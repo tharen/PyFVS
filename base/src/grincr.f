@@ -1,5 +1,8 @@
       SUBROUTINE GRINCR (DEBUG,IPMODI,LTMGO,LMPBGO,LDFBGO,
      1                   LBWEGO,LCVATV,LBGCGO)
+
+      use tree_data, only: copy_cuts_data,copy_mort_data
+
       IMPLICIT NONE
 C----------
 C  $Id: grincr.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
@@ -275,6 +278,10 @@ C
       IF (DEBUG) WRITE(JOSTND,20) ICYC
    20 FORMAT(' CALLING CUTS, CYCLE=',I2)
       CALL CUTS
+
+      ! Copy removed trees to tree_data
+      call copy_cuts_data(icyc,wk3/grospc)
+
 C
 C     STORE THE REMOVED TPA IN WK4 FOR USE IN THE SECOND CALL TO THE
 C     EVENT MONITOR (SPMCDBH INVOLVING CUT TREES).
@@ -520,6 +527,10 @@ C
       IF (DEBUG) WRITE(JOSTND,160) ICYC
   160 FORMAT(' CALLING MORTS, CYCLE=',I2)
       CALL MORTS
+
+      ! Copy the mortality estimate to tree_data prior to tripling
+      call copy_mort_data(icyc, wk2/grospc)
+
 C
 C     NOW TRIPLE RECORDS AND REALLIGN POINTERS IF TRIPLING OPTION IS
 C     SET.

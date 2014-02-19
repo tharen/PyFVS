@@ -1,3 +1,13 @@
+../api/prgprm_mod.f90
+../api/arrays_mod.f90
+../api/contrl_mod.f90
+../api/workcm_mod.f90
+../api/plot_mod.f90
+../api/varcom_mod.f90
+../api/outcom_mod.f90
+../api/tree_data.f90
+../api/fvs_step.f90
+
 ../base/src/algcmp.f
 ../base/src/algevl.f
 ../base/src/algexp.f
@@ -576,4 +586,3 @@
 ../wc/src/regent.f
 ../ws/src/r5crwd.f
 ../wc/src/smhgdg.f
-
