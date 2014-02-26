@@ -1,10 +1,11 @@
 module tree_data
     use prgprm_mod
+    use contrl_mod, only: itrn,icyc
     implicit none
 
     !!TODO: Perhaps the api tree data could be represented by an array
     !       of tree objects type(tree), dimension(maxcy1,maxtre) :: sim_trees
-    integer, dimension(maxcy1,maxtre) :: tree_id,plot_seq,age,spp_seq
+    integer, dimension(maxcy1,maxtre) :: tree_seq,tree_id,plot_seq,age,spp_seq
     integer, dimension(maxcy1) :: num_recs
     real, dimension(maxcy1,maxtre) :: live_tpa,cut_tpa,mort_tpa
     real, dimension(maxcy1,maxtre) :: live_dbh,dbh_incr,ba_pctl,pnt_bal
@@ -18,19 +19,23 @@ module tree_data
     contains
 
     subroutine copy_tree_data()
-        use contrl_mod, only: icyc, itrn
+        !use contrl_mod, only: itrn
         use arrays_mod, only: idtree, itre, isp, prob, wk2, dbh, dg, ht &
                 , ht2td, htg, cfv, bfv, wk1, defect, crwdth, icr, pct
         use plot_mod, only: grospc
         use varcom_mod, only: ptbalt
         use workcm_mod, only : work1
-        integer :: i
+        integer :: i,x
+
+        !TODO: Is it faster to copy only up to itrn
+        !           eg. live_dbh(i,:) = dbh(:)
 
         !offset tree data so that cycle 0 data is stored in the first slot
         i = icyc+1
 
         !copy tree data to the tree_data module
         num_recs(i) = itrn
+        tree_seq(i,:itrn) = (/(x, x=1,itrn, 1)/)
         tree_id(i,:) = idtree(:)
         plot_seq(i,:) = itre(:)
         spp_seq(i,:) = isp(:)
