@@ -1,7 +1,5 @@
       SUBROUTINE GRADD (DEBUG,IPMODI,LTMGO,LMPBGO,LDFBGO,
      1                  LBWEGO,LCVATV,LBGCGO)
-      use fmcom_mod, only: lfmon
-      use snag_data, only: copy_snag_data
       IMPLICIT NONE
 C----------
 C  $Id: gradd.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
@@ -337,9 +335,5 @@ C
          ENDIF
   170    CONTINUE
       ENDIF
-
-      if (lfmon) then
-          call copy_snag_data()
-      endif
       RETURN
       END
