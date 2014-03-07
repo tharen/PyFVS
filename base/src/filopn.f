@@ -262,6 +262,11 @@ C
         if (LOPEN) close(unit=JSVOUT)
       endif
 
+C     Close the GENRPT file
+      call getlun(i)
+      inquire(unit=i,opened=LOPEN)
+      if (LOPEN) close(unit=i)
+
       return
       end
 
