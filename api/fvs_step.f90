@@ -2,24 +2,38 @@ module fvs_step
     !Implements the FVS grower loop in a step-wise manner.
     !The included subroutines fvs_init, fvs_grow, and fvs_end are extractions
     !   from the fvs subroutine in fvs.f and implement it's component parts.
-    !   The only modifications from the original fvs.f are for porting to
-    !   fortran 90 and for readability
+    !
+    !   Several core FVS 'include' files have been rougly ported to f90 modules
+    !   to support 'use' statements, streamline compilation, and to take
+    !   advantage of modern Fortran functionality and language integration
+    !   tools (primarily F2PY).
+    !
+    !   Additional core FVS routines have been modified to support the step API.
+    !   The modified routines have been renamed and are called only from the
+    !   step API routines.
+    !
+    !   Modified FVS routines:
+    !       tregro.f => step_tregro.f
+    !       grincr.f => step_grincr.f
     !
     !Author: Tod Haren, tod.haren@gmail.com
     !Date: 10/2013
 
-!    logical :: quiet = .true.
-!    logical :: extensions = .false.
+    !TODO: Strip out the restart and cmdline logic from the step API routines
 
     contains
 
-    subroutine fvs_init(irtncd)
-        !Initialize an FVS run.  Extracted from fvs.f
+    subroutine fvs_init(keywords, irtncd)
+        ! Initialize an FVS run.  Extracted from fvs.f to break the execution
+        ! into explicit components for improved interaction with external code.
+        !
+        ! Modifications include preprocessor directives to optionally exclude
+        ! extranious FVS routines.
 
-#define xFVSREPORTS
-#define xFVSEXTENSIONS
-#define xFVSSTARTSTOP
-#define xFVSDEBUG
+!#define xFVSREPORTS
+!#define xFVSEXTENSIONS
+!#define xFVSSTARTSTOP
+!#define xFVSDEBUG
 
         use contrl_mod
         use arrays_mod
@@ -27,13 +41,14 @@ module fvs_step
         use workcm_mod
         use outcom_mod
         use tree_data
-!        use snag_data
 
         implicit none
 
         !Python F2PY Interface Directives
+        !f2py character(len=256),intent(in) :: keywords
         !f2py integer,intent(out) :: irtncd
 
+        character(len=256) :: keywords
         integer :: irtncd
 
         INTEGER I,IA,N,K,NTODO,ITODO,IACTK,IDAT,NP
@@ -47,11 +62,18 @@ module fvs_step
         INTEGER IRSTRTCD,ISTOPDONE,lenCl
 
         character(len=100) :: fmt
+
+        ! Initialize the command line argument
+        ! TODO: Accept keywords as a buffer rather than a file name
+        keywords = '--keywordfile='//adjustl(keywords)
+        call fvssetcmdline(keywords,len_trim(keywords), irtncd)
+
         !
         !******************     EXECUTION BEGINS     ******************
         !
-        DEBUG=.true.
+        DEBUG=.FALSE.
 
+!#ifdef FVSSTARTSTOP
         !Check the current return code, if -1 the cmdLine has never been processed.
         call fvsGetRtnCode(IRTNCD)
         if (IRTNCD == -1) then
@@ -70,6 +92,7 @@ module fvs_step
         if (IRTNCD.ne.0) return
         if (IRSTRTCD.lt.0) return
         if (IRSTRTCD.ge.1) return !in fvs.f this code skips over the initialization routines and the time increment
+!#endif /* FVSSTARTSTOP */
 
         ICL1=0
         LSTART = .TRUE.
@@ -81,10 +104,10 @@ module fvs_step
         CALL fvsGetRtnCode(IRTNCD)
         IF (IRTNCD.NE.0) RETURN
 
-#ifdef FVSREPORTS
+!#ifdef FVSREPORTS
         !SEE IF WE NEED TO DO SOME DEBUG.
         CALL DBCHK (DEBUG,'MAIN',4,0)
-#endif /* FVSREPORTS */
+!#endif /* FVSREPORTS */
 
         !PROCESS ARRAY IY
         IF (NCYC.LE.0)  NCYC=1
@@ -117,7 +140,7 @@ module fvs_step
             ENDDO
         ENDIF
 
-#ifdef FVSEXTENSIONS
+!#ifdef FVSEXTENSIONS
         !WRITE BUG MODEL HEADERS AND WRITE AND PROCESS OPTION LISTS
         !THE CALL TO TMOPTS MUST BE PLACED BEFORE CALL OPEXPN AS TMOPTS
         !CALLS SCHED WHICH CHANGES THE CONTENTS OF THE ARRAY IY.
@@ -128,7 +151,7 @@ module fvs_step
         !SET UP ECON COST & REVENUE INDEXES BY SPECIES
         !CALL ECSETP PRIOR TO PROCESSING ACTIVITY SCHEDULE TO ENSURE CORRECT ECON ACTIVITY SORTING
         CALL ECSETP(IY)
-#endif /* FVSEXTENSIONS */
+!#endif /* FVSEXTENSIONS */
 
         !PROCESS AND LIST THE ACTIVITY SCHEDULE.
         CALL OPEXPN (JOSTND,NCYC,IY)
@@ -141,16 +164,16 @@ module fvs_step
         !CALCULATE TREES/ACRE ( = LOAD PROB )
         CALL NOTRE
 
-#ifdef FVSEXTENSIONS
+!#ifdef FVSEXTENSIONS
         !WESTERN ROOT DISEASE MODEL VER. 3.0 INITIALIZATION
         CALL RDMN1 (1)
-#endif /* FVSEXTENSIONS */
 
         !COMPUTE DEAD LPP/ACRE.
         CALL MPSDLP
 
         !COMPUTE DEAD DFB/ACRE.
         CALL DFBINV
+!#endif /* FVSEXTENSIONS */
 
         ICYC = 1
 
@@ -205,9 +228,9 @@ module fvs_step
         !ASSIGN THE EXAMPLE TREES TO THE OUTPUT ARRAYS.
         CALL EXTREE
 
-#ifdef FVSREPORTS
+!#ifdef FVSREPORTS
         !FIND OUT IF THE COVER MODEL WILL BE CALLED.
-        CALL CVGO (LCVGO)
+!        CALL CVGO (LCVGO)
 
         !CALL **CVBROW** TO COMPUTE SHRUB DENSITY AND WILDLIFE
         !BROWSE STATISTICS (MAKE THIS CALL REGARDLESS OF LCVGO).
@@ -234,22 +257,25 @@ module fvs_step
         !WRITE OUTPUT HEADING FOR STAND COMP TABLE IF NOT TO BE SUPPRESSED
         !USING DELOTAB KEYWORD.
         IF (ITABLE(1) .EQ. 0) CALL GHEADS (NPLT,MGMID,JOSTND,0,ITITLE)
-#endif /* FVSREPORTS */
+!#endif /* FVSREPORTS */
 
         !WRITE INITIAL STAND STATISTICS.  MAKE SURE THAT ICL6 IS POSITIVE
         ICL6=1
         CALL DISPLY
 
-#ifdef FVSSTARTSTOP
+!#ifdef FVSSTARTSTOP
         CALL fvsGetRtnCode(IRTNCD)
         IF (IRTNCD.NE.0) RETURN
-#endif /* FVSSTARTSTOP */
+!#endif /* FVSSTARTSTOP */
 
-#ifdef FVSREPORTS
+!#ifdef FVSREPORTS
         !IF TREE LIST OUTPUT IS REQUESTED...CALL TREE LIST PRINTER.
         CALL MISPRT
+!#endif /*FVSREPORTS*/
+
         CALL PRTRLS (1)
 
+!#ifdef FVSREPORTS
         !CREATE THE INITIAL STAND VISULIZATION.
         CALL SVSTART
 
@@ -258,13 +284,13 @@ module fvs_step
 
         !IF NAT CRUISE OUTPUT IS REQUESTED ... CALL NATCRZ PRINTER.
         CALL NATCRZ (1)
-#endif /*FVSREPORTS*/
+!#endif /*FVSREPORTS*/
 
         !DONE WITH DEAD TREES THAT WERE PRESENT IN THE INVENTORY. PURGE
         !THEM FROM THE LIST (VIA RESET POINTER)
         IREC2=MAXTP1
 
-#ifdef FVSEXTENSIONS
+!#ifdef FVSEXTENSIONS
         !WESTERN ROOT DISEASE MODEL VER. 3.0 MODEL INITIALIZATION
         CALL RDMN1 (2)
         CALL RDPR
@@ -272,7 +298,7 @@ module fvs_step
         !BLISTER RUST MODEL INITIALIZATION
         CALL BRSETP
         CALL BRPR
-#endif /*FVSEXTENSTIONS*/
+!#endif /*FVSEXTENSTIONS*/
 
         LFLAG = .FALSE.
         LSTART = .FALSE.
@@ -280,21 +306,20 @@ module fvs_step
         !INITIALIZE TYPE 1 EVENT MONTITOR VARIABLES
         CALL EVTSTV(-1)
 
+        !Copy the initial tree list
         call copy_tree_data()
-!        call copy_snag_data()
 
         !This is 40, the entrance to the grower loop in fvs.f
         return
     end subroutine fvs_init
 
     subroutine fvs_grow(irtncd)
-        !Execute a FVS grow cycle.  Extracted from fvs.f
+        !Execute a FVS grow cycle.  Adapted from fvs.f
 
         use contrl_mod
         use arrays_mod
         use workcm_mod
         use tree_data
-!        use snag_data
 
         implicit none
 
@@ -319,49 +344,50 @@ module fvs_step
         !  and then increments it prior to entering the grower loop
         ICYC = ICYC + 1
 
-#ifdef FVSDEBUG
+!#ifdef FVSDEBUG
         !SIMULATE HARVEST (THINNINGS), GROWTH, MORTALITY, AND
         !ESTABLISHMENT.
         if (DEBUG) then
             fmt = "(/,' CALLING TREGRO, CYCLE = ',I4)"
             write(JOSTND,fmt) ICYC
         endif
-#endif /* FVSDEBUG */
+!#endif /* FVSDEBUG */
 
-        CALL TREGRO
+        !CALL TREGRO
+        call step_tregro()
 
-#ifdef FVSSTARTSTOP
+!#ifdef FVSSTARTSTOP
         CALL fvsGetRtnCode(IRTNCD)
         IF (IRTNCD.NE.0) RETURN
         CALL getAmStopping (ISTOPDONE)
         IF (ISTOPDONE.NE.0) RETURN
-#endif /* FVSSTARTSTOP */
+!#endif /* FVSSTARTSTOP */
 
         !ASSIGN THE EXAMPLE TREES TO THE OUTPUT ARRAYS.
         CALL EXTREE
 
-#ifdef FVSREPORTS
-#ifdef FVSDEBUG
+!#ifdef FVSREPORTS
+!#ifdef FVSDEBUG
         !WRITE STAND STATISTICS
         if (DEBUG) then
             fmt = "(/,' CALLING DISPLY, CYCLE = ',I4)"
             write (JOSTND,fmt) ICYC
         endif
-#endif /*FVSDEBUG*/
+!#endif /*FVSDEBUG*/
 
-#endif /* FVSREPORTS */
+!#endif /* FVSREPORTS */
         !!NOTE: The summary array is populated in DISPLY
         CALL DISPLY
 
-#ifdef FVSSTARTSTOP
+!#ifdef FVSSTARTSTOP
         CALL fvsGetRtnCode(IRTNCD)
         IF (IRTNCD.NE.0) RETURN
-#endif /* FVSSTARTSTOP */
+!#endif /* FVSSTARTSTOP */
 
         !CALL RESAGE TO RESET STAND AGE.
         CALL RESAGE
 
-#ifdef FVSEXTENSIONS
+!#ifdef FVSEXTENSIONS
         !DWARF MISTLETOE MODEL OUTPUT
         CALL MISPRT
 
@@ -370,18 +396,18 @@ module fvs_step
 
         !BLISTER RUST MODEL OUTPUT
         CALL BRPR
-#endif /* FVSEXTENSIONS */
+!#endif /* FVSEXTENSIONS */
 
         !IF TREE LIST OUTPUT IS REQUESTED...CALL TREE LIST PRINTER.
         CALL PRTRLS (1)
 
-#ifdef FVSREPORTS
+!#ifdef FVSREPORTS
         !IF RUNNING FVSSTAND POST-PROCESSOR, CALL FILE PRINTER.
         CALL FVSSTD (1)
 
         !IF NAT CRUISE OUTPUT IS REQUESTED ... CALL NATCRZ PRINTER.
         CALL NATCRZ (1)
-#endif /* FVSREPORTS */
+!#endif /* FVSREPORTS */
 
         !FIND AND RUN ANY SCHEDULED SYSTEM CALLS.
         CALL OPFIND (1,MYACT,NTODO)
@@ -396,8 +422,8 @@ module fvs_step
             ENDDO
         ENDIF
 
+        ! Copy end of cycle data
         call copy_tree_data()
-!        call copy_snag_data()
 
         return
     end subroutine fvs_grow
@@ -469,6 +495,11 @@ module fvs_step
         CALL BRROUT
 
         CALL GENPRT
+
+!       Close the GENRPT file
+        call getlun(i)
+        inquire(unit=i,opened=LFLAG)
+        if (LFLAG) close(unit=i)
 
         return
     end subroutine fvs_end

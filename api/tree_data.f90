@@ -20,7 +20,7 @@ module tree_data
 
     subroutine copy_tree_data()
         !use contrl_mod, only: itrn
-        use arrays_mod, only: idtree, itre, isp, prob, wk2, dbh, dg, ht &
+        use arrays_mod, only: idtree, itre, isp, prob, wk2, wk4, dbh, dg, ht &
                 , ht2td, htg, cfv, bfv, wk1, defect, crwdth, icr, pct
         use plot_mod, only: grospc
         use varcom_mod, only: ptbalt
@@ -33,35 +33,41 @@ module tree_data
         !offset tree data so that cycle 0 data is stored in the first slot
         i = icyc+1
 
+        !write(*,*) 'GROWING SPACE FACTOR:',grospc
+
         !copy tree data to the tree_data module
         num_recs(i) = itrn
         tree_seq(i,:itrn) = (/(x, x=1,itrn, 1)/)
-        tree_id(i,:) = idtree(:)
-        plot_seq(i,:) = itre(:)
-        spp_seq(i,:) = isp(:)
-        live_tpa(i,:) = prob(:)/grospc
+        tree_id(i,:itrn) = idtree(:itrn)
+        plot_seq(i,:itrn) = itre(:itrn)
+        spp_seq(i,:itrn) = isp(:itrn)
+        live_tpa(i,:itrn) = prob(:itrn)/grospc
 
-        !if (icyc>0) mort_tpa(i-1,:) = wk2(:)/grospc
+        ! Mortality records are tripled before the grow routine returns
+        if (icyc>0) mort_tpa(i,:itrn) = wk2(:itrn)/grospc
+
         !cut tpa is copied in grincr.f.
-        live_dbh(i,:) = dbh(:)
-        ba_pctl(i,:) = pct(:)
-        pnt_bal(i,:) = ptbalt(:)
-        dbh_incr(i,:) = dg(:)
-        if (icyc==0) dbh_incr(i,:) = work1(:)
-        ht_total(i,:) = ht(:)
-        ht_merch_cuft(i,:) = ht2td(:, 1)
-        ht_merch_bdft(i,:) = ht2td(:, 2)
-        ht_incr(i,:) = htg(:)
+!        if (icyc>0) cut_tpa(i,:itrn) = wk4(:itrn)/grospc
 
-        cuft_total(i,:) = cfv(:)
-        cuft_net(i,:) = wk1(:)
-        bdft_net(i,:) = bfv(:)
+        live_dbh(i,:itrn) = dbh(:itrn)
+        ba_pctl(i,:itrn) = pct(:itrn)
+        pnt_bal(i,:itrn) = ptbalt(:itrn)
+        dbh_incr(i,:itrn) = dg(:itrn)
+        if (icyc==0) dbh_incr(i,:itrn) = work1(:itrn)
+        ht_total(i,:itrn) = ht(:itrn)
+        ht_merch_cuft(i,:itrn) = ht2td(:itrn, 1)
+        ht_merch_bdft(i,:itrn) = ht2td(:itrn, 2)
+        ht_incr(i,:itrn) = htg(:itrn)
 
-        defect_cuft(i,:) = (defect - mod(defect,100)) / 10000.0
-        defect_bdft(i,:) = mod(defect,100) / 100.0
+        cuft_total(i,:itrn) = cfv(:itrn)
+        cuft_net(i,:itrn) = wk1(:itrn)
+        bdft_net(i,:itrn) = bfv(:itrn)
 
-        cr_width(i,:) = crwdth(:)
-        cr_ratio(i,:) = icr(:)
+        defect_cuft(i,:itrn) = (defect - mod(defect,100)) / 10000.0
+        defect_bdft(i,:itrn) = mod(defect,100) / 100.0
+
+        cr_width(i,:itrn) = crwdth(:itrn)
+        cr_ratio(i,:itrn) = icr(:itrn)
 
     end subroutine copy_tree_data
 
@@ -72,7 +78,9 @@ module tree_data
         real, dimension(maxtre) :: mort
 
         ! Mortality estimates copied after the call to `morts` in grincr.f
-        mort_tpa(cycle,:) = mort(:) !wk2(:)/grospc
+        !  tripling occurs right after call morts, so maybe "untripling"
+        !  would be OK to bring this back out of the FVS guts.
+        mort_tpa(cycle+1,:) = mort(:) !wk2(:)/grospc
 
     end subroutine copy_mort_data
 
