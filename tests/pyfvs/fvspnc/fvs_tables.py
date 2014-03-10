@@ -1,8 +1,10 @@
+import uuid
+
 import numpy
 import tables
 import pandas
 
-trees_dtype = numpy.dtype([('run_id', long), ('stand_id', long), ('period', int)
+trees_dtype = numpy.dtype([('run_id', long), ('stand_id', long), ('cycle', int)
         , ('year', int), ('plot_id', int), ('tree_seq', int), ('tree_id', int)
         , ('age', int), ('species', 'S2'), ('spp_seq', int), ('live_tpa', float)
         , ('cut_tpa', float), ('mort_tpa', float), ('dbh', float)
@@ -23,7 +25,7 @@ tree_data_names = ('plot_seq', 'tree_seq', 'tree_id', 'age', 'spp_seq'
 
 def trees_to_recarray(
         tree_data, spp_codes, run_id=0, stand_id=0
-        , year_zero=0, period_len=10):
+        , year_zero=0, cycle_len=10):
     """
     Copy FVS projection tree lists to a Numpy record array. 
     """
@@ -44,7 +46,7 @@ def trees_to_recarray(
     d[1][:] = stand_id
     d[2][:] = numpy.array(range(x))[:, numpy.newaxis]
     d[2] = d[2][mask].flatten()
-    d[3] = d[2] * period_len + year_zero
+    d[3] = d[2] * cycle_len + year_zero
 
     for name in tree_data_names:
         if name == 'spp_seq':
@@ -62,7 +64,7 @@ def trees_to_recarray(
 
 def trees_to_dataframe(
         tree_data, spp_codes, run_id=0, stand_id=0
-        , year_zero=0, period_len=10):
+        , year_zero=0, cycle_len=10):
     """
     Copy FVS projection tree lists to a Pandas dataframe. 
     """
@@ -83,7 +85,7 @@ def trees_to_dataframe(
     d[1][:] = stand_id
     d[2][:] = numpy.array(range(x))[:, numpy.newaxis]
     d[2] = d[2][mask].flatten()
-    d[3] = d[2] * period_len + year_zero
+    d[3] = d[2] * cycle_len + year_zero
 
     for name in tree_data_names:
         if name == 'spp_seq':
@@ -98,6 +100,38 @@ def trees_to_dataframe(
 
     return df
 
+class RunMaster(tables.IsDescription):
+    """
+    Master table linking projections to data tables
+    """
+    run_id = tables.StringCol(36, pos=0)
+    stand_id = tables.UInt16Col(pos=1)
+    silv_regime = tables.StringCol(36, pos=2)
+    num_cycles = tables.UInt16Col(pos=3)
+    min_year = tables.UInt16Col(pos=4)
+    max_year = tables.UInt16Col(pos=5)
+    # timestamp = tables.UInt32Col(pos=2)
+    timestamp = tables.Float64Col(pos=6)
+
+class SnagData(tables.IsDescription):
+    """
+    Snag data array definitions
+    real, dimension(maxcy1,mxsnag) :: hard_density, soft_density &
+            , dbh_dead, hard_ht, soft_ht, hard_vol, soft_vol
+    integer, dimension(maxcy1,mxsnag) :: spp, year_dead
+    """
+    run_id = tables.StringCol(36, pos=0)
+    cycle = tables.UInt16Col(pos=1)
+    year = tables.UInt16Col(pos=2)
+    species = tables.StringCol(2, pos=3)
+    dbh_dead = tables.Float16Col(pos=4)
+    year_dead = tables.UInt16Col(pos=5)
+    hard_density = tables.Float16Col(pos=6)
+    hard_ht = tables.Float16Col(pos=7)
+    hard_vol = tables.Float16Col(pos=8)
+    soft_density = tables.Float16Col(pos=9)
+    soft_ht = tables.Float16Col(pos=10)
+    soft_vol = tables.Float16Col(pos=11)
 
 class TreeData(tables.IsDescription):
     """
@@ -110,9 +144,8 @@ class TreeData(tables.IsDescription):
     real, dimension(maxcy1,maxtre) :: cuft_total,cuft_net,bdft_net &
             ,defect_cuft,defect_bdft
     """
-    run_id = tables.UInt32Col(pos=0)
-    stand_id = tables.UInt16Col(pos=3)
-    period = tables.UInt16Col(pos=1)
+    run_id = tables.StringCol(36, pos=0)
+    cycle = tables.UInt16Col(pos=1)
     year = tables.UInt16Col(pos=2)
     plot_id = tables.UInt8Col(pos=4)
     tree_seq = tables.UInt16Col(pos=5)
@@ -139,28 +172,123 @@ class TreeData(tables.IsDescription):
     defect_cuft = tables.Float32Col(pos=26)
     defect_bdft = tables.Float32Col(pos=27)
 
-def init_tree_store(fp, title=''):
+def init_fvs_tables(fp, title=''):
     h5 = tables.openFile(fp, mode='w', title=title)
     f = tables.Filters(complib='blosc')
+    h5.create_table('/', 'run_master', RunMaster, 'FVS Run Primary Table', filters=f)
     h5.create_table('/', 'tree_data', TreeData, 'FVS Tree Data', filters=f)
+    h5.create_table('/', 'snag_data', SnagData, 'FVS Snag Data', filters=f)
     h5.flush()
+
+    h5.root.run_master.cols.run_id.create_index()
+
     h5.root.tree_data.cols.run_id.create_index()
-    h5.root.tree_data.cols.period.create_index()
-    h5.root.tree_data.cols.stand_id.create_index()
+    h5.root.tree_data.cols.cycle.create_index()
 
-    return h5
+    h5.root.snag_data.cols.run_id.create_index()
+    h5.root.snag_data.cols.cycle.create_index()
 
-def store_trees(h5, tree_data, spp_codes, stand_id=None, run_id=None):
+    h5.close()
+
+def init_run(h5_path, stand_id, timestamp):
+    h5 = tables.open_file(h5_path, mode='a')
+    tbl = h5.root.run_master
+#     try:
+#         id = max(tbl.cols.run_id) + 1  # [tbl.colindexes['run_id'][-1]] + 1
+#
+#     except ValueError:
+#         id = 0
+    id = uuid.uuid1()
+
+    row = h5.root.run_master.row
+    row['run_id'] = id
+    row['stand_id'] = stand_id
+    row['timestamp'] = 0
+    row['timestamp'] = timestamp
+    row.append()
+    h5.close()
+    return id
+
+def delete_run(h5_path, run_id):
+    h5 = tables.open_file(h5_path, mode='a')
+
+    # Delete snags
+    rows = h5.root.snag_data['run_id'] == run_id
+    h5.root.snag_data.remove_rows(rows)
+
+    # Delete trees
+    rows = h5.root.tree_data['run_id'] == run_id
+    h5.root.tree_data.remove_rows(rows)
+
+    # Delete the run
+    rows = h5.root.run_master['run_id'] == run_id
+    h5.root.run_master.remove_rows(rows)
+
+    h5.close()
+
+    return True
+
+def wavg(group):
+    d = group['dbh_dead']
+    w = group['hard_density']
+    return (d * w).sum() / w.sum()
+
+def store_snags(h5_path, snag_data, spp_codes, cycle_years
+        , num_cycles=40, run_id=None):
+    """
+    Append FVS projection detail snag estimates to the snag_data HDF table.
+    """
+    h5 = tables.open_file(h5_path, mode='a')
+    row = h5.root.snag_data.row
+
+    columns = [
+            'dbh_dead', 'year_dead'
+            , 'hard_density', 'hard_ht', 'hard_vol'
+            , 'soft_density', 'soft_ht', 'soft_vol'
+            ]
+
+    # TODO: compress the snag list using Pandas groupby and apply methods
+
+    all_columns = ['spp_seq', ] + columns
+    for i in range(num_cycles + 1):
+        rc = snag_data.num_recs[i]
+        snag_df = pandas.DataFrame(dict(zip(all_columns, [getattr(snag_data, col)[i, :rc] for col in all_columns])))
+        snag_df['dbhgrp'] = (snag_df['dbh_dead'] / 5).astype(int) * 5
+        snag_df['hard_htgrp'] = (snag_df['hard_ht'] / 10).astype(int) * 10
+        snag_df['soft_htgrp'] = (snag_df['soft_ht'] / 10).astype(int) * 10
+        snag_grps = snag_df.groupby(('spp_seq', 'dbhgrp', 'year_dead', 'hard_htgrp', 'soft_htgrp')
+                , sort=True)
+
+        blah = snag_grps.apply(wavg)
+        blah.to_csv('foo.txt', mode='a')
+
+        for r in xrange(rc):
+            row['run_id'] = run_id
+            row['cycle'] = i
+            row['year'] = cycle_years[i]
+            row['species'] = spp_codes[getattr(snag_data, 'spp_seq')[i, r]]
+            for col in columns:
+                row[col] = getattr(snag_data, col)[i, r]
+
+            row.append()
+
+    h5.close()
+
+def store_trees(h5_path, tree_data, spp_codes, cycle_years
+        , num_cycles=40, run_id=None):
     """
     Append a projection tree list in a tree_data HDF table
     """
+    h5 = tables.open_file(h5_path, mode='a')
+
     # TODO: add plot_id lookup argument
     row = h5.root.tree_data.row
-    for i, rc in enumerate(tree_data.num_recs):
+    for i in range(num_cycles + 1):
+        rc = tree_data.num_recs[i]
         for r in xrange(rc):
             row['run_id'] = run_id
-            row['period'] = i
-            row['stand_id'] = stand_id
+            row['cycle'] = i
+            row['year'] = cycle_years[i]
             # #TODO: add plot_id lookup like spp_codes
             row['plot_id'] = tree_data.plot_seq[i, r]
             row['tree_seq'] = tree_data.tree_seq[i, r]
@@ -189,5 +317,4 @@ def store_trees(h5, tree_data, spp_codes, stand_id=None, run_id=None):
 
             row.append()
 
-    h5.root.tree_data.flush()
-
+    h5.close()

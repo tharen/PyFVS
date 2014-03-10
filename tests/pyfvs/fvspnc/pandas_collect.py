@@ -49,18 +49,18 @@ def writetrees(plots, treelist='pnt01.tre'):
                 treerow = treerow.replace('xidx', '%04d' % id)
                 tl.write('%s\n' % treerow)
 
-
-reps = 1
+reps = 10
 kwds = ('pnt01.key',)  # 'pnt02.key')
 # kwds = [os.path.join(root,kwd) for kwd in kwds]
 
-num_periods = 5
-period_len = 10
-year_zero = 1990
+num_cycles = 30
+cycle_len = 5
+year_zero = 2010
 
-trees_df = pandas.DataFrame(dtype=fvs_tables.trees_dtype)
+# trees_df = pandas.DataFrame(dtype=fvs_tables.trees_dtype)
 
-h5 = fvs_tables.init_tree_store('trees.h5')
+h5_path = 'tree.h5'
+fvs_tables.init_fvs_tables(h5_path)
 
 # Create a numpy recarray of summary variables
 sumvars = ('year', 'age', 'tpa', 'tcuft', 'mcuft', 'mbdft', 'rtpa', 'rtcuft'
@@ -77,33 +77,39 @@ run_id = 0
 for kwd in kwds:
     plottrees = readtrees('pnt01.tre.save')
 
-    rep_trees = []
+#     rep_trees = []
     for x in xrange(reps):
         print 'Rep:', x
         # bootstrap the plot records
         tls = resampleplots(plottrees)
         writetrees(tls)
 
-        # cl = numpy.array((1,),dtype='a100')
-        cl = '--keywordfile=%s' % (kwd,)
-
-        # initialize the run
-        i = fvs.fvssetcmdline(cl)
+# # Execute FVS using the original API routines
+#         cmd = '--keywordfile={}'.format(kwd)
+#         fvs.fvssetcmdline(cmd)
+# #         fvs.fvs()
+#
+#         cycle_year = year_zero
+#         for cycle in range(1, num_cycles):
+#             fvs.fvssetstoppointcodes(6, cycle_year)
+#             fvs.fvs()
+#             fvs.fvsgetstoppointcodes()
+#             cycle_year += cycle_len
+#
+#         fvs.filclose()
 
         cycle_year = year_zero
 
         # Initialize the FVS run
-        fvs.fvs_step.fvs_init()
+        fvs.fvs_step.fvs_init(kwd)
 
         # loop through growth cycles, collecting summary and tree stats
-        for cycle in range(1, num_periods + 1):
+        for cycle in range(1, num_cycles + 1):
 
             # call the FVS grower loop
             fvs.fvs_step.fvs_grow()
-            # print 'FVS Returned with exit code %d' % rtn
 
-            cycle_year += period_len
-
+            cycle_year += cycle_len
 
         # close all IO files
         fvs.fvs_step.fvs_end()
@@ -111,36 +117,50 @@ for kwd in kwds:
 
         run_id += 1
 
-        rep_trees.append(
-                fvs_tables.trees_to_dataframe(
-                        fvs.tree_data, spp_codes, stand_id=0, run_id=x
-                        , year_zero=year_zero, period_len=period_len))
-        
-        d=fvs.snag_data
-        snags = pandas.DataFrame({
-                'snag_spp':d.snag_spp[cycle,:]
-                ,'snag_dbh':d.snag_dbh[cycle,:]
-                ,'soft_snags':d.snag_dense_soft[cycle,:]
-                ,'hard_snags':d.snag_dense_hard[cycle,:]
-                ,'total_snags':d.snag_dense_hard[cycle,:]+d.snag_dense_soft[cycle,:]
-                })
-        snags.to_csv('snags.csv')
-        
+#         rep_trees.append(
+#                 fvs_tables.trees_to_dataframe(
+#                         fvs.tree_data, spp_codes, stand_id=0, run_id=x
+#                         , year_zero=year_zero, cycle_len=cycle_len
+#                         ))
+#
+#         d = fvs.snag_data
+
+#     open('snags.csv', 'w').close()
+#     for cycle in range(num_cycles):
+#         snags = pandas.DataFrame({
+#                 'cycle':cycle
+#                 , 'snag_spp':spp_codes[d.snag_spp[cycle, :d.snag_recs[cycle]]]
+#                 , 'snag_dbh':d.snag_dbh[cycle, :d.snag_recs[cycle]]
+#                 , 'year_dead':d.snag_year_dead[cycle, :d.snag_recs[cycle]]
+#                 , 'soft_snags':d.snag_dense_soft[cycle, :d.snag_recs[cycle]]
+#                 , 'hard_snags':d.snag_dense_hard[cycle, :d.snag_recs[cycle]]
+#                 , 'total_snags':d.snag_dense_hard[cycle, :d.snag_recs[cycle]] + d.snag_dense_soft[cycle, :d.snag_recs[cycle]]
+#                 , 'soft_snag_ht':d.snag_ht_soft[cycle, :d.snag_recs[cycle]]
+#                 , 'hard_snags_ht':d.snag_ht_hard[cycle, :d.snag_recs[cycle]]
+#                 , 'soft_snags_vol':d.snag_vol_soft[cycle, :d.snag_recs[cycle]]
+#                 , 'hard_snags_vol':d.snag_vol_hard[cycle, :d.snag_recs[cycle]]
+#                 }
+#                 , columns=('cycle', 'snag_spp', 'snag_dbh', 'year_dead'
+#                         , 'soft_snag_ht', 'hard_snags_ht', 'soft_snags_vol'
+#                         , 'hard_snags_vol', 'soft_snags', 'hard_snags', 'total_snags')
+#                 )
+#         snags.to_csv('snags.csv', mode='a', float_format='%.2f', index=False)
+
 #         df = fvs_tables.trees_to_dataframe(fvs.tree_data, spp_codes
-#                 , stand_id=0, run_id=x, year_zero=year_zero, period_len=period_len)
+#                 , stand_id=0, run_id=x, year_zero=year_zero, cycle_len=cycle_len)
 #         trees_df = pandas.concat([trees_df, df])
 
-#         fvs_tables.store_trees(h5, fvs.tree_data, spp_codes, stand_id=0, run_id=x)
+        fvs_tables.store_trees(h5_path, fvs.tree_data, spp_codes, stand_id=0, run_id=run_id)
+        fvs_tables.store_snags(h5_path, fvs.snag_data, spp_codes, stand_id=0, run_id=run_id)
 
-    trees_df = pandas.concat(rep_trees)
-#     trees_df = pandas.DataFrame(numpy.hstack(rep_trees))
-    trees_df.to_csv('trees.txt', float_format='%.4f', index=False
-            , cols=fvs_tables.trees_dtype.names)
+#     trees_df = pandas.concat(rep_trees)
+#     trees_df.to_csv('trees.csv', float_format='%.4f', index=False
+#             , cols=fvs_tables.trees_dtype.names)
 
 #     hdfstore = pandas.HDFStore('trees.h5')
 #     hdfstore.put('/tree_datax', trees_df, format='t')
 
-h5.close()
+# h5.close()
 
 #         # Collect the projected trees
 #         i = numpy.sum(fvs.tree_data.spp_seq != 0)
@@ -174,7 +194,7 @@ et = time.clock()
 shutil.copy2('pnt01.tre.save', 'pnt01.tre')
 
 # #summary_names = ('year','age','tpa_b','gross_cuft_b','merch_cuft_b','gross_bdft_b','net_bdft_b','tpa_r','gross_cuft_r','top_cuft_r','gross_merch_cuft_r','net_merch_cuft_r','gross_bdft_r','net_bdft_r','baa_a','ccf_a','topht_a','per_len','accr_cuft','mort_cuft','sam_wt','for_cvr','size_class','stock_class')
-# ##summary = numpy.recarray((num_periods+1,20),dtype='i',names=summary_names)
+# ##summary = numpy.recarray((num_cycles+1,20),dtype='i',names=summary_names)
 
 print '%d reps; total elapsed time: %.2f, %.3f second per rep' % (reps, et - st, (et - st) / run_id)
 
