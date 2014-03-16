@@ -48,10 +48,13 @@ C IFTR(127-132) APPLY ONLY TO  8-FT LOGS WITH DIB (6-11)
 
 
 C     ***** CLEAR PREVIOUS TREE *****
-      DO 10 I=1,20
-        INTBF(I) = 0
-        LOGVOL(1,I) = 0
-   10   LOGVOL(4,I) = 0
+!      DO 10 I=1,20
+!        INTBF(I) = 0
+!        LOGVOL(1,I) = 0
+!   10   LOGVOL(4,I) = 0
+      intbf(:) = 0
+      logvol(1,:) = 0
+      logvol(4,:) = 0
 
          X = 0.0
 

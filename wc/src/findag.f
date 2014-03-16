@@ -1,5 +1,6 @@
       SUBROUTINE FINDAG(I,ISPC,D,D2,H,SITAGE,SITHT,AGMAX1,HTMAX,HTMAX2,
      &                  DEBUG)
+      use siteht_mod, only: get_siteht
       IMPLICIT NONE
 C----------
 C  **FINDAG--WC  DATE OF LAST REVISION:  01/12/11
@@ -26,7 +27,7 @@ C  DECLARATIONS
 C----------
       LOGICAL DEBUG
       INTEGER I,ISPC,MAPPHD,MAPHD(MAXSP)
-      REAL AGMAX(MAXSP),AG,DIFF,H,HGUESS,SINDX,TOLER
+      REAL AGMAX(MAXSP),AG,age_delta,DIFF,H,HGUESS,SINDX,TOLER
       REAL HDRAT1(8),HDRAT2(8)
       REAL SITAGE,SITHT,AGMAX1,HTMAX,HTMAX2,D,D2
 C----------
@@ -44,7 +45,8 @@ C----------
       TOLER=2.0
       SINDX = SITEAR(ISPC)
       AGMAX1 = AGMAX(ISPC)
-      AG = 2.0
+      AG = 100.0
+      age_delta = 49.0
       MAPPHD=MAPHD(ISPC)
       HTMAX=HDRAT1(MAPPHD)*D+HDRAT2(MAPPHD)
       HTMAX2=HDRAT1(MAPPHD)*D2+HDRAT2(MAPPHD)
@@ -67,31 +69,40 @@ C
 C----------
 C  CALL HTCALC TO CALCULATE POTENTIAL HT GROWTH
 C----------
-      HGUESS = 0.0
-      CALL HTCALC(SINDX,ISPC,AG,HGUESS,JOSTND,DEBUG)
-C
-      IF(DEBUG)WRITE(JOSTND,91200)AG,HGUESS,H
-91200 FORMAT(' IN GUESS AN AGE--AGE,HGUESS,H ',3F10.2)
-C
-      DIFF=ABS(HGUESS-H)
-      IF(DIFF .LE. TOLER .OR. H .LT. HGUESS)THEN
-        SITAGE = AG
-        SITHT = HGUESS
-        GO TO 30
-      END IF
-      AG = AG + 2.
-C
-      IF(AG .GT. AGMAX1) THEN
-C----------
-C  H IS TOO GREAT AND MAX AGE IS EXCEEDED
-C----------
-        SITAGE = AGMAX1
-        SITHT = H
-        GO TO 30
-      ELSE
-        GO TO 75
-      ENDIF
-C
+!      hguess = htcalc(SINDX,ISPC,AG,JOSTND,DEBUG)
+
+      ! Use a binary search to find the site age for this tree
+      sitht = 0.0
+      sitage = 2.0
+
+      do while (age_delta >= 2)
+
+        call get_siteht(sindx,ispc,ag,hguess)
+!        call htcalc(sindx,ispc,ag,hguess,0,0)
+
+        ! We're done if the current height is within the search tolerance
+        if (abs(hguess-h) .le. toler) then
+            sitage = ag
+            sitht = hguess
+            exit
+
+        elseif (hguess .gt. h) then
+            ag = ag - age_delta
+
+        else
+            ag = ag + age_delta
+
+        endif
+
+        age_delta = age_delta * 0.5
+
+      end do
+
+      if (sitht == 0.0 .and. hguess > h) then
+        sitht = h
+        sitage = agmax1
+      endif
+
    30 CONTINUE
       IF(DEBUG)WRITE(JOSTND,50)I,SITAGE,SITHT
    50 FORMAT(' LEAVING SUBROUTINE FINDAG  I,SITAGE,SITHT =',

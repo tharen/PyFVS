@@ -155,7 +155,7 @@ c      HTRY      IN   R*4    A trial value for total ht.
 c      SF_2PTH1  OUT  R*4    Predicted dib at h1 minus measured diameter there
   
 
-      REAL SF_2PTH1
+      REAL*4 SF_2PTH1
       REAL DBH,HTRY,DBTBH,h1,d1,d2,SLOPE
 c      REAL*4  SUPV_arg(4)
       REAL*4 HEX(2), ZEX(2),DOB,DBT,DIFF

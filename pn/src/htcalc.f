@@ -1,5 +1,10 @@
       SUBROUTINE HTCALC(SINDX,ISPC,AG,HGUESS,JOSTND,DEBUG)
       IMPLICIT NONE
+
+!f2py intent(in) :: sindx,ispc,ag
+!f2py intent(hide) :: jostnd,debug
+!f2py intent(out) :: hguess
+
 C----------
 C  **HTCALC--PN   DATE OF LAST REVISION:  03/07/12
 C----------

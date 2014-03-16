@@ -1,4 +1,5 @@
       SUBROUTINE SITSET
+      use siteht_mod, only: get_siteht
       IMPLICIT NONE
 C----------
 C  **SITSET--PN   DATE OF LAST REVISION:  05/11/11
@@ -123,6 +124,8 @@ C----------
      &SINDX,ISISP,AG,SI
       SI = 0.
       CALL HTCALC(SINDX,ISISP,AG,SI,JOSTND,DEBUG)
+!      call get_siteht(sindx,isisp,ag,si)
+
       IF(DEBUG)WRITE(JOSTND,*)'RETURN FROM HTCALC,SINDX,ISISP,AG,SI=',
      &SINDX,ISISP,AG,SI
       IF(ISPC.EQ.20 .AND. ISISP.NE.20)THEN

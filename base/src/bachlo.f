@@ -64,7 +64,8 @@ C----------
       Z=3.0*U-2.0
       IF (Z.LT. 0.001) GOTO 10
       X=1.0-0.5*ALOG(Z)
-      Z=0.5*(X-2.0)**2
+!      Z=0.5*(X-2.0)**2
+      Z=0.5*((X-2.0)*(X-2.0))
       GO TO 30
 C----------
 C  CALCULATE X AND Z ASSUMING A UNIFORM DISTRIBUTION.

@@ -25,21 +25,25 @@ c      CHARACTER*89 INREC
 C FLAG FOR CRUISING METHODS, FLAGS WRITING TO THE LOG STOCK FILE
 C      INITIALIZE VARIABLES
 
-      DO 30 I=1,20
-        VDEF(I)=0.0
-        lggrd(i) = 0.0 
-C        IF (I.LE.11) VOL(I)=0
-  30  CONTINUE
-   
-      DO 35, I=1,7
-        DO 33, J=1,20
-            LOGVOL(I,J) = 0.0
-  33     CONTINUE
-  35  CONTINUE         
+C      DO 30 I=1,20
+C        VDEF(I)=0.0
+C        lggrd(i) = 0.0
+CC        IF (I.LE.11) VOL(I)=0
+C  30  CONTINUE
+      VDEF(:) = 0.0
+      lggrd(:) = 0.0
+
+C      DO 35, I=1,7
+C        DO 33, J=1,20
+C            LOGVOL(I,J) = 0.0
+C  33     CONTINUE
+C  35  CONTINUE
+      LOGVOL(:,:) = 0.0
       
-      DO 37, I=1,15
-        VOL(I) = 0.0
-  37  CONTINUE
+C      DO 37, I=1,15
+C        VOL(I) = 0.0
+C  37  CONTINUE
+      VOL(:) = 0.0
       
       LOGS=0
       ERRFLAG = 0

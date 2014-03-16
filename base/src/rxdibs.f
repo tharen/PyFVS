@@ -57,7 +57,8 @@ C----------
 C  COMPUTE THE LENGTH OF THE LOG AS A RATIO BETWEEN DBH TO MERCH TOP
 C  AND DBH TO DIB @ 16.3'; MINIMUM LOG LENGTH = 0.1 FT.
 C----------
-         GLOGLN(1) = (((DBH**2-TOPD**2)/(DBH**2-D16**2))*12.3)+4.0
+!         GLOGLN(1) = (((DBH**2-TOPD**2)/(DBH**2-D16**2))*12.3)+4.0
+         GLOGLN(1) = (((DBH*DBH-TOPD*TOPD)/(DBH*DBH-D16*D16))*12.3)+4.0
          IF( GLOGLN(1) .LT. 0.1 ) GLOGLN(1) = 0.1
       ELSE
 C----------
