@@ -441,6 +441,7 @@ foreach (fn ${source_files})
         
         # Need the location of C headers and include files
         if (${fn} MATCHES "(.*\\.h$)|(.*\\.F77$)")
+                OR ${filename} STREQUAL "findage_mod.f90"
             list(APPEND include_dirs ${pathname})
         endif()
         

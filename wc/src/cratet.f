@@ -1,4 +1,5 @@
       SUBROUTINE CRATET
+      use findage_mod, only: findag
       IMPLICIT NONE
 C----------
 C  **CRATET--WC   DATE OF LAST REVISION:  04/06/11

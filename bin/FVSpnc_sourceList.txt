@@ -14,6 +14,7 @@
 ../api/fmcom_mod.f90
 ../api/snag_data.f90
 ../api/siteht_mod.f90
+../api/findage_mod.f90
 
 ../base/src/algcmp.f
 ../base/src/algevl.f
@@ -586,7 +587,7 @@
 ../wc/src/dgdriv.f
 ../wc/src/dubscr.f
 ../wc/src/essubh.f
-../wc/src/findag.f
+
 ../wc/src/htgf.f
 ../wc/src/logs.f
 ../wc/src/morts.f

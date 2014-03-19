@@ -32,7 +32,7 @@ C
 C     PROCSS THE COMMAND LINE. Passing an empty string signals that the 
 C     real command line arguments will be fetched.
 C
-      do i = 1,5
+      do i = 1,2
 
       lenCl = 0
       CALL fvsSetCmdLine(' ',lenCL,rtnCode)

@@ -1,4 +1,5 @@
       SUBROUTINE COMCUP
+      use findage_mod, only: findag
       IMPLICIT NONE
 C----------
 C  $Id: comcup.f 767 2013-04-10 22:29:22Z rhavis@msn.com $

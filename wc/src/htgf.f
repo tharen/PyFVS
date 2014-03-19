@@ -1,4 +1,5 @@
       SUBROUTINE HTGF
+      use findage_mod, only: findag
       use siteht_mod, only: get_siteht
       IMPLICIT NONE
 C----------
@@ -207,8 +208,8 @@ C----------
       IF(DEBUG)WRITE(JOSTND,*)' ISPC,I,HGUESS,AGP10= ',
      &ISPC,I,HGUESS,AGP10
 C
-!      HGUESS = HTCALC(SINDX,ISPC,AGP10,JOSTND,DEBUG)
-      call get_siteht(SINDX,ISPC,AGP10,HGUESS)
+      CALL HTCALC(SINDX,ISPC,AGP10,HGUESS,JOSTND,DEBUG)
+!      call get_siteht(SINDX,ISPC,AGP10,HGUESS)
 
       POTHTG= HGUESS-SITHT
 C----------

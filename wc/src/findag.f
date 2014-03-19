@@ -27,7 +27,7 @@ C  DECLARATIONS
 C----------
       LOGICAL DEBUG
       INTEGER I,ISPC,MAPPHD,MAPHD(MAXSP)
-      REAL AGMAX(MAXSP),AG,age_delta,DIFF,H,HGUESS,SINDX,TOLER
+      REAL AGMAX(MAXSP),AG,DIFF,H,HGUESS,SINDX,TOLER
       REAL HDRAT1(8),HDRAT2(8)
       REAL SITAGE,SITHT,AGMAX1,HTMAX,HTMAX2,D,D2
 C----------
@@ -45,8 +45,7 @@ C----------
       TOLER=2.0
       SINDX = SITEAR(ISPC)
       AGMAX1 = AGMAX(ISPC)
-      AG = 100.0
-      age_delta = 49.0
+      AG = 2.0
       MAPPHD=MAPHD(ISPC)
       HTMAX=HDRAT1(MAPPHD)*D+HDRAT2(MAPPHD)
       HTMAX2=HDRAT1(MAPPHD)*D2+HDRAT2(MAPPHD)
@@ -65,43 +64,38 @@ C----------
         GO TO 30
       ENDIF
 C
-   75 CONTINUE
-C----------
-C  CALL HTCALC TO CALCULATE POTENTIAL HT GROWTH
-C----------
-!      hguess = htcalc(SINDX,ISPC,AG,JOSTND,DEBUG)
+!   75 CONTINUE
+!C----------
+!C  CALL HTCALC TO CALCULATE POTENTIAL HT GROWTH
+!C----------
+!      HGUESS = 0.0
+!!      CALL HTCALC(SINDX,ISPC,AG,HGUESS,JOSTND,DEBUG)
+!      call get_siteht(sindx,ispc,ag,hguess)
+!C
+!      IF(DEBUG)WRITE(JOSTND,91200)AG,HGUESS,H
+!91200 FORMAT(' IN GUESS AN AGE--AGE,HGUESS,H ',3F10.2)
+!C
+!      DIFF=ABS(HGUESS-H)
+!      IF(DIFF .LE. TOLER .OR. H .LT. HGUESS)THEN
+!        SITAGE = AG
+!        SITHT = HGUESS
+!        GO TO 30
+!      END IF
+!      AG = AG + 2.
+!C
+!      IF(AG .GT. AGMAX1) THEN
+!C----------
+!C  H IS TOO GREAT AND MAX AGE IS EXCEEDED
+!C----------
+!        SITAGE = AGMAX1
+!        SITHT = H
+!        GO TO 30
+!      ELSE
+!        GO TO 75
+!      ENDIF
+!C
 
-      ! Use a binary search to find the site age for this tree
-      sitht = 0.0
-      sitage = 2.0
-
-      do while (age_delta >= 2)
-
-        call get_siteht(sindx,ispc,ag,hguess)
-!        call htcalc(sindx,ispc,ag,hguess,0,0)
-
-        ! We're done if the current height is within the search tolerance
-        if (abs(hguess-h) .le. toler) then
-            sitage = ag
-            sitht = hguess
-            exit
-
-        elseif (hguess .gt. h) then
-            ag = ag - age_delta
-
-        else
-            ag = ag + age_delta
-
-        endif
-
-        age_delta = age_delta * 0.5
-
-      end do
-
-      if (sitht == 0.0 .and. hguess > h) then
-        sitht = h
-        sitage = agmax1
-      endif
+      call guess_age(sindx,ispc,h,sitht,sitage)
 
    30 CONTINUE
       IF(DEBUG)WRITE(JOSTND,50)I,SITAGE,SITHT
@@ -111,3 +105,50 @@ C
       RETURN
       END
 C**END OF CODE SEGMENT
+
+      subroutine guess_age(site_idx,spp_idx,height,site_height,site_age)
+      use siteht_mod, only: get_siteht
+      implicit none
+
+      !f2py intent(in) :: site_idx,spp_idx,height,max_age
+      !f2py intent(out) :: site_age
+
+      real :: site_idx,height,site_height,site_age
+      integer :: spp_idx
+
+      ! Use a binary search to find the equivalent site age
+      ! Adapted from http://rosettacode.org/wiki/Binary_search#Fortran
+      ! Use an array pointer to split the search range at each step.
+      real, target :: a(100)
+      real, pointer :: p(:)
+      integer :: mid, offset, i
+      real :: site_ht,upper_ht,lower_ht
+
+      !a(:) = (/(i,i=2,200,2)/)
+      do i=1,100
+          a(i) = i*2
+      enddo
+
+      ! Define the site height target window
+      upper_ht = height + 2
+      lower_ht = height - 2
+
+      p => a !pointer into a
+      site_age = 0.0
+      offset = 0
+
+      do while (size(p) > 0)
+          mid = size(p)/2 + 1 !integer division
+          call get_siteht(site_idx,spp_idx,p(mid),site_ht)
+          if (site_ht > upper_ht) then
+                p => p(:mid-1)
+          else if (site_ht < lower_ht) then
+                offset = offset + mid
+                p => p(mid+1:)
+          else
+                site_age = (offset + mid) * 2    ! SUCCESS!!
+                return
+          end if
+      end do
+
+      end subroutine guess_age
