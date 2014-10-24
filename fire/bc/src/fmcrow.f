@@ -1,7 +1,7 @@
       SUBROUTINE FMCROW
       IMPLICIT NONE
 C
-C  $Id: fmcrow.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id: fmcrow.f 1333 2014-10-23 17:49:02Z tod.haren $
 C
 C----------
 C  **FMCROW  FIRE-BC
@@ -141,6 +141,8 @@ C       COPY TEMPORARY VALUES TO FFE ARRAY
 
         DO J = 0,5
           CROWNW(I,J) = XV(J)
+          IF (DEBUG) WRITE(JOSTND,*) 'I=',I,' size=',J,
+     &    ' CROWNW=',CROWNW(I,J)
         ENDDO
 
   999 CONTINUE

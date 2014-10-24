@@ -1,7 +1,7 @@
       SUBROUTINE CLIN (DEBUG,LKECHO)
       IMPLICIT NONE
 C----------
-C  $Id: clin.f 1127 2013-12-16 20:06:44Z tod.haren $
+C  $Id: clin.f 1333 2014-10-23 17:49:02Z tod.haren $
 C----------
 C
 C     CLIMATE EXTENSION
@@ -447,7 +447,7 @@ C
      >         ' MULTIPLIER FOR SPECIES ',I4,'=',A,'    IS ',F10.4)
         ENDIF
       ENDIF
-      GOTO 10      
+      GOTO 10
   600 CONTINUE
 C                        OPTION NUMBER 6 -- MXDENMLT
 C     ACTIVITY CODE 2804

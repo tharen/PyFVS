@@ -4,7 +4,7 @@
      -    JOSTND,LKECHO,ABIRTH)
       IMPLICIT NONE
 C
-C $Id: dbstreesin.f 968 2013-07-12 18:49:16Z rhavis@msn.com $
+C $Id: dbstreesin.f 1333 2014-10-23 17:49:02Z tod.haren $
 C
 C     NOTE: ALL OF THE VARIABLE IN THIS ROUTINE ARE VOLITILE. THE GET RESET
 C           AT EVERY CALL. BE CAREFUL.
@@ -323,7 +323,7 @@ C     CATCH NULLS AND ASSIGN VALUES TO 0 INSTEAD
         END IF
 
         HABITAT = 0
-        IF(VAL_LI(21).NE.SQL_NULL_DATA) THEN
+        IF(VAL_LI(21).NE.SQL_NULL_DATA.AND.VAL_LI(21).GT.0) THEN
           CTMP(VAL_LI(21)+1:)=' '
           READ (CTMP,*,ERR=10) HABITAT
           GOTO 20

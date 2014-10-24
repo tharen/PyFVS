@@ -1,7 +1,7 @@
       SUBROUTINE CLMORTS
       IMPLICIT NONE
 C----------
-C  $Id: clmorts.f 1127 2013-12-16 20:06:44Z tod.haren $
+C  $Id: clmorts.f 1333 2014-10-23 17:49:02Z tod.haren $
 C----------
 C
 C     CLIMATE EXTENSION - COMPUTES CLIMATE-CAUSED MORTALITY
@@ -25,7 +25,7 @@ C
       INTEGER MYACT(1),IDT,IACT,NP,ITODO,NTODO
       REAL PRMS(3)
       DATA MYACT/2801/
-      
+
       CALL DBCHK (DEBUG,'CLMORTS',7,ICYC)   
 
       IF (DEBUG) WRITE (JOSTND,1) LCLIMATE

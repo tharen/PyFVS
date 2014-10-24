@@ -1,6 +1,6 @@
 // cfim.cpp : Defines the entry point for the console application.
 //----------
-//  $Id: cfim.cpp 1127 2013-12-16 20:06:44Z tod.haren $
+//  $Id: cfim.cpp 1333 2014-10-23 17:49:02Z tod.haren $
 //----------
 // Cruz, M.G.; Butler, B.W.; Alexander, M.E.; Viegas, D.X. 2006.
 // Development and evaluation of a semi-physical crown fire initiation model.
@@ -16,7 +16,7 @@
 #include <string.h>
 #include <stdlib.h>
 #ifndef unix
-  #include <conio.h>
+#include <conio.h>
 #endif
 #include <sys/timeb.h>
 
@@ -152,7 +152,7 @@ static int convectflag=0;   //if 0, gaussian profile of plume follows the "c" li
       float *CFIM_In,
       float *CFIM_out,
       float *fminfo);}
-  #endif
+#endif
 #else
   extern "C" __declspec(dllexport) int CFIM_DRIVER (                 // VS2010 compiler, Windows OS
     float *CFIN_In,

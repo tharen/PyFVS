@@ -1,7 +1,8 @@
       SUBROUTINE FMUSRFM (IYR, FMD)
       IMPLICIT NONE
 C----------
-C  $Id: fmusrfm.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id: fmusrfm.f 1333 2014-10-23 17:49:02Z tod.haren $
+C  $Id: fmusrfm.f 1333 2014-10-23 17:49:02Z tod.haren $
 C----------
 C     PROCESSES THE FUELMODL KEYWORD AND THE FUELTRET KEYWORD.
 C
@@ -49,7 +50,7 @@ C     CHECK WHETHER THE FIRECALC KEYWORD IS SCHEDULED FOR THIS YEAR
       IF (NTODO.GT.0) THEN
         DO 400 ITODO = 1,NTODO
           CALL OPGET(ITODO,8,JYR,IACTK,NPRM,PRMS)
-          IF (JYR .NE. IYR) GO TO 400
+C          IF (JYR .NE. IYR) GO TO 400
           CALL OPDONE (ITODO,IYR)
 
 C         SET THE FIRECALC PARAMETER VALUES.
@@ -75,7 +76,7 @@ C     If so, we will use those in preference to anything else.
               PRMS(I) = 0
             ENDDO
             CALL OPGET(ITODO,8,JYR,IACTK,NPRM,PRMS)
-            IF (JYR .EQ. IYR) THEN
+C            IF (JYR .EQ. IYR) THEN
                IF (NPRM.LE.0) THEN
                   LUSRFM = .FALSE.
                   CALL OPDONE(ITODO,IYR)
@@ -137,7 +138,7 @@ C     If so, we will use those in preference to anything else.
                    END SELECT
                  END SELECT
                ENDIF
-            ENDIF
+C            ENDIF
          ENDDO
       ENDIF
 
@@ -221,7 +222,7 @@ C
       IF (NTODO.GT.0) THEN
         DO JDO = 1,NTODO
           CALL OPGET(JDO,3,JYR,IACTK,NPRM,PRMS)
-          IF (JYR .EQ. IYR) THEN
+C          IF (JYR .EQ. IYR) THEN
 
             LOK = .TRUE.
             IF (PRMS(1) .LT. 0.0) LOK = .FALSE.
@@ -240,7 +241,7 @@ C
               CALL OPDEL1(JDO)
             ENDIF
 
-          ENDIF
+C          ENDIF
         ENDDO
       ENDIF
       IF (IFTYR .GT. 0) THEN

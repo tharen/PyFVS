@@ -1,7 +1,7 @@
       SUBROUTINE DBSTRLS(IWHO,KODE,TEM)
       IMPLICIT NONE
 C----------
-C $Id: dbstrls.f 787 2013-04-18 21:21:52Z rhavis@msn.com $
+C $Id: dbstrls.f 1333 2014-10-23 17:49:02Z tod.haren $
 C----------
 C     PURPOSE: TO OUTPUT THE TREELIST DATA TO THE DATABASE
 C
@@ -176,7 +176,7 @@ C     IF IT DOESN'T THEN WE NEED TO CREATE IT
      -             'PrdLen int null,'//
      -             'TreeId char(8) null,'//
      -             'TreeIndex int null,'//
-     -             'Species char(3) null,'//
+     -             'Species char(8) null,'//
      -             'TreeVal int null,'//
      -             'SSCD int null,'//
      -             'PtIndex int null,'//

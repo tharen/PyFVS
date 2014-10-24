@@ -1,4 +1,4 @@
-#	$Id: makefile 809 2013-04-30 23:04:34Z rhavis@msn.com $	
+#	$Id: makefile 1333 2014-10-23 17:49:02Z tod.haren $	
 
 # Notes: If OS is defined, then then we are 32 bit windows, otherwise, we are Linix 
 # x86_64 or mac osx x86_64. 
@@ -21,6 +21,7 @@ else
  WIN = 
  SLIBSUFX = .so
  PRGSUFX = 
+ ODBC = odbc 
  ifdef OSTYPE
   ifeq ($(OSTYPE),linux)
     OSARCH = l64
@@ -39,8 +40,8 @@ else
  ifndef OSARCH
    OSARCH = osx
    PIC =      # never use PIC on this OSARCH type
+   ODBC = iodbc 
  endif
- ODBC = odbc 
 endif
 
 #.PHONY: printvars
@@ -187,7 +188,7 @@ endif
 ifeq (${OSARCH},w32) 
 %.prg : $(object) 
 	$(CC) fvsSQL.o -shared -l $(ODBC) $(WIN) -o   ../libfvsSQL.dll 
-	$(LD) -shared -o $(basename ../$@)$(SLIBSUFX) ../libfvsSQL.dll  $(filter-out fvsSQL.o main.o,$(object))
+	$(LD) -shared -Wl,--export-all-symbols -o $(basename ../$@)$(SLIBSUFX) ../libfvsSQL.dll  $(filter-out fvsSQL.o main.o,$(object))
 	$(LD)         -o $(basename ../$@)$(PRGSUFX)  ../libfvsSQL.dll  $(filter-out fvsSQL.o       ,$(object))
 else
 %.prg : $(object) 

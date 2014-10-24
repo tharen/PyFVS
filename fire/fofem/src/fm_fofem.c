@@ -1,5 +1,5 @@
 //
-// $Id: fm_fofem.c 1127 2013-12-16 20:06:44Z tod.haren $
+// $Id: fm_fofem.c 1333 2014-10-23 17:49:02Z tod.haren $
 //
 /*{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}
 * Name: fm_fofem.c
@@ -65,7 +65,7 @@ void Test_In (float fr_In[]);
       float *fr_In,
       float *fr_Out,
       char  *cr_ErrMes);
-  #endif
+#endif
 #else
   extern __declspec(dllexport) int FM_FOFEM (    // VS2010 compiler, Windows OS
     float *fr_In,

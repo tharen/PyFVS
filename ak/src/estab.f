@@ -1,7 +1,7 @@
       SUBROUTINE ESTAB (KDT)
       IMPLICIT NONE
 C----------
-C AK $Id: estab.f 1127 2013-12-16 20:06:44Z tod.haren $
+C AK $Id: estab.f 1333 2014-10-23 17:49:02Z tod.haren $
 C----------
 COMMONS
 C
@@ -1150,6 +1150,8 @@ C
       DEFECT(ITRN)=0.
       ISPECL(ITRN)=0
       NORMHT(ITRN)=0
+      HT2TD(ITRN,1)=0.
+      HT2TD(ITRN,2)=0.
       PROB(ITRN)=(ESPROB(N)*EXPAND) /DUPNPT
       DBH(ITRN)=0.1
       HT(ITRN)=HHT

@@ -1,7 +1,8 @@
       SUBROUTINE FMSCUT (MXVOL,NR,NC,SSNG,DSNG,CTCRWN,TKCRWN)
       IMPLICIT NONE
 C----------
-C  $Id: fmscut.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id: fmscut.f 1333 2014-10-23 17:49:02Z tod.haren $
+C  $Id: fmscut.f 1333 2014-10-23 17:49:02Z tod.haren $
 C----------
 C     SINGLE-STAND VERSION
 C
@@ -125,9 +126,12 @@ C       "MERCH" VOLUME AS USEFUL, SO LMERCH IS .TRUE.
 C       REPORTED USING MBIO WHEN JENKINS EQUATIONS ARE IN USE
 
         IF (ICMETH .EQ. 0) THEN  ! FFE-CALCULATION METHOD
+          X = 0.0
+          IF (HRVTRE .GT. 0.0) THEN
             XNEG1= -1.0
             CALL FMSVL2(ISP(I),DBH(I),HT(I),XNEG1,X,LMERCH,DEBUG,JOSTND)
             X = X * V2T(ISP(I)) * HRVTRE
+          ENDIF
         ELSE                     ! JENKINS CALCULATION METHOD
           X = MBIO * HRVTRE
         ENDIF

@@ -1,7 +1,7 @@
       SUBROUTINE FMINIT
       IMPLICIT NONE
 C----------
-C  $Id: fminit.f 960 2013-07-09 20:17:17Z sarebain@fs.fed.us $
+C  $Id: fminit.f 1333 2014-10-23 17:49:02Z tod.haren $
 C----------
 C  PURPOSE:
 C      INITIALIZE VARIABLES FOR THE FIRE MODEL
@@ -38,7 +38,13 @@ C----------
       IFTYR = 0
       ISALVC = 0
       ISALVS = 0
+      ICYCRM = 0
+      ITRNL = ITRN
       NSNAGSALV=0
+
+      DO J=1,MAXTRE
+      ISPCC(J)=0
+      ENDDO
 C
       DO I=1,4
         PFLAM(I)=0.

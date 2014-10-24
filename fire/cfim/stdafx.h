@@ -1,5 +1,5 @@
 //----------
-//  $Id: stdafx.h 1127 2013-12-16 20:06:44Z tod.haren $
+//  $Id: stdafx.h 1333 2014-10-23 17:49:02Z tod.haren $
 //----------
 // stdafx.h : include file for standard system include files,
 // or project specific include files that are used frequently, but
@@ -14,7 +14,7 @@
 
 #include <stdio.h>
 #ifndef unix
-  #include <tchar.h>
+#include <tchar.h>
 #endif
 
 // TODO: reference additional headers your program requires here

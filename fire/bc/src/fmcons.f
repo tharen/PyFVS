@@ -1,7 +1,7 @@
       SUBROUTINE FMCONS(FMOIS,BTYPE,PLAREA,IYR,ICALL,PSMOKE,PSBURN)
       IMPLICIT NONE
 C
-C  $Id: fmcons.f 1127 2013-12-16 20:06:44Z tod.haren $
+C  $Id: fmcons.f 1333 2014-10-23 17:49:02Z tod.haren $
 C
 C----------
 C  **FMCONS   FIRE-BC
@@ -319,11 +319,10 @@ C       BURN PILED FUELS
           PRBURN(2,IL) = 0.9
         ENDDO
 
-        PRBURN(2,11) = PLAREA
+C       100% OF LITTER AND DUFF UNDER THE PILES IS BURNED
 
-C       AND LITTER (100% OF LITTER UNDER THE PILES IS BURNED)
-
-        PRBURN(2,10) = PLAREA
+        PRBURN(2,11) = 1.0
+        PRBURN(2,10) = 1.0
         
 C       NO LIVE FUELS BURN 
         PLVBRN(1) = 0

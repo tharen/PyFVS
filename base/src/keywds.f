@@ -1,7 +1,7 @@
       BLOCK DATA KEYWDS
       IMPLICIT NONE
 C----------
-C  $Id: keywds.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id: keywds.f 1333 2014-10-23 17:49:02Z tod.haren $
 C----------
 C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
@@ -53,6 +53,6 @@ C
      >     'POINTREF','ECHO','NOECHO','CYCLEAT','ATRTLIST'/
       DATA (TABLE(I),I=136,150) /
      >     'THINRDSL','MORTMSB ','SETSITE ','CLIMATE ','SDICALC ',
-     >     '        ','        ','        ','        ','        ',
+     >     'THINQFA ','        ','        ','        ','        ',
      >     '        ','        ','        ','        ','        '/
       END

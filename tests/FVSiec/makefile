@@ -1,5 +1,5 @@
 
-# $Id: makefile 933 2013-06-11 15:19:27Z rhavis@msn.com $
+# $Id: makefile 1333 2014-10-23 17:49:02Z tod.haren $
 
 all : iet01 iet02 iet03  \
  ffe_svs climate climatePutGet
@@ -40,7 +40,7 @@ ffe_svs:
 	-../../bin/FVSiec --restart=ffe_svs.stop
 	-diff -w ffe_svs_007.svs ffe_svs_007.svs.save
 	-diff -w ffe_svs_index.svs ffe_svs_index.svs.save
-	rm ffe_svs_*.svs ffe_svs_*.grd
+#	rm ffe_svs_*.svs ffe_svs_*.grd
 	@echo Test ffe_svs ended
 	
 

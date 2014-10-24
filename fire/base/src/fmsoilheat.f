@@ -1,7 +1,7 @@
       SUBROUTINE FMSOILHEAT (IYR, LNMOUT)
       IMPLICIT NONE
 C----------
-C  $Id: fmsoilheat.f 996 2013-07-26 20:32:02Z drobinsonessa@gmail.com $
+C  $Id: fmsoilheat.f 1333 2014-10-23 17:49:02Z tod.haren $
 C----------
 C
 C     CALLED FROM: FMBURN
@@ -51,9 +51,12 @@ C
       real smcat(4), duffcat(4), algslp
       real MOIS1(2,5), MOIS2(2,5), MOIS3(2,5), MOIS4(2,5), soilmois
 
+#if _WIN64
       !DEC$ ATTRIBUTES DLLIMPORT :: FM_FOFEM
-
+#else
+      !DEC$ ATTRIBUTES DLLIMPORT :: FM_FOFEM
       !DEC$ ATTRIBUTES ALIAS:'_FM_FOFEM' :: FM_FOFEM
+#endif
 
       integer fm_fofem
       
