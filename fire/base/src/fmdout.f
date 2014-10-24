@@ -1,4 +1,5 @@
       SUBROUTINE FMDOUT (IYR)
+      use downwood_data, only: copy_downwood
       IMPLICIT NONE
 C----------
 C  $Id: fmdout.f 1333 2014-10-23 17:49:02Z tod.haren $
@@ -472,6 +473,9 @@ C
 
       CALL DBSFMDWVOL(IYR,NPLT,V1,16,DBSKODE)
       IF(DBSKODE.EQ.0) GOTO 850
+
+      ! Copy the down wood volume for this cycle
+      call copy_downwood(v1)
 
 C     IF HEADER REQUESTED AND THIS IS THE FIRST OPPORTUNITY TO PRINT
 C     IT, THEN DO SO.

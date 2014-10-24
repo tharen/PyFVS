@@ -1,4 +1,5 @@
       SUBROUTINE FMCHRVOUT (IYR)
+      use carbon_data, only: copy_harvest_carbon
       IMPLICIT NONE
 C----------
 C  $Id: fmchrvout.f 1333 2014-10-23 17:49:02Z tod.haren $
@@ -128,6 +129,9 @@ C     CALL THE DBS MODULE TO OUTPUT FUEL DATA TO A DATABASE
       DBSKODE = 1
       CALL DBSFMHRPT(IYR,NPLT,V,6,DBSKODE)
       IF(DBSKODE.EQ.0) RETURN
+
+      ! Copy carbon estimates for the current cycle
+      call copy_harvest_carbon(v)
 
 C     IF HEADER REQUESTED AND THIS IS THE FIRST OPPORTUNITY TO PRINT
 C     IT, THEN DO SO.

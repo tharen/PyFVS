@@ -9,7 +9,7 @@ module snag_data
     implicit none
 
     real, dimension(maxcy1,mxsnag) :: hard_density, soft_density &
-            , dbh_dead, hard_ht, soft_ht, hard_vol, soft_vol
+            , dead_dbh, hard_ht, soft_ht, hard_vol, soft_vol
     integer, dimension(maxcy1,mxsnag) :: spp_seq, year_dead
     integer, dimension(maxcy1) :: num_recs
 
@@ -34,7 +34,7 @@ module snag_data
 
         num_recs(icyc) = nsnag
         spp_seq(icyc,:nsnag) = sps(:nsnag)
-        dbh_dead(icyc,:nsnag) = dbhs(:nsnag)
+        dead_dbh(icyc,:nsnag) = dbhs(:nsnag)
         year_dead(icyc,:nsnag) = yrdead(:nsnag)
 
         do x = 1,nsnag

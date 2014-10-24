@@ -1,6 +1,8 @@
 ../api/prgprm_mod.f90
 ../api/arrays_mod.f90
+../api/carbon_data.f90
 ../api/contrl_mod.f90
+../api/downwood_data.f90
 ../api/workcm_mod.f90
 ../api/plot_mod.f90
 ../api/varcom_mod.f90
@@ -9,9 +11,10 @@
 ../api/tree_data.f90
 ../api/fvs_step.f90
 ../api/step_tregro.f90
-../api/step_grincr.f
+
 ../api/fmparm_mod.f90
 ../api/fmcom_mod.f90
+../api/fmfcom_mod.f90
 ../api/snag_data.f90
 ../api/siteht_mod.f90
 ../api/findage_mod.f90
@@ -594,3 +597,4 @@
 ../wc/src/regent.f
 ../ws/src/r5crwd.f
 ../wc/src/smhgdg.f
+

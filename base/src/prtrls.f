@@ -1,4 +1,5 @@
       SUBROUTINE PRTRLS (IWHO)
+      use tree_data, only: save_tree_data,copy_tree_data,copy_cuts_data
       IMPLICIT NONE
 C----------
 C  $Id: prtrls.f 968 2013-07-12 18:49:16Z rhavis@msn.com $
@@ -63,6 +64,19 @@ C----------
   501 CONTINUE
   502 CONTINUE
       NUMREQ = 0
+
+
+      ! Process tree details for the API report arrays if requested.
+      if (save_tree_data) then
+        select case (iwho)
+            case (1)
+                ! Complete live tree list & mortality
+                call copy_tree_data()
+            case (2)
+                ! Cut tree list
+                call copy_cuts_data()
+        end select
+      endif
 C----------
 C     FIND OUT IF THERE IS A TREELIST OPTION.
 C

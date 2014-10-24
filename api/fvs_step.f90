@@ -35,12 +35,14 @@ module fvs_step
 !#define xFVSSTARTSTOP
 !#define xFVSDEBUG
 
-        use contrl_mod
-        use arrays_mod
-        use plot_mod
-        use workcm_mod
-        use outcom_mod
-        use tree_data
+        use prgprm_mod, only: maxcyc,maxcy1,maxtp1
+        use contrl_mod, only: &
+                icl1,icl6,icyc,irec2,itable,itrn,iy,jostnd,lflag,lstart,ncyc
+        use arrays_mod, only: bfv,cfv,ind,prob,wk1,wk3
+        use plot_mod, only: mgmid,nplt,sdiac,sdiac2
+        use workcm_mod, only: iwork1
+        use outcom_mod, only: ititle,ocvcur,obfcur,omccur
+        use tree_data, only: init_tree_data
 
         implicit none
 
@@ -62,6 +64,9 @@ module fvs_step
         INTEGER IRSTRTCD,ISTOPDONE,lenCl
 
         character(len=100) :: fmt
+
+        ! Zero the API report arrays
+        call init_tree_data()
 
         ! Initialize the command line argument
         ! TODO: Accept keywords as a buffer rather than a file name
@@ -306,9 +311,6 @@ module fvs_step
         !INITIALIZE TYPE 1 EVENT MONTITOR VARIABLES
         CALL EVTSTV(-1)
 
-        !Copy the initial tree list
-        call copy_tree_data()
-
         !This is 40, the entrance to the grower loop in fvs.f
         return
     end subroutine fvs_init
@@ -421,9 +423,6 @@ module fvs_step
                 ENDIF
             ENDDO
         ENDIF
-
-        ! Copy end of cycle data
-        call copy_tree_data()
 
         return
     end subroutine fvs_grow

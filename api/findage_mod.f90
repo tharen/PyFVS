@@ -8,14 +8,14 @@ module findage_mod
 
     implicit none
 
-    real :: age_steps(6),max_age(maxsp)
+    real :: age_steps(9),max_age(maxsp)
 
     ! FIXME: max_age could be a program level parameter
-    data max_age / maxsp*200. /
+    data max_age / maxsp*400. /
     ! Predefined binary search age increments
     ! Assumes max_age is always 200
-    !data age_steps /50.0,25.0,12.5,6.125,3.0625,1.53125/ !,0.765625/
-    data age_steps /50.0,26.0,14.0,8.0,4.0,2.0/
+    data age_steps /100.0,50.0,25.0,12.5,6.125,3.0625,1.53125,0.765625,0.3828125/
+    !data age_steps /50.0,26.0,14.0,8.0,4.0,2.0/
 
     contains
 
@@ -135,7 +135,8 @@ module findage_mod
         integer :: spp_idx
 
         ! Locals
-        integer :: i, check_age
+        integer :: i
+        real :: check_age
 
         site_height = 0.0
         site_age = 0.0
@@ -166,10 +167,10 @@ module findage_mod
         end if
 
         ! Loop through the age increments to narrow in on the current height
-        check_age = max_age(spp_idx) / 2
+        check_age = max_age(spp_idx) / 2.0
         do i=1,size(age_steps)
 !            call get_siteht(site_idx,spp_idx,check_age,site_height)
-            call htcalc(site_idx,spp_idx,real(check_age),site_height,0,0)
+            call htcalc(site_idx,spp_idx,check_age,site_height,0,0)
             if (site_height > height) then
                 check_age = check_age - age_steps(i)
             elseif (site_height < height) then

@@ -18510,6 +18510,9 @@ module siteht_mod
         !f2py intent(in) :: spp,si,age
         !f2py intent(out) :: siteht
 
+        ! TODO: Impliment interpolation between 5/10 foot site classes and
+        !        5 year age classes
+
         ! Return the precalculated value if the species, age, and site are
         !   represented, otherwise calculate the site height
         if (lu_spp(spp) &
@@ -18517,17 +18520,19 @@ module siteht_mod
                 .and. (min_site <= si .and. si <= max_site) &
                 ) then
             ! Offset the age and site to the array index
-            ! Height by age is represented by two's as used in FINDAG
-            !   odd year ages are rounded down
-            !age_idx = int((age - min_age)*0.5) + 1
-            age_idx = int(age - min_age) + 1
+            age_idx = int(age - min_age + 1)
             site_idx = int(si - min_site + 1)
             siteht = siteht_lu(age_idx,site_idx,spp)
 
+            !Keep a tally of how many times the lookup succeeds
             lu_tally(spp) = lu_tally(spp)+1
+
         else
-            fail_over(spp) = fail_over(spp)+1
             call htcalc(si,spp,age,siteht,0,0)
+
+            !Keep a tally of how many times the lookup misses
+            fail_over(spp) = fail_over(spp)+1
+
         endif
         
         return

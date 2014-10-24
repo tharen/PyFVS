@@ -14,8 +14,8 @@ subroutine step_tregro()
     DEBUG=.FALSE.
 
     !CALL GRINCR TO COMPUTE INCREMENTS AND SEE IF BUG MODELS ARE ACTIVE.
-    !CALL GRINCR (DEBUG,1,LTMGO,LMPBGO,LDFBGO,LBWEGO,LCVATV,LBGCGO)
-    call step_grincr(debug,1,ltmgo,lmpbgo,ldfbgo,lbwego,lcvatv,lbgcgo)
+    CALL GRINCR (DEBUG,1,LTMGO,LMPBGO,LDFBGO,LBWEGO,LCVATV,LBGCGO)
+    !call step_grincr(debug,1,ltmgo,lmpbgo,ldfbgo,lbwego,lcvatv,lbgcgo)
 
     ! Copy snag records prior to mortality estimation for this cycle
     ! This captures mortality from the previous cycle, which influenced the
