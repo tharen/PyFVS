@@ -2,7 +2,7 @@ module fmcom_mod
     use prgprm_mod, only: maxtre,maxsp,maxcy1
     use fmparm_mod
     implicit none
-!ode segment FMCOM.
+!Code segment FMCOM.
 !----------
 !  $Id: FMCOM.F77 960 2013-07-09 20:17:17Z sarebain@fs.fed.us $
 !----------
@@ -45,13 +45,13 @@ module fmcom_mod
 !                involve that variable should be re-examined (see FMSCRO)
 !     CWD2B2:    dimensioned like CWD2B, this is crown material from trees
 !                killed during the current FVS cycle.  It won't start falling
-!                until after it is added to CWD2B at the start of the next cycle.
+!                until after it is added to CWD2B (at the end of the year).
 !                **Indexed the same way as CWD2B**
-!     CWDVOL:    array for down woody debris, it holds down wood volume
+!     CWDVOL:    array for down woody debris, it holds down wood volume 
 !                in cuft/acre. Dimensioned like CWD, but without the litter and
 !                duff categories.  The tenth position is the total volume of the woody
 !                classes instead.
-!     CWDCOV:    array for down woody debris, it holds down wood cover
+!     CWDCOV:    array for down woody debris, it holds down wood cover 
 !                in percent. Dimensioned like CWD, but without the litter and
 !                duff categories.  The tenth position is the total cover of the woody
 !                classes instead.
@@ -193,9 +193,9 @@ module fmcom_mod
 !                SALVSPA(I,2) = salvaged initially soft snags per acre in
 !                snag record i
 !     SCCF:      STAND-LEVEL CROWN COMPETITION FACTOR (PERCENTAGE)
-!     SETDECAY:  array (1:mxflcl, 1:4 for the decay rate class) that shows whether the
+!     SETDECAY:  array (1:mxflcl, 1:4 for the decay rate class) that shows whether the 
 !                user had reset the surface fuel decay rate with the FuelDcay keyword.
-!                 -1 means the decay rate has not been set, a value greater than 0 is
+!                 -1 means the decay rate has not been set, a value greater than 0 is 
 !                the actual rate set for that class.
 !     SNGNEW:    New snags to add to list
 !     SNPRCL:    THE UPPER DBH FOR A GROUP OF SNAGS (FOR PRINTING ONLY)
@@ -223,6 +223,10 @@ module fmcom_mod
 !     DBHC:      Tree DBH set in FMTREM, used in FMEVTBM
 !     HTC:       Tree height set in FMTREM, used in FMEVTBM
 !     CROWNWC:   Crown weight set in FMTREM, used in FMEVTBM
+!     ICYCRM:    Thinning cycle for TREEBIO function
+!     ITRNL:     Lenght of tree list at time of call to FMTREM from CUTS.
+!                Estab trees may enter simulation between the call
+!                to FMTREM and the call to FMEVTBM.
 !
 !     VARIABLE DECLARATIONS: COMMON BLOCK FMCOM
 
@@ -319,6 +323,7 @@ module fmcom_mod
       REAL     PREMST(MAXTRE),PREMCR(MAXTRE)
       INTEGER  ISPCC(MAXTRE)
       REAL     DBHC(MAXTRE),HTC(MAXTRE),CROWNWC(MAXTRE,0:5)
+      INTEGER  ICYCRM,ITRNL
 
       COMMON /FMCOM/                                                 &
             ALLDWN, BURNYR, CANMHT, CBHCUT,                          &
@@ -330,8 +335,8 @@ module fmcom_mod
             FMICR, FMKOD, FMSLOP,FTREAT,                             &
             FUAREA, GROW, HARD, HARTYP, HARVYR, HTDEAD, HTIH,        &
             HTIS, HTR1, HTR2, HTX, HTXSFT, ICANSP, ICBHMT,           &
-            IFMYR1, IFMYR2, IFTYR, ISALVC, ISALVS, ISNGSM,           &
-            JCOUT, JFROUT,                                           &
+            ICYCRM,IFMYR1, IFMYR2, IFTYR, ISALVC, ISALVS, ISNGSM,    &
+            ITRNL,JCOUT, JFROUT,                                     &
             JLOUT,  LANHED, LEAFLF,  LFMON, LFMON2, LFROUT,          &
             LDYNFM, LIMBRK, LDHEAD, LSHEAD, LVWEST, MAXHT, MINHT,    &
             NSNAG, NYRS, NZERO, OLDCOVTYP, OLDCRL, OLDHT, OLDCRW,    &
@@ -352,7 +357,7 @@ module fmcom_mod
 !	   Dimensions of Q10CWD AND REFMATCWD arrays must equal
 !     to MXFLCL+1 from FMPARMS.F77
 !
-!     Q10CWD:      Q10 FOR THE MXFMCL+1 DECAY CLASSES; THE +1 IS FOR ROOT
+!     Q10CWD:      Q10 FOR THE MXFMCL+1 DECAY CLASSES; THE +1 IS FOR ROOT 
 !                  DECAY RATES, WHICH ARE NOT INCLUDED WITH CWD CATEGORIES
 !     REFMATCWD:   REFERENCE TEMPERATURE (CELSIUS) AT WHICH THE DECAY RATE
 !                  IS MEASURED. REFERENCE DECAY RATES SET IN FMVINIT

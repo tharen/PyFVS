@@ -8,25 +8,22 @@ module findage_mod
 
     implicit none
 
-    real :: age_steps(9),max_age(maxsp)
+    real :: age_steps(8),max_age(maxsp)
 
     ! FIXME: max_age could be a program level parameter
-    data max_age / maxsp*400. /
+    data max_age / maxsp*200. /
     ! Predefined binary search age increments
     ! Assumes max_age is always 200
-    data age_steps /100.0,50.0,25.0,12.5,6.125,3.0625,1.53125,0.765625,0.3828125/
-    !data age_steps /50.0,26.0,14.0,8.0,4.0,2.0/
+    data age_steps /100.0,50.0,25.0,12.5,6.125,3.0625,1.53125,0.765625/ !,0.3828125/
+    !data age_steps /100.0,50.0,26.0,14.0,8.0,4.0,2.0,1.0/
 
     contains
 
-    SUBROUTINE FINDAG(I,ISPC,D,D2,H,SITAGE,SITHT,AGMAX1,HTMAX,HTMAX2,DEBUG)
+    subroutine findag(i,ispc,d,d2,h,sitage,sitht,agmax1,htmax,htmax2,debug)
         ! Estimate the age of a tree using species site curves
-        ! Replaces findag.f
+        ! Adapts and replaces findag.f
 
         implicit none
-        !----------
-        !  **FINDAG--WC  DATE OF LAST REVISION:  01/12/11
-        !----------
         !  THIS ROUTINE FINDS EFFECTIVE TREE AGE BASED ON INPUT VARIABLE(S)
         !  CALLED FROM **COMCUP
         !  CALLED FROM **CRATET
@@ -40,6 +37,7 @@ module findage_mod
         REAL AG,DIFF,H,HGUESS,SINDX,TOLER
         REAL HDRAT1(8),HDRAT2(8)
         REAL SITAGE,SITHT,AGMAX1,HTMAX,HTMAX2,D,D2
+        character(len=100) :: fmt
         !----------
         !  DATA STATEMENTS
         !----------
@@ -74,55 +72,23 @@ module findage_mod
             return
         ENDIF
 
-!
-!   75 CONTINUE
-!C----------
-!C  CALL HTCALC TO CALCULATE POTENTIAL HT GROWTH
-!C----------
-!      HGUESS = 0.0
-!!      CALL HTCALC(SINDX,ISPC,AG,HGUESS,JOSTND,DEBUG)
-!      call get_siteht(sindx,ispc,ag,hguess)
-!C
-!      IF(DEBUG)WRITE(JOSTND,91200)AG,HGUESS,H
-!91200 FORMAT(' IN GUESS AN AGE--AGE,HGUESS,H ',3F10.2)
-!C
-!      DIFF=ABS(HGUESS-H)
-!      IF(DIFF .LE. TOLER .OR. H .LT. HGUESS)THEN
-!        SITAGE = AG
-!        SITHT = HGUESS
-!        GO TO 30
-!      END IF
-!      AG = AG + 2.
-!C
-!      IF(AG .GT. AGMAX1) THEN
-!C----------
-!C  H IS TOO GREAT AND MAX AGE IS EXCEEDED
-!C----------
-!        SITAGE = AGMAX1
-!        SITHT = H
-!        GO TO 30
-!      ELSE
-!        GO TO 75
-!      ENDIF
-!C
-
         call guess_age(sindx,ispc,h,sitht,sitage)
 
-   30   continue
+        continue
         if (debug) then
-            WRITE(JOSTND,50)I,SITAGE,SITHT
-   50       FORMAT(' LEAVING SUBROUTINE FINDAG  I,SITAGE,SITHT =', &
-                    I5,2F10.3)
+            fmt = "(' LEAVING SUBROUTINE FINDAG  I,SITAGE,SITHT =', &
+                    I5,2F10.3)"
+            WRITE(JOSTND,fmt)I,SITAGE,SITHT
         end if
 
         return
     end subroutine findag
 
     subroutine guess_age(site_idx,spp_idx,height,site_height,site_age)
-        ! Use a binary search to find the equivalent site age
-        ! Adapted from http://rosettacode.org/wiki/Binary_search#Fortran
-        ! Use an array pointer to split the search range at each step.
-        ! TODO: Implement a leftmost search
+        ! Find the site_age that results in a site_height equivalent to
+        ! the given tree height.
+        ! Implemented as a binary search of fixed length.  Height equivalence
+        ! is assumed for the final age step in the module variable age_steps.
 
         use siteht_mod, only: get_siteht
         implicit none
@@ -143,8 +109,8 @@ module findage_mod
 
         ! Check the lower age bound
         check_age = 2.0
-!        call get_siteht(site_idx,spp_idx,age_ptr(1),site_height)
-        call htcalc(site_idx,spp_idx,real(check_age),site_height,0,0)
+        call get_siteht(site_idx,spp_idx,check_age,site_height)
+!        call htcalc(site_idx,spp_idx,check_age,site_height,0,0)
         if (height<=site_height) then
 !            write (*,*) 'Ht below range: ', 'age:',check_age,'si:',site_idx &
 !                    ,'spp:',spp_idx,'hgt:',height,'hgt^:',site_height
@@ -156,28 +122,27 @@ module findage_mod
 
         ! Check the upper age bound
         check_age = max_age(spp_idx)
-!        call get_siteht(site_idx,spp_idx,check_age,site_height)
-        call htcalc(site_idx,spp_idx,real(check_age),site_height,0,0)
+        call get_siteht(site_idx,spp_idx,check_age,site_height)
+!        call htcalc(site_idx,spp_idx,check_age,site_height,0,0)
         if (height>=site_height) then
 !            write (*,*) 'Ht above range: ', 'age:',check_age &
 !                    ,'si:',site_idx,'spp:',spp_idx,'hgt:',height,'hgt^:',site_height
-            site_age = max_age(spp_idx)
+            site_age = check_age
             site_height = height
             return
         end if
 
-        ! Loop through the age increments to narrow in on the current height
-        check_age = max_age(spp_idx) / 2.0
-        do i=1,size(age_steps)
-!            call get_siteht(site_idx,spp_idx,check_age,site_height)
-            call htcalc(site_idx,spp_idx,check_age,site_height,0,0)
+        ! Fixed length binary search to find the age of equivalent height
+        check_age = max_age(spp_idx) - age_steps(1)
+        do i=2,size(age_steps)
+            call get_siteht(site_idx,spp_idx,check_age,site_height)
+!            call htcalc(site_idx,spp_idx,check_age,site_height,0,0)
             if (site_height > height) then
                 check_age = check_age - age_steps(i)
-            elseif (site_height < height) then
-                check_age = check_age + age_steps(i)
             else
-                exit
+                check_age = check_age + age_steps(i)
             end if
+
         end do
 
         site_age = check_age
