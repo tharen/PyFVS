@@ -269,10 +269,14 @@ string(REPLACE "../" "${src_root}/" common_source "${common_source}")
 
 set(temp_src)
 foreach(fn ${common_source})
-    if ((NOT ${fn} MATCHES ".*main.f$")
+    file(READ ${fn} foo)
+    if ((NOT ${fn} MATCHES ".*main\\.(f|f90)$")
         # Variant specific code includes the prgprm and esparm files
         AND (NOT "${foo}" MATCHES ".*PRGPRM.F77.*")
-        AND (NOT "${foo}" MATCHES ".*ESPARM.F77.*"))
+        AND (NOT "${foo}" MATCHES ".*ESPARM.F77.*")
+        AND (NOT "${foo}" MATCHES ".*prgprm_mod.*")
+        AND (NOT "${foo}" MATCHES ".*siteht_mod.*")
+        AND (NOT "${foo}" MATCHES ".*snag_data.*"))
         list(APPEND temp_src ${fn})
     endif()
 endforeach()
@@ -441,13 +445,13 @@ foreach (fn ${source_files})
         
         # Need the location of C headers and include files
         if (${fn} MATCHES "(.*\\.h$)|(.*\\.F77$)")
-                OR ${filename} STREQUAL "findage_mod.f90"
             list(APPEND include_dirs ${pathname})
         endif()
         
         # Separate the core FVS code from executable main routine
         if ((${extname} STREQUAL ".f") OR (${extname} STREQUAL ".f90"))
-            if (${filename} STREQUAL "main.f")
+            if ((${filename} STREQUAL "main.f")
+                OR (${filename} STREQUAL "main.f90"))
                 list(APPEND main_source ${fn})
             else()
                 list (APPEND fvs_source ${fn})
@@ -463,6 +467,9 @@ endforeach(fn)
 list(REMOVE_DUPLICATES include_dirs)
 list(REMOVE_DUPLICATES fvs_source)
 list(REMOVE_DUPLICATES main_source)
+
+# Include the variant build folder to catch .mod files
+list(APPEND include_dirs ${CMAKE_CURRENT_BINARY_DIR})
 
 # Add the newly found include dirs
 include_directories(BEFORE ${include_dirs})
@@ -584,7 +591,20 @@ if (WITH_PYMOD)
     string(REPLACE "../" "${src_root}/" source_files "${source_files}")
     
     # Source files to be wrapped with F2PY
-    set(_pymod_src "apisubs.f" "cmdline.f" "filopn.f" "fvs.f" "rann.f")
+    set(_pymod_src 
+                "apisubs.f" "cmdline.f" "filopn.f" "fvs.f" "htcalc.f" "rann.f"
+                "prgprm_mod.f90" "arrays_mod.f90" "contrl_mod.f90"
+                "workcm_mod.f90" "plot_mod.f90" "varcom_mod.f90"
+                "outcom_mod.f90" "volstd_mod.f90" "fmparm_mod.f90"
+                "fmcom_mod.f90" "fmfcom_mod.f90"
+                
+                "carbon_data.f90" "downwood_data.f90" "tree_data.f90"
+                "fvs_step.f90" "snag_data.f90" "siteht_mod.f90"
+                "findage_mod.f90"
+                
+#                "step_grincr.f90" "dbs_commons.f" "fire_commons.f"
+#                "fvs_commons.f" "fvs_prgpm.f" "snag_data.f90"
+                )
     # Routines to be skipped by F2PY
     set(pymod_skip "") #required by f2py_gen 
     

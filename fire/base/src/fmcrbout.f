@@ -1,5 +1,4 @@
       SUBROUTINE FMCRBOUT (IYR)
-      use carbon_data, only: copy_forest_carbon
       IMPLICIT NONE
 C----------
 C  $Id: fmcrbout.f 709 2013-03-19 22:06:06Z drobinsonessa@gmail.com $
@@ -208,9 +207,6 @@ C     CALL THE DBS MODULE TO OUTPUT FUEL DATA TO A DATABASE
       DBSKODE = 1
       CALL DBSFMCRPT(IYR,NPLT,V,11,DBSKODE)
       IF(DBSKODE.EQ.0) GOTO 900
-
-      ! Copy carbon estimates for the current cycle
-      call copy_forest_carbon(v)
 
 C     IF HEADER REQUESTED AND THIS IS THE FIRST OPPORTUNITY TO PRINT
 C     IT, THEN DO SO.

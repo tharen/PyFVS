@@ -1,4 +1,4 @@
-#calc_height.py
+# calc_height.py
 
 """
 Automate the generation of site height lookup tables and associated code.
@@ -9,11 +9,36 @@ Requests for trees not present in the lookup table are handled by htcalc.f.
 import os
 import sys
 import numpy
+import numpy.f2py
 
+os.environ['PATH'] = '{};{}'.format(r'C:\MinGW\bin', os.environ['PATH'])
 variants = {
     'pn':'pyfvspnc'
-    ,'wc':'pyfvswcc'
+    , 'wc':'pyfvswcc'
     }
+
+args = ['--fcompiler=gnu95'
+        # , '--help-fcompiler'
+        , '-c', '-m', 'htcalc'
+        , '--build-dir', r'C:\workspace\Open-FVS\google_code\branches\PyFVS\bin\release\soc\f2py'
+        , '--include-paths'
+        ]
+
+include_dirs = r'C:\workspace\Open-FVS\google_code\branches\PyFVS\common;C:\workspace\Open-FVS\google_code\branches\PyFVS\so\common'
+# TODO: This may not be true for OSX
+if os.name == 'nt':
+    args.append(include_dirs)
+else:
+    # F2PY expects a colon separated list, not semicolon
+    args = args.append(':'.join(include_dirs.split(';')))
+
+src = r'C:\workspace\Open-FVS\google_code\branches\PyFVS\so\src\htcalc.f'
+args.append(src)
+
+sys.argv = [sys.argv[0], ] + args
+numpy.f2py.f2py2e.run_compile()
+
+sys.exit()
 
 var = sys.argv[1]
 fvs = __import__(variants[var])
@@ -22,18 +47,18 @@ spp = [6, 7, 16, 18, 19, 22]
 age = numpy.arange(1, 201, 1)
 site = numpy.arange(50, 151)
 
-out = open(os.path.join(os.path.split(__file__)[0],'{}_siteht_mod.f90'.format(var)), 'w')
+out = open(os.path.join(os.path.split(__file__)[0], '{}_siteht_mod.f90'.format(var)), 'w')
 
 sppcodes = [fvs.fvsspeciescode(s)[0].strip() for s in range(1, 40)]
 
 spp_lu = [0] * 39
-for i,sp in enumerate(spp):
-    spp_lu[sp-1] = i + 1
+for i, sp in enumerate(spp):
+    spp_lu[sp - 1] = i + 1
 
-x = [','.join(str(s) for s in spp_lu[i:i+10]) for i in range(0,len(spp_lu),10)]
+x = [','.join(str(s) for s in spp_lu[i:i + 10]) for i in range(0, len(spp_lu), 10)]
 s = ' &\n        ,'.join('{}'.format(y) for y in x)
 
-spp_lst = ';'.join('{}:{}'.format(sppcodes[sp - 1],sp) for sp in spp)
+spp_lst = ';'.join('{}:{}'.format(sppcodes[sp - 1], sp) for sp in spp)
 
 out.write("""module siteht_mod
     !------------------------------------------------
@@ -63,14 +88,14 @@ out.write("""module siteht_mod
         num_age=len(age), num_site=len(site)
         , min_site=min(site), max_site=max(site)
         , min_age=min(age), max_age=max(age)
-        , spp_lu=s,num_lu=len(spp)
-        ,spp_lst=spp_lst)
+        , spp_lu=s, num_lu=len(spp)
+        , spp_lst=spp_lst)
 )
 
-for idx,sp in enumerate(spp):
+for idx, sp in enumerate(spp):
     for s, si in enumerate(site):
         out.write('    !{} (:,{},{})\n'.format(sppcodes[sp - 1], si, sp))
-        out.write('    data siteht_lu(:,{},{}) / &\n            '.format(s + 1, idx+1))
+        out.write('    data siteht_lu(:,{},{}) / &\n            '.format(s + 1, idx + 1))
 
         rows = []
         i = 0

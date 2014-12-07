@@ -1,5 +1,4 @@
       SUBROUTINE ESCPRS (ITRGT,DEBUG)
-      use findage_mod, only: findag
       IMPLICIT NONE
 C----------
 C  **ESCPRS DATE OF LAST REVISION:   06/21/11

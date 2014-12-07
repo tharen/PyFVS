@@ -1,6 +1,4 @@
       SUBROUTINE HTGF
-      use findage_mod, only: findag
-      use siteht_mod, only: get_siteht
       IMPLICIT NONE
 C----------
 C  **HTGF--WC    DATE OF LAST REVISION:  07/08/11
@@ -208,9 +206,8 @@ C----------
       IF(DEBUG)WRITE(JOSTND,*)' ISPC,I,HGUESS,AGP10= ',
      &ISPC,I,HGUESS,AGP10
 C
-      CALL HTCALC(SINDX,ISPC,AGP10,HGUESS,JOSTND,DEBUG)
-!      call get_siteht(SINDX,ISPC,AGP10,HGUESS)
-
+      HGUESS = 0.0
+      CALL HTCALC(SINDX,ISPC,AGP10,HGUESS,JOSTND,DEBUG) 
       POTHTG= HGUESS-SITHT
 C----------
 C  PATCH FOR OREGON WHITE OAK - WORK BY GOULD AND HARRINGTON, PNW

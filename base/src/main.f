@@ -1,8 +1,5 @@
       PROGRAM MAIN
-      use siteht_mod
-      use plot_mod, only: sitear
       IMPLICIT NONE
-
 C----------
 C  $Id: main.f 1381 2014-12-09 15:26:03Z tod.haren@gmail.com $
 C----------
@@ -32,8 +29,6 @@ C
 C     PROCSS THE COMMAND LINE. Passing an empty string signals that the 
 C     real command line arguments will be fetched.
 C
-      do i = 1,1
-
       lenCl = 0
       CALL fvsSetCmdLine(' ',lenCL,rtnCode)
       IF (rtnCode.NE.0) GOTO 10
@@ -45,22 +40,8 @@ C     RUN ALL THE CYCLES and STANDS--unless there is a stop point!
         IF (rtnCode .NE. 0) exit
       ENDDO
 
-      ![6, 16, 18, 19, 22]
-      write(*,*) 'lookup: ',lu_tally(6),lu_tally(16)
-     &      ,lu_tally(18),lu_tally(19),lu_tally(22)
-      write(*,*) 'failover: ',fail_over(6),fail_over(16)
-     &      ,fail_over(18),fail_over(19),fail_over(22)
-
-      write(*,*) 'site: ', sitear(6),sitear(16),sitear(18)
-     &      ,sitear(19),sitear(22)
-
-      lu_tally(:) = 0
-      fail_over(:) = 0
-
-      enddo
-
    10 CONTINUE 
-
+   
       call fvsGetICCode(i)
 
 #ifdef PROFILING

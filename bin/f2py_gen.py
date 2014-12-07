@@ -41,7 +41,7 @@ if os.name == 'nt':
     args.append('${include_dirs}')
 else:
     # F2PY expects a colon separated list, not semicolon
-    args = ':'.join(args.append('${include_dirs}').split(';'))
+    args = args.append(':'.join('${include_dirs}'.split(';')))
 
 pymod_skip = '${pymod_skip}'.split(';')
 if pymod_skip[0] != '':

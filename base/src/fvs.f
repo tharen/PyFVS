@@ -1,5 +1,4 @@
       SUBROUTINE FVS(IRTNCD)
-      use tree_data, only: init_tree_data
       IMPLICIT NONE
 
 
@@ -78,8 +77,6 @@ C     Check the current return code, if -1 the cmdLine has never been processed.
       if (IRTNCD == -1) then
         lenCl = 0
         CALL fvsSetCmdLine(' ',lenCl,IRTNCD)
-        ! Zero out the API report arrays
-        call init_tree_data()
         IF (IRTNCD.NE.0) RETURN
       endif
 
