@@ -8,8 +8,8 @@ module tree_data
     !       of tree objects type(tree), dimension(maxcy1,maxtre) :: sim_trees
     !FIXME: The array dimensions are backwards and need to be column major
     integer, dimension(maxcy1) :: num_recs
-    integer, dimension(maxcy1,maxtre) :: tree_seq,tree_id,plot_seq,age,spp_seq
-    real, dimension(maxcy1,maxtre) :: &
+    integer, dimension(maxtre,maxcy1) :: tree_seq,tree_id,plot_seq,age,spp_seq
+    real, dimension(maxtre,maxcy1) :: &
             live_tpa,cut_tpa,mort_tpa,live_dbh,dbh_incr,ba_pctl,pnt_bal &
             ,ht_total,ht_merch_cuft,ht_merch_bdft,ht_incr,cr_width,cr_ratio &
             ,cuft_total,cuft_net,bdft_net,defect_cuft,defect_bdft
@@ -62,38 +62,38 @@ module tree_data
 
         !copy tree data to the tree_data module
         num_recs(i) = itrn
-        tree_seq(i,:itrn) = (/(x, x=1,itrn, 1)/)
-        tree_id(i,:itrn) = idtree(:itrn)
-        plot_seq(i,:itrn) = itre(:itrn)
-        spp_seq(i,:itrn) = isp(:itrn)
-        age(i,:itrn) = abirth(:itrn)
-        live_tpa(i,:itrn) = prob(:itrn)/grospc
+        tree_seq(:itrn,i) = (/(x, x=1,itrn, 1)/)
+        tree_id(:itrn,i) = idtree(:itrn)
+        plot_seq(:itrn,i) = itre(:itrn)
+        spp_seq(:itrn,i) = isp(:itrn)
+        age(:itrn,i) = abirth(:itrn)
+        live_tpa(:itrn,i) = prob(:itrn)/grospc
 
         ! Mortality records are tripled before the grow routine returns
-        if (icyc>0) mort_tpa(i,:itrn) = wk2(:itrn)/grospc
+        if (icyc>0) mort_tpa(:itrn,i) = wk2(:itrn)/grospc
 
         !cut tpa is copied in grincr.f.
-!        if (icyc>0) cut_tpa(i,:itrn) = wk4(:itrn)/grospc
+!        if (icyc>0) cut_tpa(:itrn,i) = wk4(:itrn)/grospc
 
-        live_dbh(i,:itrn) = dbh(:itrn)
-        ba_pctl(i,:itrn) = pct(:itrn)
-        pnt_bal(i,:itrn) = ptbalt(:itrn)
-        dbh_incr(i,:itrn) = dg(:itrn)
-        if (icyc==0) dbh_incr(i,:itrn) = work1(:itrn)
-        ht_total(i,:itrn) = ht(:itrn)
-        ht_merch_cuft(i,:itrn) = ht2td(:itrn, 1)
-        ht_merch_bdft(i,:itrn) = ht2td(:itrn, 2)
-        ht_incr(i,:itrn) = htg(:itrn)
+        live_dbh(:itrn,i) = dbh(:itrn)
+        ba_pctl(:itrn,i) = pct(:itrn)
+        pnt_bal(:itrn,i) = ptbalt(:itrn)
+        dbh_incr(:itrn,i) = dg(:itrn)
+        if (icyc==0) dbh_incr(:itrn,i) = work1(:itrn)
+        ht_total(:itrn,i) = ht(:itrn)
+        ht_merch_cuft(:itrn,i) = ht2td(:itrn, 1)
+        ht_merch_bdft(:itrn,i) = ht2td(:itrn, 2)
+        ht_incr(:itrn,i) = htg(:itrn)
 
-        cuft_total(i,:itrn) = cfv(:itrn)
-        cuft_net(i,:itrn) = wk1(:itrn)
-        bdft_net(i,:itrn) = bfv(:itrn)
+        cuft_total(:itrn,i) = cfv(:itrn)
+        cuft_net(:itrn,i) = wk1(:itrn)
+        bdft_net(:itrn,i) = bfv(:itrn)
 
-        defect_cuft(i,:itrn) = (defect - mod(defect,100)) / 10000.0
-        defect_bdft(i,:itrn) = mod(defect,100) / 100.0
+        defect_cuft(:itrn,i) = (defect - mod(defect,100)) / 10000.0
+        defect_bdft(:itrn,i) = mod(defect,100) / 100.0
 
-        cr_width(i,:itrn) = crwdth(:itrn)
-        cr_ratio(i,:itrn) = icr(:itrn)
+        cr_width(:itrn,i) = crwdth(:itrn)
+        cr_ratio(:itrn,i) = icr(:itrn)
 
     end subroutine copy_tree_data
 
@@ -106,7 +106,7 @@ module tree_data
         ! Mortality estimates copied after the call to `morts` in grincr.f
         !  tripling occurs right after call morts, so maybe "untripling"
         !  would be OK to bring this back out of the FVS guts.
-        mort_tpa(cycle+1,:itrn) = mort(:itrn)/grospc
+        mort_tpa(:itrn,cycle+1) = mort(:itrn)/grospc
 
     end subroutine copy_mort_data
 
@@ -115,7 +115,7 @@ module tree_data
         ! Copy the cut trees
         ! This is triggered by the cuts.f routine before preening the treelist.
         implicit none
-        cut_tpa(icyc,:itrn) = wk3(:itrn)/grospc
+        cut_tpa(:itrn,icyc) = wk3(:itrn)/grospc
     end subroutine copy_cuts_data
 
 end module tree_data
