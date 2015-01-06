@@ -1,5 +1,6 @@
       SUBROUTINE GRADD (DEBUG,IPMODI,LTMGO,LMPBGO,LDFBGO,
      1                  LBWEGO,LCVATV,LBGCGO)
+      use arrays_mod, only: barkrat
       IMPLICIT NONE
 C----------
 C  $Id: gradd.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
@@ -81,7 +82,8 @@ C
          DO 30 I=1,ITRN
          IS=ISP(I)
          D=DBH(I)
-         BARK=BRATIO(IS,D,HT(I))
+!         BARK=BRATIO(IS,D,HT(I))
+         BARK=BARKRAT(I)
          IF(DG(I) .GT. 0.) THEN
            DDS=(DG(I)*(2.0*BARK*D+DG(I)))*SCALE
 !           DG(I)=SQRT((D*BARK)**2+DDS)-BARK*D

@@ -1,4 +1,5 @@
       SUBROUTINE MORTS
+      use arrays_mod, only: barkrat
       IMPLICIT NONE
 C----------
 C  **MORTS--WC  DATE OF LAST REVISION:  09/09/13
@@ -136,7 +137,8 @@ C----------
       P=PROB(I)
       IS=ISP(I)
       D=DBH(I)
-      BARK=BRATIO(IS,D,HT(I))
+!      BARK=BRATIO(IS,D,HT(I))
+      BARK=BARKRAT(I)
       G=DG(I)/BARK
       CIOBDS=(2.0*D*G+G*G)
       SD2SQ=SD2SQ+P*(D*D+CIOBDS)
@@ -194,7 +196,8 @@ C----------
       WKI=0.0
       WK2(I)=0.0
       D=DBH(I)
-      BARK=BRATIO(ISPC,D,HT(I))
+!      BARK=BRATIO(ISPC,D,HT(I))
+      BARK=BARKRAT(I)
       IF(P.LE.0.0) GO TO 40
       RELDBH=D/AVED
       IF(D.LE.0.5)D=0.5
@@ -269,7 +272,8 @@ C----------
       IF(DEBUG)WRITE(JOSTND,*)'IN MORTS I,XCHECK,X,P,RIPP,FINT,WKI= ',
      &I,XCHECK,X,P,RIPP,FINT,WKI
 C
-      BARK=BRATIO(IS,D,HT(I))
+!      BARK=BRATIO(IS,D,HT(I))
+      BARK=BARKRAT(I)
       G = (DG(I)/BARK) * (FINT/10.0)
       IDMFLG=IFIX(SIZCAP(ISPC,3))
       IF((D+G).GE.SIZCAP(ISPC,1) .AND. IDMFLG.NE.1) THEN

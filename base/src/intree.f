@@ -1,4 +1,5 @@
       SUBROUTINE INTREE (RECORD,IRDPLV,ISDSP,SDLO,SDHI,LKECHO)
+      use arrays_mod, only: barkrat
       IMPLICIT NONE
 C----------
 C  $Id: intree.f 1127 2013-12-16 20:06:44Z tod.haren $
@@ -48,6 +49,9 @@ C
       INTEGER ICNTR1,ICNTR2,I3
       DIMENSION IPVARS(5),IDAMCD(6)
       DATA IDCMP1/10000000/
+
+      REAL BRATIO
+
 C---------
 C     SET INITIAL VALUES FOR SPECIES TRANSLATION.
 C---------
@@ -457,6 +461,9 @@ C  INCOMING VALUES FOR PRINTING IN **FVSSTD**
 C----------
       IF(IDG.EQ.1 .OR. IDG.EQ.3) PDBH(I)=DG(I)
       IF(IHTG.EQ.1 .OR. IHTG.EQ.3) PHT(I)=HTG(I)
+
+      BARKRAT(I)= BRATIO(ISP(I),DBH(I),HT(I))
+
 C----------
 C  STORE ALL DEAD TREES IN THE BOTTOM OF THE ARRAYS
 C  TREES WITH HISTORY CODES 6,7 ARE RECENT DEAD (GET IMC()=7)
@@ -474,6 +481,7 @@ C----------
       DBH(IREC2)= DBH(I)
       DG(IREC2)= DG(I)
       HT(IREC2)= HT(I)
+      BARKRAT(IREC2)= BRATIO(ISP(I),DBH(I),HT(I))
       ITRUNC(IREC2) = ITRUNC(I)
       NORMHT(IREC2) = NORMHT(I)
       ICR(IREC2)= ICR(I)
@@ -497,6 +505,7 @@ C----------
       DBH(I)=0.
       DG(I)=0.
       HT(I)=0.
+      BARKRAT(I)=0.
       ITRUNC(I)=0
       NORMHT(I)=0
       ICR(I)=0

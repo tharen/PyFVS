@@ -1,4 +1,5 @@
       SUBROUTINE VOLS
+      use arrays_mod, only: barkrat
       IMPLICIT NONE
 C----------
 C  **VOLS--BASE    DATE OF LAST REVISION:   05/11/11
@@ -138,7 +139,8 @@ C----------
 C----------
 C  IF NOT INITIAL SUMMARY, ADD DG TO DBH; ASSIGN D2H.
 C----------
-      BARK=BRATIO(ISPC,D,H)
+!      BARK=BRATIO(ISPC,D,H)
+      BARK=BARKRAT(I)
       IF(.NOT.LSTART) D=D+DG(I)/BARK
       D2H=D*D*H
 C**************************************************

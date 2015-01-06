@@ -1,4 +1,5 @@
       SUBROUTINE HTGSTP
+      use arrays_mod, only: barkrat
       IMPLICIT NONE
 C----------
 C  $Id: htgstp.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
@@ -91,7 +92,8 @@ C     LOAD HEIGHT AND CHECK HEIGHT RANGE.  IF OUT-OF-RANGE, THEN SKIP
 C     TREE RECORD.
 C
       H=HT(I)
-      BRK=BRATIO(IS,DBH(I),H)
+!      BRK=BRATIO(IS,DBH(I),H)
+      BRK=BARKRAT(I)
       IF (H.LE.HT1 .OR. H.GT.HT2) GOTO 100
 C
 C     IF A RANDOM NUMBER IS GREATER THAN THE PROBABILITY OF DAMAGE,

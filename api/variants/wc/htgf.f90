@@ -141,7 +141,8 @@
       AGMAX = 0.0
       HTMAX = 0.0
       HTMAX2 = 0.0
-      BARK=BRATIO(ISPC,D,H)
+!      BARK=BRATIO(ISPC,D,H)
+      BARK=barkrat(i)
       D2 = D + DG(I)/BARK
       IF (PROB(I).LE.0.0) GO TO 161
       IF(DEBUG)WRITE(JOSTND,*)' IN HTGF, CALLING FINDAG I= ',I

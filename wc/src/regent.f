@@ -1,4 +1,5 @@
       SUBROUTINE REGENT(LESTB,ITRNIN)
+      use arrays_mod, only: barkrat
       IMPLICIT NONE
 C----------
 C  **REGENT--WC   DATE OF LAST REVISION:  02/08/13
@@ -210,7 +211,8 @@ C----------
       K=I
       L=0
       H=HT(I)
-      BARK=BRATIO(ISPC,D,H)
+!      BARK=BRATIO(ISPC,D,H)
+      BARK=BARKRAT(I)
       IF(LSKIPH) THEN
         HTG(K)=0.0
         GO TO 4
@@ -316,7 +318,8 @@ C----------
 C         APPLY USER SUPPLIED MULTIPLIERS, AND CHECK TO SEE IF
 C         COMPUTED VALUE IS WITHIN BOUNDS.
 C----------
-          BARK=BRATIO(ISPC,D,H)
+!          BARK=BRATIO(ISPC,D,H)
+          BARK=BARKRAT(I)
           IF(DEBUG)WRITE(JOSTND,*)' BARK,XRDGRO= ',BARK,XRDGRO
           IF((D.LT.0.).OR.(DG(K).LT.0.))THEN
             DG(K)=HTG(K)*0.2*BARK*XRDGRO
