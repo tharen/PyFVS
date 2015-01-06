@@ -103,22 +103,34 @@ elseif (CMAKE_GENERATOR MATCHES "Unix Makefiles")
 
 # TODO: Add MSYS and Cygwin GNU toolchains
 
+# MinGW-64
+#SET(PREFIX x86_64-w64-mingw32)
+
 else ()
     message(FATAL_ERROR "Unknown compiler toolchain; exiting")    
 
 endif()
 
 if (CMAKE_COMPILER_IS_GNUCC)
+    
+    #TODO: Check for 32bit target
+    set(CMAKE_SHARED_LINKER_FLAGS "-m32 ${CMAKE_SHARED_LINKER_FLAGS}")
+    set(CMAKE_EXE_LINKER_FLAGS "-m32 ${CMAKE_EXE_LINKER_FLAGS}")
+    
     message(STATUS "Add GCC compiler flags.")
-    # BUILD_TYPE = Debug 
-    set (CMAKE_Fortran_FLAGS_DEBUG "-Og -g")
-    set (CMAKE_CXX_FLAGS_DEBUG "-Og -g")
-    set (CMAKE_C_FLAGS_DEBUG "-Og -g")
+    # BUILD_TYPE = Debug
+    set (flags "-m32 -mfpmath=sse -msse -march=native")
+    set (CMAKE_Fortran_FLAGS_DEBUG "-Og -g ${flags}")
+    set (CMAKE_CXX_FLAGS_DEBUG "-Og -g ${flags}")
+    set (CMAKE_C_FLAGS_DEBUG "-Og -g ${flags}")
     
     # BUILD_TYPE = Release
-    set (flags "-m32 -mfpmath=sse -Ofast -march=native -funroll-loops")
+    set (flags "-Ofast -m32 -mfpmath=sse -msse -march=native -funroll-loops")
+#    set (flags "-Ofast -m32")
+#    set (flags "-mfpmath=sse -Ofast -march=native -funroll-loops")
     if (ENABLE_LTO)
-        set(flags "${flags} -flto -fwhole-program")
+        #set(flags "${flags} -flto -fwhole-program")
+        set(flags "${flags} -flto")
     endif()
     set(CMAKE_Fortran_FLAGS_RELEASE "${flags}")
     set(CMAKE_CXX_FLAGS_RELEASE "${flags}")
@@ -134,11 +146,16 @@ if (CMAKE_COMPILER_IS_GNUCC)
         set(CMAKE_SHARED_LINKER_FLAGS "${flags} ${CMAKE_SHARED_LINKER_FLAGS}")
     endif ()
     
-    set(CMAKE_CXX_FLAGS "-pipe -cpp ${CMAKE_CXX_FLAGS}")
-    set(CMAKE_C_FLAGS "-pipe -cpp ${CMAKE_C_FLAGS}")
-    set(CMAKE_Fortran_FLAGS "-pipe -cpp ${CMAKE_Fortran_FLAGS}")
-    set(CMAKE_EXE_LINKER_FLAGS "-pipe ${CMAKE_EXE_LINKER_FLAGS}")
-    set(CMAKE_SHARED_LINKER_FLAGS "-pipe ${CMAKE_SHARED_LINKER_FLAGS}")
+    set(flags "-pipe")
+    if (ENABLE_LTO)
+        #set(flags "${flags} -flto -fwhole-program")
+        set(flags "${flags} -flto")
+    endif()
+    set(CMAKE_CXX_FLAGS "-cpp ${flags} ${CMAKE_CXX_FLAGS}")
+    set(CMAKE_C_FLAGS "-cpp ${flags} ${CMAKE_C_FLAGS}")
+    set(CMAKE_Fortran_FLAGS "-cpp ${flags} ${CMAKE_Fortran_FLAGS}")
+    set(CMAKE_EXE_LINKER_FLAGS "-pipe ${flags} ${CMAKE_EXE_LINKER_FLAGS}")
+    set(CMAKE_SHARED_LINKER_FLAGS "-pipe ${flags} ${CMAKE_SHARED_LINKER_FLAGS}")
 
 endif ()
 

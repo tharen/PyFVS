@@ -7,6 +7,27 @@
 !  $Id: main.f 829 2013-05-08 20:55:27Z rhavis@msn.com $
 !----------
       INTEGER rtnCode,lenCL,i
+
+#ifdef PROFILING
+      ! In profiling mode multiple iterations of the same keyword
+      ! file can be run to increase the sample size for gprof
+      integer :: iters,j
+      character(len=32) :: arg
+      print '(a)', 'Do profiling iterations'
+      iters = 1
+      do j=0, command_argument_count()
+        call get_command_argument(j,arg)
+        if (len_trim(arg)==0) exit
+        if ((arg=='--iters') .or. (arg=='-i')) then
+            call get_command_argument(j+1,arg)
+            read(arg, '(i10)'), iters
+            print '(a i4)', 'Number of iterations:',iters
+        endif
+      enddo
+
+      do j=1, iters
+#endif
+
 !
 !     PROCSS THE COMMAND LINE. Passing an empty string signals that the
 !     real command line arguments will be fetched.
@@ -41,6 +62,12 @@
    10 CONTINUE 
 
       call fvsGetICCode(i)
+
+#ifdef PROFILING
+      print '(a i4)',"End of run: ",j
+      if (i > 0) exit
+      enddo
+#endif
 
       IF (i .EQ. 0) STOP	
 
