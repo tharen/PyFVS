@@ -1,4 +1,5 @@
       SUBROUTINE DISPLY
+      use contrl_mod, only: nofortype
       IMPLICIT NONE
 C----------
 C  $Id: disply.f 1048 2013-09-18 14:42:04Z rhavis@msn.com $
@@ -236,7 +237,9 @@ C----------
       DUM1=0.
       IXF=2
       ISNOFT=IFORTP
-      CALL FORTYP(IXF,DUM1)
+      if (.not. nofortype) then
+        CALL FORTYP(IXF,DUM1)
+      endif
 C-------
 C  IF THIS IS THE SN VARIANT, AND THE FOREST TYPE JUST CHANGED, THEN
 C  WE MAY ALSO NEED TO UPDATE THE SDIDEF ARRAY AND SDIMAX AND BAMAX
