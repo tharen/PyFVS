@@ -1,4 +1,7 @@
 module tree_data
+    ! Provides multidimensional arrays and subroutines for collecting
+    ! tree level attributes for an entire simulation
+
     use prgprm_mod, only: maxcy1,maxtre
     use contrl_mod, only: itrn,icyc
     use plot_mod, only: grospc
@@ -21,6 +24,7 @@ module tree_data
     contains
 
     subroutine init_tree_data()
+        ! Initialize the tree attribute arrays to zero
         num_recs(:) = 0
         tree_seq(:,:) = 0
         tree_id(:,:) = 0
@@ -48,6 +52,8 @@ module tree_data
     end subroutine init_tree_data
 
     subroutine copy_tree_data()
+        ! Populate the live tree and mortality attributes for this cycle
+        ! Live tree attributes are
         use arrays_mod, only: idtree, itre, isp, prob, wk2, wk4, dbh, dg, ht &
                 , ht2td, htg, cfv, bfv, wk1, defect, crwdth, icr, pct, abirth
         use varcom_mod, only: ptbalt
