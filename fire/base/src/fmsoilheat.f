@@ -1,7 +1,7 @@
       SUBROUTINE FMSOILHEAT (IYR, LNMOUT)
       IMPLICIT NONE
 C----------
-C  $Id: fmsoilheat.f 1333 2014-10-23 17:49:02Z tod.haren $
+C  $Id: fmsoilheat.f 1399 2015-01-09 00:44:58Z tod.haren $
 C----------
 C
 C     CALLED FROM: FMBURN

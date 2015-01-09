@@ -1,7 +1,7 @@
       SUBROUTINE FMIN (ICALL,NSP,LKECHO)
       IMPLICIT NONE
 C----------
-C  FIRE $Id: fmin.f 1333 2014-10-23 17:49:02Z tod.haren $
+C  FIRE $Id: fmin.f 1399 2015-01-09 00:44:58Z tod.haren $
 C----------
 C
 C     FIRE - FIRE & SNAG MODEL
@@ -1028,10 +1028,10 @@ C
       ENDIF
 
       NPARMS= 6
-      PRMS(1) = 10.0
+      PRMS(1) = 0.0
       PRMS(2) = 999.0
       PRMS(3) = 5.0
-      PRMS(4) = 0.0
+      PRMS(4) = 1.0
       PRMS(5) = 0.9
       PRMS(6) = 0.0
 

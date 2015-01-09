@@ -11,15 +11,15 @@
 # files and generated object code within the project subfolder, thus avoiding 
 # cross-build polution and redundant compilation where possible.
 #
-# Example: A project folder for a debug build and a seperate folder for releas
+# Example: A project folder for a debug build and a seperate folder for release
 #   mkdir <FVS bin>/debug
 #   cd <FVS bin>/debug
-#   cmake .. -G"MinGW Makefiles" -DFVS_VARIANTS=pnc;wcc -DBUILD_TYPE=DEBUG -DWITH_PYMOD=ON
+#   cmake .. -G"MinGW Makefiles" -DFVS_VARIANTS="pnc;wcc" -DBUILD_TYPE=DEBUG -DWITH_PYMOD=ON
 #   mingw32-make -j4
 #
 #   mkdir <FVS bin>/release
 #   cd <FVS bin>/release
-#   cmake .. -G"MinGW Makefiles" -DFVS_VARIANTS=pnc;wcc -DBUILD_TYPE=RELEASE -DWITH_PYMOD=ON
+#   cmake .. -G"MinGW Makefiles" -DFVS_VARIANTS="pnc;wcc" -DBUILD_TYPE=RELEASE -DWITH_PYMOD=ON
 #   mingw32-make -j4
 #
 # CMake will create a subfolder for each FVS variant and copy the cmake list 
@@ -84,19 +84,21 @@ set(INCLUDE_INSTALL_PATH ${INSTALL_DIR}/lib)
 
 ##-----COMPILER FLAGS-----##
 if (CMAKE_GENERATOR MATCHES "Visual Studio 10")
-    message(STATUS "Configure FVS for VS10/Intel")
+    message(STATUS "Configure FVS build for ${CMAKE_GENERATOR}")
     set(flags "/D_WINDOWS /W3 /Zm100")
     set (CMAKE_C_FLAGS "${flags}" CACHE STRING "VS10 mod A" FORCE)
     set (CMAKE_CXX_FLAGS "${flags}" CACHE STRING "VS10 mod B" FORCE)
 
-elseif (CMAKE_GENERATOR MATCHES "MinGW Makefiles") # AND WIN32
-    message(STATUS "Configure FVS for MinGW (gcc, gfortran)")
+elseif (
+    (CMAKE_GENERATOR MATCHES "MinGW Makefiles") OR 
+    (CMAKE_GENERATOR MATCHES "MSYS Makefiles"))
+    message(STATUS "Configure FVS build for ${CMAKE_GENERATOR} (gcc, gfortran)")
     set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -static")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
     add_definitions(-DANSI -DWINDOWS -DCMPgcc)
     
 elseif (CMAKE_GENERATOR MATCHES "Unix Makefiles")
-    message(STATUS "Configure FVS for *nix (gcc, gfortran)")
+    message(STATUS "Configure FVS build for ${CMAKE_GENERATOR} (gcc, gfortran)")
     set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -static")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
     add_definitions(-DANSI -DCMPgcc)
@@ -118,16 +120,15 @@ if (CMAKE_COMPILER_IS_GNUCC)
     set(CMAKE_EXE_LINKER_FLAGS "-m32 ${CMAKE_EXE_LINKER_FLAGS}")
     
     message(STATUS "Add GCC compiler flags.")
-    # BUILD_TYPE = Debug
-    set (flags "-m32 -mfpmath=sse -msse -march=native")
-    set (CMAKE_Fortran_FLAGS_DEBUG "-Og -g ${flags}")
-    set (CMAKE_CXX_FLAGS_DEBUG "-Og -g ${flags}")
-    set (CMAKE_C_FLAGS_DEBUG "-Og -g ${flags}")
-    
+
+    # BUILD_TYPE = Debug 
+    set (flags "-Og -g -mfpmath=sse -msse -march=native")
+    set (CMAKE_Fortran_FLAGS_DEBUG "${flags}")
+    set (CMAKE_CXX_FLAGS_DEBUG "${flags}")
+    set (CMAKE_C_FLAGS_DEBUG "${flags}")
+
     # BUILD_TYPE = Release
-    set (flags "-Ofast -m32 -mfpmath=sse -msse -march=native -funroll-loops")
-#    set (flags "-Ofast -m32")
-#    set (flags "-mfpmath=sse -Ofast -march=native -funroll-loops")
+    set (flags "-Ofast -mfpmath=sse -msse -march=native -funroll-loops")
     if (ENABLE_LTO)
         #set(flags "${flags} -flto -fwhole-program")
         set(flags "${flags} -flto")
@@ -146,16 +147,16 @@ if (CMAKE_COMPILER_IS_GNUCC)
         set(CMAKE_SHARED_LINKER_FLAGS "${flags} ${CMAKE_SHARED_LINKER_FLAGS}")
     endif ()
     
-    set(flags "-pipe")
+    #TODO: Check for 32bit target
+    set(flags "-m32 -pipe")
     if (ENABLE_LTO)
-        #set(flags "${flags} -flto -fwhole-program")
         set(flags "${flags} -flto")
     endif()
     set(CMAKE_CXX_FLAGS "-cpp ${flags} ${CMAKE_CXX_FLAGS}")
     set(CMAKE_C_FLAGS "-cpp ${flags} ${CMAKE_C_FLAGS}")
     set(CMAKE_Fortran_FLAGS "-cpp ${flags} ${CMAKE_Fortran_FLAGS}")
-    set(CMAKE_EXE_LINKER_FLAGS "-pipe ${flags} ${CMAKE_EXE_LINKER_FLAGS}")
-    set(CMAKE_SHARED_LINKER_FLAGS "-pipe ${flags} ${CMAKE_SHARED_LINKER_FLAGS}")
+    set(CMAKE_EXE_LINKER_FLAGS "${flags} ${CMAKE_EXE_LINKER_FLAGS}")
+    set(CMAKE_SHARED_LINKER_FLAGS "${flags} ${CMAKE_SHARED_LINKER_FLAGS}")
 
 endif ()
 
@@ -272,6 +273,8 @@ if (STATIC_LINK EQUAL OFF)
     set_target_properties(ffe_lib PROPERTIES
             LINKER_LANGUAGE CXX
             OUTPUT_NAME FVSffe
+            #TODO: is stdcall alias necessary
+            #LINK_FLAGS -Wl,--add-stdcall-alias
             )
 else ()
     add_library(ffe_lib OBJECT ${ffe_source})

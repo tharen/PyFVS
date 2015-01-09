@@ -2,7 +2,7 @@
      >                   LDB,JOUT,IRC)
       IMPLICIT NONE
 C----------
-C  $Id: algevl.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id: algevl.f 1399 2015-01-09 00:44:58Z tod.haren $
 C----------
 C
 C     CALLED FROM EVMON, OPEVAL, EVTSTV, EVAGRP, HVTHN1, HVHRV1,
@@ -112,8 +112,14 @@ C
       IF (INSTR.LT.0) THEN
          IXSTK=IXSTK+1
          IF (IXSTK.GT.MXX .OR. ILSTK.GE.MXL-IXSTK+1) GOTO 2040
-         IF (INSTR.LT. -1000) THEN
+         IF ((INSTR.LT.-1000).AND.(INSTR.GT.-2000)) THEN
             INSTR = INSTR+1000
+C
+C  IF INSTR IS LT. -1000 AND GT -2000 THEN THE INSTRUCTION IS A
+C  GROUP POINT  CODE
+C
+         ELSEIF(INSTR.LT.-2000)THEN
+            INSTR=INSTR+2000
          ELSE
             INSTR = -INSTR
          ENDIF

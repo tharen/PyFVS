@@ -1,7 +1,7 @@
       SUBROUTINE CHPUT
       IMPLICIT NONE
 C----------
-C  $Id: chput.f 874 2013-05-16 19:44:36Z drobinsonessa@gmail.com $
+C  $Id: chput.f 1399 2015-01-09 00:44:58Z tod.haren $
 C----------
 C
 C     WRITE THE ALL-DATA CHARACTER DATA TO THE DA FILE.
@@ -122,7 +122,7 @@ C
          ENDDO
       ENDIF
 C
-      DO 102 J=1,10
+      DO 102 J=1,30
       DO 101 I=1,10
       CALL CHWRIT(CBUFF,IPNT,LNCBUF,NAMGRP(J)(I:I),2)
   101 CONTINUE
@@ -152,5 +152,11 @@ C
   110 CONTINUE
       CALL CHWRIT(CBUFF,IPNT,LNCBUF,ITITLE(72:72),3)
 C
+      DO 112 J=1,30
+      DO 111 I=1,10
+      CALL CHWRIT(CBUFF,IPNT,LNCBUF,PTGNAME(J)(I:I),2)
+  111 CONTINUE
+  112 CONTINUE
+
       RETURN
       END

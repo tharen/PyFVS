@@ -2,7 +2,7 @@
      -                   LKECHO,KODE)
       IMPLICIT NONE
 C
-C $Id: dbsopen.f 968 2013-07-12 18:49:16Z rhavis@msn.com $
+C $Id: dbsopen.f 1399 2015-01-09 00:44:58Z tod.haren $
 C
 C     PURPOSE: TO OPEN A DATABASE CONNECTION
 C     INPUT: CONNECT  - THE INPUT CONNECTION STRING (or file name)
@@ -130,7 +130,7 @@ C
           ConnStr='DRIVER=SQLite3 ODBC Driver'//
      -            ';Database='//TRIM(DSN)//
      -            ';Version=3;LongNames=0;Timeout=1000;NoTXN=0'//
-     -            ';SyncPragma=NORMAL;StepAPI=0;NoWCHAR=1'
+     -            ';SyncPragma=OFF;StepAPI=0;NoWCHAR=1'
         ELSE
           IF(SUFFIX.EQ.'XLS') THEN
             ConnStr='DRIVER={Microsoft Excel Driver (*.xls)}'//

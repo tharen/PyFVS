@@ -1,21 +1,30 @@
 .hg/*
 .hgignore
+.svn
 
 *.pyc
+*.pyo
 *.o
 *.obj
 *.*~
 *.bak
+*.bogus
 *.orig
+*.rej
 *.tmp
 
+*.h5
+*.mdb
+*.zip
+
 *.out
+*.sng
 *.chp
 *.trl
 *.sum
-*.sng
 
 *.h5
 *.mdb
 bin/*
 !bin/*List.txt
+!bin/CMakeLists.txt

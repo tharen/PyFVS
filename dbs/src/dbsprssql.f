@@ -1,7 +1,7 @@
       SUBROUTINE DBSPRSSQL(ORIGSTR,LSCHED,KODE)
       IMPLICIT NONE
 C
-C $Id: dbsprssql.f 295 2012-05-31 18:52:14Z ncrookston.fs@gmail.com $
+C $Id: dbsprssql.f 1399 2015-01-09 00:44:58Z tod.haren $
 C
 C
 C     PURPOSE: TO PARSE OUT AND REPLACE EVENT MONITOR VARIABLES AND OTHER
@@ -89,8 +89,7 @@ C         REPLACE KEYWORD WITH VALUE
               KODE = 1
             CASE('FVSCASE')
               CALL DBSCASE(1)
-              WRITE(CMPUSTR,'(I8)')ICASE
-              NEWSTR = TRIM(NEWSTR)//' '//trim(adjustl(CMPUSTR))
+              NEWSTR = TRIM(NEWSTR)//' '//CASEID
             CASE DEFAULT
               IF(LSCHED) THEN
 C               CHECK AGAINST COMPUTES AND OTHER EVENT MONITOR VARS
