@@ -1,12 +1,12 @@
       SUBROUTINE DBSINIT
       IMPLICIT NONE
 C
-C $Id: dbsinit.f 295 2012-05-31 18:52:14Z ncrookston.fs@gmail.com $
+C $Id: dbsinit.f 1399 2015-01-09 00:44:58Z tod.haren $
 C
       INCLUDE 'DBSCOM.F77'
 C
 C
-      ICASE    = -1
+      CASEID    = ""
 
       ISUMARY  = 0
       ICOMPUTE = 0

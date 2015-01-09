@@ -1,6 +1,6 @@
       BLOCK DATA DBSBLKD
 C
-C $Id: dbsblkd.f 295 2012-05-31 18:52:14Z ncrookston.fs@gmail.com $
+C $Id: dbsblkd.f 1399 2015-01-09 00:44:58Z tod.haren $
 C
 C     INITIALIZE DATABASE VARIABLES
 C
@@ -12,28 +12,6 @@ C
 C
 COMMONS
 C
-      DATA SUMRYID/-1/
-      DATA CMPUID/-1/
-      DATA TREEOUTID/-1/
-      DATA CUTSID/-1/
-      DATA IATRTLID/-1/
-      DATA FMPFID/-1/
-      DATA FUELID/-1/
-      DATA CONID/-1/
-      DATA BURNID/-1/
-      DATA CMRPTID/-1/
-      DATA CHRPTID/-1/
-      DATA MORTID/-1/
-      DATA SSUMID/-1/
-      DATA SDETID/-1/
-      DATA CANPRID/-1/
-      DATA DWDVID/-1/
-      DATA DWDCID/-1/
-      DATA STRCLID/-1/
-      DATA BM_MNID/-1/
-      DATA BMTREID/-1/
-      DATA BMVOLID/-1/
-      DATA BMBKPID/-1/
       DATA DSNOUT/'FVSOut.mdb'/
       DATA ConnHndlOut/-1/
       DATA EnvHndlOut/-1/

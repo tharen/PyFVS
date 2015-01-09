@@ -1,7 +1,7 @@
       PROGRAM MAIN
       IMPLICIT NONE
 C----------
-C  $Id: main.f 1381 2014-12-09 15:26:03Z tod.haren@gmail.com $
+C  $Id: main.f 1399 2015-01-09 00:44:58Z tod.haren $
 C----------
       INTEGER rtnCode,lenCL,i
 
@@ -45,8 +45,8 @@ C     RUN ALL THE CYCLES and STANDS--unless there is a stop point!
       call fvsGetICCode(i)
 
 #ifdef PROFILING
-      print '(a i4)',"End of run: ",j
-      if (i > 0) exit
+	      print '(a i4)',"End of run: ",j
+	      if (i > 0) exit
       enddo
 #endif
 

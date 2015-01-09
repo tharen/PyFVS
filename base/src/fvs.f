@@ -1,9 +1,7 @@
       SUBROUTINE FVS(IRTNCD)
       IMPLICIT NONE
-
-
 C----------
-C  $Id: fvs.f 1064 2013-10-30 01:03:33Z tod.haren@gmail.com $
+C  $Id: fvs.f 1399 2015-01-09 00:44:58Z tod.haren $
 C----------
 C
 C     THE PROGNOSIS MODEL FOR STAND DEVELOPMENT
