@@ -1,7 +1,37 @@
+.hg
+.hgignore
+.svn
+
 *.py[cod]
+
+*.o
+*.obj
+*.*~
+*.bak
+*.bogus
+*.orig
+*.rej
+*.tmp
+
+*.h5
+*.mdb
+*.zip
+
+*.out
+*.sng
+*.chp
+*.trl
+*.sum
+
+*.h5
+*.mdb
+bin
+!bin/*List.txt
+!bin/CMakeLists.txt
 
 # C extensions
 *.so
+*.dll
 
 # Packages
 *.egg
@@ -10,7 +40,6 @@ dist
 build
 eggs
 parts
-bin
 var
 sdist
 develop-eggs

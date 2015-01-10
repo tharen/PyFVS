@@ -1,0 +1,23 @@
+syntax: glob
+
+.gitignore
+.git/*
+
+*.pyc
+*.o
+*.obj
+*.*~
+*.bak
+*.orig
+*.tmp
+
+*.out
+*.chp
+*.trl
+*.sum
+*.sng
+
+*.h5
+*.mdb
+
+bin\*
