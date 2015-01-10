@@ -613,6 +613,7 @@ if (WITH_PYMOD)
     # Source files to be wrapped with F2PY
     set(_pymod_src 
                 "apisubs.f" "cmdline.f" "filopn.f" "fvs.f" "htcalc.f" "rann.f"
+                "htdbh.f"
                 "prgprm_mod.f90" "arrays_mod.f90" "contrl_mod.f90"
                 "workcm_mod.f90" "plot_mod.f90" "varcom_mod.f90"
                 "outcom_mod.f90" "volstd_mod.f90" "fmparm_mod.f90"
