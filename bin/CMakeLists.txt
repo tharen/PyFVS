@@ -122,10 +122,11 @@ if (CMAKE_COMPILER_IS_GNUCC)
     message(STATUS "Add GCC compiler flags.")
 
     # BUILD_TYPE = Debug 
-    set (flags "-Og -g -mfpmath=sse -msse -march=native")
+    set (flags "-g -O0 -mfpmath=sse -msse -march=native -fcheck=all -Wall")
     set (CMAKE_Fortran_FLAGS_DEBUG "${flags}")
     set (CMAKE_CXX_FLAGS_DEBUG "${flags}")
     set (CMAKE_C_FLAGS_DEBUG "${flags}")
+    set(CMAKE_EXE_LINKER_FLAGS "${flags} ${CMAKE_EXE_LINKER_FLAGS}")
 
     # BUILD_TYPE = Release
     set (flags "-Ofast -mfpmath=sse -msse -march=native -funroll-loops")

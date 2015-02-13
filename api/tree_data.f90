@@ -95,8 +95,8 @@ module tree_data
         cuft_net(:itrn,i) = wk1(:itrn)
         bdft_net(:itrn,i) = bfv(:itrn)
 
-        defect_cuft(:itrn,i) = (defect - mod(defect,100)) / 10000.0
-        defect_bdft(:itrn,i) = mod(defect,100) / 100.0
+        defect_cuft(:itrn,i) = (defect(:itrn) - mod(defect(:itrn),100)) / 10000.0
+        defect_bdft(:itrn,i) = mod(defect(:itrn),100) / 100.0
 
         cr_width(:itrn,i) = crwdth(:itrn)
         cr_ratio(:itrn,i) = icr(:itrn)
