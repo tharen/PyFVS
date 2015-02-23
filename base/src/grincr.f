@@ -1,5 +1,7 @@
       SUBROUTINE GRINCR (DEBUG,IPMODI,LTMGO,LMPBGO,LDFBGO,
      1                   LBWEGO,LCVATV,LBGCGO)
+      use tree_data, only: save_tree_data,copy_tree_data,copy_cuts_data
+     &                     ,copy_mort_data
       IMPLICIT NONE
 C----------
 C  $Id: grincr.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
@@ -193,6 +195,12 @@ C
         ENDIF
         CALL RCON
       ENDIF
+
+      ! Copy tree attributes for the start of the period
+      if (save_tree_data) then
+        call copy_tree_data()
+      endif
+
 C
 C     WESTERN ROOT DISEASE VER. 3.0 MODEL PROJECTION SETUP.
 C
@@ -275,6 +283,12 @@ C
       IF (DEBUG) WRITE(JOSTND,20) ICYC
    20 FORMAT(' CALLING CUTS, CYCLE=',I2)
       CALL CUTS
+
+      ! Copy cut TPA to the tree_data arrays
+      if (save_tree_data) then
+          call copy_cuts_data()
+      endif
+
 C
 C     STORE THE REMOVED TPA IN WK4 FOR USE IN THE SECOND CALL TO THE
 C     EVENT MONITOR (SPMCDBH INVOLVING CUT TREES).
@@ -520,6 +534,12 @@ C
       IF (DEBUG) WRITE(JOSTND,160) ICYC
   160 FORMAT(' CALLING MORTS, CYCLE=',I2)
       CALL MORTS
+
+      ! Copy the mortality estimate to tree_data prior to tripling
+      if (save_tree_data) then
+          call copy_mort_data()
+      endif
+
 C
 C     NOW TRIPLE RECORDS AND REALLIGN POINTERS IF TRIPLING OPTION IS
 C     SET.

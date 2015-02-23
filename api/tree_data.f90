@@ -52,9 +52,8 @@ module tree_data
     end subroutine init_tree_data
 
     subroutine copy_tree_data()
-        ! Populate the live tree and mortality attributes for this cycle
-        ! Live tree attributes are
-        use arrays_mod, only: idtree, itre, isp, prob, wk2, wk4, dbh, dg, ht &
+        ! Populate the live tree attributes for the beginning of this cycle
+        use arrays_mod, only: idtree, itre, isp, prob, dbh, dg, ht &
                 , ht2td, htg, cfv, bfv, wk1, defect, crwdth, icr, pct, abirth
         use varcom_mod, only: ptbalt
         use workcm_mod, only : work1
@@ -72,11 +71,11 @@ module tree_data
         tree_id(:itrn,i) = idtree(:itrn)
         plot_seq(:itrn,i) = itre(:itrn)
         spp_seq(:itrn,i) = isp(:itrn)
-        age(:itrn,i) = abirth(:itrn)
+        age(:itrn,i) = int(abirth(:itrn))
         live_tpa(:itrn,i) = prob(:itrn)/grospc
 
-        ! Mortality records are tripled before the grow routine returns
-        if (icyc>0) mort_tpa(:itrn,i) = wk2(:itrn)/grospc
+!        ! Mortality records are tripled before the grow routine returns
+!        if (icyc>0) mort_tpa(:itrn,i) = wk2(:itrn)/grospc
 
         !cut tpa is copied in grincr.f.
 !        if (icyc>0) cut_tpa(:itrn,i) = wk4(:itrn)/grospc
@@ -103,25 +102,23 @@ module tree_data
 
     end subroutine copy_tree_data
 
-    subroutine copy_mort_data(cycle,mort)
+    subroutine copy_mort_data()
+        use arrays_mod, only: wk2
         implicit none
 
-        integer :: cycle
-        real, dimension(maxtre) :: mort
-
         ! Mortality estimates copied after the call to `morts` in grincr.f
-        !  tripling occurs right after call morts, so maybe "untripling"
-        !  would be OK to bring this back out of the FVS guts.
-        mort_tpa(:itrn,cycle+1) = mort(:itrn)/grospc
+        mort_tpa(:itrn,icyc+1) = wk2(:itrn)/grospc
 
     end subroutine copy_mort_data
 
     subroutine copy_cuts_data()
-        use arrays_mod, only: wk3
         ! Copy the cut trees
-        ! This is triggered by the cuts.f routine before preening the treelist.
+        ! Call from GRINCR right after the call to CUTS
+        use arrays_mod, only: wk3
         implicit none
-        cut_tpa(:itrn,icyc) = wk3(:itrn)/grospc
+
+        cut_tpa(:itrn,icyc+1) = wk3(:itrn)/grospc
+
     end subroutine copy_cuts_data
 
 end module tree_data

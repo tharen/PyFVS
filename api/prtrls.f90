@@ -1,5 +1,4 @@
       SUBROUTINE PRTRLS (IWHO)
-      use tree_data, only: save_tree_data,copy_tree_data,copy_cuts_data
 
       use prgprm_mod
       use arrays_mod
@@ -47,19 +46,6 @@
   501 CONTINUE
   502 CONTINUE
       NUMREQ = 0
-
-
-      ! Process tree details for the API report arrays if requested.
-      if (save_tree_data) then
-        select case (iwho)
-            case (1)
-                ! Complete live tree list & mortality
-                call copy_tree_data()
-            case (2)
-                ! Cut tree list
-                call copy_cuts_data()
-        end select
-      endif
 !----------
 !     FIND OUT IF THERE IS A TREELIST OPTION.
 !
