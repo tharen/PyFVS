@@ -1,6 +1,8 @@
 module fmfcom_mod
     use prgprm_mod, only: maxcyc,maxsp
     use fmparm_mod, only: mxflcl,mxdfmd,mxfmod
+    implicit none
+    save
 !.... Code segment FMFCOM.
 !----------
 !  $Id: FMFCOM.F77 767 2013-04-10 22:29:22Z rhavis@msn.com $

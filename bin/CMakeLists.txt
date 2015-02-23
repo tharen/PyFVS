@@ -40,7 +40,7 @@
 # Generated binaries are placed in the Open-FVS subfolder.
 #
 # Additional cmake arguments:
-#   -DSTATIC_LINK=ON/OFF - Statically link FFE & SQL with the FVS binaries.
+#   -DSTATIC_LINK=ON/OFF - Statically link FOFEM & SQL with the FVS binaries.
 #   -DWITH_PYMOD=ON/OFF - Include Python module targets, default is OFF
 #   -DFVS_VARIANTS=<variant list> - Explicitly list the variants to include in
 #           the build as a semicolon seperated list of variant abbreviations,
@@ -65,7 +65,7 @@ set(source_list_dir ${CMAKE_CURRENT_LIST_DIR})
 # Define default values for build configuration options
 set(FVS_VARIANTS "all" CACHE STRING "FVS variants to configure")
 set(WITH_PYMOD OFF CACHE BOOL "Build the Python module module.")
-set(STATIC_LINK ON CACHE BOOL "Statically link FFE & SQL.")
+set(STATIC_LINK ON CACHE BOOL "Statically link FOFEM & SQL.")
 set(BUILD_TYPE DEBUG CACHE STRING "Select the build type (Debug; Release).")
 set(ENABLE_LTO OFF CACHE BOOL "Enable link time optimizations.")
 set(PROFILING OFF CACHE BOOL "Compile with profiling information.")
@@ -256,29 +256,29 @@ else ()
 endif ()
 add_dependencies(sql_lib gen_dbstypedefs)
 
-#---FFE
-# Get the list of FFE C/C++ source files
-set(ffe_source)
+#---FOFEM
+# Get the list of FOFEM C/C++ source files
+set(fofem_source)
 foreach (fn ${source_file_list})
-    # FFE Source files are C/C++, excluding the SQL code
+    # FOFEM Source files are C/C++, excluding the SQL code
     if((${fn} MATCHES "(.*\\.c$)|(.*\\.cpp$)")
             AND (NOT ${fn} MATCHES "(.*mkdbsTypeDefs.c$)|(.*fvsSQL.c$)"))
-        list (APPEND ffe_source ${fn})  
+        list (APPEND fofem_source ${fn})  
     endif()
 endforeach(fn)
-list(REMOVE_DUPLICATES ffe_source)
+list(REMOVE_DUPLICATES fofem_source)
 
-# Compile the FFE object library
+# Compile the FOFEM object library
 if (STATIC_LINK EQUAL OFF)
-    add_library(ffe_lib SHARED ${ffe_source})
-    set_target_properties(ffe_lib PROPERTIES
+    add_library(fofem_lib SHARED ${fofem_source})
+    set_target_properties(fofem_lib PROPERTIES
             LINKER_LANGUAGE CXX
-            OUTPUT_NAME FVSffe
+            OUTPUT_NAME FVSfofem
             #TODO: is stdcall alias necessary
             #LINK_FLAGS -Wl,--add-stdcall-alias
             )
 else ()
-    add_library(ffe_lib OBJECT ${ffe_source})
+    add_library(fofem_lib OBJECT ${fofem_source})
 endif ()
 
 #---Common Objects
@@ -322,11 +322,11 @@ foreach (sl ${source_lists})
 endforeach()
 list(REMOVE_DUPLICATES common_source)
 
-# Compile the  object libraries
-add_library(common_objs OBJECT ${common_source})
-
-# Ensure the SQL and common objects are built in sequence
-add_dependencies(common_objs sql_lib)
+## Compile the  object libraries
+#add_library(common_objs OBJECT ${common_source})
+#
+## Ensure the SQL and common objects are built in sequence
+#add_dependencies(common_objs sql_lib)
 
 #---Locate key Python items
 if (WITH_PYMOD)
@@ -495,8 +495,8 @@ list(APPEND include_dirs ${CMAKE_CURRENT_BINARY_DIR})
 # Add the newly found include dirs
 include_directories(BEFORE ${include_dirs})
 
-# Remove source files already in common, FFE, SQL
-set(sl ${common_source} ${ffe_source} ${sql_source})
+# Remove source files already in common, FOFEM, SQL
+set(sl ${common_source} ${fofem_source} ${sql_source})
 foreach(fn ${sl})
     list(FIND fvs_source ${fn} i)
     if (NOT ${i} EQUAL -1)
@@ -516,7 +516,7 @@ endforeach()
 
 #---Compile the variant FVS code to an object library
 set(fvs_objs "fvs${variant}_objs")
-add_library(${fvs_objs} OBJECT ${fvs_source})
+add_library(${fvs_objs} OBJECT ${fvs_source} ${common_source})
 
 ##TODO: Need a fixup for VBA 
 #if (WIN32)
@@ -528,26 +528,26 @@ add_library(${fvs_objs} OBJECT ${fvs_source})
 #---Link the shared library and executables
 if (STATIC_LINK EQUAL OFF)
     add_library(${fvs_lib} SHARED
-        $<TARGET_OBJECTS:common_objs>
+#        $<TARGET_OBJECTS:common_objs>
         $<TARGET_OBJECTS:${fvs_objs}>)
-    target_link_libraries(${fvs_lib} ffe_lib sql_lib)
+    target_link_libraries(${fvs_lib} fofem_lib sql_lib)
     
     add_executable (${fvs_exe} ${main_source}
-        $<TARGET_OBJECTS:common_objs>
+#        $<TARGET_OBJECTS:common_objs>
         $<TARGET_OBJECTS:${fvs_objs}>)
-    target_link_libraries(${fvs_exe} ffe_lib sql_lib)
+    target_link_libraries(${fvs_exe} fofem_lib sql_lib)
     
 else ()
     add_library(${fvs_lib} SHARED
-        $<TARGET_OBJECTS:common_objs>
+#        $<TARGET_OBJECTS:common_objs>
         $<TARGET_OBJECTS:${fvs_objs}>
-        $<TARGET_OBJECTS:ffe_lib>
+        $<TARGET_OBJECTS:fofem_lib>
         $<TARGET_OBJECTS:sql_lib>
         )
     add_executable (${fvs_exe} ${main_source}
-        $<TARGET_OBJECTS:common_objs>
+#        $<TARGET_OBJECTS:common_objs>
         $<TARGET_OBJECTS:${fvs_objs}>
-        $<TARGET_OBJECTS:ffe_lib>
+        $<TARGET_OBJECTS:fofem_lib>
         $<TARGET_OBJECTS:sql_lib>
         )
         
@@ -659,16 +659,16 @@ if (WITH_PYMOD)
     # Compile the Python module and link required libraries
     if (STATIC_LINK EQUAL OFF)   
         add_library(${pymod_name} SHARED ${f2py_wrappers}
-            $<TARGET_OBJECTS:common_objs>
+#            $<TARGET_OBJECTS:common_objs>
             $<TARGET_OBJECTS:${fvs_objs}>)
-        target_link_libraries(${pymod_name} ffe_lib sql_lib)
+        target_link_libraries(${pymod_name} fofem_lib sql_lib)
         
     else ()
         add_library(${pymod_name} SHARED ${f2py_wrappers}
-            $<TARGET_OBJECTS:common_objs>
+#            $<TARGET_OBJECTS:common_objs>
             $<TARGET_OBJECTS:${fvs_objs}>
             $<TARGET_OBJECTS:sql_lib>
-            $<TARGET_OBJECTS:ffe_lib>)
+            $<TARGET_OBJECTS:fofem_lib>)
             
         if (WIN32)
             target_link_libraries(${pymod_name} odbc32)

@@ -82,10 +82,14 @@
         DO IPL = 1,2 ! PULP/SAW
           DO IHW = 1,2 !SW/HW
           XTMP = 0.
+            write(*,*) ICHABT,KYR,IFATE,IPL,IHW
+            write(*,*) faprop(1,1,1,1,1)
             DO IFATE = 1,3 ! 3 FATES (INUSE,LANDFILL,ENERGY); 4=sum 1:3
-              XTMP = XTMP + FAPROP(ICHABT,KYR,IFATE,IPL,IHW)
+              !XTMP = XTMP + FAPROP(ICHABT,KYR,IFATE,IPL,IHW)
+              XTMP = XTMP + FAPROP(1,KYR,IFATE,IPL,IHW)
               V(IFATE) = V(IFATE) + &
-                FATE(IPL,IHW,JCYC) * FAPROP(ICHABT,KYR,IFATE,IPL,IHW)
+                !FATE(IPL,IHW,JCYC) * FAPROP(ICHABT,KYR,IFATE,IPL,IHW)
+                FATE(IPL,IHW,JCYC) * FAPROP(1,KYR,IFATE,IPL,IHW)
             ENDDO
             V(4) = V(4) + (FATE(IPL,IHW,JCYC) * (1.0 - XTMP))
           ENDDO
