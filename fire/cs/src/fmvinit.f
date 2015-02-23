@@ -1,5 +1,10 @@
       SUBROUTINE FMVINIT
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use fmfcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMVINIT  FIRE-CS-DATE OF LAST REVISION: 04/23/13
 C----------
@@ -9,25 +14,6 @@ C----------
 C  CALLED FROM: FMINIT
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
-      INCLUDE 'FMFCOM.F77'
-C
-C
-COMMONS
-C
       INTEGER I,J,TFALLCLS(MAXSP),SNAGCLS(MAXSP)
 
       LVWEST    = .FALSE.  ! EASTERN VARIANT
@@ -303,7 +289,7 @@ C  MOCKERNUT HICKORY
 C----------
           CASE (17)
             V2T(I)     =  39.9
-            TFALLCLS(I) = 2 
+            TFALLCLS(I) = 2
             DKRCLS(I)  =  4
             SNAGCLS(I) =  3
 C----------
@@ -311,7 +297,7 @@ C  PIGNUT HICKORY
 C----------
           CASE (18)
             V2T(I)     =  41.2
-            TFALLCLS(I) = 2  
+            TFALLCLS(I) = 2
             DKRCLS(I)  =  4
             SNAGCLS(I) =  3
 C----------
@@ -327,7 +313,7 @@ C  WATER HICKORY
 C----------
           CASE (20)
             V2T(I)     =  38.0
-            TFALLCLS(I) = 2 
+            TFALLCLS(I) = 2
             DKRCLS(I)  =  4
             SNAGCLS(I) =  3
 C----------
@@ -359,7 +345,7 @@ C  AMERICAN BEECH
 C----------
           CASE (24)
             V2T(I)     =  34.9
-            TFALLCLS(I) = 4 
+            TFALLCLS(I) = 4
             DKRCLS(I)  =  4
             SNAGCLS(I) =  2
 C----------
@@ -383,7 +369,7 @@ C  BLUE ASH
 C----------
           CASE (27)
             V2T(I)     =  33.1
-            TFALLCLS(I) = 5 
+            TFALLCLS(I) = 5
             DKRCLS(I)  =  4
             SNAGCLS(I) =  2
 C----------
@@ -407,7 +393,7 @@ C  BOXELDER
 C----------
           CASE (30)
             V2T(I)     =  25.9
-            TFALLCLS(I) = 5 
+            TFALLCLS(I) = 5
             DKRCLS(I)  =  4
             SNAGCLS(I) =  2
 C----------
@@ -423,7 +409,7 @@ C  BLACK CHERRY
 C----------
           CASE (32)
             V2T(I)     =  29.3
-            TFALLCLS(I) = 4  
+            TFALLCLS(I) = 4
             DKRCLS(I)  =  2
             SNAGCLS(I) =  2
 C----------
@@ -439,7 +425,7 @@ C  SUGARBERRY
 C----------
           CASE (34)
             V2T(I)     =  30.6
-            TFALLCLS(I) = 4  
+            TFALLCLS(I) = 4
             DKRCLS(I)  =  4
             SNAGCLS(I) =  2
 C----------
@@ -535,7 +521,7 @@ C  GREEN ASH
 C----------
           CASE (46)
             V2T(I)     =  33.1
-            TFALLCLS(I) = 5 
+            TFALLCLS(I) = 5
             DKRCLS(I)  =  4
             SNAGCLS(I) =  2
 C----------
@@ -566,7 +552,7 @@ C----------
 C  BLACK OAK
 C----------
           CASE (50)
-            V2T(I)     =  34.9 
+            V2T(I)     =  34.9
             TFALLCLS(I) = 4
             DKRCLS(I)  =  3
             SNAGCLS(I) =  2
@@ -615,7 +601,7 @@ C  SWAMP CHESTNUT OAK
 C----------
           CASE (56)
             V2T(I)     =  37.4
-            TFALLCLS(I) = 3 
+            TFALLCLS(I) = 3
             DKRCLS(I)  =  3
             SNAGCLS(I) =  2
 C----------
@@ -623,7 +609,7 @@ C  POST OAK
 C----------
           CASE (57)
             V2T(I)     =  37.4
-            TFALLCLS(I) = 3 
+            TFALLCLS(I) = 3
             DKRCLS(I)  =  2
             SNAGCLS(I) =  3
 C----------
@@ -631,7 +617,7 @@ C  DELTA POST OAK
 C----------
           CASE (58)
             V2T(I)     =  37.4
-            TFALLCLS(I) = 3 
+            TFALLCLS(I) = 3
             DKRCLS(I)  =  2
             SNAGCLS(I) =  3
 C----------
@@ -639,7 +625,7 @@ C  CHESTNUT OAK
 C----------
           CASE (59)
             V2T(I)     =  35.6
-            TFALLCLS(I) = 3 
+            TFALLCLS(I) = 3
             DKRCLS(I)  =  3
             SNAGCLS(I) =  2
 C----------
@@ -663,7 +649,7 @@ C  SHINGLE OAK
 C----------
           CASE (62)
             V2T(I)     =  34.9
-            TFALLCLS(I) = 4 
+            TFALLCLS(I) = 4
             DKRCLS(I)  =  2
             SNAGCLS(I) =  2
 C----------
@@ -672,7 +658,7 @@ C----------
           CASE (63)
             V2T(I)     =  35.6
             TFALLCLS(I) = 3
-            DKRCLS(I)  =  3        
+            DKRCLS(I)  =  3
             SNAGCLS(I) =  2
 C----------
 C  WATER OAK
@@ -703,7 +689,7 @@ C  SHUMARD OAK
 C----------
           CASE (67)
             V2T(I)     =  34.9
-            TFALLCLS(I) = 4 
+            TFALLCLS(I) = 4
             DKRCLS(I)  =  3
             SNAGCLS(I) =  2
 C----------
@@ -719,7 +705,7 @@ C  SASSAFRAS
 C----------
           CASE (69)
             V2T(I)     =  26.2
-            TFALLCLS(I) = 4 
+            TFALLCLS(I) = 4
             DKRCLS(I)  =  2
             SNAGCLS(I) =  2
 C----------
@@ -727,7 +713,7 @@ C  OHIO BUCKEYE
 C----------
           CASE (70)
             V2T(I)     =  20.6
-            TFALLCLS(I) = 5 
+            TFALLCLS(I) = 5
             DKRCLS(I)  =  4
             SNAGCLS(I) =  2
 C----------
@@ -783,7 +769,7 @@ C  BLACK LOCUST
 C----------
           CASE (77)
             V2T(I)     =  41.2
-            TFALLCLS(I) = 2 
+            TFALLCLS(I) = 2
             DKRCLS(I)  =  1
             SNAGCLS(I) =  3
 C----------
@@ -815,7 +801,7 @@ C  RIVER BIRCH
 C----------
           CASE (81)
             V2T(I)     =  30.6
-            TFALLCLS(I) = 5 
+            TFALLCLS(I) = 5
             DKRCLS(I)  =  4
             SNAGCLS(I) =  1
 C----------
@@ -847,7 +833,7 @@ C  NON-COMMERCIAL HARDWOODS
 C----------
           CASE (85)
             V2T(I)     =  39.9
-            TFALLCLS(I) = 5 
+            TFALLCLS(I) = 5
             DKRCLS(I)  =  3
             SNAGCLS(I) =  2
 C----------
@@ -879,7 +865,7 @@ C  HAWTHORN SPECIES
 C----------
           CASE (89)
             V2T(I)     =  38.7
-            TFALLCLS(I) = 5 
+            TFALLCLS(I) = 5
             DKRCLS(I)  =  4
             SNAGCLS(I) =  2
 C----------
@@ -887,53 +873,53 @@ C  KENTUCKY COFFEETREE
 C----------
           CASE (90)
             V2T(I)     =  33.1
-            TFALLCLS(I) = 5  
+            TFALLCLS(I) = 5
             DKRCLS(I)  =  4
             SNAGCLS(I) =  2
-C----------               
-C  OSAGE-ORANGE  
-C----------               
-          CASE (91)       
+C----------
+C  OSAGE-ORANGE
+C----------
+          CASE (91)
             V2T(I)     =  47.4
-            TFALLCLS(I) = 4 
+            TFALLCLS(I) = 4
             DKRCLS(I)  =  1
             SNAGCLS(I) =  2
-C----------               
-C  CUCUMBERTREE  
-C----------               
-          CASE (92)       
+C----------
+C  CUCUMBERTREE
+C----------
+          CASE (92)
             V2T(I)     =  27.4
             TFALLCLS(I) = 4
             DKRCLS(I)  =  4
             SNAGCLS(I) =  2
-C----------               
-C  SWEETBAY  
-C----------               
-          CASE (93)       
+C----------
+C  SWEETBAY
+C----------
+          CASE (93)
             V2T(I)     =  26.2
             TFALLCLS(I) = 4
             DKRCLS(I)  =  4
             SNAGCLS(I) =  2
-C----------               
-C  MULBERRY SPECIES  
-C----------               
-          CASE (94)       
+C----------
+C  MULBERRY SPECIES
+C----------
+          CASE (94)
             V2T(I)     =  36.8
             TFALLCLS(I) = 5
             DKRCLS(I)  =  1
             SNAGCLS(I) =  2
-C----------               
-C  EASTERN HOPHORNBEAM  
-C----------               
-          CASE (95)       
+C----------
+C  EASTERN HOPHORNBEAM
+C----------
+          CASE (95)
             V2T(I)     =  39.3
             TFALLCLS(I) = 4
             DKRCLS(I)  =  3
             SNAGCLS(I) =  2
-C----------               
-C  SOURWOOD  
-C----------               
-          CASE (96)       
+C----------
+C  SOURWOOD
+C----------
+          CASE (96)
             V2T(I)     =  31.2
             TFALLCLS(I) = 5
             DKRCLS(I)  =  4
@@ -1051,13 +1037,13 @@ C----------
       PBTIME =  7.0 !may need to make this shorter??
 C----------
 C  PARAMETERS FOR FUEL MODEL SELECTION
-C  COVER TYPE 
+C  COVER TYPE
 C----------
       OLDICT = 0
 C----------
 C  DROUGHT START AND END YEARS
 C----------
-      IDRYB  = 0 
+      IDRYB  = 0
       IDRYE  = 0
 C----------
 C  CRITICAL % CHANGE REQUIERED TO TRIGGER ACTIVITY FUELS

@@ -1,5 +1,10 @@
       SUBROUTINE FMGFMV(IYR, IFMD)
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use fmfcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -20,14 +25,9 @@ C----------
 
 C.... PARAMETER INCLUDE FILES.
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... COMMON INCLUDE FILES.
 
-      INCLUDE 'FMFCOM.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'CONTRL.F77'
 
 C     LOCAL VARIABLE DECLARATIONS
 

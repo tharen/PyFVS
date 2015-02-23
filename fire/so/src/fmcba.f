@@ -1,5 +1,11 @@
       SUBROUTINE FMCBA (IYR,ISWTCH)
-      IMPLICIT NONE
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMCBA   FIRE-SO-DATE OF LAST REVISION: 04/25/13
 C----------
@@ -40,9 +46,9 @@ C     I=5   0.25 - 1"     10 HOUR FUELS, TONS/AC
 C     I=6   1 - 3"       100 HOUR FUELS, TONS/AC
 C     I=7   3 - 9"     1,000 HOUR FUELS, TONS/AC
 C     I=8   9 - 20"    10,000 HOUR FUELS, TONS/AC
-C     I=9   20 - 35"    
-C     I=10  35 - 50"  
-C     I=11  > 50"  
+C     I=9   20 - 35"
+C     I=10  35 - 50"
+C     I=11  > 50"
 C     I=12  LITTER   ALWAYS ZERO: ABSENT FROM OTTMAR
 C     I=13  DUFF                         TONS/AC
 C     THE COVER TYPE (1-11) * 10 + STRUCTURAL STAGE (1-7) DEFINE, IN COMBINATION,
@@ -57,14 +63,8 @@ C     I=4  SELECTIVELY HARVESTED
 C     I=5  THINNED
 C     I=6  PATCH CLEARCUT
 COMMONS
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'PLOT.F77'
       INCLUDE 'SSTGMC.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
 COMMONS
 
 C VARIABLE DECLARATIONS.
@@ -118,7 +118,7 @@ C     EACH SO HABITAT CODE MAPS TO EITHER WET (1), MESIC (2) OR DRY (3).  (FROM 
      & 1, 3, 3, 3, 3, 2, 3, 2, 2, 2,
      & 1, 2/
 
-      DATA (((DKRADJ(I,J,K), K=1,3), J=1,3), I=1,3) /           
+      DATA (((DKRADJ(I,J,K), K=1,3), J=1,3), I=1,3) /
      &  1.7,    2,  1.7, 1.49, 1.91, 1.49,  0.75, 0.85,  0.75,
      & 1.35, 1.85, 1.35,    1,  1.7,    1, 0.875,  1.2, 0.875,
      & 1.21, 1.79, 1.21, 1.14, 1.76, 1.14,  0.75, 0.85,  0.75/
@@ -136,7 +136,7 @@ C     EACH SO HABITAT CODE MAPS TO EITHER WET (1), MESIC (2) OR DRY (3).  (FROM 
      & 20,0.0,0.0,0.5,5.2,7.0, 3.9,0.0,0.0,0.0,0.0,0.0, 8.3,
      & 25,0.0,0.0,0.5,5.5,6.7,12.8,0.0,3.5,0.0,0.0,0.0, 8.3,
      & 32,0.0,0.0,0.5,2.3,4.8, 4.3,6.2,0.0,0.0,0.0,0.0, 6.0/
-      DATA ((FUELINI(I,J),I=1,13),J=11,20) /            
+      DATA ((FUELINI(I,J),I=1,13),J=11,20) /
      & 36,0.0,0.0,0.5,3.8,7.4, 7.1, 4.6,6.6,0.0,0.0,0.0, 6.0,
      & 40,0.0,0.0,0.5,2.7,5.0, 5.7, 2.0,2.0,0.0,0.0,0.0, 6.0,
      & 44,0.0,0.0,0.5,2.4,5.1,10.2, 8.6,3.0,0.0,0.0,0.0, 6.0,
@@ -147,7 +147,7 @@ C     EACH SO HABITAT CODE MAPS TO EITHER WET (1), MESIC (2) OR DRY (3).  (FROM 
      & 57,0.3,0.4,0.4,0.6,1.1, 8.8, 7.2,0.0,0.0,0.0,0.0, 9.1,
      & 58,0.3,0.4,0.7,1.1,1.5, 3.1, 4.7,0.0,0.0,0.0,0.0,15.9,
      & 59,0.7,0.7,0.5,1.8,3.5,12.3, 2.3,0.0,0.0,0.0,0.0,15.9/
-      DATA ((FUELINI(I,J),I=1,13),J=21,30) /            
+      DATA ((FUELINI(I,J),I=1,13),J=21,30) /
      & 61,0.3,0.4,0.5,1.2, 1.2, 2.5, 5.2, 2.0,0.0,0.0,0.0,20.4,
      & 62,0.8,0.5,0.5,2.6, 4.3, 7.0,10.5, 3.0,0.0,0.0,0.0,20.4,
      & 66,0.0,0.0,0.5,2.7, 5.5, 2.3, 0.0, 0.0,0.0,0.0,0.0, 8.3,
@@ -158,7 +158,7 @@ C     EACH SO HABITAT CODE MAPS TO EITHER WET (1), MESIC (2) OR DRY (3).  (FROM 
      & 95,0.0,0.0,0.5,3.9, 4.8,10.0, 5.5, 6.9,0.0,0.0,0.0,15.1,
      & 99,0.0,0.0,0.5,2.1, 6.3,10.3,10.8,11.6,0.0,0.0,0.0,15.1,
      &103,0.3,0.4,0.5,0.8, 1.7, 0.9, 0.0, 0.0,0.0,0.0,0.0, 2.3/
-      DATA ((FUELINI(I,J),I=1,13),J=31,40) /            
+      DATA ((FUELINI(I,J),I=1,13),J=31,40) /
      &106,0.5,0.5,0.3,0.7,4.0, 0.8,0.0,0.0,0.0,0.0,0.0,3.8,
      &107,0.5,0.5,0.4,1.2,7.4, 2.1,0.0,0.0,0.0,0.0,0.0,3.8,
      &110,0.5,0.5,0.7,2.3,5.9, 5.1,2.0,0.0,0.0,0.0,0.0,4.5,
@@ -169,7 +169,7 @@ C     EACH SO HABITAT CODE MAPS TO EITHER WET (1), MESIC (2) OR DRY (3).  (FROM 
      &127,0.0,0.0,0.5,5.5,6.7,12.8,0.0,3.5,0.0,0.0,0.0,9.8,
      &134,0.0,0.0,0.5,1.7,4.1, 6.5,5.2,0.0,0.0,0.0,0.0,5.3,
      &138,0.0,0.0,0.5,2.5,6.6,15.8,1.2,0.0,0.0,0.0,0.0,5.3/
-      DATA ((FUELINI(I,J),I=1,13),J=41,43) /            
+      DATA ((FUELINI(I,J),I=1,13),J=41,43) /
      &146,0.0,0.0,0.5,1.7,4.1, 6.5,5.2,0.0,0.0,0.0,0.0,5.3,
      &150,0.0,0.0,0.5,2.5,6.6,15.8,1.2,0.0,0.0,0.0,0.0,5.3,
      &160,0.7,3.3,0.2,0.4,0.8, 0.0,0.0,0.0,0.0,0.0,0.0,2.3/
@@ -260,7 +260,7 @@ C----------
      & 107,  11,  11,  44,  44,  48,
      & 115, 160, 160, 106, 106, 107/
 C      for new species, copied doug-fir
-      DATA ((COVRINI(I,J),I=1,6),J=65,113) /     
+      DATA ((COVRINI(I,J),I=1,6),J=65,113) /
      & 121,  52,  52,  52,  66,  52,
      & 122,  53,  53,  71,  71,  76,
      & 123,  56,  56,  71,  71,  76,
@@ -274,7 +274,7 @@ C      for new species, copied doug-fir
      & 134,  58,  58,  83,  83,  87,
      & 135,  58,  58,  83,  83,  87,
      & 136,  62,  62,  95,  95,  99,
-     & 137,  62,  62,  95,  95,  99, 
+     & 137,  62,  62,  95,  95,  99,
      & 141,  52,  52,  52,  66,  52,
      & 142,  53,  53,  71,  71,  76,
      & 143,  56,  56,  71,  71,  76,
@@ -295,130 +295,130 @@ C      for new species, copied doug-fir
      & 164,  58,  58,  83,  83,  87,
      & 165,  58,  58,  83,  83,  87,
      & 166,  62,  62,  95,  95,  99,
-     & 167,  62,  62,  95,  95,  99,                  
-     & 171,  52,  52,  52,  66,  52,      
-     & 172,  53,  53,  71,  71,  76,      
-     & 173,  56,  56,  71,  71,  76,      
-     & 174,  58,  58,  83,  83,  87,      
-     & 175,  58,  58,  83,  83,  87,      
-     & 176,  62,  62,  95,  95,  99,      
-     & 177,  62,  62,  95,  95,  99, 
-     & 181,  52,  52,  52,  66,  52, 
-     & 182,  53,  53,  71,  71,  76, 
-     & 183,  56,  56,  71,  71,  76, 
-     & 184,  58,  58,  83,  83,  87, 
-     & 185,  58,  58,  83,  83,  87, 
-     & 186,  62,  62,  95,  95,  99, 
-     & 187,  62,  62,  95,  95,  99/ 
-      DATA ((COVRINI(I,J),I=1,6),J=114,162) /  
-     & 191,  52,  52,  52,  66,  52, 
-     & 192,  53,  53,  71,  71,  76, 
-     & 193,  56,  56,  71,  71,  76, 
-     & 194,  58,  58,  83,  83,  87, 
-     & 195,  58,  58,  83,  83,  87, 
-     & 196,  62,  62,  95,  95,  99, 
-     & 197,  62,  62,  95,  95,  99, 
-     & 201,  52,  52,  52,  66,  52, 
-     & 202,  53,  53,  71,  71,  76, 
-     & 203,  56,  56,  71,  71,  76, 
-     & 204,  58,  58,  83,  83,  87, 
-     & 205,  58,  58,  83,  83,  87, 
-     & 206,  62,  62,  95,  95,  99, 
-     & 207,  62,  62,  95,  95,  99, 
-     & 211,  52,  52,  52,  66,  52, 
-     & 212,  53,  53,  71,  71,  76, 
-     & 213,  56,  56,  71,  71,  76, 
-     & 214,  58,  58,  83,  83,  87, 
-     & 215,  58,  58,  83,  83,  87, 
-     & 216,  62,  62,  95,  95,  99, 
-     & 217,  62,  62,  95,  95,  99, 
-     & 221,  52,  52,  52,  66,  52, 
-     & 222,  53,  53,  71,  71,  76, 
-     & 223,  56,  56,  71,  71,  76, 
-     & 224,  58,  58,  83,  83,  87, 
-     & 225,  58,  58,  83,  83,  87, 
-     & 226,  62,  62,  95,  95,  99, 
-     & 227,  62,  62,  95,  95,  99, 
-     & 231,  52,  52,  52,  66,  52, 
-     & 232,  53,  53,  71,  71,  76, 
-     & 233,  56,  56,  71,  71,  76, 
-     & 234,  58,  58,  83,  83,  87, 
-     & 235,  58,  58,  83,  83,  87, 
-     & 236,  62,  62,  95,  95,  99, 
-     & 237,  62,  62,  95,  95,  99, 
-     & 241,  52,  52,  52,  66,  52, 
-     & 242,  53,  53,  71,  71,  76, 
-     & 243,  56,  56,  71,  71,  76, 
-     & 244,  58,  58,  83,  83,  87, 
-     & 245,  58,  58,  83,  83,  87, 
-     & 246,  62,  62,  95,  95,  99, 
-     & 247,  62,  62,  95,  95,  99, 
-     & 251,  52,  52,  52,  66,  52, 
-     & 252,  53,  53,  71,  71,  76, 
-     & 253,  56,  56,  71,  71,  76, 
-     & 254,  58,  58,  83,  83,  87, 
-     & 255,  58,  58,  83,  83,  87, 
-     & 256,  62,  62,  95,  95,  99, 
-     & 257,  62,  62,  95,  95,  99/                                   
-      DATA ((COVRINI(I,J),I=1,6),J=163,211) /   
-     & 261,  52,  52,  52,  66,  52, 
-     & 262,  53,  53,  71,  71,  76, 
-     & 263,  56,  56,  71,  71,  76, 
-     & 264,  58,  58,  83,  83,  87, 
-     & 265,  58,  58,  83,  83,  87, 
-     & 266,  62,  62,  95,  95,  99, 
-     & 267,  62,  62,  95,  95,  99,  
-     & 271,  52,  52,  52,  66,  52, 
-     & 272,  53,  53,  71,  71,  76, 
-     & 273,  56,  56,  71,  71,  76, 
-     & 274,  58,  58,  83,  83,  87, 
-     & 275,  58,  58,  83,  83,  87, 
-     & 276,  62,  62,  95,  95,  99, 
-     & 277,  62,  62,  95,  95,  99,  
-     & 281,  52,  52,  52,  66,  52, 
-     & 282,  53,  53,  71,  71,  76, 
-     & 283,  56,  56,  71,  71,  76, 
-     & 284,  58,  58,  83,  83,  87, 
-     & 285,  58,  58,  83,  83,  87, 
-     & 286,  62,  62,  95,  95,  99, 
-     & 287,  62,  62,  95,  95,  99,  
-     & 291,  52,  52,  52,  66,  52, 
-     & 292,  53,  53,  71,  71,  76, 
-     & 293,  56,  56,  71,  71,  76, 
-     & 294,  58,  58,  83,  83,  87, 
-     & 295,  58,  58,  83,  83,  87, 
-     & 296,  62,  62,  95,  95,  99, 
-     & 297,  62,  62,  95,  95,  99,  
-     & 301,  52,  52,  52,  66,  52, 
-     & 302,  53,  53,  71,  71,  76, 
-     & 303,  56,  56,  71,  71,  76, 
-     & 304,  58,  58,  83,  83,  87, 
-     & 305,  58,  58,  83,  83,  87, 
-     & 306,  62,  62,  95,  95,  99, 
-     & 307,  62,  62,  95,  95,  99,  
-     & 311,  52,  52,  52,  66,  52, 
-     & 312,  53,  53,  71,  71,  76, 
-     & 313,  56,  56,  71,  71,  76, 
-     & 314,  58,  58,  83,  83,  87, 
-     & 315,  58,  58,  83,  83,  87, 
-     & 316,  62,  62,  95,  95,  99, 
-     & 317,  62,  62,  95,  95,  99,  
-     & 321,  52,  52,  52,  66,  52, 
-     & 322,  53,  53,  71,  71,  76, 
-     & 323,  56,  56,  71,  71,  76, 
-     & 324,  58,  58,  83,  83,  87, 
-     & 325,  58,  58,  83,  83,  87, 
-     & 326,  62,  62,  95,  95,  99, 
-     & 327,  62,  62,  95,  95,  99/                                         
-      DATA ((COVRINI(I,J),I=1,6),J=212,218) /    
-     & 331,  52,  52,  52,  66,  52, 
-     & 332,  53,  53,  71,  71,  76, 
-     & 333,  56,  56,  71,  71,  76, 
-     & 334,  58,  58,  83,  83,  87, 
-     & 335,  58,  58,  83,  83,  87, 
-     & 336,  62,  62,  95,  95,  99, 
-     & 337,  62,  62,  95,  95,  99/         
-           
+     & 167,  62,  62,  95,  95,  99,
+     & 171,  52,  52,  52,  66,  52,
+     & 172,  53,  53,  71,  71,  76,
+     & 173,  56,  56,  71,  71,  76,
+     & 174,  58,  58,  83,  83,  87,
+     & 175,  58,  58,  83,  83,  87,
+     & 176,  62,  62,  95,  95,  99,
+     & 177,  62,  62,  95,  95,  99,
+     & 181,  52,  52,  52,  66,  52,
+     & 182,  53,  53,  71,  71,  76,
+     & 183,  56,  56,  71,  71,  76,
+     & 184,  58,  58,  83,  83,  87,
+     & 185,  58,  58,  83,  83,  87,
+     & 186,  62,  62,  95,  95,  99,
+     & 187,  62,  62,  95,  95,  99/
+      DATA ((COVRINI(I,J),I=1,6),J=114,162) /
+     & 191,  52,  52,  52,  66,  52,
+     & 192,  53,  53,  71,  71,  76,
+     & 193,  56,  56,  71,  71,  76,
+     & 194,  58,  58,  83,  83,  87,
+     & 195,  58,  58,  83,  83,  87,
+     & 196,  62,  62,  95,  95,  99,
+     & 197,  62,  62,  95,  95,  99,
+     & 201,  52,  52,  52,  66,  52,
+     & 202,  53,  53,  71,  71,  76,
+     & 203,  56,  56,  71,  71,  76,
+     & 204,  58,  58,  83,  83,  87,
+     & 205,  58,  58,  83,  83,  87,
+     & 206,  62,  62,  95,  95,  99,
+     & 207,  62,  62,  95,  95,  99,
+     & 211,  52,  52,  52,  66,  52,
+     & 212,  53,  53,  71,  71,  76,
+     & 213,  56,  56,  71,  71,  76,
+     & 214,  58,  58,  83,  83,  87,
+     & 215,  58,  58,  83,  83,  87,
+     & 216,  62,  62,  95,  95,  99,
+     & 217,  62,  62,  95,  95,  99,
+     & 221,  52,  52,  52,  66,  52,
+     & 222,  53,  53,  71,  71,  76,
+     & 223,  56,  56,  71,  71,  76,
+     & 224,  58,  58,  83,  83,  87,
+     & 225,  58,  58,  83,  83,  87,
+     & 226,  62,  62,  95,  95,  99,
+     & 227,  62,  62,  95,  95,  99,
+     & 231,  52,  52,  52,  66,  52,
+     & 232,  53,  53,  71,  71,  76,
+     & 233,  56,  56,  71,  71,  76,
+     & 234,  58,  58,  83,  83,  87,
+     & 235,  58,  58,  83,  83,  87,
+     & 236,  62,  62,  95,  95,  99,
+     & 237,  62,  62,  95,  95,  99,
+     & 241,  52,  52,  52,  66,  52,
+     & 242,  53,  53,  71,  71,  76,
+     & 243,  56,  56,  71,  71,  76,
+     & 244,  58,  58,  83,  83,  87,
+     & 245,  58,  58,  83,  83,  87,
+     & 246,  62,  62,  95,  95,  99,
+     & 247,  62,  62,  95,  95,  99,
+     & 251,  52,  52,  52,  66,  52,
+     & 252,  53,  53,  71,  71,  76,
+     & 253,  56,  56,  71,  71,  76,
+     & 254,  58,  58,  83,  83,  87,
+     & 255,  58,  58,  83,  83,  87,
+     & 256,  62,  62,  95,  95,  99,
+     & 257,  62,  62,  95,  95,  99/
+      DATA ((COVRINI(I,J),I=1,6),J=163,211) /
+     & 261,  52,  52,  52,  66,  52,
+     & 262,  53,  53,  71,  71,  76,
+     & 263,  56,  56,  71,  71,  76,
+     & 264,  58,  58,  83,  83,  87,
+     & 265,  58,  58,  83,  83,  87,
+     & 266,  62,  62,  95,  95,  99,
+     & 267,  62,  62,  95,  95,  99,
+     & 271,  52,  52,  52,  66,  52,
+     & 272,  53,  53,  71,  71,  76,
+     & 273,  56,  56,  71,  71,  76,
+     & 274,  58,  58,  83,  83,  87,
+     & 275,  58,  58,  83,  83,  87,
+     & 276,  62,  62,  95,  95,  99,
+     & 277,  62,  62,  95,  95,  99,
+     & 281,  52,  52,  52,  66,  52,
+     & 282,  53,  53,  71,  71,  76,
+     & 283,  56,  56,  71,  71,  76,
+     & 284,  58,  58,  83,  83,  87,
+     & 285,  58,  58,  83,  83,  87,
+     & 286,  62,  62,  95,  95,  99,
+     & 287,  62,  62,  95,  95,  99,
+     & 291,  52,  52,  52,  66,  52,
+     & 292,  53,  53,  71,  71,  76,
+     & 293,  56,  56,  71,  71,  76,
+     & 294,  58,  58,  83,  83,  87,
+     & 295,  58,  58,  83,  83,  87,
+     & 296,  62,  62,  95,  95,  99,
+     & 297,  62,  62,  95,  95,  99,
+     & 301,  52,  52,  52,  66,  52,
+     & 302,  53,  53,  71,  71,  76,
+     & 303,  56,  56,  71,  71,  76,
+     & 304,  58,  58,  83,  83,  87,
+     & 305,  58,  58,  83,  83,  87,
+     & 306,  62,  62,  95,  95,  99,
+     & 307,  62,  62,  95,  95,  99,
+     & 311,  52,  52,  52,  66,  52,
+     & 312,  53,  53,  71,  71,  76,
+     & 313,  56,  56,  71,  71,  76,
+     & 314,  58,  58,  83,  83,  87,
+     & 315,  58,  58,  83,  83,  87,
+     & 316,  62,  62,  95,  95,  99,
+     & 317,  62,  62,  95,  95,  99,
+     & 321,  52,  52,  52,  66,  52,
+     & 322,  53,  53,  71,  71,  76,
+     & 323,  56,  56,  71,  71,  76,
+     & 324,  58,  58,  83,  83,  87,
+     & 325,  58,  58,  83,  83,  87,
+     & 326,  62,  62,  95,  95,  99,
+     & 327,  62,  62,  95,  95,  99/
+      DATA ((COVRINI(I,J),I=1,6),J=212,218) /
+     & 331,  52,  52,  52,  66,  52,
+     & 332,  53,  53,  71,  71,  76,
+     & 333,  56,  56,  71,  71,  76,
+     & 334,  58,  58,  83,  83,  87,
+     & 335,  58,  58,  83,  83,  87,
+     & 336,  62,  62,  95,  95,  99,
+     & 337,  62,  62,  95,  95,  99/
+
 C----------
 C  THIS TABLE (FROM NICK CROOKSTON) SHOWS THE PLANT ASSOCIATIONS FOR
 C  EACH OF THE 92 PLANT ASSOCIATIONS OF THE SORNEC VARIANT. THE
@@ -607,7 +607,7 @@ C----------
       IF (COVTYP .EQ. 0) THEN
         IF (IYR .GT. IY(1)) THEN
           COVTYP = OLDCOV
-        ELSEIF ((ITYPE .GT. 0) .AND. 
+        ELSEIF ((ITYPE .GT. 0) .AND.
      >   (KODFOR .GE. 600 .AND. KODFOR .LT. 700)) THEN
           COVTYP = COVINI(ITYPE)
         ELSE
@@ -714,14 +714,14 @@ C----------
         STFUEL(6,2) = FUELINI(8,IPOSN) * (8./11.) +
      &              FUELINI(9,IPOSN) !gt 20" material from the FCCS is thrown
 c                                     into the 12 - 20" class (the old gt 12" class)
-        STFUEL(7,2) = 0  ! this is zero instead of FUELINI(9,IPOSN) so that 
+        STFUEL(7,2) = 0  ! this is zero instead of FUELINI(9,IPOSN) so that
 c                        folks with old databases with the fuel_gt_12 column
-c                        filled in won't get extra large fuel added in when 
+c                        filled in won't get extra large fuel added in when
 c                        the fuels are initialized.
         STFUEL(8,2) = FUELINI(10,IPOSN)
         STFUEL(9,2) = FUELINI(11,IPOSN)
-        STFUEL(10,2) = FUELINI(12,IPOSN)        
-        STFUEL(11,2) = FUELINI(13,IPOSN)              
+        STFUEL(10,2) = FUELINI(12,IPOSN)
+        STFUEL(11,2) = FUELINI(13,IPOSN)
       ENDIF
       DO I=1,MXFLCL
           STFUEL(I,1) = 0.
@@ -760,8 +760,8 @@ C       RATE WILL BE USED
             ENDDO
           ENDDO
 
-        ELSE ! Oregon 
-        
+        ELSE ! Oregon
+
 C     DECAY RATES BASED ON WORKSHOP RESULTS FOR KIM MELLEN-MCLEAN'S CWD MODEL
 C     FIRST BASE RATES ARE SET (BY DECAY RATE CLASS) AND THEN THEY ARE ADJUSTED
 C     BASED ON HABITAT TYPE (TEMPERATURE AND MOISTURE CATEGORY)
@@ -775,7 +775,7 @@ C     BASED ON HABITAT TYPE (TEMPERATURE AND MOISTURE CATEGORY)
           DKRT(7,1) = 0.019  ! 20 - 35"
           DKRT(8,1) = 0.019  ! 35 - 50"
           DKRT(9,1) = 0.019  !  > 50"
-          
+
           DKRT(1,2) = 0.081 ! < 0.25"
           DKRT(2,2) = 0.081 ! 0.25 - 1"
           DKRT(3,2) = 0.081 ! 1 - 3"
@@ -785,7 +785,7 @@ C     BASED ON HABITAT TYPE (TEMPERATURE AND MOISTURE CATEGORY)
           DKRT(7,2) = 0.025  ! 20 - 35"
           DKRT(8,2) = 0.025  ! 35 - 50"
           DKRT(9,2) = 0.025  !  > 50"
-          
+
           DKRT(1,3) = 0.090 ! < 0.25"
           DKRT(2,3) = 0.090 ! 0.25 - 1"
           DKRT(3,3) = 0.090 ! 1 - 3"
@@ -794,8 +794,8 @@ C     BASED ON HABITAT TYPE (TEMPERATURE AND MOISTURE CATEGORY)
           DKRT(6,3) = 0.033  ! 12 - 20"
           DKRT(7,3) = 0.033  ! 20 - 35"
           DKRT(8,3) = 0.033  ! 35 - 50"
-          DKRT(9,3) = 0.033  !  > 50"      
-          
+          DKRT(9,3) = 0.033  !  > 50"
+
           DKRT(1,4) = 0.113 ! < 0.25"
           DKRT(2,4) = 0.113 ! 0.25 - 1"
           DKRT(3,4) = 0.113 ! 1 - 3"
@@ -805,17 +805,17 @@ C     BASED ON HABITAT TYPE (TEMPERATURE AND MOISTURE CATEGORY)
           DKRT(7,4) = 0.058  ! 20 - 35"
           DKRT(8,4) = 0.058  ! 35 - 50"
           DKRT(9,4) = 0.058  !  > 50"
-          
+
           TEMP = SOHMC(ITYPE)
           MOIST = SOWMD(ITYPE)
-          
+
           DO I = 1,9
             DO J = 1,4
               IF (I .LE. 3) THEN
                 K = 1
-              ELSEIF (I .LE. 5) THEN 
+              ELSEIF (I .LE. 5) THEN
                 K = 2
-              ELSE 
+              ELSE
                 K = 3
               ENDIF
               DKRT(I,J) = DKRT(I,J)*DKRADJ(TEMP,MOIST,K)
@@ -828,8 +828,8 @@ C       in this case, bump up the decay rate of the smaller wood to that of the 
 
           DO I = 9,2,-1
             DO J = 1,4
-              IF ((DKRT(I,J)-DKRT(I-1,J)) .GT. 0) THEN 
-                  DKRT(I-1,J) = DKRT(I,J)                         
+              IF ((DKRT(I,J)-DKRT(I-1,J)) .GT. 0) THEN
+                  DKRT(I-1,J) = DKRT(I,J)
               ENDIF
             ENDDO
           ENDDO
@@ -863,13 +863,13 @@ C     IF FUELMULT WAS USED, USE THE MULTIPLIER WITH THE DEFAULT RATES.
                   DKR(I,J) = DKRT(I,J)
                 ELSE
                   DKR(I,J) = -1*DKR(I,J)*DKRT(I,J)
-                ENDIF  
+                ENDIF
               ENDIF
             ENDDO
           ENDDO
           DO I = 1,10
             DO J = 1,4
-              IF (PRDUFF(I,J) .LT. 0.0) PRDUFF(I,J) = PRDUFFT(I,J) 
+              IF (PRDUFF(I,J) .LT. 0.0) PRDUFF(I,J) = PRDUFFT(I,J)
               TODUFF(I,J) = DKR(I,J) * PRDUFF(I,J)
             ENDDO
           ENDDO
@@ -929,8 +929,8 @@ C         HEIGHT LOSS CEASES FOR THE LAST 50% (USED TO BE SET BY HTR2, CHANGED F
 
             IF (DECAYX(I) .LT. 0.0) DECAYX(I) = 999.0
 
-            IF (HTX(I,1)  .LT. 0.0) HTX(I,1) = 1.0 
-            IF (HTX(I,3)  .LT. 0.0) HTX(I,3) = 1.0 
+            IF (HTX(I,1)  .LT. 0.0) HTX(I,1) = 1.0
+            IF (HTX(I,3)  .LT. 0.0) HTX(I,3) = 1.0
             IF (HTX(I,2)  .LT. 0.0) HTX(I,2) = 0.0
             IF (HTX(I,4)  .LT. 0.0) HTX(I,4) = 0.0
 
@@ -938,7 +938,7 @@ C         HEIGHT LOSS CEASES FOR THE LAST 50% (USED TO BE SET BY HTR2, CHANGED F
 
           IF (PBSOFT .LT. 0.0) PBSOFT = 1.0
           IF (PBSMAL .LT. 0.0) PBSMAL = 0.9
-          
+
         ELSE
 
           DO I = 1,MAXSP                        ! OREGON
@@ -986,22 +986,22 @@ C         HEIGHT LOSS CEASES FOR THE LAST 50% (USED TO BE SET BY HTR2, CHANGED F
 
             END SELECT
           ENDDO
-  
+
           IF (PBSOFT .LT. 0.0) PBSOFT = 0.0
           IF (PBSMAL .LT. 0.0) PBSMAL = 0.0
-          
+
         ENDIF
-        
+
         ! set whether each species is a softwood or not
-   
-        DO I = 1,MAXSP       
+
+        DO I = 1,MAXSP
           SELECT CASE (I)
             CASE (1:20,32)
               LSW(I) = .TRUE.
             CASE (21:31,33)
               LSW(I) = .FALSE.
-          END SELECT  
-        ENDDO       
+          END SELECT
+        ENDDO
 
 C
 C       RETURN FOR SNGCOE ENTRY POINT (FFE NOT ACTIVE)
@@ -1048,15 +1048,15 @@ C       FINE DEAD FOLIAGE DIFFERS BETWEEN CA AND OR
 C       DEAD INCENSE-CEDAR FOLIAGE DROPS IN ONE YR
 
         TFALL(6,0)     = 1.0
-        
-C       DEAD LARCH AND HARDWOOD FOLIAGE DROPS IN ONE YR  
-      
+
+C       DEAD LARCH AND HARDWOOD FOLIAGE DROPS IN ONE YR
+
         TFALL(17,0) = 1.0
         DO I = 21,31
           TFALL(I,0) = 1.0
         ENDDO
         TFALL(33,0) = 1.0
-        
+
 C       LARGER DEAD FOLIAGE IS IDENTICAL FOR CA AND OR
 
         DO I = 1,MAXSP
@@ -1066,7 +1066,7 @@ C       LARGER DEAD FOLIAGE IS IDENTICAL FOR CA AND OR
           ! white fir, mountain hemlock
           ! lodgepole pine, red fir,
           ! juniper, grand fir, subalpine fir, pacific silver fir,
-          ! noble fir, whitebark pine, western larch, 
+          ! noble fir, whitebark pine, western larch,
           ! western hemlock, all hardwoods, other softwoods
           CASE (1,2,3,4,5,7,9,11,12:17,19,21:33)
             TFALL(I,3) = 15.0
@@ -1099,20 +1099,20 @@ C         TFALL(I,3) CANNOT BE < TFALL(I,2)
 
 C       *** END OF SPECIAL SO-FFE INITIALIZATION ***
 C       *** SECTION                              ***
-        
+
 C       CHANGE THE INITIAL FUEL LEVELS BASED ON PHOTO SERIES INFO INPUT
 
         CALL OPFIND(1,MYACT(2),J)
         IF (J .GT. 0) THEN
           CALL OPGET(J,2,JYR,IACTK,NPRM,PRMS)
           IF ((PRMS(1) .GE. 0) .AND. (PRMS(2) .GE. 0)) THEN
-            CALL FMPHOTOVAL(NINT(PRMS(1)), NINT(PRMS(2)), FOTOVAL, 
+            CALL FMPHOTOVAL(NINT(PRMS(1)), NINT(PRMS(2)), FOTOVAL,
      >                      FOTOVALS)
 
             DO I = 1, MXFLCL
               IF (FOTOVAL(I) .GE. 0) STFUEL(I,2) = FOTOVAL(I)
               IF (I .LE. 9) STFUEL(I,1) = FOTOVALS(I)
-            ENDDO                 
+            ENDDO
 
 C           IF FOTOVAL(1) IS NEGATIVE, THEN AN INVALID CODE WAS ENTERED.
 C           DON'T MARK EVENT DONE IF THIS IS A CALL FROM SVSTART--WILL
@@ -1127,7 +1127,7 @@ C           NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.
             CALL RCDSET (2,.TRUE.)
           ENDIF
         ENDIF
- 
+
 C       ASSUME THE FUELS ARE UNPILED.
 C       CHANGE THE INITIAL FUEL LEVELS BASED ON INPUT FROM THE USER
 C       FIRST DO FUELHARD (FUELINIT) THEN FUELSOFT
@@ -1141,23 +1141,23 @@ C       FIRST DO FUELHARD (FUELINIT) THEN FUELSOFT
           IF (PRMS(5) .GE. 0) STFUEL(6,2) = PRMS(5)
           IF (PRMS(6) .GE. 0) STFUEL(10,2) = PRMS(6)
           IF (PRMS(7) .GE. 0) STFUEL(11,2) = PRMS(7)
-          IF (PRMS(8) .GE. 0) STFUEL(1,2) = PRMS(8)          
-          IF (PRMS(9) .GE. 0) STFUEL(2,2) = PRMS(9)           
+          IF (PRMS(8) .GE. 0) STFUEL(1,2) = PRMS(8)
+          IF (PRMS(9) .GE. 0) STFUEL(2,2) = PRMS(9)
           IF (PRMS(1) .GE. 0) THEN
             IF ((PRMS(8) .LT. 0) .AND. (PRMS(9) .LT. 0)) THEN
               STFUEL(1,2) = PRMS(1) * 0.5
               STFUEL(2,2) = PRMS(1) * 0.5
-            ENDIF                 
+            ENDIF
             IF ((PRMS(8) .LT. 0) .AND. (PRMS(9) .GE. 0)) THEN
               STFUEL(1,2) = MAX(PRMS(1) - PRMS(9),0.)
-            ENDIF  
+            ENDIF
             IF ((PRMS(8) .GE. 0) .AND. (PRMS(9) .LT. 0)) THEN
               STFUEL(2,2) = MAX(PRMS(1) - PRMS(8),0.)
-            ENDIF  
-          ENDIF                
-          IF (PRMS(10) .GE. 0) STFUEL(7,2) = PRMS(10) 
-          IF (PRMS(11) .GE. 0) STFUEL(8,2) = PRMS(11) 
-          IF (PRMS(12) .GE. 0) STFUEL(9,2) = PRMS(12)   
+            ENDIF
+          ENDIF
+          IF (PRMS(10) .GE. 0) STFUEL(7,2) = PRMS(10)
+          IF (PRMS(11) .GE. 0) STFUEL(8,2) = PRMS(11)
+          IF (PRMS(12) .GE. 0) STFUEL(9,2) = PRMS(12)
 
 C         DON'T MARK EVENT DONE IF THIS IS A CALL FROM SVSTART--WILL
 C         NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.
@@ -1175,9 +1175,9 @@ C         NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.
           IF (PRMS(4) .GE. 0) STFUEL(4,1) = PRMS(4)
           IF (PRMS(5) .GE. 0) STFUEL(5,1) = PRMS(5)
           IF (PRMS(6) .GE. 0) STFUEL(6,1) = PRMS(6)
-          IF (PRMS(7) .GE. 0) STFUEL(7,1) = PRMS(7)          
-          IF (PRMS(8) .GE. 0) STFUEL(8,1) = PRMS(8)                           
-          IF (PRMS(9) .GE. 0) STFUEL(9,1) = PRMS(9)         
+          IF (PRMS(7) .GE. 0) STFUEL(7,1) = PRMS(7)
+          IF (PRMS(8) .GE. 0) STFUEL(8,1) = PRMS(8)
+          IF (PRMS(9) .GE. 0) STFUEL(9,1) = PRMS(9)
 
 C         DON'T MARK EVENT DONE IF THIS IS A CALL FROM SVSTART--WILL
 C         NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.
@@ -1217,4 +1217,4 @@ C     IN FIRST YEAR, SET C-REPORTING REGION FOR FOREST CODES IN CALIFORNIA
 
       RETURN
       END
- 
+

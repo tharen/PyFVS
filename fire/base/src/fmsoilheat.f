@@ -1,5 +1,10 @@
       SUBROUTINE FMSOILHEAT (IYR, LNMOUT)
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use fmfcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -18,27 +23,7 @@ C     LNMOUT: TRUE IF NORMAL OUTPUT PROCESS, FALSE TO SUPPRESS ALL OUTPUTS
 C
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
-      INCLUDE 'FMFCOM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
       INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
 C
       integer iyr
       logical lnmout
@@ -59,8 +44,8 @@ C
 #endif
 
       integer fm_fofem
-      
-      data SMCAT /5,10,15,25/      
+
+      data SMCAT /5,10,15,25/
 C     check for debug
 
       call dbchk (debug,'FMSOILHEAT',10,icyc)
@@ -98,7 +83,7 @@ C     Calculate summation in Pile categories
 C
 C     This assumes that "hard" surface fuel is sound and "soft" surface
 C     fuel is rotten.  It also assumes that half of the 6-12" stuff is
-C     6-9" and the other half is 9-12".  
+C     6-9" and the other half is 9-12".
 C
       fofem_input (  1 +1) = CWD(3,1,1,5) + CWD(3,1,2,5) ! 1 hour wood
       fofem_input (  2 +1) = CWD(3,2,1,5) + CWD(3,2,2,5) ! 10 hour wood
@@ -120,9 +105,9 @@ C
 C     this duff depth assumes that duff is 12 tons/acre/inch
 
       ! Duff depth, inches
-      fofem_input ( 13 +1) = (CWD(3,11,1,5) + CWD(3,11,2,5))/12 
+      fofem_input ( 13 +1) = (CWD(3,11,1,5) + CWD(3,11,2,5))/12
       ! Litter Load
-      fofem_input ( 14 +1) = CWD(3,10,1,5) + CWD(3,10,2,5)  
+      fofem_input ( 14 +1) = CWD(3,10,1,5) + CWD(3,10,2,5)
       fofem_input ( 15 +1) = FLIVE(1)  ! Herb load
       fofem_input ( 16 +1) = FLIVE(2)  ! Shrub
 
@@ -143,7 +128,7 @@ C     get default fuel moistures for this variant
       CALL FMMOIS(2, MOIS2)
       CALL FMMOIS(3, MOIS3)
       CALL FMMOIS(4, MOIS4)
-      
+
 C     use duff moisture to determine the soil moisture and moisture code
 
       duffcat(1) = mois1(1,5)
@@ -156,12 +141,12 @@ C     use duff moisture to determine the soil moisture and moisture code
       IF (MOIS(1,5) .LE. ((MOIS1(1,5) + MOIS2(1,5))/2)) THEN
         moiscode = 1
       ELSEIF (MOIS(1,5) .LE. ((MOIS2(1,5) + MOIS3(1,5))/2)) THEN
-        moiscode = 2	
-      ELSEIF (MOIS(1,5) .LE. ((MOIS3(1,5) + MOIS4(1,5))/2)) THEN      		
+        moiscode = 2
+      ELSEIF (MOIS(1,5) .LE. ((MOIS3(1,5) + MOIS4(1,5))/2)) THEN
         moiscode = 3
       ELSE
-      	moiscode = 4	
-      ENDIF	
+      	moiscode = 4
+      ENDIF
 
       ! Soil Moisture
       fofem_input ( 23 +1) = soilmois
@@ -202,7 +187,7 @@ C     use duff moisture to determine the soil moisture and moisture code
       fofem_input ( 28 +1) = regnum
       ! Fuel Category, 1-Natural, 2-Pile, 3-Slash
       fofem_input ( 29 +1) = 1
-      
+
       IF (VVER(1:2) .EQ. 'NE') THEN
          covnum = 8
       ELSEIF (VVER(1:2) .EQ. 'LS') THEN
@@ -214,7 +199,7 @@ C     use duff moisture to determine the soil moisture and moisture code
       ! Cover Group:
       ! 0-None, 1-Grass, 2-Sage, 3-Shrub,  4-Pocosin,
       ! 5-Ponderosa, 6-White Pine Hemlock , 7-Red Jack Pine,
-      ! 8-Balsam, Blk Red Whit Spruce      
+      ! 8-Balsam, Blk Red Whit Spruce
       fofem_input ( 30 +1) = covnum
       ! Output flag, 0=no output, 1=a file of output.
       fofem_input ( 31 +1) = 0
@@ -253,4 +238,4 @@ C     use duff moisture to determine the soil moisture and moisture code
 
       return
       end
-      
+

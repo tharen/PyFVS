@@ -1,5 +1,9 @@
       SUBROUTINE FMSVTREE (NOUT,ISVOBJ)
-      IMPLICIT NONE
+      use fmcom_mod
+      use fmfcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -14,15 +18,9 @@ C     INPUT:
 C     NOUT  =THE OUTPUT FILE REFERENCE NUMBER
 C     ISVOBJ=THE OBJECT BEING PROCESSED
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
 
-      INCLUDE 'FMPARM.F77'
 
-      INCLUDE 'FMCOM.F77'
 
-      INCLUDE 'FMFCOM.F77'
 
       INCLUDE 'SVDATA.F77'
 

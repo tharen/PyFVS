@@ -1,5 +1,10 @@
       SUBROUTINE FMIN (ICALL,NSP,LKECHO)
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use fmfcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  FIRE $Id$
 C----------
@@ -15,16 +20,6 @@ C     PARAMETER DEFINITIONS
 C     ICALL = 1 call is within a stand (called from INITRE)
 C             2 call from outside a stand (called from PPIN)
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
-      INCLUDE 'CONTRL.F77'
-C
-COMMONS
-C
       INTEGER    KWCNT
       PARAMETER (KWCNT = 53)
 
@@ -476,7 +471,6 @@ C     SET THE NEW FALL RATE PARAMETERS FOR THE SNAG MODEL.
 C        NOTE THAT MORE THAN ONE SUPPLEMENTAL RECORD IS REQUIRED
 C           IF ENTERING MULTIPLE SPECIES.
 C
-C
       JSP = 0
       CALL SPDECD (1,JSP,NSP(1,1),JOSTND,IRECNT,KEYWRD,
      &             ARRAY,KARD)
@@ -846,10 +840,10 @@ C        set array SETDECAY so we know if the decay rates have been set by the u
          IF (LNOTBK(7)) THEN
             SETDECAY(4,IDEC) = ARRAY(7)
             SETDECAY(5,IDEC) = ARRAY(7)
-            SETDECAY(6,IDEC) = ARRAY(7)   
+            SETDECAY(6,IDEC) = ARRAY(7)
             SETDECAY(7,IDEC) = ARRAY(7)
             SETDECAY(8,IDEC) = ARRAY(7)
-            SETDECAY(9,IDEC) = ARRAY(7)            
+            SETDECAY(9,IDEC) = ARRAY(7)
          ENDIF
 C        NOW RE-DETERMINE THE DECAY RATE TO DUFF
          IF (ID .LT. 5) THEN
@@ -2034,7 +2028,7 @@ C                        OPTION NUMBER 43 -- SOILHEAT
 C
       IF (IDSHEAT .EQ. 0) CALL GETID (IDSHEAT)
 C
-      ISHEATB = -IY(1)  ! WHEN NEGATIVE, A HEADING IS NEEDED. 
+      ISHEATB = -IY(1)  ! WHEN NEGATIVE, A HEADING IS NEEDED.
       ISHEATE = IY(1) + 999
       SOILTP = 3
       IF (LNOTBK(3)) SOILTP = INT(ARRAY(3))
@@ -2115,7 +2109,7 @@ C
 
  4610 FORMAT(/A8,T12,'CARBON REPORTS WILL BE BASED ON METHOD',
      >      I2, ' (0=FFE, 1=JENKINS)',/T12, 'REPORT UNITS WILL BE',
-     >      I2, ' (0=US(TONS/ACRE), 1=METRIC(METRIC TONS/HA)', 
+     >      I2, ' (0=US(TONS/ACRE), 1=METRIC(METRIC TONS/HA)',
      >          ' 2=COMBINED(METRIC TONS/ACRE))',/T12,
      >      'PROPORTION OF DEAD ROOTS DECAYING ANNUALLY WILL BE: ',
      >      F7.4,' (<0 = NO DEAD ROOTS)',/T12,
@@ -2520,7 +2514,7 @@ C.... Special entry to retrieve keywords.
       END
 
       SUBROUTINE FMKEYDMP (IOUT,IRECNT,KEYWRD,ARRAY,KARD,NVALS)
-      IMPLICIT NONE
+      implicit none
 C----------
 C  **FMKEYDMP DATE OF LAST REVISION:   08/03/05
 C----------
@@ -2542,7 +2536,7 @@ C
 
       SUBROUTINE FMKEYRDR (INUNIT,IOUT,LDEBUG,KEYWRD,LNOTBK,
      >                   ARRAY,IRECNT,KODE,KARD,LFLAG,NVALS)
-      IMPLICIT NONE
+      implicit none
 C----------
 C  **FMKEYRDR DATE OF LAST REVISION:  10/20/09
 C----------

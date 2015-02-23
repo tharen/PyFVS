@@ -1,5 +1,10 @@
       SUBROUTINE FMVINIT
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use fmfcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMVINIT  FIRE-IE-DATE OF LAST REVISION: 04/23/13
 C----------
@@ -8,25 +13,6 @@ C  INITIALIZE VARIANT-SPECIFIC VARIABLES FOR THE FIRE MODELC
 C  CALLED FROM: FMINIT
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
-      INCLUDE 'FMFCOM.F77'
-C
-C
-COMMONS
-C
       INTEGER I,J
 
       LVWEST    = .TRUE.  ! WESTERN VARIANT

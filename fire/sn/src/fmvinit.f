@@ -1,5 +1,10 @@
       SUBROUTINE FMVINIT
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use fmfcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMVINIT  FIRE-SN-DATE OF LAST REVISION: 04/23/13
 C----------
@@ -9,25 +14,6 @@ C----------
 C  CALLED FROM: FMINIT
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
-      INCLUDE 'FMFCOM.F77'
-C
-C
-COMMONS
-C
       INTEGER I,J,TFALLCLS(MAXSP),SNAGCLS(MAXSP)
 
       LVWEST    = .FALSE.  ! EASTERN VARIANT
@@ -77,7 +63,7 @@ C----------
       DKR(8,1)  = 0.11
       DKR(9,1)  = 0.11
 C----------
-C  DECAY RATES FOR DECAY CLASSES 2 - 4 
+C  DECAY RATES FOR DECAY CLASSES 2 - 4
 C  THESE WERE THE ORIGINAL RATES SET FOR SN FROM ABBOTT AND CROSSLEY / BARBER AND VANLEAR
 C----------
       DKR(1,2)  = 0.11
@@ -89,7 +75,7 @@ C----------
       DKR(7,2)  = 0.07
       DKR(8,2)  = 0.07
       DKR(9,2)  = 0.07
-C 
+C
       DO I = 1,9
         DO J = 3,4
           DKR(I,J) = DKR(I,2)
@@ -241,7 +227,7 @@ C----------
             V2T(I)     =  33.7
             TFALLCLS(I) =  6
             LEAFLF(I)  =   2.0
-            DKRCLS(I)  =   1  
+            DKRCLS(I)  =   1
             SNAGCLS(I) =   1
 C----------
 C  SPRUCE PINE
@@ -259,7 +245,7 @@ C----------
             V2T(I)     =  33.7
             TFALLCLS(I) =  6
             LEAFLF(I)  =   2.0
-            DKRCLS(I)  =   1  
+            DKRCLS(I)  =   1
             SNAGCLS(I) =   1
 C----------
 C  TABLE MOUNTAIN PINE

@@ -1,5 +1,10 @@
       SUBROUTINE FMVINIT
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use fmfcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMVINIT  FIRE-UT-DATE OF LAST REVISION: 04/23/13
 C----------
@@ -15,25 +20,8 @@ C----------
 *
 ***********************************************************************
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
       INCLUDE 'PLOT.F77'
 C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
-      INCLUDE 'FMFCOM.F77'
-C
-COMMONS
 C----------
       INTEGER I,J
 C----------
@@ -95,9 +83,9 @@ C----------
       DKR(4,1) = 0.015
       DKR(5,1) = 0.015
       DKR(6,1) = 0.015
-      DKR(7,1) = 0.015  
-      DKR(8,1) = 0.015  
-      DKR(9,1) = 0.015  
+      DKR(7,1) = 0.015
+      DKR(8,1) = 0.015
+      DKR(9,1) = 0.015
 C
       DO I = 1,9
         DO J = 2,4
@@ -409,7 +397,7 @@ C
         END SELECT
 C
         SELECT CASE (I)
-        
+
 C----------
 C       TIME-TO-FALL FOR OTHER CROWN CATEGORIES
 C----------

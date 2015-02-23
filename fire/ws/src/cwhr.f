@@ -1,15 +1,15 @@
       SUBROUTINE CWHR(ISP, DBH, FVS_HT, FMICR, FMPROB, CWID, FMITRN,
      >           CWXPTS,CCBP,DBHBP,SZDN,CWHR_MOD,CWHR_WT)
-      IMPLICIT NONE
+      use contrl_mod
+      use fmfcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **CWHR   FIRE-WS-DATE OF LAST REVISION: 03/14/05
 C----------
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
-      INCLUDE 'FMFCOM.F77'
-      INCLUDE 'CONTRL.F77'
 C
 C      Public Function CWHRSizeDensity(rst As DAO.Recordset) As String
 C'  rst is a DAO recordset, field names must be trees, Dbh, Ht, CrA
@@ -491,7 +491,7 @@ C
 C     LOOKS LIKE THIS DOES A CORRECTED % CANOPY COVER
 C
       FUNCTION PCNETAVG(grosspercentcover)
-C
+      implicit none
       real pcRndPack, avg1
 
       pcRndPack = (1. - 1. / Exp(grosspercentcover / 100.)) * 100.

@@ -1,5 +1,10 @@
       SUBROUTINE FMVINIT
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use fmfcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMVINIT  FIRE-EM-DATE OF LAST REVISION: 04/23/13
 C----------
@@ -7,24 +12,6 @@ C  Purpose:
 C  Initialize variant-specific variables for the Fire Model
 C  Called from: FMINIT
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
-      INCLUDE 'FMFCOM.F77'
-C
-C
 COMMONS
 C----------
 C  VARIABLE DECLARATIONS
@@ -89,11 +76,11 @@ C
           DKR(I,J) = DKR(I,1)
         ENDDO
       ENDDO
-      
+
 C  LITTER LOSS/YR (10) AND DUFF LOSS/YR (11)
       DO J = 1,4
-        DKR(10,J) = .5          
-        DKR(11,J) = .002        
+        DKR(10,J) = .5
+        DKR(11,J) = .002
       ENDDO
 C----------
 C     DUFF PRODUCTION RATES 'PRDUFF' ARE A PROPORTION OF THE OVERALL
@@ -123,8 +110,8 @@ C----------
 C  V2T() - UNITS ARE LB/CUFT BY SPECIES FROM 'WOOD HANDBOOK' USDA
 C  FOREST PRODUCTS AG. HANDBOOK 72.  1974. DENSITY OF PINYON, JUNIPER,
 C  GAMBEL FROM CHOJNACKY 1992.
-C  
-C  FOR THE ORIGINAL 8 SPECIES 1-3, 7-10, AND 18, DATA IS 
+C
+C  FOR THE ORIGINAL 8 SPECIES 1-3, 7-10, AND 18, DATA IS
 C  FROM JIM BROWN. 1977. HANDBOOK FOR PREDICTING SLASH WEIGHTS OF
 C  WESTERN CONIFERS.
 C
@@ -174,7 +161,7 @@ C----------
 
         SELECT CASE (I)
 C----------
-C  WHITEBARK PINE 
+C  WHITEBARK PINE
 C----------
           CASE (1)
             V2T(I)     =  22.5    ! uses IE white pine

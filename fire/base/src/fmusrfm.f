@@ -1,15 +1,15 @@
       SUBROUTINE FMUSRFM (IYR, FMD)
-      IMPLICIT NONE
+      use fmcom_mod
+      use fmfcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C  $Id$
 C----------
 C     PROCESSES THE FUELMODL KEYWORD AND THE FUELTRET KEYWORD.
 C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
 
 C
       INTEGER IYR,FMD,MYACT(3),NTODO,ITODO,NPRM,IACTK,JYR,J,I,JDO
@@ -44,7 +44,7 @@ C     FIRECALC(2549) - USE NEW FM LOGIC OR MODELLED LOADS
 C
       DATA MYACT/2538,2525,2549/
 
-C     CHECK WHETHER THE FIRECALC KEYWORD IS SCHEDULED FOR THIS YEAR 
+C     CHECK WHETHER THE FIRECALC KEYWORD IS SCHEDULED FOR THIS YEAR
 
       CALL OPFIND(1,MYACT(3),NTODO)
       IF (NTODO.GT.0) THEN
@@ -60,9 +60,9 @@ C         SET THE FIRECALC PARAMETER VALUES.
           USAV(1) = PRMS(3)
           USAV(2) = PRMS(4)
           USAV(3) = PRMS(5)
-          UBD(1)  = PRMS(6)          
+          UBD(1)  = PRMS(6)
           UBD(2)  = PRMS(7)
-          ULHV    = PRMS(8)                    
+          ULHV    = PRMS(8)
   400   CONTINUE
       ENDIF
 
@@ -71,7 +71,7 @@ C     If so, we will use those in preference to anything else.
 
       CALL OPFIND(1,MYACT(1),NTODO)
       IF (NTODO.GT.0) THEN
-         DO ITODO=1,NTODO         
+         DO ITODO=1,NTODO
             DO I=1,8
               PRMS(I) = 0
             ENDDO
@@ -82,32 +82,32 @@ C            IF (JYR .EQ. IYR) THEN
                   CALL OPDONE(ITODO,IYR)
                ELSE IF (PRMS(1).EQ.0.) THEN
                   LUSRFM = .FALSE.
-                  CALL OPDONE(ITODO,IYR)                  
+                  CALL OPDONE(ITODO,IYR)
                ELSE IF (INT(PRMS(1)).GT.MXDFMD .OR.
-     >            INT(PRMS(3)).GT.MXDFMD .OR. INT(PRMS(5)).GT.MXDFMD 
+     >            INT(PRMS(3)).GT.MXDFMD .OR. INT(PRMS(5)).GT.MXDFMD
      >            .OR. INT(PRMS(7)).GT.MXDFMD) THEN
                   LUSRFM = .FALSE.
-               ELSE               
+               ELSE
                  SELECT CASE (INT(PRMS(1)))
                  CASE (31:100,110:120,125:140,150:160,166:180,190:200,
      >                205:256)
                     LUSRFM = .FALSE.
-                 CASE DEFAULT                
+                 CASE DEFAULT
                    SELECT CASE (INT(PRMS(3)))
                    CASE (31:100,110:120,125:140,150:160,166:180,190:200,
      >                  205:256)
                       LUSRFM = .FALSE.
-                   CASE DEFAULT  
+                   CASE DEFAULT
                      SELECT CASE (INT(PRMS(5)))
                      CASE (31:100,110:120,125:140,150:160,166:180,
      >                    190:200,205:256)
                         LUSRFM = .FALSE.
-                     CASE DEFAULT  
+                     CASE DEFAULT
                        SELECT CASE (INT(PRMS(7)))
                        CASE (31:100,110:120,125:140,150:160,166:180,
      >                      190:200,205:256)
                           LUSRFM = .FALSE.
-                       CASE DEFAULT  
+                       CASE DEFAULT
                           CALL OPDONE(ITODO,IYR)
                           LUSRFM=.TRUE.
                           IF (MOD(NPRM,2).EQ.1) THEN
@@ -134,7 +134,7 @@ C            IF (JYR .EQ. IYR) THEN
                              FWTUSR(J) = PRMS(I+1)
                           ENDDO
                        END SELECT
-                     END SELECT                        
+                     END SELECT
                    END SELECT
                  END SELECT
                ENDIF
@@ -213,7 +213,7 @@ C     KEYWORD.
           ENDDO
         ENDIF
       ENDIF
-     
+
 C
 C     CHECK TO SEE IF THERE WAS ANY HARVEST TYPE OR FUEL TREATMENT INFO
 C     ASSIGNED.
