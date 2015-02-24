@@ -1,8 +1,10 @@
       SUBROUTINE FMPPGET (WK3, IPNT, ILIMIT)
-      use contrl_mod
       use fmcom_mod
-      use fmfcom_mod
       use fmparm_mod
+      use contrl_mod
+      use svdata_mod
+      use fmsvcm_mod
+      use fmfcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -32,9 +34,7 @@ C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'SVDATA.F77'
 
-      INCLUDE 'FMSVCM.F77'
 
       LOGICAL LOGICS(MXL)
       INTEGER INTS(MXI), I, ILIMIT, IPNT, NSNAGZ

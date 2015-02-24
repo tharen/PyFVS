@@ -1,6 +1,7 @@
       SUBROUTINE SVSNAGE(IYEAR,IDEAD,SNCRDI,SNCRTO,SNHT,SNDI)
       use contrl_mod
       use fmcom_mod
+      use svdata_mod
       use fmparm_mod
       use prgprm_mod
       implicit none
@@ -30,8 +31,6 @@ C
 C----------
 C
       INCLUDE 'SVDEAD.F77'
-C
-      INCLUDE 'SVDATA.F77'
 C
       INCLUDE 'PLOT.F77'
 C

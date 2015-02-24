@@ -1,5 +1,9 @@
       SUBROUTINE SVGTPL
-      IMPLICIT NONE
+      use contrl_mod
+      use svdata_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -20,17 +24,11 @@ C     NC IS THE NUMBER OF COLUMNS
 C     NCF IS THE NUMBER OF THE FIRST COLUMN THAT CONTAINS AN
 C         EXTRA ROW...0 IF NONE CONTAIN EXTRA ROWS.
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
 
       INCLUDE 'PLOT.F77'
 
-      INCLUDE 'SVDATA.F77'
 
-      INCLUDE 'CONTRL.F77'
 
-      INCLUDE 'ARRAYS.F77'
 
 COMMONS
 

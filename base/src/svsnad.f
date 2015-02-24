@@ -1,8 +1,9 @@
       SUBROUTINE SVSNAD(IYEAR,ISNADD,NSNGS,ISWTCH)
-      use contrl_mod
-      use fmcom_mod
       use arrays_mod
+      use fmcom_mod
       use fmparm_mod
+      use contrl_mod
+      use svdata_mod
       use prgprm_mod
       implicit none
 C----------
@@ -32,8 +33,6 @@ C
       INCLUDE 'SVDEAD.F77'
 C
       INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'SVDATA.F77'
 C
 
 C

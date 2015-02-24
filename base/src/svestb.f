@@ -1,5 +1,9 @@
       SUBROUTINE SVESTB (I1)
-      IMPLICIT NONE
+      use contrl_mod
+      use svdata_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -16,13 +20,9 @@ C     MUST BE SET PRIOR TO CALLING THIS ROUTINE FOR THE NEW TREE.
 
 COMMONS
 
-      INCLUDE 'PRGPRM.F77'
 
-      INCLUDE 'ARRAYS.F77'
 
-      INCLUDE 'CONTRL.F77'
 
-      INCLUDE 'SVDATA.F77'
 
       INCLUDE 'SVDEAD.F77'
 

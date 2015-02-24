@@ -1,8 +1,10 @@
       SUBROUTINE SVCWD(IYEAR)
-      use contrl_mod
-      use fmcom_mod
       use arrays_mod
+      use fmcom_mod
       use fmparm_mod
+      use contrl_mod
+      use svdata_mod
+      use fmsvcm_mod
       use prgprm_mod
       implicit none
 C----------
@@ -47,11 +49,7 @@ C   Common variable definitions:
 C     V2T:     Volume (cuft) to Tons conversion factor (in /FMCOM/)
 C----------
 C
-      INCLUDE 'SVDATA.F77'
-C
       INCLUDE 'SVDEAD.F77'
-C
-      INCLUDE 'FMSVCM.F77'
 C
       INTEGER CWDDL1, CWDDL2, I, IBP, ICWD, ID, IH, IP, IPC, IPCNT,
      &        IPS, IPUT, IOBJ, ISVOBJ, ISZCLS, IYEAR, J, JBP, KSP,

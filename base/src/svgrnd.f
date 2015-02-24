@@ -1,5 +1,8 @@
       SUBROUTINE SVGRND (NOUT,KYLAST,KYFRST,IFIREFLG)
-      IMPLICIT NONE
+      use contrl_mod
+      use svdata_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -63,11 +66,8 @@ C       20     DARK BROWNS       244 to 255
 
 COMMONS
 
-      INCLUDE 'PRGPRM.F77'
 
-      INCLUDE 'SVDATA.F77'
 
-      INCLUDE 'CONTRL.F77'
 
 COMMONS
 
@@ -93,7 +93,7 @@ C     surface of the indicated color (so CWD objects are more visible)
       IF ( ICOLIDX .LT. 0 ) THEN
         LMONO = .TRUE.
         ICOLIDX = (-1) * ICOLIDX
-        ICOLOR = ICOLIDX*12+14        
+        ICOLOR = ICOLIDX*12+14
       ELSE
         LMONO = .FALSE.
       ENDIF

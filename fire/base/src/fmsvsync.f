@@ -3,6 +3,7 @@
       use fmcom_mod
       use fmparm_mod
       use contrl_mod
+      use svdata_mod
       use fmfcom_mod
       use prgprm_mod
       implicit none
@@ -18,7 +19,6 @@ C     MODEL IS KEEPING TRACK OF.
 C
 C     *****  UNDER DEVELOPMENT ******
 C
-      INCLUDE 'SVDATA.F77'
       INCLUDE 'SVDEAD.F77'
 C
       REAL FMTOTAL

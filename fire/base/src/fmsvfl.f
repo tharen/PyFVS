@@ -1,7 +1,9 @@
       SUBROUTINE FMSVFL (NOUT)
       use fmcom_mod
-      use fmfcom_mod
       use fmparm_mod
+      use svdata_mod
+      use fmsvcm_mod
+      use fmfcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -17,9 +19,7 @@ C     NOUT  =THE OUTPUT FILE REFERENCE NUMBER
 C
 
 
-      INCLUDE 'SVDATA.F77'
 
-      INCLUDE 'FMSVCM.F77'
 
 
 
@@ -215,6 +215,8 @@ C       GO AHEAD AND WRITE OUT THE FIRE INFORMATION TO THE SVS FILE.
       END
 
       SUBROUTINE FMGETFL(ASIZE, FLINE)
+      use fmsvcm_mod
+      use svdata_mod
       use prgprm_mod
       implicit none
 C----------
@@ -227,10 +229,6 @@ C
 C     INPUT:
 C     ASIZE  =THE SIZE OF THE ARRAY PASSED IN
 C     FLINE  =THE ARRAY TO BE FILLED WITH THE FIRE LINE INFO
-C
-      INCLUDE 'SVDATA.F77'
-C
-      INCLUDE 'FMSVCM.F77'
 C
       REAL FLINE
       INTEGER ASIZE

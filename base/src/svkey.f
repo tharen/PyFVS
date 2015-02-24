@@ -1,5 +1,8 @@
       SUBROUTINE SVKEY(KEYWRD,LNOTBK,ARRAY)
-      IMPLICIT NONE
+      use contrl_mod
+      use svdata_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -13,13 +16,9 @@ C     PROCESS VISUALZATION KEYWORD.
 C
 C     ALL ARGUMENTS ARE INPUT, STD FROM INITRE
 C
-COMMONS
 
-      INCLUDE 'PRGPRM.F77'
 
-      INCLUDE 'CONTRL.F77'
 
-      INCLUDE 'SVDATA.F77'
 
 COMMONS
 
@@ -81,15 +80,15 @@ C>>>      IF (ICOLIDX.LT.0) ICOLIDX=2
       ENDIF
       WRITE (JOSTND,16) ICOLIDX
       IF (LNOTBK(7)) JSVOUT = -1
-      IF (JSVOUT .LT. 0) WRITE (JOSTND,15) 
-     >   'SVS RUNS BUT NO OUTPUT FILES ARE PRODUCED.' 
-   
+      IF (JSVOUT .LT. 0) WRITE (JOSTND,15)
+     >   'SVS RUNS BUT NO OUTPUT FILES ARE PRODUCED.'
+
 
    15 FORMAT (T12,A)
    16 FORMAT (T12,'COLOR INDEX= ',I4)
 
       IF (JSVOUT.LT.0) RETURN
-      
+
       JSVOUT=90
       inquire(unit=JSVOUT,opened=LOPEN)
       if (.not.LOPEN) then

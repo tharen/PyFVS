@@ -901,9 +901,9 @@ C     add an activity to the schedule.
 
       subroutine fvsSVSDimSizes(nsvsobjs,ndeadobjs,ncwdobjs,
      -                          mxsvsobjs,mxdeadobjs,mxcwdobjs)
+      use svdata_mod
       use prgprm_mod
       implicit none
-      include "SVDATA.F77"
       include "SVDEAD.F77"
 
 !Python F2PY Interface Directives
@@ -931,6 +931,7 @@ C     add an activity to the schedule.
 
       subroutine fvsSVSObjData(name,nch,action,nobjs,attr,rtnCode)
       use contrl_mod
+      use svdata_mod
       use prgprm_mod
       implicit none
 
@@ -947,7 +948,6 @@ c               3= there were more/fewer than nobjs.
 c               4= the length of the "name" string was too big or small
 
       include "PLOT.F77"
-      include "SVDATA.F77"
       include "SVDEAD.F77"
 
 !Python F2PY Interface Directives

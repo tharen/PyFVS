@@ -1,5 +1,9 @@
       SUBROUTINE SVRMOV (REMOVE,ISWTCH,SSNG,DSNG,CTCRWN,ICURYEAR)
-      IMPLICIT NONE
+      use contrl_mod
+      use svdata_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -25,15 +29,9 @@ C            = 3 IF SVMORT CALLED THIS SUBROUTINE, WESTWIDE PINE BEETLE MORT
 C            = 4 IF SVCUTS CALLED THIS SUBROUTINE
 C----------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
 
-      INCLUDE 'ARRAYS.F77'
 
-      INCLUDE 'CONTRL.F77'
 
-      INCLUDE 'SVDATA.F77'
 
       INCLUDE 'PLOT.F77'
 
@@ -41,8 +39,6 @@ C
 
       INCLUDE 'METRIC.F77'
 
-C
-COMMONS
 C
 C     WPP     - SUM OF REMOVE PER PLOT
 C     PPP     - SUM OF PROB PER PLOT

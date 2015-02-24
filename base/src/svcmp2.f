@@ -1,5 +1,8 @@
       SUBROUTINE SVCMP2(ITARG,ISOUR)
-      IMPLICIT NONE
+      use contrl_mod
+      use svdata_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -13,24 +16,9 @@ C     INPUT:
 C     ITARG IS A TARGET LOCATION TO WHICH A TREE WILL BE PLACED
 C     ISOUR IS THE INDEX OF THE TREE BEING MOVED.
 C
-C     CALLED FROM COMPRS AND TREDEL. 
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'SVDATA.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
+C     CALLED FROM COMPRS AND TREDEL.
 C
       INCLUDE 'WORKCM.F77'
-C
-C
-COMMONS
 C
       INTEGER ISOUR,ITARG
       INTEGER IWKCM1(MAXTRE)

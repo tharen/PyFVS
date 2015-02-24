@@ -1,8 +1,9 @@
       SUBROUTINE SVSTART
-      use contrl_mod
-      use fmcom_mod
       use arrays_mod
+      use fmcom_mod
       use fmparm_mod
+      use contrl_mod
+      use svdata_mod
       use prgprm_mod
       implicit none
 C----------
@@ -13,8 +14,6 @@ C     STAND VISUALIZATION GENERATION
 C     N.L.CROOKSTON -- RMRS MOSCOW -- NOVEMBER 1998
 C
 C     BUILD THE INITIAL DISPLAY OF THE INITIAL TREES.
-C
-      INCLUDE 'SVDATA.F77'
 C
       INCLUDE 'SVRCOM.F77'
 C

@@ -3,6 +3,8 @@
       use fmcom_mod
       use fmparm_mod
       use contrl_mod
+      use svdata_mod
+      use fmsvcm_mod
       use fmfcom_mod
       use prgprm_mod
       implicit none
@@ -30,11 +32,9 @@ C
 
 
 
-      INCLUDE 'SVDATA.F77'
 
       INCLUDE 'SVDEAD.F77'
 
-      INCLUDE 'FMSVCM.F77'
 
       INCLUDE 'METRIC.F77'
 

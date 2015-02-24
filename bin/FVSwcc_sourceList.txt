@@ -1,4 +1,4 @@
-../api/variants/pn/prgprm_mod.f90
+../api/variants/wc/prgprm_mod.f90
 
 ../api/arrays_mod.f90
 ../api/contrl_mod.f90
@@ -18,6 +18,8 @@
 ../api/fmcom_mod.f90
 ../api/fmfcom_mod.f90
 ../api/fmprop_mod.f90
+../api/fmsvcm_mod.f90
+../api/svdata_mod.f90
 ../api/metric_mod.f90
 
 ../api/carbon_data.f90
@@ -26,6 +28,7 @@
 ../api/fvs_step.f90
 ../api/step_tregro.f90
 ../api/snag_data.f90
+
 
 ../api/variants/wc/siteht_mod.f90
 ../api/variants/wc/findage_mod.f90
@@ -287,7 +290,7 @@
 ../common/SSTGMC.F77
 ../common/STDSTK.F77
 ../common/SUMTAB.F77
-../common/SVDATA.F77
+
 ../common/SVDEAD.F77
 ../common/SVRCOM.F77
 ../common/VARCOM.F77
@@ -361,11 +364,6 @@
 ../econ/src/ecsetp.f
 ../econ/src/ecstatus.f
 ../econ/src/ecvol.f
-../fire/base/common/FMCOM.F77
-../fire/base/common/FMFCOM.F77
-../fire/base/common/FMPARM.F77
-../fire/base/common/FMPROP.F77
-../fire/base/common/FMSVCM.F77
 ../fire/base/src/excfim.f
 ../fire/base/src/fmburn.f
 ../fire/base/src/fmcadd.f

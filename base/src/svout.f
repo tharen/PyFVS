@@ -1,8 +1,9 @@
       SUBROUTINE SVOUT(IYEAR,IFMCLFG,AMSG)
-      use contrl_mod
-      use fmcom_mod
       use arrays_mod
+      use fmcom_mod
       use fmparm_mod
+      use contrl_mod
+      use svdata_mod
       use prgprm_mod
       implicit none
 C----------
@@ -58,7 +59,6 @@ C
 
       INCLUDE 'PLOT.F77'
 
-      INCLUDE 'SVDATA.F77'
 
       INCLUDE 'SVDEAD.F77'
 

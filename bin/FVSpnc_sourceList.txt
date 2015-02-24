@@ -291,7 +291,7 @@
 ../common/SSTGMC.F77
 ../common/STDSTK.F77
 ../common/SUMTAB.F77
-../common/SVDATA.F77
+
 ../common/SVDEAD.F77
 ../common/SVRCOM.F77
 ../common/VARCOM.F77
@@ -366,7 +366,6 @@
 ../econ/src/ecstatus.f
 ../econ/src/ecvol.f
 
-../fire/base/common/FMSVCM.F77
 ../fire/base/src/excfim.f
 ../fire/base/src/fmburn.f
 ../fire/base/src/fmcadd.f

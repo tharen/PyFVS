@@ -1,6 +1,7 @@
       SUBROUTINE SVSALV(IYR,MINDBH,MAXDBH,MAXAGE,OKSOFT,PROP,PROPLV)
       use contrl_mod
       use fmcom_mod
+      use svdata_mod
       use fmparm_mod
       use prgprm_mod
       implicit none
@@ -44,8 +45,6 @@ C              sp/spgroup, via the SALVSP keyword:
 C              0 = cut this sp/spgroup in a salvage cut;
 C              1 = leave this sp/spgroup in a salvage cut
 C----------
-C
-      INCLUDE 'SVDATA.F77'
 C
       INCLUDE 'SVDEAD.F77'
 C

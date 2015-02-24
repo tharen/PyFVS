@@ -1,7 +1,6 @@
 module fmsvcm_mod
     use svdata_mod, only: mxsvob
     implicit none
-    save
     !CODE SEGMENT FMSVCM
     !----------
     !  $Id: FMSVCM.F77 767 2013-04-10 22:29:22Z rhavis@msn.com $
