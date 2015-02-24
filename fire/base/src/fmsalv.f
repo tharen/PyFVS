@@ -1,8 +1,9 @@
       SUBROUTINE FMSALV (IYR,SALVTPA)
-      use contrl_mod
       use fmcom_mod
-      use fmfcom_mod
       use fmparm_mod
+      use contrl_mod
+      use fmprop_mod
+      use fmfcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -52,7 +53,6 @@ C.... Parameter statements.
 C.... Parameter include files.
 
 C.... Common include files.
-      INCLUDE 'FMPROP.F77'
 
 C.... Variable declarations.
 

@@ -3,6 +3,7 @@
       use fmcom_mod
       use fmparm_mod
       use contrl_mod
+      use fmprop_mod
       use fmfcom_mod
       use prgprm_mod
       implicit none
@@ -32,7 +33,6 @@ C     PARAMETER INCLUDE FILES.
 C     COMMON INCLUDE FILES
 
       INCLUDE 'PLOT.F77'
-      INCLUDE 'FMPROP.F77'
       INCLUDE 'METRIC.F77'
 
 C     VARIABLE DECLARATIONS

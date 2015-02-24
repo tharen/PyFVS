@@ -1,12 +1,11 @@
       BLOCK DATA FMCBLK
+      use fmprop_mod
       use prgprm_mod
       implicit none
 C----------
 C   **FMCBLK--FIRE-EM  DATE OF LAST REVISION:   03/20/09
 C----------
 COMMONS
-      INCLUDE 'FMPROP.F77'
-C
 C----------
 C  LOCAL VARIABLES DECLARATIONS
 C----------

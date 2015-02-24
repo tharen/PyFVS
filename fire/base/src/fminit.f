@@ -34,6 +34,9 @@ C----------
 C----------
 C  VARIABLE INITIALIZATIONS.
 C----------
+
+      call fmcblk()
+
       HARVYR = 0
       NSNAG  = 0
       IFTYR = 0
