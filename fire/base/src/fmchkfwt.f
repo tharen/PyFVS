@@ -1,5 +1,8 @@
       LOGICAL FUNCTION FMCHKFWT(I2)
-      IMPLICIT NONE
+      use contrl_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -11,9 +14,6 @@ C     PREVENT PLACING MORE THAN MXFMOD ELEMENTS IN THE
 C     FMOD/FWT ARRAY
 C
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'FMPARM.F77'
 
       INTEGER I2
 

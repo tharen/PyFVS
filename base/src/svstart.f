@@ -1,5 +1,10 @@
       SUBROUTINE SVSTART
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use arrays_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -9,37 +14,14 @@ C     N.L.CROOKSTON -- RMRS MOSCOW -- NOVEMBER 1998
 C
 C     BUILD THE INITIAL DISPLAY OF THE INITIAL TREES.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
       INCLUDE 'SVDATA.F77'
 C
-C
       INCLUDE 'SVRCOM.F77'
-C
-C
-COMMONS
 C
 
       LOGICAL DEBUG
       INTEGER I, ID, IFC, IH, ISVOBJ, J, K, L
       CHARACTER VVER*7
-C
 C
       CALL DBCHK (DEBUG,'SVSTART',7,ICYC)
 
@@ -141,7 +123,6 @@ C
 C     QUICK CHECKS/DEBUG
 C
       IF (DEBUG) CALL SVCDBH(WK3,0)
-C
 C
       RETURN
       END

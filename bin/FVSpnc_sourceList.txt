@@ -365,10 +365,7 @@
 ../econ/src/ecsetp.f
 ../econ/src/ecstatus.f
 ../econ/src/ecvol.f
-../fire/base/common/FMCOM.F77
 
-../fire/base/common/FMPARM.F77
-../fire/base/common/FMPROP.F77
 ../fire/base/common/FMSVCM.F77
 ../fire/base/src/excfim.f
 ../fire/base/src/fmburn.f

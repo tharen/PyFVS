@@ -1,5 +1,10 @@
       SUBROUTINE FMCROW
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use arrays_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C
 C  $Id$
 C
@@ -37,13 +42,8 @@ C                  PCTILE
 ***********************************************************************
 
 C.... Parameter include files.
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... Common include files.
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
 
 C.... Parameter statements.
 
@@ -72,7 +72,7 @@ C     9 = SUBALPINE FIR            -                 1
 C    10 = PONDEROSA PINE           -                13
 C    11 = BIRCH (PB)               aspen                    61
 C    12 = ASPEN (AS)                                        61
-C    13 = COTTONWOOD (CW)          cottonwood sp            60 
+C    13 = COTTONWOOD (CW)          cottonwood sp            60
 C    14 = OTHER CONIFER (OC)       FD                3
 C    15 = OTHER HARDWOOD (OH)      EP                       61
 C
@@ -153,7 +153,7 @@ C----------
 C  PLACEHOLDER FOR UNUSED CALLS IN **FMCROWE**
 C----------
 	SUBROUTINE HTDBH(I10,I11,X10,X11,I12)
-	IMPLICIT NONE
+      implicit none
 C
 	INTEGER I10,I11,I12
 	REAL    X10,X11
@@ -171,7 +171,7 @@ C----------
 C  PLACEHOLDER FOR UNUSED CALLS IN **FMCROWE**
 C----------
 	SUBROUTINE SEVLHT(X30,X31,L30,L31,X32,I30,L32,I31,C30)
-	IMPLICIT NONE
+      implicit none
 C
         LOGICAL   L30,L31,L32,L33
 	CHARACTER C30*3

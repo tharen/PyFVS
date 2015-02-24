@@ -1,5 +1,10 @@
       SUBROUTINE FMCROW
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use arrays_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMCROW  FIRE-AK DATE OF LAST REVISION:  05/03/12
 C----------
@@ -34,13 +39,8 @@ C                  PCTILE
 ***********************************************************************
 
 C.... Parameter include files.
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... Common include files.
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
 
 C.... Parameter statements.
 
@@ -65,10 +65,10 @@ C     6 = alaska-cedar           western redcedar  7
 C     7 = lodgepole pine            -             11
 C     8 = sitka spruce           Engelmann spruce 18
 C     9 = subalpine fir             -              1
-C    10 = red alder                 -             23    
+C    10 = red alder                 -             23
 C    11 = black cottonwood       eastern cottonwood         17
 C    12 = other hardwoods        eastern cottonwood         17
-C    13 = other softwoods        grand fir         4 
+C    13 = other softwoods        grand fir         4
 C --------------------------------------------------------------
 
       DATA ISPMAP /18,7,4,24,6,7,11,18,1,23,17,17,4/
@@ -144,12 +144,10 @@ C       COPY TEMPORARY VALUES TO FFE ARRAY
       RETURN
       END
 C
-C
 C----------
 C  PLACEHOLDER FOR UNUSED CALLS IN **FMCROWE**
 C----------
 C      SUBROUTINE HTDBH(I10,I11,X10,X11,I12)
-C      IMPLICIT NONE
 C
 C      INTEGER I10,I11,I12
 C      REAL    X10,X11

@@ -1,5 +1,9 @@
       SUBROUTINE FMTRIP (ITFN,I,WEIGHT)
-      IMPLICIT NONE
+      use fmcom_mod
+      use arrays_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -18,13 +22,7 @@ C     ITFN   -
 C     I      -
 C     WEIGHT -
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77' 
 C      INCLUDE 'PPEPRM.F77'
-      INCLUDE 'FMPARM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'FMCOM.F77'
 
       INTEGER I,ITFN,JJ
       REAL    WEIGHT

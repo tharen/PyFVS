@@ -1,5 +1,10 @@
       SUBROUTINE FMKILL(ICALL)
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use arrays_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -20,18 +25,8 @@ C                   GRADD  [SINGLE-STAND]
 C     CALLS:   FMSSEE
 C              FMSADD
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
       INCLUDE 'PLOT.F77'
       INCLUDE 'OUTCOM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'FMCOM.F77'
-C
-COMMONS
 C
       INTEGER I, YEAR, ICALL, ISHAG
       LOGICAL DEBUG

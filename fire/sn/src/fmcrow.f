@@ -1,15 +1,20 @@
       SUBROUTINE FMCROW
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use arrays_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMCROW  FIRE-SN DATE OF LAST REVISION:  07/16/12
 C----------
 C     CALLED FROM: FMSDIT, FMPRUN
 C     CALLS:
-C                 
+C
 C  PURPOSE:
 C     THIS SUBROUTINE CALCULATES CROWNW(TREE,SIZE), THE WEIGHT OF
 C     VARIOUS SIZES OF CROWN MATERIAL THAT IS ASSOCIATED WITH EACH TREE
-C     RECORD IN THE CURRENT STAND.  
+C     RECORD IN THE CURRENT STAND.
 C----------
 C  LOCAL VARIABLE DEFINITIONS:
 C     D:        DBH
@@ -18,27 +23,8 @@ C     IC:       LENGTH OF LIVE CROWN
 C     SP:       SPECIES
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C      
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C      
-      INCLUDE 'CONTRL.F77'
-C
-C      
-      INCLUDE 'ARRAYS.F77'
-C
-C
       INCLUDE 'SNCOM.F77'
 C
-C
-COMMONS
 C----------
 C  VARIABLE DECLARATIONS
 C----------
@@ -144,7 +130,7 @@ C    88 = softwoods, misc.         eastern redcedar    14
 C    89 = hardwoods, misc.         comm. hardwoods     44
 C    90 = unknown/not listed       comm. hardwoods     44
 
-  
+
       DATA ISPMAP /8,14, 9, 3, 3, 3, 3, 3, 3, 3,
      &             3, 5, 3, 3,14,14,12,26,50,19,
      &            18,26,44,24,24,53,39,44,55,44,
@@ -173,7 +159,7 @@ C  IF GROW IS STILL LESS THAN 1 AFTER THE INCREMENT.
 C----------
         IF (GROW(I) .LT. 1) GROW(I) = GROW(I) + 1
         IF (GROW(I) .LT. 1) GOTO 999
-C----------        
+C----------
 C  ARGUMENTS TO PASS
 C----------
 	      SPI = ISPMAP(ISP(I))

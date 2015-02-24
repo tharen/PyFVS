@@ -1,7 +1,7 @@
       SUBROUTINE FMINIT
+      use contrl_mod
       use fmcom_mod
       use fmfcom_mod
-      use contrl_mod
       use fmparm_mod
       use prgprm_mod
       implicit none

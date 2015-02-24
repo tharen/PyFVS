@@ -1,7 +1,7 @@
 
 c $Id$
 
-c     This is a collection of routines that provide an interface to 
+c     This is a collection of routines that provide an interface to
 c     the shared library version of FVS. Other routines that exist
 c     inside FVS may also be called.
 
@@ -9,9 +9,9 @@ c     Created in late 2011 by Nick Crookston, RMRS-Moscow
 
       subroutine fvsDimSizes(ntrees,ncycles,nplots,maxtrees,maxspecies,
      -                       maxplots,maxcycles)
+      use contrl_mod
+      use prgprm_mod
       implicit none
-      include "PRGPRM.F77"
-      include "CONTRL.F77"
       include "PLOT.F77"
 
 !Python F2PY Interface Directives
@@ -30,7 +30,7 @@ c     Created in late 2011 by Nick Crookston, RMRS-Moscow
       ncycles   = NCYC
       nplots    = IPTINV
       maxtrees  = MAXTRE
-      maxspecies= MAXSP 
+      maxspecies= MAXSP
       maxplots  = MAXPLT
       maxcycles = MAXCYC
       return
@@ -38,10 +38,10 @@ c     Created in late 2011 by Nick Crookston, RMRS-Moscow
 
       subroutine fvsSummary(summary,icycle,ncycles,maxrow,maxcol,
      -                      rtnCode)
+      use contrl_mod
+      use prgprm_mod
       implicit none
 
-      include "PRGPRM.F77"
-      include "CONTRL.F77"
       include "OUTCOM.F77"
 
 !Python F2PY Interface Directives
@@ -57,9 +57,9 @@ c     Created in late 2011 by Nick Crookston, RMRS-Moscow
 !DEC$ ATTRIBUTES REFERENCE :: SUMMARY, ICYCLE, NCYCLES, MAXROW
 !DEC$ ATTRIBUTES REFERENCE :: MAXCOL, RTNCODE
 #endif
-      
+
       integer :: summary(20),icycle,ncycles,maxrow,maxcol,rtnCode
-      
+
       maxrow = maxcy1
       maxcol = 20
       ncycles = ncyc
@@ -70,9 +70,14 @@ c     Created in late 2011 by Nick Crookston, RMRS-Moscow
         rtnCode = 0
       endif
       return
-      end    
-      
+      end
+
       subroutine fvsTreeAttr(name,nch,action,ntrees,attr,rtnCode)
+      use contrl_mod
+      use fmcom_mod
+      use arrays_mod
+      use fmparm_mod
+      use prgprm_mod
       implicit none
 
 c     set and/or gets the named tree attributes
@@ -86,12 +91,6 @@ c               2= ntrees is greater than maxtrees, not all data transfered
 c               3= there were more/fewer than ntrees.
 c               4= the length of the "name" string was too big or small
 c
-      include "PRGPRM.F77"
-      include "FMPARM.F77"
-      include "FMCOM.F77"
-      include "ARRAYS.F77"
-      include "CONTRL.F77"
-      include "VARCOM.F77"
 
 !Python F2PY Interface Directives
 !f2py intent(in) :: name
@@ -219,6 +218,7 @@ c
 
 
       subroutine fvsSpeciesAttr(name,nch,action,attr,rtnCode)
+      use prgprm_mod
       implicit none
 
 c     set and/or gets the named species attributes
@@ -229,7 +229,6 @@ c     attr    = a vector of length data, always "double"
 c     rtnCode = 0 is OK, 1= "name" not found,
 c               4= the length of the "name" string was too big or small
 c
-      include "PRGPRM.F77"
       include "PLOT.F77"
 
 !Python F2PY Interface Directives
@@ -280,6 +279,10 @@ c
 
 
       subroutine fvsEvmonAttr(name,nch,action,attr,rtnCode)
+      use fmcom_mod
+      use arrays_mod
+      use fmparm_mod
+      use prgprm_mod
       implicit none
 
 c     set and/or gets the named tree attributes
@@ -288,12 +291,8 @@ c     nch     = the number of characters in "name"
 c     action  = char string that is one of "set" or "get" (case sensitive)
 c     attr    = a vector of length data, always "double"
 c     rtnCode = 0 is OK, 1=action is "get" and variable
-c               is known to be undefined. 2= "name" not found, 
+c               is known to be undefined. 2= "name" not found,
 c
-      include "PRGPRM.F77"
-      include "FMPARM.F77"
-      include "FMCOM.F77"
-      include "ARRAYS.F77"
       include "OPCOM.F77"
 
 !Python F2PY Interface Directives
@@ -313,10 +312,10 @@ c
       character(len=9)  :: name
       character(len=4)  :: action
       character(len=8)  :: upname
-     
+
       upname = ' '
       upname = name(1:nch)
-      
+
       action=action(1:3)
       if (action=="get") attr = 0
 
@@ -545,15 +544,15 @@ c
       case ("shrubwt")
         if (action=="get") attr = flive(1)
         if (action=="set") flive(1) = real(attr,4)
-        return        
+        return
       case ("herbwt")
         if (action=="get") attr = flive(2)
-        if (action=="set") flive(2) = real(attr,4)                
+        if (action=="set") flive(2) = real(attr,4)
         return
       case default
         iv=0
       end select
-      
+
       if (iv == 0) then
         do i=1,nch
           call upcase(upname(i:i))
@@ -566,7 +565,7 @@ c
               else
                 rtncode = 1
               endif
-            elseif (action=="set") then 
+            elseif (action=="set") then
               tstv5(i) = real(attr,4)
               LTSTV5(i) = .TRUE.
             else
@@ -585,7 +584,7 @@ c
         endif
         return
       endif
-      
+
       i = mod(iv,100)
       iv = iv/100
 
@@ -614,18 +613,18 @@ c
       end select
       return
       end
-      
+
       subroutine fvsAddTrees(in_dbh,in_species,in_ht,in_cratio,
      -                       in_plot,in_tpa,ntrees,rtnCode)
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
       implicit none
 
 c     rtnCode = 0 when all is OK
 c               1 when there is no room for the ntrees
 c                 or when ntrees is zero
-      
-      include "PRGPRM.F77"
-      include "ARRAYS.F77"
-      include "CONTRL.F77"
+
       include "OUTCOM.F77"
       include "PLOT.F77"
       include "VARCOM.F77"
@@ -642,13 +641,13 @@ c                 or when ntrees is zero
 !DEC$ ATTRIBUTES REFERENCE :: IN_DBH, IN_SPECIES, IN_HT, IN_CRATIO
 !DEC$ ATTRIBUTES REFERENCE :: IN_PLOT, IN_TPA, NTREES, RTNCODE
 #endif
-      
+
       real(kind=8) :: in_dbh(ntrees),in_species(ntrees),
      -    in_ht(ntrees),in_cratio(ntrees),in_plot(ntrees),
      -    in_tpa(ntrees)
       real :: cw,crdum
       integer :: ntrees,rtnCode,i
-      
+
       rtnCode = 0
       if (ntrees == 0 .or. ntrees+itrn > MAXTRE) then
         rtnCode = 1
@@ -671,7 +670,7 @@ c                 or when ntrees is zero
         call cwcalc(isp(itrn),prob(itrn),dbh(itrn),ht(itrn),crdum,
      &              icr(itrn),cw,0,jostnd)
         crwdth(itrn)=cw
-c       
+c
         dg(itrn)=0.0
         htg(itrn)=0.0
         pct(itrn)=0.0
@@ -684,7 +683,7 @@ c
         ptbalt(itrn)=0.
         idtree(itrn)=10000000+icyc*10000+itrn
         call misputz(itrn,0)
-c       
+c
         abirth(itrn)=5
         defect(itrn)=0
         ispecl(itrn)=0
@@ -715,16 +714,16 @@ c     next time dist is called.
       ifst=1
       return
       end
-      
+
       subroutine fvsSpeciesCode(fvs_code,fia_code,plant_code,
      -                          indx,nchfvs,nchfia,nchplant,rtnCode)
+      use prgprm_mod
       implicit none
 
 c     rtnCode = 0 when all is OK
 c               1 when index is out of bounds
 c     indx    = species index
-     
-      include "PRGPRM.F77"
+
       include "PLOT.F77"
 
 !Python F2PY Interface Directives
@@ -748,7 +747,7 @@ c     indx    = species index
       character(len=4) :: fvs_code
       character(len=4) :: fia_code
       character(len=6) :: plant_code
-      
+
       if (indx == 0 .or. indx > MAXSP) then
         nchfvs  = 0
         nchfia  = 0
@@ -765,13 +764,14 @@ c     indx    = species index
       endif
       return
       end
-      
-      
-      subroutine fvsCutTrees(pToCut,ntrees,rtnCode)
 
-      include "PRGPRM.F77"
-      include "ARRAYS.F77"
-      include "CONTRL.F77"
+
+      subroutine fvsCutTrees(pToCut,ntrees,rtnCode)
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
+
 
 !Python F2PY Interface Directives
 !f2py double intent(in) :: pToCut
@@ -790,15 +790,16 @@ c     indx    = species index
         rtnCode = 1
         return
       endif
-      
+
       print *,"Not yet implemented"
       rtnCode = 1
       return
       end
-      
-      subroutine fvsStandID(sID,sCN,mID,ncsID,ncCN,ncmID)
 
-      include "PRGPRM.F77"
+      subroutine fvsStandID(sID,sCN,mID,ncsID,ncCN,ncmID)
+      use prgprm_mod
+      implicit none
+
       include "PLOT.F77"
 
 !Python F2PY Interface Directives
@@ -818,7 +819,7 @@ c     indx    = species index
       character(len=26) sID
       character(len=4)  mID
       character(len=40) sCN
-      
+
       sID = NPLT
       mID = MGMID
       sCN = DBCN
@@ -831,7 +832,7 @@ c     indx    = species index
 
       subroutine fvsCloseFile(filename,nch)
       implicit none
-      
+
 !Python F2PY Interface Directives
 !f2py intent(in) :: filename
 !f2py intent(in) :: nch
@@ -855,15 +856,15 @@ C     from within FVS. nch is the length of filename.
       endif
       return
       end
-      
-      
+
+
       subroutine fvsAddActivity(idt,iactk,inprms,nprms,rtnCode)
+      use contrl_mod
+      use prgprm_mod
       implicit none
 
 C     add an activity to the schedule.
 
-      include "PRGPRM.F77"
-      include "CONTRL.F77"
 
 !Python F2PY Interface Directives
 !f2py intent(in) :: idt
@@ -877,13 +878,13 @@ C     add an activity to the schedule.
 !DEC$ ATTRIBUTES C,DECORATE :: FVSADDACTIVITY
 !DEC$ ATTRIBUTES REFERENCE :: IDT, IACTK, INPRMS, NPRMS, RTNCODE
 #endif
-      
+
       integer :: i,idt,iactk,nprms,rtnCode,kode
       integer, parameter :: mxtopass=20
       real(kind=8) inprms(nprms)
       real(kind=4) prms(mxtopass)
 
-      if (nprms > 0) then 
+      if (nprms > 0) then
         do i=1,min(nprms,mxtopass)
           prms(i) = real(inprms(i),kind=4)
         enddo
@@ -895,13 +896,13 @@ C     add an activity to the schedule.
         call opincr (IY,ICYC,NCYC)
         rtnCode = 0
       endif
-      return 
+      return
       end
-      
+
       subroutine fvsSVSDimSizes(nsvsobjs,ndeadobjs,ncwdobjs,
      -                          mxsvsobjs,mxdeadobjs,mxcwdobjs)
+      use prgprm_mod
       implicit none
-      include "PRGPRM.F77"
       include "SVDATA.F77"
       include "SVDEAD.F77"
 
@@ -916,9 +917,9 @@ C     add an activity to the schedule.
 !DEC$ ATTRIBUTES REFERENCE :: MXSVSOBJS,MXDEADOBJS,MXCWDOBJS
 #endif
 
-      integer :: nsvsobjs,  ndeadobjs,  ncwdobjs,  
-     -           mxsvsobjs, mxdeadobjs, mxcwdobjs 
-      
+      integer :: nsvsobjs,  ndeadobjs,  ncwdobjs,
+     -           mxsvsobjs, mxdeadobjs, mxcwdobjs
+
       nsvsobjs   =  NSVOBJ
       ndeadobjs  =  NDEAD
       ncwdobjs   =  NCWD
@@ -929,6 +930,8 @@ C     add an activity to the schedule.
       end
 
       subroutine fvsSVSObjData(name,nch,action,nobjs,attr,rtnCode)
+      use contrl_mod
+      use prgprm_mod
       implicit none
 
 c     set and/or gets the named SVS object attributes
@@ -937,18 +940,16 @@ c     nch     = the number of characters in "name"
 c     action  = char string that is one of "set" or "get" (case sensitive)
 c     nobjs   = the number of objects, length of data
 c     attr    = a vector of length data, always "double"
-c     rtnCode = 0 is OK, 
+c     rtnCode = 0 is OK,
 c               1= "name" not found,
 c               2= nobjs is greater than the corresponding max, no data transfered.
 c               3= there were more/fewer than nobjs.
 c               4= the length of the "name" string was too big or small
 
-      include "PRGPRM.F77"
-      include "CONTRL.F77"
       include "PLOT.F77"
       include "SVDATA.F77"
       include "SVDEAD.F77"
-      
+
 !Python F2PY Interface Directives
 !f2py intent(in) :: name
 !f2py intent(in) :: nch
@@ -967,22 +968,22 @@ c               4= the length of the "name" string was too big or small
       real(kind=8)      :: attr(nobjs)
       character(len=10) :: name
       character(len=4)  :: action
-      
+
       if (nch == 0 .or. nch > 10) then
         rtnCode = 4
         return
       endif
-        
+
       name=name(1:nch)
       action=action(1:3)
 
       rtnCode = 0
-      
+
       select case(name)
-      
+
 C     ALL object section (the locations, etc):
-        
-      case ("objtype")  
+
+      case ("objtype")
         if (nobjs > MXSVOB) then
           attr = 0
           rtnCode = 2
@@ -994,9 +995,9 @@ C     ALL object section (the locations, etc):
           return
         endif
         if (action=="get") attr = IOBJTP(:nsvobj)
-        if (action=="set") IOBJTP(:nsvobj) = int(attr,4) 
+        if (action=="set") IOBJTP(:nsvobj) = int(attr,4)
 
-      case ("objindex")  
+      case ("objindex")
         if (nobjs > MXSVOB) then
           attr = 0
           rtnCode = 2
@@ -1008,9 +1009,9 @@ C     ALL object section (the locations, etc):
           return
         endif
         if (action=="get") attr = IS2F(:nsvobj)
-        if (action=="set") IS2F(:nsvobj) = int(attr,4) 
+        if (action=="set") IS2F(:nsvobj) = int(attr,4)
 
-      case ("xloc")  
+      case ("xloc")
         if (nobjs > MXSVOB) then
           attr = 0
           rtnCode = 2
@@ -1022,9 +1023,9 @@ C     ALL object section (the locations, etc):
           return
         endif
         if (action=="get") attr = XSLOC(:nsvobj)
-        if (action=="set") XSLOC(:nsvobj) = real(attr,4) 
+        if (action=="set") XSLOC(:nsvobj) = real(attr,4)
 
-      case ("yloc")  
+      case ("yloc")
         if (nobjs > MXSVOB) then
           attr = 0
           rtnCode = 2
@@ -1036,10 +1037,10 @@ C     ALL object section (the locations, etc):
           return
         endif
         if (action=="get") attr = YSLOC(:nsvobj)
-        if (action=="set") YSLOC(:nsvobj) = real(attr,4) 
-        
+        if (action=="set") YSLOC(:nsvobj) = real(attr,4)
+
 C     SNAG section:
-        
+
       case ("snagdbh")
         if (nobjs > MXDEAD) then
           attr = 0
@@ -1053,7 +1054,7 @@ C     SNAG section:
         endif
         if (action=="get") attr = SNGDIA(:ndead)
         if (action=="set") SNGDIA(:ndead) = real(attr,4)
-        
+
       case ("snaglen")
         if (nobjs > MXDEAD) then
           attr = 0
@@ -1081,8 +1082,8 @@ C     SNAG section:
         endif
         if (action=="get") attr = IYRCOD(:ndead)
         if (action=="set") IYRCOD(:ndead) = int(attr,4)
-        
-        
+
+
       case ("snagspp")
         if (nobjs > MXDEAD) then
           attr = 0
@@ -1096,7 +1097,7 @@ C     SNAG section:
         endif
         if (action=="get") attr = ISNSP(:ndead)
         if (action=="set") ISNSP(:ndead) = int(attr,4)
-                
+
       case ("snagfdir")
         if (nobjs > MXDEAD) then
           attr = 0
@@ -1110,7 +1111,7 @@ C     SNAG section:
         endif
         if (action=="get") attr = FALLDIR(:ndead)
         if (action=="set") FALLDIR(:ndead) = real(attr,4)
-        
+
       case ("snagstat")
         if (nobjs > MXDEAD) then
           attr = 0
@@ -1123,7 +1124,7 @@ C     SNAG section:
           return
         endif
         if (action=="get") attr = ISTATUS(:ndead)
-        if (action=="set") ISTATUS(:ndead) = int(attr,4) 
+        if (action=="set") ISTATUS(:ndead) = int(attr,4)
 
       case ("snagwt0")
         if (nobjs > MXDEAD) then
@@ -1137,7 +1138,7 @@ C     SNAG section:
           return
         endif
         if (action=="get") attr = SNGCNWT(:ndead,0)
-        if (action=="set") SNGCNWT(:ndead,0) = real(attr,4) 
+        if (action=="set") SNGCNWT(:ndead,0) = real(attr,4)
 
       case ("snagwt1")
         if (nobjs > MXDEAD) then
@@ -1151,7 +1152,7 @@ C     SNAG section:
           return
         endif
         if (action=="get") attr = SNGCNWT(:ndead,1)
-        if (action=="set") SNGCNWT(:ndead,1) = real(attr,4) 
+        if (action=="set") SNGCNWT(:ndead,1) = real(attr,4)
 
       case ("snagwt2")
         if (nobjs > MXDEAD) then
@@ -1165,7 +1166,7 @@ C     SNAG section:
           return
         endif
         if (action=="get") attr = SNGCNWT(:ndead,2)
-        if (action=="set") SNGCNWT(:ndead,2) = real(attr,4) 
+        if (action=="set") SNGCNWT(:ndead,2) = real(attr,4)
 
       case ("snagwt3")
         if (nobjs > MXDEAD) then
@@ -1179,11 +1180,11 @@ C     SNAG section:
           return
         endif
         if (action=="get") attr = SNGCNWT(:ndead,3)
-        if (action=="set") SNGCNWT(:ndead,3) = real(attr,4) 
+        if (action=="set") SNGCNWT(:ndead,3) = real(attr,4)
 
 C     CWD section:
 
-      case ("cwddia") 
+      case ("cwddia")
         if (nobjs > MXCWD) then
           attr = 0
           rtnCode = 2
@@ -1195,9 +1196,9 @@ C     CWD section:
           return
         endif
         if (action=="get") attr = cwddia(:ncwd)
-        if (action=="set") cwddia(:ncwd) = real(attr,4) 
-        
-      case ("cwdlen") 
+        if (action=="set") cwddia(:ncwd) = real(attr,4)
+
+      case ("cwdlen")
         if (nobjs > MXCWD) then
           attr = 0
           rtnCode = 2
@@ -1209,9 +1210,9 @@ C     CWD section:
           return
         endif
         if (action=="get") attr = cwdlen(:ncwd)
-        if (action=="set") cwdlen(:ncwd) = real(attr,4) 
-        
-      case ("cwdpil") 
+        if (action=="set") cwdlen(:ncwd) = real(attr,4)
+
+      case ("cwdpil")
         if (nobjs > MXCWD) then
           attr = 0
           rtnCode = 2
@@ -1223,8 +1224,8 @@ C     CWD section:
           return
         endif
         if (action=="get") attr = cwdpil(:ncwd)
-        if (action=="set") cwdpil(:ncwd) = real(attr,4) 
-        
+        if (action=="set") cwdpil(:ncwd) = real(attr,4)
+
       case ("cwddir")
         if (nobjs > MXCWD) then
           attr = 0
@@ -1237,9 +1238,9 @@ C     CWD section:
           return
         endif
         if (action=="get") attr = cwddir(:ncwd)
-        if (action=="set") cwddir(:ncwd) = real(attr,4) 
-        
-      case ("cwdwt")  
+        if (action=="set") cwddir(:ncwd) = real(attr,4)
+
+      case ("cwdwt")
         if (nobjs > MXCWD) then
           attr = 0
           rtnCode = 2
@@ -1251,17 +1252,20 @@ C     CWD section:
           return
         endif
         if (action=="get") attr = cwdwt(:ncwd)
-        if (action=="set") cwdwt(:ncwd) = real(attr,4) 
-        
+        if (action=="set") cwdwt(:ncwd) = real(attr,4)
+
       case default
         rtnCode = 1
         attr = 0
       end select
-      
+
       return
       end
 
       subroutine fvsFFEAttrs(name,nch,action,nobjs,attr,rtnCode)
+      use fmcom_mod
+      use fmparm_mod
+      use prgprm_mod
       implicit none
 
 c     set and/or gets the named FFE variables
@@ -1270,15 +1274,12 @@ c     nch     = the number of characters in "name"
 c     action  = char string that is one of "set" or "get" (case sensitive)
 c     nobjs   = the number of objects, length of data
 c     attr    = a vector of length data, always "double"
-c     rtnCode = 0 is OK, 
+c     rtnCode = 0 is OK,
 c               1= "name" not found,
 c               2= nobjs is greater than the corresponding max, no data transfered.
 c               3= there were more/fewer than nobjs.
 c               4= the length of the "name" string was too big or small
 
-      include "PRGPRM.F77"
-      include 'FMPARM.F77'
-      include 'FMCOM.F77'
 
 !Python F2PY Interface Directives
 !f2py intent(in) :: name
@@ -1298,17 +1299,17 @@ c               4= the length of the "name" string was too big or small
       real(kind=8)      :: attr(nobjs)
       character(len=10) :: name
       character(len=4)  :: action
-      
+
       if (nch == 0 .or. nch > 10) then
         rtnCode = 4
         return
       endif
-        
+
       name=name(1:nch)
       action=action(1:3)
 
       rtnCode = 0
-      
+
       select case(name)
 
       case ("fallyrs0")
@@ -1318,7 +1319,7 @@ c               4= the length of the "name" string was too big or small
           return
         endif
         if (action=="get") attr = TFALL(1:MAXSP,0)
-        if (action=="set") TFALL(1:MAXSP,0) = real(attr,4) 
+        if (action=="set") TFALL(1:MAXSP,0) = real(attr,4)
 
       case ("fallyrs1")
         if (nobjs /= MAXSP) then
@@ -1327,7 +1328,7 @@ c               4= the length of the "name" string was too big or small
           return
         endif
         if (action=="get") attr = TFALL(1:MAXSP,1)
-        if (action=="set") TFALL(1:MAXSP,1) = real(attr,4) 
+        if (action=="set") TFALL(1:MAXSP,1) = real(attr,4)
 
       case ("fallyrs2")
         if (nobjs /= MAXSP) then
@@ -1336,7 +1337,7 @@ c               4= the length of the "name" string was too big or small
           return
         endif
         if (action=="get") attr = TFALL(1:MAXSP,2)
-        if (action=="set") TFALL(1:MAXSP,2) = real(attr,4) 
+        if (action=="set") TFALL(1:MAXSP,2) = real(attr,4)
 
       case ("fallyrs3")
         if (nobjs /= MAXSP) then
@@ -1345,7 +1346,7 @@ c               4= the length of the "name" string was too big or small
           return
         endif
         if (action=="get") attr = TFALL(1:MAXSP,3)
-        if (action=="set") TFALL(1:MAXSP,3) = real(attr,4) 
+        if (action=="set") TFALL(1:MAXSP,3) = real(attr,4)
 
       case ("fallyrs4")
         if (nobjs /= MAXSP) then
@@ -1354,7 +1355,7 @@ c               4= the length of the "name" string was too big or small
           return
         endif
         if (action=="get") attr = TFALL(:MAXSP,4)
-        if (action=="set") TFALL(:MAXSP,4) = real(attr,4) 
+        if (action=="set") TFALL(:MAXSP,4) = real(attr,4)
 
       case ("fallyrs5")
         if (nobjs /= MAXSP) then
@@ -1363,13 +1364,13 @@ c               4= the length of the "name" string was too big or small
           return
         endif
         if (action=="get") attr = TFALL(:MAXSP,5)
-        if (action=="set") TFALL(:MAXSP,5) = real(attr,4) 
+        if (action=="set") TFALL(:MAXSP,5) = real(attr,4)
 
       case default
         rtnCode = 1
         attr = 0
       end select
-      
+
       return
       end
       

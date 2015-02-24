@@ -1,11 +1,10 @@
       BLOCK DATA FMCBLK
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C   **FMCBLK--FIRE-BM  DATE OF LAST REVISION:   05/13/09
 C----------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'FMPROP.F77'
 
       INTEGER J

@@ -1,6 +1,10 @@
       Subroutine FMSFALL(IYR,KSP,D,ORIGDEN,DENTTL,ISWTCH,
      &                   RSOFT,RSMAL,DFALLN)
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMSFALL--FIRE-EM  DATE OF LAST REVISION: 11/30/09
 C----------
@@ -58,21 +62,6 @@ C              NI variant).
 C              Internal FALLX values can be overridden by the user, via
 C              the SNAGFALL keyword.
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
 COMMONS
 C----------
 C  LOCAL VARIABLES DECLARATIONS

@@ -1,5 +1,10 @@
       SUBROUTINE FMCROW
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use arrays_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMCROW  FIRE-IE DATE OF LAST REVISION:  01/10/12
 C----------
@@ -31,24 +36,6 @@ C     ISPMAP:   SPECIES (NUMBER) IN FMCROWW OR FMCROWE THAT DIFFERENT
 C               SPECIES ARE MAPPED TO
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C      
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C      
-      INCLUDE 'CONTRL.F77'
-C
-C     
-      INCLUDE 'ARRAYS.F77'
-C
-C
-COMMONS
 C----------
 C  VARIABLE DECLARATIONS
 C----------
@@ -69,7 +56,7 @@ C     1 = WESTERN WHITE PINE       -                15
 C     2 = WESTERN LARCH            -                 8
 C     3 = DOUGLAS-FIR              -                 3
 C     4 = GRAND FIR                -                 4
-C     5 = WESTERN HEMLOCK          -                 6 
+C     5 = WESTERN HEMLOCK          -                 6
 C     6 = WESTERN REDCEDAR         -                 7
 C     7 = LODGEPOLE PINE           -                11
 C     8 = ENGELMANN SPRUCE         -                18
@@ -82,7 +69,7 @@ C    14 = SUBALPINE LARCH       subalpine fir        1
 C    15 = PINYON PINE              -                12
 C    16 = ROCKY MOUNTAIN JUNIPER   -                16
 C    17 = PACIFIC YEW           western redcedar     7
-C    18 = QUAKING ASPEN            -                        41 
+C    18 = QUAKING ASPEN            -                        41
 C    19 = COTTONWOODS           eastern cottonwood          17
 C    20 = MOUNTAIN MAPLE        bigleaf maple        5
 C    21 = PAPER BIRCH              -                        43
@@ -91,7 +78,7 @@ C    23 = OTHER SOFTWOODS     mountain hemlock      24
 C----------
       DATA ISPMAP / 15, 8, 3, 4, 6, 7, 11, 18, 1, 13,
      &              24, 14, 11, 1, 12, 16, 7, 41, 17, 5,
-     &             43, 23, 24/ 
+     &             43, 23, 24/
 
 C----------
 C  CHECK FOR DEBUG.
@@ -125,7 +112,7 @@ C  IF GROW IS STILL LESS THAN 1 AFTER THE INCREMENT.
 C----------
         IF (GROW(I) .LT. 1) GROW(I) = GROW(I) + 1
         IF (GROW(I) .LT. 1) GOTO 999
-C----------        
+C----------
 C  ARGUMENTS TO PASS
 C----------
         SPIW = ISP(I)
@@ -167,7 +154,7 @@ C----------
 C  PLACEHOLDER FOR UNUSED CALLS IN **FMCROWE**
 C----------
       SUBROUTINE HTDBH(I10,I11,X10,X11,I12)
-      IMPLICIT NONE
+      implicit none
 C
       INTEGER I10,I11,I12
       REAL    X10,X11

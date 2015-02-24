@@ -1,5 +1,8 @@
       SUBROUTINE FMSNGDK(VVER,KSP,D,DKTIME)
-      IMPLICIT NONE
+      use fmcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -25,20 +28,7 @@ C     DKTIME:  Years, since death, for snag to become soft.
 C     KSP:     Species number for current snag pool/record.
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
       INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
 C
       CHARACTER VVER*7
       INTEGER JADJ, JSML, JYRSOFT, KSP

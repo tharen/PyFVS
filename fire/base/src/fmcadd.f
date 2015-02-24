@@ -1,10 +1,15 @@
       SUBROUTINE FMCADD
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use arrays_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C     CALLED FROM: FMMAIN
-C     CALLS        
+C     CALLS
 *  Purpose:
 *     This subroutine calculates annual litterfall and crown breakage
 *     from each tree, and adds the material to the appropriate debris
@@ -22,7 +27,7 @@ C     CALLS
 *
 *  Local variable definitions:
 *     DKCL:    decay class
-*     DOWN:    pounds per acre of snag material falling in this year. 
+*     DOWN:    pounds per acre of snag material falling in this year.
 *     PDOWN:   the Proportion of material that has come DOWN in each
 *              year class of CWD2B
 *     MAXYR:   the number of year classes of CWD2B from which material
@@ -31,107 +36,102 @@ C     CALLS
 *  Common block variables and parameters:
 *
 ***********************************************************************
-      
+
 C.... Parameter statements.
-    
-C.... Parameter include files. 
-  
-      INCLUDE 'PRGPRM.F77'
+
+C.... Parameter include files.
+
 C      INCLUDE 'PPEPRM.F77'
-      INCLUDE 'FMPARM.F77'
-    
+
 C.... Common include files.
-    
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-    
-C.... Variable declarations. 
-    
+
+
+C.... Variable declarations.
+
         INTEGER I, SIZE, SP, DKCL, IYR
-        REAL    DOWN, PDOWN 
-      LOGICAL DEBUG	
+        REAL    DOWN, PDOWN
+      LOGICAL DEBUG
         REAL    AMT
 C-----------
 C  CHECK FOR DEBUG.
 C-----------
       CALL DBCHK (DEBUG,'FMCADD',6,ICYC)
       IF (DEBUG) WRITE(JOSTND,7) ICYC
-  7   FORMAT(' ENTERING FMCADD CYCLE = ',I2)	
-    
+  7   FORMAT(' ENTERING FMCADD CYCLE = ',I2)
+
 C.... Begin routine.
 
 C     Go through the tree list, calculating debris inputs from each tree.
-    
+
       DO I=1,ITRN
-    
+
          IF (FMPROB(I).GT.0.) THEN
-    
+
             SP = ISP(I)
             DKCL = DKRCLS(SP)
-          
+
 C           Litterfall from foliage:
             CWD(1,10,2,DKCL) = CWD(1,10,2,DKCL)
      +        + (CROWNW(I,0) * FMPROB(I)/LEAFLF(SP)) * P2T
-            CWDNEW(1,10) = CWDNEW(1,10) 
-     +        + (CROWNW(I,0) * FMPROB(I)/LEAFLF(SP)) * P2T   
-      
-            DO SIZE=1,5 
-        
+            CWDNEW(1,10) = CWDNEW(1,10)
+     +        + (CROWNW(I,0) * FMPROB(I)/LEAFLF(SP)) * P2T
+
+            DO SIZE=1,5
+
 C           Random breakage of each woody crown component:
-                AMT = (LIMBRK * FMPROB(I) * CROWNW(I,SIZE)) 
+                AMT = (LIMBRK * FMPROB(I) * CROWNW(I,SIZE))
      &                                    * P2T
                 CWD(1,SIZE,2,DKCL) = CWD(1,SIZE,2,DKCL) + AMT
                 CWDNEW(1,SIZE) = CWDNEW(1,SIZE) + AMT
-        
+
 C           Dead material from crown lifting (NOTE:  foliage isn't being
 C           included here because it's assumed that the leaf-lifespan
-C           data used above already incorporates the death of some foliage 
+C           data used above already incorporates the death of some foliage
 C           due to crown lifting):
-    
+
                 AMT = (FMPROB(I) * OLDCRW(I,SIZE)) * P2T
                 CWD(1,SIZE,2,DKCL) = CWD(1,SIZE,2,DKCL) + AMT
                 CWDNEW(1,SIZE) = CWDNEW(1,SIZE) + AMT
-    
+
             ENDDO
          ENDIF
       ENDDO
-  
-  
+
+
 C     Add in the debris-in-waiting from snags.  Since crowns left during
-C     salvage are handled elsewhere, it is enough to take 
-C     all the material in the year-1 pool of CWD2B.   
-      
+C     salvage are handled elsewhere, it is enough to take
+C     all the material in the year-1 pool of CWD2B.
+
           IYR=1
           PDOWN = 1.0
-        
-C       Repeat for each decay class:        
-      
-        DO DKCL=1,4 
-      
+
+C       Repeat for each decay class:
+
+        DO DKCL=1,4
+
 C          First add the litterfall to down debris.
-           
+
             DOWN = PDOWN * CWD2B(DKCL,0,IYR) / NYRS
-           CWD(1,10,2,DKCL) = CWD(1,10,2,DKCL) + DOWN / 2000.0 
+           CWD(1,10,2,DKCL) = CWD(1,10,2,DKCL) + DOWN / 2000.0
            CWDNEW(1,10) = CWDNEW(1,10) + DOWN / 2000.0
            CWD2B(DKCL,0,IYR) = CWD2B(DKCL,0,IYR) - DOWN
-           
+
 C          Then all the sizes of woody material.
-        
+
            DO SIZE=1,5
                 DOWN = PDOWN * CWD2B(DKCL,SIZE,IYR) / NYRS
               CWD(1,SIZE,2,DKCL) = CWD(1,SIZE,2,DKCL) + DOWN / 2000.0
               CWDNEW(1,SIZE) = CWDNEW(1,SIZE) + DOWN / 2000.0
               CWD2B(DKCL,SIZE,IYR) = CWD2B(DKCL,SIZE,IYR) - DOWN
-              
+
            ENDDO
         ENDDO
 
-C     Write out debug values before pools are moved forward for the year. 
- 
+C     Write out debug values before pools are moved forward for the year.
+
         IF (DEBUG) THEN
           WRITE(JOSTND,*) 'BEFORE POOLS ARE MOVED FORWARD'
-          DO DKCL=1,4 
+          DO DKCL=1,4
             DO SIZE=0,5
                 DO IYR=1,(TFMAX-1)
                    WRITE (JOSTND,10)DKCL,SIZE,IYR,
@@ -139,12 +139,12 @@ C     Write out debug values before pools are moved forward for the year.
       ENDDO
             ENDDO
           ENDDO
-        ENDIF 
-        
+        ENDIF
+
 C     Move all the debris-in-waiting pools of each decay class forward
 C     one year, to be ready for next year:
-    
-      DO DKCL=1,4 
+
+      DO DKCL=1,4
          DO SIZE=0,5
             DO IYR=1,(TFMAX-1)
                CWD2B(DKCL,SIZE,IYR) = CWD2B(DKCL,SIZE,IYR+1)
@@ -153,11 +153,11 @@ C     one year, to be ready for next year:
          ENDDO
       ENDDO
 
-C     Write out debug values after pools are moved forward for the year. 
-    
+C     Write out debug values after pools are moved forward for the year.
+
       IF (DEBUG) THEN
           WRITE(JOSTND,*) 'AFTER POOLS ARE MOVED FORWARD'
-         DO DKCL=1,4 
+         DO DKCL=1,4
             DO SIZE=0,5
                DO IYR=1,(TFMAX-1)
                   WRITE (JOSTND,10)DKCL,SIZE,IYR,
@@ -168,6 +168,6 @@ C     Write out debug values after pools are moved forward for the year.
             ENDDO
          ENDDO
       ENDIF
-     
+
       RETURN
-        END   
+        END

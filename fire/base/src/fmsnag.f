@@ -1,5 +1,9 @@
       SUBROUTINE FMSNAG (IYR, YR1)
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C  $Id$
@@ -27,11 +31,11 @@ C
 *          'Base' rate-of-fall is calculated from DBH assuming that Marcot's
 *          observed rate for <18" snags applies on average to 9" snags, and
 *          his rate for >18" snags applies to 28" snags.
-*     SN - MULTIPLIERS TO TWEAK THE EQUATIONS BY SPECIES WERE DEVELOPED FROM 
+*     SN - MULTIPLIERS TO TWEAK THE EQUATIONS BY SPECIES WERE DEVELOPED FROM
 *          OZARK-OUACHITA WORKSHOP INPUT
 *     LS - MULTIPLIERS AND EQUATIONS WERE DEVELOPED FROM LAKE STATES WORKSHOP INPUT
 *     NE - FALL RATES WERE DETERMINED FROM DISCUSSIONS WITH COELI HOOVER AND LINDA
-*          HEATH AND A PAPER BY YAMASAKI AND LEAK (IN PRESS, NJAF) 
+*          HEATH AND A PAPER BY YAMASAKI AND LEAK (IN PRESS, NJAF)
 *
 *----------------------------------------------------------------------
 *
@@ -54,12 +58,8 @@ C
 C.... Parameter statements.
 
 C.... Parameter include files.
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... Common include files.
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'CONTRL.F77'
 
 C.... Variable declarations.
 
@@ -133,7 +133,7 @@ C       Skip this record if there are no snags in it.
 
         JSP = SPS(I)
 C
-C       SEE IF SPECIES IS ASPEN OR COTTONWOOD OR PAPER BIRCH - 
+C       SEE IF SPECIES IS ASPEN OR COTTONWOOD OR PAPER BIRCH -
 C       SPECIAL RULES IN UT/TT/CR
 C
         LASCO = .FALSE.
@@ -145,8 +145,8 @@ C
      &        VVER(1:2) .EQ. 'SM' .OR.
      &        VVER(1:2) .EQ. 'SP' .OR.
      &        VVER(1:2) .EQ. 'BP' .OR.
-     &        VVER(1:2) .EQ. 'LP' .OR.     
-     &        VVER(1:2) .EQ. 'SF') THEN 
+     &        VVER(1:2) .EQ. 'LP' .OR.
+     &        VVER(1:2) .EQ. 'SF') THEN
           IF (JSP.EQ.20 .OR. JSP.EQ.21 .OR. JSP.EQ.22 .OR. JSP.EQ.28)
      &        LASCO = .TRUE.
         ENDIF
@@ -201,13 +201,13 @@ C
           XS = PBFRIS(I) * DENIS(I)
             XH = PBFRIH(I) * DENIH(I)
             IF (DFIS .LT. XS) DFIS = XS
-              IF (DFIH .LT. XH) DFIH = XH   
+              IF (DFIH .LT. XH) DFIH = XH
             ELSEIF ((IYR-BURNYR) .LE. PBTIME) THEN
-              XS = PBFRIS(I) * DENIS(I) 
-              XH = PBFRIH(I) * DENIH(I) 
+              XS = PBFRIS(I) * DENIS(I)
+              XH = PBFRIH(I) * DENIH(I)
             IF (DFIS .LT. XS) DFIS = XS
-              IF (DFIH .LT. XH) DFIH = XH   
-            ENDIF       
+              IF (DFIH .LT. XH) DFIH = XH
+            ENDIF
           ENDIF
 
 C     Now actually remove the snags.  If less than DZERO will be left,
@@ -259,15 +259,15 @@ C     this means there are no snags of either type left in the record.
      &      VVER(1:2) .EQ. 'CR' .OR.
      &      VVER(1:2) .EQ. 'LP' .OR.
      &      VVER(1:2) .EQ. 'BP' .OR.
-     &      VVER(1:2) .EQ. 'SP' .OR.     
+     &      VVER(1:2) .EQ. 'SP' .OR.
      &      VVER(1:2) .EQ. 'SF' .OR.
      &      VVER(1:2) .EQ. 'SM') THEN
-          IF ((DENIH(I) .GT. 0.0) .AND. (HTIH(I) .LT. 1.5)) 
+          IF ((DENIH(I) .GT. 0.0) .AND. (HTIH(I) .LT. 1.5))
      &      DENIH(I) = 0.0
           IF ((DENIS(I) .GT. 0.0) .AND. (HTIS(I) .LT. 1.5))
      &      DENIS(I) = 0.0
         ELSE
-          IF ((DENIH(I) .GT. 0.0) .AND. (HTIH(I) .LT. 1.0)) 
+          IF ((DENIH(I) .GT. 0.0) .AND. (HTIH(I) .LT. 1.0))
      &      DENIH(I) = 0.0
           IF ((DENIS(I) .GT. 0.0) .AND. (HTIS(I) .LT. 1.0))
      &      DENIS(I) = 0.0
