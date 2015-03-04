@@ -1,4 +1,5 @@
       SUBROUTINE CROWN
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -23,8 +24,6 @@ C  CROWN RATIO WHEN DBH IS LESS THAN 3 INCHES.  PROCESSING OF
 C  CROWN CHANGE FOR SMALL TREES IS CONTROLLED BY **REGENT**.
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'COEFFS.F77'
 C
       INCLUDE 'CONTRL.F77'

@@ -1,4 +1,5 @@
       SUBROUTINE BMDAM (II,ICODES)
+      use arrays_mod
       use prgprm_mod
       implicit none
 
@@ -45,7 +46,6 @@ C    correct index value for both live and dead.
 C----------
 C
       INCLUDE 'PPEPRM.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'PPCNTL.F77'
 

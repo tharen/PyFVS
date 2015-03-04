@@ -1,4 +1,5 @@
       SUBROUTINE SPESRT
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -10,8 +11,6 @@ C     BEEN COMPRESSED AND/OR TREES HAVE BEEN ADDED VIA THE
 C     REGENERATION ESTABLISHMENT SUBMODEL.
 C
       INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INTEGER I
 C

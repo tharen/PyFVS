@@ -1,5 +1,6 @@
       SUBROUTINE DMADLV(SrcInd, Cnt, SFld, IFld,  MshHt, Dist,
      &                      Level, Shd, Shd0, II, EB)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -101,7 +102,6 @@ C     ZZ      DMCOM
 C     ISP     ARRAYS
 C
 
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'DMCOM.F77'
 
 C Subroutine arguments.

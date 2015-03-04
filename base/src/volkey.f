@@ -1,4 +1,5 @@
       SUBROUTINE VOLKEY(DEBUG)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -9,8 +10,6 @@ C  THIS SUBROUTINE PROCESSES THE KEYWORDS USED TO MODIFY VOLUME
 C  STANDARDS AND EQUATIONS.
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'COEFFS.F77'
 C
       INCLUDE 'CONTRL.F77'

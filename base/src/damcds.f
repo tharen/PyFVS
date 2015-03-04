@@ -1,4 +1,5 @@
       SUBROUTINE DAMCDS (II,ICODES)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -10,7 +11,6 @@ C     ICODES= DISEASE AND DAMAGE CODES ARRAY
 C
 C----------
 C
-      INCLUDE 'ARRAYS.F77'
       INTEGER   I,II
       INTEGER*4 IDD
       INTEGER ICODES(6)

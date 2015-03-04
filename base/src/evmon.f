@@ -1,4 +1,5 @@
       SUBROUTINE EVMON (IPH,IPPCL)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -21,8 +22,6 @@ C     IPH   = THE PROJECTION PHASE NUMBER...USED TO SET IPHASE.
 C     IPPCL = 1=CALL PPEVMI IF PPE IS ACTIVE
 C             2=SUPPRESS THE CALL TO PPEVMI WHEN PPE IS ACTIVE.
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'OPCOM.F77'
 C
       INCLUDE 'CONTRL.F77'

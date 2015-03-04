@@ -1,4 +1,5 @@
       SUBROUTINE SMHTGF(ISPC,I,HTGRTH,CR,TPCCF,LESTB,DEBUG)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -10,8 +11,6 @@ C CALLED FROM **REGENT.
 C CALLS **FINDAG
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'PLOT.F77'
 C
       INCLUDE 'CALCOM.F77'

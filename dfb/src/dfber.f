@@ -1,4 +1,5 @@
       SUBROUTINE DFBER (NOER)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -47,8 +48,6 @@ C     ITRN   - (CONTRL)  INPUT
 C     JODFB  - (DFBCOM)  INPUT
 C     PBADF4 - (DFBCOM)  OUTPUT
 C     PROB   - (ARRAYS)  INPUT
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'CONTRL.F77'
 C

@@ -1,4 +1,5 @@
       SUBROUTINE DFBMOD
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -38,8 +39,6 @@ C     PREKLL - (DFBCOM)  INPUT
 C     START  - (DFBCOM)  INPUT
 C
       INCLUDE 'DFBCOM.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'CONTRL.F77'
 C

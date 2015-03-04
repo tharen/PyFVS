@@ -1,4 +1,5 @@
       SUBROUTINE TMBMAS
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -23,7 +24,6 @@ C      in a common block. Local declaration removed.
 C----------
 C
 
-      INCLUDE 'ARRAYS.F77'
 
       INCLUDE 'CONTRL.F77'
 

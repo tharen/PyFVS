@@ -1,4 +1,5 @@
       SUBROUTINE RDTIM
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -22,7 +23,6 @@ C
       INCLUDE 'RDPARM.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'RDADD.F77'
 C

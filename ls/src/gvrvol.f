@@ -1,6 +1,7 @@
 
       SUBROUTINE GVRVOL (VN,VM,BBFV,ISPC,D,H,TKILL,BARK,ITRNC,VMAX,
      1              CTKFLG,BTKFLG,IT)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -15,8 +16,6 @@ C
 C
       INCLUDE 'PLOT.F77'
 C
-      INCLUDE 'ARRAYS.F77'
-COMMONS
 C----------
       REAL VOL(15)
       LOGICAL TKILL,CTKFLG,BTKFLG,DEBUG,DONE,LCONE

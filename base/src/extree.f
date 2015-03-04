@@ -1,4 +1,5 @@
       SUBROUTINE EXTREE
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -6,8 +7,6 @@ C  $Id$
 C----------
 C
 C     ASSIGNS THE EXAMPLE TREES TO THE OUTPUT ARRAYS.
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'CONTRL.F77'
 C

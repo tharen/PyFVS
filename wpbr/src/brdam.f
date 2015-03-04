@@ -1,4 +1,5 @@
       SUBROUTINE BRDAM(II,ICODES)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C**********************************************************************
@@ -33,7 +34,6 @@ C**********************************************************************
 
 C.... Common include files.
 
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'BRCOM.F77'
 
 C.... Local variable declarations.

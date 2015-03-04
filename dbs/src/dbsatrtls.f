@@ -1,4 +1,5 @@
       SUBROUTINE DBSATRTLS(IWHO,KODE,TEM)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C
@@ -11,8 +12,6 @@ C                     INORDER FOR US TO CONTINUE
 C            KODE  - FOR LETTING CALLING ROUTINE KNOW IF THIS IS A
 C                     REDIRECT OF THE FLAT FILE REPORT OR IN
 C                     ADDITION TO
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'CONTRL.F77'
 C

@@ -1,4 +1,5 @@
       SUBROUTINE MBACAL
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -8,8 +9,6 @@ C   THIS SUBROUTINE IDENTIFIES THE SITE SPECIES (IE SPECIES OF
 C   MAXIMUM BASAL AREA IN THE STAND. THIS ROUTINE IS CALLED FROM
 C   CRATET AND DENSE.
 C----------
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'COEFFS.F77'
 C

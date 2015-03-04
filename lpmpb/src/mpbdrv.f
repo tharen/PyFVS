@@ -1,4 +1,5 @@
       SUBROUTINE MPBDRV
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -21,8 +22,6 @@ C     Function name was used as variable name.
 C     changed variable INT to INCRS
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'PLOT.F77'

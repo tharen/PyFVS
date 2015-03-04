@@ -1,4 +1,5 @@
       SUBROUTINE BWEBMS (TRFBMS,ICVOPT)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -37,7 +38,6 @@ C    10/06/11 Lance R. David (FMSC)
 C       This routine created for the CI variant expansion to 19 species.
 C----------
 C
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'PLOT.F77'
 C

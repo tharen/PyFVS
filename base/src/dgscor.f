@@ -1,4 +1,5 @@
       SUBROUTINE DGSCOR (SSIG,FRM,RHO,RHOCP,IT)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -8,8 +9,6 @@ C  THIS SUBROUTINE CALCULATES THE ERROR IN DIAMETER GROWTH PREDICTION
 C  THAT WILL BE CARRIED OVER INTO THE NEXT CYCLE.
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'PLOT.F77'

@@ -1,6 +1,7 @@
       SUBROUTINE STEP_GRINCR (DEBUG,IPMODI,LTMGO,LMPBGO,LDFBGO
      &          ,LBWEGO,LCVATV,LBGCGO)
       use tree_data, only: copy_cuts_data,copy_mort_data
+      use arrays_mod
       use prgprm_mod
       implicit none
 
@@ -14,8 +15,6 @@ C
 C     CALLED FROM: PPMAIN AND TREGRO.
 C
       INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'CONTRL.F77'
 C

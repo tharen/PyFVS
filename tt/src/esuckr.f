@@ -1,4 +1,5 @@
       SUBROUTINE ESUCKR
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -10,8 +11,6 @@ C  VALUE OF MAXTRE. COMPRS IS CALLED IN ESNUTR.
 C
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'COEFFS.F77'
 C
       INCLUDE 'CONTRL.F77'

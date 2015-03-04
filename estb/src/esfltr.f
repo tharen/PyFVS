@@ -1,4 +1,5 @@
       SUBROUTINE ESFLTR
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -7,8 +8,6 @@ C----------
 C
 C      CALLED AFTER CRATET TO COLLECT INVENTORY INFORMATION FOR
 C      UNDERSTORY/OVERSTORY DENSITIES AND TO FLAG BEST TREES
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'CONTRL.F77'
 C

@@ -1,4 +1,5 @@
       SUBROUTINE DGF(DIAM)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C
@@ -16,8 +17,6 @@ C  PREDICTION.  ENTRY **DGCONS** IS CALLED BY **RCON** TO LOAD SITE
 C  DEPENDENT COEFFICIENTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'CALCOM.F77'
 C
       INCLUDE 'COEFFS.F77'

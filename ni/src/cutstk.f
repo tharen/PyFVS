@@ -1,4 +1,5 @@
       SUBROUTINE CUTSTK
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -9,8 +10,6 @@ C  LEVELS FOR VARIOUS THINNING OPTIONS.
 C----------
 COMMONS
       INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'PLOT.F77'
 C

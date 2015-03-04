@@ -1,4 +1,5 @@
       SUBROUTINE MPSDLP
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -21,7 +22,6 @@ C   07/02/10 Lance R. David (FMSC)
 C----------
 C
 
-      INCLUDE 'ARRAYS.F77'
 
       INCLUDE 'CONTRL.F77'
 

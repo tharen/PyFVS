@@ -1,4 +1,5 @@
       SUBROUTINE DFBTAB(CFTVOL)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -45,8 +46,6 @@ C     LINV   - (DFBCOM)  INPUT/OUTPUT
 C     LIVEDF - (DFBCOM)  INPUT
 C     PREKLL - (DFBCOM)  INPUT
 C     PROB   - (ARRAYS)  INPUT
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'CONTRL.F77'
 C

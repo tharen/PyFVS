@@ -1,4 +1,5 @@
       SUBROUTINE COLMRT
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -20,8 +21,6 @@ C
       INCLUDE 'COLCOM.F77'
 C
       INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'CONTRL.F77'
 C

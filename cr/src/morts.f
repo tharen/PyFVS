@@ -1,4 +1,5 @@
       SUBROUTINE MORTS
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -15,8 +16,6 @@ C  10 INCHECS, AT WHICH TIME BAMAX BASED MORTALITY TAKES OVER.  IF
 C  NOT SET BY THE USER, BAMAX IS DETERMINED FROM MAX SDI AT 10" DBH.
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'OUTCOM.F77'

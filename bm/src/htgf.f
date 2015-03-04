@@ -1,4 +1,5 @@
       SUBROUTINE HTGF
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -14,8 +15,6 @@ C  CONSTANTS THAT NEED ONLY BE RESOLVED ONCE.
 C  CALLS ***FINDAG
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'COEFFS.F77'
 C
       INCLUDE 'CONTRL.F77'

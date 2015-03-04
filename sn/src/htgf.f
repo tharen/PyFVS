@@ -1,4 +1,5 @@
       SUBROUTINE HTGF
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -15,8 +16,6 @@ C  DEPENDENT CONSTANTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'COEFFS.F77'
 C

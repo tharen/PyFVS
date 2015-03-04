@@ -1,4 +1,5 @@
       SUBROUTINE STKVAL(S)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -43,8 +44,6 @@ C
 COMMON BLOCKS
 C
       INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'PLOT.F77'
 C----------

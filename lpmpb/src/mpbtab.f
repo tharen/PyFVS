@@ -1,4 +1,5 @@
       SUBROUTINE MPBTAB(CFTVOL)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -58,8 +59,6 @@ C   08/22/14 Lance R. David (FMSC)
 C     Function name was used as variable name.
 C     changed variable INDEX to INDX
 C----------
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'CONTRL.F77'
 C

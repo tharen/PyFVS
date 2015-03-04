@@ -1,4 +1,5 @@
       SUBROUTINE MPBDAM (II,ICODES)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -23,7 +24,6 @@ C     correct index value for both live and dead.
 C   07/02/10 Lance R. David (FMSC)
 C----------
 C
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'MPBCOM.F77'
 C
       INTEGER   I, II, ICODES(6)

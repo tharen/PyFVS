@@ -1,4 +1,5 @@
       SUBROUTINE BWEPDM
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -95,7 +96,6 @@ C       Extremely high mortality is calculated when MFT and/or MFM is 0.0
 C----------
 C
       INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'PLOT.F77'
       INCLUDE 'COEFFS.F77'
       INCLUDE 'BWESTD.F77'

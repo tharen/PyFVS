@@ -1,5 +1,6 @@
       SUBROUTINE BFVOL(ISPC,D,H,D2H,BBFV,TKILL,LCONE,BARK,VMAX,ITHT,
      1                 BTKFLG)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -8,8 +9,6 @@ C
 C  ONLY DIFFERENCE FROM NI.SOURCE BFVOL IS THE ARGUMENT LIST IN
 C  THE CALL TO SUBROUTINE LOGS.
 C----------
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'COEFFS.F77'
 C

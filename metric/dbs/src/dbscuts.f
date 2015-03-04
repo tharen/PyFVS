@@ -1,4 +1,5 @@
       SUBROUTINE DBSCUTS(IWHO,KODE)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -17,7 +18,6 @@ C
 C---
 COMMONS
 
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'PLOT.F77'
       INCLUDE 'ESTREE.F77'

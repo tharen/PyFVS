@@ -1,4 +1,5 @@
       SUBROUTINE REGENT(LESTB,ITRNIN)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -38,8 +39,6 @@ C  COMPUTES INCREMENTS FROM AGE 5 TO THE END OF THE CYCLE.
 C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'COEFFS.F77'
 C

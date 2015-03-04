@@ -1,4 +1,5 @@
       SUBROUTINE CVCBMS (LTHIN)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -40,8 +41,6 @@ C  TRFBMS(MAXTRE)-- PREDICTED FOLIAGE BIOMASS IN POUNDS
 C----------
 COMMONS
       INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'PLOT.F77'
 C

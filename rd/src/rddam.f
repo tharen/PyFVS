@@ -1,4 +1,5 @@
       SUBROUTINE RDDAM (II,ICODES)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -78,7 +79,6 @@ C.... Common include files.
 
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'PLOT.F77'
       INCLUDE 'HTCAL.F77'

@@ -1,6 +1,7 @@
       SUBROUTINE REGENT(LESTB,ITRNIN)
-      use prgprm_mod
       use arrays_mod, only: barkrat
+      use arrays_mod
+      use prgprm_mod
       implicit none
 C----------
 C  **REGENT--WC   DATE OF LAST REVISION:  02/08/13
@@ -20,8 +21,6 @@ C  **SMHGDG IS CALLED TO CALCULATE SMALL TREE HEIGHT AND DIAMETER
 C  INCREMENT
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'CALCOM.F77'
 C
       INCLUDE 'COEFFS.F77'

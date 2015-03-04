@@ -1,4 +1,5 @@
       SUBROUTINE CHGET
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -8,8 +9,6 @@ C
 C     READ THE ALL-DATA CHARACTER DATA FROM THE DA FILE.
 C
 C     PART OF THE PARALLEL PROCESSING EXTENSION OF PROGNOSIS SYSTEM.
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'CONTRL.F77'
 C

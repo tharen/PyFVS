@@ -1,4 +1,5 @@
       SUBROUTINE CVCLAS (LTHIN)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -46,8 +47,6 @@ C  -- STRUCT -- STAND STRUCTURE CODE
 C
 C  HEIGHT CLASS CODES: 1=0-10', 2=10-20',...   ...16=150' AND UP.
 C----------
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'CONTRL.F77'
 C

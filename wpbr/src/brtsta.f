@@ -1,4 +1,5 @@
       SUBROUTINE BRTSTA
+      use arrays_mod
       use prgprm_mod
       implicit none
 C**********************************************************************
@@ -36,7 +37,6 @@ C**********************************************************************
 
 C.... Common include files.
 
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'BRCOM.F77'
 

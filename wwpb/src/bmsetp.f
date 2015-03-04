@@ -1,4 +1,5 @@
       SUBROUTINE BMSETP
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -27,7 +28,6 @@ C             SPLAEX
 C             SPNBEX
 COMMONS
       INCLUDE 'PPEPRM.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'PPCNTL.F77'
 
       INCLUDE 'BMPRM.F77'

@@ -1,4 +1,5 @@
       SUBROUTINE BWESIT
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -58,7 +59,6 @@ C
       INCLUDE 'PLOT.F77'
       INCLUDE 'COEFFS.F77'
       INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECOM.F77'
       INCLUDE 'BWECM2.F77'

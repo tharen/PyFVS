@@ -1,5 +1,6 @@
       SUBROUTINE GRINCR (DEBUG,IPMODI,LTMGO,LMPBGO,LDFBGO,
      1                   LBWEGO,LCVATV,LBGCGO)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -11,7 +12,6 @@ C
 C     CALLED FROM: PPMAIN AND TREGRO.
 C
       INCLUDE 'PLOT.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'PDEN.F77'
       INCLUDE 'OUTCOM.F77'

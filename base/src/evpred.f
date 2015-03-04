@@ -1,4 +1,5 @@
       SUBROUTINE EVPRED
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -10,8 +11,6 @@ C
 C  THIS ROUTINE IS CALLED FROM **EVTSTV**.
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'PLOT.F77'

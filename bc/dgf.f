@@ -1,4 +1,5 @@
       SUBROUTINE DGF(DIAM)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -18,7 +19,6 @@ C
 
 COMMONS
       INCLUDE 'CALCOM.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'COEFFS.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'PLOT.F77'

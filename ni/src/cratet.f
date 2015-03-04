@@ -1,4 +1,5 @@
       SUBROUTINE CRATET
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -21,8 +22,6 @@ C        AND ISCT.
 C    8)  PRINT A TABLE DESCRIBING CONTROL PARAMETERS AND INPUT
 C        VARIABLES.
 C----------
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'PLOT.F77'
 C

@@ -1,4 +1,5 @@
       SUBROUTINE DFBDAM (II,ICODES)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -39,7 +40,6 @@ C    dead trees are already at the end of the arrays. Argument II is
 C    correct index value for both live and dead.
 C----------
 C
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'DFBCOM.F77'
 C
       LOGICAL LDELTR

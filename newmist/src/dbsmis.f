@@ -834,6 +834,7 @@ C     RELEASE STATEMENT HANDLE
 C-------------------------------------------------------------------------------
 
       SUBROUTINE DBSMIS5(IYEAR,KODE)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -848,7 +849,6 @@ C                     ADDITION TO
 C
 C---
 
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'PLOT.F77'
       INCLUDE 'ESTREE.F77'

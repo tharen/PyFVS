@@ -1,4 +1,5 @@
         SUBROUTINE VOLONT
+      use arrays_mod
       use prgprm_mod
       implicit none
 C
@@ -23,7 +24,6 @@ C
       INCLUDE 'CONTRL.F77'
       INCLUDE 'VOLSTD.F77'
       INCLUDE 'PLOT.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'METRIC.F77'
 
 COMMONS

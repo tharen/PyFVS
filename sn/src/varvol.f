@@ -1,4 +1,5 @@
         SUBROUTINE VARVOL
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -19,8 +20,6 @@ C
 C  THIS SUBROUTINE INCLUDES LOGIC FOR ALL REGION 8 VARIANTS -- SN, SE
 C
 C----------
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'CONTRL.F77'
 C

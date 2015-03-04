@@ -1,4 +1,5 @@
       SUBROUTINE RCON
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -14,8 +15,6 @@ C  LOADED INTO VECTORS THAT ARE SUBSCRIPTED BY SPECIES.
 C----------
 COMMONS
       INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'COEFFS.F77'
 C

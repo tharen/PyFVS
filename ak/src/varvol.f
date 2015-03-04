@@ -1,4 +1,5 @@
         SUBROUTINE VARVOL
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -14,8 +15,6 @@ C  All FLEWELLING EQS. (TONGASS NF, EXCEPT SP.NO. 1) USE STANDARD LOG
 C  LENGTH OF 32 FT FOR BD FT CALCULATIONS AND 16 FT LOGS FOR CU FT
 C  CALCULATIONS. ALL CHUGACH NF EQS. USE 16 FT LOGS.
 C----------
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'COEFFS.F77'
 C

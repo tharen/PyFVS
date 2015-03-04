@@ -1,4 +1,5 @@
       SUBROUTINE MORTS
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -22,7 +23,6 @@ C  IF A BASAL AREA MAXIMUM HAS BEEN SET BY THE USER, A CHECK IS MADE TO
 C  MAKE SURE BASAL AREA HAS NOT EXCEEDED THE SPECIFIED LIMIT.
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'OUTCOM.F77'
       INCLUDE 'PLOT.F77'

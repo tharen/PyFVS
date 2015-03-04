@@ -1,4 +1,5 @@
       SUBROUTINE BMSDIT
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -17,7 +18,6 @@ C
       INCLUDE 'BMPRM.F77'
       INCLUDE 'PPCNTL.F77'
 
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'OUTCOM.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'PLOT.F77'

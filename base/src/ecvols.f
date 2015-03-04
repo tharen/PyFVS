@@ -1,4 +1,5 @@
       SUBROUTINE ECVOLS
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -10,8 +11,6 @@ C  FOR REMOVALS WHEN THEY OCCUR.
 C  ENTRY POINTS FOR OTHER ECONOMIC ANALYSIS RELATED SUBROUTINES
 C  ARE ALSO CONTAINED WITHIN THIS SUBROUTINE.
 C----------
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'CONTRL.F77'
 C

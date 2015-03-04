@@ -1,4 +1,5 @@
       SUBROUTINE BASDAM(ITREE,ICODES)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -24,8 +25,6 @@ C       33 = MC DEFECT % USED FOR A GIVEN CYCLE
 C       44 = BF DEFECT % USED FOR A GIVEN CYCLE
 C
 C  COMMONS
-C
-      INCLUDE 'ARRAYS.F77'
 C
 C  COMMONS
 C----------

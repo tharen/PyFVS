@@ -553,6 +553,7 @@ C
 
 
       SUBROUTINE FMPOFL_FMPTRH(IYR,MXI,PRB,FLM1,FLM2,PTR1,PTR2)
+      use arrays_mod
       use prgprm_mod
       implicit none
 
@@ -565,7 +566,6 @@ C
 C     NL CROOKSTON -- RMRS MOSCOW -- MAY 2004
 C
       INCLUDE 'FMPARM.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'PLOT.F77'
       INCLUDE 'FMCOM.F77'
       INCLUDE 'FMFCOM.F77'

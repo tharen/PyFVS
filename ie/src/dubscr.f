@@ -1,4 +1,5 @@
       SUBROUTINE DUBSCR(ISPC,D,H,BA,CR,TPCCF,AVH,TMAI)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -22,8 +23,6 @@ C  PI, JU DO NOT USE THIS ROUTINE
 C----------
 COMMONS
       INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'PDEN.F77'
 C

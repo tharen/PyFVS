@@ -1,4 +1,5 @@
       SUBROUTINE HTCALC(I,ISPC,XSITE,AG,HGUESS,POTHTG)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -9,8 +10,6 @@ C   INDEPENDENT VARIABLES SUCH AS DBH, DG AGE ...
 C   CALLED FROM **HTGF**
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'VARCOM.F77'

@@ -1,4 +1,5 @@
       SUBROUTINE ESUCKR
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -9,8 +10,6 @@ C    ASSUMPTION: THE TREE LIST HAS BEEN COMPRESSED TO ABOUT 1/2 THE
 C    VALUE OF MAXTRE. COMPRS IS CALLED IN ESNUTR.
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'COEFFS.F77'
 C
       INCLUDE 'CONTRL.F77'

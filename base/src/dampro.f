@@ -1,4 +1,5 @@
       SUBROUTINE DAMPRO
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -13,7 +14,6 @@ C  CREATED: 07/06/2007 LANCE R. DAVID
 C
 C----------
 C
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'CONTRL.F77'
 
       INTEGER I1,I2,II,I

@@ -1,4 +1,5 @@
       SUBROUTINE DISPLY
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -9,7 +10,6 @@ C  OF THE PROJECTION, AND AT THE END OF EACH CYCLE.  ESTIMATES
 C  STAND AGE IF MISSING FROM THE STNDINFO KEYWORD
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'OUTCOM.F77'
       INCLUDE 'PLOT.F77'

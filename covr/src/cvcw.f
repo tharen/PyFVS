@@ -1,4 +1,5 @@
       SUBROUTINE CVCW (LTHIN)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -28,8 +29,6 @@ C  CRAREA -- SUM OF ALL CROWN PROJECTION AREAS (PI/4*TRECW*TRECW)
 C----------
 COMMONS
       INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'PLOT.F77'
 C

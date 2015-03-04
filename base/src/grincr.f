@@ -2,6 +2,7 @@
      1                   LBWEGO,LCVATV,LBGCGO)
       use tree_data, only: save_tree_data,copy_tree_data,copy_cuts_data
      &                     ,copy_mort_data
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -13,8 +14,6 @@ C
 C     CALLED FROM: PPMAIN AND TREGRO.
 C
       INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'CONTRL.F77'
 C

@@ -1,4 +1,5 @@
       SUBROUTINE HTDBH (IFOR,ISPC,D,H,MODE)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -22,8 +23,6 @@ C             1 IF HEIGHT IS PROVIDED AND DIAMETER IS DESIRED
 C----------
 COMMONS
       INCLUDE 'COEFFS.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'VARCOM.F77'
 C

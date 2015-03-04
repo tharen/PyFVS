@@ -1,6 +1,7 @@
       SUBROUTINE DGDRIV
-      use prgprm_mod
       use arrays_mod, only: barkrat
+      use arrays_mod
+      use prgprm_mod
       implicit none
 C----------
 C WC $Id$
@@ -21,8 +22,6 @@ C  REPRESENTS CHANGE IN SQUARED DIAMETER.
 C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'COEFFS.F77'
 C

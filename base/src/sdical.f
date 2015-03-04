@@ -1,4 +1,5 @@
       SUBROUTINE SDICAL (XMAX)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -17,8 +18,6 @@ C  MONITOR VARIABLES "BSDIMAX" AND "ASDIMAX".  ITS ALSO CALLED FROM
 C  **MORTS** IN VARIANTS WHICH USE SDI BASED MORTALITY ALGORITHMS.
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'PLOT.F77'

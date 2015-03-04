@@ -1,4 +1,5 @@
       SUBROUTINE CROWN
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -34,8 +35,6 @@ C                MCREQN(1,MAXSP) = 4.0  LOG LOGARITHMIC EQUATION
 C                MCREQN(1,MAXSP) = 5.0  INVERSE OR HYPERBOLIC EQUATION
 C
       INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'COEFFS.F77'
 C

@@ -1,4 +1,5 @@
       SUBROUTINE RDTREG
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -56,7 +57,6 @@ C.... Common include files.
       INCLUDE 'RDADD.F77'
       INCLUDE 'RDARRY.F77'
       INCLUDE 'RDCRY.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'PLOT.F77'
 
 C.... Local variable declarations.

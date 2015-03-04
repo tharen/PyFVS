@@ -1,4 +1,5 @@
       SUBROUTINE UPDATE
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -11,8 +12,6 @@ C     COMPUTES VOLUME STATISTICS
 C     EXECUTES SOME OF THE SUMMARY LOGIC.
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'COEFFS.F77'
 C
       INCLUDE 'CONTRL.F77'

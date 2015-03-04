@@ -1,4 +1,5 @@
       SUBROUTINE STATS
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -10,8 +11,6 @@ C  **MAIN**.  **TVALUE** IS CALLED TO CALCULATE STUDENT'S T FOR
 C  CONSTRUCTION OF CONFIDENCE INTERVALS.
 C---------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'VOLSTD.F77'
@@ -25,10 +24,6 @@ C
       INTEGER IFLG(MAXSP),I,ISPC,J,IALP,IERR,NDF
       REAL P,TBA,TBF,TCF,T,SUM,SUMSQ,ST,XBAR,S,SS,SE,UL,UU,CV
       REAL SEU,SEP,SCF,SBF,SBA
-      EQUIVALENCE (WK3,SUMT),(WK3(MAXPLT+1),SUMBA),
-     &            (WK4,SUMCF),(WK4(MAXPLT+1),SUMBF),
-     &            (WK5,TOTTR),(WK5(MAXSP+1),TOTBA),
-     &            (WK6,TOTCF),(WK6(MAXSP+1),TOTBF)
       DATA LABELS/
      &  'BOARD FEET/ACRE ',
      &  'CUBIC FEET/ACRE ',

@@ -1,6 +1,7 @@
       SUBROUTINE UPDATE
-      use prgprm_mod
       use arrays_mod, only: barkrat
+      use arrays_mod
+      use prgprm_mod
       implicit none
 C----------
 C  $Id$
@@ -12,8 +13,6 @@ C     COMPUTES VOLUME STATISTICS
 C     EXECUTES SOME OF THE SUMMARY LOGIC.
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'COEFFS.F77'
 C
       INCLUDE 'CONTRL.F77'

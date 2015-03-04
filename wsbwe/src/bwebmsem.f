@@ -1,4 +1,5 @@
       SUBROUTINE BWEBMS (TRFBMS,ICVOPT)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -34,7 +35,6 @@ C       Adapted for the Eastern Montana 19 species variant.
 C    14-JUL-2010 Lance R. David (FMSC)
 C----------
 C
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'PLOT.F77'
 C

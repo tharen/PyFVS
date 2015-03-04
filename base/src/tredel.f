@@ -1,4 +1,5 @@
       SUBROUTINE TREDEL (IVACT,INDEX)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -21,8 +22,6 @@ C     AVAILABLE FOR FURTHER CALCULATIONS (SUCH AS SPMCDBH ON CUT TREES).
 C     GARY DIXON, MAY 1998.
 C
 C     NL CROOKSTON-FORESTRY SCIENCES LAB, MOSCOW, ID.-JUNE 1982.
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'CONTRL.F77'
 C

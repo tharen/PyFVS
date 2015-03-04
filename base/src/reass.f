@@ -1,4 +1,5 @@
       SUBROUTINE REASS
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -9,8 +10,6 @@ C  THE ARRAY ISCT FOLLOWING RECORD TRIPLING.  THE VECTOR IND2
 C  IS USED FOR WORK SPACE.
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'CONTRL.F77'
 C
       INTEGER J,ISPC,I1,I2,I,K,ITFN,LAST,IKNT

@@ -1,4 +1,5 @@
       SUBROUTINE BGCFVS(X)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C--------------------
@@ -28,7 +29,6 @@ C     CALLED FROM: GRADD OF FVS BASE CODE
 C
       INCLUDE 'ENTITY.F77'
       INCLUDE 'BGCCOM.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'CONTRL.F77'
 C      INCLUDE 'PPCNTL.F77'                            ! removed 11/02 ajm
 C

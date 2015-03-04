@@ -1,4 +1,5 @@
       SUBROUTINE MPBER (NOER)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -17,8 +18,6 @@ C     Adapated to 24 species (CR variant)
 C   07/02/10 Lance R. David (FMSC)
 C----------
       LOGICAL NOER
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'CONTRL.F77'
 C

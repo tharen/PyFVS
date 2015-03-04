@@ -1,12 +1,11 @@
       SUBROUTINE ESUCKR
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
 C  **ESUCKR--ESTB   DATE OF LAST REVISION:  06/20/11
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'COEFFS.F77'
 C
       INCLUDE 'CONTRL.F77'

@@ -1,6 +1,7 @@
       SUBROUTINE VOLS
-      use prgprm_mod
       use arrays_mod, only: barkrat
+      use arrays_mod
+      use prgprm_mod
       implicit none
 C----------
 C  **VOLS--BASE    DATE OF LAST REVISION:   05/11/11
@@ -18,8 +19,6 @@ C
 C  NATCRS, OCFVOL, AND OBFVOL ARE ENTRY POINTS IN SUBROUTINE
 C  **VARVOL**, WHICH IS VARIANT SPECIFIC.
 C----------
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'COEFFS.F77'
 C

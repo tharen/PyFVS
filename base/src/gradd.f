@@ -1,7 +1,8 @@
       SUBROUTINE GRADD (DEBUG,IPMODI,LTMGO,LMPBGO,LDFBGO,
      1                  LBWEGO,LCVATV,LBGCGO)
-      use prgprm_mod
       use arrays_mod, only: barkrat
+      use arrays_mod
+      use prgprm_mod
       implicit none
 C----------
 C  $Id$
@@ -12,8 +13,6 @@ C     CVBROW STATISTICS, ESTABLISHIES NEW TREES, AND COMPUTES OTHER
 C     END-OF-CYCLE STATISTICS.
 C
 C     CALLED FROM: TREGRO AND PPMAIN
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'COEFFS.F77'
 C

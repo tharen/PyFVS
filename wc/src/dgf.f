@@ -1,6 +1,7 @@
       SUBROUTINE DGF(DIAM)
-      use prgprm_mod
       use arrays_mod, only: barkrat
+      use arrays_mod
+      use prgprm_mod
       implicit none
 C----------
 C  **DGF--WC    DATE OF LAST REVISION:  11/18/11
@@ -21,8 +22,6 @@ C     FROM PNW STATION DATE 04/19/10 ESM
 C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'COEFFS.F77'
 C

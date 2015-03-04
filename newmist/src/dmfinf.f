@@ -1,4 +1,5 @@
       SUBROUTINE DMFINF (Ptr, Index)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -65,7 +66,6 @@ C
 C**********************************************************************
 
       INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'DMCOM.F77'
 
 C Subroutine arguments.

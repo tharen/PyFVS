@@ -1,4 +1,5 @@
       SUBROUTINE FMDOUT (IYR)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -28,7 +29,6 @@ C.... PARAMETER INCLUDE FILES.
 C.... COMMON INCLUDE FILES.
       INCLUDE 'PLOT.F77'
       INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
 
       INCLUDE 'FMCOM.F77'
       INCLUDE 'FMFCOM.F77'

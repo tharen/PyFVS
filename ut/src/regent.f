@@ -1,4 +1,5 @@
       SUBROUTINE REGENT(LESTB,ITRNIN)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -20,8 +21,6 @@ C  **RCON** TO LOAD MODEL PARAMETERS THAT NEED ONLY BE RESOLVED ONCE.
 C  CALLS **FINDAG TO CALCULATE ASPEN TREE AGE
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'CALCOM.F77'
 C
       INCLUDE 'COEFFS.F77'

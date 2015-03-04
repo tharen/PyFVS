@@ -1,4 +1,5 @@
       SUBROUTINE CLGMULT(TREEMULT)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -7,7 +8,6 @@ C----------
 C
 C     CLIMATE EXTENSION -- COMUTES TREE-LEVEL GROWTH MULTIPLIER
 C
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'PLOT.F77'
       INCLUDE 'CLIMATE.F77'

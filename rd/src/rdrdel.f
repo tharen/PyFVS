@@ -1,4 +1,5 @@
       SUBROUTINE RDRDEL
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -39,7 +40,6 @@ C.... COMMON INCLUDE FILES
 C
       INCLUDE 'CONTRL.F77'
       INCLUDE 'PLOT.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'OUTCOM.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'

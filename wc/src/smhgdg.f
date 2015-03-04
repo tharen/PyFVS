@@ -1,4 +1,5 @@
       SUBROUTINE SMHGDG (IT,ISPC,H,D,HG5,DG5,ICYC,JOSTND,DEBUG,MODE)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -23,8 +24,6 @@ C  HG5    - 5 YEAR HEIGHT INCREMANT
 C  DG5    - 5 YEAR DIAMETER INCREMENT
 COMMONS
       INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'VARCOM.F77'
 C

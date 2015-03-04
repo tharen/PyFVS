@@ -1,5 +1,6 @@
       SUBROUTINE FINDAG(I,ISPC,D1,D2,H,SITAGE,SITHT,AGMAX,HTMAX1,
      &                  HTMAX2,DEBUG)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -11,8 +12,6 @@ C----------
 C  COMMONS
 C
       INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'PLOT.F77'
 C

@@ -1,4 +1,5 @@
       SUBROUTINE CUTS
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -10,7 +11,6 @@ C  INDICATED.  CALLS **CLSSTK** AND **AUTSTK** WHICH ARE ENTRY
 C  POINTS IN SUBROUTINE **CUTSTK**.  ALSO CALLS **SDICLS**, **CCCLS**,
 C  AND **RDCLS** WHICH ARE ENTRY POINTS IN **SDICAL**
 C
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'COEFFS.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'OUTCOM.F77'

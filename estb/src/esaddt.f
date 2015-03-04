@@ -1,4 +1,5 @@
       SUBROUTINE ESADDT(ICALL)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -9,7 +10,6 @@ C     ADD NEW TREES FROM A FILE OR EXTERNAL DATA BASE.
 
 C     COMMONS
 
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'OUTCOM.F77'
       INCLUDE 'PLOT.F77'

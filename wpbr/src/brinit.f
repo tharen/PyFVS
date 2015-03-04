@@ -1,4 +1,5 @@
       SUBROUTINE BRINIT
+      use arrays_mod
       use prgprm_mod
       implicit none
 C**********************************************************************
@@ -51,7 +52,6 @@ C**********************************************************************
 C.... Common include files.
 
       INCLUDE 'BRCOM.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'CONTRL.F77'
 
       INTEGER I4, I, J, K, L

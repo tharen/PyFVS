@@ -1,12 +1,11 @@
       SUBROUTINE HTGSTP
-      use prgprm_mod
       use arrays_mod, only: barkrat
+      use arrays_mod
+      use prgprm_mod
       implicit none
 C----------
 C  $Id$
 C----------
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'CONTRL.F77'
 C
@@ -16,8 +15,6 @@ C
       INTEGER ISPC,IDT,IACT,NP,ITODO,NTODO
       REAL STDPBR,AVEPRB,PRB,HT1,HT2,H,BRK,BRATIO,X,PKIL,BACHLO
       REAL TOPK,TOPH,D,AF,DTK,CN
-      EQUIVALENCE (WK6(2),HT1),(WK6(3),HT2),(WK6(4),PRB),
-     >            (WK6(5),AVEPRB),(WK6(6),STDPBR)
       DATA MYACT/110,111/
 C
 C     FIND OPTIONS
@@ -36,6 +33,14 @@ C     LOAD PARAMETERS.  NOTE THAT SEVERAL PARAMETERS ARE EQUIVALENCED
 C     TO WK6 THUS THEY ARE LOADED AUTOMATICALLY.
 C
       ISPC=IFIX(WK6(1))
+
+      ! Assignments to replace original EQUIVALENCE
+      ! TODO: Research how these values are assigned to WK6
+      HT1=WK6(2)
+      HT2=WK6(3)
+      PRB=WK6(4)
+      AVEPRB=WK6(5)
+      STDPBR=WK6(6)
 C
 C     SET INDICIES TO SPECIES COUNTERS.
 C

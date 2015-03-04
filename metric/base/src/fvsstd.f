@@ -1,4 +1,5 @@
       SUBROUTINE FVSSTD (IWHO)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -9,7 +10,6 @@ C     CREATE A FILE FOR FVSTAND POST-PROCESSOR INPUT.
 C
 C     IWHO=1 IF CALLED FROM MAIN, IWHO=2 IF CALLED FROM CUTS
 C
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'HTCAL.F77'
       INCLUDE 'PLOT.F77'

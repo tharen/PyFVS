@@ -1,4 +1,5 @@
       SUBROUTINE DMCW(DMTRCW)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -48,7 +49,6 @@ C
 C********************************************************************C
 
       INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'PLOT.F77'
       INCLUDE 'DMCOM.F77'
 

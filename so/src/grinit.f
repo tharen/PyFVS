@@ -1,4 +1,5 @@
       SUBROUTINE GRINIT
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -6,8 +7,6 @@ C SO $Id$
 C----------
 C
 C  INITIALIZE PROGNOSIS MODEL VARIABLES
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'COEFFS.F77'
 C

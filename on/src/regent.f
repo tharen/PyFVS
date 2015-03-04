@@ -1,4 +1,5 @@
       SUBROUTINE REGENT(LESTB,ITRNIN)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -16,7 +17,6 @@ C  FROM **TREGRO** DURING CYCLING.  ENTRY **REGCON** IS CALLED FROM
 C  **RCON** TO LOAD MODEL PARAMETERS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'CALCOM.F77'
       INCLUDE 'COEFFS.F77'
       INCLUDE 'CONTRL.F77'

@@ -1,4 +1,5 @@
       SUBROUTINE EVLDX (XLDREG,NXLDX,INSTR,IRC)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -18,7 +19,6 @@ C     IRC   = RETURN CODE, 0=OK, 1=VARIABLE IS CURRENTLY UNDEFINED,
 C             2=INSTRUCTION CODE COULD NOT BE DECIPHERED.
 C
       INCLUDE 'OPCOM.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'OUTCOM.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'PLOT.F77'

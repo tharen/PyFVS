@@ -1,12 +1,11 @@
       SUBROUTINE ESTAB (KDT)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
 C LS/M $ID$
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'PLOT.F77'

@@ -1,12 +1,11 @@
       SUBROUTINE BFVOL(ISPC,D,H,D2H,BBFV,TKILL,LCONE,BARK,VMAX,ITHT,
      1                 BTKFLG)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
 C  **BFVOL--TT   DATE OF LAST REVISION:   03/10/10
 C----------
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'COEFFS.F77'
 C

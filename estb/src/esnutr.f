@@ -1,4 +1,5 @@
       SUBROUTINE ESNUTR
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -6,8 +7,6 @@ C  **ESNUTR DATE OF LAST REVISION:  10/02/12
 C----------
 C
 C     INTERFACE ROUTINE TO COUPLE THE REGEN MODEL AND PROGNOSIS.
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'CONTRL.F77'
 C

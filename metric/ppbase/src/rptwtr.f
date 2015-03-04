@@ -1,4 +1,5 @@
       SUBROUTINE RPTWTR (NCYC2,IONER)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -24,8 +25,6 @@ C
       INCLUDE 'OUTCOM.F77'
 C
       INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'PPCNTL.F77'
 C

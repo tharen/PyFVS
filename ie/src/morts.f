@@ -1,4 +1,5 @@
       SUBROUTINE MORTS
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -14,8 +15,6 @@ C  IS CALLED FROM **TREGRO** WHEN CYCLING FOR GROWTH PREDICTION.  ENTRY
 C  **MORCON** IS ACCESSED TO LOAD SITE DEPENDENT CONSTANTS.
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'PLOT.F77'
 C
       INCLUDE 'CALCOM.F77'

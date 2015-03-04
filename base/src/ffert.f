@@ -1,6 +1,7 @@
       SUBROUTINE FFERT
-      use prgprm_mod
       use arrays_mod, only: barkrat
+      use arrays_mod
+      use prgprm_mod
       implicit none
 C----------
 C  $Id$
@@ -14,8 +15,6 @@ C  INCREMENTS OF FERTILIZER TREATMENT TO A CONTROL. THIS SUBROUTINE
 C  IS CALLED BY ** TREGRO **.
 C
       COMMON /FFCOM/ IFFDAT, FFPRMS(4)
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'CONTRL.F77'
 C

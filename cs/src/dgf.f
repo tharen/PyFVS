@@ -1,4 +1,5 @@
       SUBROUTINE DGF(DIAM)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -28,8 +29,6 @@ C  SERVICE, NORTH CENTRAL FOREST EXPERIMENT STATION. 38 P.
 C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'COEFFS.F77'
 C

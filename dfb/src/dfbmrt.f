@@ -1,4 +1,5 @@
       SUBROUTINE DFBMRT
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -52,8 +53,6 @@ C     OKILL  - (DFBCOM)  INPUT/OUTPUT
 C     PROB   - (ARRAYS)  INPUT
 C     START  - (DFBCOM)  INPUT
 C     WK2    - (ARRAYS)  OUTPUT
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'CONTRL.F77'
 C

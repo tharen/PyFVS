@@ -1,4 +1,5 @@
       SUBROUTINE BRCOUT
+      use arrays_mod
       use prgprm_mod
       implicit none
 C**********************************************************************
@@ -38,7 +39,6 @@ C.... Common include files.
 
       INCLUDE 'BRCOM.F77'
       INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'PLOT.F77'
       INCLUDE 'OUTCOM.F77'
 

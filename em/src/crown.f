@@ -1,4 +1,5 @@
       SUBROUTINE CROWN
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -35,8 +36,6 @@ C  QUAKING ASPEN (AS) AND PAPER BIRCH (PB) USE IE-AS WHICH ARE ORIGINALLY FROM U
 C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'COEFFS.F77'
 C

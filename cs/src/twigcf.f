@@ -1,4 +1,5 @@
       SUBROUTINE TWIGCF(ISPC,H,D,VN,VM,I)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -10,8 +11,6 @@ C DEFECT ARE STILL CALCULATED IN VOLS.
 C----------
 COMMONS
       INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'VOLSTD.F77'
 C

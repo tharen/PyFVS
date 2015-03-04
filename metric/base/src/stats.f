@@ -1,4 +1,5 @@
       SUBROUTINE STATS
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -10,7 +11,6 @@ C  **MAIN**.  **TVALUE** IS CALLED TO CALCULATE STUDENT'S T FOR
 C  CONSTRUCTION OF CONFIDENCE INTERVALS.
 C---------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'VOLSTD.F77'
       INCLUDE 'PLOT.F77'

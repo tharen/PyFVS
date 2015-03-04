@@ -1,4 +1,5 @@
       SUBROUTINE FVS(IRTNCD)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -19,8 +20,6 @@ C
 C     PHONE (208) 882-3557
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'PLOT.F77'
 C
       INCLUDE 'CONTRL.F77'

@@ -1,4 +1,5 @@
       SUBROUTINE DFBGO(L)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -52,8 +53,6 @@ C     Changed scalar variable IACTK to array with dimension of (1) due to
 C     error detected by LF95.
 C-------------------------------------------------------------------------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'DFBCOM.F77'

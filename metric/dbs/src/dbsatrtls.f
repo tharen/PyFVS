@@ -1,4 +1,5 @@
       SUBROUTINE DBSATRTLS(IWHO,KODE,TEM)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -15,7 +16,6 @@ C                     REDIRECT OF THE FLAT FILE REPORT OR IN
 C                     ADDITION TO
 C
 
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'PLOT.F77'
       INCLUDE 'ESTREE.F77'

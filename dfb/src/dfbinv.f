@@ -1,4 +1,5 @@
       SUBROUTINE DFBINV
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -23,8 +24,6 @@ C     LINV   - (DFBCOM)  INPUT
 C     NDAMS  - (DFBCOM)  INPUT
 C     PREKLL - (DFBCOM)  OUTPUT
 C     PROB   - (ARRAYS)  INPUT
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'DFBCOM.F77'
 C

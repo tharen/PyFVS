@@ -1,4 +1,5 @@
       SUBROUTINE DBSSTANDIN(SQLSTR,LKECHO)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C
@@ -9,8 +10,6 @@ C     AUTH: D. GAMMEL -- SEM -- AUGUST 2002
 C     OVERHAUL: NL CROOKTON -- RMRS MOSCOW -- SEPTEMBER 2004
 C---
 COMMONS
-      INCLUDE  'ARRAYS.F77'
-C
       INCLUDE  'COEFFS.F77'
 C
       INCLUDE  'CONTRL.F77'

@@ -1,4 +1,5 @@
       SUBROUTINE INITRE
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -7,8 +8,6 @@ C----------
 C
 C  THIS ROUTINE PROCESSES OPTIONS AND INITIATES THE
 C  PROGNOSIS RUN.  CALLED FROM **MAIN**.
-C
-      INCLUDE  'ARRAYS.F77'
 C
       INCLUDE  'COEFFS.F77'
 C

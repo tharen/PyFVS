@@ -1,4 +1,5 @@
       SUBROUTINE PTBAL
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -12,8 +13,6 @@ C     N.L.CROOKSTON, INT-MOSCOW, MARCH 1991.
 C
 C     COMMONS
 C
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'PLOT.F77'
 C
       INCLUDE 'CONTRL.F77'
@@ -25,7 +24,6 @@ C
       INTEGER NP,I,II,IP,N
       REAL XBALT
       INTEGER IPNDX(MAXPLT)
-      EQUIVALENCE (WK6,IPNDX)
 C
       LOGICAL DEBUG
 C-----------

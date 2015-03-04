@@ -1,4 +1,5 @@
       SUBROUTINE DUBSCR(ISPC,D,H,CR,TPCT,TPCCF)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -20,8 +21,6 @@ C  J  CONSTANT ICR=9
 C
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'PLOT.F77'
 C
       INCLUDE 'CONTRL.F77'

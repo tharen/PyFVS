@@ -1,4 +1,5 @@
       SUBROUTINE SMHTGF(ISPC,I,HTGRTH,CR,TPCCF)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -8,8 +9,6 @@ C THIS SUBROUTINE COMPUTES THE HEIGHT GROWTH FOR SMALL TREES (HTGRTH)
 C IN REAL SCALE.  THIS ROUTINE IS CALLED FROM REGENT.
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'PLOT.F77'
 C
       INCLUDE 'CALCOM.F77'

@@ -1,4 +1,5 @@
       SUBROUTINE FORTYP(IXF,SDIFIA)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -38,8 +39,6 @@ C
       INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'VARCOM.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
 C----------
 C  DECLARATIONS

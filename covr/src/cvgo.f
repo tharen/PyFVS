@@ -1,4 +1,5 @@
       SUBROUTINE CVGO (LCVATV)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -7,8 +8,6 @@ C----------
 C
 C     FIND OUT IF THE COVER/BROWSE MODELS WILL BE ROUTINELY
 C     CALLED DURING THE PROJECTION.
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'CVCOM.F77'
 C

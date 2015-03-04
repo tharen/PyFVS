@@ -1,4 +1,5 @@
       SUBROUTINE ESCPRS (ITRGT,DEBUG)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -8,8 +9,6 @@ C
       INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'ESHAP.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'OUTCOM.F77'
 C

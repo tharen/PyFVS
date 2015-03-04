@@ -1,4 +1,5 @@
       SUBROUTINE DUBSCR(ISPC,D,H,CR,TPCT,TPCCF)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -15,8 +16,6 @@ C  WHEN THE SO11 MODEL WAS RETIRED IN JUNE 2010. IT IS USED BY
 C  THE EC, NC, AND WS VARIANTS
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'PLOT.F77'
 C
       INCLUDE 'CONTRL.F77'

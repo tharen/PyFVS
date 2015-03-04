@@ -1,4 +1,5 @@
       SUBROUTINE HTGF
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -9,8 +10,6 @@ C   INCREMENT FOR EACH CYCLE AND LOADS IT INTO
 C    AN ARRAY, HTG.
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'COEFFS.F77'
 C
       INCLUDE 'CONTRL.F77'

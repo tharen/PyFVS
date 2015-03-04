@@ -1,4 +1,5 @@
       SUBROUTINE RDBB4
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -66,7 +67,6 @@ C.... Common include files.
 
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'RDADD.F77'
       INCLUDE 'PLOT.F77'

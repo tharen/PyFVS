@@ -1,4 +1,5 @@
       SUBROUTINE TMCOUP
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -32,7 +33,6 @@ C**********************************************************************
 
 C
 
-      INCLUDE 'ARRAYS.F77'
 
       INCLUDE 'CONTRL.F77'
 

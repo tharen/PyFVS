@@ -1,4 +1,5 @@
       SUBROUTINE RDPRIN (IRRTR)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -39,7 +40,6 @@ C
 C----------------------------------------------------------------------
 C
       INCLUDE 'RDPARM.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'PLOT.F77'
       INCLUDE 'RDCOM.F77'

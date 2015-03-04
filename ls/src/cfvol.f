@@ -1,5 +1,6 @@
       SUBROUTINE CFVOL(ISPC,D,HZ,D2H,VN,VM,VMAX,TKILL,LCONE,BARK,ITHT,
      1                 CTKFLG)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -9,8 +10,6 @@ C THIS ROUTINE CALCULATES CUBIC FOOT VOLUME USING A
 C USER DEFINED EQUATION.
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'COEFFS.F77'
 C
       INCLUDE 'CONTRL.F77'

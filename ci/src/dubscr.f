@@ -1,4 +1,5 @@
       SUBROUTINE DUBSCR(ISPC,D,H,BA,CR,TPCCF,AVH,TMAI)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -16,8 +17,6 @@ C       ALL SIZES FOR THESE SPECIES ARE DUBBED IN **CROWN**.
 C----------
 COMMONS
       INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'ARRAYS.F77'
 C
       INCLUDE 'PDEN.F77'
 C

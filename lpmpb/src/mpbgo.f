@@ -1,4 +1,5 @@
       SUBROUTINE MPBGO(L)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -19,8 +20,6 @@ C     Initialization of logical variable L.
 C   07/02/10 Lance R. David (FMSC)
 C----------
 COMMONS
-      INCLUDE 'ARRAYS.F77'
-C
       INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'PLOT.F77'

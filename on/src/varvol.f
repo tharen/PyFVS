@@ -1,4 +1,5 @@
         SUBROUTINE VARVOL
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -31,7 +32,6 @@ C
       INCLUDE 'CONTRL.F77'
       INCLUDE 'VOLSTD.F77'
       INCLUDE 'PLOT.F77'
-      INCLUDE 'ARRAYS.F77'
 COMMONS
 C----------
       REAL VOL(15),BOLTHT(21),LOGLEN(7,21),BBFV1,UPSHT1

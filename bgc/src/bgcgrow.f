@@ -1,4 +1,5 @@
       SUBROUTINE BGCGRO(IY1,IY2)
+      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
@@ -19,7 +20,6 @@ C
       INCLUDE 'CONTRL.F77'
       INCLUDE 'PDEN.F77'
       INCLUDE 'OUTCOM.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'CVCOM.F77'
 C      INCLUDE 'PPCNTL.F77'                         ! removed 11/02 ajm
 C
