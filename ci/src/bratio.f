@@ -1,17 +1,12 @@
       FUNCTION BRATIO(IS,D,H)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **BRATIO--CI  DATE OF LAST REVISION:  08/27/13
 C----------
 C FUNCTION TO COMPUTE BARK RATIOS AS A FUNCTION OF DIAMETER AND SPECIES.
 C REPLACES ARRAY BKRAT IN BASE MODEL.
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
 COMMONS
 C----------
 C     SPECIES LIST FOR CENTRAL IDAHO VARIANT.
@@ -72,7 +67,7 @@ C
         IF (D .GT. 0.) THEN
       	  BRATIO=DIB/D
       	ELSE
-       	  BRATIO=0.97 	
+       	  BRATIO=0.97
       	ENDIF
       	IF (BRATIO .GT. 0.97) BRATIO=0.97
 C

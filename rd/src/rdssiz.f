@@ -1,5 +1,6 @@
       SUBROUTINE RDSSIZ(ISP,A,STCUT,ISL,ISPS,IRTSPC)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDSSIZ      LAST REVISION:  09/03/14
 C----------
@@ -27,14 +28,11 @@ C
 C  Revision History :
 C   03/05/95 - Last revision date.
 C   09/03/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
-C
 C.... PARAMETER INCLUDE FILES
 C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 C
       INTEGER ISL, ISP, ISPS(ITOTSP), IRTSPC(MAXSP), J

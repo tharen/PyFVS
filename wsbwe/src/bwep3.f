@@ -1,5 +1,6 @@
       SUBROUTINE BWEP3
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **BWEP3                   DATE OF LAST REVISION:  06/18/13
 C----------
@@ -9,7 +10,7 @@ C    ALSO PRINTS TABLE 5 - ANNUAL SUMMARY
 C
 C  K.A. SHEEHAN  USDA-FS, R6-NATURAL RESOURCES, PORTLAND, OR
 C
-C   CALLED FROM: BWELIT	
+C   CALLED FROM: BWELIT
 C
 C   SUBROUTINES AND FUNCTIONS CALLED:	NONE
 C
@@ -19,7 +20,7 @@ C   ITITLB - TITLE FOR BW MODEL
 C   IYRCUR - CURRENT YEAR
 C   MGMIDB - MANAGEMENT ID TAG FOR BW MODEL [BWEBOX]
 C   OUT3(IC,IH,I), FOR I: 1= INITIAL NO. OF EGGS; 2-7= % OF TOTAL
-C     (GENERATIONAL) MORTALITY DURING EGGS TO ESTABLISHED L2S (2), 
+C     (GENERATIONAL) MORTALITY DURING EGGS TO ESTABLISHED L2S (2),
 C     L2S TO MID-L4S (STARVATION =3, PREDATORS + OTHER =4),
 C     MID-L4S TO L6 (STARV.+DISPERSAL = 5, PRED.S + OTHER = 6),
 C     PUPAL PREDS. = 7); % DEFOLIATION OF NEW (=8) AND TOTAL (=9) FOLIAGE;
@@ -27,7 +28,7 @@ C     AMT. OF NEW (=10) AND TOTAL (=11) FOLIAGE; AMOUNT OF NEW
 C     EGGS PRODUCED BY THIS GENERATION (=12); FINAL NO. OF ADULTS
 C     (=13); NO. OF FEMALES (=14); FEMALE WT. (=15);
 C     AND NO. EGGS PER FEMALE (=16);  % MORT. DUE TO SPRAY (=17);
-C     AND PARASITES (L2-4 =18, L4-6=19, P=20). 
+C     AND PARASITES (L2-4 =18, L4-6=19, P=20).
 C
 C  Revision History:
 C    09-JUN-00 Lance David (FHTET)
@@ -38,15 +39,11 @@ C   02-JUN-2009 Lance R. David (FMSC)
 C      Added Stand ID and comma delimiter to output tables, some header
 C      and column labels modified.
 C   14-JUL-2010 Lance R. David (FMSC)
-C      Added IMPLICIT NONE and declared variables as needed.
 C   11-APR-2013 Lance R. David (FMSC)
 C      REAL variable DIFF was used in loop control at label 85 in error.
 C      Changed to variable IDIFF and removed REAL declaration of DIFF.
 C---------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BWECM2.F77'
       INCLUDE 'BWEBOX.F77'
       INCLUDE 'BWECOM.F77'
@@ -57,23 +54,23 @@ C
       CHARACTER*3 TRESP(6),sumt1,sumt2
       INTEGER IAPPB, IAPPC, IAPPD, IAPPE, IAPPF, IAPPG, IAPPH, IAPPI,
      &        IAPPJ, IC, ICROWN, IDIFF, IEGGS, IH, INDEX, ISEL2,
-     &        ISIZE, ISPAR, ISPNUM, ISPRE, ISSPR, ISSTV, IYEARK, K, 
+     &        ISIZE, ISPAR, ISPNUM, ISPRE, ISSPR, ISSTV, IYEARK, K,
      &        KCROWN(18), LH, LSIZE, NEWDEF
-      INTEGER I, IYEAR, IYR, LASTYR 
+      INTEGER I, IYEAR, IYR, LASTYR
       REAL APPB, APPC, APPD, APPE, APPF, APPG, APPH, APPI, APPJ,
      &     DEAD, DEFNEW, DEFOLD, EGGD, FECUND, GENMOR, OVWINT,
      &     RINC, RINC10, SPRING, SUMALE, SURV,
-     &     TEMPH(20), TEMPO(20), TEMPS(20), X 
+     &     TEMPH(20), TEMPO(20), TEMPS(20), X
       REAL EGMASS, SNEWEG, SUMACT, SUMADT, SUMEGG, SUMEL2, SUMFEM,
      &     SUMFOL, SUMPAL, SUMPAP, SUMPAR, SUMPAS, SUMPOT, SUMPRE,
-     &     SUMPRL, SUMPRP, SUMPRS, SUMSPR, SUMSTL, SUMSTS, SUMSTV 
+     &     SUMPRL, SUMPRP, SUMPRS, SUMSPR, SUMSTL, SUMSTS, SUMSTV
 
       DATA HEADER/.TRUE./
       DATA TRESP/' WF',' DF',' GF','SAF',' ES',' WL'/
       DATA EGMASS/41.7/
 C
 C SOURCES: GPERM2 - SHEEHAN ET AL (1989) TABLE 9A (MEAN OF WF & DF,
-C   ALL THREE CROWN THIRDS WT'D EQUALLY); EGMASS - SHEEHAN ET AL 
+C   ALL THREE CROWN THIRDS WT'D EQUALLY); EGMASS - SHEEHAN ET AL
 C   (1989) TABLE 2
 C
       DO 10 I=1,20
@@ -102,7 +99,7 @@ C
       SUMSTL=0.0
       SUMFEM=0.0
 C
-C IF THIS IS THE FIRST CALL, PRINT THE HEADER - FIRST FOR 
+C IF THIS IS THE FIRST CALL, PRINT THE HEADER - FIRST FOR
 C    TABLE 5, THEN FOR G_CROWN (LP2)
 C
       IF (HEADER .AND. LP5) THEN
@@ -158,7 +155,7 @@ C
          IYEAR=0
          IF (IYRCUR.GT.IY(1)) THEN
            IDIFF=IYRCUR-IY(1)
-           IYR=IY(1)-1	   
+           IYR=IY(1)-1
            DO 80 I=1,IDIFF
            IYEAR=IYEAR+1
            IYR=IYR+1
@@ -166,7 +163,7 @@ C
    75      FORMAT (A26,',',6(1X,I4,',',3('    0,')))
    80      CONTINUE
          ENDIF
-      ENDIF 
+      ENDIF
 C
       HEADER=.FALSE.
 C
@@ -223,16 +220,16 @@ C
         TEMPH(4)=TEMPH(4)+OUT3(IC,IH,4)
         TEMPH(5)=TEMPH(5)+OUT3(IC,IH,5)
         TEMPH(6)=TEMPH(6)+OUT3(IC,IH,6)
-        TEMPH(7)=TEMPH(7)+OUT3(IC,IH,7)  
-        TEMPH(8)=TEMPH(8)+OUT3(IC,IH,8)  
-        TEMPH(9)=TEMPH(9)+OUT3(IC,IH,9)  
-        TEMPH(10)=TEMPH(10)+OUT3(IC,IH,10)  
-        TEMPH(11)=TEMPH(11)+OUT3(IC,IH,11)  
+        TEMPH(7)=TEMPH(7)+OUT3(IC,IH,7)
+        TEMPH(8)=TEMPH(8)+OUT3(IC,IH,8)
+        TEMPH(9)=TEMPH(9)+OUT3(IC,IH,9)
+        TEMPH(10)=TEMPH(10)+OUT3(IC,IH,10)
+        TEMPH(11)=TEMPH(11)+OUT3(IC,IH,11)
         TEMPH(12)=TEMPH(12)+OUT3(IC,IH,12)
         TEMPH(13)=TEMPH(13)+OUT3(IC,IH,13)
         TEMPH(14)=TEMPH(14)+OUT3(IC,IH,14)
         TEMPH(15)=TEMPH(15)+(OUT3(IC,IH,15)*OUT3(IC,IH,14))
-        TEMPH(16)=TEMPH(16)+(OUT3(IC,IH,16)*OUT3(IC,IH,14))       
+        TEMPH(16)=TEMPH(16)+(OUT3(IC,IH,16)*OUT3(IC,IH,14))
         TEMPH(17)=TEMPH(17)+OUT3(IC,IH,17)
         TEMPH(18)=TEMPH(18)+OUT3(IC,IH,18)
         TEMPH(19)=TEMPH(19)+OUT3(IC,IH,19)
@@ -246,7 +243,7 @@ C
          DEFNEW=0.0
          IF (OUT3(IC,IH,10).GT.0.0) DEFNEW=100.0*(1.0-(OUT3(IC,IH,8)
      &      /OUT3(IC,IH,10)))
-         IF (DEFNEW.GT.0.0) KCROWN(INDEX)=NINT(DEFNEW)              
+         IF (DEFNEW.GT.0.0) KCROWN(INDEX)=NINT(DEFNEW)
       ENDIF
 C
 C  RESET THE ARRAY TO ZERO
@@ -266,12 +263,12 @@ C
            SUMACT=SUMACT+TEMPH(8)
            SUMPOT=SUMPOT+TEMPH(10)
            SUMFOL=SUMFOL+TEMPH(11)
-           SUMEGG=SUMEGG+TEMPH(1)  
-           SUMEL2=SUMEL2+TEMPH(2)  
-           SUMSTV=SUMSTV+TEMPH(3)+TEMPH(5)  
-           SUMPRE=SUMPRE+TEMPH(4)+TEMPH(6)+TEMPH(7)  
-           SUMPAR=SUMPAR+TEMPH(18)+TEMPH(19)+TEMPH(20)  
-           SUMSPR=SUMSPR+TEMPH(17)  
+           SUMEGG=SUMEGG+TEMPH(1)
+           SUMEL2=SUMEL2+TEMPH(2)
+           SUMSTV=SUMSTV+TEMPH(3)+TEMPH(5)
+           SUMPRE=SUMPRE+TEMPH(4)+TEMPH(6)+TEMPH(7)
+           SUMPAR=SUMPAR+TEMPH(18)+TEMPH(19)+TEMPH(20)
+           SUMSPR=SUMSPR+TEMPH(17)
            SNEWEG=SNEWEG+TEMPH(12)
            SUMADT=SUMADT+TEMPH(13)
            SUMPRS=SUMPRS+TEMPH(4)
@@ -314,7 +311,7 @@ C
      &            /TEMPH(10)))
               DEFOLD=-1.0
               IF (TEMPH(11).GT.0.0) DEFOLD=100.0*(1.0-(TEMPH(9)
-     &            /TEMPH(11)))    
+     &            /TEMPH(11)))
               RINC=TEMPH(12)/TEMPH(1)
               EGGD=(TEMPH(1)*GPERM2)/(EGMASS*TEMPH(11))
               WRITE (JOBWP5,380) NPLT,IYRCUR,TRESP(IH),(TEMPH(K),K=2,6),
@@ -349,7 +346,7 @@ C
             ENDIF
          ELSE
             IAPPB=0
-            RINC=0.0  
+            RINC=0.0
          ENDIF
          SURV=SURV-SUMEL2
          IF (SURV.GT.0.0) THEN

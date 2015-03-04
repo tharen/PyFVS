@@ -1,4 +1,6 @@
       SUBROUTINE MISCPF(PRFCUT)
+      use prgprm_mod
+      implicit none
 ***********************************************************************
 *  **MISCPF--MS  Date of last revision:  08/02/99
 *----------------------------------------------------------------------
@@ -37,13 +39,11 @@
 *        This change was provided by Bob Havis (FMSC) to eliminate
 *        LF95 FORTRAN compiler warnings.
 ***********************************************************************
-      IMPLICIT NONE
 
 C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C.... Common include files.
 

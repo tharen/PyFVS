@@ -1,35 +1,22 @@
       SUBROUTINE BFVOL(ISPC,D,H,D2H,BBFV,TKILL,LCONE,BARK,VMAX,ITHT,
      1                 BTKFLG)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **BFVOL--SO  DATE OF LAST REVISION:   04/24/08
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ARRAYS.F77'
-C
 C
       INCLUDE 'COEFFS.F77'
 C
-C
       INCLUDE 'CONTRL.F77'
-C
 C
       INCLUDE 'OUTCOM.F77'
 C
-C
       INCLUDE 'PLOT.F77'
 C
-C
       INCLUDE 'VOLSTD.F77'
-C
-C
-COMMONS
 C
 C  ************** BOARD FOOT MERCHANTABILITY SPECIFICATIONS ********
 C
@@ -114,8 +101,6 @@ C----------
       TSIZE=D
       IF(IBTRAN(ISPC).GT.0) TSIZE=D2H
 C
-C
-C
 C--------------------------------------------------
 C  THIS SECTION OF CODE ONLY APPLIES TO CERTAIN VARIANTS.
 C
@@ -161,7 +146,6 @@ C
 C
 C--------------------------------------------------
 C
-C
       IF(TSIZE.GE.BTRAN(ISPC)) GO TO 20
 C
       BBFV = VT + BFVEQS(1,ISPC)
@@ -188,8 +172,6 @@ C  SET TOPKILL FLAG AND RETURN.
 C----------
       BTKFLG = .TRUE.
       RETURN
-C
-C
 C
 C----------
 C  METHB = 3 OR 4:  VOLUME COMPUTED USING ONE OF THE REGION 6 LOG
@@ -252,8 +234,6 @@ C----------
   110 CONTINUE
   120 CONTINUE
       RETURN
-C
-C
 C
 C----------
 C  REGION 6 WESTSIDE VOLUME.  32 FOOT LOGS; PROCESS EVERY OTHER LOG.

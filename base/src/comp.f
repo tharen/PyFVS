@@ -1,5 +1,6 @@
       SUBROUTINE COMP(CMP,ICMP,ATTR)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -9,19 +10,9 @@ C  WITH THE FOUR LARGEST CLASSES AND LOADS ICMP WITH
 C  CORRESPONDING SPECIES-TREE CLASS LABELS.
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CONTRL.F77'
 C
-C
       INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
 C
       INTEGER MXSP3
       PARAMETER (MXSP3=MAXSP*3)

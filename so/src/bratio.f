@@ -1,5 +1,6 @@
       FUNCTION BRATIO(IS,D,H)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **BRATIO--SO  DATE OF LAST REVISION:  09/09/13
 C----------
@@ -15,8 +16,6 @@ C 21=WA, 22=RA, 23=BM, 24=AS, 25=CW, 26=CH, 27=WO, 28=WI, 29=GC,  30=MC,
 C 31=MB, 32=OS, 33=OH
 C----------
 COMMONS
-      INCLUDE 'PRGPRM.F77'
-C
       REAL BARKB(3,MAXSP),BRDAT(MAXSP),H,D,BRATIO,DIB,TEMD
       INTEGER IS
 C
@@ -82,7 +81,7 @@ C  SPECIES FROM WC,CA VARIANT
 C----------
       CASE(9,15,19:23,25,26,27,28:31,33)
 C
-        IF (D .GT. 0) THEN 
+        IF (D .GT. 0) THEN
           IF(BARKB(3,IS) .EQ. 1.)THEN
             DIB=BARKB(1,IS)*D**BARKB(2,IS)
             BRATIO=DIB/D

@@ -1,14 +1,13 @@
       FUNCTION BRATIO(IS,D,H)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **BRATIO--EC   DATE OF LAST REVISION:  09/09/13
 C----------
 C FUNCTION TO COMPUTE BARK RATIOS AS A FUNCTION OF DIAMETER AND SPECIES.
-C REPLACES ARRAY BKRAT IN BLKDAT. 
+C REPLACES ARRAY BKRAT IN BLKDAT.
 C----------
 C  COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
 C
 C  COMMONS
 C----------
@@ -77,7 +76,7 @@ C----------
 C
       DATA BARK1/
      &    0.964,     0.851,     0.844,     0.903,     0.950,
-     &    0.903,     0.963,     0.956,     0.903,     0.889, 
+     &    0.903,     0.963,     0.956,     0.903,     0.889,
      &  0.93371,     0.934,   0.93329,   0.93329,  0.904973,
      &    0.903,       0.9,  0.837291,   0.94967,    0.0836,
      &   0.0836,  0.075256,    0.0836,   0.15565,  0.075256,

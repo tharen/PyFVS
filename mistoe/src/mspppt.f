@@ -1,4 +1,6 @@
       SUBROUTINE MSPPPT (WK3, IPNT, ILIMIT)
+      use prgprm_mod
+      implicit none
 ***********************************************************************
 *  **MSPPPT--MS  DATE OF LAST REVISION:  06/25/13
 *----------------------------------------------------------------------
@@ -52,7 +54,7 @@
 *
 *  Revision History :
 *  01-MAR-95  Lance R. David (MAG)
-*     Storage of DMGMLT (from MISCOM; user-adjustable diameter 
+*     Storage of DMGMLT (from MISCOM; user-adjustable diameter
 *     growth multiplier) removed due to change of MISTGMOD keyword.
 *     This variable is no longer used.
 *  10-MAR-08; Lance R. David (FHTET)
@@ -66,7 +68,6 @@
 *     Corrected write of MISCYC array, only 1 dimension being processed.
 *
 ***********************************************************************
-      IMPLICIT NONE
 
 C.... Parameter statements.
       INTEGER MXI,MXL,MXR
@@ -74,7 +75,6 @@ C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C.... Common include files.
 

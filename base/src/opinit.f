@@ -1,5 +1,6 @@
       SUBROUTINE OPINIT
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -8,17 +9,9 @@ C     OPTION PROCESSING ROUTINE - NL CROOKSTON - JUNE 1981 - MOSCOW
 C
 C     OPINIT IS USED TO INITIALIZE OPTION PROCESSING POINTERS.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'OPCOM.F77'
 C
       INTEGER I
-C
-COMMONS
 C
       ISEQDN=0
       IMGL=1

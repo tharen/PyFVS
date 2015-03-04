@@ -1,5 +1,6 @@
       BLOCK DATA BRBLKD
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C**********************************************************************
 C  **BRBLKD--IE   DATE OF LAST REVISION:  06/05/2014
 C----------------------------------------------------------------------
@@ -53,7 +54,6 @@ C**********************************************************************
 
 C.... Common include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BRCOM.F77'
 
 C.... Data statements.
@@ -73,7 +73,7 @@ C.... Blister Rust Species Map.
 C.... WPBR Model species/indices are: WP/1, LM/2
 C.... Western White Pine set as host to Blister Rust model species 1.
 C.... Limber Pine set as host to Blister Rust model species 2.
-C.... 
+C....
 
       DATA BRSPM/1,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0/
 

@@ -1,35 +1,24 @@
       SUBROUTINE ESINIT
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C   **ESINIT--CI DATE OF LAST REVISION:   02/16/12
 C----------
 C     CALLED FROM INITRE, ONLY ONCE, TO INITIALIZE REGEN. MODEL.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ESPARM.F77'
-C
 C
       INCLUDE 'ESCOMN.F77'
 C
-C
       INCLUDE 'ESHAP.F77'
-C
 C
       INCLUDE 'ESHAP2.F77'
 C
-C
       INCLUDE 'ESRNCM.F77'
-C
 C
       INCLUDE 'ESWSBW.F77'
 C
-C
-COMMONS
 C----------
       EQUIVALENCE (NSTK,SUMPRB)
       LOGICAL LTEMP,LKECHO
@@ -95,7 +84,6 @@ C----------
         IF(KODE.GT.0) WRITE(*,'('' OPEN FAILED FOR '',I4)') JOREGT
       ENDIF
       RETURN
-C
 C
 C----------
 C     CALLED FROM INITRE WHEN NOTREES KEYWORD IS ENTERED.

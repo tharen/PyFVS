@@ -1,11 +1,12 @@
       SUBROUTINE RDBOUT
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDBOUT      LAST REVISION:  08/27/14
 C----------
 C
 C  Purpose :
-C     Produces optional output (in a separate file) of mortality due to 
+C     Produces optional output (in a separate file) of mortality due to
 C     bark beetles.
 C
 C  Called By :
@@ -28,7 +29,7 @@ C              DSII/DSIU/DSO, for each record.
 C     RROBNK - total number of trees killed by bark beetles, for each
 C              tree species.
 C
-C  Local Variables : 
+C  Local Variables :
 C     CLKILL - REAL
 C              Total number of trees killed in each type, by 5 inch
 C              DBH size classes.
@@ -36,7 +37,7 @@ C     CMC    - CHARACTER
 C              Name of output file.
 C     IBBOUT - INTEGER
 C              Unit number of output file.
-C     NOKILL - LOGICAL 
+C     NOKILL - LOGICAL
 C              FLAG - .TRUE. if there were no beetles active this year.
 C     ROWSUM - REAL
 C              Total number of trees killed in each type (inside,
@@ -44,7 +45,7 @@ C              I-uninf, outsied)
 C     SUMLIV - REAL
 C              Total number of trees alive in each type, before bark
 C              beetles attacked.
-C     TOLDYR - LOGICAL 
+C     TOLDYR - LOGICAL
 C              FLAG - .TRUE. if other species this year are already
 C              printed.
 C     TOTSPC - REAL
@@ -61,13 +62,11 @@ C        Change of metric conversion factors variable names to match
 C        variables in new \FVS\COMMON\METRIC.F77. rd\src\metric.f77
 C        will be retired. (mods courtesy of Don Robinson, ESSA)
 C   08/26/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 
 C.... Common include files.
@@ -86,13 +85,13 @@ C.... Local variable declarations.
       INTEGER     CLASS, I, ICL, IDI, J, JYR, K, SP
       REAL        ROWSUM(3,MAXSP), CLKILL(3,MAXSP,7), SUMLIV(3,MAXSP)
       REAL        TOTSPC(MAXSP)
-      
+
 C.... ISTEP=2 (set in RDCNTL?) is the first time it's called.  Write the
 C.... table headers then.
 C.... Since the report has been requested, need to write headers whether
 C.... there are any trees in the simulation at this time or not.
 
-      IF (ISTEP .EQ. 2) THEN 
+      IF (ISTEP .EQ. 2) THEN
           WRITE (IBBOUT,1100)
           WRITE (IBBOUT,1105)
           WRITE (IBBOUT,1100)
@@ -114,13 +113,13 @@ C.... there are any trees in the simulation at this time or not.
 
           WRITE (IBBOUT,1120)
       ENDIF
-      
+
       IF (IROOT .EQ. 0) GOTO 1000
-      
+
       JYR = IY(ISTEP)
       NOKILL = .TRUE.
       TOLDYR = .FALSE.
-      
+
       DO 22 I=1,3
          DO 11 J=1,MAXSP
             ROWSUM(I,J) = 0.0
@@ -132,7 +131,7 @@ C.... there are any trees in the simulation at this time or not.
    10       CONTINUE
    11    CONTINUE
    22 CONTINUE
-    
+
       IDI = MAXRR
 
       DO 66 I=1,ITRN
@@ -150,13 +149,13 @@ C.... there are any trees in the simulation at this time or not.
          SUMLIV(3,SP) = SUMLIV(3,SP) + PROBIU(I)
          SUMLIV(1,SP) = SUMLIV(1,SP) + FPROB(I) * (SAREA - PAREA(IDI))
    66 CONTINUE
-   
+
       IDI = MAXRR
 
-      DO 99 SP=1,MAXSP 
+      DO 99 SP=1,MAXSP
          IF (RROBNK(SP) .LE. 0.0) GOTO 99
-         NOKILL = .FALSE. 
-         
+         NOKILL = .FALSE.
+
 C....    First change everything into per acre.
 
          IF (MAXRR .LT. 3) IDI = IDITYP(IRTSPC(SP))
@@ -164,17 +163,17 @@ C....    First change everything into per acre.
          DO 77 J=2,3
             SUMLIV(J,SP) = SUMLIV(J,SP) / PAREA(IDI)
             ROWSUM(J,SP) = ROWSUM(J,SP) / PAREA(IDI)
-            TOTSPC(SP) = TOTSPC(SP) + ROWSUM(J,SP) 
-   77    CONTINUE         
+            TOTSPC(SP) = TOTSPC(SP) + ROWSUM(J,SP)
+   77    CONTINUE
 
          IF (PAREA(IDI) .LT. SAREA) THEN
             SUMLIV(1,SP) = SUMLIV(1,SP) / (SAREA-PAREA(IDI))
             ROWSUM(1,SP) = ROWSUM(1,SP) / (SAREA-PAREA(IDI))
-            TOTSPC(SP) = TOTSPC(SP) + ROWSUM(1,SP) 
+            TOTSPC(SP) = TOTSPC(SP) + ROWSUM(1,SP)
          ELSE
             SUMLIV(1,SP) = 0.0
             ROWSUM(1,SP) = 0.0
-         ENDIF   
+         ENDIF
 
          DO 88 ICL = 1,7
             CLKILL(2,SP,ICL) = CLKILL(2,SP,ICL) / PAREA(IDI)
@@ -182,31 +181,31 @@ C....    First change everything into per acre.
             IF (PAREA(IDI) .LT. SAREA)
      &         CLKILL(1,SP,ICL) = CLKILL(1,SP,ICL)/(SAREA-PAREA(IDI))
    88    CONTINUE
-         
+
          IF (LMTRIC) THEN
-            IF (TOLDYR) THEN         
+            IF (TOLDYR) THEN
                WRITE(IBBOUT,2011) JSP(SP),
      &                            (CLKILL(2,SP,I)/ACRtoHA,I=1,7),
-     &                            ROWSUM(2,SP)/ACRtoHA, 
+     &                            ROWSUM(2,SP)/ACRtoHA,
      &                            SUMLIV(2,SP)/ACRtoHA
             ELSE
-               WRITE(IBBOUT,2001) JYR, JSP(SP), 
+               WRITE(IBBOUT,2001) JYR, JSP(SP),
      &                           (CLKILL(2,SP,I)/ACRtoHA,I=1,7),
-     &                            ROWSUM(2,SP)/ACRtoHA, 
+     &                            ROWSUM(2,SP)/ACRtoHA,
      &                            SUMLIV(2,SP)/ACRtoHA
                TOLDYR = .TRUE.
             ENDIF
-         
-            WRITE(IBBOUT,2002) (CLKILL(3,SP,I)/ACRtoHA,I=1,7), 
-     &                          ROWSUM(3,SP)/ACRtoHA, 
+
+            WRITE(IBBOUT,2002) (CLKILL(3,SP,I)/ACRtoHA,I=1,7),
+     &                          ROWSUM(3,SP)/ACRtoHA,
      &                          SUMLIV(3,SP)/ACRtoHA
-            WRITE(IBBOUT,2004) (CLKILL(1,SP,I)/ACRtoHA,I=1,7), 
-     &                          ROWSUM(1,SP)/ACRtoHA, 
-     &                          TOTSPC(SP)/ACRtoHA, 
+            WRITE(IBBOUT,2004) (CLKILL(1,SP,I)/ACRtoHA,I=1,7),
+     &                          ROWSUM(1,SP)/ACRtoHA,
+     &                          TOTSPC(SP)/ACRtoHA,
      &                          SUMLIV(1,SP)/ACRtoHA
             WRITE(IBBOUT,1111)
          ELSE
-            IF (TOLDYR) THEN         
+            IF (TOLDYR) THEN
                WRITE(IBBOUT,2011) JSP(SP), (CLKILL(2,SP,I),I=1,7),
      &                            ROWSUM(2,SP), SUMLIV(2,SP)
             ELSE
@@ -214,18 +213,18 @@ C....    First change everything into per acre.
      &                            ROWSUM(2,SP), SUMLIV(2,SP)
                TOLDYR = .TRUE.
             ENDIF
-         
-            WRITE(IBBOUT,2002) (CLKILL(3,SP,I),I=1,7), ROWSUM(3,SP), 
+
+            WRITE(IBBOUT,2002) (CLKILL(3,SP,I),I=1,7), ROWSUM(3,SP),
      &                          SUMLIV(3,SP)
-            WRITE(IBBOUT,2004) (CLKILL(1,SP,I),I=1,7), ROWSUM(1,SP), 
+            WRITE(IBBOUT,2004) (CLKILL(1,SP,I),I=1,7), ROWSUM(1,SP),
      &                          TOTSPC(SP), SUMLIV(1,SP)
             WRITE(IBBOUT,1111)
-         ENDIF   
+         ENDIF
    99 CONTINUE
- 
+
       IF (NOKILL) WRITE(IBBOUT,2000) JYR
       WRITE(IBBOUT,1111)
- 
+
  1000 RETURN
 
  1100 FORMAT (63('* '))
@@ -242,8 +241,8 @@ C....    First change everything into per acre.
      &        '     Total     Total    Before')
  1135 FORMAT ('(year)',20X,'     0-<5     5-<10 ',
      &        '   10-<15    15-<20    20-<25    25-<30       30+',
-     &        '                        Attack') 
-     
+     &        '                        Attack')
+
  2000 FORMAT (1X,I4,21X,'no beetle kill')
  2001 FORMAT (1X,I4,5X,A3,'    in-inf   ',7(F9.2,1X),1X,F9.2,10X,
      &            1X,F9.2)
@@ -261,6 +260,6 @@ C.... Headers used when running the metric version.
      &        '     Row     Species   Total')
  1235 FORMAT ('(year)',20X,'    0-<13    13-<25 ',
      &        '   25-<38    38-<51    51-<64    64-<76       76+',
-     &        '                        Attack') 
+     &        '                        Attack')
 
       END

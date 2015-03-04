@@ -39,7 +39,7 @@ c     (this is only done if a none-zero return or restart code is set)
 c     initialize the multiple report routine (this does not open a file)
 
       call genrpt
-      
+
       keywordfile = " "
       maxStoppts = 6
       stopptfile = " "
@@ -197,6 +197,7 @@ c     open/reopen the keyword/output file.
       end
 
       block data setglblcntl
+      implicit none
       include "GLBLCNTL.F77"
       data fvsRtnCode/-1/
       end
@@ -277,7 +278,7 @@ c     open/reopen the keyword/output file.
 
 !Python F2PY Interface Directives
 !f2py intent(out) :: restrtcd
-      
+
 #ifdef _WINDLL
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE,ALIAS : 'FVSRESTART' :: FVSRESTART
 !DEC$ ATTRIBUTES REFERENCE :: restrtcd
@@ -328,7 +329,7 @@ cc     -        " restrtcd=",restrtcd
 
 !Python F2PY Interface Directives
 !f2py intent(out) :: restrtcd
-      
+
 #ifdef _WINDLL
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE :: FVSRESTARTLASTSTAND
 !DEC$ ATTRIBUTES ALIAS : 'FVSRESTARTLASTSTAND' :: FVSRESTARTLASTSTAND
@@ -396,6 +397,7 @@ C     if in an error state, close the files.
       end
 
       subroutine fvsGetRtnCode (rtnCode)
+      implicit none
 
       include "GLBLCNTL.F77"
       integer :: rtnCode
@@ -415,6 +417,7 @@ C     if in an error state, close the files.
 
 
       subroutine fvsStopPoint (LOCODE,ISTOPDONE)
+      use prgprm_mod
       implicit none
 
 c     note that this routine is called during the simulation
@@ -429,7 +432,6 @@ c     note that this routine is called during the simulation
 !DEC$ ATTRIBUTES REFERENCE :: LOCODE,ISTOPDONE
 #endif
 
-      include "PRGPRM.F77"
       include "GLBLCNTL.F77"
       include "CONTRL.F77"
 

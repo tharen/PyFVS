@@ -1,5 +1,6 @@
       SUBROUTINE RDROUT
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDROUT      LAST REVISION:  09/02/14
 C----------
@@ -16,21 +17,15 @@ C
 C  Revision History :
 C   11/06/89 - Last revision date.
 C   09/02/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
 
       INCLUDE 'RDPARM.F77'
 
       INCLUDE 'CONTRL.F77'
 
       INCLUDE 'RDCOM.F77'
-C
-COMMONS
 C
       CHARACTER*132 DSTRNG
 

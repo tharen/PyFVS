@@ -1,5 +1,6 @@
       SUBROUTINE STATS
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -9,24 +10,14 @@ C  **MAIN**.  **TVALUE** IS CALLED TO CALCULATE STUDENT'S T FOR
 C  CONSTRUCTION OF CONFIDENCE INTERVALS.
 C---------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ARRAYS.F77'
-C
 C
       INCLUDE 'CONTRL.F77'
 C
-C
       INCLUDE 'VOLSTD.F77'
-C
 C
       INCLUDE 'PLOT.F77'
 C
-C
-COMMONS
       CHARACTER*16 LABELS(4)
       REAL TOTCF(MAXSP),
      &   TOTTR(MAXSP),TOTBA(MAXSP),TOTBF(MAXSP),

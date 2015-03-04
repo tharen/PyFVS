@@ -1,5 +1,6 @@
       SUBROUTINE RDDOUT
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDDOUT      LAST REVISION:  08/28/14
 C----------
@@ -80,24 +81,24 @@ C              Weighted average percentage of root systems of trees
 C              infected by root disease for a species.
 C
 C  Common Block Variables Used :
-C     DBH    - (ARRAYS)  (I)  
-C     I1, I2 - (RRCOM)   (O)   
-C     IND1   - (ARRAYS)  (I)  
-C     IOUNIT - (RRCOM)   (I)  
-C     IRRTRE - (RRPARM)  (I)  
-C     ISCT   - (CONTRL)  (I)  
-C     ISTEP  - (RRCOM)   (I)  
-C     ITRN   - (CONTRL)  (I)  
-C     IY     - (CONTRL)  (I)  
-C     JSP    - (PLTCHR)  (I)  
-C     MAXSP  - (PRGPRM)  (I)  
-C     MGMID  - (PLTCHR)  (I)  
-C     NPLT   - (PLTCHR)  (I)   
-C     PAREA  - (RRCOM)   (I)  
-C     PRINF  - (RRCOM)   (I)  
-C     PROBI  - (RR)      (I)  
-C     PROBIU - (RR)      (I)  
-C     RDKILL - (RRCOM)   (I)  
+C     DBH    - (ARRAYS)  (I)
+C     I1, I2 - (RRCOM)   (O)
+C     IND1   - (ARRAYS)  (I)
+C     IOUNIT - (RRCOM)   (I)
+C     IRRTRE - (RRPARM)  (I)
+C     ISCT   - (CONTRL)  (I)
+C     ISTEP  - (RRCOM)   (I)
+C     ITRN   - (CONTRL)  (I)
+C     IY     - (CONTRL)  (I)
+C     JSP    - (PLTCHR)  (I)
+C     MAXSP  - (PRGPRM)  (I)
+C     MGMID  - (PLTCHR)  (I)
+C     NPLT   - (PLTCHR)  (I)
+C     PAREA  - (RRCOM)   (I)
+C     PRINF  - (RRCOM)   (I)
+C     PROBI  - (RR)      (I)
+C     PROBIU - (RR)      (I)
+C     RDKILL - (RRCOM)   (I)
 C
 C  Revision History :
 C     08-OCT-97 Matthew K. Thompson (FHTET)
@@ -116,12 +117,10 @@ C        Change of metric conversion factors variable names to match
 C        variables in new \FVS\COMMON\METRIC.F77. rd\src\metric.f77
 C        will be retired. (mods courtesy of Don Robinson, ESSA)
 C   08/28/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C----------------------------------------------------------------------
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 
 C.... Common include files.
@@ -131,21 +130,21 @@ C.... Common include files.
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
       INCLUDE 'ARRAYS.F77'
-      INCLUDE 'RDADD.F77' 
+      INCLUDE 'RDADD.F77'
       INCLUDE 'METRIC.F77'
 
 C.... Dimension statements for local variables.
 
       INTEGER  I, I1, I2, IDI, IK, INDXKL(IRRTRE), INDXU(IRRTRE),
      &         IU, J, JYR, KSP, L
-      
+
       REAL     ODBHKL(IRRTRE), ODBHU(IRRTRE), ONDTRE(7), ONLTRE(7),
      &         OPROBI(MAXSP), OPROBU(MAXSP), ORRKIL(MAXSP),
      &         PCTKL(IRRTRE),  PCTU(IRRTRE), PVECKL(IRRTRE),
      &         PVECU(IRRTRE), TMPI, X1, X2, X3, X4
 
       CHARACTER*1 CHTYPE(ITOTRR)
-      
+
       DATA CHTYPE /'P','S','A','W'/
 
       TMPI = 0.0
@@ -204,18 +203,18 @@ C.... Print header for detailed output table.
          ELSE
             WRITE (IOUNIT,2105) JYR, CHTYPE(IRRSP), PAREA(IRRSP)
          ENDIF
-      ELSE   
+      ELSE
          IF (LMTRIC) THEN
             WRITE (IOUNIT,2106) CHTYPE(IRRSP), PAREA(IRRSP)*ACRtoHA
          ELSE
             WRITE (IOUNIT,2106) CHTYPE(IRRSP), PAREA(IRRSP)
          ENDIF
-      ENDIF   
+      ENDIF
 
       IF (PAREA(IRRSP) .EQ. 0.0) THEN
         WRITE(IOUNIT,2120)
         RETURN
-      ENDIF  
+      ENDIF
 
 C.... Find tree species in root disease patches.
 
@@ -224,7 +223,7 @@ C.... Find tree species in root disease patches.
  4100 FORMAT ('***** NO TREES IN STAND')
       GOTO 4000
 
- 804  CONTINUE             
+ 804  CONTINUE
       IDI = IRRSP
       DO 800 KSP=1, MAXSP
          IF (IRRSP .LT. 3) IDI=IDITYP(IRTSPC(KSP))
@@ -287,8 +286,8 @@ C....    Write out the indicators.
             PCTKL(I) = 0.0
   802    CONTINUE
 
-  801    CONTINUE 
-         IF (LMTRIC) THEN 
+  801    CONTINUE
+         IF (LMTRIC) THEN
             WRITE(IOUNIT,2110) JSP(KSP),
      >           (ONDTRE(I)*INTOCM,I=1,6), X1/ACRtoHA,
      >           (ONLTRE(I)*INTOCM,I=1,6),  X2/ACRtoHA, X3/ACRtoHA, X4
@@ -346,8 +345,8 @@ C.... Format statements for header.
  1140 FORMAT ('YEAR TYPE AREA  SP',2(5X,'10   30   50   70   90',
      >'  100  TREES/ACRE'),' TREES/ACRE',2X,'INFECTED')
  1145 FORMAT ('---- ---------  --',2(3X,6(' ----'),' ----------'),
-     >2(' ----------'))   
-     
+     >2(' ----------'))
+
 C.... Format statements for headers specific to metric.
 
  1230 FORMAT (6X,'DISEASE',3X,

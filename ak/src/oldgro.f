@@ -1,5 +1,6 @@
       SUBROUTINE OLDGRO(ISPC,VN,D,H,BBFV)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **OLDGRO--AK    DATE OF LAST REVISION:  02/14/08
 C----------
@@ -9,15 +10,8 @@ C
 C   FROM DON DEMARS --- PNW, JUNEAU AK
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CONTRL.F77'
 C
-C
-COMMONS
 C----------
       LOGICAL DEBUG
       INTEGER ISPC,I,K,N,NN,KBD,NNN,JJ,NM,ICK,KB

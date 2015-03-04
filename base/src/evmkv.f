@@ -1,21 +1,13 @@
       SUBROUTINE EVMKV(CTOK)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C
 C     CREATES A NEW VARIABLE, IF IT CAN!
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'OPCOM.F77'
-C
-C
-COMMONS
 C
       CHARACTER*(*) CTOK
 

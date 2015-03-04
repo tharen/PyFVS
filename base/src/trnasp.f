@@ -1,5 +1,6 @@
       SUBROUTINE TRNASP
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -8,15 +9,7 @@ C  THE VALUE TO RADIANS. THE VALUE IS THEN ASSIGNED TO THE VARIABLE
 C  ASPECT.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
 C
 C----------
 C   CONVERT ASPECT TO RADIANS.

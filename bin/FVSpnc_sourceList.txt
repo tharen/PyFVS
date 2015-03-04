@@ -525,7 +525,7 @@
 ../pg/src/varget.f
 ../pg/src/varput.f
 ../pn/common/ESPARM.F77
-../pn/common/PRGPRM.F77
+
 ../pn/src/blkdat.f
 ../pn/src/bratio.f
 ../pn/src/ccfcal.f

@@ -1,5 +1,6 @@
       SUBROUTINE CRATET
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C CR $Id$
 C----------
@@ -21,37 +22,21 @@ C    8)  PRINT A TABLE DESCRIBING CONTROL PARAMETERS AND INPUT
 C        VARIABLES.
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ARRAYS.F77'
-C
 C
       INCLUDE 'PLOT.F77'
 C
-C
       INCLUDE 'COEFFS.F77'
-C
 C
       INCLUDE 'CONTRL.F77'
 C
-C
       INCLUDE 'OUTCOM.F77'
-C
 C
       INCLUDE 'HTCAL.F77'
 C
-C
       INCLUDE 'VARCOM.F77'
 C
-C
       INCLUDE 'GGCOM.F77'
-C
-C
-COMMONS
 C
 C----------
 C  INTERNAL VARIABLES.

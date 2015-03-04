@@ -1,5 +1,6 @@
       SUBROUTINE ESADDT(ICALL)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **ESADDT DATE OF LAST REVISION:  07/25/08
 C----------
@@ -8,7 +9,6 @@ C     ADD NEW TREES FROM A FILE OR EXTERNAL DATA BASE.
 
 C     COMMONS
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'ARRAYS.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'OUTCOM.F77'

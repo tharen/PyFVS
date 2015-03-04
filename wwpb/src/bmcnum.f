@@ -1,5 +1,7 @@
       SUBROUTINE BMCNUM(ISTD,IYR)
-      
+      use prgprm_mod
+      implicit none
+
 c      CALLED BY: BMDRV
 ***********************************************************************
 *  **BMCNUM  Date of last revision: Aug, 1999 (AJM)
@@ -10,7 +12,7 @@ c      CALLED BY: BMDRV
 *      used to move beetles between stands. Calculations are done here
 *      because many of the necessary variables are already in memory
 *      (and would not be in memory outside of this stand loop).
-*      
+*
 *      There will be potentially two passes through this routine.
 *      If Ips are not the primary pest, then we need to calculate
 *      the numerator for Ips and for the main pest (MPB or WPB)
@@ -26,7 +28,7 @@ c      CALLED BY: BMDRV
 *
 *  Call list definitions:
 *     NUMER:  (2,plot) Numerator of the scoring equation for special trees
-*             in the stand. 
+*             in the stand.
 *
 *  Local variable definitions:
 *     BA:     BA in size class
@@ -53,15 +55,14 @@ c      CALLED BY: BMDRV
 *     NSCL:   From BMPRM; Number of dbh size classes
 *     PBSPEC: From BMPRM; Pine Beetle specie(s) being simulated
 *     REPPHE: From BMCOM; Repellant pheromone...
-*     SCMIN:  From BMCOM; minimum size class for attack 
-*     TFOOD:  From BMCOM; total beetle attractive 'food' 
+*     SCMIN:  From BMCOM; minimum size class for attack
+*     TFOOD:  From BMCOM; total beetle attractive 'food'
 ***********************************************************************
 
 C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'PPEPRM.F77'
       INCLUDE 'BMPRM.F77'
 
@@ -72,17 +73,17 @@ C.... Common include files.
 C.... Variable declarations.
 
       INTEGER ISIZ
-      INTEGER LISCMIN(2)  
+      INTEGER LISCMIN(2)
       INTEGER NPASS
 
-      REAL BAIS, BAHG 
+      REAL BAIS, BAHG
       REAL SPTREE, SPAREA
       REAL SPEC
       REAL ASPEC(2)
 
       IF(LBMDEB) WRITE(JBMBPR,10) IYR, ISTD
    10 FORMAT(' Begin BMCNUM: Year= ',I5, 'Stand= ', I6)
-   
+
       LISCMIN(1)= ISCMIN(PBSPEC)
       ASPEC(1) = USERA(PBSPEC)
       NUMER(1,ISTD) = 0.0
@@ -91,26 +92,26 @@ C.... Variable declarations.
       TFOOD(ISTD,2) = 0.0
 
       NPASS = 1
-      
+
       IF (IPSON) THEN
 c       If Ips is a driving variable, then need to go second time through loop
         NPASS= 2
         LISCMIN(2)= ISCMIN(3)
         ASPEC(2) = USERA(3)
       ENDIF
-      
+
 C.... DO for the number of passes through this routine
 
       DO 100 IPASS=1,NPASS
-      
+
         BAIS= 0.0
         SPEC= 0.0
         BAHG= 0.0
         SPAREA= 0.0
-         
+
         BAIS= BAH(ISTD,NSCL+1) + BANH(ISTD,NSCL+1)
         IF (BAIS .LE. 1E-6) GOTO 100
-        
+
         DO 110 ISIZ=1,NSCL
 
 C....     find total special trees in stand

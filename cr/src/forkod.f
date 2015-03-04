@@ -1,5 +1,6 @@
       SUBROUTINE FORKOD
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C CR $Id$
 C----------
@@ -7,19 +8,9 @@ C
 C     TRANSLATES FOREST CODE INTO A SUBSCRIPT, IFOR, AND IF
 C     KODFOR IS ZERO, THE ROUTINE RETURNS THE DEFAULT CODE.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'PLOT.F77'
 C
-C
       INCLUDE 'CONTRL.F77'
-C
-C
-COMMONS
 C
 C----------
 C  NATIONAL FORESTS:
@@ -108,7 +99,7 @@ C----------
         WRITE(JOSTND,26)
    26   FORMAT(T12,'ROUTT NF (211) BEING MAPPED TO MEDICINE BOW-',
      &  'ROUTT (206) FOR FURTHER PROCESSING.')
-        I=4        
+        I=4
       ENDIF
       IFOR=I
    30 CONTINUE

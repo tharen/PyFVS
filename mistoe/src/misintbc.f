@@ -1,4 +1,6 @@
       SUBROUTINE MISINT
+      use prgprm_mod
+      implicit none
 ***********************************************************************
 *  **MISINT--IB  Date of last revision:  10/07/05
 *                14-Jul-2008
@@ -37,7 +39,6 @@ C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C.... Common include files.
 
@@ -99,8 +100,8 @@ C.... Mortality coefficients
      &   0.0,0.0,0.0,                  !EP
      &   0.0,0.0,0.0,                  !AT
      &   0.0,0.0,0.0,                  !AC
-     &   0.01319,-0.01627,0.00822,     !OC=FD                    
-     &   0.0,0.0,0.0/                  !OH  
+     &   0.01319,-0.01627,0.00822,     !OC=FD
+     &   0.0,0.0,0.0/                  !OH
 
 C.... Check for debug.
 

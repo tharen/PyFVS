@@ -1,5 +1,6 @@
       SUBROUTINE DUNN (SS)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **DUNN--WS    DATE OF LAST REVISION:  05/09/12
 C----------
@@ -13,19 +14,9 @@ C DEFAULT VALUE SPECIFIED IN GRINIT IS MAINTAINED. THIS ROUTINE IS
 C CALLED FROM INITRE.
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'PLOT.F77'
 C
-C
       INCLUDE 'CONTRL.F77'
-C
-C
-COMMONS
 C
 C----------
       INTEGER IST,ISPC,I
@@ -82,7 +73,7 @@ C
 C  SURROGATE EQUATION ASSIGNMENT:
 C
 C    FROM EXISTING WS EQUATIONS --
-C      USE 1(SP) FOR 11(WP) AND 24(MH) 
+C      USE 1(SP) FOR 11(WP) AND 24(MH)
 C      USE 2(DF) FOR 22(BD)
 C      USE 3(WF) FOR 13(SF)
 C      USE 4(GS) FOR 23(RW)
@@ -92,7 +83,7 @@ C      USE 31(BO) FOR 28(LO), 29(CY), 30(BL), 32(VO), 33(IO), 40(BM), AND
 C                     43(OH)
 C
 C    FROM CA VARIANT --
-C      USE CA11(KP) FOR 12(PM), 14(KP), 15(FP), 16(CP), 17(LM), 19(GP), 20(WE), 
+C      USE CA11(KP) FOR 12(PM), 14(KP), 15(FP), 16(CP), 17(LM), 19(GP), 20(WE),
 C                       25(WJ), 26(WJ), AND 27(CJ)
 C      USE CA12(LP) FOR 9(LP) AND 10(WB)
 C
@@ -150,7 +141,6 @@ C
    20 CONTINUE
 C
       RETURN
-C
 C
 C----------
 C   WS FIRE MODEL NEEDS SITE INDICES FOR DUNNING CODES.

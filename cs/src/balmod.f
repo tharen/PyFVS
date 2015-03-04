@@ -1,5 +1,6 @@
       SUBROUTINE BALMOD(ISPC,D,BAL,BA,GMOD,DEBUG)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **BALMOD--CS    DATE OF LAST REVISION:  05/19/08
 C----------
@@ -11,15 +12,8 @@ C  ESTIMATION SEQUENCE. THIS ROUTINE IS CALLED BY DGF, HTGF, AND
 C  RGNTHW.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CONTRL.F77'
 C
-C
-COMMONS
 C----------
       LOGICAL DEBUG
       REAL B1(MAXSP),B2(MAXSP),B3(MAXSP)

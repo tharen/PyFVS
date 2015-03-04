@@ -1,9 +1,10 @@
       SUBROUTINE DMSLST (DMRCls, n, SInd, SCD, SPtr, SLst)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
-C **DMSLST -- NISI  Date of last revision: April 14 1994 
+C **DMSLST -- NISI  Date of last revision: April 14 1994
 C--------------------------------------------------------------------
 C Purpose:
 C   To simulate spread the model places source trees in sampling
@@ -18,13 +19,13 @@ C--------------------------------------------------------------------
 C
 C Called by:
 C
-C     DMTREG 
+C     DMTREG
 C
 C Other routines called:
 C
 C     DMRANN
 C
-C Argument list definitions:                        
+C Argument list definitions:
 C
 C     INTEGER DMRCls  (I) The DM category from which trees will be
 C                          chosen at random.
@@ -34,17 +35,17 @@ C                          corresponding to the cumulative
 C                          probability within the 'SrcCD()' array.
 C                          These records are sorted by DM category
 C                          into groups marked by the 'Sptr()' array.
-C     REAL    SCD     (I) The cumulative probability of each DM 
-C                          group is computed by taking the relative 
+C     REAL    SCD     (I) The cumulative probability of each DM
+C                          group is computed by taking the relative
 C                          density (trees/acre) of each treelist
 C                          record and forming a cumulative
 C                          distribution.
 C     INTEGER SPtr    (I) Breakpoints demarcating the DM categories
 C                          ordered within the 'SInd() and 'SCD()'
 C                          arrays. Each value marks the *last* entry
-C                          in that category: eg: 'Sptr(3)' contains 
+C                          in that category: eg: 'Sptr(3)' contains
 C                          the position of the last position with DM
-C                          rating 3; 'Sptr(2)+1' contains the first. 
+C                          rating 3; 'Sptr(2)+1' contains the first.
 C     INTEGER SLst    (O) List of trees selected to occupy the
 C                          sampling ring being processed.
 C                          Index 1: The index value to the treelist
@@ -57,7 +58,7 @@ C
 C     LOGICAL  flg        A flag that is .TRUE. whenever a treelist
 C                          record has already been chosen; otherwise
 C                          it is .FALSE.
-C     INTEGER  i          Loop counter for the number of trees to 
+C     INTEGER  i          Loop counter for the number of trees to
 C                          include in the sample 'n'.
 C     INTEGER  j          Loop counter for the relevant portion of
 C                          the 'SCD()' and 'SInd' arrays.
@@ -81,7 +82,6 @@ C     KNT      DMCOM
 C
 C********************************************************************
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'DMCOM.F77'
 
 C Subroutine arguments.
@@ -105,7 +105,7 @@ C Local variables.
       INTEGER   pFrst, pLast
       REAL      RND
 
-C Compute pointers to the location of the distribution within the 
+C Compute pointers to the location of the distribution within the
 C 'SCD()' array. Note that 'SPtr()' is the position of the *last*
 C item in the set.
 
@@ -118,7 +118,7 @@ C item in the set.
       pLast = SPtr(DMRCls)
 
 C Loop through the 'i' samples to be drawn, calling a random
-C number each time. Then walk through the 'j' values of the 
+C number each time. Then walk through the 'j' values of the
 C cumulative distribution. When a source is chosen, check to see if
 C it has already been selected, and increment KNT if required.
 C 'SLst(0, INDX)' holds the number of unique source trees used to

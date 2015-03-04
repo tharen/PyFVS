@@ -1,11 +1,13 @@
       SUBROUTINE BMPPPT (IPNT, ILIMIT)
-      
+      use prgprm_mod
+      implicit none
+
 ***********************************************************************
 *  **BMPPPT--WWPB   DATE OF LAST REVISION:  02/01/95
 *----------------------------------------------------------------------
 *  Purpose:
 *     Write the damage code information for the given stand.
-*  This is part of the Parallel Processing Extension, and freely 
+*  This is part of the Parallel Processing Extension, and freely
 *  adapted from MSPPPT.FOR. In this case, damage code information is
 *  only useful from the initialization. Therefore, if the master cycle
 *  is more than 2, the variable is not saved or restored.
@@ -29,7 +31,6 @@ C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'PPEPRM.F77'
       INCLUDE 'BMPRM.F77'
 
@@ -48,7 +49,7 @@ C     WRITE THE LOGICAL SCALAR. THIS IS .TRUE. IF THE MASTER
 C     CYCLE IS 2 OR LESS, .FALSE. OTHERWISE.
 
       LX = (MICYC .LE. 2)
-      
+
       LOGICS (1) = LX
       CALL LFWRIT (WK3, IPNT, ILIMIT, LOGICS, MXL, 2)
 

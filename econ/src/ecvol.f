@@ -1,4 +1,6 @@
       SUBROUTINE ECVOL(treeId, LOGDIA, LOGVOL, isCubic)
+      use prgprm_mod
+      implicit none
 C----------
 C **ECVOL--ECON  DATE OF LAST REVISION: 0/12/2012
 C----------
@@ -24,9 +26,7 @@ C 0/12/2012 eliminated species identifier as provided duplicate information to t
 !           Net voluemes computed in echarv.f based on whole tree defect
 !  treeId - FVS internal sequential tree index number, 1 to number of trees in simulation.
 
-      implicit none
 
-      include 'PRGPRM.F77'
       include 'ECNCOM.F77'
 
       integer, parameter  :: MAX_DIA_TYPE=3, MAX_VOL_TYPE=7              !These values from constants in VOLSTD

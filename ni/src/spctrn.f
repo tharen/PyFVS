@@ -1,29 +1,24 @@
       SUBROUTINE SPCTRN (SPCIN, ISPC1)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C NI $ID$
 C----------
 C  CALLED FROM INTREE, WHEN THE INPUT SPECIES CODE IS NOT RECOGNIZED.
 C  THIS ROUTINE ASSIGNS THE MOST SIMILAR SPECIES SEQUENCE NUMBER TO THE
 C  SPECIES NOT RECOGNIZED IN THE VARIANT.  TRANSLATES FVS ALPHA CODES,
-C  FIA CODES, AND USDA PLANTS SYMBOLS.  THE ASPT ARRAY CONTAINS THE 
-C  SPECIES MAPPING.  ALL SPECIES MAPPING WAS APPROVED BY THE FVS 
-C  REGIONAL CONTACTS IN APRIL 2007. TO PROVIDE ADEQUATE CODE 
+C  FIA CODES, AND USDA PLANTS SYMBOLS.  THE ASPT ARRAY CONTAINS THE
+C  SPECIES MAPPING.  ALL SPECIES MAPPING WAS APPROVED BY THE FVS
+C  REGIONAL CONTACTS IN APRIL 2007. TO PROVIDE ADEQUATE CODE
 C  DOCUMENTATION, STANDARD FVS CODING FORMAT HAS BEEN RELAXED TO ALLOW
 C  THE USE OF EXCLAMATION MARKS (!) TO PLACE COMMENTS AT THE
 C  END OF VALID FORTRAN STATEMENTS.
 C----------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'PLOT.F77'
 C
+      INCLUDE 'CONTRL.F77'
 C
-      INCLUDE 'CONTRL.F77'      
-C
-COMMONS
 C----------
       CHARACTER VVER*7
       CHARACTER*(*)SPCIN
@@ -1387,7 +1382,7 @@ C  INITIALIZATIONS
 C----------
       CALL VARVER(VVER)
       VAR=VVER(:2)
-      IF(VAR.EQ.'BP' .OR. VAR.EQ.'LP' .OR. VAR.EQ.'SF' .OR. 
+      IF(VAR.EQ.'BP' .OR. VAR.EQ.'LP' .OR. VAR.EQ.'SF' .OR.
      & VAR.EQ.'SM' .OR. VAR.EQ.'SP')VAR='CR'
       IJSPIN=3
       ISPC1= 0
@@ -1434,89 +1429,89 @@ C----------
             SPCOUT= ASPT(I,19)
           CASE('WS')
             SPCOUT= ASPT(I,20)
-        END SELECT 
-        GO TO 150        
+        END SELECT
+        GO TO 150
       ELSEIF (SPCIN .EQ. ASPT(I,2)) THEN
         IJSPIN=2
         SELECT CASE (VAR)
-          CASE('AK') 
+          CASE('AK')
             SPCOUT= ASPT(I,4)
-          CASE('BM') 
+          CASE('BM')
             SPCOUT= ASPT(I,5)
-          CASE('CA') 
+          CASE('CA')
             SPCOUT= ASPT(I,6)
-          CASE('CI') 
+          CASE('CI')
             SPCOUT= ASPT(I,7)
-          CASE('CR') 
+          CASE('CR')
             SPCOUT= ASPT(I,8)
-          CASE('EC') 
+          CASE('EC')
             SPCOUT= ASPT(I,9)
-          CASE('EM') 
+          CASE('EM')
             SPCOUT= ASPT(I,10)
-          CASE('IE') 
+          CASE('IE')
             SPCOUT= ASPT(I,11)
-          CASE('KT') 
+          CASE('KT')
             SPCOUT= ASPT(I,12)
-          CASE('NC') 
+          CASE('NC')
             SPCOUT= ASPT(I,13)
-          CASE('NI') 
+          CASE('NI')
             SPCOUT= ASPT(I,14)
-          CASE('PN') 
+          CASE('PN')
             SPCOUT= ASPT(I,15)
-          CASE('SO') 
+          CASE('SO')
             SPCOUT= ASPT(I,16)
-          CASE('TT') 
+          CASE('TT')
             SPCOUT= ASPT(I,17)
-          CASE('UT') 
+          CASE('UT')
             SPCOUT= ASPT(I,18)
-          CASE('WC') 
+          CASE('WC')
             SPCOUT= ASPT(I,19)
-          CASE('WS') 
+          CASE('WS')
             SPCOUT= ASPT(I,20)
         END SELECT
-        GO TO 150   
+        GO TO 150
       ELSEIF (SPCIN .EQ. ASPT(I,3)) THEN
         IJSPIN=3
         SELECT CASE (VAR)
-          CASE('AK') 
+          CASE('AK')
             SPCOUT= ASPT(I,4)
-          CASE('BM') 
+          CASE('BM')
             SPCOUT= ASPT(I,5)
-          CASE('CA') 
+          CASE('CA')
             SPCOUT= ASPT(I,6)
-          CASE('CI') 
+          CASE('CI')
             SPCOUT= ASPT(I,7)
-          CASE('CR') 
+          CASE('CR')
             SPCOUT= ASPT(I,8)
-          CASE('EC') 
+          CASE('EC')
             SPCOUT= ASPT(I,9)
-          CASE('EM') 
+          CASE('EM')
             SPCOUT= ASPT(I,10)
-          CASE('IE') 
+          CASE('IE')
             SPCOUT= ASPT(I,11)
-          CASE('KT') 
+          CASE('KT')
             SPCOUT= ASPT(I,12)
-          CASE('NC') 
+          CASE('NC')
             SPCOUT= ASPT(I,13)
-          CASE('NI') 
+          CASE('NI')
             SPCOUT= ASPT(I,14)
-          CASE('PN') 
+          CASE('PN')
             SPCOUT= ASPT(I,15)
-          CASE('SO') 
+          CASE('SO')
             SPCOUT= ASPT(I,16)
-          CASE('TT') 
+          CASE('TT')
             SPCOUT= ASPT(I,17)
-          CASE('UT') 
+          CASE('UT')
             SPCOUT= ASPT(I,18)
-          CASE('WC') 
+          CASE('WC')
             SPCOUT= ASPT(I,19)
-          CASE('WS') 
+          CASE('WS')
             SPCOUT= ASPT(I,20)
         END SELECT
-        GO TO 150   
-      ENDIF      
+        GO TO 150
+      ENDIF
   100 CONTINUE
-  150 CONTINUE  
+  150 CONTINUE
 C----------
 C  FIND STANDARD SPECIES NUMBER FOR VARIANT TO RETURN TO INTREE.
 C  IF SPECIES CODE WAS NOT SET, RETURN MAXIMUM SPECIES NUMBER.

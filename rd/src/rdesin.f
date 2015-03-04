@@ -1,5 +1,6 @@
       SUBROUTINE RDESIN
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDESIN      LAST REVISION:  08/28/14
 C----------
@@ -24,19 +25,13 @@ C
 C  Revision History :
 C   08/24/89 - Last revision date.
 C   08/28/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'PLOT.F77'
       INCLUDE 'ESHAP.F77'
 C
-COMMONS
-C
       MINREP = 30
- 
+
       RETURN
       END

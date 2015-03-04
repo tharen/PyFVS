@@ -1,6 +1,7 @@
       SUBROUTINE SUMOUT(IOSUM,I20,ICFLAG,JOPRT,JOSTND,JOSUM,
      >                  LENG,MGMID,NPLT,SAMWT,ITITLE,IPTINV)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -13,10 +14,10 @@ C              2: AGE
 C              3: TREES/ACRE                     START OF PERIOD
 C              4: TOTAL CU FT                    START OF PERIOD
 C     *        4: MERCH CU FT (PULP AND SAWLOG)  START OF PERIOD
-C              5: MERCH CU FT                    START OF PERIOD 
-C     *        5: MERCH CU FT (SAWLOG)           START OF PERIOD    
-C              6: MERCH BD FT                    START OF PERIOD  
-C     *        6: MERCH BD FT (SAWLOG)           START OF PERIOD 
+C              5: MERCH CU FT                    START OF PERIOD
+C     *        5: MERCH CU FT (SAWLOG)           START OF PERIOD
+C              6: MERCH BD FT                    START OF PERIOD
+C     *        6: MERCH BD FT (SAWLOG)           START OF PERIOD
 C              7: REMOVED TREES/ACRE
 C              8: REMOVED TOTAL CU FT
 C     *        8: REMOVED MERCH CU FT (PULP AND SAWLOG)
@@ -48,15 +49,7 @@ C     MGMID = MANAGEMENT IDENTIFICATION FIELD. ASSUMED ALPHANUMERIC.
 C     NPLT  = PLOT IDENTIFICATION FIELD. ASSUMED ALPHANUMERIC.
 C NOTE: * Indicates R8 and R9 specific (CS, LS, NE, OZ, SE, SN)
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'SUMTAB.F77'
-C
-COMMONS
 C
       CHARACTER CISN*11,NPLT*26,TIM*8,DAT*10,MGMID*4,VVER*7,REV*10
       CHARACTER ITITLE*72,RECORD*250
@@ -77,7 +70,7 @@ C
       CALL VARVER (VVER)
       CALL REVISE (VVER,REV)
       CALL GRDTIM (DAT,TIM)
-      
+
       IF(LDSK) THEN
         INQUIRE(UNIT=JOSUM,opened=LCONN)
         IF (.NOT.LCONN) THEN

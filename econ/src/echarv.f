@@ -1,5 +1,7 @@
       SUBROUTINE ECHARV (bfPerTree, dbh, ft3PerTree, GROSPC, PREM2,
      &                                           spId, treeId, ICYC, IY)
+      use prgprm_mod
+      implicit none
 C----------
 C **ECHARV--ECON  DATE OF LAST REVISION: 09/02/10
 C----------
@@ -30,9 +32,7 @@ C Author Fred Martin, WA DNR,
 !  spId       - internal FVS species identifier, ISPC=FVS variable name.
 !  treeId     - index to passed tree in list of all trees.
 
-      implicit none
 
-      include 'PRGPRM.F77'
       include 'ECNCOM.F77'
 
       integer :: i, keyWdIdx, logId
@@ -145,7 +145,6 @@ C Author Fred Martin, WA DNR,
 !    "sortIndex" is descending sorted index of "classes" array, used to access "classes" array values
       pure function getDiaGrp(value, cntClasses, classes, sortIndex)
      &                                                      result(indx)
-         implicit none
          integer :: i, indx
          integer, intent(in) :: cntClasses, sortIndex(cntClasses)
          real, intent(in) :: value, classes(cntClasses)

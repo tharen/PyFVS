@@ -1,5 +1,6 @@
       SUBROUTINE FMSOUT (IYR)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMSOUT--FIRE/M   DATE OF LAST REVISION:  04/08/14
 *     SINGLE-STAND VERSION
@@ -32,7 +33,6 @@ C.... PARAMETER STATEMENTS.
 
 C.... PARAMETER INCLUDE FILES.
 
-      INCLUDE 'PRGPRM.F77'
 Cppe      INCLUDE 'PPEPRM.F77'
 Cppe      INCLUDE 'PPCNTL.F77'
       INCLUDE 'FMPARM.F77'
@@ -249,10 +249,10 @@ C     the total heights and dbhs to get the class-averages.
                WRITE(JSNOUT,300) IYR,JSP(IDC),JCL,
      &             TOTDBH(IDC,JYR,JCL)*INtoCM,
      &             TOTHTH(IDC,JYR,JCL)*FTtoM, TOTHTS(IDC,JYR,JCL)*FTtoM,
-     &             INT(TOTVLH(IDC,JYR,JCL)*FT3toM3), 
+     &             INT(TOTVLH(IDC,JYR,JCL)*FT3toM3),
      &             INT(TOTVLS(IDC,JYR,JCL)*FT3toM3),
      &           INT((TOTVLH(IDC,JYR,JCL)+TOTVLS(IDC,JYR,JCL))*FT3toM3),
-     &             (IYR-JYR+1), TOTDH(IDC,JYR,JCL)/ACRtoHA, 
+     &             (IYR-JYR+1), TOTDH(IDC,JYR,JCL)/ACRtoHA,
      &             TOTDS(IDC,JYR,JCL)/ACRtoHA,TOTN/ACRtoHA
   300          FORMAT(1X,I4,1X,A2,1X,I3,1X,3(F5.1,1X),
      &                3(I5,1X),I4,1X,3(F7.2,1X))

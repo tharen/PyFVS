@@ -1,26 +1,15 @@
       SUBROUTINE LNKCHN (ITREE)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ARRAYS.F77'
-C
 C
       INCLUDE 'CONTRL.F77'
 C
-C
       INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
 C
       INTEGER ITREE,II,KPTRII,IR
 C

@@ -1,5 +1,6 @@
       SUBROUTINE FMMOIS (FMOIS, MOIS)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMMOIS  FIRE--SN--DATE OF LAST REVISION:  06/22/05
 C----------
@@ -10,8 +11,8 @@ C     THIS SUBROUTINE RETURNS THE PRESET MOISTURE LEVELS.
 C     THE MOISTURE VALUES USED FOR SEVERE AND MODERATE POTENTIAL FIRES
 C     (CATEGORIES 1 $ 3) WERE PROVIDED BY BENNIE TERRELL AND GREGG
 C     VICKERS.  CATEGORY 2 IS APPROX. HALF WAY BETWEEN CAT 1 & 3. CAT 4
-C     IS THE SAME AS IN NI.  
-C     DUFF MOISTURE VALUES ARE THE DEFAULTS IN FOFEM. 
+C     IS THE SAME AS IN NI.
+C     DUFF MOISTURE VALUES ARE THE DEFAULTS IN FOFEM.
 C----------
 C  CALL LIST DEFINITIONS:
 C     FMOIS:   MOISTURE MODEL NUMBER
@@ -22,15 +23,8 @@ C     MOIS: (1,*):DEAD STUFF: ,1=0-.25;,2=.25-1;,3=1-3;,4=3+;,5=DUFF
 C           (2,*):LIVE STUFF
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CONTRL.F77'
 C
-C
-COMMONS
 C----------
 C  LOCAL VARIABLE DECLARATIONS
 C----------
@@ -83,7 +77,7 @@ C----------
           MOIS(1,4) = .20
           MOIS(1,5) = 1.0
           MOIS(2,1) = 1.0
-          MOIS(2,2) = 1.0          
+          MOIS(2,2) = 1.0
 C
       ELSEIF (FMOIS .EQ. 4) THEN
 C----------
@@ -95,7 +89,7 @@ C----------
           MOIS(1,4) = .50
           MOIS(1,5) = 1.75
           MOIS(2,1) = 1.5
-          MOIS(2,2) = 1.5          
+          MOIS(2,2) = 1.5
 C
       ENDIF
 C

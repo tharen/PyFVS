@@ -1,5 +1,6 @@
       SUBROUTINE RDESTB(N,ANS)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDESTB      LAST REVISION:  O8/28/14
 C----------
@@ -20,16 +21,9 @@ C
 C  Revision History :
 C   03/07/95 - Last revision date.
 C   08/28/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
-C
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 
       INCLUDE 'RDCOM.F77'
@@ -44,7 +38,7 @@ C
       TPAREA = 0.0
       DO 20 IDI=MINRR,MAXRR
          TPAREA = TPAREA + PAREA(IDI)
-   20 CONTINUE      
+   20 CONTINUE
       IF (IROOT .EQ. 0 .OR. TPAREA .EQ. 0.0) RETURN
 C
 C.....PUT TREES INTO OUTSIDE DENSIITY ARRAY (INCLUDING THE FRINGE ARRAY)

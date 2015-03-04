@@ -1,5 +1,6 @@
       SUBROUTINE CVCBMS (LTHIN)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **CVCBMS DATE OF LAST REVISION:  06/28/13
 C----------
@@ -38,23 +39,14 @@ C  TPA         -- TREES PER ACRE
 C  TRFBMS(MAXTRE)-- PREDICTED FOLIAGE BIOMASS IN POUNDS
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CONTRL.F77'
-C
 C
       INCLUDE 'ARRAYS.F77'
 C
-C
       INCLUDE 'PLOT.F77'
-C
 C
       INCLUDE 'CVCOM.F77'
 C
-COMMONS
 C----------
       LOGICAL LTHIN,DEBUG
       CHARACTER VVER*7
@@ -95,20 +87,17 @@ C     WP=WP,WL=WL,DF=DF,GF=GF,WH=WH,RC=RC,LP=LP,ES=ES,AF=AF,PP=PP
 C     MH=MH
      &   11, 38*0/
 C
-C
       DATA MAPAK /
 C     WS=ES,RC=RC,SF=GF,MH=MH,WH=WH,YC=RC,LP=LP,SS=ES,AF=AF,RA=WL
      &    8,    6,    4,   11,    5,    6,    7,    8,    9,    2,
 C     CW=WL,OH=WL,OS=MH
      &    2,    2,   11, 36*0/
 C
-C
       DATA MAPBM /
 C     WP=WP,WL=WL,DF=DF,GF=GF,MH=MH,WJ=RC,LP=LP,ES=ES,AF=AF,PP=PP
      &    1,    2,    3,    4,   11,    6,    7,    8,    9,   10,
 C     WB=WP,LM=WP,PY=WH,YC=RC,AS=WL,CW=WL,OS=MH,OH=WL
      &    1,    1,    5,    6,    2,    2,   11,    2, 31*0/
-C
 C
       DATA MAPCA /
 C     PC=RC,IC=RC,RC=RC,WF=GF,RF=AF,SH=AF,DF=DF,WH=WH,MH=MH,WB=WP
@@ -119,16 +108,14 @@ C     WJ=RC,BR=ES,GS=RC,PY=WH,OS=MH,LO=WL,CY=WL,BL=WL,EO=WL,WO=WL
      &    6,    8,    6,    5,   11,    2,    2,    2,    2,    2,
 C     BO=WL,VO=WL,IO=WL,BM=WL,BU=WL,RA=WL,MA=WL,GC=WL,DG=WL,FL=WL
      &    2,    2,    2,    2,    2,    2,    2,    2,    2,    2,
-C     WN=WL,TO=WL,SY=WL,AS=WL,CW=WL,WI=WL,CN=WL,CL=WL,OH=WL      
+C     WN=WL,TO=WL,SY=WL,AS=WL,CW=WL,WI=WL,CN=WL,CL=WL,OH=WL
      &    2,    2,    2,    2,    2,    2,    2,    2,    2/
-C
 C
       DATA MAPCI /
 C     WP=WP,WL=WL,DF=DF,GF=GF,WH=WH,RC=RC,LP=LP,ES=ES,AF=AF,PP=PP
      &    1,    2,    3,    4,    5,    6,    7,    8,    9,   10,
 C     WB=WP,PY=WH,AS=WL,WJ=RC,MC=WL,LM=WP,CW=WL,OS=MH,OH=WL
      &    1,    5,    2,    6,    2,    1,    2,   11,    2, 30*0/
-C
 C
       DATA MAPCR /
 C     AF=AF,CB=AF,DF=DF,GF=GF,WF=GF,MH=MH,RC=RC,WL=WL,BC=WP,LM=WP
@@ -140,7 +127,6 @@ C     NC=WL,PW=WL,GO=WL,AW=WL,EM=WL,BK=WL,SO=WL,PB=WL,AJ=RC,RM=RC
 C     OJ=RC,ER=RC,PM=PP,PD=PP,AZ=PP,CI=LP,OS=MH,OH=WL
      &    6,    6,   10,   10,   10,    7,   11,    2, 11*0/
 C
-C
       DATA MAPEC /
 C     WP=WP,WL=WL,DF=DF,SF=GF,RC=RC,GF=GF,LP=LP,ES=ES,AF=AF,PP=PP
      &    1,    2,    3,    4,    6,    4,    7,    8,    9,   10,
@@ -151,13 +137,11 @@ C     VN=WL,RA=WL,PB=WL,GC=WL,DG=WL,AS=WL,CW=WL,WO=WL,PL=WL,WI=WL
 C     OS=MH,OH=WL
      &   11,    2, 17*0/
 C
-C
       DATA MAPEM /
 C     WB=WP,WL=WL,DF=DF,LM=WP,LL=WL,RM=RC,LP=LP,ES=ES,AF=AF,PP=PP
      &    1,    2,    3,    1,    2,    6,    7,    8,    9,   10,
 C     GA=WL,AS=WL,CW=WL,BA=WL,PW=WL,NC=WL,PB=WL,OS=MH,OH=WL
      &    2,    2,    2,    2,    2,    2,    2,   11,    2, 30*0/
-C
 C
       DATA MAPIE /
 C     WP=WP,WL=WL,DF=DF,GF=GF,WH=WH,RC=RC,LP=LP,ES=ES,AF=AF,PP=PP
@@ -167,7 +151,6 @@ C     MH=MH,WB=WP,LM=WP,LL=WL,PI=PP,RM=RC,PY=WH,AS=WL,CO=WL,MM=WL
 C     PB=WL,OH=WL,OS=MH
      &    2,    2,   11, 26*0/
 C
-C 
        DATA MAPSO /
 C     WP=WP,SP=WP,DF=DF,WF=GF,MH=MH,IC=RC,LP=LP,ES=ES,SH=AF,PP=PP
      &    1,    1,    3,    4,   11,    6,    7,    8,    9,   10,
@@ -178,13 +161,11 @@ C     WA=WL,RA=WL,BM=WL,AS=WL,CW=WL,CH=WL,WO=WL,WI=WL,GC=WL,MC=WL
 C     MB=WL,OS=MH,OH=WL
      &    2,   11,    2, 16*0/
 C
-C
       DATA MAPTT /
 C     WB=WP,LM=WP,DF=DF,PM=PP,BS=ES,AS=WL,LP=LP,ES=ES,AF=AF,PP=PP
      &    1,    1,    3,   10,    8,    2,    7,    8,    9,  10,
 C     UJ=RC,RM=RC,BI=WL,MM=WL,NC=WL,MC=WL,OS=MH,OH=WL
      &    6,    6,    2,    2,    2,    2,   11,    2, 31*0/
-C
 C
       DATA MAPUT /
 C     WB=WP,LM=WP,DF=DF,WF=GF,BS=ES,AS=WL,LP=LP,ES=ES,AF=AF,PP=PP,
@@ -193,7 +174,6 @@ C     PI=PP,WJ=RC,GO=WL,PM=PP,RM=RC,UJ=RC,GB=WP,NC=WL,FC=WL,MC=WL,
      &   10,    6,    2,   10,    6,    6,    1,    2,    2,    2,
 C    &BI=WL,BE=WL,OS=MH,OH=WL
      &    2,    2,   11,    2, 25*0/
-C
 C
       DATA MAPWC /
 C     SF=GF,WF=GF,GF=GF,AF=AF,RF=AF,  =MH,NF=GF,YC=RC,IC=RC,ES=ES
@@ -204,7 +184,6 @@ C     BM=WL,RA=WL,WA=WL,PB=WL,GC=WL,AS=WL,CW=WL,WO=WL,WJ=RC,LL=WL
      &    2,    2,    2,    2,    2,    2,    2,    2,    6,    2,
 C     WB=WP,KP=PP,PY=WH,DG=WL,HT=WL,CH=WL,WI=WL,  =MH,OT=MH
      &    1,   10,    5,    2,    2,    2,    2,   11,   11, 10*0/
-C
 C
       DATA MAPWS /
 C     SP=WP,DF=DF,WF=GF,GS=RC,IC=RC,JP=PP,RF=AF,PP=PP,LP=LP,WB=WP
@@ -220,7 +199,7 @@ C     MC=WL,OS=MH,OH=WL
 C
 C----------
       CALL VARVER(VVER)
-C    
+C
       SELECT CASE (VVER(:2))
 C  ORIGINAL 11 SPECIES VARIANTS
       CASE('KT','NC','NI')

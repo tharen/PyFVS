@@ -1,12 +1,9 @@
       SUBROUTINE SICHG(ISISP,SSITE,SIAGE)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **SICHG--PN   DATE OF LAST REVISION:  04/22/10
 C----------
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
 COMMONS
       INTEGER DIFF,REFAGE(MAXSP)
       CHARACTER*1 ISILOC,REFLOC(MAXSP)

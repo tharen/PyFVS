@@ -1,5 +1,6 @@
       SUBROUTINE DGF(DIAM)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **DGF--UT    DATE OF LAST REVISION:  05/04/11
 C----------
@@ -15,37 +16,24 @@ C  PREDICTION.  ENTRY **DGCONS** IS CALLED BY **RCON** TO LOAD SITE
 C  DEPENDENT COEFFICIENTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
-C
 C
       INCLUDE 'ARRAYS.F77'
 C
-C
       INCLUDE 'COEFFS.F77'
-C
 C
       INCLUDE 'CONTRL.F77'
 C
-C
       INCLUDE 'OUTCOM.F77'
-C
 C
       INCLUDE 'PLOT.F77'
 C
-C
       INCLUDE 'PDEN.F77'
-C
 C
       INCLUDE 'VARCOM.F77'
 C
-C
       INCLUDE 'GGCOM.F77'
 C
-C
-COMMONS
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES.
 C
@@ -601,7 +589,7 @@ CCCC        IF(DF .GT. DBHMAX(ISPC)) DF = DBHMAX(ISPC)
           DDS=-9.21
         ELSE
           DDS = ALOG( (DIAGR * (2.0 * DPP * BARK + DIAGR)) )
-     &          + COR(ISPC) + DGCON(ISPC)     
+     &          + COR(ISPC) + DGCON(ISPC)
           IF(DDS .LT. -9.21) DDS=-9.21
         ENDIF
 C
@@ -631,7 +619,6 @@ C  END OF SPECIES LOOP.
 C----------
    20 CONTINUE
       RETURN
-C
 C
       ENTRY DGCONS
 C----------

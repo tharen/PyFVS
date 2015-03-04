@@ -1,6 +1,7 @@
       SUBROUTINE FINDAG(I,ISPC,D1,D2,H,SITAGE,SITHT,AGMAX1,HTMAX1,
      &                  HTMAX2,DEBUG)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **FINDAG--AK  DATE OF LAST REVISION:  01/12/11
 C----------
@@ -16,15 +17,9 @@ C  AGMAX1  --  RETURN VARIABLE TO PASS AGMAX ARRAY BACK TO HTGF ROUTINE
 C----------
 C  COMMONS
 C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CONTRL.F77'
 C
-C
       INCLUDE 'ARRAYS.F77'
-C
 C
       INCLUDE 'PLOT.F77'
 C

@@ -1,5 +1,6 @@
       SUBROUTINE DBSSTANDIN(SQLSTR,LKECHO)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -9,7 +10,6 @@ C     OVERHAUL: NL CROOKTON -- RMRS MOSCOW -- SEPTEMBER 2004
 C---
 COMMONS
 
-      INCLUDE  'PRGPRM.F77'
       INCLUDE  'ARRAYS.F77'
       INCLUDE  'COEFFS.F77'
       INCLUDE  'CONTRL.F77'

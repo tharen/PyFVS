@@ -1,5 +1,6 @@
       SUBROUTINE FORMCL(ISPC,IFOR,D,FC)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **FORMCL--WC     DATE OF LAST REVISION:  05/19/08
 C----------
@@ -7,16 +8,7 @@ C
 C THIS PROGRAM CALCULATES FORM FACTORS FOR CALCULATING CUBIC AND
 C BOARD FOOT VOLUMES.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CONTRL.F77'
-C
-C
-COMMONS
 C
 C----------
       REAL FC,D

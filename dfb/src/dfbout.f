@@ -1,5 +1,6 @@
       SUBROUTINE DFBOUT
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **DFBOUT  DATE OF LAST REVISION:  05/30/13
 C----------
@@ -32,19 +33,9 @@ C     NCYC   - (CONTRL)  INPUT
 C     PRBDFB - (DFBCOM)  INPUT
 C     WORKIN - (DFBCOM)  INPUT
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CONTRL.F77'
 C
-C
       INCLUDE 'DFBCOM.F77'
-C
-C
-COMMONS
 C
 
       INTEGER I

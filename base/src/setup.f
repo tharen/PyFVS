@@ -1,5 +1,6 @@
       SUBROUTINE SETUP
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -7,21 +8,11 @@ C
 C     SET UP THE INDEX POINTERS FOR IND1( SPECIES INDICES ).
 C     THE DEFINITION OF MOST VARIABLES OCCURES IN **INTREE**
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ARRAYS.F77'
-C
 C
       INCLUDE 'CONTRL.F77'
 C
       INTEGER IX,LAST,I,IR,KNT,ISTART,NEXT,J
-C
-COMMONS
-C
 C
       IF (IREC1.GT.0) GOTO 10
       ITRN=0
@@ -54,7 +45,6 @@ C
   300 CONTINUE
 C
       ITRN = LAST
-C
 C
       RETURN
       END

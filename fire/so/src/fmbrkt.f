@@ -1,17 +1,12 @@
       FUNCTION FMBRKT(DBH,ISP)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMBRKT  FIRE-SO-DATE OF LAST REVISION:  08/20/04
 C----------
 C
 C     COMPUTES THE BARK THICKNESS FOR USE IN THE FIRE-CAUSED MORTALITY
 C     ROUTINE (FMEFF). DATA ARE FROM FOFEM V5.0 (REINHARDT ET AL. 2000)
-C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-COMMONS
 C
       INTEGER ISP
       REAL    DBH,FMBRKT
@@ -31,26 +26,26 @@ C
      >     0.025,    !11 western juniper
      >     0.046,    !12 grand fir
      >     0.041,    !13 subalpine fir
-     >     0.047,    !14 pacific silver fir     
-     >     0.045,    !15 noble fir     
-     >     0.03,     !16 whitebark pine     
-     >     0.063,    !17 western larch     
+     >     0.047,    !14 pacific silver fir
+     >     0.045,    !15 noble fir
+     >     0.03,     !16 whitebark pine
+     >     0.063,    !17 western larch
      >     0.035,    !18 western redcedar
      >     0.04,     !19 western hemlock
      >     0.025,    !20 pacific yew
      >     0.062,    !21 white alder
      >     0.026,    !22 red alder
      >     0.024,    !23 big leaf maple
-     >     0.044,    !24 quaking aspen     
+     >     0.044,    !24 quaking aspen
      >     0.044,    !25 black cottonwood
      >     0.062,    !26 bitter cherry
-     >     0.029,    !27 oregon white oak     
-     >     0.041,    !28 willow     
+     >     0.029,    !27 oregon white oak
+     >     0.041,    !28 willow
      >     0.045,    !29 giant chinkapin
      >     0.044,    !30 curl-leaf mt. mahog.- used WC-other (AS)
      >     0.044,    !31 birch-leaf mt. mahog.- used WC-other (AS)
      >     0.063,    !32 other softwoods- used Douglas-fir
-     >     0.044/    !33 other hardwoods- used WC-other (AS)                                                                 
+     >     0.044/    !33 other hardwoods- used WC-other (AS)
 C
       FMBRKT = DBH*B1(ISP)
 C

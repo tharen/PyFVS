@@ -1,5 +1,7 @@
 c      SUBROUTINE BMCGRF (ISTD,IYR)
       SUBROUTINE BMCGRF (ISTD,IYR,OLDGRF)
+      use prgprm_mod
+      implicit none
 
 c     CALLED BY: BMDRV
 ***********************************************************************
@@ -47,7 +49,6 @@ c     CALLED BY: BMDRV
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'PPEPRM.F77'
       INCLUDE 'BMPRM.F77'
 
@@ -82,37 +83,37 @@ c     output file:
    20 CONTINUE
 
 C     Begin calculation by looping over sizeclass-level GRF factors.
-      
+
       DO 100 ICLS= 1,NSCL
-      
+
          IF (GRF(ISTD,ICLS) .GT. 0.0) THEN
             OLDGRF(ICLS) = GRF(ISTD,ICLS)
          ELSE
             OLDGRF(ICLS) = 1.0
          ENDIF
          GRF(ISTD,ICLS)= 1.0
-         
+
 C...     GRF from DM (near zero is DMR=6)
 
          GRFDV = 1.0 - (SDMR(ISTD,ICLS) / 6.5)
          IF (GRFDV .LE. 0.0) GRFDV = .01
          GRF(ISTD,ICLS)= GRF(ISTD,ICLS) * GRFDV
          DVRV(ISTD,6) = DVRV(ISTD,6) + GRFDV * BAH(ISTD,ICLS)
-         
+
 C....    GRF from root disease
 
          GRFDV= 1.0 - SRR(ISTD,ICLS)
          IF (GRFDV .LE. 0.0) GRFDV = .01
          GRF(ISTD,ICLS)= GRF(ISTD,ICLS) * GRFDV
          DVRV(ISTD,7) = DVRV(ISTD,7) + GRFDV * BAH(ISTD,ICLS)
-      
+
 C....    GRF from stem rusts
 
          GRFDV = 1.0 - SSR(ISTD,ICLS)
          IF (GRFDV .LE. 0.0) GRFDV = .01
          GRF(ISTD,ICLS)= GRF(ISTD,ICLS) * GRFDV
          DVRV(ISTD,8) = DVRV(ISTD,8) + GRFDV * BAH(ISTD,ICLS)
-      
+
 C...  GRF from other beetle attacks
 C
          TOTATT = OTHATT(ISTD,ICLS) + TOPKLL(ISTD,ICLS)
@@ -122,26 +123,26 @@ C
          GRF(ISTD,ICLS)= GRF(ISTD,ICLS) * GRFDV
          DVRV(ISTD,4) = DVRV(ISTD,4) + GRFDV * BAH(ISTD,ICLS)
 
-C      
+C
 C...  GRF from fire (differs between beetle species)
-C         
+C
          GRFDV = 1.0
          IF (PBSPEC .EQ. 1 .OR. PBSPEC .EQ. 2) THEN
             GRFDV = 1 - 0.5 * SCORCH(ISTD,ICLS)
          ELSEIF (PBSPEC .EQ. 3) THEN
             GRFDV = 1 - 0.99 * SCORCH(ISTD,ICLS)
-         ENDIF   
+         ENDIF
          IF (GRFDV .LE. 0.0) GRFDV = .01
          GRF(ISTD,ICLS)= GRF(ISTD,ICLS) * GRFDV
          DVRV(ISTD,1) = DVRV(ISTD,1) + GRFDV * BAH(ISTD,ICLS)
-C       
+C
 C...  GRF from lightning
-C                            
+C
          GRFDV = 1 - .99 * STRIKE(ISTD,ICLS)
          IF (GRFDV .LE. 0.0) GRFDV = .01
          GRF(ISTD,ICLS)= GRF(ISTD,ICLS) * GRFDV
          DVRV(ISTD,2) = DVRV(ISTD,2) + GRFDV * BAH(ISTD,ICLS)
-      
+
 c  GRF from drought
 c
          GRFDV = RVDSC(ISTD,ICLS)
@@ -165,9 +166,9 @@ c
          IF (RVDFOL(ISTD,ICLS) .LE. 0.0) RVDFOL(ISTD,ICLS) = 1.0
          GRFDV = RVDFOL(ISTD,ICLS)
          IF (GRFDV .LE. 0.0) GRFDV = .01
-         GRF(ISTD,ICLS)= GRF(ISTD,ICLS) * GRFDV 
+         GRF(ISTD,ICLS)= GRF(ISTD,ICLS) * GRFDV
          DVRV(ISTD,5) = DVRV(ISTD,5) + GRFDV * BAH(ISTD,ICLS)
-         
+
 C...  GRF from density effects
 
 C   The following two lines commented out 6/25/99, AJM.
@@ -197,13 +198,13 @@ C
         GRFSTD(ISTD)= GRFSTD(ISTD) / TOTAL
         DO 210 IDV= 1,NUMRV
            DVRV(ISTD,IDV) = DVRV(ISTD,IDV) / TOTAL
-  210   CONTINUE        
+  210   CONTINUE
       ELSE
         GRFSTD(ISTD)= 1.0
         DO 215 IDV= 1,NUMRV
            DVRV(ISTD,IDV) = 1.0
-  215   CONTINUE        
-      ENDIF  
+  215   CONTINUE
+      ENDIF
 C *************************************************************************
 C...The following section of code calculates stand-level GRF due to
 C   stand density effects, and then updates the total stand GRF accordingly
@@ -224,22 +225,22 @@ c   LCDENS is set to false in BMPPIN.) AJM 1/31/00.
       IF(LCDENS) THEN
          GRFSTD(ISTD)=GRFSTD(ISTD) * RVDNST(ISTD)
          DVRV(ISTD,9) = RVDNST(ISTD)
-      ELSE 
+      ELSE
          DVRV(ISTD,9) = 1.0
       ENDIF
 C *************************************************************************
 c     temporarily disable grfstd()   may 4, 93
-c                            
-c      GRFSTD(ISTD)= 1.0      
+c
+c      GRFSTD(ISTD)= 1.0
 
 
 
-      
+
 C.... Common return
 
  9999 CONTINUE
 
-      
+
       IF(LBMDEB) WRITE(JBMBPR,99)IYR
    99 FORMAT(' End BMCGRF: Year = ',I4)
 

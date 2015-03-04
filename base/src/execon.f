@@ -1,17 +1,13 @@
       SUBROUTINE EXECON
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C-------
 C
 C     EXTRA EXTERNAL REFERENCES FOR THE ECON EXTENSION.
 C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ECNCOM.F77'
-C
 C
       INTEGER I1,I2,I3,ICYC,IT,IS,II,IRECNT,KEY
       REAL PREM2,GROSPC,ARRAY22,D

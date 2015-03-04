@@ -1,15 +1,12 @@
        SUBROUTINE GRINIT
-       IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C
 C  INITIALIZE PROGNOSIS MODEL VARIABLES
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'ARRAYS.F77'
       INCLUDE 'COEFFS.F77'
       INCLUDE 'CONTRL.F77'
@@ -27,7 +24,6 @@ C
       INCLUDE 'BCPLOT.F77'
       INCLUDE 'METRIC.F77'
 C
-COMMONS
 C----------
       INTEGER I,J,K
       CHARACTER*26 DBLK
@@ -99,7 +95,7 @@ C     INITIAL VALUES FOR "Version 2" active and processed; respectively
       SIZCAP(I,4) = 999.
       JSPIN(I)=1
     5 CONTINUE
-      DBHMIN(7) = 12.5 * CMtoIN    ! PL uses 12.5 cm 
+      DBHMIN(7) = 12.5 * CMtoIN    ! PL uses 12.5 cm
       LFLAGV = .FALSE.
       LBAMAX = .FALSE.
       LZEIDE = .FALSE.
@@ -259,7 +255,7 @@ C----------
 C  INITIALIZE SUMTAB COMMON VARIABLES
 C----------
       MAIFLG = 0
-      NEWSTD = 0 
+      NEWSTD = 0
       TOTREM = 0.
       AGELST = 0.
       DO 60 I=1,MAXCY1

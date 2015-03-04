@@ -1,5 +1,6 @@
       SUBROUTINE CWIDTH
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -10,21 +11,12 @@ C  THIS ROUTINE IS CALLED FROM **MAIN** TO LOAD THE INITIAL CROWN
 C  WIDTHS, AND FROM **UPDATE** TO LOAD THE END-OF-CYCLE VALUES.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ARRAYS.F77'
-C
 C
       INCLUDE 'CONTRL.F77'
 C
-C
       INCLUDE 'CWDCOM.F77'
 C
-C
-COMMONS
 C----------
 C  DEFINITIONS:
 C

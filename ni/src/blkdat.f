@@ -1,51 +1,34 @@
       BLOCK DATA BLKDAT
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **BLKDAT--NI    DATE OF LAST REVISION:  04/12/10
 C----------
 C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'COEFFS.F77'
-C
 C
       INCLUDE 'ESPARM.F77'
 C
-C
       INCLUDE 'ESCOMN.F77'
-C
 C
       INCLUDE 'PDEN.F77'
 C
-C
       INCLUDE 'ECON.F77'
-C
 C
       INCLUDE 'HTCAL.F77'
 C
-C
       INCLUDE 'CONTRL.F77'
-C
 C
       INCLUDE 'PLOT.F77'
 C
-C
       INCLUDE 'RANCOM.F77'
-C
 C
       INCLUDE 'SCREEN.F77'
 C
-C
       INCLUDE 'FVSSTDCM.F77'
 C
-C
-COMMONS
 C----------
       INTEGER I,J
 C----------
@@ -111,7 +94,6 @@ C
      O    0.,0.,3*1.0,0.,1.,0.,1.,4*0.0,1.,0.,1.,1.,0.,1.,1.,  20*0.0/
 C----------
 C COMMON STATEMENT FOR PLOT VARIABLES.
-C
 C
 C     SPECIES LIST FOR INLAND EMPIRE VARIANT.
 C

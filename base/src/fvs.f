@@ -1,5 +1,6 @@
       SUBROUTINE FVS(IRTNCD)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -18,33 +19,19 @@ C
 C     PHONE (208) 882-3557
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ARRAYS.F77'
-C
 C
       INCLUDE 'PLOT.F77'
 C
-C
       INCLUDE 'CONTRL.F77'
-C
 C
       INCLUDE 'OUTCOM.F77'
 C
-C
       INCLUDE 'PDEN.F77'
-C
 C
       INCLUDE 'ECON.F77'
 C
-C
       INCLUDE 'WORKCM.F77'
-C
-C
-COMMONS
 C
 
 !Python F2PY Interface Directives

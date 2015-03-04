@@ -1,5 +1,6 @@
       SUBROUTINE DFBGO(L)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **DFBGO   DATE OF LAST REVISION:  06/30/10
 C----------
@@ -51,21 +52,11 @@ C     Changed scalar variable IACTK to array with dimension of (1) due to
 C     error detected by LF95.
 C-------------------------------------------------------------------------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ARRAYS.F77'
-C
 C
       INCLUDE 'CONTRL.F77'
 C
-C
       INCLUDE 'DFBCOM.F77'
-C
-C
-COMMONS
 C
       LOGICAL L, LMIN
 

@@ -1,5 +1,6 @@
       SUBROUTINE DFBINT
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **DFBINT--BASE  DATE OF LAST REVISION:  06/30/10
 C----------
@@ -47,16 +48,7 @@ C REVISION HISTORY:
 C   22-MAR-2002 Lance R. David (FHTET)
 C     Added variable LSET and call to DFNSD to (re)set random number generator.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'DFBCOM.F77'
-C
-C
-COMMONS
 C
 
       INTEGER I, KODE

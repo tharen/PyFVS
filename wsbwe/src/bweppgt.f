@@ -1,5 +1,6 @@
       SUBROUTINE BWEPPGT (WK3, IPNT, ILIMIT, IB)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **BWEPPGT                DATE OF LAST REVISION:  09/20/13
 C----------
@@ -34,7 +35,6 @@ C  Revision History :
 C   08-SEP-2006 - Lance R. David (FHTET)
 C     This subroutine was written.
 C   14-JUL-2010 Lance R. David (FMSC)
-C     Added IMPLICIT NONE and declared variables as needed.
 C   23-JUN-2011 Lance R. David (FMSC)
 C     Added BWPRMS array for RAWS daily weather processing to BLCOM3.
 C   20-SEP-2013 Lance R. David (FMSC)
@@ -46,7 +46,6 @@ C----------
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'METRIC.F77'
       INCLUDE 'PPEPRM.F77'
 
@@ -73,7 +72,7 @@ C.... Parameter statements.
 
       PARAMETER (MXL=21,MXI=83,MXR=918)
       PARAMETER (LNCBUF=IRECLN*4)
- 
+
       CHARACTER CBUFF(LNCBUF)
 
       LOGICAL LOGICS(MXL)
@@ -235,7 +234,7 @@ C.... Read larger integer arrays from buffer
 C
 C     Note on processing arrays:
 C     When handling a 2-dimensional array, consider a string of values a
-C     complete column of the array and the length of the array as the 
+C     complete column of the array and the length of the array as the
 C     number of rows. So, a call to IFREAD or BFREAD will process 1 column
 C     of the specified number of rows (length) in a 2-dimensional array.
 C
@@ -259,7 +258,7 @@ C.... Read real varaibles (scalars and arrays) from buffer.
 
 C.... Load real scalars then arrays from the REALS array.
 C     Scalars and small one-dimensional arrays are handled first
-C     for ease of indexing. 
+C     for ease of indexing.
 C
       RAINDM     = REALS(1)
       RAINDS     = REALS(2)
@@ -654,7 +653,7 @@ C
 C     --- from BWEBOX ---
 C     CHARACTER*4 MGMIDB
 C     CHARACTER*8 DEFLAB,DLABS(5)
-C     CHARACTER*12 STATES(10,2)    -- Static 
+C     CHARACTER*12 STATES(10,2)    -- Static
 C     CHARACTER*16 WSLOOK(100,10)  -- Static
 C     CHARACTER*20 TEMPS2(3)       -- Static
 C     CHARACTER*40 OUTNAM(8)       -- Static

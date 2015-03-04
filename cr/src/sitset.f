@@ -1,5 +1,6 @@
       SUBROUTINE SITSET
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C CR $Id$
 C----------
@@ -11,37 +12,21 @@ C  THAT HAVE NOT BEEN SET USING THE SITECODE KEYWORD, AND DEFAULT SDI
 C  MAXIMUM VALUES FOR SPECIES THAT HAVE NOT BEEN SET USING THE SDIDEF
 C  KEYWORD.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'COEFFS.F77'
-C
 C
       INCLUDE 'CONTRL.F77'
 C
-C
       INCLUDE 'ESPARM.F77'
-C
 C
       INCLUDE 'ESCOMN.F77'
 C
-C
       INCLUDE 'GGCOM.F77'
-C
 C
       INCLUDE 'PLOT.F77'
 C
-C
       INCLUDE 'VARCOM.F77'
 C
-C
       INCLUDE 'VOLSTD.F77'
-C
-C
-COMMONS
 C
 C----------
       CHARACTER FORST*2,DIST*2,PROD*2,VAR*2,VOLEQ*10
@@ -55,12 +40,12 @@ C  21=NC, 22=PW, 23=GO, 24=AW, 25=EM, 26=BK, 27=SO, 28=PB, 29=AJ, 30=RM,
 C  31=OJ, 32=ER, 33=PM, 34=PD, 35=AZ, 36=CI, 37=OS, 38=OH
 C
 C  SPECIES EXPANSION:
-C  UJ,AJ,RM,OJ,ER USE CR JU                              
+C  UJ,AJ,RM,OJ,ER USE CR JU
 C  NC,PW USE CR CO
-C  GO,AW,EM,BK,SO USE CR OA                             
-C  PB USES CR AS                              
+C  GO,AW,EM,BK,SO USE CR OA
+C  PB USES CR AS
 C  PM,PD,AZ USE CR PI
-C  CI USES CR PP                              
+C  CI USES CR PP
 C----------
 C
       DATA SDICON/

@@ -1,5 +1,6 @@
       SUBROUTINE BRDAM(II,ICODES)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C**********************************************************************
 C  **BRDAM        DATE OF LAST REVISION:  06/05/2014
 C----------------------------------------------------------------------
@@ -32,7 +33,6 @@ C**********************************************************************
 
 C.... Common include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'ARRAYS.F77'
       INCLUDE 'BRCOM.F77'
 

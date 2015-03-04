@@ -1,40 +1,39 @@
       SUBROUTINE BMDVO (I,IYEAR)
+      use prgprm_mod
+      implicit none
 C----------
 C  **BMDVO  DATE OF LAST REVISION:  JUNE 27, 1994
 C----------
 C
-c     Westwide Pine Beetle model; 
+c     Westwide Pine Beetle model;
 C         Prints the output relating to driving variables (fast kills,
 c     special trees and individual rvs). Output is printed as cycle
 c     averages for each stand and for the landscape.
-c     
+c
 C     A TABLE OF RESULTS IS OUTPUT AT THE CONCLUSION OF EACH CYCLE.
 C
 C     CALLED FROM -- BMDRV
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'PPEPRM.F77' 
+      INCLUDE 'PPEPRM.F77'
       INCLUDE 'PPCNTL.F77'
-      
+
       INCLUDE 'BMPRM.F77'
       INCLUDE 'BMCOM.F77'
       INCLUDE 'BMPCOM.F77'
-      
+
       INTEGER ryear,ryear2, RYEARP
-      
+
       IF (.NOT. LBMDVO) RETURN
-      
+
 c     ryear triggers the reporting. It is the last year of a cycle.
-C     The average values are reported for the first year of the 
+C     The average values are reported for the first year of the
 C     cycle just finished. e.g: for and outbreak from 1993-1994
 C     during the 1990-1994 period, the reporting would be for 1990
 C     and would be the average of 1993 and 1994.
 
       ryear = miy(micyc) - 1
       ryear2= miy(micyc - 1)
-      
+
 C
 C     New local variable RYEARP to identify output table values as
 C     end of cycle values (RNH June98)
@@ -46,17 +45,17 @@ c     Accumulate sums for each variable
       STFK(I) = STFK(I) + FASTK(I,1)
       SVFK(I) = SVFK(I) + FASTK(I,2)
       SBAFK(I) = SBAFK(I) + FASTK(I,3)
-      IF (.NOT. LBMVOL .AND. .NOT. LBMDET) 
+      IF (.NOT. LBMVOL .AND. .NOT. LBMDET)
      &      SRVSTD(I) = SRVSTD(I) + GRFSTD(I)
 
-      DO 10 ISIZ= 1,NSCL              
+      DO 10 ISIZ= 1,NSCL
          SSPEC(I) = SSPEC(I) + SPCLT(I,ISIZ,1) * TREE(I,ISIZ,1)
-   10 CONTINUE                                                 
-       
-      DO 15 IDV= 1,NUMRV              
-         SDVRV(I,IDV) = SDVRV(I,IDV) + DVRV(I,IDV)         
-   15 CONTINUE                                                 
-      
+   10 CONTINUE
+
+      DO 15 IDV= 1,NUMRV
+         SDVRV(I,IDV) = SDVRV(I,IDV) + DVRV(I,IDV)
+   15 CONTINUE
+
 C     Zero out the variable holding the fast kills (since it is added to
 c     during calculation in BMMORT
 
@@ -65,21 +64,21 @@ c     during calculation in BMMORT
       FASTK(I,3) = 0.0
 
 c     Print state information averaged within the master cycle.
-       
+
       IF (IYEAR .EQ. ryear) THEN
         IF (ibmmrt .LE. 0) GOTO 85
-      
-        X = 1.0 / FLOAT(ibmmrt)     
+
+        X = 1.0 / FLOAT(ibmmrt)
 
         STFK(I) = STFK(I) * X
         SVFK(I) = SVFK(I) * X
         SBAFK(I) = SBAFK(I) * X
         SSPEC(I) = SSPEC(I) * X
         IF (.NOT. LBMVOL .AND. .NOT. LBMDET) SRVSTD(I) = SRVSTD(I) * X
-       
-        DO 20 IDV= 1,NUMRV              
+
+        DO 20 IDV= 1,NUMRV
            SDVRV(I,IDV) = SDVRV(I,IDV) * X
-   20   CONTINUE                                                 
+   20   CONTINUE
 
 c       Write the stand averages to the driving variables output file
 C
@@ -170,8 +169,8 @@ c     Zero out all summary variables after printing.
    71   CONTINUE
 
       END IF
-              
-   85 CONTINUE           
-              
+
+   85 CONTINUE
+
       RETURN
       END

@@ -1,5 +1,6 @@
       SUBROUTINE STATS
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -9,15 +10,12 @@ C  **MAIN**.  **TVALUE** IS CALLED TO CALCULATE STUDENT'S T FOR
 C  CONSTRUCTION OF CONFIDENCE INTERVALS.
 C---------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'ARRAYS.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'VOLSTD.F77'
-      INCLUDE 'PLOT.F77' 
+      INCLUDE 'PLOT.F77'
       INCLUDE 'METRIC.F77'
 C
-COMMONS
       CHARACTER*16 LABELS(4)
       REAL TOTCF(MAXSP),
      &   TOTTR(MAXSP),TOTBA(MAXSP),TOTBF(MAXSP),
@@ -100,7 +98,7 @@ C----------
       DO 41 I=1,MAXSP
         IF(IFLG(I).EQ.0) GO TO 41
         WRITE(JOSTND,9003) JSP(I),
-     &                NSP(I,1)(1:2), 
+     &                NSP(I,1)(1:2),
      &                TOTCF(I)*FT3pACRtoM3pHA,
      &                TOTTR(I)/ACRtoHA,
      &                TOTBA(I)*FT2pACRtoM2pHA
@@ -158,7 +156,7 @@ C----------
       UL=XBAR-T*SE
       IF(UL.LT.0.0) UL=0.0
       UU=XBAR+T*SE
-      CV=S/XBAR  
+      CV=S/XBAR
       SEU=T*SE
       SEP=SEU*100./XBAR
       WRITE(JOSTND,9007) LABELS(3),
@@ -180,7 +178,7 @@ C----------
       SUM=SUM+SCF
       SUMSQ=SUMSQ+SCF*SCF
    80 CONTINUE
-      IF(SUM.GT.0.0) GO TO 85 
+      IF(SUM.GT.0.0) GO TO 85
       WRITE(JOSTND,9007)  LABELS(2),SUM,SUM
       GO TO 90
    85 CONTINUE

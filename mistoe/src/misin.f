@@ -1,4 +1,6 @@
       SUBROUTINE MISIN(PASKEY,ARRAY,LNOTBK,LKECHO)
+      use prgprm_mod
+      implicit none
 ***********************************************************************
 *  **MISIN      Date of last revision:  05/23/13
 *               Interim Model
@@ -84,13 +86,11 @@
 *                array added for previous update is no longer needed and
 *                was removed along with inclusion of common ARRAYS.F77.
 ***********************************************************************
-      IMPLICIT NONE
 
 C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C.... Common include files.
 

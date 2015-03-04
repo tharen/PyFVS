@@ -1,15 +1,17 @@
       SUBROUTINE BMCWIN (ISTD,IYR)
+      use prgprm_mod
+      implicit none
 
 *     CALLED FROM:  BMDRV
 *     CALLS   GPGET2
-*             GPADD 
+*             GPADD
 *             PCTILE
 *             SPLAAR
 ***********************************************************************
 *  **BMCWIN  Date of last revision:  June 9, 1994
 *----------------------------------------------------------------------
 *  Purpose:
-*     Windthrow Model adapted from the windthrow model in the 
+*     Windthrow Model adapted from the windthrow model in the
 *     Western Root Disease Model.
 *     Windthrow affects all trees equally, regardless of root infection
 *       or stress.
@@ -30,7 +32,7 @@
 *     STEMS:  Stem frequency by tree type
 *     TBPROB: Total # of trees to windthrow
 *     TEMP:   Temporary array of heights (for passing to PCTILE)
-*     TEMP2:  Temporary pointer (for sorting)            
+*     TEMP2:  Temporary pointer (for sorting)
 *     TPCT:   Array holding height percentiles
 *     TSTEMS: Total stem frequency
 *     TT:     Density of trees windthrown
@@ -46,7 +48,7 @@
 *  Common block variables and parameters:
 *     DWPHOS: From BMCOM; Array to hold density of downed host trees for
 *             Ips (stratified by standing/dead and size class)
-*     OAKILL: Array containing the proportion of trees in each size class 
+*     OAKILL: Array containing the proportion of trees in each size class
 *             and tree type killed by "other agents" (i.e. not pine beetles)
 *
 ***********************************************************************
@@ -55,7 +57,6 @@ C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'PPEPRM.F77'
       INCLUDE 'BMPRM.F77'
 
@@ -69,15 +70,15 @@ C.... Variable declarations.
       INTEGER IEND
       INTEGER DUM(1)
       INTEGER IPNT(NSCL+NSCL)
-      
+
       REAL SUM
       REAL TBPROB
       REAL TEMP(NSCL+NSCL), TEMP2
       REAL TT, TVAL
       REAL TSTEMS
       REAL TPCT(NSCL+NSCL)
-      REAL WSUSC(2, 2)            
-      
+      REAL WSUSC(2, 2)
+
       REAL WINDSP(2), ROCR(2), STEMS(2)
       REAL WINDW(NSCL, 2), WDOM(2)
 
@@ -85,10 +86,10 @@ C.... Variable declarations.
       LOGICAL   LOK
 
       SAVE
-      
+
 C.... Initializations
 
-C     maybe these should be initialized elsewhere? 
+C     maybe these should be initialized elsewhere?
 
 
 C     from root disease manual (.028 is white pine, lodgepole pine;i
@@ -106,10 +107,10 @@ C.... Check for debug.
 
       IF(LBMDEB) WRITE(JBMBPR,10) IYR, ISTD
    10 FORMAT(' Begin BMCWIN: Year = ',I5, 'Stand = ', I6)
-   
-C     KLUDGE TO GET AROUND COUNTING OF NONSTOCKABLE STANDS.   
-   
-      IF (ICNT .GE. BMEND) ICNT = 0      
+
+C     KLUDGE TO GET AROUND COUNTING OF NONSTOCKABLE STANDS.
+
+      IF (ICNT .GE. BMEND) ICNT = 0
       ICNT = ICNT + 1
 
 C     Check if this is a year for windthrow
@@ -122,39 +123,39 @@ C     Check if this is a year for windthrow
         CALL GPGET2 (305, IYR1, 7, NPRMS, PRMS, 1, I, DUM, LOK)
 
         IF (LOK) THEN
-          
+
           IYR2= IYR1 + IFIX(PRMS(1)) - 1
           MWINHT = PRMS(2)
           THRESH = PRMS(3)
           CRASH = PRMS(4)
 
           IF (LBMDEB) WRITE (JBMBPR,71) MICYC,IYR1,IYR2,PRMS(4),PRMS(3)
-   71     FORMAT (/' BMCWIN: MICYC=', I5,' IYR1=',I5,' IYR2=',I5, 
+   71     FORMAT (/' BMCWIN: MICYC=', I5,' IYR1=',I5,' IYR2=',I5,
      >      ' CRASH=',F7.4,' THRESH=',F7.4)
 
           IF (IYR2.GE.MIY(MICYC)) THEN
             PRMS(1) = IYR2 - MIY(MICYC) + 1
-            CALL GPADD (KODE, MIY(MICYC), 305, NPRMS, PRMS(1), 1, DUM) 
+            CALL GPADD (KODE, MIY(MICYC), 305, NPRMS, PRMS(1), 1, DUM)
             IYR2 = MIY(MICYC) - 1
             IF (LBMDEB) WRITE (JBMBPR,81) PRMS(1),IYR2
    81       FORMAT (/' IN BMCWIN:  WINDTHROW HAS BEEN SCHEDULED FOR ',
      >           'THE NEXT MASTER CYCLE. DURATION WILL BE ',F5.0,
      >           ' NEW IYR2=',I5)
           ENDIF
-        ENDIF 
+        ENDIF
         IF (IYR .GT. IYR2) CRASH = 0.0
-      ENDIF                           
+      ENDIF
 
 C     If windthrow is not active this year then exit out of routine.
 
       IF (IYR .GT. IYR2 .OR. CRASH .LE. 0.0) RETURN
 
       CALL SPLAAR(ISTD,SAREA,IRC)
-      
+
 C.... -------------------- Begin Routine ----------------------------
 
 C.... normalize relative susceptibility of different species to windthrow
-      
+
 C.... WSUSC(i,1)=susc of type i to windthrow (type 1=host, 2=nonhost)
 
       SUM = WSUSC(1, 1) + WSUSC(2, 1)
@@ -163,10 +164,10 @@ C.... WSUSC(i,2) = normalized susc.
 
       WSUSC(1, 2) = WSUSC(1, 1) / SUM
       WSUSC(2, 2) = WSUSC(2, 1) / SUM
-      
+
 C.... Sum stems by type (host,nonhost) and build pointer lists
 C     to dominant/codominant classes
-      
+
       IJ = 0
       DO 1000 ITYP=1,2
          DO 1100 ISIZ=1,NSCL
@@ -177,7 +178,7 @@ C     to dominant/codominant classes
  1000 CONTINUE
 
 C     Set up pointers to the hts in decending order for use by the PCTILE routine
-      
+
       IEND= 2 * NSCL - 1
       DO 2000 IJ=1,IEND
          DO 2100 I=1,IEND
@@ -188,20 +189,20 @@ C     Set up pointers to the hts in decending order for use by the PCTILE routin
             ENDIF
  2100    CONTINUE
  2000 CONTINUE
-      
+
       CALL PCTILE(NSCL+NSCL,IPNT,TEMP,TPCT,TVAL)
-      
+
       IJ = 0
       DO 3000 ITYP=1,2
-      
+
          WINDSP(ITYP) = 0.0
          STEMS(ITYP) = 0.0
          ROCR(ITYP) = 0.0
-      
+
          DO 3100 ISIZ=1,NSCL
             IJ = IJ + 1
-            
-            IF ((TPCT(IJ) .GE. WDOM(ITYP)) .AND. 
+
+            IF ((TPCT(IJ) .GE. WDOM(ITYP)) .AND.
      &                       (HTS(ISTD,ISIZ,ITYP) .GE. MWINHT)) THEN
                IF (TREE(ISTD,ISIZ,ITYP) .GT. 0.0) THEN
                   STEMS(ITYP) = STEMS(ITYP) + TREE(ISTD,ISIZ,ITYP)
@@ -210,10 +211,10 @@ C     Set up pointers to the hts in decending order for use by the PCTILE routin
                   ROCR(ITYP) = ROCR(ITYP) + WINDW(ISIZ,ITYP)
                ENDIF
             ENDIF
-      
+
  3100    CONTINUE
  3000 CONTINUE
-      
+
       TSTEMS = 0.0
       TBPROB = 0.0
       DO 4000 ITYP=1,2
@@ -221,68 +222,68 @@ C     Set up pointers to the hts in decending order for use by the PCTILE routin
          WINDSP(ITYP) = STEMS(ITYP) * WSUSC(ITYP, 2)
          TBPROB = TBPROB + WINDSP(ITYP)
  4000 CONTINUE
-      
+
 C...  Total number of stems to windthrow
-      
+
       WINDN = TSTEMS * CRASH
       IF (WINDN .GT. TSTEMS) WINDN = TSTEMS
-      
+
 C.... Allocate windthrow to types, assuming that the density of stems
 C.... is above min
-      
+
       IF (WINDN .GE. THRESH) THEN
-      
+
          DO 5000 ITYP=1,2
             WINDSP(ITYP) = WINDN * (WINDSP(ITYP) / TBPROB)
  5000    CONTINUE
-      
+
 C....    Now allocate these proportions into the "other agent kill" list
 C        NB: BLOWDOWN IS NOT A PROPORTION!
 C        I assume that no BLOWDN trees are left standing (pun, ahem!)
-      
+
          DO 6000 ISIZ=1,NSCL
             DO 6100 ITYP=1,2
                IF ((TREE(ISTD,ISIZ,ITYP) .GT. 0.0)
      &            .AND. (ROCR(ITYP) .GT. 0.0)) THEN
                   TT = WINDSP(ITYP) * WINDW(ISIZ,ITYP) / ROCR(ITYP)
-                  IF (TT .GT. (TREE(ISTD,ISIZ,ITYP) * .95)) 
+                  IF (TT .GT. (TREE(ISTD,ISIZ,ITYP) * .95))
      &               TT = TREE(ISTD,ISIZ,ITYP) * .95
 
                   J = L2D(ISIZ)
-                  IF (ITYP .EQ. 1 .AND. J .GT. 0) 
+                  IF (ITYP .EQ. 1 .AND. J .GT. 0)
      &                   DWPHOS(ISTD,2,J) = DWPHOS(ISTD,2,J) + TT
 
                   OAKILL(ISTD,ISIZ,ITYP) = OAKILL(ISTD,ISIZ,ITYP)
      &                                  + TT / TREE(ISTD,ISIZ,ITYP)
-      
-      
+
+
                   TT = TT * TVOL(ISTD,ISIZ,ITYP) * V2T
-                  IF (J .GE. 1) THEN                
-C                    large downed dead wood                     
+                  IF (J .GE. 1) THEN
+C                    large downed dead wood
                      DDWP(ISTD,2,1) = DDWP(ISTD,2,1) + TT
                   ELSE
-C                    small downed dead wood                     
+C                    small downed dead wood
                      DDWP(ISTD,1,1) = DDWP(ISTD,1,1) + TT
-                  ENDIF   
+                  ENDIF
                ENDIF
  6100       CONTINUE
  6000    CONTINUE
-      
-      ELSE  
+
+      ELSE
 
 C....  if the windthrow event does not occur then reschedule the event for next year
-      
+
          DO 7000 ITYP=1,2
             WINDSP(ITYP) = 0
  7000    CONTINUE
          WINDN = 0
 
       ENDIF
-      
+
 C.... Common Return
 
  9999 CONTINUE
-      
+
       IF(LBMDEB) WRITE(JBMBPR,99) IYR
    99 FORMAT(' End BMCWIN: Year = ',I5)
 

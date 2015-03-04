@@ -1,7 +1,9 @@
       SUBROUTINE BGCGRO(IY1,IY2)
+      use prgprm_mod
+      implicit none
 C----------
 C  **BGCGROW  BGC--DATE OF LAST REVISION: 3/13/00
-C    Revised 11/12/02.  Removing index ISTND, and removing PPE common 
+C    Revised 11/12/02.  Removing index ISTND, and removing PPE common
 C                       "includes" (PPEPRM, PPCNTL, & PRGPRM).  AJM
 C           These changes--also made in BGCFVS, BGCGROW, BGCINT, BGCGO,
 C           BGCIN, and BGCCOM.f77--remove all PPE funtionality.
@@ -10,12 +12,9 @@ C----------
 C
 C     RUNS THE BGC EXTENSION
 C
-C     CALLED FROM: GRINCR 
-C
-COMMONS
+C     CALLED FROM: GRINCR
 C
       INCLUDE 'BGCCOM.F77'
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'PLOT.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'PDEN.F77'
@@ -23,8 +22,6 @@ C
       INCLUDE 'ARRAYS.F77'
       INCLUDE 'CVCOM.F77'
 C      INCLUDE 'PPCNTL.F77'                         ! removed 11/02 ajm
-C
-COMMONS
 C
 C      print *, 'in BGCGROW, LBGCON=',LBGCON(ISTND)
 C      IF(.NOT.LBGCON(ISTND)) RETURN                ! removed 11/02 ajm

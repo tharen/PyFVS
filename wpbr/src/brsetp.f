@@ -1,5 +1,6 @@
       SUBROUTINE BRSETP
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C**********************************************************************
 C  **BRSETP       DATE OF LAST REVISION:  06/05/2014
 C----------------------------------------------------------------------
@@ -20,7 +21,7 @@ C     Modified to allow blister rust on other species using ISPBR array.
 C     Species loop (label 110) and species temp index variable (I3)
 C     are new.
 C  02-APR-2001 Lance R. David (FHTET)
-C     Deactivated initialization of stock type (ISTOTY) because it is 
+C     Deactivated initialization of stock type (ISTOTY) because it is
 C     now a canker input file variable.
 C  02-MAY-2001 Lance R. David (FHTET)
 C     Added species dimension to BRNTRECS variable.
@@ -32,7 +33,6 @@ C**********************************************************************
 
 C.... Common include files
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BRCOM.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'ARRAYS.F77'

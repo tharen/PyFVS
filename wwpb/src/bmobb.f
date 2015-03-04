@@ -1,4 +1,6 @@
       SUBROUTINE BMOBB(ISTD,IYR)
+      use prgprm_mod
+      implicit none
 C----------
 C  **BMOBB       LAST REVISION:  JUNE 8, 1994
 C----------
@@ -10,7 +12,7 @@ C
 C  CALLED BY :
 C     BMDRV
 C
-C  CALLS     : 
+C  CALLS     :
 C     GPGET2
 C     GPADD
 C
@@ -24,7 +26,6 @@ C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'PPEPRM.F77'
       INCLUDE 'BMPRM.F77'
 
@@ -33,7 +34,7 @@ C.... Common include files.
       INCLUDE 'BMCOM.F77'
 
 C.... Variable declarations.
-      
+
       LOGICAL LOK
       INTEGER ISIZ, MINSIZ
       INTEGER DUM(1)
@@ -56,11 +57,11 @@ C.... Check for debug.
          OTHATT(ISTD,ISIZ) = 0.0
   117 CONTINUE
 
-C     KLUDGE TO GET AROUND COUNTING OF NONSTOCKABLE STANDS.   
-   
-      IF (ICNT .GE. BMEND) ICNT = 0      
+C     KLUDGE TO GET AROUND COUNTING OF NONSTOCKABLE STANDS.
+
+      IF (ICNT .GE. BMEND) ICNT = 0
       ICNT = ICNT + 1
-      
+
       IF (ICNT .EQ. 1) THEN
 
         IYR1= IYR
@@ -69,11 +70,11 @@ C     KLUDGE TO GET AROUND COUNTING OF NONSTOCKABLE STANDS.
 C     FETCH THE MOST RECENTLY SCEHEDULED UNTRIGGERED ACTIVITY. IF THERE
 C     ARE ANY SET FOR THIS YEAR (IYR), THEN THEY TAKE OVER ANY CURRENT
 C     SET OF PARAMETERS.
-         
+
         CALL GPGET2 (323, IYR1, 7, NPRMS, PRMS, 1, I, DUM, LOK)
 
         IF (LOK) THEN
-  
+
           IYR2= IYR1 + IFIX(PRMS(1)) - 1
 
           MINSIZ = INT(PRMS(2))
@@ -82,26 +83,26 @@ C     SET OF PARAMETERS.
           GRFMAX = PRMS(5)
 
           IF (LBMDEB) WRITE (JBMBPR,101) IYR1,MINSIZ,THRESH,
-     &                                   ATTKRT,GRFMAX     
+     &                                   ATTKRT,GRFMAX
   101     FORMAT (/' IN BMOBB: IYR1=',I5,' MINSIZ=',
      >    I5,' THRESHOLD=',F7.4,' ATTACK RATE= ',F6.4,' MAX RV=',F4.2)
-  
+
           IF (IYR2.GE.MIY(MICYC)) THEN
             PRMS(1) = IYR2 - MIY(MICYC) + 1
-            CALL GPADD (KODE, MIY(MICYC), 323, NPRMS, PRMS, 1, DUM) 
+            CALL GPADD (KODE, MIY(MICYC), 323, NPRMS, PRMS, 1, DUM)
             IYR2 = MIY(MICYC) - 1
             IF (LBMDEB) WRITE (JBMBPR,103) PRMS(1),IYR2
   103       FORMAT (/' IN BMOBB: OTHER BARK BEETLES ARE SCHEDULED FOR ',
      >        'THE NEXT MASTER CYCLE. DURATION WILL BE =',F5.0,
-     >        '  NEW IYR2=',I5)     
+     >        '  NEW IYR2=',I5)
           ENDIF
-        ELSE  
+        ELSE
 C         Zero out the attact rate to signify that bark beetles are not active this year.
           IF (IYR .GT. IYR2) ATTKRT = 0.0
-        ENDIF 
+        ENDIF
       ENDIF
-      
-C     IF THE ATTACK RATE IS ZERO THEN ASSUME THE MODEL IS NOT ACTIVE THIS YEAR.      
+
+C     IF THE ATTACK RATE IS ZERO THEN ASSUME THE MODEL IS NOT ACTIVE THIS YEAR.
       IF (ATTKRT .LE. 0.0) RETURN
 C
 C     IF NO DESIRED SPECIES PRESENT THEN RETURN.
@@ -120,20 +121,20 @@ C
     6 CONTINUE
 
 C
-C     COMPARE DENSITY OF STEMS TO THRESHOLD SPECIFIED BY USER 
+C     COMPARE DENSITY OF STEMS TO THRESHOLD SPECIFIED BY USER
 C
       IF (CLSUMI .LT. THRESH) GOTO 777
 
 
-C     SUFFICIENT STEMS FOR OUTBREAK, NOW APPLY SPECIFIC ATTACK RATE.  
-      
+C     SUFFICIENT STEMS FOR OUTBREAK, NOW APPLY SPECIFIC ATTACK RATE.
+
       DO 20 ISIZ= MINSIZ,NSCL
 
          IF (GRF(ISTD,ISIZ) .GT. GRFMAX) GOTO 20
-         
+
          OTHATT(ISTD,ISIZ) = OTHATT(ISTD,ISIZ) + ATTKRT
          OTHATT(ISTD,ISIZ) = AMIN1(OTHATT(ISTD,ISIZ),1.0)
-         
+
    20 CONTINUE
 
   777 CONTINUE

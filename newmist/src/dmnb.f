@@ -1,5 +1,6 @@
       SUBROUTINE DMNB (RQ, D, CNB)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -41,13 +42,13 @@ C----------------------------------------------------------------------
 C
 C Called by:
 C
-C     DMTREG 
+C     DMTREG
 C
 C Other routines called:
 C
 C     BNDIST
 C
-C Argument list definitions:                        
+C Argument list definitions:
 C
 C     INTEGER RQ      (I) The sampling ring number for which the
 C                          cumulative distribution function is to be
@@ -63,7 +64,7 @@ C
 C     LOGICAL erflg       Unused, could set exit status for base FVS.
 C     INTEGER i           General loop counter.
 C     INTEGER j           Ring loop counter (inner, outer)
-C     INTEGER k           General loop counter. 
+C     INTEGER k           General loop counter.
 C     INTEGER CUR         Flag for current ring being processed.
 C     INTEGER PRV         Flag for previous ring just processed.
 C     INTEGER EMark       Location of the last non-zero probability
@@ -72,7 +73,7 @@ C     INTEGER TopEnd      The last non-zero probability for the
 C                          current (outer) ring.
 C     REAL    mu          The requested mean of the distribution.
 C     REAL    var         The requested variance of the distribution.
-C     REAL    NB          The array holding the distribution for 
+C     REAL    NB          The array holding the distribution for
 C                          observations in the inner and the outer
 C                          rings.
 C
@@ -84,7 +85,6 @@ C     DMCLMP   DMCOM
 C
 C**********************************************************************
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'DMCOM.F77'
 
 C Subroutine argument list.
@@ -94,9 +94,9 @@ C Subroutine argument list.
       REAL     CNB
 
       DIMENSION CNB(0:DSTLEN)
-      
+
 C Local variables.
-      
+
       LOGICAL  erflg
       INTEGER  i, j, k
       INTEGER  CUR, PRV
@@ -120,7 +120,7 @@ C likelihood of observing exactly 2 Source trees in the annulus is:
 C
 C    {P(0,i) * P(2,o)} + { P(1,i) * P(3,o) } + {P(2,i) * P(4,o) } + ...
 C
-C where 'i' indexes the inner circle and 'o' indexes the outer circle. 
+C where 'i' indexes the inner circle and 'o' indexes the outer circle.
 C
 
 C Zero the distribution.
@@ -136,47 +136,47 @@ C tree. The point has only 1 likelihood: P(1)= 1.0.
 
       CUR = 1
       DO 100 j = RQ - 1, RQ
-        
+
         IF (j .EQ. 0) THEN
-        
+
           NB(CUR,1) = 1.0
           EMark(CUR) = 1
-          
+
         ELSE
-        
-          mu = CrArea(j) * D 
+
+          mu = CrArea(j) * D
           var = DMCLMP * mu
-          
+
           CALL BNDIST(mu, var, erflg, DSTLEN, NB(0,CUR),
      >                 EMark(CUR))
-          
-        END IF 
-        
+
+        END IF
+
         CUR = 2
         PRV = 1
 
-  100 CONTINUE  
+  100 CONTINUE
 
 C Reweight to account for absence of observations of the n=0 class.
 C This is because there is always at least a sample of 1 (the target
 C tree itself) for both the inner and outer disks.
 
       DO 1000 i = 1, 2
-        x = 1.0 / (1.0 - NB(0, i)) 
+        x = 1.0 / (1.0 - NB(0, i))
         NB(0, i) = 0.
         DO 1001 j = 1, EMark(i)
           NB(j, i) = NB(j, i) * x
  1001   CONTINUE
  1000 CONTINUE
- 
+
 C Do the sum of products described above. 'PRV' indexes the inner
 C disk, 'CUR' the outer. Recall that in the RQ=1 case, the 'PRV' disk
 C is a point.
 
         TopEnd = EMark(CUR)
-        
+
         DO 210 k = 0,TopEnd
-          x = 0.             
+          x = 0.
           DO 220 j = k,MIN0(k+EMark(PRV),DSTLEN)
             YD = NB(j, CUR) * NB(j-k, PRV)
             IF (YD .GT. 1.0E-25) x = x + YD
@@ -187,16 +187,16 @@ C is a point.
 C Create the cumulative probability by sums.
 
       DO 300 k = 1, TopEnd
-        CNB(k) = CNB(k-1) + CNB(k) 
+        CNB(k) = CNB(k-1) + CNB(k)
   300 CONTINUE
-      
+
 C Adjust distribution to account for forbidden values. ie: make it
 C all sum to 1.
-                           
+
       x = 1.0 / CNB(TopEnd)
       DO 400 k = 0, TopEnd
-	  CNB(k) = CNB(k) * x 
+	  CNB(k) = CNB(k) * x
   400 CONTINUE
-      
+
       RETURN
       END

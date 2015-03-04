@@ -1,21 +1,13 @@
       SUBROUTINE RCDSET (IC,LRETRN)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C
 C     SETS THE RETURN CODE FOR THE PROGNOSIS MODEL.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CONTRL.F77'
-C
-C
-COMMONS
 C
       INTEGER IC
       LOGICAL LRETRN

@@ -1,5 +1,6 @@
       SUBROUTINE BRIBA
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C**********************************************************************
 C  **BRIBA        DATE OF LAST REVISION:  06/05/2014
 C----------------------------------------------------------------------
@@ -31,7 +32,6 @@ C**********************************************************************
 
 C.... Common include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BRCOM.F77'
       INCLUDE 'PLOT.F77'
       INCLUDE 'CONTRL.F77'

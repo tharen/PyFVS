@@ -1,5 +1,6 @@
       SUBROUTINE CVINIT
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **CVINIT DATE OF LAST REVISION:  07/11/08
 C----------
@@ -7,21 +8,11 @@ C  INITIALIZES COVER VARIABLES FOR THE CURRENT STAND.
 C  CALLED FROM **INITRE**.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ARRAYS.F77'
-C
 C
       INCLUDE 'CONTRL.F77'
 C
-C
       INCLUDE 'CVCOM.F77'
-C
-C
-COMMONS
 C
       INTEGER I,J
       ICVBGN = 0

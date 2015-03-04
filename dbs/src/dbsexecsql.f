@@ -1,8 +1,8 @@
       SUBROUTINE DBSEXECSQL (SQLCMD,ConnHndl,LSCHED,IRC)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C
 C $Id$
-C
 C
 C     AUTH: D. GAMMEL -- RMRS -- MAY 2003
 C     PURPOSE: EXECUTES USER DEFINED QUERIES UPON OPENED
@@ -12,23 +12,14 @@ C            ConnHndl - THE CONNECTION HANDLE TO THE DBMS
 C            LSCHED   - SPECIFIES WHETHER THIS IS COMING FROM THE EVENT
 C                       MONITOR
 COMMONS
-C
-C
-      INCLUDE  'PRGPRM.F77'
-C
-C
       INCLUDE  'CONTRL.F77'
-C
 C
       INCLUDE  'OPCOM.F77'
 C
-C
       INCLUDE  'PLOT.F77'
-C
 C
       INCLUDE  'DBSCOM.F77'
 C
-COMMONS
 
       CHARACTER*(*) SQLCMD
       INTEGER(SQLSMALLINT_KIND) ColumnCount,MxNameLen,ColNumber,
@@ -102,7 +93,7 @@ C
               CALL UPCASE(ColName(I:I))
             END DO
             IF (NameLen .LT. MxNameLen) ColName(NameLen+1:) = ""
-            IOPKD = 0            
+            IOPKD = 0
             DO I=1,ITST5
               IF (ColName(:8).EQ.CTSTV5(I)) THEN
                 IOPKD = I
@@ -117,7 +108,7 @@ C
                 IOPKD = ITST5
               ENDIF
             ENDIF
-            
+
             IF(IOPKD.GT.0) THEN
               IBound = IBound + 1
               LI(IBound)=SQL_NULL_DATA

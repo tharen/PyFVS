@@ -1,5 +1,6 @@
       BLOCK DATA MPBLKD
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **MPBLKD--SO     DATE OF LAST REVISION:  08/22/14
 C----------
@@ -9,24 +10,19 @@ C     SEE MPBCUP OR MPBMOD FOR VARIABLE DISCRIPTIONS.
 C
 C Revision History
 C   10/14/04 LANCE DAVID (FHTET)
-C     CREATED THIS SORNEC-33 VARIANT VERSION TO ACCOMODATE 
-C     THE 33 SPECIES REPRESENTED. SURROGATE SPECIES ASSIGNMENTS 
+C     CREATED THIS SORNEC-33 VARIANT VERSION TO ACCOMODATE
+C     THE 33 SPECIES REPRESENTED. SURROGATE SPECIES ASSIGNMENTS
 C     ARE BASED ON THOSE MADE IN THE NORTHERN IDAHO AND CENTRAL
 C     ROCKIES VARIANTS.
 C   07/02/10 Lance R. David (FMSC)
-C     Added IMPLICIT NONE.
 C   08/22/14 Lance R. David (FMSC)
 C     Function name was used as variable name.
 C     changed variable INT to INCRS
 C----------------------------------------------------------------------
 C
-COMMONS
 
-      INCLUDE 'PRGPRM.F77'
 
       INCLUDE 'MPBCOM.F77'
-C
-COMMONS
 C
       DATA  JOMPB  / 7 /
 

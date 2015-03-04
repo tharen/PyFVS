@@ -1,5 +1,6 @@
       SUBROUTINE DIST(N,ATTR,PCTWK)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -13,18 +14,10 @@ C  WITH SUBSCRIPTS TO TREE RECORDS TO BE PRINTED.  N IS THE CURRENT
 C  LENGTH OF THE TREE RECORD LIST (ITRN).
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ARRAYS.F77'
-C
 C
       INCLUDE 'CONTRL.F77'
 C
-C
-COMMONS
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES.
 C----------

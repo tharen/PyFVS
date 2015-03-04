@@ -1,5 +1,6 @@
       SUBROUTINE ECNPUT (WK3,IPNT,ILIMIT)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -8,23 +9,14 @@ C     STORE THE ECONOMIC DATA FOR A GIVEN STAND.
 C
 C     PART OF THE PARALLEL PROCESSING EXTENSION TO PROGNOSIS.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
       INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'ECNCOM.F77'
-C      
+C
       INCLUDE 'ECNCOMSAVES.F77'
 C
-C
-COMMONS
-C
-C
       INTEGER MXL,MXI,MXR
-C      
+C
       PARAMETER (MXL=6,MXI=20,MXR=14)
       INTEGER ILIMIT,IPNT,I
       LOGICAL LOGICS(MXL)
@@ -34,15 +26,15 @@ C
 C
 C  PUT THE INTEGER SCALARS.
 C
-      INTS( 1) = annCostCnt   
-      INTS( 2) = annRevCnt    
+      INTS( 1) = annCostCnt
+      INTS( 2) = annRevCnt
       INTS( 3) = econStartYear
-      INTS( 4) = fixHrvCnt    
-      INTS( 5) = fixPctCnt    
-      INTS( 6) = pctMinUnits  
-      INTS( 7) = plntCostCnt  
-      INTS( 8) = varHrvCnt    
-      INTS( 9) = varPctCnt    
+      INTS( 4) = fixHrvCnt
+      INTS( 5) = fixPctCnt
+      INTS( 6) = pctMinUnits
+      INTS( 7) = plntCostCnt
+      INTS( 8) = varHrvCnt
+      INTS( 9) = varPctCnt
       INTS(10) = burnCnt
       INTS(11) = hrvCstCnt
       INTS(12) = hrvRvnCnt

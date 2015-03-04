@@ -1,18 +1,20 @@
       SUBROUTINE BMATCT(IYR)
+      use prgprm_mod
+      implicit none
 
 C     CALLED FROM BMDRV
 C     CALLS:  SPLAAR
 C             SPLADS
 C             SPLALO
 C             GPGET2
-C      
+C
 ***********************************************************************
 *  **BMATCT  Date of last revision:  09/28/05
 *----------------------------------------------------------------------
 *  Purpose:
 *
 *     This routine moves BKP between stands, and between each stand
-*     and the Outside world. Each stand and the Outside is given a 
+*     and the Outside world. Each stand and the Outside is given a
 *     "score" based on how it looks from the source stand.
 *     Then all the scores are scaled and the appropriate proportion of
 *     BKP is moved from away from the source stand into the target.
@@ -28,7 +30,7 @@ C
 *  Local variable definitions:
 *     ASPEC:  Variable used to scale attractiveness of "special" trees
 *     ATTOJ:  ATTractiveness of the Outside for each beetle type in the
-*             current stand 
+*             current stand
 *     ATTWP:  average ATTractiveness of the World (area within RMAX) of
 *             each point in the Outside
 *     BAHO:   Basal Area of Host per acre in the Outside
@@ -47,7 +49,7 @@ C
 *             acre)in the Landscape
 *     KLS:    the area-weighted average K value for the Stockable parts of
 *             the Landscape
-*     LOK:    Logical indicating if OW values are to change this year.  
+*     LOK:    Logical indicating if OW values are to change this year.
 *     NEWBKP: Array containing the new value for bkp for each stand and
 *             beetle type
 *     NPASS:  Number of "passes" to make over stands (will be 2 if both
@@ -66,8 +68,8 @@ C
 *     TDIST:  half the length of a square with area=TAREA
 *     TIPSDV: Total BKP for stand if Ips is a driving variable
 *     TOTBKP: Accumulates total BKP across stands
-*     TOTSC:  Array containing the total stand attractiveness for each 
-*             beetle type 
+*     TOTSC:  Array containing the total stand attractiveness for each
+*             beetle type
 *
 *  Common block variables and parameters:
 *     BKP:    From BMCOM; beetle kill pressure
@@ -84,7 +86,7 @@ C
 *     PBSPEC: From BMCOM; switch identifying which pine beetle species
 *             are being modeled
 *     RVOD:   host Rating Value Outside due to Drought effects
-*     STOCK:  logical variable to indicate whether each stand is STOCKable   
+*     STOCK:  logical variable to indicate whether each stand is STOCKable
 *     STOCKO: proportion of the Outside that is STOCKable
 *     TFOOD:  From BMCOM; total beetle attractive 'food'
 *     ATTC:   the 'ATTractiveness Constant' of each stand (eqn.9)
@@ -93,46 +95,45 @@ C
 *     AREALP: approximate area of the Landscape that is within RMAX of the
 *             Outside (P for 'prime'), in sq.mi.
 *     AREALS: total Stockable area of the Landscape, in sq.mi.
-*     AREAO:  total area of the Outside, in sq.mi.                       
+*     AREAO:  total area of the Outside, in sq.mi.
 *     RADL:   RADius of a circle just large enough to enclose the Landscape
 *     RADLC:  RADius that the Landscape would have if it was circular
-*     SDD:    From BMCOM: 
-*      
+*     SDD:    From BMCOM:
+*
 ***********************************************************************
 
 C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77' 
       INCLUDE 'PPEPRM.F77'
       INCLUDE 'BMPRM.F77'
-      
+
       INCLUDE 'PPCNTL.F77'
       INCLUDE 'BMCOM.F77'
       INCLUDE 'BMPCOM.F77'
-      
+
 C.... Call Statement Variable Declarations:
-      INTEGER   IYR      
+      INTEGER   IYR
 
 C Convert acres to square miles and meters to miles: All units are
-C now in miles. (This is not true of all routines.) 
-      
+C now in miles. (This is not true of all routines.)
+
       REAL    AC2SQM, M2MI, MI2M
-      
+
       PARAMETER (AC2SQM= 1./640.)
       PARAMETER (M2MI= 1./1609.34)
       PARAMETER (MI2M= 1609.34)
-      
+
 C.... Variable declarations.
 
       INTEGER IPASS, ISIZ
       INTEGER IRC, DUM(1)
-      INTEGER TARG, CURR 
-      
+      INTEGER TARG, CURR
+
       LOGICAL LOK
       REAL    PRMS(7)
-      
+
       REAL    DIST, TAREA, CAREA, XX, R2
       REAL    NEWBKP(2,MXSTND)
       REAL    PROP
@@ -143,10 +144,10 @@ C.... Variable declarations.
 
       REAL    ASPEC(2), NZERO(2), DDWT(2), RMAX(2), DX, TX(2), SX(2)
       REAL    RADO(2), KL(2), KLS(2), KAV(2), KO(2), BKPO(2)
-      REAL    ATTWP(2)                        
+      REAL    ATTWP(2)
       REAL    XP, YP, XMIN, XMAX, YMIN, YMAX, XMID, YMID
       REAL    D, DMAX, CDIST, TDIST
-      
+
       REAL    SPO(2), BAO, BAHO(2), BASPO(2)
       REAL    XSPO(2), XBAO, XBAHO(2), XBASPO(2), XBKPO(2), XRVO
       REAL    TBAHO, TBASPO, TSPO
@@ -163,7 +164,7 @@ C Begin Routine
 
       NPASS= 1
       IF (IPSON) NPASS= 2
-       
+
 C     Initializations from ATTRACT keyword.  The first element of each array
 C     gives the value for the main beetle, the second element gives the value
 C     for Ips when it acts as a secondary beetle.
@@ -171,30 +172,30 @@ C     for Ips when it acts as a secondary beetle.
       NZERO(1) = SELFA(PBSPEC)
       DDWT(1) = USERC(PBSPEC)
       RMAX(1) = URMAX(PBSPEC)
-      
+
       IF (NPASS .EQ. 2) THEN
         ASPEC(2) = USERA(3)
         NZERO(2) = SELFA(3)
         DDWT(2) = USERC(3)
         RMAX(2) = URMAX(3)
-      END IF 
-      
-C     If the outside world is not being used, then don't bother calling the 
+      END IF
+
+C     If the outside world is not being used, then don't bother calling the
 c     option processor.
 
       IF (OUTOFF) GOTO 3
-      
+
 C     Call the option processor to see if any values are going to change this
 c     year. Once values are changed, they will remain that value until another
-c     call to the option processor changes them again. Note that since we are 
-c     not in a stand loop, we do not need the initial IF statement used in 
+c     call to the option processor changes them again. Note that since we are
+c     not in a stand loop, we do not need the initial IF statement used in
 c     other calls.
 
       IYR1= IYR
-      NPRMS= 6                                      
-  
-      CALL GPGET2 (310,IYR1,7,NPRMS,PRMS(1),1,I,DUM,LOK) 
-  
+      NPRMS= 6
+
+      CALL GPGET2 (310,IYR1,7,NPRMS,PRMS(1),1,I,DUM,LOK)
+
       IF (LOK) THEN
 
         IF (PRMS(1) .GE. 0.0) CBKPO(1) = PRMS(1)
@@ -203,36 +204,36 @@ c     other calls.
         IF (PRMS(4) .GE. 0.0) CSPO(1) = PRMS(4)
         IF (PRMS(5) .GE. 0.0) CBAO = PRMS(5)
         IF (PRMS(6) .GE. 0.0) CRVOND = PRMS(6)
-      ENDIF   
+      ENDIF
 
-c     Now call the option processor to see if values for Ips (as a driving 
+c     Now call the option processor to see if values for Ips (as a driving
 c     variable) will change this year. Only bother calling if Ips is a DV.
 
       IF (IPSON) THEN
-      
+
         IYR1= IYR
-        NPRMS= 4                                      
-        
-        CALL GPGET2 (311,IYR1,7,NPRMS,PRMS(1),1,I,DUM,LOK) 
-        
+        NPRMS= 4
+
+        CALL GPGET2 (311,IYR1,7,NPRMS,PRMS(1),1,I,DUM,LOK)
+
         IF (LOK) THEN
           IF (PRMS(1) .GE. 0.0) CBKPO(2) = PRMS(1)
           IF (PRMS(2) .GE. 0.0) CBAHO(2) = PRMS(2)
           IF (PRMS(3) .GE. 0.0) CBASPO(2) = PRMS(3)
           IF (PRMS(4) .GE. 0.0) CSPO(2) = PRMS(4)
-        ENDIF   
+        ENDIF
 
       ENDIF
-      
+
     3 CONTINUE
-      
+
 C***************************************************************************
 C                      START HERE IN THE FIRST YEAR.
 C***************************************************************************
-                                           
+
 C Skip all the spatial stuff and initial averaging if you've already done it.
       IF (ACDONE) GOTO 50
-      
+
 C         First, find ATTBYK, which is needed even if Outside is turned off.
 C         This is found from equation 9, with R2 = the radius that the stand
 C         would have if it was a circle, and R1 = 0.
@@ -241,22 +242,22 @@ C         would have if it was a circle, and R1 = 0.
             CALL SPLAAR(BMSDIX(CURR), CAREA, IRC)
             CAREA = CAREA * AC2SQM
             R2 = SQRT(CAREA / PIE)
-            
+
             DO 7 IPASS=1,NPASS
               IF (R2 .GT. RMAX(IPASS)) R2 = RMAX(IPASS)
-              ATTBYK(IPASS,CURR) = (PIE / DDWT(IPASS)) 
+              ATTBYK(IPASS,CURR) = (PIE / DDWT(IPASS))
      &                 * (LOG(ABS(DDWT(IPASS) * R2 * R2 + NZERO(IPASS)))
      &                    - LOG(ABS(NZERO(IPASS))))
-    7       CONTINUE 
+    7       CONTINUE
     8     CONTINUE
 
-C         If the Outside is turned off, this is all you need - go past Go 
+C         If the Outside is turned off, this is all you need - go past Go
 C         and collect $200.
           IF (OUTOFF) THEN
             ACDONE = .TRUE.
             GOTO 50
-          END IF                        
-      
+          END IF
+
 C         Zero some landscape-average counters that may be needed.
           XBAO = 0.0
           XRVO = 0.0
@@ -265,21 +266,21 @@ C         Zero some landscape-average counters that may be needed.
             XBAHO(IPASS) = 0.0
             XSPO(IPASS) = 0.0
             XBASPO(IPASS) = 0.0
-    9     CONTINUE        
-        
-      
+    9     CONTINUE
+
+
 c         Figure out centre of landscape:
           XMAX = -1.0
           YMAX = -1.0
           XMIN=  1.e35
-          YMIN=  1.e35             
+          YMIN=  1.e35
           DO 10 CURR= 1,BMSTND
             CALL SPLALO(BMSDIX(CURR), XP, YP, IRC)
-            IF (XP .GT. XMAX) XMAX= XP 
+            IF (XP .GT. XMAX) XMAX= XP
             IF (XP .LT. XMIN) XMIN= XP
             IF (YP .GT. YMAX) YMAX= YP
             IF (YP .LT. YMIN) YMIN= YP
-   10     CONTINUE      
+   10     CONTINUE
 
           XMID= (XMIN + XMAX) / 2.
           YMID= (YMIN + YMAX) / 2.
@@ -295,29 +296,29 @@ c         zero and the outside world is not floating.
           DO 13 CURR= 1,BMSTND
             CALL SPLAAR(BMSDIX(CURR), CAREA, IRC)
             CAREA= CAREA * AC2SQM
-        
+
             AREAL= AREAL + CAREA
-                   
+
             D= SQRT(CAREA / PIE) * MI2M
-        
+
             CALL SPLALO(BMSDIX(CURR), XP, YP, IRC)
             D= D + SQRT((XMID-XP)**2 + (YMID-YP)**2)
             IF (D .GT. DMAX) DMAX= D
-            
+
 c           Do not include non-stockable stands in the following averages.
             IF (.NOT. STOCK(CURR)) GOTO 13
-            AREALS = AREALS + CAREA            
-            
-C           If needed, add up the total BA of each current stand, and average RV.            
-            IF ((CBAO .LT. 0.0) .AND. (UFLOAT .NE. -1.0)) 
+            AREALS = AREALS + CAREA
+
+C           If needed, add up the total BA of each current stand, and average RV.
+            IF ((CBAO .LT. 0.0) .AND. (UFLOAT .NE. -1.0))
      &          XBAO = XBAO + CAREA*(BAH(CURR,NSCL+1)+BANH(CURR,NSCL+1))
-            IF ((CRVOND .LT. 0.0) .AND. (UFLOAT .NE. -1.0)) 
+            IF ((CRVOND .LT. 0.0) .AND. (UFLOAT .NE. -1.0))
      &          XRVO = XRVO + CAREA * GRFSTD(CURR)
-                                                                  
+
 C           If needed, add up host BA, special trees and BKP of each current
-C           stand, for each beetle type.            
+C           stand, for each beetle type.
             DO 12 IPASS=1,NPASS
-            
+
               IF ((CBKPO(IPASS) .LT. 0.0) .AND. (UFLOAT .NE. -1.0)) THEN
                 IF ((PBSPEC .NE. 3) .AND. (IPASS .EQ. 1)) THEN
                   XBKPO(IPASS)= XBKPO(IPASS)+(CAREA*BKP(CURR))
@@ -325,61 +326,61 @@ C           stand, for each beetle type.
                   XBKPO(IPASS)= XBKPO(IPASS)+(CAREA*BKPIPS(CURR))
                 ENDIF
               END IF
-                
-              IF (((CBAHO(IPASS) .GE. 0.0) .AND. (CSPO(IPASS) .GE. 0.0) 
-     &          .AND. (CBASPO(IPASS) .GE. 0.0)) .OR. (UFLOAT .EQ. -1.0)) 
+
+              IF (((CBAHO(IPASS) .GE. 0.0) .AND. (CSPO(IPASS) .GE. 0.0)
+     &          .AND. (CBASPO(IPASS) .GE. 0.0)) .OR. (UFLOAT .EQ. -1.0))
      &            GOTO 12
 
-C             Find the host size-threshold for each pest species              
-              IF (IPASS .EQ.1) THEN 
+C             Find the host size-threshold for each pest species
+              IF (IPASS .EQ.1) THEN
                 MIN = ISCMIN(PBSPEC)
-              ELSE 
+              ELSE
                 MIN = ISCMIN(3)
               END IF
-              
-C             Add up the amount of host and special trees in each size class 
+
+C             Add up the amount of host and special trees in each size class
               TBAHO = 0.0
               TBASPO = 0.0
               TSPO = 0.0
               DO 11 ISIZ=1,NSCL
                 IF (ISIZ .GE. MIN) TBAHO = TBAHO + BAH(CURR,ISIZ)
                 XX = TREE(CURR,ISIZ,1) * SPCLT(CURR,ISIZ,IPASS)
-                TSPO = TSPO + XX       
+                TSPO = TSPO + XX
                 IF (ISIZ .GE. MIN) TBASPO = TBASPO + XX * MSBA(ISIZ)
    11         CONTINUE
-   
-              XBAHO(IPASS) = XBAHO(IPASS) + CAREA * TBAHO             
+
+              XBAHO(IPASS) = XBAHO(IPASS) + CAREA * TBAHO
               XSPO(IPASS) = XSPO(IPASS) + CAREA * TSPO
               XBASPO(IPASS) = XBASPO(IPASS) + CAREA * TBASPO
    12       CONTINUE
-            
+
    13     CONTINUE
-                     
+
           RADL= DMAX * M2MI
-          
-c         If needed, divide landscape sums by AREALS to get the required averages.  
+
+c         If needed, divide landscape sums by AREALS to get the required averages.
 c         Re-initialize any array values that have been set to negative numbers
 c         because the initial averages were missing.
           IF (UFLOAT .EQ. -1.0) GOTO 21
-          
+
           IF (CBAO .LT. 0.0) CBAO = XBAO / AREALS
           IF (CRVOND .LT. 0.0) CRVOND = (XRVO / AREALS) / RVOD
 
-          DO 20 IPASS=1,NPASS          
-            IF (CBKPO(IPASS) .LT. 0.0) 
+          DO 20 IPASS=1,NPASS
+            IF (CBKPO(IPASS) .LT. 0.0)
      &         CBKPO(IPASS) = XBKPO(IPASS) / AREALS
             IF (CBAHO(IPASS) .LT. 0.0)
      &         CBAHO(IPASS) = XBAHO(IPASS) / AREALS
             IF (CBASPO(IPASS) .LT. 0.0)
      &         CBASPO(IPASS) = XBASPO(IPASS) / AREALS
-            IF (CSPO(IPASS) .LT. 0.0) 
+            IF (CSPO(IPASS) .LT. 0.0)
      &         CSPO(IPASS) = XSPO(IPASS) / AREALS
    20     CONTINUE
-   21     CONTINUE                              
-          
+   21     CONTINUE
+
 c         equations 5, 11, 15 and 16:
           RADLC = SQRT(AREAL / PIE)
-          
+
           DO 211 IPASS=1,NPASS
             RADO(IPASS) = RADL + RMAX(IPASS)
             AREAO(IPASS) = (PIE * RADO(IPASS) * RADO(IPASS)) - AREAL
@@ -393,69 +394,69 @@ c         equations 5, 11, 15 and 16:
 
 c       Find the 'attractiveness constant' of each stockable stand.  TX is the
 c       logarithmic term in equation 9 (which is constant for all stands), and
-c       SX is the stand-summation term.  Distances and areas are converted here  
+c       SX is the stand-summation term.  Distances and areas are converted here
 c       to MILES or SQUARE MILES.  CDIST and TDIST are used to ensure that no
 c       pair of current and target stands are considered to be at closer AVERAGE
 c       distance than is physically possible (i.e. closer than the distance between
 c       the centers of two squares with their areas).
         DO 22 IPASS=1,NPASS
-          TX(IPASS)= (PIE / DDWT(IPASS)) 
+          TX(IPASS)= (PIE / DDWT(IPASS))
      &     * (LOG(ABS(DDWT(IPASS)*RMAX(IPASS)*RMAX(IPASS)+NZERO(IPASS)))
      &        - LOG(ABS(NZERO(IPASS))))
-   22   CONTINUE  
-      
+   22   CONTINUE
+
         DO 30 CURR= 1,BMSTND
           IF (.NOT. STOCK(CURR)) GOTO 30
           CALL SPLAAR(BMSDIX(CURR),CAREA,IRC)
           CDIST = 0.5 * SQRT(CAREA * AC2SQM)
-          
+
           SX(1)= 0.0
           SX(2)= 0.0
           DO 25 TARG= 1,BMSTND
-            
+
             IF (TARG .EQ. CURR) THEN
               DO 23 IPASS=1,NPASS
                 SX(IPASS) = SX(IPASS) + ATTBYK(IPASS,CURR)
    23         CONTINUE
-                
-            ELSE                                        
+
+            ELSE
               CALL SPLADS(BMSDIX(TARG),BMSDIX(CURR),DIST,IRC)
               DIST= DIST * M2MI
               CALL SPLAAR(BMSDIX(TARG),TAREA,IRC)
               TAREA= TAREA * AC2SQM
               TDIST = 0.5 * SQRT(TAREA)
               IF (DIST .LT. (CDIST+TDIST)) DIST = CDIST + TDIST
-              
+
               DO 24 IPASS=1,NPASS
                 IF (DIST .LE. RMAX(IPASS)) THEN
-                  DX= DDWT(IPASS) * DIST * DIST       
+                  DX= DDWT(IPASS) * DIST * DIST
                   SX(IPASS)= SX(IPASS) + (TAREA / (DX + NZERO(IPASS)))
                 END IF
-   24         CONTINUE               
+   24         CONTINUE
             END IF
-              
+
    25     CONTINUE
 
 c         calculate ATTC from equation 9, and make sure it's not negative
           DO 27 IPASS=1,NPASS
             ATTC(IPASS,CURR)= TX(IPASS) - SX(IPASS)
             IF (ATTC(IPASS,CURR) .LT. 0.0) ATTC(IPASS,CURR) = 0.0
-   27     CONTINUE 
-           
-   30   CONTINUE 
-   
+   27     CONTINUE
+
+   30   CONTINUE
+
 c This is the end of the "spatial stuff".
         ACDONE= .TRUE.
    50 CONTINUE
-                  
-                  
+
+
 C***************************************************************************
 C                     START HERE IN THE SECOND YEAR.
 C***************************************************************************
 
 c You can skip some stuff if the Outside is turned off.
-      IF (OUTOFF) GOTO 91      
- 
+      IF (OUTOFF) GOTO 91
+
 C Calculate KL.  If the Outside is floating, also find average BKP in stockable
 C stands, and KLS.
       DO 60 IPASS=1,NPASS
@@ -463,47 +464,47 @@ C stands, and KLS.
         KLS(IPASS) = 0.0
         XBKPO(IPASS) = 0.0
    60 CONTINUE
-      
+
       DO 75 CURR= 1,BMSTND
         CALL SPLAAR(BMSDIX(CURR),CAREA,IRC)
         CAREA= CAREA * AC2SQM
-            
+
         DO 70 IPASS= 1,NPASS
           XX = CAREA * NUMER(IPASS,CURR)
           KL(IPASS)= KL(IPASS) + XX
-          
+
           IF ((UFLOAT .EQ. -1.0) .AND. (STOCK(CURR)))THEN
             KLS(IPASS) = KLS(IPASS) + XX
-            
+
             IF ((PBSPEC .NE. 3) .AND. (IPASS .EQ. 1)) THEN
               XBKPO(IPASS)= XBKPO(IPASS)+(CAREA*BKP(CURR))
             ELSE
               XBKPO(IPASS)= XBKPO(IPASS)+(CAREA*BKPIPS(CURR))
             ENDIF
-            
+
           END IF
-          
+
    70   CONTINUE
    75 CONTINUE
-   
+
       DO 76 IPASS= 1,NPASS
         KL(IPASS)=  KL(IPASS) / AREAL
    76 CONTINUE
 
- 
+
 C At this point, all initial values for the Outside are known.  Get KO
 C and BKPO for the current year.  If the Outside is floating, these are just
 C the landscape averages for stockable stands.  Otherwise, KO must be calculated
 C from some component values.
       IF (UFLOAT .EQ. -1.0) THEN
-      
+
         DO 80 IPASS=1,NPASS
           KO(IPASS) = KLS(IPASS) / AREALS
           BKPO(IPASS) = XBKPO(IPASS) / AREALS
    80   CONTINUE
-       
+
       ELSE
-      
+
         BAO = CBAO
         RVOND = CRVOND
         RVO = RVOND * RVOD
@@ -522,19 +523,19 @@ C     Notice that it may only be a bad year for one beetle type.
       IF (LBAD) THEN
         IF (IBADBB .NE. 3 .OR. (IBADBB .EQ. 3 .AND. NPASS .EQ. 1))
      &      BKPO(1) = BKPO(1) * BADREP(PBSPEC)
-        IF (IBADBB .GE. 3 .AND. NPASS .EQ. 2) 
+        IF (IBADBB .GE. 3 .AND. NPASS .EQ. 2)
      &      BKPO(2) = BKPO(2) * BADREP(3)
-      ENDIF    
-   
+      ENDIF
+
       END IF
-              
+
 C If parts of the Outside are non-stockable, reduce KO and BKPO accordingly.
       IF (STOCKO .LT. 1.0) THEN
         DO 87 IPASS=1,NPASS
           KO(IPASS) = KO(IPASS) * STOCKO
           BKPO(IPASS) = BKPO(IPASS) * STOCKO
    87   CONTINUE
-      END IF  
+      END IF
 C
 C Calculate KAV from equation 17, and ATTWP from equation 18:
       DO 90 IPASS=1,NPASS
@@ -634,7 +635,6 @@ C         Add attractiveness of Outside to the total for the current stand,
 C         and calculate BKP lost to the Outside (BKPOUT).
           TOTSC(IPASS)= TOTSC(IPASS) + ATTOJ(IPASS)
 C
-C  
         IF (TOTSC(IPASS) .GT. 0.) BKPOUT(IPASS,CURR) = TOTBKP(IPASS)
      &                              * (ATTOJ(IPASS) / TOTSC(IPASS))
 
@@ -683,18 +683,18 @@ C     *** PUT ONE IN                                           ***
 C     ************************************************************
 
         IF (.NOT. STOCK(CURR)) GOTO 300
-        
+
 c       Change back to PER AREA (Acres)
 
         CALL SPLAAR(BMSDIX(CURR),CAREA,IRC)
-        
+
         DO 301, IPASS= 1,2
           NEWBKP(IPASS,CURR)= NEWBKP(IPASS,CURR) / CAREA
           BKPOUT(IPASS,CURR)= BKPOUT(IPASS,CURR) / CAREA
           BKPIN(IPASS,CURR)=  BKPIN(IPASS,CURR) / CAREA
           SELFBKP(IPASS,CURR)=SELFBKP(IPASS,CURR) / CAREA
   301   CONTINUE
-        
+
 c       Calculate how much BKP actually makes it into the stand.
 c       Any remainder is lost and not reallocated to another stand.
 c       (TFOOD includes a multiplier for prob host ba in stand -- see
@@ -713,19 +713,19 @@ c           ALPHA = (0.565 - (0.034 * SDD))
         IF (ALPHA .GT. 0.90) ALPHA = 0.90
         IF (ALPHA .LT. 0.01) ALPHA = 0.01
         IF (PBSPEC .NE. 3) THEN
-           IF ((NEWBKP(1,CURR) .GT. 0.0) 
+           IF ((NEWBKP(1,CURR) .GT. 0.0)
      &          .AND. (TFOOD(CURR,1) .GT. 0.0)) THEN
-              BKP(CURR) = TFOOD(CURR,1) * (1.0 - 
+              BKP(CURR) = TFOOD(CURR,1) * (1.0 -
      &        EXP(-(ALPHA * NEWBKP(1,CURR) / (TFOOD(CURR,1) + 1E-6))))
               BKPS(CURR) = BKP(CURR) / NEWBKP(1,CURR)
-           ELSE 
+           ELSE
               BKP(CURR) = 0.0
               BKPS(CURR) = 1.0
            ENDIF
            BKPA(CURR) = BKP(CURR)
 
            IF (NEWBKP(2,CURR) .GT. 0.0) THEN
-              BKPIPS(CURR) = TFOOD(CURR,2) * (1.0 - 
+              BKPIPS(CURR) = TFOOD(CURR,2) * (1.0 -
      &        EXP(-(ALPHA * NEWBKP(2,CURR) / (TFOOD(CURR,2) + 1E-6))))
            ELSE
               BKPIPS(CURR) = 0.0
@@ -733,7 +733,7 @@ c           ALPHA = (0.565 - (0.034 * SDD))
 
         ELSE
            IF (NEWBKP(1,CURR) .GT. 0.0) THEN
-              BKPIPS(CURR) = TFOOD(CURR,1) * (1.0 - 
+              BKPIPS(CURR) = TFOOD(CURR,1) * (1.0 -
      &        EXP(-(ALPHA * NEWBKP(1,CURR) / (TFOOD(CURR,1) + 1E-6))))
               BKPS(CURR) = BKPIPS(CURR) / NEWBKP(1,CURR)
             ELSE
@@ -743,15 +743,15 @@ c           ALPHA = (0.565 - (0.034 * SDD))
             BKPA(CURR) = BKPIPS(CURR)
         ENDIF
 
-C     Put a tiny amount of BKP in the stand as a background level (too little to 
+C     Put a tiny amount of BKP in the stand as a background level (too little to
 c     do anything unless the small trees are really sick)
 c
-c        IF ((BKP(CURR) .EQ. 0.0) .AND. (BAH(CURR,NSCL+1) .GT. 0.0)) 
+c        IF ((BKP(CURR) .EQ. 0.0) .AND. (BAH(CURR,NSCL+1) .GT. 0.0))
 c     &         BKP(CURR)= 0.25 * MSBA(1) / CAREA
-c      
-c        IF ((BKPIPS(CURR) .EQ. 0.0) .AND. (BAH(CURR,NSCL+1) .GT. 0.0)) 
+c
+c        IF ((BKPIPS(CURR) .EQ. 0.0) .AND. (BAH(CURR,NSCL+1) .GT. 0.0))
 c     &         BKPIPS(CURR)= 0.25 * MSBA(1) / CAREA
-      
+
   300 CONTINUE
 
       IF(LBMDEB) WRITE(JBMBPR,2) IYR

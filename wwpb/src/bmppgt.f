@@ -1,11 +1,13 @@
       SUBROUTINE BMPPGT (IPNT, ILIMIT)
-      
+      use prgprm_mod
+      implicit none
+
 ***********************************************************************
 *  **BMPPGT--WWPB   DATE OF LAST REVISION:  07/03/94
 *----------------------------------------------------------------------
 *  Purpose:
 *     Get the damage code information for the given stand.
-*  This is part of the Parallel Processing Extension, and freely 
+*  This is part of the Parallel Processing Extension, and freely
 *  adapted from MSPPGT.FOR. In this case, damage code information is
 *  only useful from the initialization. Therefore, if the master cycle
 *  is more than 2, the variable is not saved or restored.
@@ -29,7 +31,6 @@ C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'PPEPRM.F77'
       INCLUDE 'BMPRM.F77'
 

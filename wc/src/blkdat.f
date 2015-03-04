@@ -1,54 +1,36 @@
       BLOCK DATA BLKDAT
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **BLKDAT--WC   DATE OF LAST REVISION:  05/09/12
 C----------
 C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'COEFFS.F77'
-C
 C
       INCLUDE 'ESPARM.F77'
 C
-C
       INCLUDE 'ESCOMN.F77'
-C
 C
       INCLUDE 'PDEN.F77'
 C
-C
       INCLUDE 'ECON.F77'
-C
 C
       INCLUDE 'HTCAL.F77'
 C
-C
       INCLUDE 'CONTRL.F77'
-C
 C
       INCLUDE 'PLOT.F77'
 C
-C
       INCLUDE 'RANCOM.F77'
-C
 C
       INCLUDE 'SCREEN.F77'
 C
-C
       INCLUDE 'VARCOM.F77'
-C
 C
       INCLUDE 'FVSSTDCM.F77'
 C
-C
-COMMONS
 C----------
       INTEGER I,J
 C----------
@@ -97,7 +79,7 @@ C     3 = GRAND FIR (GF)               ABIES GRANDIS
 C     4 = SUBALPINE FIR (AF)           ABIES LASIOCARPA
 C     5 = CALIFORNIA RED FIR (RF)/     ABIES MAGNIFICA
 C         SHASTA RED FIR
-C     6 =    
+C     6 =
 C     7 = NOBLE FIR (NF)               ABIES PROCERA
 C     8 = ALASKA CEDAR (YC)/           CALLITROPSIS NOOTKATENSIS
 C         WESTERN LARCH                LARIX OCCIDENTALIS
@@ -134,7 +116,7 @@ C    34 = PACIFIC DOGWOOD (DG)         CORNUS NUTTALLII
 C    35 = HAWTHORN (HT)                CRATAEGUS sp.
 C    36 = BITTER CHERRY (CH)           PRUNUS EMARGINATA
 C    37 = WILLOW (WI)                  SALIX sp.
-C    38 =    
+C    38 =
 C    39 = OTHER (OT)
 C----------
       DATA JSP /

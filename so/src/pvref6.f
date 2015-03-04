@@ -1,4 +1,6 @@
       SUBROUTINE PVREF6 (KARD2,ARRAY2,LPVCOD,LPVREF)
+      use prgprm_mod
+      implicit none
 C----------
 C  **PVREF6--SO   DATE OF LAST REVISION: 03/29/13
 C----------
@@ -21,11 +23,6 @@ C                      FROM FSVEG DATA BASE
 C     HABPVR         - FVS HABITAT/ECOCLASS CODE CORRESPONDING TO
 C                      PV CODE/REFERENCE CODE COMBINATION
 C  DECLARATIONS
-C
-      IMPLICIT NONE
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
 C
       INCLUDE 'PLOT.F77'
 C

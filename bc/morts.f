@@ -1,5 +1,6 @@
       SUBROUTINE MORTS
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -13,8 +14,6 @@ C  IS CALLED FROM **TREGRO** WHEN CYCLING FOR GROWTH PREDICTION.  ENTRY
 C  **MORCON** IS ACCESSED TO LOAD SITE DEPENDENT CONSTANTS.
 C----------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'ARRAYS.F77'
       INCLUDE 'PLOT.F77'
       INCLUDE 'CALCOM.F77'
@@ -27,7 +26,6 @@ C
       INCLUDE 'BCPLOT.F77'
       INCLUDE 'METRIC.F77'
 C
-COMMONS
 C----------
 C  DEFINITIONS:
 C
@@ -692,7 +690,7 @@ C  LINCL IS USED TO INDICATE WHETHER A TREE GETS AFFECTED OR NOT
           IF(PRM(5).LT.3.)THEN
             IF(PRM(2).GT. 1.0)PRM(2)=1.0
             IF(PRM(2).LT. 0.0)PRM(2)=0.0
-          ENDIF 
+          ENDIF
           IF (PRM(5).EQ.1.0) THEN
             IP=2
           ELSEIF (PRM(5).EQ.2.0) THEN

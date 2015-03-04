@@ -1,5 +1,6 @@
       SUBROUTINE BWEDR
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **BWEDR                  DATE OF LAST REVISION:  08/28/13
 C----------
@@ -43,7 +44,7 @@ C
 C Revision History:
 C   18-MAY-00 Lance David (FHTET)
 C      .Added debug handling.
-C      .Added variable IACTC for activity codes due to problems 
+C      .Added variable IACTC for activity codes due to problems
 C       experienced with passing literals using LF95 compiler.
 C   30-AUG-2006 Lance R. David (FHTET)
 C      Changed array orientation of IEVENT from (4,250) to (250,4) for
@@ -54,14 +55,11 @@ C   02-JUN-2009 Lance R. David (FMSC)
 C      Added Stand ID and comma delimiter to output tables, some header
 C      and column labels modified.
 C   14-JUL-2010 Lance R. David (FMSC)
-C      Added IMPLICIT NONE and declared variables as needed.
 C   28-AUG-2013 Lance R. David (FMSC)
 C      Added loading of weather year into IEVENT array.
 C
 C----------------------------------------------------------------------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'OPCOM.F77'
       INCLUDE 'PLOT.F77'
@@ -90,7 +88,6 @@ C
      & ' IYRCUR =',IYRCUR,' IYRST =',IYRST,' IYREND =',IYREND,
      & ' IYRECV =',IYRECV
 
-C
 C
 C     ************************ EXECUTION BEGINS ************************
 C
@@ -172,7 +169,7 @@ C
 C
 C           CALL THE BUDWORM DEFOLIATION (BUD-LITE) MODEL.
 C
-         ELSEIF (IYRCUR.GE.IYRST) THEN 
+         ELSEIF (IYRCUR.GE.IYRST) THEN
              IF (DEBUG) WRITE (JOSTND,*) 'IN BWEDR: CALL BWELIT'
              CALL BWELIT
              IOBDUR=IOBDUR+1
@@ -263,7 +260,7 @@ C        CALL OPNEW (KODE,IYRCUR,IACTC,0,0)
       ENDIF
 C
  9000 CONTINUE
-      
+
       IF (DEBUG) WRITE (JOSTND,*) 'EXIT BWEDR: ICYC= ',ICYC
       RETURN
       END

@@ -1,5 +1,6 @@
       SUBROUTINE  RDINUP
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDINUP      LAST REVISION:  08/28/14
 C----------
@@ -17,21 +18,15 @@ C
 C  Revision History :
 C   11/06/89 - Last revision date.
 C   08/28/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'PLOT.F77'
 C
-COMMONS
-C
       INTEGER  I, IDI, J, K
-      
+
 C*    WRITE(6,1)
 C*  1 FORMAT(' STARTING RDINUP')
 

@@ -1,5 +1,6 @@
       SUBROUTINE ESUCKR
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **ESUCKR--TT   DATE OF LAST REVISION:  01/27/11
 C
@@ -9,43 +10,28 @@ C  VALUE OF MAXTRE. COMPRS IS CALLED IN ESNUTR.
 C
 C----------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ARRAYS.F77'
-C
 C
       INCLUDE 'COEFFS.F77'
 C
-C
       INCLUDE 'CONTRL.F77'
-C
 C
       INCLUDE 'PLOT.F77'
 C
-C
       INCLUDE 'ESPARM.F77'
-C
 C
       INCLUDE 'ESHOOT.F77'
 C
-C
       INCLUDE 'ESCOMN.F77'
-C
 C
       INCLUDE 'ESHAP.F77'
 C
-C
       INCLUDE 'ESTREE.F77'
-C
 C
       INCLUDE 'STDSTK.F77'
 C
-C
       INCLUDE 'VARCOM.F77'
 C
-COMMONS
 C----------
       EXTERNAL ESRANN
       LOGICAL DEBUG
@@ -91,7 +77,7 @@ C
       HTAVE(I)=0.0
    10 CONTINUE
       TPATOT=0.0
-C---------- 
+C----------
 C  PROCESS SPROUT KEYWORD OPTIONS.
 C  INITIALIZE VARIABLES
 C----------
@@ -147,7 +133,7 @@ C----------
 C  SINGLE SPECIES
 C----------
       ELSE
-        DO JJ=1,NSPSPE 	
+        DO JJ=1,NSPSPE
         IF(J.EQ.ISPSPE(JJ))THEN
           SPRMLT(JJ,IT)=PRMS(2)
           HTMSPR(JJ,IT)=PRMS(3)

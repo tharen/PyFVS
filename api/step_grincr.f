@@ -1,9 +1,10 @@
       SUBROUTINE STEP_GRINCR (DEBUG,IPMODI,LTMGO,LMPBGO,LDFBGO
      &          ,LBWEGO,LCVATV,LBGCGO)
-
       use tree_data, only: copy_cuts_data,copy_mort_data
+      use prgprm_mod
+      implicit none
 
-      IMPLICIT NONE
+
 C----------
 C  $Id: grincr.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
 C----------
@@ -12,37 +13,21 @@ C     COMPUTES GROWTH AND MORTALITY ON EACH TREE RECORD.
 C
 C     CALLED FROM: PPMAIN AND TREGRO.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'PLOT.F77'
-C
 C
       INCLUDE 'ARRAYS.F77'
 C
-C
       INCLUDE 'CONTRL.F77'
-C
 C
       INCLUDE 'PDEN.F77'
 C
-C
       INCLUDE 'OUTCOM.F77'
-C
 C
       INCLUDE 'STDSTK.F77'
 C
-C
       INCLUDE 'ESHAP.F77'
 C
-C
       INCLUDE 'VARCOM.F77'
-C
-C
-COMMONS
 C
       REAL PRM(6)
       INTEGER MYACTS(3)

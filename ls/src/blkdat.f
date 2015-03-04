@@ -1,5 +1,6 @@
       BLOCK DATA BLKDAT
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **BLKDAT--LS  DATE OF LAST REVISION:  02/15/12
 C----------
@@ -9,48 +10,30 @@ C
 C     COMMON STATEMENT FOR MODEL COEFFICIENTS WHICH ARE HABITAT
 C     AND SITE DEPENDENT.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'COEFFS.F77'
-C
 C
       INCLUDE 'ESPARM.F77'
 C
-C
       INCLUDE 'ESCOMN.F77'
-C
 C
       INCLUDE 'PDEN.F77'
 C
-C
       INCLUDE 'ECON.F77'
-C
 C
       INCLUDE 'HTCAL.F77'
 C
-C
       INCLUDE 'CONTRL.F77'
-C
 C
       INCLUDE 'PLOT.F77'
 C
-C
       INCLUDE 'RANCOM.F77'
-C
 C
       INCLUDE 'SCREEN.F77'
 C
-C
       INCLUDE 'VARCOM.F77'
-C
 C
       INCLUDE 'FVSSTDCM.F77'
 C
-COMMONS
 C----------
 C
       INTEGER I,J
@@ -284,7 +267,6 @@ C
      & -5.1435,  -2.7758,  -5.1435,  -3.2510,  -4.7903,  -5.2776,
      & -5.1435,  -5.1435,  -3.2510,  -5.7928,  -5.7928,  -5.1435,
      & -4.5018,  -5.1435/
-C
 C
       DATA BB0/68*0.0/
       DATA BB1/68*0.0/

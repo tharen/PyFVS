@@ -1,4 +1,6 @@
       SUBROUTINE BMDRV
+      use prgprm_mod
+      implicit none
 C
 C  **BMDRV  DATE OF LAST REVISION:  12/08/05
 C----------
@@ -7,17 +9,13 @@ C     PART OF THE PINE BEETLE EXTENSION OF THE PPE.
 C
 C     CALLED FROM -- ALSTD2
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77' 
-      INCLUDE 'PPEPRM.F77'  
+      INCLUDE 'PPEPRM.F77'
       INCLUDE 'BMPRM.F77'
-      INCLUDE 'PPCNTL.F77' 
+      INCLUDE 'PPCNTL.F77'
       INCLUDE 'BMCOM.F77'
-      
+
 C Local variable definitions:
-      
+
       INTEGER  IYR, ISTD, SINDX
 ****************************************
 C...THE FOLLOWING ADDED FOR TEST 3/27/00
@@ -36,10 +34,10 @@ C      BETTER TO USE IBMYR1 THAN BMSTND.  COMMENT OUT ABOVE.  AJM 12/05
 
 C     Zero arrays that store volume removal through sanitation and
 C     salvage management actions.
-      
+
         DO 10 ISTD = 1, BMSTND
-          CVOLREM(ISTD,1) = 0.0      
-          CVOLREM(ISTD,2) = 0.0      
+          CVOLREM(ISTD,1) = 0.0
+          CVOLREM(ISTD,2) = 0.0
           SREMOV(ISTD)   = 0.0
           MYLSTS(ISTD)   =0
    10   CONTINUE
@@ -58,22 +56,22 @@ C
 C      ENDIF
 C+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 C       Loop over the years within the cycle
-                                            
+
         DO 30 IYR = IBMYR1,IBMYR2
-        
+
 c         CALL GPCYCL
-          
+
           write(*,*) iyr
- 
+
 c         Collect pheromone management info.
 
           CALL BMPHER (IYR)
-          CALL BMAPH (IYR)         
-          
+          CALL BMAPH (IYR)
+
 c         Other management (except sanitation cuts)
 
           CALL BMPSTC (IYR)
-          CALL BMSALV (IYR) 
+          CALL BMSALV (IYR)
 C
 C         Moved BMSANI here to make stand level (RNH, May98)
 C
@@ -82,13 +80,13 @@ C
 
 c         Determine the rating values due to 'drought' in this year.
 
-          CALL BMDRGT (IYR)         
+          CALL BMDRGT (IYR)
 
-c         Do the first loop over the stands 
-          
-          DO 40 ISTD = 1, BMSTND 
+c         Do the first loop over the stands
+
+          DO 40 ISTD = 1, BMSTND
             IF(.NOT. STOCK(ISTD)) GOTO 40
-            
+
             SINDX= BMSDIX(ISTD)
 
             CALL BMCWIN(SINDX,IYR)
@@ -119,7 +117,7 @@ C           and extra mortality (Set slow toggle to false)
 
             CALL BMMORT(SINDX,IYR,.FALSE.)
 
-C           Calculate GRF         
+C           Calculate GRF
 C            WRITE (*,*) STOCK(ISTD), SINDX, ISTD, BMSTND
 C            CALL BMCGRF (SINDX,IYR)
             CALL BMCGRF (SINDX,IYR,OLDGRF)
@@ -134,31 +132,31 @@ C           Calculate BKP
 C            CALL BMCBKP (SINDX,IYR)
             CALL BMCBKP (SINDX,IYR,OLDGRF)
 
-C           Calculate numerator of attractiveness eqn.         
+C           Calculate numerator of attractiveness eqn.
 
-            CALL BMCNUM (SINDX,IYR)             
+            CALL BMCNUM (SINDX,IYR)
 
    40     CONTINUE
 
 c         Calculate and apply negative feedback if triggered by a high
 c         landscape-level BKP (MJO April98). Added LFDBK flag (MJO July98).
 
-c     The following call commented out 12/1/99. AJM.  This process now 
+c     The following call commented out 12/1/99. AJM.  This process now
 c     happens WITHIN BMCBKP, and is now a stand-level phenomena.
 
 c          IF (LFDBK) CALL BMFDBK (IYR)
 
 c         Compute attractiveness and move BKP around.
-   
+
           CALL BMATCT (IYR)
 
 c         Do the second loop over stands.
-          
-          DO 45 ISTD = 1, BMSTND 
+
+          DO 45 ISTD = 1, BMSTND
             IF(.NOT. STOCK(ISTD)) GOTO 45
-          
+
             SINDX= BMSDIX(ISTD)
-            
+
 C           These are now called above with the fast DVs. See comment there.
 C           Other bark beetles
 C           CALL BMOBB (SINDX,IYR)
@@ -170,29 +168,29 @@ C          Run Ips routine if Ips is a driving variable or if Ips is main beetle
            IF ((PBSPEC .EQ. 3) .OR. (IPSON))
      >           CALL BMIPS (SINDX,IYR)
 
-c           Do the non-Ips within-stand beetle dynamics. 
+c           Do the non-Ips within-stand beetle dynamics.
 
             IF (PBSPEC .NE. 3) CALL BMISTD(SINDX,IYR)
-            
+
 C           Print out beetle specific output.
 
             CALL BMOUT (SINDX,IYR) ! replaces bmoutm ajm 9/05
-c            CALL BMOUTM (SINDX,IYR) 
+c            CALL BMOUTM (SINDX,IYR)
 c            CALL BMDVO (SINDX,IYR) ! obsolete ajm 9/05
-    
+
 C           Remove beetle-killed (and slow DV killed) trees.
 
             CALL BMMORT(SINDX,IYR,.TRUE.)
-            
+
 c           Age dead woody pools one year
 
             CALL BMAGDW (SINDX,IYR)
 
-   45     CONTINUE  
-   
+   45     CONTINUE
+
    30   CONTINUE
-        
+
       ENDIF
-      
+
       RETURN
       END

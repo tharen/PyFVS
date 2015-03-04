@@ -1,4 +1,6 @@
       SUBROUTINE MISPUTZ(ITREE,IDMR)
+      use prgprm_mod
+      implicit none
 ***********************************************************************
 *  **MISPUTZ--MS  Date of last revision:  01/21/94
 *----------------------------------------------------------------------
@@ -18,11 +20,9 @@
 *     IMIST:  From MISCOM; array containing tree record DMR's.
 *
 ***********************************************************************
-      IMPLICIT NONE
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C.... Common include files.
 

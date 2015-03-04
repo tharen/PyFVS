@@ -1,5 +1,6 @@
       BLOCK DATA MPBLKD
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **MPBLKD--EC  DATE OF LAST REVISION:  08/22/14
 C----------
@@ -17,14 +18,10 @@ C     Function name was used as variable name.
 C     changed variable INT to INCRS
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
 
       INCLUDE 'MPBCOM.F77'
 
 COMMONS
-C
       DATA  JOMPB  / 7 /
 
       DATA IPLTNO/ 1 /,IMPROB/ 1 /,NATR/ 2 /, KEYMPB/ 2,3,6*0,1 /,
@@ -32,9 +29,9 @@ C
 
 C----------
 C vv---- MPB surface area calculation surrogate specie (surfce.f)
-C !!   
+C !!
 C !!   SPECIES LIST FOR EC VARIANT.
-C !!  FVS Alpha                         
+C !!  FVS Alpha
 C !!   #   Code Common Name             Scientific Name
 C !! ---- ----- ----------------------- ------------------------------------
 C WP   1    WP  WESTERN WHITE PINE      PINUS MONTICOLA
@@ -67,8 +64,8 @@ C DF  27    CW  BLACK COTTONWOOD        POPULUS BALSAMIFERA var. TRICHOCARPA
 C DF  28    WO  OREGON WHITE OAK        QUERCUS GARRYANA
 C DF  29    PL  CHERRY AND PLUM SPECIES PRUNUS sp.
 C DF  30    WI  WILLOW SPECIES          SALIX sp.
-C WL  31    OS  OTHER SOFTWOODS         
-C DF  32    OH  OTHER HARDWOODS         
+C WL  31    OS  OTHER SOFTWOODS
+C DF  32    OH  OTHER HARDWOODS
 C----------
 
 
@@ -77,8 +74,8 @@ C----------
 C     Use appropriate surrogate species for the calculations in surfce.f
 C                  WP  L DF GF WH  C LP  S AF PP WH
       DATA MPBSPM / 1, 2, 3, 3, 3, 3, 7, 1, 3,10, 3,
-C                  MH PY WB NF WF LL YC WJ BM VN RA 
+C                  MH PY WB NF WF LL YC WJ BM VN RA
      &              2, 2, 2, 3, 3, 2, 2, 2, 3, 3, 2,
-C                  PB GC DG AS CW WO PL WI OS OH 
+C                  PB GC DG AS CW WO PL WI OS OH
      &              3, 3, 3, 3, 3, 3, 3, 3, 2, 3 /
       END

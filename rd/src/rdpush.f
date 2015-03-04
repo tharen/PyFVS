@@ -1,5 +1,6 @@
       SUBROUTINE RDPUSH
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDPUSH      LAST REVISION:  09/02/14
 C----------
@@ -20,19 +21,16 @@ C
 C  COMMON BLOCK VARIABLES :
 C     xxxxx:   From ANCOM;
 C
-C
 C  LOCAL VARIABLES :
 C
 C  Revision History :
 C   03/24/93 - Last revision date.
 C   09/02/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
 C.... PARAMETER INCLUDE FILES
 C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 C
 C.... COMMON INCLUDE FILES

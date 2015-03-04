@@ -1,5 +1,6 @@
       SUBROUTINE DFBRAN(SEL)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **DFBRAN DATE OF LAST REVISION:  06/30/10
 C----------
@@ -52,7 +53,6 @@ C
       REAL   SEL, SEED
       DOUBLE PRECISION SS0
 
-      INCLUDE 'PRGPRM.F77'
 
       INCLUDE 'CONTRL.F77'
 

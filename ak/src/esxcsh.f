@@ -1,23 +1,16 @@
       SUBROUTINE ESXCSH (TIME,II,HHT,WMAX)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C   **ESXCSH--AK     DATE OF LAST REVISION:   05/08/12
 C
 C     SUBROUTINE TO ASSIGN HEIGHTS TO EXCESS TREES
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ESPARM.F77'
-C
 C
       INCLUDE 'ESHAP.F77'
 C
-C
-COMMONS
 C----------
 C
       INTEGER II

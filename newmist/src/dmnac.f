@@ -1,5 +1,6 @@
       SUBROUTINE DMNAC(A,B)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -15,8 +16,7 @@ C     DMOPTS
 C     DMTREG
 C     PPDMTREG
 C
-C
-C Argument list definitions:                        
+C Argument list definitions:
 C
 C     REAL      A         ALPHA TERM
 C     REAL      B         BETA TERM
@@ -42,18 +42,17 @@ C     SF        DMCOM
 C
 C**********************************************************************
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'DMCOM.F77'
 
 C     LOCAL VARIABLES.
 
-      INTEGER   I, J      
+      INTEGER   I, J
       REAL      X, A, B, TMP(MXTHRX)
 
       DO J = 1, MXTHRX
         TMP(J) = EXP(DSTNCE(J) * B)
       ENDDO
-    
+
       DO I = 0,6
         X = FLOAT(I) * A
         DO J = 1,MXTHRX

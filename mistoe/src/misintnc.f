@@ -1,4 +1,6 @@
       SUBROUTINE MISINT
+      use prgprm_mod
+      implicit none
 ***********************************************************************
 *  **MISINT--NC  Date of last revision:  07/12/11
 *----------------------------------------------------------------------
@@ -34,13 +36,11 @@
 *    Added arrays for height growth impacts.
 *    Impact values must be supplied by MistHMod keyword.
 ***********************************************************************
-      IMPLICIT NONE
 
 C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C.... Common include files.
 
@@ -89,7 +89,7 @@ C.... Marshall, Katy 2007. Permanent plots for measuring spread and
 C.... impact of Douglas-fir dwarf mistletoe in the Southern Oregon
 C.... Cascades, Pacific Northwest Region: Results of the ten year
 C.... remeasurement. USDA Forest Service, Pacific Northwest Region,
-C.... Southwest Oregon Forest Insect and Disease Service Center, 
+C.... Southwest Oregon Forest Insect and Disease Service Center,
 C.... Central Point, Oregon. SWOFIDSC-07-04. 34 pp.
 C....
 C.... Default values for DF in this table would be:

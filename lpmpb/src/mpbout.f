@@ -1,5 +1,6 @@
       SUBROUTINE MPBOUT
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **MPBOUT        DATE OF LAST REVISION:  06/14/13
 C----------
@@ -11,34 +12,22 @@ C
 C Revision History
 C   02/08/88 Last noted revision date.
 C   07/02/10 Lance R. David (FMSC)
-C     Added IMPLICIT NONE.
 C----------
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
 C
       INCLUDE 'PLOT.F77'
 C
-C
       INCLUDE 'CONTRL.F77'
 C
-C
       INCLUDE 'MPBCOM.F77'
-C
-C
-COMMONS
 C
       CHARACTER*133 DSTRNG
       CHARACTER*3 YES
       CHARACTER*2 NO
-      
+
       INTEGER I
-      
+
       DATA YES/'YES'/,NO/'NO'/
- 
+
       IF (.NOT.LMPB1) RETURN
       CALL MPBHED
       WRITE (JOMPB,9015)
@@ -47,7 +36,7 @@ C
      >        'PROBABILITY  WAS THERE AN OUTBREAK',/,
      >        'NUMBER      YEARS    OF OUTBREAK',
      >        '      IN THIS STAND',/,55('-'),/)
- 
+
       DO 120 I = 1,NCYC
       IF(WORKIN(I))WRITE (JOMPB,9016) I,IY(I),IY(I+1),PRBMPB(I),YES
       IF(.NOT.WORKIN(I))WRITE(JOMPB,9016)I,IY(I),IY(I+1),PRBMPB(I),NO

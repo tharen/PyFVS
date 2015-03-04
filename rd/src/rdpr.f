@@ -1,5 +1,6 @@
       SUBROUTINE RDPR
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDPR        LAST REVISION:  08/29/14
 C----------
@@ -23,7 +24,6 @@ C
 C  COMMON BLOCK VARIABLES :
 C     xxxxx:   From ANCOM;
 C
-C
 C  LOCAL VARIABLES :
 C     FIRSTL:  Is first line of output yet to be printed?
 C     LYAREA:  LAST YEAR'S DISEASED AREA
@@ -38,13 +38,11 @@ C       Change of metric conversion factors variable names to match
 C       variables in new \FVS\COMMON\METRIC.F77. rd\src\metric.f77
 C       will be retired. (mods courtesy of Don Robinson, ESSA)
 C   08/29/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
 C.... PARAMETER INCLUDE FILES
 C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 C
 C.... COMMON INCLUDE FILES
@@ -54,8 +52,8 @@ C
       INCLUDE 'PLOT.F77'
       INCLUDE 'RDARRY.F77'
       INCLUDE 'RDCOM.F77'
-      INCLUDE 'RDCRY.F77' 
-      INCLUDE 'RDADD.F77' 
+      INCLUDE 'RDCRY.F77'
+      INCLUDE 'RDADD.F77'
       INCLUDE 'METRIC.F77'
 
       LOGICAL  DEBUG, FIRSTL
@@ -65,7 +63,7 @@ C
      &         LYAREA(ITOTSP), TCLAS, TDIE, TDVOL, TIN, TOTINF,
      &         TPRBIN, TPRINF, TSTMPS, TUN
       CHARACTER*1 CHTYPE(ITOTRR)
-      
+
       DATA CHTYPE /'P','S','A','W'/
 
       IF (ICYC .EQ. 0) THEN
@@ -80,8 +78,8 @@ C     SEE IF WE NEED TO DO SOME DEBUG.
 C
       CALL DBCHK (DEBUG,'RDPR',4,ICYC)
 
-      IF (IROOT .EQ. 0) RETURN 
-      
+      IF (IROOT .EQ. 0) RETURN
+
       DO 5000 IRRSP=MINRR,MAXRR
          TDIE   = 0.0
          TDVOL  = 0.0
@@ -92,10 +90,10 @@ C
          CFVPA  = 0.0
          TIN    = 0.0
          TUN    = 0.0
-         TPRBIN = 0.0 
+         TPRBIN = 0.0
          CORE   = 0.0
          EXPAND = 0.0
-         TOTINF = 0.0 
+         TOTINF = 0.0
          ALLVOL = 0.0
 
          IF (IRDOUT .NE. 0) CALL RDDOUT
@@ -135,7 +133,7 @@ C
             ELSE
                WRITE (IRUNIT,1150)
                WRITE (IRUNIT,1155)
-            ENDIF   
+            ENDIF
             WRITE (IRUNIT,1160)
          ELSE
             JYR = IY(ISTEP)
@@ -144,11 +142,11 @@ C
  102        FORMAT ('IN RDPR:ISTEP ICYC JYR=',3I5)
          ENDIF
 
-         IF (PAREA(IRRSP) .LE. 0.0 .AND. LYAREA(IRRSP) .LE. 0.0) 
+         IF (PAREA(IRRSP) .LE. 0.0 .AND. LYAREA(IRRSP) .LE. 0.0)
      &      GOTO 7300
-         IF (PAREA(IRRSP) .LE. 0.0 .AND. LYAREA(IRRSP) .GT. 0.0) 
+         IF (PAREA(IRRSP) .LE. 0.0 .AND. LYAREA(IRRSP) .GT. 0.0)
      &      GOTO 6000
-        
+
          IEND = MAX(1,ISTEP)
 
          DO 702 M = 1,IEND
@@ -200,13 +198,13 @@ C
 
   750       CONTINUE
   800    CONTINUE
-      
+
 C        CHANGE NEWLY INFECTED TREES TO A PROPORTION
 
-         IF (CORINF(IRRSP,2) .GT. 0.0) 
+         IF (CORINF(IRRSP,2) .GT. 0.0)
      &      CORE = CORINF(IRRSP,1) / CORINF(IRRSP,2)
          IF (EXPINF(IRRSP,2) .GT. 0.0)
-     &      EXPAND = EXPINF(IRRSP,1) / EXPINF(IRRSP,2) 
+     &      EXPAND = EXPINF(IRRSP,1) / EXPINF(IRRSP,2)
          TOTINF = EXPINF(IRRSP,2) + CORINF(IRRSP,2)
          IF (TOTINF .GT. 0.0)
      &      TOTINF = (EXPINF(IRRSP,1) + CORINF(IRRSP,1)) / TOTINF
@@ -232,16 +230,16 @@ C
      &         BASTPA*FT2pACRtoM2pHA,TDIE/ACRtoHA,TDVOL*FT3pACRtoM3pHA,
      &         TUN/ACRtoHA,TIN/ACRtoHA,TPRINF,CFVPA*FT3pACRtoM3pHA,
      &         BAPA*FT2pACRtoM2pHA,CORE,EXPAND,TOTINF
-          ELSE  
+          ELSE
             WRITE(IRUNIT,2098) JYR,IOAGE,CHTYPE(IRRSP),NCENTS(IRRSP),
      &         PAREA(IRRSP),RRRATE(IRRSP),TSTMPS,BASTPA,TDIE,TDVOL,
      &         TUN,TIN,TPRINF,CFVPA,BAPA,CORE,EXPAND,TOTINF
-          ENDIF  
+          ENDIF
           FIRSTL = .FALSE.
           GOTO 7300
 
  6000    CONTINUE
- 
+
 C         OUTPUT TO PRINT IF THIS WAS THE CYCLE AFTER CENTERS DISAPPEARED
 
          IF (LMTRIC) THEN
@@ -253,8 +251,8 @@ C         OUTPUT TO PRINT IF THIS WAS THE CYCLE AFTER CENTERS DISAPPEARED
          ENDIF
          RRRATE(IRRSP) = 0.0
 
- 7300    CONTINUE 
- 
+ 7300    CONTINUE
+
 C        PRINT THE MACHINE READABLE FORM (I.E. NO TABLE HEADERS) OF THE
 C        OUTPUT ON UNIT IOUT. IRGEN(7) STATES WHETHER TO PRINT THIS OUTPUT.
 C        NOTE THAT THE INFORMATION IS SLIGHTLY DIFFERENT IN THIS FILE.
@@ -268,15 +266,15 @@ C        NOTE THAT THE INFORMATION IS SLIGHTLY DIFFERENT IN THIS FILE.
      &         BASTPA*FT2pACRtoM2pHA,TDIE/ACRtoHA,TDVOL*FT3pACRtoM3pHA,
      &         TUN/ACRtoHA,TIN/ACRtoHA,TPRINF,
      &         DAREA*ACRtoHA,CORE,EXPAND,TOTINF
-          ELSE  
+          ELSE
             WRITE(IOUT,4099) JYR,IOAGE,CHTYPE(IRRSP),NCENTS(IRRSP),
      &         PAREA(IRRSP),RRRATE(IRRSP),TSTMPS,BASTPA,TDIE,TDVOL,
      &         TUN,TIN,TPRINF,DAREA,CORE,EXPAND,TOTINF
           ENDIF
          ENDIF
-      
+
         LYAREA(IRRSP) = PAREA(IRRSP)
-        
+
 C       NOW THAT WE'VE USED THE VARIABLES, ZERO THEM FOR FUTURE USE
 
         CORINF(IRRSP,1) = 0.0
@@ -284,7 +282,7 @@ C       NOW THAT WE'VE USED THE VARIABLES, ZERO THEM FOR FUTURE USE
         CORINF(IRRSP,2) = 0.0
         EXPINF(IRRSP,2) = 0.0
  5000 CONTINUE
-                     
+
       IF (.NOT. FIRSTL .AND. MINRR .NE. MAXRR) WRITE(IRUNIT,1121)
       RETURN
 
@@ -296,22 +294,22 @@ C
 C     Warning message RE. multi-pest models (RNH June 1998)
 C
  1106 FORMAT (/,'*=================================================',
-     &'===========================*',/ 
+     &'===========================*',/
      &'*---> Note:  The combined insect and pathogen models (in ',
      &'one executable) <---*',/
      &'*---> should NOT be used without close consultation with ',
-     &'the forest''s    <---*',/ 
+     &'the forest''s    <---*',/
      &'*---> pathologist and entomologist.  Because of the ',
      &'potential for more   <---*',/
      &'*---> than one insect and/or pathogen acting on the same ',
-     &'tree species,   <---*',/   
+     &'tree species,   <---*',/
      &'*---> the interpretation of the results of the combined ',
      &'model can be     <---*',/
      &'*---> inaccurate without appropriate model knowledge and/or',
      &' experience.  <---*',/
      &'*==========================================================',
      &'==================*',/)
- 
+
  1115 FORMAT (25X,'SUMMARY STATISTICS FOR ROOT DISEASE AREAS',
      &        ' (PER ACRE BASED ON DISEASED AREA ONLY)')
  1120 FORMAT (130('-'))

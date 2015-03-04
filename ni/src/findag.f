@@ -1,6 +1,7 @@
       SUBROUTINE FINDAG(I,ISPC,D1,D2,H,SITAGE,SITHT,AGMAX,HTMAX1,HTMAX2,
      &                  DEBUG)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **FINDAG--NI  DATE OF LAST REVISION:  01/14/11
 C----------
@@ -12,8 +13,6 @@ C  CALLED FROM **COMCUP
 C  CALLED FROM **CRATET
 C
 C  COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
 C
       INCLUDE 'CONTRL.F77'
 C

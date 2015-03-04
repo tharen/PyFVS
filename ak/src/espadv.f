@@ -1,32 +1,22 @@
       SUBROUTINE ESPADV (RTOP40)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C   **ESPADV--AK     DATE OF LAST REVISION:   05/08/12
 C
 C     SUBROUTINE TO PREDICT THE PROBS OF ADVANCE SPECIES.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ESPARM.F77'
-C
 C
       INCLUDE 'ESCOMN.F77'
 C
-C
       INCLUDE 'ESCOM2.F77'
-C
 C
       INCLUDE 'PLOT.F77'
 C
-C
       INCLUDE 'ESHAP.F77'
 C
-C
-COMMONS
       INTEGER I
       REAL RTOP40
 C----------

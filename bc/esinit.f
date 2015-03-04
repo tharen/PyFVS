@@ -1,12 +1,11 @@
       SUBROUTINE ESINIT
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C     CALLED FROM INITRE, ONLY ONCE, TO INITIALIZE REGEN. MODEL.
 C
-COMMONS
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'ESPARM.F77'
       INCLUDE 'ESCOMN.F77'
       INCLUDE 'ESHAP.F77'

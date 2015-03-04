@@ -1,4 +1,6 @@
       BLOCK DATA BWEBK
+      use prgprm_mod
+      implicit none
 C----------
 C  **BWEBK--IB       DATE OF LAST REVISION:  09/06/06
 C           SEI 14-July-2008
@@ -38,7 +40,7 @@ C       the process of moving initialization of nonstatic variables
 C       to the BWEINT routine.
 C    04-OCT-00 Lance David (FHTET)
 C       Added data statemenst to load weather station names into
-C       WSLOOK that had previously been loaded at runtime from 
+C       WSLOOK that had previously been loaded at runtime from
 C       stations.dat file.
 C    10-NOV-00 Lance David (FHTET)
 C       Put Western Larch back into host species list (IBWSPM). It
@@ -50,15 +52,10 @@ C    09-SEP-06 Lance David (FHTET)
 C       Moved non-static variables FOLDVY, FOLWTY and IOUT6A to bweint.f.
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BWECOM.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECM2.F77'
       INCLUDE 'BWEBOX.F77'
-C
-COMMONS
 C
 C     ****** IBWSPM IS MODIFIED FOR NI and CI VARIANTS
 C     DEFOLIATION MODEL SPECIES INDICES:

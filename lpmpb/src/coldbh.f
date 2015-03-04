@@ -1,5 +1,6 @@
       SUBROUTINE COLDBH
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **COLDBH        DATE OF LAST REVISION:  07/02/10
 C----------
@@ -9,28 +10,15 @@ C
 C Revision History
 C   05/31/00 Last noted revision date.
 C   07/02/10 Lance R. David (FMSC)
-C     Added IMPLICIT NONE.
 C----------
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
 C
       INCLUDE 'COLCOM.F77'
 C
-C
       INCLUDE 'ARRAYS.F77'
-C
 C
       INCLUDE 'CONTRL.F77'
 C
-C
       INCLUDE 'MPBCOM.F77'
-C
-C
-COMMONS
 C
       INTEGER I,J,I1,I2,INDEX
 C

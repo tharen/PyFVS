@@ -1,5 +1,6 @@
       SUBROUTINE HABTYP (KARD2,ARRAY2)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -9,11 +10,8 @@ C     RETURNS ICHmw2/01 BY DEFAULT.
 C
 C----------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BCPLOT.F77'
 C
-COMMONS
 C----------
       REAL         ARRAY2
       CHARACTER*20 KARD2
@@ -29,11 +27,11 @@ C----------
 C----------
       DATA RGN /'CAR',
      >          'KAM',
-     >          'NEL'/ 
+     >          'NEL'/
 
       DATA ZN  /'ESSF',
      >          'ICH',
-     >          'IDF', 
+     >          'IDF',
      >          'MS',
      >          'PP',
      >          'SBS',
@@ -182,6 +180,7 @@ C     CONVERT CASE FOR KEYWORD INPUT ARGS: REGION AND ZONE ARE
 C     UPPERCASE; SUBZONE IS LOWERCASE
 C
       SUBROUTINE LOCASE (C)
+      implicit none
 
       CHARACTER C
       CHARACTER*26 UPPER,LOWER

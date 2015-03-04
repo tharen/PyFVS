@@ -1,5 +1,6 @@
       SUBROUTINE EXMIST
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -38,7 +39,6 @@ C----------
 C----------
 C  PARAMETER INCLUDE FILES.
 C----------
-      INCLUDE 'PRGPRM.F77'
 C----------
 C  VARIABLE DECLARATIONS.
 C----------
@@ -159,6 +159,7 @@ C----------
       END
 
       REAL FUNCTION MISDGF(ITREE,ISPC)
+      implicit none
 C----------
 C  **MISDGF--MS  Date of last revision:  04/09/91
 C----------
@@ -186,6 +187,7 @@ C----------
       END
 
       REAL FUNCTION MISHGF(ITREE,ISPC)
+      implicit none
 C----------
 C  **MISDGF--MS  Date of last revision:  04/01/11
 C----------

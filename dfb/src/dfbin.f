@@ -1,5 +1,6 @@
       SUBROUTINE DFBIN (PASKEY,ARRAY,LNOTBK,LKECHO)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **DFBIN   DATE OF LAST REVISION:  05/30/13
 C----------
@@ -76,16 +77,11 @@ C   10-NOV-2003 - Lance R. David (FHTET)
 C     Added LFLAG to KEYRDR call statement argument list.
 C
 C---------------------------------
-C 
-COMMONS
 C
-      INCLUDE 'PRGPRM.F77'
 
       INCLUDE 'CONTRL.F77'
 
       INCLUDE 'DFBCOM.F77'
-C
-COMMONS
 C
 
       INTEGER IDT, KODE, ISIZE, I, NUMBR
@@ -111,7 +107,6 @@ C
 C     Set flag for writing warnig note RE: use of ??X.exe models
 C
       CALL TXNOTE (LXNOTE)
-C
 C
    10 CONTINUE
 C
@@ -247,7 +242,6 @@ C
  1500 CONTINUE
 C
 C  ====================  OPTION NUMBER 5  -- MANSTART  ==============
-C
 C
       ISMETH = 1
       IF(LKECHO)WRITE(JOSTND,1510) KEYWRD

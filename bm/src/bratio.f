@@ -1,14 +1,13 @@
       FUNCTION BRATIO(IS,D,H)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **BRATIO--BM   DATE OF LAST REVISION:  09/09/13
 C----------
 C FUNCTION TO COMPUTE BARK RATIOS AS A FUNCTION OF DIAMETER AND SPECIES.
-C REPLACES ARRAY BKRAT IN BLKDAT. 
+C REPLACES ARRAY BKRAT IN BLKDAT.
 C----------
 C  COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
 C
 C  COMMONS
 C----------
@@ -51,7 +50,7 @@ C     202,15,122,116,81 FROM WALTERS ET.AL. RES BULL 50
 C     242,93,108   FROM WYKOFF ET.AL. RES PAPER INT 133
 C----------
       CASE(1:5,7:10,17)
-        IF (D .GT. 0) THEN 
+        IF (D .GT. 0) THEN
           DIB=BARK1(IS)*D**BARK2(IS)
           BRATIO=DIB/D
           IF(BRATIO .GT. 1.0 .OR. BRATIO .LE. 0.0) THEN
@@ -68,7 +67,7 @@ C  ALASKA CEDAR (14=YC)
 C  OTHER HARDWOODS (18=OH)
 C----------
       CASE(13,14,18)
-        IF (D .GT. 0) THEN 
+        IF (D .GT. 0) THEN
           DIB=BARK1(IS)*D**BARK2(IS)
           BRATIO=DIB/D
         ELSE
@@ -91,7 +90,7 @@ C----------
 C----------
 C  LIMBER PINE (12 = LM)
 C----------
-      CASE(12)      
+      CASE(12)
         TEMD=D
         IF(TEMD.LT.1.)TEMD=1.
         BRATIO=BARK1(IS)+BARK2(IS)*(1.0/TEMD)
@@ -99,7 +98,7 @@ C----------
 C  BLACK COTTONWOOD (16 = CW)
 C----------
       CASE(16)
-        IF (D .GT. 0) THEN 
+        IF (D .GT. 0) THEN
           DIB=BARK1(IS) + BARK2(IS)*D
           BRATIO=DIB/D
         ELSE

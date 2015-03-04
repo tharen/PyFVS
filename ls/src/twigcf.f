@@ -1,5 +1,6 @@
       SUBROUTINE TWIGCF(ISPC,H,D,VN,VM,I)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **TWIGCF---LS  DATE OF LAST REVISION:  07/11/08
 C----------
@@ -8,20 +9,12 @@ C CUBIC FOOT VOLUME FOR A TREE.  CORRECTIONS FOR TOP KILL AND
 C DEFECT ARE STILL CALCULATED IN VOLS.
 C----------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'PLOT.F77'
-C
 C
       INCLUDE 'ARRAYS.F77'
 C
-C
       INCLUDE 'VOLSTD.F77'
 C
-C
-COMMONS
 C----------
 C  DIMENSION STATEMENT FOR INTERNAL ARRAYS.
 C----------
@@ -134,5 +127,5 @@ C----------
      &        ))**B4(ISPC)
   100  CONTINUE
        RETURN
-       END                                    
+       END
 

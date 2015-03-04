@@ -1,5 +1,6 @@
         SUBROUTINE VARVOL
-        IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **VARVOL--WC    DATE OF LAST REVISION:   10/12/12
 C----------
@@ -10,25 +11,13 @@ C  EQUAL TO 6.  IT ALSO CONTAINS ANY OTHER SPECIAL VOLUME CALCULATION
 C  METHOD SPECIFIC TO A VARIANT (METHB OR METHC = 8)
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ARRAYS.F77'
-C
 C
       INCLUDE 'CONTRL.F77'
 C
-C
       INCLUDE 'PLOT.F77'
 C
-C
       INCLUDE 'VOLSTD.F77'
-C
-C
-COMMONS
 C
 C----------
       REAL BRATIO,ERRFLAG,TDIBC,TDIBB,TVOL1,TVOL4,X0,DBTBH,FC,VMAX,BARK
@@ -130,7 +119,7 @@ C
           IF(IT.GT.0)HT2TD(IT,2)=X02
         ELSE
           IF(IT.GT.0)HT2TD(IT,2)=0.
-        ENDIF        
+        ENDIF
 C
         IF(DEBUG)WRITE(JOSTND,*)' AFTER PROFILE CF TVOL= ',TVOL
       ELSE
@@ -228,13 +217,13 @@ C
           IF(DEBUG)WRITE(JOSTND,*)' CALLING PROFILE BF ISPC,ARGS = ',
      &    ISPC,IREGN,FORST,VEQNNB(ISPC),BFTOPD(ISPC),BFSTMP(ISPC),D,H,
      &    DBT,BARK
-C       
+C
           CALL PROFILE (IREGN,FORST,VEQNNB(ISPC),TOPDIB,X01,
      &    BFSTMP(ISPC),D,HTTYPE,H,I01,X02,X03,X04,X05,X06,X07,
      &    X08,X09,I02,DBT,BARK*100.,LOGDIA,BOLHT,LOGLEN,LOGVOL,
      &    TVOL,I03,X010,X011,I1,I1,I1,I04,I05,X012,CTYPE,I01,PROD,
      &    IERR)
-C   
+C
           IF(D.GE.BFMIND(ISPC))THEN
             IF(IT.GT.0)HT2TD(IT,1)=X02
           ELSE
@@ -266,7 +255,7 @@ C
           ELSE
             IF(DEBUG)WRITE(16,*)' before BLMVOL-BFTOPD(ISPC),BARK= ',
      &      BFTOPD(ISPC),BARK
-C    
+C
             CALL BLMVOL(VEQNNB(ISPC),BFTOPD(ISPC),H,X0,D,'F',IFC,TVOL,
      &                  LOGDIA,LOGLEN,LOGVOL,LOGST,NLOGMS,NLOGTW,
      &                  1,1,IERR)
@@ -308,7 +297,6 @@ C----------
       BTKFLG = .TRUE.
       RETURN
 C
-C
 C----------
 C  ENTER ANY OTHER CUBIC HERE
 C----------
@@ -320,7 +308,6 @@ C----------
       CTKFLG = .FALSE.
       RETURN
 C
-C
 C----------
 C  ENTER ANY OTHER BOARD HERE.
 C----------
@@ -329,7 +316,6 @@ C----------
       BBFV=0.
       BTKFLG = .FALSE.
       RETURN
-C
 C
 C----------
 C  ENTRY POINT FOR SENDING VOLUME EQN NUMBER TO THE FVS-TO-NATCRZ ROUTINE

@@ -1,5 +1,6 @@
       SUBROUTINE RDESCP (LMAXTR,MXRR)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDESCP      LAST REVISION:  08/28/14
 C----------
@@ -20,19 +21,11 @@ C
 C  Revision History :
 C   08/14/12 - Last revision date.
 C   08/28/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-C
-      INCLUDE  'PRGPRM.F77'
       INCLUDE  'RDPARM.F77'
       INCLUDE  'RDCOM.F77'
-C
-C
-COMMONS
 C
       INTEGER  IDI, LMAXTR, MXRR
       REAL     TPAREA
@@ -40,7 +33,7 @@ C
       TPAREA = 0.0
       DO 100 IDI=1,ITOTRR
          TPAREA = TPAREA + PAREA(IDI)
-  100 CONTINUE       
+  100 CONTINUE
 
       IF (IROOT .EQ. 0 .OR. TPAREA .EQ. 0.0) THEN
          MXRR = LMAXTR
@@ -49,4 +42,4 @@ C
       ENDIF
 
       RETURN
-      END   
+      END

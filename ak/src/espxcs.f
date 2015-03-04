@@ -1,33 +1,22 @@
       SUBROUTINE ESPXCS (RTOP40)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **ESPXCS--AK     DATE OF LAST REVISION:   05/08/12
 C
 C    PREDICT THE PROBABILITY OF EXCESS SPECIES
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ESPARM.F77'
-C
 C
       INCLUDE 'ESCOMN.F77'
 C
-C
       INCLUDE 'ESCOM2.F77'
-C
 C
       INCLUDE 'PLOT.F77'
 C
-C
       INCLUDE 'ESHAP.F77'
 C
-C
-COMMONS
 C----------
 C     P(EXCESS WHITE SPRUCE).
 C----------

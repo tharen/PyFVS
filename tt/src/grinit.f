@@ -1,61 +1,42 @@
       SUBROUTINE GRINIT
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C TT $Id$
 C
 C  INITIALIZE PROGNOSIS MODEL VARIABLES
 C----------
 C
-COMMONS
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ARRAYS.F77'
-C
 C
       INCLUDE 'COEFFS.F77'
 C
-C
       INCLUDE 'CONTRL.F77'
-C
 C
       INCLUDE 'OPCOM.F77'
 C
-C
       INCLUDE 'WORKCM.F77'
-C
 C
       INCLUDE 'PLOT.F77'
 C
-C
       INCLUDE 'HTCAL.F77'
-C
 C
       INCLUDE 'ECON.F77'
 C
-C
       INCLUDE 'MULTCM.F77'
-C
 C
       INCLUDE 'SUMTAB.F77'
 C
-C
       INCLUDE 'VOLSTD.F77'
-C
 C
       INCLUDE 'VARCOM.F77'
 C
-C
       INCLUDE 'CWDCOM.F77'
-C
 C
       INCLUDE 'CALCOM.F77'
 C
-C
       INCLUDE 'GGCOM.F77'
 C
-C
-COMMONS
 C----------
       CHARACTER*26 DBLK
       CHARACTER*4 NONE

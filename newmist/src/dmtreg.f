@@ -1,5 +1,6 @@
       SUBROUTINE DMTREG
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -175,7 +176,6 @@ C     PBrkPt  DMCOM
 C
 C********************************************************************
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'ARRAYS.F77'
       INCLUDE 'MISCOM.F77'
@@ -533,8 +533,9 @@ C     AND BOTTOM PIECES ALREADY ACCOUNTS FOR THE FACT THAT A TRUNCATED
 C     SECTION MAY BE INVOLVED.
 
       REAL FUNCTION DMHtWt(v,r,s,UHt,LHt)
+      use prgprm_mod
+      implicit none
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'DMCOM.F77'
 
       INTEGER v,r,s

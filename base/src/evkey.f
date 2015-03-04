@@ -1,5 +1,6 @@
       SUBROUTINE EVKEY (CTOK,NUM,IRC)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -15,16 +16,7 @@ C     NUM   = THE LOAD OP-CODE FOR THE TOKEN, IF IT IS DEFINED.
 C     IRC   = RETURN CODE, 0=CTOK WAS FOUND, NUM IS DEFINED.
 C             1=CTOK WAS NOT FOUND, NUM IS UNDEFINED.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'OPCOM.F77'
-C
-C
-COMMONS
 C
       INTEGER IRC,NUM,I
       CHARACTER*8 CTOK

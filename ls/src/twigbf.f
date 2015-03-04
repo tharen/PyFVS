@@ -1,19 +1,11 @@
       SUBROUTINE TWIGBF(ISPC,H,D,VMAX,BBFV)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **TWIGBF---LS    DATE OF LAST REVISION:   07/11/08
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
 C
 C  ************** BOARD FOOT MERCHANTABILITY SPECIFICATIONS ********
 C

@@ -1,5 +1,6 @@
       SUBROUTINE MBACAL
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -8,34 +9,19 @@ C   MAXIMUM BASAL AREA IN THE STAND. THIS ROUTINE IS CALLED FROM
 C   CRATET AND DENSE.
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ARRAYS.F77'
-C
 C
       INCLUDE 'COEFFS.F77'
 C
-C
       INCLUDE 'CONTRL.F77'
-C
 C
       INCLUDE 'PLOT.F77'
 C
-C
       INCLUDE 'HTCAL.F77'
-C
 C
       INCLUDE 'PDEN.F77'
 C
-C
       INCLUDE 'ESHAP.F77'
-C
-C
-COMMONS
 C
       INTEGER ISPC,II,I,MDX
       REAL P,XMAX

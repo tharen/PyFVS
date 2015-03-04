@@ -1,8 +1,8 @@
       SUBROUTINE DBSCASE(IFORSURE)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C
 C $Id$
-C
 C
 C     PURPOSE: TO POPULATE A DATABASE WITH THE PROGNOSIS MODEL
 C              OUTPUT.
@@ -12,27 +12,16 @@ C                       NEEDED.
 C
 C---
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'DBSCOM.F77'
-C
 C
       INCLUDE 'OPCOM.F77'
 C
-C
       INCLUDE 'OUTCOM.F77'
-C
 C
       INCLUDE 'KEYCOM.F77'
 C
-C
       INCLUDE 'PLOT.F77'
 C
-C
-COMMONS
 C---
 
       INTEGER(SQLINTEGER_KIND),parameter:: MaxStringLen=255

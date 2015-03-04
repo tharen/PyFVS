@@ -1,5 +1,6 @@
       SUBROUTINE BWESIN (PRMS,IBWSPM,IS1,IS2,ICRC1,ICRC2,ICRC3)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **BWESIN                 DATE OF LAST REVISION:  07/14/10
 C----------
@@ -27,14 +28,7 @@ C       ICRC2  - SECOND RETURNED CROWN DO LOOP INDEX.
 C  Revision History:
 C    14-JUL-2010 Lance R. David (FMSC)
 C       Previous noted revision 03/18/93
-C       Added IMPLICIT NONE and declared variables as needed.
 C----------
-C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-COMMONS
 C
       INTEGER IBWSPM(MAXSP), ICRC1, ICRC2, ICRC3, IS1, IS2
       REAL PRMS(6)

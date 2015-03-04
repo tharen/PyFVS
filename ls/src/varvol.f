@@ -1,5 +1,6 @@
         SUBROUTINE VARVOL
-        IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C LS $ID$
 C----------
@@ -26,24 +27,14 @@ C  WI (CHEQUAMEGON-NICOLET), AND UPPER MI (OTTAWA AND HIAWATHA NFS),
 C  AND INTERNATIONAL 1/4" IS USED EVERYWHERE ELSE
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CONTRL.F77'
-C
 C
       INCLUDE 'VOLSTD.F77'
 C
-C
       INCLUDE 'PLOT.F77'
-C
 C
       INCLUDE 'ARRAYS.F77'
 COMMONS
-C
 C----------
       REAL VOL(15),BOLTHT(21),LOGLEN(7,21),BBFV1,UPSHT1
       LOGICAL TKILL,CTKFLG,BTKFLG,DEBUG,DONE,LCONE
@@ -181,7 +172,7 @@ C
             DONE=.TRUE.
           IF(DEBUG)WRITE(JOSTND,*)' AFTER CASE 3 (CALL 2)TCVOL IERR,',
      &    'VOL= ',IERR,VOL
-        ENDIF       
+        ENDIF
         IF(DEBUG)WRITE(JOSTND,*)' IT,AFTER CASE 3 (ALL CALLS)',
      &  'TCVOL IERR,VOL= ', IERR,VOL
       ENDIF
@@ -194,7 +185,7 @@ C
         IF(IT.GT.0)HT2TD(IT,2)=X03
       ELSE
         IF(IT.GT.0)HT2TD(IT,2)=0.
-      ENDIF        
+      ENDIF
       IF (DONE)GOTO 50
 C----------
 C--TREE DID NOT MEET PULPWOOD SPECS
@@ -264,7 +255,7 @@ C
           IF(IT.GT.0)HT2TD(IT,2)=X03
         ELSE
           IF(IT.GT.0)HT2TD(IT,2)=0.
-        ENDIF        
+        ENDIF
       ENDIF
 C----------
 C  SET RETURN VALUES.
@@ -298,8 +289,6 @@ C
       IF(IERR.EQ.12)CALL ERRGRO(.TRUE.,36)
 C
       RETURN
-C
-C
 C
 C----------
 C  ENTER ANY OTHER CUBIC HERE
@@ -388,7 +377,6 @@ C----------
         BTKFLG = .FALSE.
       ENDIF
       RETURN
-C
 C
 C----------
 C  ENTRY POINT FOR SENDING VOLUME EQN NUMBER TO THE FVS-TO-NATCRZ ROUTINE

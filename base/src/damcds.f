@@ -1,5 +1,6 @@
       SUBROUTINE DAMCDS (II,ICODES)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -9,9 +10,6 @@ C     ICODES= DISEASE AND DAMAGE CODES ARRAY
 C
 C----------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'ARRAYS.F77'
       INTEGER   I,II
       INTEGER*4 IDD
@@ -29,6 +27,6 @@ C----------
       DO I = 1,6
         DAMSEV(I,II) = ICODES(I)
       END DO
-      	
+
       RETURN
       END

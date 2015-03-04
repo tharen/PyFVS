@@ -1,5 +1,6 @@
       SUBROUTINE RDPPPT (WK3, IPNT, ILIMIT)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 ***********************************************************************
 *  **RDPPPT      DATE OF LAST REVISION:  09/10/14
 *----------------------------------------------------------------------
@@ -33,7 +34,6 @@
 *     22-JUL-02 Lance R. David (FHTET)
 *       Removed unused array PROBO from RDARRY common area processing.
 *   09/10/14 Lance R. David (FMSC)
-*     Updated, added implicit none and declared variables.
 *
 ***********************************************************************
 
@@ -43,7 +43,6 @@ C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
       INCLUDE 'METRIC.F77'
       INCLUDE 'PPEPRM.F77'
@@ -211,7 +210,7 @@ C.... Write integer arrays to buffer.
 C
 C     Note on processing arrays:
 C     When handling a 2-dimensional array, consider a string of values a
-C     complete column of the array and the length of the array as the 
+C     complete column of the array and the length of the array as the
 C     number of rows. So, a call to IFWRIT or BFWRIT will process 1 column
 C     of the specified number of rows (length) in a 2-dimensional array.
 C
@@ -553,7 +552,7 @@ C---- from common RDCRY ------------
   104 CONTINUE
   105 CONTINUE
 
-      IF (PDEBUG) 
+      IF (PDEBUG)
      >   WRITE (JOPPRT,'(/'' IN RDPPPT: END OF ISTND,ICYC='',I7,I4)')
      >         ISTND,ICYC
 

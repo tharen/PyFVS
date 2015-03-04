@@ -1,5 +1,6 @@
       SUBROUTINE VARGET (WK3,IPNT,ILIMIT,REALS,LOGICS,INTS)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **VARGET--KT   DATE OF LAST REVISION:  09/18/08
 C----------
@@ -8,19 +9,10 @@ C     READ THE VARIANT SPECIFIC VARIABLES.
 C
 C     PART OF THE PARALLEL PROCESSING EXTENSION TO PROGNOSIS.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'KOTCOM.F77'
 C
-C
-COMMONS
-C
 C     NOTE: THE ACTUAL STORAGE LIMIT FOR INTS, LOGICS, AND REALS
-C     IS MAXTRE (SEE PRGPRM).  
+C     IS MAXTRE (SEE PRGPRM).
 C
       INTEGER ILIMIT,IPNT,MXL,MXI,MXR
       PARAMETER (MXL=1,MXI=2,MXR=1)
@@ -46,14 +38,11 @@ C**   CALL BFREAD (WK3, IPNT, ILIMIT, REALS, MXR, 2)
       END
 
       SUBROUTINE VARCHGET (CBUFF, IPNT, LNCBUF)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C     Get variant-specific character data
 C----------
-C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
 C
       INTEGER LNCBUF
       CHARACTER CBUFF(LNCBUF)
@@ -62,4 +51,4 @@ C
       ! See /bc/varget.f and /bc/varput.f for examples of VARCHGET and VARCHPUT
       RETURN
       END
-      
+

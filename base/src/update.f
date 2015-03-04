@@ -1,6 +1,7 @@
       SUBROUTINE UPDATE
+      use prgprm_mod
       use arrays_mod, only: barkrat
-      IMPLICIT NONE
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -11,27 +12,15 @@ C     COMPUTES VOLUME STATISTICS
 C     EXECUTES SOME OF THE SUMMARY LOGIC.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ARRAYS.F77'
-C
 C
       INCLUDE 'COEFFS.F77'
 C
-C
       INCLUDE 'CONTRL.F77'
-C
 C
       INCLUDE 'OUTCOM.F77'
 C
-C
       INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
 C
       LOGICAL DEBUG
       REAL SPCMO(MAXSP,3),WKI,BRATIO

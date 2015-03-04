@@ -1,5 +1,6 @@
       SUBROUTINE BWEAGE (TOTR)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **BWEAGE                  DATE OF LAST REVISION:  07/14/10
 C----------
@@ -8,7 +9,7 @@ C     AGE THE FOLIAGE ONE YEAR.
 C
 C     PART OF THE WESTERN SPRUCE BUDWORM MODEL/PROGNOSIS LINKAGE CODE.
 C     N.L. CROOKSTON--FORESTRY SCIENCES LAB, MOSCOW, ID--JANUARY 1984
-c 
+c
 c     minor changes by K.Sheehan 7/96 to remove LBWDEB
 C
 C     CALLED FROM :
@@ -27,16 +28,10 @@ C Revision History:
 C  17-MAY-2005 Lance R. David (FHTET)
 C     Added FVS parameter file PRGPRM.F77.
 C  14-JUL-2010 Lance R. David (FMSC)
-C     Added IMPLICIT NONE and declared variables as needed.
 C-----------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECOM.F77'
-C
-COMMONS
 C
       INTEGER I, ICMYR, ICROWN, IFAGE, IHOST, IREM, ISZI
       REAL BWESLP, CUM, DIF, DIV, FA, FR, PR, PRALL, PRB, XMULT

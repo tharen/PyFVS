@@ -1,5 +1,6 @@
       SUBROUTINE PPIN
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **PPIN--PPBASE   DATE OF LAST REVISION:  06/03/10
 C----------
@@ -12,10 +13,6 @@ C     INT-FORESTRY SCIENCES LABORATORY-MOSCOW, IDAHO
 C
 C     CALLED FROM : PPEMAIN.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'PPEPRM.F77'
       INCLUDE 'OPCOM.F77'
       INCLUDE 'PPHVCM.F77'
@@ -23,8 +20,6 @@ C
       INCLUDE 'CONTRL.F77'
       INCLUDE 'PPCNTL.F77'
       INCLUDE 'METRIC.F77'
-C
-COMMONS
 C
       INTEGER ISIZE
       PARAMETER (ISIZE=72)
@@ -154,7 +149,7 @@ C
       ENDIF
       RETURN
  1300 CONTINUE
-C                        OPTION NUMBER 3 
+C                        OPTION NUMBER 3
       GOTO 10
 C
  1400 CONTINUE

@@ -1,5 +1,6 @@
       SUBROUTINE REGENT(LESTB,ITRNIN)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -26,7 +27,6 @@ C  COMPUTES INCREMENTS FROM AGE 5 TO THE END OF THE CYCLE.
 
 COMMONS
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'CALCOM.F77'
       INCLUDE 'ARRAYS.F77'
       INCLUDE 'COEFFS.F77'

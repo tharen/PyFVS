@@ -1,5 +1,6 @@
       SUBROUTINE DMSRC (Sp, D, Ptr, Index, P, SrcI, SrcCD, SPtr)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -15,7 +16,7 @@ C The first, 'SPtr()', holds six array positions that are the break
 C points between the DM categories. Within these breakpoint groups,
 C 'SrcCD()' holds the cumulative distribution of treelist records
 C within the DM category. This cumulative distribution can be used
-C with a random number to select trees at random. Last, 'SrcI()' 
+C with a random number to select trees at random. Last, 'SrcI()'
 C holds the treelist record itself, allowing the unique attributes
 C (e.g.: height, crown and DM rating) of an individual tree to be
 C used. This routine may have the dubious distinction of having the
@@ -24,13 +25,13 @@ C--------------------------------------------------------------------
 C
 C Called by:
 C
-C     DMTREG 
+C     DMTREG
 C
 C Other routines called:
 C
 C     [none]
 C
-C Argument list definitions:                        
+C Argument list definitions:
 C
 C     INTEGER Sp      (I) The species code being processed
 C     REAL    D       (I) The density of each DM category of species
@@ -39,7 +40,7 @@ C     INTEGER Ptr     (I) Matrix of **pointers to treelist, sorted
 C                          by species and DM class:
 C                          Index 1: Species code.
 C                          Index 2: DM rating.
-C                          Index 3: FST is first position in 
+C                          Index 3: FST is first position in
 C                                   'Index()'.
 C                          array; LST is last position in array. This
 C                          mapping is analagous to the 'IND1()' array
@@ -57,19 +58,19 @@ C                          probability within the 'SrcCD()' array.
 C                          These records are sorted by DM category
 C                          into groups marked by the 'Sptr()' array.
 C     REAL    SrcCD   (O) The cumulative probability of each DM group
-C                          is computed by taking the relative 
+C                          is computed by taking the relative
 C                          density (trees/acre) of each treelist
 C                          record and forming a cumulative
 C                          distribution.
 C     INTEGER Sptr    (O) Breakpoints demarcating the DM categories
 C                          ordered within the 'SrcI() and 'SrcCD()'
 C                          arrays. Each value marks the *last* entry
-C                          in that category: e.g.: 'Sptr(3)' contains 
+C                          in that category: e.g.: 'Sptr(3)' contains
 C                          the position of the last position with DM
-C                          rating 3; 'Sptr(2)+1' contains the first. 
+C                          rating 3; 'Sptr(2)+1' contains the first.
 C
 C Local variable definitions:
-C     
+C
 C     INTEGER i           Loop over DM categories.
 C     INTEGER j           Loop over elements of each DM category.
 C     INTEGER k           Counter for absolute position in 'SrcI()'
@@ -86,11 +87,10 @@ C     MAXSP     PRGPRM
 C     MAXTRE    PRGPRM
 C     FST       DMCOM
 C     LST       DMCOM
-C     DMTINY    DMCOM                                                
+C     DMTINY    DMCOM
 C
 C********************************************************************
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'DMCOM.F77'
 
 C Subroutine arguments.
@@ -119,14 +119,14 @@ C Local variables.
 
       k = 0
       DO 100 i = 0, 6
-        IF (Ptr(Sp, i, FST) .GT. 0) THEN  
+        IF (Ptr(Sp, i, FST) .GT. 0) THEN
           x = 1.0 / (D(i) + DMTINY)
           y = 0.0
           DO 200 j = Ptr(Sp, i, FST), Ptr(Sp, i, LST)
             k = k + 1
             y = y + P(Index(j)) * x
             SrcI(k) = Index(j)
-            SrcCD(k) = y 
+            SrcCD(k) = y
   200     CONTINUE
         END IF
       SPtr(i) = k

@@ -1,4 +1,6 @@
       SUBROUTINE MISRAN(IARRAY,ISIZE)
+      use prgprm_mod
+      implicit none
 ***********************************************************************
 *  **MISRAN--MS  Date of last revision:  06/16/00
 *----------------------------------------------------------------------
@@ -32,7 +34,6 @@
 *     MAXTRE: From PRGPRM; maximum number tree records.
 *
 ***********************************************************************
-      IMPLICIT NONE
 
       INTEGER IM,IA,IC
 
@@ -48,7 +49,6 @@ C.... to avoid machine overflow.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C.... Common include files.
 

@@ -1,5 +1,6 @@
       SUBROUTINE BRATV(L)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C**********************************************************************
 C  **BRATV        DATE OF LAST REVISION:  06/05/2014
 C----------------------------------------------------------------------
@@ -17,7 +18,6 @@ C**********************************************************************
 
 C.... Common include files
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BRCOM.F77'
 
 C.... Local variable declarations

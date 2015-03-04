@@ -1,5 +1,6 @@
       SUBROUTINE HTGF
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **HTGF--NI   DATE OF LAST REVISION:  07/08/11
 C----------
@@ -11,33 +12,20 @@ C  CYCLING.  ENTRY **HTCONS** IS CALLED FROM **RCON** TO LOAD SITE
 C  DEPENDENT CONSTANTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
-C
 C
       INCLUDE 'ARRAYS.F77'
 C
-C
       INCLUDE 'COEFFS.F77'
-C
 C
       INCLUDE 'CONTRL.F77'
 C
-C
       INCLUDE 'PLOT.F77'
-C
 C
       INCLUDE 'MULTCM.F77'
 C
-C
       INCLUDE 'HTCAL.F77'
 C
-C
-COMMONS
 C----------
 C   MODEL COEFFICIENTS AND CONSTANTS:
 C
@@ -94,7 +82,7 @@ C-----------
       DO 30 I3 = I1,I2
       I=IND1(I3)
       HTG(I)=0.
-      IF (PROB(I).LE.0.0)THEN 
+      IF (PROB(I).LE.0.0)THEN
         IF(LTRIP)THEN
           ITFN=ITRN+2*I-1
           HTG(ITFN)=0.
@@ -127,7 +115,7 @@ C
  9000   FORMAT(' 9000 HTGF, HTG=',F8.4,' CON=',F8.4,' HTCON=',F8.4,
      &  ' H2COF=',F12.8,' D =',F8.4/' WK1=',F8.4,' HGLH=',F8.4,
      &  ' HTNEW=',F8.4,' HDGCOF=',F8.4,' I=',I4,' ISPC=',I2)
-      ENDIF     
+      ENDIF
 C----------
 C CHECK FOR SIZE CAP COMPLIANCE.
 C----------

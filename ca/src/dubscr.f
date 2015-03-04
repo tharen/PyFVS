@@ -1,5 +1,6 @@
       SUBROUTINE DUBSCR(ISPC,D,H,CR,TPCT,TPCCF)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **DUBSCR--CA   DATE OF LAST REVISION:  02/22/08
 C----------
@@ -17,24 +18,13 @@ C  JUNIPER USE BCR_(6) COEFFICIENTS (CONSTANT ICR=9)
 C
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ARRAYS.F77'
-C
 C
       INCLUDE 'PLOT.F77'
 C
-C
       INCLUDE 'CONTRL.F77'
 C
-C
       INCLUDE 'PDEN.F77'
-C
-C
-COMMONS
 C
       LOGICAL DEBUG
       EXTERNAL RANN

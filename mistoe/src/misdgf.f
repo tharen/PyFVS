@@ -1,4 +1,6 @@
       REAL FUNCTION MISDGF(ITREE,ISPC)
+      use prgprm_mod
+      implicit none
 ***********************************************************************
 *  **MISDGF--MS  Date of last revision:  12/20/03
 *----------------------------------------------------------------------
@@ -58,13 +60,11 @@
 *     20-DEC-03
 *        Removed parameter file (misprm.f77)
 ***********************************************************************
-      IMPLICIT NONE
 
 C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C.... Common include files.
 

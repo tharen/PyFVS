@@ -1,16 +1,13 @@
       SUBROUTINE GROHED (IUNIT)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C CR $Id$
 C----------
 C     WRITES HEADER FOR BASE MODEL PORTION OF PROGNOSIS SYSTEM
 C----------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
       INCLUDE 'PLOT.F77'
-C
 C
 C COMMONS
 C
@@ -115,7 +112,6 @@ C
 C
  1000 CONTINUE
       RETURN
-C
 C
       ENTRY VARVER (VVER)
 C----------

@@ -1,5 +1,6 @@
         SUBROUTINE VARVOL
-        IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **VARVOL--NI    DATE OF LAST REVISION:   03/20/13
 C----------
@@ -10,25 +11,13 @@ C  EQUAL TO 6.  IT ALSO CONTAINS ANY OTHER SPECIAL VOLUME CALCULATION
 C  METHOD SPECIFIC TO A VARIANT (METHB OR METHC = 8)
 C----------
 C
-COMMONS 
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ARRAYS.F77'
-C
 C
       INCLUDE 'CONTRL.F77'
 C
-C
       INCLUDE 'VOLSTD.F77'
 C
-C
       INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
 C
 C----------
       CHARACTER CTYPE*1,FORST*2,HTTYPE,VVER*7,VAR*2,PROD*2
@@ -46,7 +35,6 @@ C----------
 C----------
 C SPECIES ORDER:    1   2   3   4   5   6   7   8   9  10  11
 C                  WP   L  DF  GF  WH   C  LP   S  AF  PP  OT
-C
 C
 C----------
 C  NATIONAL CRUISE SYSTEM ROUTINES (METHOD = 6)
@@ -75,14 +63,13 @@ C
       ELSE
         IREGN=1
       ENDIF
-C      
+C
       IF(DEBUG)WRITE(JOSTND,*)' IFOR, IREGN,ISPC,VEQNNC(ISPC)= ',
      &IFOR, IREGN,ISPC,VEQNNC(ISPC)
 C----------
 C  BRANCH TO R6 LOGIC FOR COLVILLE NATIONAL FOREST.
 C----------
       IF(IFOR .EQ. 5) GO TO 100
-C
 C
 C----------
 C  REGION 1 NATCRS SEQUENCE
@@ -145,7 +132,7 @@ C
         IF(IT.GT.0)HT2TD(IT,2)=X02
       ELSE
         IF(IT.GT.0)HT2TD(IT,2)=0.
-      ENDIF        
+      ENDIF
 C----------
 C  IF TOP DIAMETER IS DIFFERENT FOR BF CALCULATIONS, STORE APPROPRIATE
 C  VOLUMES AND CALL PROFILE AGAIN.
@@ -239,8 +226,6 @@ C----------
       BTKFLG = .TRUE.
       RETURN
 C
-C
-C
 C----------
 C  REGION 6 NATCRS SEQUENCE
 C----------
@@ -307,7 +292,7 @@ C
           IF(IT.GT.0)HT2TD(IT,2)=X02
         ELSE
           IF(IT.GT.0)HT2TD(IT,2)=0.
-        ENDIF        
+        ENDIF
 C----------
 C  IF TOP DIAMETER IS DIFFERENT FOR BF CALCULATIONS, STORE APPROPRIATE
 C  VOLUMES AND CALL PROFILE AGAIN.
@@ -398,8 +383,6 @@ C----------
         ENDIF
         CTKFLG = .TRUE.
         BTKFLG = .TRUE.
-C
-C
 C
       ELSE
 C----------
@@ -522,8 +505,6 @@ C
       ENDIF
       RETURN
 C
-C
-C
 C----------
 C  ENTER ANY OTHER CUBIC HERE
 C----------
@@ -534,7 +515,6 @@ C----------
       VM=0.
       CTKFLG = .FALSE.
       RETURN
-C
 C
 C----------
 C  ENTER ANY OTHER BOARD HERE
@@ -547,7 +527,6 @@ C----------
       BBFV=0.
       BTKFLG = .FALSE.
       RETURN
-C
 C
 C----------
 C  ENTRY POINT FOR SENDING VOLUME EQN NUMBER TO THE FVS-TO-NATCRZ ROUTINE

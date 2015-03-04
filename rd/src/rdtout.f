@@ -1,5 +1,6 @@
       SUBROUTINE RDTOUT
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDTOUT      LAST REVISION:  09/04/14
 C----------
@@ -8,7 +9,7 @@ C  PRINTS A SUMMARY OF THE DISEASE INFORMATION WHICH WAS READ IN
 C  FROM THE TREELIST.
 C
 C  CALLED BY :
-C     INITRE  [PROGNOSIS] -NOT ANY MORE 
+C     INITRE  [PROGNOSIS] -NOT ANY MORE
 C     RDMN1   [ROOT DISEASE]
 C
 C  CALLS     :
@@ -20,21 +21,17 @@ C
 C  COMMON BLOCK VARIABLES :
 C     STCUT:   From ANCOM;
 C
-C
 C  LOCAL VARIABLES :
-C
 C
 C  Revision History:
 C   06/12/13 Lance R. David (FMSC)
 C     Modified for removal of "print control" column 1.
 C   09/04/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
 C.... PARAMETER INCLUDE FILES
 C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 C
 C.... COMMON INCLUDE FILES
@@ -100,8 +97,8 @@ C
               ELSE
                  WRITE (JOSTND,1080) NINT(STCUT(J)),
      &            PROBDA(IDI,1,J,1), PROBDA(IDI,2,J,1)
-              ENDIF 
-            ENDIF  
+              ENDIF
+            ENDIF
  1070       FORMAT (12X,I2,'-',I3,'"',6X,F5.0,10X,F5.0)
  1080       FORMAT (12X,'  >',I3,'"',6X,F5.0,10X,F5.0)
  1071       FORMAT (11X,I3,'-',I3,' CM',5X,F5.0,10X,F5.0)

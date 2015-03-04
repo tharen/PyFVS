@@ -1,4 +1,6 @@
       SUBROUTINE MISGET(ITREE,IDMR)
+      use prgprm_mod
+      implicit none
 ***********************************************************************
 *  **MISGET--MS  Date of last revision:  01/14/94
 *----------------------------------------------------------------------
@@ -15,18 +17,16 @@
 *     IMIST:  From MISCOM; array containing tree record DMR's.
 *
 ***********************************************************************
-      IMPLICIT NONE
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C.... Common include files.
 
       INCLUDE 'MISCOM.F77'
 
       INTEGER IDMR,ITREE
-      
+
 C.... Get dwarf mistletoe rating for current tree.
 
       IDMR=IMIST(ITREE)

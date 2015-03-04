@@ -1,5 +1,6 @@
       SUBROUTINE EVTSTV (IUSERV)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -21,34 +22,19 @@ C     EVUST4 CALLED BY VARIOUS ROUTINES TO SET THE STATUS OF A
 C            VARIABLE TO UNSET.
 C     EVGET4 CALLED TO GET THE VALUE OF A STORED VARIABLE.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ARRAYS.F77'
-C
 C
       INCLUDE 'OPCOM.F77'
 C
-C
       INCLUDE 'OUTCOM.F77'
-C
 C
       INCLUDE 'PLOT.F77'
 C
-C
       INCLUDE 'CONTRL.F77'
-C
 C
       INCLUDE 'SUMTAB.F77'
 C
-C
       INCLUDE 'VARCOM.F77'
-C
-C
-COMMONS
 C
       LOGICAL LDEB,LDEB2,LSET
       CHARACTER VVER*7
@@ -199,7 +185,6 @@ C     PPLDEV FOR ITEMS 10 TO 16.
 C
 C     GROUP 5 ARE USER DEFINED.
 C
-C
       IF (LDEB) WRITE (JOSTND,1) IUSERV,ICYC
     1 FORMAT (' IN EVTSTV,IUSERV=',I4,' ICYC=',I4)
       IF (IUSERV.GE.1) GOTO 20
@@ -211,7 +196,7 @@ C
         BTSDIX=0
         SDIBC=0
         SDIBC2=0
-      ELSE 
+      ELSE
         IF (IPHASE.GT.1) GOTO 10
       ENDIF
       IF (LDEB) WRITE (JOSTND,91) IPHASE,ICYC
@@ -263,9 +248,9 @@ C
       TSTV1(42)=ISZCL
       TSTV1(43)=ISTCL
       TSTV1(44)=1./GROSPC
-      TSTV1(45)=0. !initialize so debug output is consistent. 
+      TSTV1(45)=0. !initialize so debug output is consistent.
       TSTV1(46)=ICAGE
-      TSTV1(47)=0. !initialize so debug output is consistent. 
+      TSTV1(47)=0. !initialize so debug output is consistent.
       TSTV1(48)=ISILFT
       CALL FISHER(FINDX)
       TSTV1(49)=FINDX

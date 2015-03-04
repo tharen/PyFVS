@@ -1,5 +1,6 @@
       SUBROUTINE BRTREG
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C**********************************************************************
 C  **BRTREG       DATE OF LAST REVISION:  06/05/2014
 C----------------------------------------------------------------------
@@ -74,7 +75,6 @@ C     BRECAN call modified by removal of RI(J) call parameter.
 C**********************************************************************
 C.... Common include files
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'CONTRL.F77'
       INCLUDE 'ARRAYS.F77'
       INCLUDE 'PLOT.F77'
@@ -93,7 +93,7 @@ C.... Activities and related codes are as follows:
 C....
 C.... prune----1001   exspecs-1004   brtlst-1007   devfact-1010
 C.... prnspecs-1002   ribes---1005   brclst-1008
-C...  excise---1003   inact---1006   stock--1009 
+C...  excise---1003   inact---1006   stock--1009
 
       DATA MYACTS/
      &     1001,1002,1003,1004,1005,1006,1007,1008,1009,1010/
@@ -479,7 +479,7 @@ C....       During the last year of the cycle, host trees that were
 C....       not killed by BR this cycle need to have the mortality
 C....       imposed by FVS or other model captured so that the total
 C....       historic mortality of the host species is accurate.
-C....       Also, the number of trees variable needs reduced for 
+C....       Also, the number of trees variable needs reduced for
 C....       trees killed during the last year of the cycle, the historical
 C....       mortality will have already been addressed in this case.
 

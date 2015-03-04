@@ -1,39 +1,26 @@
       SUBROUTINE ESPXCS
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **ESPXCS--CI   DATE OF LAST REVISION:   06/20/11
 C
 C  PREDICTS THE PROBABILITY OF EXCESS SPECIES
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ESPARM.F77'
-C
 C
       INCLUDE 'ESCOMN.F77'
 C
-C
       INCLUDE 'ESCOM2.F77'
-C
 C
       INCLUDE 'PLOT.F77'
 C
-C
       INCLUDE 'PDEN.F77'
-C
 C
       INCLUDE 'ESHAP.F77'
 C
-C
       INCLUDE 'ESHAP2.F77'
 C
-C
-COMMONS
 C----------
       REAL PN
 C----------

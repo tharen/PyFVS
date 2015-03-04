@@ -1,5 +1,6 @@
       SUBROUTINE BWEPPPT (WK3, IPNT, ILIMIT, IB)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **BWEPPPT                DATE OF LAST REVISION:  09/20/13
 C----------
@@ -34,7 +35,6 @@ C  Revision History :
 C   11-SEP-2006 - Lance R. David (FHTET)
 C     This subroutine was written.
 C   14-JUL-2010 Lance R. David (FMSC)
-C     Added IMPLICIT NONE and declared variables as needed.
 C   23-JUN-2011 Lance R. David (FMSC)
 C     Added BWPRMS array for RAWS daily weather processing to BLCOM3.
 C   20-SEP-2013 Lance R. David (FMSC)
@@ -44,7 +44,6 @@ C----------
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'METRIC.F77'
       INCLUDE 'PPEPRM.F77'
 
@@ -68,7 +67,7 @@ C
 C.... Variable declarations.
 C.... Parameter statements.
       INTEGER LNCBUF, MXI, MXL, MXR
-      
+
       PARAMETER (MXL=21,MXI=83,MXR=918)
       PARAMETER (LNCBUF=IRECLN*4)
 
@@ -105,25 +104,25 @@ C---- from common BWEBOX ------------
       LOGICS(2)  = LTEMP1(2)
       LOGICS(3)  = LTEMP1(3)
       LOGICS(4)  = LTEMP1(4)
-      LOGICS(5)  = LP1      
-      LOGICS(6)  = LP2      
-      LOGICS(7)  = LP3      
-      LOGICS(8)  = LP4      
-      LOGICS(9)  = LP5      
-      LOGICS(10) = LP6      
-      LOGICS(11) = LP7      
-      LOGICS(12) = LP8      
+      LOGICS(5)  = LP1
+      LOGICS(6)  = LP2
+      LOGICS(7)  = LP3
+      LOGICS(8)  = LP4
+      LOGICS(9)  = LP5
+      LOGICS(10) = LP6
+      LOGICS(11) = LP7
+      LOGICS(12) = LP8
 C---- from common BWECM2 ------------
-      LOGICS(13) = LBUDL    
-      LOGICS(14) = LFIRST   
-      LOGICS(15) = LREGO    
-      LOGICS(16) = LSPRAY   
+      LOGICS(13) = LBUDL
+      LOGICS(14) = LFIRST
+      LOGICS(15) = LREGO
+      LOGICS(16) = LSPRAY
 C---- from common RDCOM ------------
-      LOGICS(17) = LBWDAM   
-      LOGICS(18) = LBWPDM   
-      LOGICS(19) = LCALBW   
-      LOGICS(20) = LDEFOL   
-      LOGICS(21) = LTOPK    
+      LOGICS(17) = LBWDAM
+      LOGICS(18) = LBWPDM
+      LOGICS(19) = LCALBW
+      LOGICS(20) = LDEFOL
+      LOGICS(21) = LTOPK
 
       IF (PDEBUG) WRITE (JOPPRT,*) 'IN BWEPPPT: LOGICS=',
      >            LOGICS
@@ -135,92 +134,92 @@ C
 C.... Load integer scalars into INTS array.
 C
 C---- from common BWEBOX ------------
-      INTS(1)  = IBUDYR     
-      INTS(2)  = IBWOPT     
-      INTS(3)  = IDEFPR     
-      INTS(4)  = IDEFSP(1)  
-      INTS(5)  = IDEFSP(2)  
-      INTS(6)  = IDEFSP(3)  
-      INTS(7)  = IDEFSP(4)  
-      INTS(8)  = IDEFSP(5)  
-      INTS(9)  = IFLAG      
-      INTS(10) = IOBACT     
+      INTS(1)  = IBUDYR
+      INTS(2)  = IBWOPT
+      INTS(3)  = IDEFPR
+      INTS(4)  = IDEFSP(1)
+      INTS(5)  = IDEFSP(2)
+      INTS(6)  = IDEFSP(3)
+      INTS(7)  = IDEFSP(4)
+      INTS(8)  = IDEFSP(5)
+      INTS(9)  = IFLAG
+      INTS(10) = IOBACT
       INTS(11) = IOBSCH(1,1)
       INTS(12) = IOBSCH(1,2)
       INTS(13) = IOBSCH(2,1)
       INTS(14) = IOBSCH(2,2)
       INTS(15) = IOBSCH(3,1)
       INTS(16) = IOBSCH(3,2)
-      INTS(17) = IPARA      
-      INTS(18) = IQUALD     
-      INTS(19) = IQUALW     
-      INTS(20) = ISTN       
-      INTS(21) = ISTNUM     
-      INTS(22) = ITEMP(1)   
-      INTS(23) = ITEMP(2)   
-      INTS(24) = ITEMP(3)   
-      INTS(25) = ITEMP(4)   
-      INTS(26) = ITEMP(5)   
-      INTS(27) = IWSRC      
-      INTS(28) = JOWE       
-      INTS(29) = NEVENT     
-      INTS(30) = NOBDON     
-      INTS(31) = NOBSCH     
-      INTS(32) = NUMCOL     
+      INTS(17) = IPARA
+      INTS(18) = IQUALD
+      INTS(19) = IQUALW
+      INTS(20) = ISTN
+      INTS(21) = ISTNUM
+      INTS(22) = ITEMP(1)
+      INTS(23) = ITEMP(2)
+      INTS(24) = ITEMP(3)
+      INTS(25) = ITEMP(4)
+      INTS(26) = ITEMP(5)
+      INTS(27) = IWSRC
+      INTS(28) = JOWE
+      INTS(29) = NEVENT
+      INTS(30) = NOBDON
+      INTS(31) = NOBSCH
+      INTS(32) = NUMCOL
 C---- from common BWECM2 ------------
-      INTS(33) = ILOBYR     
+      INTS(33) = ILOBYR
       INTS(34) = INSTSP
-      INTS(35) = IOBDUR     
-      INTS(36) = IOBLOC     
-      INTS(37) = IOBOPT     
-      INTS(38) = ISPRAY     
-      INTS(39) = ISPVAR     
+      INTS(35) = IOBDUR
+      INTS(36) = IOBLOC
+      INTS(37) = IOBOPT
+      INTS(38) = ISPRAY
+      INTS(39) = ISPVAR
       INTS(40) = ISPYR(1)
       INTS(41) = ISPYR(2)
       INTS(42) = ISPYR(3)
       INTS(43) = ISPYR(4)
       INTS(44) = ISPYR(5)
-      INTS(45) = IWOPT      
-      INTS(46) = IWYR       
+      INTS(45) = IWOPT
+      INTS(46) = IWYR
       INTS(47) = IYRCNT
-      INTS(48) = IYRECV     
-      INTS(49) = IYREND     
+      INTS(48) = IYRECV
+      INTS(49) = IYREND
       INTS(50) = IYRNG(1)
       INTS(51) = IYRNG(2)
-      INTS(52) = IYROBL     
-      INTS(53) = IYRSRC     
-      INTS(54) = IYRST      
-      INTS(55) = JOBWP1     
-      INTS(56) = JOBWP2     
-      INTS(57) = JOBWP3     
-      INTS(58) = JOBWP4     
-      INTS(59) = JOBWP5     
-      INTS(60) = JOBWP6     
-      INTS(61) = JOBWP7     
-      INTS(62) = JOBWP8     
-      INTS(63) = KRECVR     
-      INTS(64) = LIMITS     
-      INTS(65) = LOWYRS     
-      INTS(66) = NSPRAY     
-      INTS(67) = NUMAPP     
+      INTS(52) = IYROBL
+      INTS(53) = IYRSRC
+      INTS(54) = IYRST
+      INTS(55) = JOBWP1
+      INTS(56) = JOBWP2
+      INTS(57) = JOBWP3
+      INTS(58) = JOBWP4
+      INTS(59) = JOBWP5
+      INTS(60) = JOBWP6
+      INTS(61) = JOBWP7
+      INTS(62) = JOBWP8
+      INTS(63) = KRECVR
+      INTS(64) = LIMITS
+      INTS(65) = LOWYRS
+      INTS(66) = NSPRAY
+      INTS(67) = NUMAPP
 C---- from common BWECOM ------------
-      INTS(68) = IBWYR1     
-      INTS(69) = IBWYR2     
-      INTS(70) = ICUMYR     
-      INTS(71) = IPRBYR     
-      INTS(72) = ITODO      
-      INTS(73) = IYRCUR     
-      INTS(74) = JOWSBW     
-      INTS(75) = NCUMYR     
-      INTS(76) = NTODO      
+      INTS(68) = IBWYR1
+      INTS(69) = IBWYR2
+      INTS(70) = ICUMYR
+      INTS(71) = IPRBYR
+      INTS(72) = ITODO
+      INTS(73) = IYRCUR
+      INTS(74) = JOWSBW
+      INTS(75) = NCUMYR
+      INTS(76) = NTODO
 C---- from common BWESTD ------------
-      INTS(77) = IFHOST(1)  
-      INTS(78) = IFHOST(2)  
-      INTS(79) = IFHOST(3)  
-      INTS(80) = IFHOST(4)  
-      INTS(81) = IFHOST(5)  
-      INTS(82) = IFHOST(6)  
-      INTS(83) = IFHOST(7)  
+      INTS(77) = IFHOST(1)
+      INTS(78) = IFHOST(2)
+      INTS(79) = IFHOST(3)
+      INTS(80) = IFHOST(4)
+      INTS(81) = IFHOST(5)
+      INTS(82) = IFHOST(6)
+      INTS(83) = IFHOST(7)
 
       IF (PDEBUG) WRITE (JOPPRT,*) 'IN BWEPPPT: INTS=',
      >            INTS
@@ -233,7 +232,7 @@ C.... Write larger integer arrays from buffer
 C
 C     Note on processing arrays:
 C     When handling a 2-dimensional array, consider a string of values a
-C     complete column of the array and the length of the array as the 
+C     complete column of the array and the length of the array as the
 C     number of rows. So, a call to IFREAD or BFREAD will process 1 column
 C     of the specified number of rows (length) in a 2-dimensional array.
 C
@@ -250,47 +249,47 @@ C     .....................................................................
 
 C.... Load real scalars then arrays into the REALS array.
 C     Scalars and small one-dimensional arrays are handled first
-C     for ease of indexing. 
+C     for ease of indexing.
 C
-      REALS(1)  = RAINDM    
-      REALS(2)  = RAINDS    
-      REALS(3)  = RAINM(1)  
-      REALS(4)  = RAINM(2)  
-      REALS(5)  = RAINM(3)  
-      REALS(6)  = RAINS(1)  
-      REALS(7)  = RAINS(2)  
-      REALS(8)  = RAINS(3)  
-      REALS(9)  = WHOTM     
-      REALS(10) = WHOTSD    
-      REALS(11) = DISPMR    
-      REALS(12) = EGGS      
-      REALS(13) = OLDMAX    
-      REALS(14) = TREEDD    
-      REALS(15) = WCOLDW    
-      REALS(16) = WHOTF     
-      REALS(17) = WRAIND    
-      REALS(18) = DSEEDR    
-      REALS(19) = OBSEER    
-      REALS(20) = WSEEDR    
-      REALS(21) = DEFLYR    
-      REALS(22) = HOSTST    
-      REALS(23) = SPEFF     
-      REALS(24) = TRIGGR    
-      REALS(25) = WRAIN1(1) 
-      REALS(26) = WRAIN1(2) 
-      REALS(27) = WRAIN1(3) 
-      REALS(28) = WRAIN2(1) 
-      REALS(29) = WRAIN2(2) 
-      REALS(30) = WRAIN2(3) 
-      REALS(31) = WRAIN3(1) 
-      REALS(32) = WRAIN3(2) 
-      REALS(33) = WRAIN3(3) 
-      REALS(34) = WRAINA(1) 
-      REALS(35) = WRAINA(1) 
-      REALS(36) = WRAINA(3) 
-      REALS(37) = WRAINB(1) 
-      REALS(38) = WRAINB(2) 
-      REALS(39) = WRAINB(3) 
+      REALS(1)  = RAINDM
+      REALS(2)  = RAINDS
+      REALS(3)  = RAINM(1)
+      REALS(4)  = RAINM(2)
+      REALS(5)  = RAINM(3)
+      REALS(6)  = RAINS(1)
+      REALS(7)  = RAINS(2)
+      REALS(8)  = RAINS(3)
+      REALS(9)  = WHOTM
+      REALS(10) = WHOTSD
+      REALS(11) = DISPMR
+      REALS(12) = EGGS
+      REALS(13) = OLDMAX
+      REALS(14) = TREEDD
+      REALS(15) = WCOLDW
+      REALS(16) = WHOTF
+      REALS(17) = WRAIND
+      REALS(18) = DSEEDR
+      REALS(19) = OBSEER
+      REALS(20) = WSEEDR
+      REALS(21) = DEFLYR
+      REALS(22) = HOSTST
+      REALS(23) = SPEFF
+      REALS(24) = TRIGGR
+      REALS(25) = WRAIN1(1)
+      REALS(26) = WRAIN1(2)
+      REALS(27) = WRAIN1(3)
+      REALS(28) = WRAIN2(1)
+      REALS(29) = WRAIN2(2)
+      REALS(30) = WRAIN2(3)
+      REALS(31) = WRAIN3(1)
+      REALS(32) = WRAIN3(2)
+      REALS(33) = WRAIN3(3)
+      REALS(34) = WRAINA(1)
+      REALS(35) = WRAINA(1)
+      REALS(36) = WRAINA(3)
+      REALS(37) = WRAINB(1)
+      REALS(38) = WRAINB(2)
+      REALS(39) = WRAINB(3)
 
       IIX = 39
       DO 30 IIA = 1,4
@@ -673,7 +672,7 @@ C
 C     --- from BWEBOX ---
 C     CHARACTER*4 MGMIDB
 C     CHARACTER*8 DEFLAB,DLABS(5)
-C     CHARACTER*12 STATES(10,2)    -- Static 
+C     CHARACTER*12 STATES(10,2)    -- Static
 C     CHARACTER*16 WSLOOK(100,10)  -- Static
 C     CHARACTER*20 TEMPS2(3)       -- Static
 C     CHARACTER*40 OUTNAM(8)       -- Static

@@ -1,27 +1,17 @@
       SUBROUTINE TREMOV (IREC1,IREC2)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C
 C      SWITCH THE TREES FROM POSITION IREC1 AND POSITION IREC2.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ARRAYS.F77'
-C
 C
       INCLUDE 'ESTREE.F77'
 C
-C
       INCLUDE 'STDSTK.F77'
-C
-C
-COMMONS
 C
 C----------
       REAL RTEM(23)

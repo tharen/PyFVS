@@ -1,5 +1,6 @@
       SUBROUTINE MISIN(PASKEY,ARRAY,LNOTBK,LKECHO)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -102,7 +103,6 @@ C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C.... Common include files.
 

@@ -1,5 +1,6 @@
       REAL FUNCTION RDRANP(PROP)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDRANP  DATE OF LAST REVISION:   09/09/14
 C----------
@@ -45,14 +46,12 @@ C      Common block array CDF was moved to its own common due to compiler
 C      complaint (mixed variable types in common) reported by Don Robinson
 C      (ESSA).
 C   09/09/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C     Changed array CDF to REAL, double precision was not necessary.
 C     Moved local commons PRPDAT and PRPDATD to RDCOM.F77 file.
 C----------------------------------------------------------------------
 
 C.... PARAMETER INCLUDE FILES
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 
 C.... COMMON INCLUDE FILES
@@ -67,7 +66,7 @@ C
 C     OLDPRP AND CDF WERE PUT IN A COMMON BLOCKS SO THAT THEY WOULD BE
 C     SAVED BETWEEN CALLS TO THIS FUNCTION
 C     The variable declatations (REAL OLDPRP, DOUBLE PRECISSION CDF(1001))
-C     and common block specifications were moved to the RDCOM.F77 file 
+C     and common block specifications were moved to the RDCOM.F77 file
 C     and then the RDCOM.F77 included in this routine.
 C
 c      COMMON  /PRPDAT/ OLDPRP
@@ -187,6 +186,6 @@ C
 
 cccc      write (*,*) 'oldprp = ', oldprp
 cccc      write (*,*) 'cdf = ', cdf
-      
+
       RETURN
       END

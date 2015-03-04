@@ -1,5 +1,6 @@
       SUBROUTINE CROWN
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **CROWN--BM   DATE OF LAST REVISION:  03/31/11
 C----------
@@ -22,33 +23,19 @@ C  CROWN RATIO WHEN DBH IS LESS THAN 3 INCHES.  PROCESSING OF
 C  CROWN CHANGE FOR SMALL TREES IS CONTROLLED BY **REGENT**.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ARRAYS.F77'
-C
 C
       INCLUDE 'COEFFS.F77'
 C
-C
       INCLUDE 'CONTRL.F77'
-C
 C
       INCLUDE 'OUTCOM.F77'
 C
-C
       INCLUDE 'PLOT.F77'
-C
 C
       INCLUDE 'PDEN.F77'
 C
-C
       INCLUDE 'VARCOM.F77'
-C
-C
-COMMONS
 C
       INTEGER MYACTS(1)
       LOGICAL DEBUG
@@ -434,7 +421,6 @@ C----------
      &                  0.0, -0.02373, -0.01927, -0.03545, -0.03064,
      &             -0.02216, -0.02216,-0.011608,-0.014890, -0.01516,
      &            -0.016042, -0.03064,-0.016042/
-C
 C
       DATA CRNMLT/MAXSP*1.0/
       DATA ICFLG/MAXSP*0/

@@ -1,6 +1,7 @@
       SUBROUTINE SPDECD (IPOS,ISP,CNSP,JOSTND,IRECNT,
      >                   KEYWRD,ARRAY,KARD)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -18,12 +19,7 @@ C     KEYWRD= C*8 KEYWORD.
 C     ARRAY = R*4 ARRAY OF PARAMETERS.
 C     KARD  = C*10 ARRAY OF PARAMETERS.
 C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'PLOT.F77'
-C
 C
       INTEGER IRECNT,JOSTND,ISP,IPOS,IFLAG,J,I
       CHARACTER*10 KARD(7)
@@ -75,7 +71,7 @@ C
             GOTO 50
    20       CONTINUE
 C
-C           TRY TO DECODE THE SPECIES CODE. 
+C           TRY TO DECODE THE SPECIES CODE.
 C           'ALL' IS SPECIES CODE ZERO.
 C
             IF (TEMP.NE.'ALL') THEN

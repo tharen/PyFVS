@@ -1,5 +1,6 @@
       FUNCTION FMBRKT(DBH,ISP)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMBRKT  FIRE-CA-DATE OF LAST REVISION:  09/16/03
 C----------
@@ -9,7 +10,6 @@ C     ROUTINE (FMEFF). DATA ARE FROM FOFEM V5.0 (REINHARDT ET AL. 2000)
 
 COMMONS
 
-      INCLUDE 'PRGPRM.F77'
 
 COMMONS
 

@@ -1,26 +1,16 @@
       SUBROUTINE SDEFET (LNOTBK,ARRAY,KEYWRD,
      >                   LOPEVN,IACTK,KARD,IPRMPT)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'PLOT.F77'
-C
 C
       INCLUDE 'COEFFS.F77'
 C
-C
       INCLUDE 'CONTRL.F77'
-C
-C
-COMMONS
 C
 C     PROCESSES BFDEFECT OR MCDEFECT KEYWORDS - CALLED FROM INITRE.
 C
