@@ -29,6 +29,7 @@ module fvs_step
     use workcm_mod, only: iwork1
     use outcom_mod, only: ititle,ocvcur,obfcur,omccur
     use tree_data, only: init_tree_data
+    use blkdat_mod, only: blkdat
 
     contains
 

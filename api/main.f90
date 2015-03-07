@@ -1,4 +1,5 @@
       PROGRAM MAIN
+      use blkdat_mod, only: blkdat
       use siteht_mod
       use plot_mod, only: sitear
       IMPLICIT NONE
