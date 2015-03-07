@@ -1,4 +1,5 @@
       SUBROUTINE EVMON (IPH,IPPCL)
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -23,8 +24,6 @@ C     IPPCL = 1=CALL PPEVMI IF PPE IS ACTIVE
 C             2=SUPPRESS THE CALL TO PPEVMI WHEN PPE IS ACTIVE.
 COMMONS
       INCLUDE 'OPCOM.F77'
-C
-      INCLUDE 'CONTRL.F77'
 C
 C     MAE   = LENGTH OF MAELNK.
 C     MAELNK= LIST OF ACTIVITY GROUPS THAT ARE ASSOCIATED WITH

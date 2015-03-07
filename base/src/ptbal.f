@@ -1,4 +1,7 @@
       SUBROUTINE PTBAL
+      use contrl_mod
+      use varcom_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -12,12 +15,6 @@ C
 C     N.L.CROOKSTON, INT-MOSCOW, MARCH 1991.
 C
 C     COMMONS
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'VARCOM.F77'
 C
 C     COMMONS
 C

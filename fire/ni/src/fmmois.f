@@ -1,4 +1,5 @@
       SUBROUTINE FMMOIS (FMOIS, MOIS)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -27,7 +28,6 @@ C.... PARAMETER STATEMENTS.
 C.... PARAMETER INCLUDE FILES.
 
 C.... COMMON INCLUDE FILES.
-      INCLUDE 'CONTRL.F77'
 
 
 C     LOCAL VARIABLE DECLARATIONS

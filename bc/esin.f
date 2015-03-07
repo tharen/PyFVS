@@ -1,5 +1,9 @@
       SUBROUTINE ESIN (PASKEY,ARRAY,LNOTBK,KARD,LKECHO)
+      use esparm_mod
+      use contrl_mod
       use prgprm_mod
+      use escomn_mod
+      use plot_mod
       implicit none
 C----------
 C  $Id$
@@ -7,11 +11,7 @@ C----------
 C
 C     OPTION PROCESSOR FOR ESTABLISHMENT MODEL
 C
-      INCLUDE 'ESPARM.F77'
-      INCLUDE 'ESCOMN.F77'
       INCLUDE 'ESHAP.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'ESWSBW.F77'
       INCLUDE 'METRIC.F77'
 

@@ -1,4 +1,7 @@
       SUBROUTINE DBSATRTLS(IWHO,KODE,TEM)
+      use contrl_mod
+      use varcom_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -16,10 +19,7 @@ C                     REDIRECT OF THE FLAT FILE REPORT OR IN
 C                     ADDITION TO
 C
 
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'ESTREE.F77'
-      INCLUDE 'VARCOM.F77'
       INCLUDE 'WORKCM.F77'
       INCLUDE 'DBSCOM.F77'
       INCLUDE 'METRIC.F77'

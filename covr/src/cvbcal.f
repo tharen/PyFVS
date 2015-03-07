@@ -1,4 +1,5 @@
       SUBROUTINE CVBCAL(HTINDX)
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -54,8 +55,6 @@ C-- LCAL2 --  .TRUE. IF CALIBRATION METHOD #2 IS BEING USED
 C             (CALIBRATION BY SPECIES: SHRUBHT & SHRUBPC CARDS)
 C
 C-----------------------------------------------------------------------
-C
-      INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'CVCOM.F77'
 C

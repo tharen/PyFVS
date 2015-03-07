@@ -1,4 +1,6 @@
       SUBROUTINE MISTOE
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -149,9 +151,7 @@ C.... Parameter include files.
 
 C.... Common include files.
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'MISCOM.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'DMCOM.F77'
 
 C.... Variable declarations.

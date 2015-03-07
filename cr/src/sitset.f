@@ -1,4 +1,10 @@
       SUBROUTINE SITSET
+      use plot_mod
+      use esparm_mod
+      use contrl_mod
+      use coeffs_mod
+      use escomn_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -12,19 +18,7 @@ C  THAT HAVE NOT BEEN SET USING THE SITECODE KEYWORD, AND DEFAULT SDI
 C  MAXIMUM VALUES FOR SPECIES THAT HAVE NOT BEEN SET USING THE SDIDEF
 C  KEYWORD.
 C
-      INCLUDE 'COEFFS.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'ESPARM.F77'
-C
-      INCLUDE 'ESCOMN.F77'
-C
       INCLUDE 'GGCOM.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'VARCOM.F77'
 C
       INCLUDE 'VOLSTD.F77'
 C

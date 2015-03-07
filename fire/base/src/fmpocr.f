@@ -1,4 +1,5 @@
       SUBROUTINE FMPOCR(IYR,ICALL)
+      use plot_mod
       use arrays_mod
       use fmcom_mod
       use fmparm_mod
@@ -30,7 +31,6 @@ C     PARAMETER INCLUDE FILES.
 
 C     COMMON INCLUDE FILES.
 
-      INCLUDE 'PLOT.F77'
 
 
 C     VARIABLE DECLARATIONS.

@@ -1,4 +1,6 @@
       SUBROUTINE COMPRS (NCLAS,PN1)
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -54,10 +56,6 @@ C     NOTEWORTHY INTERNAL VARIABLES:
 C     NCLS1 = THE NUMBER OF CLASSES FOUND USING METHOD 1
 C     NCLS2 = THE NUMBER OF CLASSES FOUND USING METHOD 2
 C     LTRNK = TRUE IF THE CURRENT CLASS IS A 'TRUNCATED-TREE' CLASS.
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
       INCLUDE 'ESTREE.F77'
 C

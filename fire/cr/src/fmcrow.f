@@ -1,8 +1,9 @@
       SUBROUTINE FMCROW
-      use contrl_mod
-      use fmcom_mod
+      use plot_mod
       use arrays_mod
+      use fmcom_mod
       use fmparm_mod
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -41,7 +42,6 @@ C                  PCTILE
 C.... Parameter include files.
 
 C.... Common include files.
-      INCLUDE 'PLOT.F77'
 
 C.... Parameter statements.
 

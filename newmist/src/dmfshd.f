@@ -1,4 +1,5 @@
       SUBROUTINE DMFSHD
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -90,7 +91,6 @@ C     Shade   DMCOM
 C
 C**********************************************************************
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'DMCOM.F77'
 
 C Local variables and Parameters.

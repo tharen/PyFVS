@@ -1,4 +1,5 @@
       SUBROUTINE MPBHED
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -22,7 +23,6 @@ C
 C**********************************************************************
 C
 
-      INCLUDE 'PLOT.F77'
 
       INCLUDE 'MPBCOM.F77'
 C

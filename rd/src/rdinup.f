@@ -1,4 +1,5 @@
       SUBROUTINE  RDINUP
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -23,7 +24,6 @@ C----------------------------------------------------------------------
 C
       INCLUDE 'RDPARM.F77'
       INCLUDE 'RDCOM.F77'
-      INCLUDE 'PLOT.F77'
 C
       INTEGER  I, IDI, J, K
 

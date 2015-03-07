@@ -1,6 +1,9 @@
       SUBROUTINE UPDATE
-      use arrays_mod
+      use contrl_mod
       use prgprm_mod
+      use plot_mod
+      use coeffs_mod
+      use arrays_mod
       implicit none
 C----------
 C  **UPDATE- ON DATE OF LAST REVISION:  07/23/08
@@ -12,13 +15,7 @@ C     COMPUTES VOLUME STATISTICS
 C     EXECUTES SOME OF THE SUMMARY LOGIC.
 C----------
 COMMONS
-      INCLUDE 'COEFFS.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
       INCLUDE 'OUTCOM.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
       LOGICAL DEBUG
       REAL SPCMO(MAXSP,3),WKI,BRATIO

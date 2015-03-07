@@ -1,5 +1,9 @@
       SUBROUTINE SITSET
+      use esparm_mod
+      use contrl_mod
       use prgprm_mod
+      use escomn_mod
+      use plot_mod
       implicit none
 C----------
 C  **SITSET-- LS  DATE OF LAST REVISION:  05/11/11
@@ -8,14 +12,6 @@ C THIS SUBROUTINE LOADS THE SITELG ARRAY WITH A SITE INDEX FOR EACH
 C SPECIES WHICH WAS NOT ASSIGNED A SITE INDEX BY KEYWORD.
 C----------
 COMMONS
-      INCLUDE 'ESPARM.F77'
-C
-      INCLUDE 'ESCOMN.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
       INCLUDE 'VOLSTD.F77'
 C
       LOGICAL DEBUG

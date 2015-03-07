@@ -1,8 +1,9 @@
       SUBROUTINE FMPOFL (IYR, FMD, LNMOUT)
-      use contrl_mod
+      use plot_mod
       use fmcom_mod
-      use fmfcom_mod
       use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -31,8 +32,6 @@ C     SFMOD:  SEVERE FUEL MODELS USED.  TRACKED BECAUSE IN SN, DIFFERENT
 C             FUEL MODELS MAY BE SELECTED FOR SEVERE AND MODERATE CASES.
 C     SFWT:   SEVERE FUEL MODEL WEIGHT.  USED WITH SFMOD.
 C     SNFMODS:NUMBER OF FUEL MODELS USED IN THE SEVERE CASE.
-C
-      INCLUDE 'PLOT.F77'
 C
 C  VARIABLE DECLARATIONS.
 
@@ -420,10 +419,11 @@ C
 
 
       SUBROUTINE FMPOFL_FMPTRH(IYR,MXI,PRB,FLM1,FLM2,PTR1,PTR2)
-      use fmcom_mod
-      use fmfcom_mod
+      use plot_mod
       use arrays_mod
+      use fmcom_mod
       use fmparm_mod
+      use fmfcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -434,8 +434,6 @@ C     FLAME LENGTHS.  NOT DESIGNED TO BE CALLED FROM OTHER PARTS
 C     OF THE PROGRAM.
 C
 C     NL CROOKSTON -- RMRS MOSCOW -- MAY 2004
-C
-      INCLUDE 'PLOT.F77'
 C
 C     SET THE MAXIMUM NUMBER OF REPLICATIONS.
 
@@ -612,7 +610,7 @@ C     RESTORE THE RANDOM NUMBER STATUS
       END
 
         SUBROUTINE FMPOFL_NPROB(Z,P,Q,PDF)
-        implicit none
+      implicit none
 C
 C       P, Q = PROBABILITIES TO THE LEFT AND RIGHT OF Z
 C       FOR THE STANDARD NORMAL DISTRIBUTION.

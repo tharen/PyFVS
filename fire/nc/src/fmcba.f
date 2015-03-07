@@ -1,4 +1,5 @@
       SUBROUTINE FMCBA (IYR,ISWTCH)
+      use plot_mod
       use arrays_mod
       use fmcom_mod
       use fmparm_mod
@@ -46,7 +47,6 @@ Cppe      INCLUDE 'PPEPRM.F77'
 
 C     Common include files.
 Cppe      INCLUDE 'PPCNTL.F77'
-      INCLUDE 'PLOT.F77'
 
 C     Variable declarations.
 

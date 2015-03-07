@@ -1,4 +1,6 @@
       SUBROUTINE SITSET
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -10,10 +12,6 @@ C
 C  IT IS ALSO USED TO SET DEFAULTS WHICH ARE DEPENDENT ON FOREST CODE
 C  WITHIN A VARIANT.
 C----------
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
       INCLUDE 'CICOM.F77'
 C

@@ -1,4 +1,5 @@
       SUBROUTINE BWEPPGT (WK3, IPNT, ILIMIT, IB)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -52,7 +53,6 @@ C.... Parameter include files.
 C.... Common include files.
 
       INCLUDE 'PPCNTL.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BWEBOX.F77'
       INCLUDE 'BWECM2.F77'
       INCLUDE 'BWECOM.F77'

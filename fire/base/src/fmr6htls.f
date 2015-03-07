@@ -1,4 +1,5 @@
       SUBROUTINE FMR6HTLS (KSP,X)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -43,8 +44,6 @@ C
 ***********************************************************************
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
 C----------
 C  Variable declarations.
 C----------

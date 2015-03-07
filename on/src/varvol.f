@@ -1,4 +1,6 @@
         SUBROUTINE VARVOL
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -29,9 +31,7 @@ C  WI (CHEQUAMEGON-NICOLET), AND UPPER MI (OTTAWA AND HIAWATHA NFS),
 C  AND INTERNATIONAL 1/4" IS USED EVERYWHERE ELSE
 C----------
 C
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'VOLSTD.F77'
-      INCLUDE 'PLOT.F77'
 COMMONS
 C----------
       REAL VOL(15),BOLTHT(21),LOGLEN(7,21),BBFV1,UPSHT1

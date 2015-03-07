@@ -1,5 +1,11 @@
       SUBROUTINE ESUCKR
+      use plot_mod
       use arrays_mod
+      use esparm_mod
+      use contrl_mod
+      use coeffs_mod
+      use escomn_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -10,17 +16,11 @@ C  ASSUMPTION: THE TREE LIST HAS BEEN COMPRESSED TO ABOUT 1/2 THE
 C  VALUE OF MAXTRE. COMPRS IS CALLED IN ESNUTR.
 C----------
 COMMONS
-      INCLUDE 'COEFFS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'BCPLOT.F77'
-      INCLUDE 'ESPARM.F77'
       INCLUDE 'ESHOOT.F77'
-      INCLUDE 'ESCOMN.F77'
       INCLUDE 'ESHAP.F77'
       INCLUDE 'ESTREE.F77'
       INCLUDE 'STDSTK.F77'
-      INCLUDE 'VARCOM.F77'
       INCLUDE 'METRIC.F77'
 C
       INTEGER NUMSPR,I,ICL,ISSP,IPLOT,ISPSTO,II,MXRR,J,ITRGT,MXTODO

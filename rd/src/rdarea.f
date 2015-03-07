@@ -1,4 +1,5 @@
       SUBROUTINE RDAREA
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -45,8 +46,6 @@ C
 C----------------------------------------------------------------------
 C
       INCLUDE 'RDPARM.F77'
-C
-      INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'RDCOM.F77'
 C

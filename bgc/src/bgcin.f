@@ -1,4 +1,5 @@
       SUBROUTINE BGCIN (KEYWRD,ARRAY,LNOTBK,LKECHO)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -19,7 +20,6 @@ C
       INCLUDE 'BGCCOM.F77'
       INCLUDE 'ENTITY.F77'
 C      INCLUDE 'PPCNTL.F77'  ! removed 11/02 ajm
-      INCLUDE 'CONTRL.F77'
 C
       PARAMETER (KWCNT = 12)
       CHARACTER*8 TABLE, KEYWRD, PASKEY

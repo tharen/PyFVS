@@ -1,4 +1,7 @@
         SUBROUTINE VARVOL
+      use contrl_mod
+      use varcom_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -12,15 +15,9 @@ C  EQUAL TO 6.  IT ALSO CONTAINS ANY OTHER SPECIAL VOLUME CALCULATION
 C  METHOD SPECIFIC TO A VARIANT (METHB OR METHC = 8)
 C----------
 C
-      INCLUDE 'CONTRL.F77'
-C
       INCLUDE 'VOLSTD.F77'
 C
-      INCLUDE 'PLOT.F77'
-C
       INCLUDE 'GGCOM.F77'
-C
-      INCLUDE 'VARCOM.F77'
 C
 C----------
       REAL LOGLEN(20),BOLHT(21),TVOL(15)

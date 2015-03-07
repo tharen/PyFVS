@@ -13,6 +13,7 @@
       ! file can be run to increase the sample size for gprof
       integer :: iters,j
       character(len=32) :: arg
+
       print '(a)', 'Do profiling iterations'
       iters = 1
       do j=0, command_argument_count()
@@ -27,6 +28,9 @@
 
       do j=1, iters
 #endif
+
+      ! Initialize the variant parameters and arrays
+      call blkdat()
 
 !
 !     PROCSS THE COMMAND LINE. Passing an empty string signals that the
@@ -59,7 +63,7 @@
 
       enddo
 
-   10 CONTINUE 
+   10 CONTINUE
 
       call fvsGetICCode(i)
 
@@ -69,9 +73,9 @@
       enddo
 #endif
 
-      IF (i .EQ. 0) STOP	
+      IF (i .EQ. 0) STOP
 
-      GO TO (11,12,13,14,15), i 
+      GO TO (11,12,13,14,15), i
    11 CONTINUE
       STOP 10
    12 CONTINUE

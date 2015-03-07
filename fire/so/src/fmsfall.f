@@ -2,6 +2,7 @@
      &                   RSOFT,RSMAL,DFALLN)
       use contrl_mod
       use fmcom_mod
+      use plot_mod
       use fmparm_mod
       use prgprm_mod
       implicit none
@@ -62,8 +63,6 @@ C              NI variant).
 C              Internal FALLX values can be overridden by the user, via
 C              the SNAGFALL keyword.
 C----------
-C
-      INCLUDE 'PLOT.F77'
 C
       INTEGER ISWTCH, IYR, JADJ, JSML, JYRSOFT, KSP
       LOGICAL DEBUG

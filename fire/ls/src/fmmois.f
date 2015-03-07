@@ -1,4 +1,5 @@
       SUBROUTINE FMMOIS (FMOIS, MOIS)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -22,8 +23,6 @@ C     MOIS: (1,*):DEAD STUFF: ,1=0-.25;,2=.25-1;,3=1-3;,4=3+;,5=DUFF
 C           (2,*):LIVE STUFF
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
 C----------
 C  LOCAL VARIABLE DECLARATIONS
 C----------

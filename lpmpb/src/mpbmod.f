@@ -1,4 +1,6 @@
       SUBROUTINE MPBMOD
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -18,10 +20,6 @@ C   08/22/14 Lance R. David (FMSC)
 C     Function name was used as variable name.
 C     changed variable INT to INCRS
 C----------
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
       INCLUDE 'MPBCOM.F77'
 C

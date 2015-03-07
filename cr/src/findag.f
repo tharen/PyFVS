@@ -1,5 +1,7 @@
       SUBROUTINE FINDAG(I,ISPC,D1,D2,H,SITAGE,SITHT,AGMAX,HTMAX,HTMAX2,
      &                  DEBUG)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -12,10 +14,6 @@ C
 CALLS **FNDAG
 C----------
 C COMMONS
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
       INCLUDE 'GGCOM.F77'
 C

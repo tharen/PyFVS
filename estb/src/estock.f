@@ -1,4 +1,6 @@
       SUBROUTINE ESTOCK (ELEV,IFO,XBAA,XBAALN,PN)
+      use esparm_mod
+      use escomn_mod
       use prgprm_mod
       implicit none
 C----------
@@ -7,10 +9,6 @@ C----------
 C
 C     CALCULATES PROBABILITY OF STOCKING FOR REGENERATION MODEL.
 C     COEFFICIENTS FOR PLANTING ARE NOT INCLUDED IN EQUATIONS.
-C
-      INCLUDE 'ESPARM.F77'
-C
-      INCLUDE 'ESCOMN.F77'
 C
       INCLUDE 'ESCOM2.F77'
 C

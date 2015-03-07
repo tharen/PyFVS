@@ -1,13 +1,11 @@
       SUBROUTINE ESDLAY (ISPE,IAS,DRAW,DELAY)
+      use esparm_mod
+      use escomn_mod
       use prgprm_mod
       implicit none
 C----------
 C  **ESDLAY--NI23   DATE OF LAST REVISION:  04/01/08
 C----------
-C
-      INCLUDE 'ESPARM.F77'
-C
-      INCLUDE 'ESCOMN.F77'
 C
       INCLUDE 'ESCOM2.F77'
 C

@@ -1,4 +1,6 @@
       SUBROUTINE BRCGRO(K,PROP,BRHT,BRHTG,BRDG,NLCAN,HNEW,DNEW)
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -124,8 +126,6 @@ C**********************************************************************
 C.... Common include files.
 
       INCLUDE 'BRCOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
 
 C.... Local variable declarations.
 

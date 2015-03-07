@@ -1,4 +1,5 @@
       SUBROUTINE SGDECD (ISPC,KARD,IFLAG)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -9,8 +10,6 @@ C     DECODE THE SPECIES GROUP CODE.
 C     ISPC  = NUMERIC SPECIES CODE.
 C     IFLAG = 0 IF SPECIES GROUP IS NOT FOUND; 1 IF IT IS.
 C     KARD  = CHARACTER REPRESENTATION OF SPECIES FIELD
-C
-      INCLUDE 'CONTRL.F77'
 C
 C----------
       INTEGER IFLAG,ISPC,J,I

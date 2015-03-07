@@ -1,4 +1,5 @@
       SUBROUTINE DFBRAN(SEL)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -54,7 +55,6 @@ C
       DOUBLE PRECISION SS0
 
 
-      INCLUDE 'CONTRL.F77'
 
       INCLUDE 'DFBCOM.F77'
 

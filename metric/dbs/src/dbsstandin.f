@@ -1,6 +1,13 @@
       SUBROUTINE DBSSTANDIN(SQLSTR,LKECHO)
+      use htcal_mod
+      use plot_mod
       use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use econ_mod
       use prgprm_mod
+      use varcom_mod
+      use screen_mod
       implicit none
 C----------
 C  $Id$
@@ -11,17 +18,10 @@ C     OVERHAUL: NL CROOKTON -- RMRS MOSCOW -- SEPTEMBER 2004
 C---
 COMMONS
 
-      INCLUDE  'COEFFS.F77'
-      INCLUDE  'CONTRL.F77'
-      INCLUDE  'PLOT.F77'
       INCLUDE  'OUTCOM.F77'
-      INCLUDE  'HTCAL.F77'
-      INCLUDE  'ECON.F77'
       INCLUDE  'KEYCOM.F77'
       INCLUDE  'MULTCM.F77'
       INCLUDE  'VOLSTD.F77'
-      INCLUDE  'SCREEN.F77'
-      INCLUDE  'VARCOM.F77'
       INCLUDE  'DBSCOM.F77'
       INCLUDE  'METRIC.F77'
 COMMONS

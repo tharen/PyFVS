@@ -1,4 +1,6 @@
       SUBROUTINE BWEOB
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C ------------
@@ -49,8 +51,6 @@ C      Added weather year (if using RAWS) to special events table.
 C
 C----------------------------------------------------------------------
 C
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'BWECM2.F77'
       INCLUDE 'BWEBOX.F77'
 

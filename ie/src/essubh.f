@@ -1,14 +1,12 @@
       SUBROUTINE ESSUBH (I,HHT,EMSQR,DILATE,DELAY,ELEV,IHTSER,
      &  GENTIM,TRAGE)
+      use esparm_mod
+      use escomn_mod
       use prgprm_mod
       implicit none
 C----------
 C  **ESSUBH--NI23   DATE OF LAST REVISION:   01/27/09
 C----------
-C
-      INCLUDE 'ESPARM.F77'
-C
-      INCLUDE 'ESCOMN.F77'
 C
       INCLUDE 'ESCOM2.F77'
 C

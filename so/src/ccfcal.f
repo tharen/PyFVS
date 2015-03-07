@@ -1,4 +1,5 @@
       SUBROUTINE CCFCAL(ISPC,D,H,JCR,P,LTHIN,CCFT,CRWDTH,MODE)
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -92,8 +93,6 @@ C  CROWN WIDTH EQUATIONS FOR REGION 6:
 C  FROM DONNELLY --- SEE DOCUMENTATION IN SUBROUTINE **R6CRWD**
 C----------
 COMMONS
-      INCLUDE  'PLOT.F77'
-C
 C----------
 C----------
       LOGICAL LTHIN

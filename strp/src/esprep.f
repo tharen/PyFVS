@@ -1,16 +1,13 @@
       SUBROUTINE ESPREP (ISER,PNONE,PMECH,PBURN)
+      use esparm_mod
+      use escomn_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
 C  **ESPREP DATE OF LAST REVISION:  09/17/08
 C----------
 C     PREDICT DEFAULT SITE PREP PROBABILITIES.
-C
-      INCLUDE 'ESPARM.F77'
-C
-      INCLUDE 'ESCOMN.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
       REAL PBURN,PMECH,PNONE
       INTEGER ISER

@@ -1,4 +1,6 @@
       SUBROUTINE HABTYP (KARD2,ARRAY2)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -11,10 +13,6 @@ C        ICINDX = INDEX TO CI TYPE
 C     IF KODTYP IS ZERO, THE ROUTINE RETURNS THE DEFAULT CODE.
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
       INCLUDE 'CICOM.F77'
 COMMONS
 C----------

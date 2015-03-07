@@ -1,33 +1,22 @@
       BLOCK DATA BLKDAT
+      use htcal_mod
+      use pden_mod
+      use esparm_mod
+      use rancom_mod
+      use contrl_mod
+      use coeffs_mod
+      use econ_mod
+      use plot_mod
       use prgprm_mod
+      use escomn_mod
+      use varcom_mod
+      use screen_mod
       implicit none
 C----------
 C  **BLKDAT--WC/M   DATE OF LAST REVISION:  02/15/12
 C----------
 C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
-C
-      INCLUDE 'COEFFS.F77'
-C
-      INCLUDE 'ESPARM.F77'
-C
-      INCLUDE 'ESCOMN.F77'
-C
-      INCLUDE 'PDEN.F77'
-C
-      INCLUDE 'ECON.F77'
-C
-      INCLUDE 'HTCAL.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'RANCOM.F77'
-C
-      INCLUDE 'SCREEN.F77'
-C
-      INCLUDE 'VARCOM.F77'
 C
 C     TYPE DECLARATIONS AND COMMON STATEMENT FOR CONTROL VARIABLES.
 C

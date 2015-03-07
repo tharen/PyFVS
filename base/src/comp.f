@@ -1,4 +1,6 @@
       SUBROUTINE COMP(CMP,ICMP,ATTR)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -9,10 +11,6 @@ C  ATTRIBUTE IN EACH SPECIES-TREE CLASS.  IT THEN LOADS CMP
 C  WITH THE FOUR LARGEST CLASSES AND LOADS ICMP WITH
 C  CORRESPONDING SPECIES-TREE CLASS LABELS.
 C----------
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
       INTEGER MXSP3
       PARAMETER (MXSP3=MAXSP*3)

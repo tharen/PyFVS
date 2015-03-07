@@ -1,4 +1,7 @@
       SUBROUTINE DBSCUTS(IWHO,KODE)
+      use contrl_mod
+      use varcom_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -15,13 +18,7 @@ C                     ADDITION TO
 C
 C---
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
       INCLUDE 'ESTREE.F77'
-C
-      INCLUDE 'VARCOM.F77'
 C
       INCLUDE 'WORKCM.F77'
 C

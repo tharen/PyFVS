@@ -1,6 +1,8 @@
 
       SUBROUTINE GVRVOL (VN,VM,BBFV,ISPC,D,H,TKILL,BARK,ITRNC,VMAX,
      1              CTKFLG,BTKFLG,IT)
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -10,11 +12,7 @@ C----------
 C  GEVORKIANTZ VOLUME CALCULATION METHOD (METHC AND/OR METHB=5)
 C  THIS METHOD WAS SUPERCEEDED BY THE CLARK METHOD FALL 2009
 C
-      INCLUDE 'CONTRL.F77'
-C
       INCLUDE 'VOLSTD.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
 C----------
       REAL VOL(15)

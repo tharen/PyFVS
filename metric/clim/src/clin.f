@@ -1,12 +1,12 @@
       SUBROUTINE CLIN (DEBUG,LKECHO)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
 C  $Id$
 C----------
 C
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'CLIMATE.F77'
       INCLUDE 'METRIC.F77'
 C

@@ -1,4 +1,6 @@
       SUBROUTINE HABTYP (KARD2,ARRAY2)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -11,10 +13,6 @@ C     ROUTINE ALSO TRANSLATES HABITAT TYPE INTO A SUBSCRIPT FOR THE
 C     KOOTENAI CODES WHICH IS USED IN DGF.
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
       INCLUDE 'KOTCOM.F77'
 C
 C----------

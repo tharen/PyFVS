@@ -1,4 +1,5 @@
       SUBROUTINE MISINT
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -34,8 +35,6 @@ C    Impact values must be supplied by MistHMod keyword.
 C
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
       INCLUDE 'MISCOM.F77'
 C
 C----------

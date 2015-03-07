@@ -1,6 +1,9 @@
       SUBROUTINE DGDRIV
-      use arrays_mod, only: barkrat
+      use plot_mod
       use arrays_mod
+      use arrays_mod, only: barkrat
+      use contrl_mod
+      use coeffs_mod
       use prgprm_mod
       implicit none
 C----------
@@ -22,12 +25,6 @@ C  REPRESENTS CHANGE IN SQUARED DIAMETER.
 C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
-C
-      INCLUDE 'COEFFS.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
       INCLUDE 'MULTCM.F77'
 C

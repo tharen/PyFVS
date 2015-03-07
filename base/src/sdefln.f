@@ -1,14 +1,12 @@
       SUBROUTINE SDEFLN (LNOTBK,ARRAY,KEYWRD,B0,B1,KARD,IS)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
 C  $Id$
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
 C     PROCESSES BFFDLN OR MCFDLN KEYWORDS - CALLED FROM INITRE.
 C     NL CROOKSTON - INT. MOSCOW - 4/80.
 C

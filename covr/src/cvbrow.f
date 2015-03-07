@@ -1,4 +1,6 @@
       SUBROUTINE CVBROW (LTHIN)
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -226,10 +228,6 @@ C  31) SORB:SORBUS SPP.
 C
 C-----------------------------------------------------------------------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
       INCLUDE 'OUTCOM.F77'
 C
       INCLUDE 'CVCOM.F77'

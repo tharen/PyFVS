@@ -1,6 +1,10 @@
       SUBROUTINE ESSUBH (I,HHT,EMSQR,DILATE,DELAY,ELEVDUM,IHTSER,GENTIM,
      &                   TRAGE)
+      use esparm_mod
+      use contrl_mod
       use prgprm_mod
+      use escomn_mod
+      use plot_mod
       implicit none
 C----------
 C  **ESSUBH--WC  DATE OF LAST REVISION:  01/31/12
@@ -8,14 +12,6 @@ C----------
 C     CALLED FROM **ESTAB
 C     CALLS **SMHGDG
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'ESPARM.F77'
-C
-      INCLUDE 'ESCOMN.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
       LOGICAL DEBUG
       INTEGER I,IHTSER,N,ITIME,ID,ISUM5
       REAL    AGE,EMSQR,DILATE,DELAY,ELEVDUM,GENTIM,H,HHT,TRAGE

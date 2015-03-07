@@ -1,4 +1,6 @@
       SUBROUTINE SITSET
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -10,10 +12,6 @@ C  THE SDIDEF ARRAY WITH SDI MAXIMUMS FOR EACH SPECIES WHICH WAS NOT
 C  ASSIGNED AN SDI MAXIMUM USING THE SDIMAX KEYWORD.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
       INCLUDE 'VOLSTD.F77'
 C
       INCLUDE 'METRIC.F77'

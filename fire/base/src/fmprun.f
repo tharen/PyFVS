@@ -1,4 +1,5 @@
       SUBROUTINE FMPRUN(CTCRWN)
+      use plot_mod
       use arrays_mod
       use fmcom_mod
       use fmparm_mod
@@ -15,7 +16,6 @@ C	    THIS ROUTINE ADDS THE MATERIAL THAT WAS PRUNED IN CUTS.
 C     CALLED FROM -- CUTS
 C
 
-      INCLUDE 'PLOT.F77'
 C
       DIMENSION CTCRWN(MAXTRE)
       LOGICAL   DEBUG

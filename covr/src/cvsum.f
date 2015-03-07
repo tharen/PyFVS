@@ -1,4 +1,6 @@
       SUBROUTINE CVSUM (LTHIN)
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -97,10 +99,6 @@ C             COVER, HEIGHT, PROB, AND SPECIES CODE OF UP TO 6
 C             USER-SELECTED SPECIES FOR DISPLAY
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
       INCLUDE 'CVCOM.F77'
 C
       REAL LOWLIM

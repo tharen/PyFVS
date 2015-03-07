@@ -1,4 +1,5 @@
       SUBROUTINE CVINIT
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -9,8 +10,6 @@ C  INITIALIZES COVER VARIABLES FOR THE CURRENT STAND.
 C  CALLED FROM **INITRE**.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
       INCLUDE 'CVCOM.F77'
 C
       INTEGER I,J

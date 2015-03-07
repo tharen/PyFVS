@@ -1,4 +1,5 @@
       SUBROUTINE COMCUP
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -13,8 +14,6 @@ C     ADDED THE CAPABILITY TO DELETE TREES THAT HAVE ZERO (AND/OR
 C     NEAR-ZERO) PROBS...TOTAL REWRITE.  NL CROOKSTON, JUNE 1991.
 C
 C     N.L. CROOKSTON       INT-MOSCOW     DEC. 1981 & JUNE 1982
-C
-      INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'OUTCOM.F77'
 C

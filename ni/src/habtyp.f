@@ -1,4 +1,6 @@
       SUBROUTINE HABTYP (KARD2,ARRAY2)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -12,10 +14,6 @@ C     FOR THE COLVILLE (R6), TRANSLATES PLANT ASSOCIATION INTO A
 C     CORRESPONDING NI HABITAT TYPE CODE.
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
 C----------
       INTEGER NPA,MTYPE,KTYPE,I,I1,I2,INDEX,NITYPE,K
       PARAMETER (NPA=40)

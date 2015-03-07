@@ -1,4 +1,5 @@
       SUBROUTINE MISINT
+      use contrl_mod
       use prgprm_mod
       implicit none
 ***********************************************************************
@@ -39,8 +40,6 @@
 ***********************************************************************
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
       INCLUDE 'MISCOM.F77'
 C
 C----------

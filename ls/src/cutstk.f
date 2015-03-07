@@ -1,4 +1,6 @@
       SUBROUTINE CUTSTK
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -9,10 +11,6 @@ C  THIS SUBROUTINE CONTAINS ENTRY POINTS FOR CALCULATING STOCKING
 C  LEVELS FOR VARIOUS THINNING OPTIONS.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
 C----------
       LOGICAL LINCL
       REAL BASP(6),A1(6),A2(6),A3(6)

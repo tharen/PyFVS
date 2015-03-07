@@ -1,4 +1,7 @@
       SUBROUTINE HABTYP (KARD2,ARRAY2)
+      use contrl_mod
+      use plot_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -7,12 +10,6 @@ C----------
 C
 C  TRANSLATES PLANT ASSOCIATION OR HABITAT TYPE INTO A SUBSCRIPT, ITYPE,
 C  AND IF KODTYP IS ZERO, THE ROUTINE RETURNS THE DEFAULT CODE.
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'VARCOM.F77'
 C
 C----------
       INTEGER NPA,NR5,I,IR5,IR6,LIMIT,IHB

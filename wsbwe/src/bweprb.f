@@ -1,4 +1,5 @@
       SUBROUTINE BWEPRB
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -26,7 +27,6 @@ C    14-JUL-2010 Lance R. David (FMSC)
 C       Previouse noted revision 06/19/84
 C----------
 C
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECOM.F77'
 C

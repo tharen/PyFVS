@@ -1,4 +1,5 @@
       SUBROUTINE RDGROW
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -26,7 +27,6 @@ C
 
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'RDADD.F77'
 C
       INTEGER  I, IDI, IP, IS, J

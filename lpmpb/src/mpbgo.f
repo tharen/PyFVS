@@ -1,4 +1,6 @@
       SUBROUTINE MPBGO(L)
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -20,10 +22,6 @@ C     Initialization of logical variable L.
 C   07/02/10 Lance R. David (FMSC)
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
       INCLUDE 'MPBCOM.F77'
 C
       LOGICAL L,NOERR

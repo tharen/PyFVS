@@ -1,4 +1,5 @@
       SUBROUTINE FMSDIT
+      use plot_mod
       use arrays_mod
       use fmcom_mod
       use fmparm_mod
@@ -22,7 +23,6 @@ C     NEWBOT: the height of the bottom of the crown in the current cycle
 C     OLDBOT: the height of the bottom of the crown in the previous cycle
 C
 
-      INCLUDE 'PLOT.F77'
 
       INTEGER I, J
       REAL    CYCLEN, NEWBOT, OLDBOT

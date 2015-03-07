@@ -1,14 +1,12 @@
       SUBROUTINE DBSIN (KEYWRD,ARRAY,ISDSP,SDLO,SDHI,LNOTBK,LKECHO)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C
 C $Id: dbsin.f 1399 2015-01-09 00:44:58Z tod.haren $
 C
 C     OPTION PROCESSOR FOR DATA BASE CONNECTIVITY
-C
-      INCLUDE  'CONTRL.F77'
-C
-      INCLUDE  'PLOT.F77'
 C
       INCLUDE  'DBSCOM.F77'
 C

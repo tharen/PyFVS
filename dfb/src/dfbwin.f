@@ -1,4 +1,5 @@
       SUBROUTINE DFBWIN(LDFBGO)
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -89,8 +90,6 @@ C   26-JAN-2010 Lance R. David (FHTET)
 C     Changed MYACT to MYACT(1) in call to OPREDT (from Don Robinson, ESSA).
 C-------------------------------------------------------------------------------
 COMMONS
-      INCLUDE  'CONTRL.F77'
-C
       INCLUDE  'DFBCOM.F77'
 C
       LOGICAL LDFBGO

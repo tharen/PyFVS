@@ -1,4 +1,5 @@
       SUBROUTINE OPCACT (KODE,CSTR)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -19,8 +20,6 @@ C                A WARNING MESSAGE IS ISSUED VIA ERRGRO.
 C     CSTR = THE STRING THAT IS BEING ADDED.
 C
       INCLUDE 'OPCOM.F77'
-C
-      INCLUDE 'CONTRL.F77'
 C
       LOGICAL LDEB
       CHARACTER*(*) CSTR

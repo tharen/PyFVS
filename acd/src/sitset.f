@@ -1,4 +1,7 @@
       SUBROUTINE SITSET
+      use contrl_mod
+      use plot_mod
+      use coeffs_mod
       use prgprm_mod
       implicit none
 C----------
@@ -11,12 +14,6 @@ C EQUATIONS AND COEFFICIENTS FOR THIS SUBROUTINE COME FROM 'SITE INDEX
 C CONVERSION EQUATIONS FOR THE NORTHEAST' BY DON HILT.  FILE REPORT
 C NUMBER 1: RESEARCH WORK UNIT FS-NE-4153.
 C----------
-C
-      INCLUDE 'COEFFS.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
       INCLUDE 'VOLSTD.F77'
 C

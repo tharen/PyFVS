@@ -1,11 +1,10 @@
       SUBROUTINE LNKINT
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
 C  $Id$
 C----------
-C
-      INCLUDE 'CONTRL.F77'
 C
       INTEGER I
 C

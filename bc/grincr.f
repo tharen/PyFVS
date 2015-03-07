@@ -1,6 +1,10 @@
       SUBROUTINE GRINCR (DEBUG,IPMODI,LTMGO,LMPBGO,LDFBGO,
      1                   LBWEGO,LCVATV,LBGCGO)
+      use plot_mod
       use arrays_mod
+      use contrl_mod
+      use pden_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -11,13 +15,9 @@ C     COMPUTES GROWTH AND MORTALITY ON EACH TREE RECORD.
 C
 C     CALLED FROM: PPMAIN AND TREGRO.
 C
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PDEN.F77'
       INCLUDE 'OUTCOM.F77'
       INCLUDE 'STDSTK.F77'
       INCLUDE 'ESHAP.F77'
-      INCLUDE 'VARCOM.F77'
 C
       REAL PRM(6)
       INTEGER MYACTS(3)

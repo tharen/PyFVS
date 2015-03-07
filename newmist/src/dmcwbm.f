@@ -1,4 +1,6 @@
       SUBROUTINE DMCW(DMTRCW)
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -48,8 +50,6 @@ C     [none related to NISI; FVS commons are not documented]
 C
 C********************************************************************C
 
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'DMCOM.F77'
 
 C Argument list variables

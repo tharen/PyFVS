@@ -1,4 +1,6 @@
       SUBROUTINE BWEP3
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -47,8 +49,6 @@ C
       INCLUDE 'BWECM2.F77'
       INCLUDE 'BWEBOX.F77'
       INCLUDE 'BWECOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
 
       LOGICAL HEADER
       CHARACTER*3 TRESP(6),sumt1,sumt2

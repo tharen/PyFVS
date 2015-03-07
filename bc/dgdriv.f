@@ -1,6 +1,9 @@
       SUBROUTINE DGDRIV
-      use arrays_mod
+      use contrl_mod
       use prgprm_mod
+      use plot_mod
+      use coeffs_mod
+      use arrays_mod
       implicit none
 C----------
 C  $Id$
@@ -21,9 +24,6 @@ C  REPRESENTS CHANGE IN SQUARED DIAMETER.
 C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
-      INCLUDE 'COEFFS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'MULTCM.F77'
       INCLUDE 'ESTCOR.F77'
       INCLUDE 'WORKCM.F77'

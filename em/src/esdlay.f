@@ -1,4 +1,6 @@
       SUBROUTINE ESDLAY (ISPE,IAS,DRAW,DELAY)
+      use esparm_mod
+      use escomn_mod
       use prgprm_mod
       implicit none
 C----------
@@ -8,10 +10,6 @@ C     CONTAINS WEIBULL MAXIMUM LIKLIHOOD FUNCTIONS FOR DETERMINING
 C     THE NUMBER OF YEARS BETWEEN LAST PLOT DISTURBANCE AND
 C     GERMINATION OF BEST TREES.
 C----------
-C
-      INCLUDE 'ESPARM.F77'
-C
-      INCLUDE 'ESCOMN.F77'
 C
       INCLUDE 'ESCOM2.F77'
 C

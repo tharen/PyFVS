@@ -1,4 +1,5 @@
       SUBROUTINE HTCALC (SINDX,ISPC,AG,HGUESS,JOSTND,DEBUG)
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -8,8 +9,6 @@ C THIS ROUTINE CALCULATES A POTENTIAL HT GIVEN AN SPECIES SITE AND AGE
 C IT IS USED TO CAL POTHTG AND SITE
 C----------
 COMMONS
-      INCLUDE 'VARCOM.F77'
-C
 C----------
       LOGICAL DEBUG
       INTEGER JOSTND,ISPC

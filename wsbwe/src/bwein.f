@@ -1,4 +1,5 @@
       SUBROUTINE BWEIN(LKECHO)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -136,7 +137,6 @@ C       Added RAWS weather year range as supplemental record on
 C       WEATHER keyword.
 C----------
 C
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECOM.F77'
       INCLUDE 'BWECM2.F77'

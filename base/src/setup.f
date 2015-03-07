@@ -1,4 +1,5 @@
       SUBROUTINE SETUP
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -8,8 +9,6 @@ C----------
 C
 C     SET UP THE INDEX POINTERS FOR IND1( SPECIES INDICES ).
 C     THE DEFINITION OF MOST VARIABLES OCCURES IN **INTREE**
-C
-      INCLUDE 'CONTRL.F77'
 C
       INTEGER IX,LAST,I,IR,KNT,ISTART,NEXT,J
 C

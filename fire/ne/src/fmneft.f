@@ -1,8 +1,9 @@
       SUBROUTINE FMNEFT(IFFEFT)
-      use contrl_mod
-      use fmcom_mod
+      use plot_mod
       use arrays_mod
+      use fmcom_mod
       use fmparm_mod
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -16,8 +17,6 @@ C     FIA FOREST TYPE.  THIS FOREST TYPE IS USED IN SETTING DEFAULT
 C     SURFACE FUEL LEVELS.
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'    ! since using FIA algorithm info
-C
 C----------
 C     LOCAL VARIABLE DECLARATIONS
 C----------

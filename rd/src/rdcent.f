@@ -1,5 +1,6 @@
       SUBROUTINE RDCENT(PROBIN,PCENTS,NCENTS,PROBD,SAREA,
      &                  IRFLAG,NNCENT,PISIZE,PAREA,IRRSP)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -33,7 +34,6 @@ C   08/27/14 Lance R. David (FMSC)
 C
 C----------------------------------------------------------------------
 C
-      INCLUDE 'CONTRL.F77'
 
       INCLUDE 'RDPARM.F77'
       INCLUDE 'RDADD.F77'

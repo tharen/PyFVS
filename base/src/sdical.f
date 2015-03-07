@@ -1,4 +1,7 @@
       SUBROUTINE SDICAL (XMAX)
+      use contrl_mod
+      use varcom_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -18,12 +21,6 @@ C  MONITOR VARIABLES "BSDIMAX" AND "ASDIMAX".  ITS ALSO CALLED FROM
 C  **MORTS** IN VARIANTS WHICH USE SDI BASED MORTALITY ALGORITHMS.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'VARCOM.F77'
-C
 C----------
 C  DEFINITIONS:
 C    BAXSP -- BASAL AREA BY SPECIES

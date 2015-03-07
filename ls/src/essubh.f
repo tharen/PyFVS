@@ -1,16 +1,13 @@
       SUBROUTINE ESSUBH (I,HHT,EMSQR,DILATE,DELAY,ELEV,IHTSER,GENTIM,
      &  TRAGE,SI,LOSTND)
+      use esparm_mod
+      use contrl_mod
+      use escomn_mod
       use prgprm_mod
       implicit none
 C----------
 C  **ESSUBH--LS   DATE OF LAST REVISION:   07/11/08
 C----------
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'ESPARM.F77'
-C
-      INCLUDE 'ESCOMN.F77'
 C
       REAL MAPLS(68)
       LOGICAL DEBUG

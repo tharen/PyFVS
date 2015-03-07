@@ -1,4 +1,5 @@
       SUBROUTINE HTCALC (SINDX,ISPC,AG,HGUESS,JOSTND,DEBUG)
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -9,8 +10,6 @@ C IT IS USED TO CAL POTHTG AND SITE.
 C GO TO A DIFFERENT POTENTIAL HEIGHT CURVE DEPENDING ON THE SPECIES
 C----------
 COMMONS
-      INCLUDE 'VARCOM.F77'
-C
 C----------
       LOGICAL DEBUG
       INTEGER ISPC,JOSTND

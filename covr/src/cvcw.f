@@ -1,4 +1,6 @@
       SUBROUTINE CVCW (LTHIN)
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -28,10 +30,6 @@ C  TRECW(MAXTRE) PREDICTED CROWN WIDTH IN FEET
 C  CRAREA -- SUM OF ALL CROWN PROJECTION AREAS (PI/4*TRECW*TRECW)
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
       INCLUDE 'CVCOM.F77'
 C
       LOGICAL LTHIN,DEBUG

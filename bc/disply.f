@@ -1,6 +1,11 @@
       SUBROUTINE DISPLY
+      use plot_mod
       use arrays_mod
+      use contrl_mod
+      use econ_mod
       use prgprm_mod
+      use varcom_mod
+      use screen_mod
       implicit none
 C----------
 C  $Id$
@@ -10,13 +15,8 @@ C  OF THE PROJECTION, AND AT THE END OF EACH CYCLE.  ESTIMATES
 C  STAND AGE IF MISSING FROM THE STNDINFO KEYWORD
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'OUTCOM.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'ECON.F77'
-      INCLUDE 'SCREEN.F77'
       INCLUDE 'SUMTAB.F77'
-      INCLUDE 'VARCOM.F77'
       INCLUDE 'METRIC.F77'
 C
 C----------

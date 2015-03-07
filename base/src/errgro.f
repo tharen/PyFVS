@@ -1,4 +1,6 @@
       SUBROUTINE ERRGRO (LRETRN,IERRN)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -6,10 +8,6 @@ C  $Id$
 C----------
 C
 C     ERROR PROCESSOR FOR THE FOREST VEGETATION SIMULATOR.
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
 
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE :: FVSGETICCODE

@@ -1,5 +1,7 @@
       SUBROUTINE CFVOL(ISPC,D,H,D2H,VN,VM,VMAX,TKILL,LCONE,BARK,ITHT,
      1                 CTKFLG)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -9,10 +11,6 @@ C THIS ROUTINE CALCULATES TOTAL CUBIC FOOT VOLUME USING A NUMBER OF
 C DIFFERENT METHODS.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
 C----------
 C  DIMENSION STATEMENT FOR INTERNAL ARRAYS.
 C----------

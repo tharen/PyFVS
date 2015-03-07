@@ -1,4 +1,6 @@
       SUBROUTINE FILOPN
+      use contrl_mod
+      use econ_mod
       use prgprm_mod
       implicit none
 C----------
@@ -8,10 +10,6 @@ C
 C  THIS ROUTINE OPENS THE FILES FOR THE PROGNOSIS MODEL.
 C  TO PROMPT FOR FILE NAMES, SET LPT TRUE,
 C  IF PROMPTS ARE NOT WANTED, SET LPT FALSE.
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'ECON.F77'
 C
       INTEGER LENKEY,KODE,I,LENNAM,ISTLNB
       CHARACTER*250 KEYFIL

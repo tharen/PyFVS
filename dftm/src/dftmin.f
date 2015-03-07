@@ -1,4 +1,5 @@
       SUBROUTINE DFTMIN(LKECHO)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -22,8 +23,6 @@ C     in a common block. Local declaration removed. Other declarations
 C     corrected.
 C-----------------------------------------------------------------------------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
       INCLUDE 'TMEGGS.F77'
 C
       INCLUDE 'TMCOM1.F77'

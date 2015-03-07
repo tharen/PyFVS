@@ -1,4 +1,6 @@
       SUBROUTINE HTDBH (IFOR,ISPC,D,H,MODE)
+      use contrl_mod
+      use coeffs_mod
       use prgprm_mod
       implicit none
 C----------
@@ -28,10 +30,6 @@ C      MODE = MODE OF OPERATING THIS SUBROUTINE
 C             0 IF DIAMETER IS PROVIDED AND HEIGHT IS DESIRED
 C             1 IF HEIGHT IS PROVIDED AND DIAMETER IS DESIRED
 COMMONS
-      INCLUDE 'COEFFS.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
       REAL SNALL(3,96), SNDBAL(96)
       INTEGER IWYKCA(96)
       INTEGER MODE,ISPC,IFOR,J,I

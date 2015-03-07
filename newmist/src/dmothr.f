@@ -1,4 +1,5 @@
       SUBROUTINE DMOTHR (Sp)
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -75,7 +76,6 @@ C     NewInt    DMCOM
 C
 C**********************************************************************
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'DMCOM.F77'
 
 C Subroutine arguments.

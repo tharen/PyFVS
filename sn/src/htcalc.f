@@ -1,4 +1,6 @@
       SUBROUTINE HTCALC (N,ISPC,AGET,H,HTMAX,HTG1,JOSTND,DEBUG)
+      use plot_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -20,10 +22,6 @@ C  HTMAX -- MAXIMUM HEIGHT FOR SPECIES AT SITE SI
 C  AGET  -- TREE AGE RETURNED IF N <= 0
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'VARCOM.F77'
-C
       LOGICAL DEBUG
       INTEGER JOSTND,N,J,I,ISPC
       REAL HTG1,HTMAX,H,AGET,B1,B2,B3,B4,B5,SI,HB,HTG0,HTGP5

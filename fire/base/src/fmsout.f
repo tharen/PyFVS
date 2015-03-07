@@ -1,8 +1,9 @@
       SUBROUTINE FMSOUT (IYR)
-      use contrl_mod
+      use plot_mod
       use fmcom_mod
-      use fmfcom_mod
       use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -44,7 +45,6 @@ C.... COMMON INCLUDE FILES.
 
 Csng  INCLUDE 'CONTRL.F77'
 Csng  INCLUDE 'PLOT.F77'
-      INCLUDE 'PLOT.F77'
 C
 C.... VARIABLE DECLARATIONS.
       INTEGER  YRLAST, JYR, II

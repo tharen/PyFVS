@@ -1,6 +1,9 @@
       SUBROUTINE INTREE (RECORD,IRDPLV,ISDSP,SDLO,SDHI,LKECHO)
-      use arrays_mod, only: barkrat
+      use htcal_mod
+      use plot_mod
       use arrays_mod
+      use arrays_mod, only: barkrat
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -12,12 +15,6 @@ C             1 IF THEY ARE BEING READ.
 C
 C  THIS ROUTINE READS THE STAND TREE DATA AND SETS ALL VARIABLES
 C  WHICH ARE TREE RECORD SPECIFIC.
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'HTCAL.F77'
 C
       INCLUDE 'ESTREE.F77'
 C

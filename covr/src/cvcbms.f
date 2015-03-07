@@ -1,4 +1,6 @@
       SUBROUTINE CVCBMS (LTHIN)
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -40,10 +42,6 @@ C  TPA         -- TREES PER ACRE
 C  TRFBMS(MAXTRE)-- PREDICTED FOLIAGE BIOMASS IN POUNDS
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
       INCLUDE 'CVCOM.F77'
 C
 C----------

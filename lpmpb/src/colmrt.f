@@ -1,4 +1,6 @@
       SUBROUTINE COLMRT
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -19,10 +21,6 @@ C
       INCLUDE 'MPBCOM.F77'
 C
       INCLUDE 'COLCOM.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
 C
       INTEGER I, I1, I2, J, INDEX, NUMYRS
       REAL    PRKILL(10), CFTVOL(10), SUMDED, XT

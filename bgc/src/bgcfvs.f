@@ -1,4 +1,5 @@
       SUBROUTINE BGCFVS(X)
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -29,7 +30,6 @@ C     CALLED FROM: GRADD OF FVS BASE CODE
 C
       INCLUDE 'ENTITY.F77'
       INCLUDE 'BGCCOM.F77'
-      INCLUDE 'CONTRL.F77'
 C      INCLUDE 'PPCNTL.F77'                            ! removed 11/02 ajm
 C
       INTEGER X     ! FLAG FROM FVS DICTATING WHICH INCREMENT IT IS READY TO HAVE BGC UPDATE.

@@ -1,4 +1,5 @@
       SUBROUTINE SMHTGF (MODE,ICYC,ISPC,H,DTIME,HHT,JOSTND,DEBUG)
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -23,8 +24,6 @@ C  HHT    - HEIGHT GROWTH OVER TIME INCREMENT DTIME (REGENT)
 C  HHT    - HEIGHT 5 YEARS INTO CYCLE, OR END OF CYCLE FINT<5 (ESSUBH)
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
 C----------
       LOGICAL DEBUG
       INTEGER ISPC,ICYC,JOSTND,MODE

@@ -1,4 +1,5 @@
       SUBROUTINE DAMPRO
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -14,7 +15,6 @@ C  CREATED: 07/06/2007 LANCE R. DAVID
 C
 C----------
 C
-      INCLUDE 'CONTRL.F77'
 
       INTEGER I1,I2,II,I
       INTEGER ICODES(6)

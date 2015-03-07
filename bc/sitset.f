@@ -1,4 +1,6 @@
       SUBROUTINE SITSET
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -8,8 +10,6 @@ C  THIS SUBROUTINE IS USED TO SET SIMULATION CONTROLLING VALUES
 C  THAT HAVE NOT BEEN SET USING THE KEYWORDS --- SDIMAX, BAMAX.
 C----------
 C
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'VOLSTD.F77'
       INCLUDE 'BCPLOT.F77'
       INCLUDE 'METRIC.F77'

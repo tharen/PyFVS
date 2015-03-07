@@ -1,4 +1,6 @@
       SUBROUTINE DUNN (SS)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -10,10 +12,6 @@ C
 C THIS ROUTINE IS ENTERED WITH A VLAUE BETWEEN 0 AND 7. THIS VALUE
 C IS THE TRANSLATED INTO THE SITE INDEX FOR LARGE TREES. THE SITE
 C INDEX FOR SMALL TREES IS ALSO SET AS THE VALUE OF DU50.
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
 C
 C----------
       REAL ADJFAC(11),DUNN50(8),XST2(8),SS,DU50

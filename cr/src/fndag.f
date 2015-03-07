@@ -1,4 +1,6 @@
       SUBROUTINE FNDAG(I,TAGE,SITE,RHT,BAUTBA,ISPC,DEBUG)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -10,10 +12,6 @@ C GIVEN A SITE TO FIND AN EFFECTIVE AGE.
 C EVEN-AGED LOGIC FROM GEMHT
 C----------
 C  COMMONS
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
 C  COMMONS
 C----------

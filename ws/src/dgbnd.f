@@ -1,4 +1,5 @@
       SUBROUTINE DGBND (ISPC,DBH,DDG)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -9,8 +10,6 @@ C  IS NOT EXCEEDED.  EQUATION AND COEFFICIENTS ARE FROM DOLPH AND
 C  DIXON (1993), WEST.J.APPL.FOR 8(1):24-27.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
 C----------
       EXTERNAL RANN
       INTEGER ISPC

@@ -1,4 +1,7 @@
       SUBROUTINE BRCANK
+      use htcal_mod
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -25,9 +28,6 @@ C**********************************************************************
 
 C.... Common include files.
 
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'HTCAL.F77'
       INCLUDE 'ESTREE.F77'
       INCLUDE 'BRCOM.F77'
 

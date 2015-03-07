@@ -1,4 +1,5 @@
       SUBROUTINE BMPPGT (IPNT, ILIMIT)
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -38,7 +39,6 @@ C.... Parameter include files.
 C.... Common include files.
 
       INCLUDE 'PPCNTL.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BMCOM.F77'
 
 C.... Variable declarations.

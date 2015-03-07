@@ -1,4 +1,6 @@
       SUBROUTINE ESADVH (I,HHT,DELAY,GENTIM,TRAGE,WMAX)
+      use esparm_mod
+      use escomn_mod
       use prgprm_mod
       implicit none
 C----------
@@ -6,10 +8,6 @@ C  **ESADVH--AK     DATE OF LAST REVISION:   05/08/12
 C
 C     CALCULATES HEIGHTS OF ADVANCE TREES FOR REGENERATION MODEL
 C----------
-C
-      INCLUDE 'ESPARM.F77'
-C
-      INCLUDE 'ESCOMN.F77'
 C
       INCLUDE 'ESCOM2.F77'
 C

@@ -1,7 +1,17 @@
       SUBROUTINE GETSTD
+      use htcal_mod
+      use plot_mod
+      use arrays_mod
+      use esparm_mod
+      use rancom_mod
       use contrl_mod
       use svdata_mod
-      use arrays_mod
+      use coeffs_mod
+      use econ_mod
+      use pden_mod
+      use fvsstdcm_mod
+      use escomn_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -13,21 +23,13 @@ C     DATA CHARACTER FILE, INTO MEMORY.
 C
       INCLUDE 'PPDNCM.F77'
 C
-      INCLUDE 'ESPARM.F77'
-C
-      INCLUDE 'COEFFS.F77'
-C
       INCLUDE 'CALCOM.F77'
 C
       INCLUDE 'CALDEN.F77'
 C
-      INCLUDE 'ECON.F77'
-C
       INCLUDE 'ESHAP.F77'
 C
       INCLUDE 'ESHAP2.F77'
-C
-      INCLUDE 'ESCOMN.F77'
 C
       INCLUDE 'ESCOM2.F77'
 C
@@ -35,27 +37,17 @@ C
 C
       INCLUDE 'ESTREE.F77'
 C
-      INCLUDE 'HTCAL.F77'
-C
       INCLUDE 'MULTCM.F77'
 C
       INCLUDE 'OPCOM.F77'
 C
       INCLUDE 'OUTCOM.F77'
 C
-      INCLUDE 'PDEN.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
       INCLUDE 'VOLSTD.F77'
-C
-      INCLUDE 'RANCOM.F77'
 C
       INCLUDE 'ESRNCM.F77'
 C
       INCLUDE 'DBSTK.F77'
-C
-      INCLUDE 'VARCOM.F77'
 C
       INCLUDE 'SUMTAB.F77'
 C
@@ -68,8 +60,6 @@ C
       INCLUDE 'SVRCOM.F77'
 C
       INCLUDE 'CWDCOM.F77'
-C
-      INCLUDE 'FVSSTDCM.F77'
 C
       INCLUDE 'GGCOM.F77'
 C

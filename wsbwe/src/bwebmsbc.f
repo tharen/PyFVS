@@ -1,4 +1,6 @@
       SUBROUTINE BWEBMS (TRFBMS,ICVOPT)
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -34,9 +36,6 @@ C
 C       TRFBMS - ARRAY OF TREE FOLIAGE BIOMASSES.
 C       ICVOPT - BIOMASS CALCULATION OPTION (SEE BELOW).
 C       JOUT   - LOGICAL UNIT NUMBER FOR OUTPUT REPORTS.
-C
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
 C
 C----------
 C  DECLARATIONS AND DIMENSIONS FOR INTERNAL VARIABLES

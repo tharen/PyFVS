@@ -1,4 +1,5 @@
       SUBROUTINE DMFINF (Ptr, Index)
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -65,7 +66,6 @@ C     DMRATE  DMCOM
 C
 C**********************************************************************
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'DMCOM.F77'
 
 C Subroutine arguments.

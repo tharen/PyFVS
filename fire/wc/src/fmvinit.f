@@ -1,8 +1,9 @@
       SUBROUTINE FMVINIT
-      use contrl_mod
+      use plot_mod
       use fmcom_mod
-      use fmfcom_mod
       use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
       use prgprm_mod
       implicit none
 
@@ -21,7 +22,6 @@ C    VIRTUALLY IDENTICAL TO PN-FFE VERSION
 ***********************************************************************
 COMMONS
 
-      INCLUDE 'PLOT.F77'
 
 COMMONS
 

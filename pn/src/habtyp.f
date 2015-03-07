@@ -1,4 +1,7 @@
       SUBROUTINE HABTYP (KARD2,ARRAY2)
+      use contrl_mod
+      use plot_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -9,12 +12,6 @@ C     TRANSLATES HABITAT TYPE  CODE INTO A SUBSCRIPT, ITYPE, AND IF
 C     KODTYP IS ZERO, THE ROUTINE RETURNS THE DEFAULT CODE.
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'VARCOM.F77'
-C
 C----------
       INTEGER NPA,I,IHB
       PARAMETER (NPA=75)

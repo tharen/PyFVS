@@ -1,8 +1,9 @@
       SUBROUTINE FMKILL(ICALL)
-      use contrl_mod
-      use fmcom_mod
+      use plot_mod
       use arrays_mod
+      use fmcom_mod
       use fmparm_mod
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -25,7 +26,6 @@ C                   GRADD  [SINGLE-STAND]
 C     CALLS:   FMSSEE
 C              FMSADD
 C
-      INCLUDE 'PLOT.F77'
       INCLUDE 'OUTCOM.F77'
 C
       INTEGER I, YEAR, ICALL, ISHAG

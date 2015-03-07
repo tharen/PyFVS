@@ -1,4 +1,5 @@
       SUBROUTINE FMCFMD (IYR, FMD)
+      use plot_mod
       use arrays_mod
       use fmcom_mod
       use fmparm_mod
@@ -26,8 +27,6 @@ C     SMALL:   SMALL FUELS FROM DYNAMIC FUEL MODEL
 C     LARGE:   LARGE FUELS FROM DYNAMIC FUEL MODEL
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'    ! since using FIA algorithm info
-C
 C----------
 C     LOCAL VARIABLE DECLARATIONS
 C----------

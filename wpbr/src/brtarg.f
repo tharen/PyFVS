@@ -1,4 +1,6 @@
       SUBROUTINE BRTARG
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -57,8 +59,6 @@ C**********************************************************************
 C.... Common include files.
 
       INCLUDE 'BRCOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
 
 C.... Local variable declarations.
 

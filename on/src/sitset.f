@@ -1,5 +1,9 @@
       SUBROUTINE SITSET
+      use esparm_mod
+      use contrl_mod
       use prgprm_mod
+      use escomn_mod
+      use plot_mod
       implicit none
 C----------
 C  **SITSET-- ON  DATE OF LAST REVISION:  05/11/11
@@ -11,14 +15,6 @@ C
 C CALLED BY INITRE
 C----------
 COMMONS
-      INCLUDE 'ESPARM.F77'
-C
-      INCLUDE 'ESCOMN.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
       INCLUDE 'VOLSTD.F77'
 C
       INCLUDE 'METRIC.F77'

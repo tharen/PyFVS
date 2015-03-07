@@ -1,5 +1,10 @@
       SUBROUTINE CROWN
+      use plot_mod
       use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use pden_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -16,17 +21,7 @@ C  BE RESOLVED ONCE.  A CALL TO **DUBSCR** IS ISSUED TO DUB
 C  CROWN RATIO WHEN DBH IS LESS THAN 1 INCH.
 C----------
 COMMONS
-      INCLUDE 'COEFFS.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
       INCLUDE 'OUTCOM.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'PDEN.F77'
-C
-      INCLUDE 'VARCOM.F77'
 C
 C----------
       LOGICAL DEBUG

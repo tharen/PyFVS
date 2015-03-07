@@ -1,4 +1,7 @@
       SUBROUTINE DUBSCR(ISPC,D,H,CR,TPCT,TPCCF)
+      use plot_mod
+      use contrl_mod
+      use pden_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -21,12 +24,6 @@ C  J  CONSTANT ICR=9
 C
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PDEN.F77'
-C
       LOGICAL DEBUG
       EXTERNAL RANN
       REAL BCR0(6),BCR1(6),BCR2(6),CRSD(6),TPCCF,TPCT,CR,H,D,SD,FCR

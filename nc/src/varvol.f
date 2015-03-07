@@ -1,6 +1,9 @@
         SUBROUTINE VARVOL
-      use arrays_mod
+      use contrl_mod
       use prgprm_mod
+      use plot_mod
+      use coeffs_mod
+      use arrays_mod
       implicit none
 C----------
 C  **VARVOL--NC    DATE OF LAST REVISION:   10/12/12
@@ -11,12 +14,6 @@ C  FROM THE NATIONAL CRUISE SYSTEM VOLUME LIBRARY FOR METHB OR METHC
 C  EQUAL TO 6.  IT ALSO CONTAINS ANY OTHER SPECIAL VOLUME CALCULATION
 C  METHOD SPECIFIC TO A VARIANT (METHB OR METHC = 8)
 C----------
-C
-      INCLUDE 'COEFFS.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
       INCLUDE 'VOLSTD.F77'
 C

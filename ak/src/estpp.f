@@ -1,4 +1,6 @@
       SUBROUTINE ESTPP (VAL,TPP)
+      use esparm_mod
+      use escomn_mod
       use prgprm_mod
       implicit none
 C----------
@@ -6,10 +8,6 @@ C  **ESTPP--AK    DATE OF LAST REVISION:   02/14/08
 C
 C  DIFFERS FROM ESTB ROUTINE BY MULTIPLE AT BOTTOM.
 C----------
-C
-      INCLUDE 'ESPARM.F77'
-C
-      INCLUDE 'ESCOMN.F77'
 C
       INCLUDE 'ESCOM2.F77'
 C

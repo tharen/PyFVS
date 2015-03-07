@@ -1,4 +1,5 @@
       SUBROUTINE DGBND (ISPC,DBH,DDG)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -14,8 +15,6 @@ C  CONTAINED IN THE DLODHI ARRAY.
 C  THIS ROUTINE IS CALLED BY DGDRIV.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
 C----------
 C  DLODHI - (I,J) I IS SPECIES AND J=1 IS THE LOOWER BOUND FOR DG
 C           ADJUSTMENT AND J=2 IS THE UPPER BOUND FOR DG ADJUSTMENT.

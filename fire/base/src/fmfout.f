@@ -1,4 +1,5 @@
       SUBROUTINE FMFOUT(IYR, FLAME, FMD, IFIRE, CFTMP)
+      use plot_mod
       use arrays_mod
       use fmcom_mod
       use fmparm_mod
@@ -45,7 +46,6 @@ C.... PARAMETER INCLUDE FILES.
 
 C.... COMMON INCLUDE FILES.
 C
-      INCLUDE 'PLOT.F77'
 
 C.... VARIABLE DECLARATIONS.
 C        note: if change MAXCL,must also change the formats 335,345!

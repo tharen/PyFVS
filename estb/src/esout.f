@@ -1,4 +1,5 @@
       SUBROUTINE ESOUT (LFG)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -7,8 +8,6 @@ C----------
 C
 C     PART OF THE ESTABLISHMENT MODEL SUBSYSTEM.  COPIES THE
 C     PRINT DATA FROM FILE JOREGT TO JOSTND. CALLED FROM MAIN.
-C
-      INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'ESHAP.F77'
 C

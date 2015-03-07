@@ -1,4 +1,6 @@
       SUBROUTINE SMHGDG (IT,ISPC,H,D,HG5,DG5,ICYC,JOSTND,DEBUG,MODE)
+      use varcom_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -23,10 +25,6 @@ C  RETURN VARIABLES
 C  HG5    - 5 YEAR HEIGHT INCREMANT
 C  DG5    - 5 YEAR DIAMETER INCREMENT
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'VARCOM.F77'
-C
       LOGICAL DEBUG
       INTEGER I,IT,J,ICYC,JOSTND,MODE,ISPC
       REAL    H,HG,DGS,DG1,HBH,DBHA,D,BAS,AVHT

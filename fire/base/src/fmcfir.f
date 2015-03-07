@@ -1,8 +1,9 @@
       SUBROUTINE FMCFIR (IYR,FMOIS,WMULT,SWIND,CFTMP,OINIT1,OACT1,HPA)
-      use contrl_mod
+      use plot_mod
       use fmcom_mod
-      use fmfcom_mod
       use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -36,7 +37,6 @@ C     PARAMETER STATEMENTS.
 C     PARAMETER INCLUDE FILES.
 
 C     COMMON INCLUDE FILES.
-      INCLUDE 'PLOT.F77'
 
 C     VARIABLE DECLARATIONS.
 

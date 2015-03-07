@@ -1,4 +1,7 @@
       SUBROUTINE FORTYP(IXF,SDIFIA)
+      use contrl_mod
+      use varcom_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -33,12 +36,6 @@ C              AND CARRIED IN PLOT.F77
 C----------
 C
 COMMON BLOCKS
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'VARCOM.F77'
 C
 C----------
 C  DECLARATIONS

@@ -1,4 +1,5 @@
       SUBROUTINE OPEVAL (IREFN,IRC)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -15,8 +16,6 @@ C     IRC   = 0   ALL WENT OK
 C             1   ERROR IN COMPUTATION OR PARMS IS FULL.
 C
       INCLUDE 'OPCOM.F77'
-C
-      INCLUDE 'CONTRL.F77'
 C
       INTEGER IRC,IREFN,J1,NP,I
       LOGICAL LDEB

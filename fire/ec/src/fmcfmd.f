@@ -1,4 +1,5 @@
       SUBROUTINE FMCFMD (IYR, FMD)
+      use plot_mod
       use arrays_mod
       use fmcom_mod
       use fmparm_mod
@@ -29,8 +30,6 @@ C----------
 ***********************************************************************
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
       INCLUDE 'SSTGMC.F77'
 C
 C----------

@@ -1,5 +1,9 @@
       SUBROUTINE DGF(DIAM)
+      use plot_mod
       use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use pden_mod
       use prgprm_mod
       implicit none
 C----------
@@ -26,11 +30,7 @@ C
 C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
-      INCLUDE 'COEFFS.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'OUTCOM.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'PDEN.F77'
       INCLUDE 'METRIC.F77'
 C
 C----------

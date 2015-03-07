@@ -1,5 +1,7 @@
       SUBROUTINE ESSUBH (I,HHT,EMSQR,DILATE,DELAY,ELEV,ISER,GENTIM,
      &  TRAGE)
+      use esparm_mod
+      use escomn_mod
       use prgprm_mod
       implicit none
 C----------
@@ -17,9 +19,6 @@ C     THE TREE.
 C----------
 C  COMMONS
 C
-      INCLUDE 'ESPARM.F77'
-C
-      INCLUDE 'ESCOMN.F77'
 C----------
 C  DECLARATIONS
 C----------

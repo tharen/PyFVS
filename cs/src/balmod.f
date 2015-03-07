@@ -1,4 +1,5 @@
       SUBROUTINE BALMOD(ISPC,D,BAL,BA,GMOD,DEBUG)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -12,8 +13,6 @@ C  ESTIMATION SEQUENCE. THIS ROUTINE IS CALLED BY DGF, HTGF, AND
 C  RGNTHW.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
 C----------
       LOGICAL DEBUG
       REAL B1(MAXSP),B2(MAXSP),B3(MAXSP)

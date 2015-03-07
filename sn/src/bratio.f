@@ -1,4 +1,5 @@
       FUNCTION BRATIO(IS,D,H)
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -25,8 +26,6 @@ C      BARKC(I,J) - I1= COEFF A, I2= COEF B,
 C                   ONE RECORD (J) FOR EACH SPECIES (IS)
 C      D          - DBH
 C      DIB        - DIAM. INSIDE BARK
-C
-      INCLUDE 'PLOT.F77'
 C
 C----------
 C

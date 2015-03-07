@@ -1,4 +1,6 @@
       SUBROUTINE TMOUT
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -20,9 +22,7 @@ C
 C----------
 C
 
-      INCLUDE 'CONTRL.F77'
 
-      INCLUDE 'PLOT.F77'
 
       INCLUDE 'TMCOM1.F77'
 C

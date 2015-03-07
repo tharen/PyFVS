@@ -1,4 +1,6 @@
       SUBROUTINE MAICAL
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -8,10 +10,6 @@ C  THIS SUBROUTINE CALCULATES THE MAI FOR THE STAND. IT IS CALLED
 C  FROM CRATET.
 C----------
 COMMONS
-      INCLUDE  'CONTRL.F77'
-C
-      INCLUDE  'PLOT.F77'
-C
 C----------
 C
       LOGICAL DEBUG

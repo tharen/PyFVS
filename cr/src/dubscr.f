@@ -1,4 +1,7 @@
       SUBROUTINE DUBSCR(ISPC,D,H,CR,TPCT,TPCCF)
+      use plot_mod
+      use contrl_mod
+      use pden_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -13,12 +16,6 @@ C  USED TO REPLACE CROWN RATIO ESTIMATES FOR ALL TREES THAT
 C  CROSS THE THRESHOLD BETWEEN THE SMALL AND LARGE TREE MODELS.
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PDEN.F77'
-C
 C----------
       EXTERNAL RANN
       REAL BCR0(11),BCR1(11),BCR2(11),BCR3(11),

@@ -1,12 +1,11 @@
       SUBROUTINE ESCPRS (ITRGT,DEBUG)
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
 C----------
 C  **ESCPRS DATE OF LAST REVISION:   06/21/11
 C----------
-C
-      INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'ESHAP.F77'
 C

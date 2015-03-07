@@ -1,5 +1,7 @@
       SUBROUTINE MSBMRT(EFFMRT,T2KILL,DLO,DHI,MFLAG,DEBUG)
+      use contrl_mod
       use arrays_mod, only: barkrat
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -26,10 +28,6 @@ C        SUFFICIENT TO JUST TAKE THIS 1 PASS APPROXIMATATION AND GO ON.
 C        GED 6/10/09
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
 C----------
       LOGICAL DEBUG
       REAL T2KILL,XKILL,TEMKIL,SUMKIL,TEMP,EFFMRT,DLO,DHI,DBHEND,BARK,

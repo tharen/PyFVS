@@ -1,5 +1,9 @@
       SUBROUTINE MORTS
+      use plot_mod
       use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use pden_mod
       use prgprm_mod
       implicit none
 C----------
@@ -15,13 +19,9 @@ C  IS CALLED FROM **TREGRO** WHEN CYCLING FOR GROWTH PREDICTION.  ENTRY
 C  **MORCON** IS ACCESSED TO LOAD SITE DEPENDENT CONSTANTS.
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
       INCLUDE 'CALCOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'COEFFS.F77'
       INCLUDE 'ESTREE.F77'
       INCLUDE 'MULTCM.F77'
-      INCLUDE 'PDEN.F77'
       INCLUDE 'WORKCM.F77'
       INCLUDE 'BCPLOT.F77'
       INCLUDE 'METRIC.F77'

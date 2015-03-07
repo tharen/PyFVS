@@ -1,4 +1,5 @@
        SUBROUTINE MIN(ISC,AGE,FIZ,DBH,HT,SH,TD,HTRUNC,GROSIMP,TVOLIMP)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -37,8 +38,6 @@ CC    *** IM represents the maturity of the tree
 CC    *** it is equal to 1 if the tree is immature and 2 otherwise
 CC    *** AGE is the age of the tree passed as an argument
 C
-      include 'CONTRL.F77'
-c
       include 'METRIC.F77'
 c
       INTEGER*2 IS, IM, IFZ

@@ -1,5 +1,10 @@
       SUBROUTINE CRATET
+      use htcal_mod
+      use plot_mod
       use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -23,13 +28,8 @@ C    8)  PRINT A TABLE DESCRIBING CONTROL PARAMETERS AND INPUT
 C        VARIABLES.
 C----------
 C
-      INCLUDE 'PLOT.F77'
       INCLUDE 'BCPLOT.F77'
-      INCLUDE 'COEFFS.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'OUTCOM.F77'
-      INCLUDE 'HTCAL.F77'
-      INCLUDE 'VARCOM.F77'
       INCLUDE 'METRIC.F77'
 C
 C----------

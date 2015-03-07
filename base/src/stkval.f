@@ -1,4 +1,6 @@
       SUBROUTINE STKVAL(S)
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -43,9 +45,6 @@ C              TAB3(FIA,2)= STOCKING EQUATION NUMBER
 C
 COMMON BLOCKS
 C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
 C----------
 C  DECLARATIONS
 C----------

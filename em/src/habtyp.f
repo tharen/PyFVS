@@ -1,4 +1,6 @@
       SUBROUTINE HABTYP (KARD2,ARRAY2)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -14,10 +16,6 @@ C     IEMTYP - SUBSCRIPT USED IN **SITSET
 C     ITYPE  - SUBSCRIPT USED IN **ESTAB
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
       INCLUDE 'EMCOM.F77'
 C
 C----------

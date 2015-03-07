@@ -1,4 +1,6 @@
       SUBROUTINE BMRRSS
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -10,8 +12,6 @@ C     model for these pests.
 C----------
 
       INCLUDE 'BMRRCM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
 
       LOGICAL     L,LNOTBK,LTR,LTEE
       CHARACTER*8 KEYWRD,NORR

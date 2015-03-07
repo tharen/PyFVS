@@ -1,4 +1,5 @@
       SUBROUTINE BWERAWS
+      use contrl_mod
       use prgprm_mod
       implicit none
 C-----------
@@ -119,7 +120,6 @@ C   JDAY - Julian day used to cycle through 1 year of weather data.
 C  LYRNG - Logical. True if range of RAWS weather years is to be processed.
 C
 C Common files
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BWECM2.F77'
       INCLUDE 'BWEBOX.F77'
       INCLUDE 'BWECOM.F77'

@@ -1,4 +1,5 @@
       SUBROUTINE MPGR
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -16,8 +17,6 @@ C Revision History
 C   05/31/00 Last noted revision date.
 C   07/02/10 Lance R. David (FMSC)
 C----------
-C
-      INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'MPBCOM.F77'
 C

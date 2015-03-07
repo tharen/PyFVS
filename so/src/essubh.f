@@ -1,5 +1,9 @@
       SUBROUTINE ESSUBH (I,HHT,EMSQR,DILATE,DELAY,ELEV,IHTSER,GENTIM,
      &                   TRAGE)
+      use esparm_mod
+      use contrl_mod
+      use escomn_mod
+      use pden_mod
       use prgprm_mod
       implicit none
 C----------
@@ -8,14 +12,6 @@ C----------
 C     CALLED FROM **ESTAB
 C     CALLS **SMHTGF
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'ESPARM.F77'
-C
-      INCLUDE 'ESCOMN.F77'
-C
-      INCLUDE 'PDEN.F77'
-C
       LOGICAL DEBUG
       INTEGER I,IHTSER,ITIME,N,MODE0
       REAL    AGE,EMSQR,DILATE,DELAY,ELEV,GENTIM,H,HHT,TRAGE,DUM1

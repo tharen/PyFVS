@@ -1,5 +1,10 @@
       SUBROUTINE HTGF
+      use htcal_mod
+      use pden_mod
       use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -14,17 +19,7 @@ C  IS CALLED FROM **RCON** TO LOAD SITE DEPENDENT CONSTANTS
 C  THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-      INCLUDE 'COEFFS.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
       INCLUDE 'MULTCM.F77'
-C
-      INCLUDE 'PDEN.F77'
-C
-      INCLUDE 'HTCAL.F77'
 C
       LOGICAL DEBUG
       REAL SCALE,XHT,BAL,YRS,H,HTG1,HTMAX,AGET,GMOD,RELHTA,TEMHTG

@@ -1,5 +1,9 @@
       SUBROUTINE HTGF
+      use htcal_mod
+      use plot_mod
       use arrays_mod
+      use contrl_mod
+      use coeffs_mod
       use prgprm_mod
       implicit none
 C----------
@@ -14,11 +18,7 @@ C  DEPENDENT CONSTANTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
-      INCLUDE 'COEFFS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'MULTCM.F77'
-      INCLUDE 'HTCAL.F77'
       INCLUDE 'BCPLOT.F77'
       INCLUDE 'METRIC.F77'
 C

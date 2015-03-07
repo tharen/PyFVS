@@ -1,4 +1,6 @@
       SUBROUTINE RPTWTR (NCYC2,IONER)
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -20,11 +22,7 @@ C             OUTPUT FOR THE REPORT.
 C
       INCLUDE 'PPEPRM.F77'
 C
-      INCLUDE 'CONTRL.F77'
-C
       INCLUDE 'OUTCOM.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
       INCLUDE 'PPCNTL.F77'
 C

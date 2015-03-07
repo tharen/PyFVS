@@ -1,4 +1,6 @@
       SUBROUTINE CFTOPK(ISPC,D,H,VN,VM,VMAX,LCONE,BARK,ITHT)
+      use contrl_mod
+      use coeffs_mod
       use prgprm_mod
       implicit none
 C----------
@@ -8,10 +10,6 @@ C THIS ROUTINE CORRECTS TOTAL CUBIC FOOT VOLUME AND MERCHANTABLE
 C CUBIC FOOT VOLUME FOR BROKEN/DEAD TOPS.
 C----------
 COMMONS
-      INCLUDE 'COEFFS.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
 C----------
 C  DIMENSION STATEMENT FOR INTERNAL ARRAYS.
 C----------

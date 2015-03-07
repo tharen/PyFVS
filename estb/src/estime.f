@@ -1,4 +1,6 @@
       SUBROUTINE ESTIME (IEVTYR,KDT)
+      use esparm_mod
+      use escomn_mod
       use prgprm_mod
       implicit none
 C----------
@@ -10,10 +12,6 @@ C
 C     IEVTYR= A YEAR OF INTEREST.  THE DATA OF DISTURBANCE OR SITE
 C             PREP; SOMETIMES THE BEGINNING OF THE CURRENT TALLY.
 C     KDT   = THE TALLY YEAR.
-C
-      INCLUDE 'ESPARM.F77'
-C
-      INCLUDE 'ESCOMN.F77'
 C
       INCLUDE 'ESCOM2.F77'
 C

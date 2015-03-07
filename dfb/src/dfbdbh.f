@@ -1,4 +1,5 @@
       SUBROUTINE DFBDBH
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -31,8 +32,6 @@ C     PROB   - (ARRAYS)   INPUT
 C     START  - (DFBCOM)   OUTPUT
 C
       INCLUDE 'DFBCOM.F77'
-C
-      INCLUDE 'CONTRL.F77'
 C
       INTEGER I, I1, I2, J, I3
 

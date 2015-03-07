@@ -1,4 +1,5 @@
       SUBROUTINE SVCDBH (REMOV,IST)
+      use plot_mod
       use contrl_mod
       use svdata_mod
       use arrays_mod
@@ -21,8 +22,6 @@ C     INPUT:
 C     REMOV = VECTOR OF MORTALITY OR REMOVAL TREES/ACRE
 C     IST= 1 IF MORTALITY NEEDS TO BE TAKEN INTO ACCOUNT
 C        = 0 IF IT SHOULD NOT BE TAKEN INTO ACCOUNT
-C
-      INCLUDE 'PLOT.F77'
 C
 C     WPP     - SUM OF REMOV PER PLOT
 C     PPP     - SUM OF PROB PER PLOT FROM FVS TREE LIST

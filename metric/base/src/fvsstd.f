@@ -1,5 +1,11 @@
       SUBROUTINE FVSSTD (IWHO)
+      use htcal_mod
+      use plot_mod
       use arrays_mod
+      use contrl_mod
+      use econ_mod
+      use fvsstdcm_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -10,18 +16,12 @@ C     CREATE A FILE FOR FVSTAND POST-PROCESSOR INPUT.
 C
 C     IWHO=1 IF CALLED FROM MAIN, IWHO=2 IF CALLED FROM CUTS
 C
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'HTCAL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'ESTREE.F77'
-      INCLUDE 'VARCOM.F77'
       INCLUDE 'WORKCM.F77'
       INCLUDE 'STDSTK.F77'
       INCLUDE 'SUMTAB.F77'
       INCLUDE 'OUTCOM.F77'
-      INCLUDE 'ECON.F77'
       INCLUDE 'OPCOM.F77'
-      INCLUDE 'FVSSTDCM.F77'
       INCLUDE 'METRIC.F77'
 C
 C----------

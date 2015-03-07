@@ -1,4 +1,6 @@
       SUBROUTINE FMFOUT(IYR, FLAME, FMD, IFIRE, CFTMP)
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -41,8 +43,6 @@ C.... PARAMETER INCLUDE FILES.
 
 C.... COMMON INCLUDE FILES.
 C
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'FMCOM.F77'
       INCLUDE 'FMFCOM.F77'
       INCLUDE 'METRIC.F77'

@@ -1,22 +1,18 @@
       SUBROUTINE ESUCKR
+      use plot_mod
       use arrays_mod
+      use esparm_mod
+      use contrl_mod
+      use coeffs_mod
+      use escomn_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
 C  **ESUCKR--ESTB   DATE OF LAST REVISION:  06/20/11
 C----------
 COMMONS
-      INCLUDE 'COEFFS.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'ESPARM.F77'
-C
       INCLUDE 'ESHOOT.F77'
-C
-      INCLUDE 'ESCOMN.F77'
 C
       INCLUDE 'ESCOM2.F77'
 C
@@ -27,8 +23,6 @@ C
       INCLUDE 'ESTREE.F77'
 C
       INCLUDE 'STDSTK.F77'
-C
-      INCLUDE 'VARCOM.F77'
 C
 C----------
 C     CREATE STUMP & ROOT SPROUTS FROM TREES CUT AT BEGINNING OF CYCLE.

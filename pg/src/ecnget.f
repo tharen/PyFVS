@@ -1,4 +1,5 @@
       SUBROUTINE ECNGET (WK3,IPNT,ILIMIT)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -8,8 +9,6 @@ C
 C     STORE THE ECONOMIC DATA FOR A GIVEN STAND.
 C
 C     PART OF THE PARALLEL PROCESSING EXTENSION TO PROGNOSIS.
-C
-      INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'ECNCOM.F77'
 C

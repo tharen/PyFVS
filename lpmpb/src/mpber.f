@@ -1,4 +1,6 @@
       SUBROUTINE MPBER (NOER)
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -18,10 +20,6 @@ C     Adapated to 24 species (CR variant)
 C   07/02/10 Lance R. David (FMSC)
 C----------
       LOGICAL NOER
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
       INCLUDE 'MPBCOM.F77'
 C

@@ -1,4 +1,5 @@
       SUBROUTINE RDPPGT (WK3, IPNT, ILIMIT)
+      use contrl_mod
       use prgprm_mod
       implicit none
 ***********************************************************************
@@ -50,7 +51,6 @@ C.... Parameter include files.
 C.... Common include files.
 
       INCLUDE 'PPCNTL.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'RDADD.F77'
       INCLUDE 'RDARRY.F77'
       INCLUDE 'RDCOM.F77'

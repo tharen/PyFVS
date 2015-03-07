@@ -1,4 +1,6 @@
       SUBROUTINE OPRDAT (JEXOPT,KODE)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -15,11 +17,7 @@ C              (NOTE THAT THE FILE MUST ALREADY BE OPENED).
 C     KODE   = IF POSITIVE, THE NUMBER OF ACTIVITIES ADDED
 C              IF NEGATIVE, THE NUMBER OF FAILURES TO ADD ACTIVITIES
 C
-      INCLUDE 'CONTRL.F77'
-C
       INCLUDE 'OPCOM.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
       INTEGER MXADDP,IPASS,NADD,I,NPRMS,IACTK,IDT,KODE,JEXOPT,
      >        NFAIL

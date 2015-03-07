@@ -1,4 +1,7 @@
       SUBROUTINE HABTYP (KARD2,ARRAY2)
+      use contrl_mod
+      use plot_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -25,12 +28,6 @@ C     NUMBER FOR THE HT; ITYPE WILL CARRY THE INDEX OF THAT HT IN
 C     THE R2 OR R3 HT ARRAY.
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'VARCOM.F77'
-C
 C----------
       INTEGER NR2,NR3,I,IR2,IR3,LIMIT,IHB
       PARAMETER (NR2=376)

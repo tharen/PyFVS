@@ -1,6 +1,9 @@
       SUBROUTINE FMCROWE (SPILS,SPIYV,D,H,IC,SG,XV)
-      use contrl_mod
+      use plot_mod
       use fmparm_mod
+      use contrl_mod
+      use coeffs_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -123,9 +126,6 @@ C     68  American mountain ash
 COMMONS
 
 
-      INCLUDE 'COEFFS.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'VARCOM.F77'
 
 C  VARIABLE DECLARATIONS
 

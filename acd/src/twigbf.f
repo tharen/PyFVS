@@ -1,13 +1,11 @@
       SUBROUTINE TWIGBF(ISPC,H,D,VMAX,BBFV)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
 C  **TWIGBF---NE  DATE OF LAST REVISION:  07/11/08
 C----------
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'VOLSTD.F77'
 C

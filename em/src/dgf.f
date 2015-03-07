@@ -1,5 +1,10 @@
       SUBROUTINE DGF(DIAM)
+      use plot_mod
       use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use pden_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -17,19 +22,9 @@ C  PREDICTION.  ENTRY **DGCONS** IS CALLED BY **RCON** TO LOAD SITE
 C  DEPENDENT COEFFICIENTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
       INCLUDE 'CALCOM.F77'
 C
-      INCLUDE 'COEFFS.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PDEN.F77'
-C
       INCLUDE 'GGCOM.F77'
-C
-      INCLUDE 'VARCOM.F77'
 C
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES.

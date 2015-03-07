@@ -1,4 +1,5 @@
       SUBROUTINE GROHED (IUNIT)
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -7,8 +8,6 @@ C----------
 C     WRITES HEADER FOR BASE MODEL PORTION OF PROGNOSIS SYSTEM
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
 C COMMONS
 C
 C----------

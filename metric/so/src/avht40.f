@@ -1,4 +1,6 @@
       SUBROUTINE AVHT40
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -8,8 +10,6 @@ C----------
 C  THIS SUBROUTINE IS USED TO CALCULATE THE AVERAGE HEIGHT
 C  OF THE 40 TPA OF LARGEST DIAMETER. (METRIC EQUIV)
 C
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'METRIC.F77'
 C
       INTEGER I,II

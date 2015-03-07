@@ -1,4 +1,6 @@
       SUBROUTINE DUNN (SS)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -13,10 +15,6 @@ C ANY SITEAR VALUES ARE BETWEEN 8 AND 10 THIS IS AN ERROR AND THE
 C DEFAULT VALUE SPECIFIED IN GRINIT IS MAINTAINED. THIS ROUTINE IS
 C CALLED FROM INITRE.
 C----------
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
 C
 C----------
       INTEGER IST,ISPC,I

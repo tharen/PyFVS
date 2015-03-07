@@ -1,13 +1,12 @@
       SUBROUTINE HTGSTP
-      use arrays_mod, only: barkrat
-      use arrays_mod
+      use contrl_mod
       use prgprm_mod
+      use arrays_mod
+      use arrays_mod, only: barkrat
       implicit none
 C----------
 C  $Id$
 C----------
-C
-      INCLUDE 'CONTRL.F77'
 C
       EXTERNAL RANN
       INTEGER MYACT(2)

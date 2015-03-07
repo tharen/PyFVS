@@ -1,4 +1,5 @@
       SUBROUTINE EXESTB
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -6,8 +7,6 @@ C  $Id$
 C----------
 C
 C     EXTRA REFERENCES FOR REGENERATION ESTABLISHMENT
-C
-      INCLUDE 'PLOT.F77'
 C
       INCLUDE 'CALDEN.F77'
 C

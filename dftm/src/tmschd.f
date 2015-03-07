@@ -1,4 +1,5 @@
       SUBROUTINE TMSCHD
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -21,8 +22,6 @@ C      A few variables defined locally were already defined
 C      in a common block. Local declaration removed.
 C
 C----------
-C
-      INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'TMCOM1.F77'
 C

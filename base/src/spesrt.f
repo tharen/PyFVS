@@ -1,4 +1,5 @@
       SUBROUTINE SPESRT
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -9,8 +10,6 @@ C
 C     REALIGNS THE SPECIES-ORDER SORT AFTER THE TREE LIST HAS
 C     BEEN COMPRESSED AND/OR TREES HAVE BEEN ADDED VIA THE
 C     REGENERATION ESTABLISHMENT SUBMODEL.
-C
-      INCLUDE 'CONTRL.F77'
 C
       INTEGER I
 C

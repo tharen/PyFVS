@@ -1,6 +1,9 @@
       SUBROUTINE VOLS
-      use arrays_mod
+      use contrl_mod
       use prgprm_mod
+      use plot_mod
+      use coeffs_mod
+      use arrays_mod
       implicit none
 C----------
 C  **VOLS--ON    DATE OF LAST REVISION:   05/11/11
@@ -13,10 +16,7 @@ C  NATCRS, OCFVOL, AND OBFVOL ARE ENTRY POINTS IN SUBROUTINE
 C  **VARVOL**, WHICH IS VARIANT SPECIFIC.
 C----------
 C
-      INCLUDE 'COEFFS.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'OUTCOM.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'VOLSTD.F77'
       INCLUDE 'METRIC.F77'
 C

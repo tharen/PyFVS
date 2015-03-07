@@ -1,4 +1,6 @@
       SUBROUTINE CHPUT
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -10,15 +12,11 @@ C     WRITE THE ALL-DATA CHARACTER DATA TO THE DA FILE.
 C
 C     PART OF THE PARALLEL PROCESSING EXTENSION OF PROGNOSIS SYSTEM.
 C
-      INCLUDE 'CONTRL.F77'
-C
       INCLUDE 'CALDEN.F77'
 C
       INCLUDE 'OPCOM.F77'
 C
       INCLUDE 'OUTCOM.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
       INCLUDE 'DBSTK.F77'
 C

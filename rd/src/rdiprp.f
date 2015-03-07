@@ -1,4 +1,6 @@
       SUBROUTINE RDIPRP(PROPN,NOPLOT,PRAN)
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -47,8 +49,6 @@ C.... Parameter include files.
 
 C.... Common include files.
 
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
       INCLUDE 'RDADD.F77'

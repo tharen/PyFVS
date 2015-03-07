@@ -1,4 +1,5 @@
       SUBROUTINE CWIDTH
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -12,7 +13,6 @@ C  THIS ROUTINE IS CALLED FROM **MAIN** TO LOAD THE INITIAL CROWN
 C  WIDTHS, AND FROM **UPDATE** TO LOAD THE END-OF-CYCLE VALUES.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'CWDCOM.F77'
       INCLUDE 'METRIC.F77'
 C

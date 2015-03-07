@@ -1,4 +1,6 @@
       SUBROUTINE SPCTRN (SPCIN, ISPC1)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -15,10 +17,6 @@ C  THE USE OF EXCLAMATION MARKS (!) TO PLACE COMMENTS AT THE
 C  END OF VALID FORTRAN STATEMENTS.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
       CHARACTER VVER*7
       CHARACTER*(*)SPCIN
       INTEGER MAXASPT, ISPC1, I, J, J2, IJSPIN

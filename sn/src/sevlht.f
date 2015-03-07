@@ -1,5 +1,7 @@
       SUBROUTINE SEVLHT(D,H,PULPVO,SWVOL,HT,ISPC,
      &           DEBUG,GR,VLSP)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -10,10 +12,6 @@ C DEFAULTS ARE SET IN GRINIT ALTHOUGH THEY CAN BE USER DEFINED.  THIS
 C PROGRAM FOLLOWS EQUATIONS FOUND IN SE-282 BY CLARK ET AL, PAGES 5-6,
 C 39-41, AND 66-73.
 C----------
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
       INCLUDE 'SNCOM.F77'
 C

@@ -1,4 +1,5 @@
       SUBROUTINE OPLIST (LFIRST,NPLT,MGMID,ITITLE)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -17,7 +18,6 @@ C
 C     WRITES THE ACTIVITIES THAT WERE DONE FOR THE PPE TO DATA SET
 C     JOUT.  CISN IS THE PPE INTERNAL STAND NUMBER.
 C
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'OPCOM.F77'
       INCLUDE 'KEYCOM.F77'
       INCLUDE 'METRIC.F77'

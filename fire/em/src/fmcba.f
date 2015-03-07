@@ -1,8 +1,9 @@
       SUBROUTINE FMCBA (IYR,ISWTCH)
-      use contrl_mod
-      use fmcom_mod
+      use plot_mod
       use arrays_mod
+      use fmcom_mod
       use fmparm_mod
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -32,8 +33,6 @@ C     TOTBA:   The total basal area in the stand (used in the fuels calcs)
 C     TOTCRA:  The sum of the area of the crowns, per acre (sqft)
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
       INCLUDE 'EMCOM.F77'
 C
 Cppe      INCLUDE 'PPEPRM.F77'

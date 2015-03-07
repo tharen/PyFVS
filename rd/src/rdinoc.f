@@ -1,4 +1,6 @@
       SUBROUTINE RDINOC(LICALL)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -50,10 +52,8 @@ C.... Parameter include files.
 C
 C.... Common include files.
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'RDADD.F77'
       INCLUDE 'RDCOM.F77'
-      INCLUDE 'PLOT.F77'
 
 C.... Local variables.
 

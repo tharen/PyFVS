@@ -1,4 +1,5 @@
       SUBROUTINE DGBND (ISPC,DBH,DDG)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -11,8 +12,6 @@ C ALL SPECIES USE THE SAME BOUNDING FUNCTION WHICH WAS DEVELOPED
 C FOR DOUGLAS-FIR.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
 C----------
 C MAX DG CHECK.
 C----------

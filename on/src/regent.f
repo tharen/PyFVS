@@ -1,5 +1,11 @@
       SUBROUTINE REGENT(LESTB,ITRNIN)
+      use htcal_mod
+      use pden_mod
       use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use plot_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -18,15 +24,9 @@ C  **RCON** TO LOAD MODEL PARAMETERS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
-      INCLUDE 'COEFFS.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'OUTCOM.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'HTCAL.F77'
       INCLUDE 'MULTCM.F77'
       INCLUDE 'ESTCOR.F77'
-      INCLUDE 'PDEN.F77'
-      INCLUDE 'VARCOM.F77'
 C
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES:

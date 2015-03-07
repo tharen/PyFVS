@@ -1,4 +1,7 @@
       SUBROUTINE DUBSCR(ISPC,D,H,CR,TPCT,TPCCF)
+      use plot_mod
+      use contrl_mod
+      use pden_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -16,12 +19,6 @@ C  WHEN THE SO11 MODEL WAS RETIRED IN JUNE 2010. IT IS USED BY
 C  THE EC, NC, AND WS VARIANTS
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PDEN.F77'
-C
 C----------
       EXTERNAL RANN
       INTEGER ISPC

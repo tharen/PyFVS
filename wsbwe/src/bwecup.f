@@ -1,4 +1,6 @@
       SUBROUTINE BWECUP
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -52,8 +54,6 @@ C   28-AUG-2013 Lance R. David (FMSC)
 C      Added loading of weather year into IEVENT array.
 C-----------------------------------------------------------------------------
 C
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECOM.F77'
       INCLUDE 'BWECM2.F77'

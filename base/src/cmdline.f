@@ -417,6 +417,7 @@ C     if in an error state, close the files.
 
 
       subroutine fvsStopPoint (LOCODE,ISTOPDONE)
+      use contrl_mod
       use prgprm_mod
       implicit none
 
@@ -433,7 +434,6 @@ c     note that this routine is called during the simulation
 #endif
 
       include "GLBLCNTL.F77"
-      include "CONTRL.F77"
 
       integer :: LOCODE,ISTOPDONE,i,tmpyr
 

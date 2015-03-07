@@ -1,4 +1,6 @@
       SUBROUTINE BWEDAM (TOTP,TOTR,AVPRBO)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -31,8 +33,6 @@ C      .Added stand ID to Damage report header.
 C   14-JUL-2010 Lance R. David (FMSC)
 C----------------------------------------------------------------------
 C
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECOM.F77'
 C

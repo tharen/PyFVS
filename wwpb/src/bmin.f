@@ -1,4 +1,5 @@
       SUBROUTINE BMIN(LKECHO)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -9,7 +10,6 @@ C     OPTION PROCESSOR FOR STAND-LEVEL WWPB MODEL KEYWORDS
 C     CREATED 8/18/05 AJ McMAHAN, ITX, Inc. Ft. Collins, CO
 C     CALLED FROM: INITRE
 C
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'PPEPRM.F77'
       INCLUDE 'BMPRM.F77'
       INCLUDE 'BMCOM.F77'

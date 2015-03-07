@@ -1,11 +1,10 @@
       SUBROUTINE MULTS (KIND,IDT,XMULT)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
 C  $Id$
 C----------
-C
-      INCLUDE 'CONTRL.F77'
 C
 C     GETS THE MULTIPLIERS - NL CROOKSTON - JAN 1981 - MOSCOW.
 C

@@ -1,4 +1,5 @@
       SUBROUTINE CCFCAL(ISPC,D,H,JCR,P,LTHIN,CCFT,CRWDTH,MODE)
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -21,8 +22,6 @@ C    MODE = 1 IF ONLY NEED CCF RETURNED
 C           2 IF ONLY NEED CRWDTH RETURNED
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
 C----------
 C  DIMENSION AND DATA STATEMENTS FOR INTERNAL VARIABLES.
 C

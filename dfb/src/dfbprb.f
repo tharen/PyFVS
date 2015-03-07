@@ -1,4 +1,5 @@
       SUBROUTINE DFBPRB (PROTBK)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -25,8 +26,6 @@ C     DEBUIN - (DFBCOM)  INPUT
 C     JODFB  - (DFBCOM)  INPUT
 C     JOSTND - (CONTRL)  INPUT
 C     PBADF4 - (DFBCOM)  INPUT
-C
-      INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'DFBCOM.F77'
 C

@@ -1,8 +1,9 @@
       SUBROUTINE FMCFIM (IYR, FMD, UWIND, IBYRAM, FLAMEHT, CANBURN, ROS)
-      use contrl_mod
+      use plot_mod
       use fmcom_mod
-      use fmfcom_mod
       use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
       use prgprm_mod
       implicit none
 C
@@ -26,7 +27,6 @@ C     FMD:  FUEL MODEL THAT IS USED IN THE STATIC CASE
 C
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
       INCLUDE 'METRIC.F77'
 C
       integer iyr, RC

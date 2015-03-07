@@ -1,4 +1,5 @@
       SUBROUTINE BRTDEL(IVAC,IREC)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C**********************************************************************
@@ -19,7 +20,6 @@ C**********************************************************************
 C.... Common include files.
 
       INCLUDE 'BRCOM.F77'
-      INCLUDE 'CONTRL.F77'
 
 C.... Local variable declarations.
 

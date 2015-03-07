@@ -1,4 +1,6 @@
       SUBROUTINE MPBDRV
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -22,10 +24,6 @@ C     Function name was used as variable name.
 C     changed variable INT to INCRS
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
       INCLUDE 'MPBCOM.F77'
 C
 

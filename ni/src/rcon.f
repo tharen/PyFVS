@@ -1,4 +1,7 @@
       SUBROUTINE RCON
+      use contrl_mod
+      use plot_mod
+      use coeffs_mod
       use prgprm_mod
       implicit none
 C----------
@@ -13,12 +16,6 @@ C  EFFECTS FOR THE SPECIFIED CONDITIONS.  THESE EFFECTS ARE THEN
 C  LOADED INTO VECTORS THAT ARE SUBSCRIPTED BY SPECIES.
 C----------
 COMMONS
-      INCLUDE 'COEFFS.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
       LOGICAL DEBUG
 C-----------
 C  CHECK FOR DEBUG.

@@ -1,4 +1,6 @@
       SUBROUTINE INSCYC (IFROM,IBOUND,ISPOT,LCHFNT,LMORE,IOUT,DEBU)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -32,10 +34,6 @@ C     DEBU  = TRUE IF DEBUGING
 C     IYLAST= NUMBER OF CYCLES PLUS 1 (NCYC+1)
 C
       LOGICAL  DEBU,LCHFNT,LMORE,LOK
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
 
       INTEGER IOUT,ISPOT,IBOUND,IFROM,IYLAST,I,IYPB,I1,I2

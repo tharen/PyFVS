@@ -1,11 +1,10 @@
       SUBROUTINE TWIGBF(ISPC,H,D,VMAX,BBFV)
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
 C  **TWIGBF---LS    DATE OF LAST REVISION:   07/11/08
 C----------
-C
-      INCLUDE 'PLOT.F77'
 C
 C  ************** BOARD FOOT MERCHANTABILITY SPECIFICATIONS ********
 C

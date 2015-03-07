@@ -1,8 +1,9 @@
       SUBROUTINE FMVINIT
-      use contrl_mod
+      use plot_mod
       use fmcom_mod
-      use fmfcom_mod
       use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -21,8 +22,6 @@ C----------
 ***********************************************************************
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
 C----------
       INTEGER I,J
 C----------

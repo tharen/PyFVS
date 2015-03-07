@@ -1,4 +1,5 @@
       REAL FUNCTION RDSLP(X,XX,YY,N)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -38,8 +39,6 @@ C
 C.... PARAMETER INCLUDE FILES
 C
 C.... COMMON INCLUDE FILES
-C
-      INCLUDE 'CONTRL.F77'
 C
 C.... Local variables
 C

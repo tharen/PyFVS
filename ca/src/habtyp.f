@@ -1,4 +1,7 @@
       SUBROUTINE HABTYP (KARD2,ARRAY2)
+      use contrl_mod
+      use plot_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -20,12 +23,6 @@ C     THE R5 OR R6 HT/PA ARRAY; ICL5 WILL CARRY THE FVS SEQUENCE
 C     NUMBER FOR THE HT/PA.
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'VARCOM.F77'
-C
 C----------
       INTEGER NPA,NR5,I,IFORST,I1,I2,IR5,IR6,LIMIT,IHB
       PARAMETER (NPA=90)

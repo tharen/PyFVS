@@ -1,4 +1,5 @@
       SUBROUTINE CVCNOP (LTHIN)
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -8,8 +9,6 @@ C----------
 C  **CVCNOP** CONTROLS THE CALLS TO THE CROWN WIDTH, CROWN SHAPE,
 C  CROWN FOLIAGE BIOMASS, SUMMARY, AND CLASSIFICATION SUBPROGRAMS.
 C----------
-C
-      INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'CVCOM.F77'
 C

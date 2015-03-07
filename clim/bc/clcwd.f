@@ -1,4 +1,6 @@
       REAL FUNCTION CLCWD(Q10,REF)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -11,8 +13,6 @@ C     IS BASED ON THE STANDARD Q10 RELATIONSHIP
 C
 C     EXP((MAT-REFTEMP)*LN(Q10)*0.1))
 C
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'CLIMATE.F77'
 C
 

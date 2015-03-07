@@ -1,5 +1,16 @@
       BLOCK DATA BLKDAT
+      use htcal_mod
+      use fvsstdcm_mod
+      use pden_mod
+      use esparm_mod
+      use rancom_mod
+      use contrl_mod
+      use coeffs_mod
+      use econ_mod
+      use plot_mod
       use prgprm_mod
+      use escomn_mod
+      use screen_mod
       implicit none
 C----------
 C  $Id$
@@ -7,17 +18,6 @@ C----------
 C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
 C
-      INCLUDE 'COEFFS.F77'
-      INCLUDE 'ESPARM.F77'
-      INCLUDE 'ESCOMN.F77'
-      INCLUDE 'PDEN.F77'
-      INCLUDE 'ECON.F77'
-      INCLUDE 'HTCAL.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'RANCOM.F77'
-      INCLUDE 'SCREEN.F77'
-      INCLUDE 'FVSSTDCM.F77'
       INCLUDE 'BCPLOT.F77'
       INCLUDE 'METRIC.F77'
 C

@@ -1,4 +1,6 @@
       SUBROUTINE DMCYCL
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -125,9 +127,7 @@ C     DMCAP   DMCOM
 C
 C**********************************************************************
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'DMCOM.F77'
-      INCLUDE 'PLOT.F77'
 
 C Local variables.
 

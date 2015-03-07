@@ -1,20 +1,20 @@
       SUBROUTINE ESTAB (KDT)
+      use plot_mod
       use arrays_mod
+      use esparm_mod
+      use contrl_mod
+      use pden_mod
+      use escomn_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
 C  $Id$
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'ESPARM.F77'
       INCLUDE 'ESTREE.F77'
       INCLUDE 'ESHAP.F77'
-      INCLUDE 'PDEN.F77'
       INCLUDE 'CALDEN.F77'
-      INCLUDE 'ESCOMN.F77'
-      INCLUDE 'VARCOM.F77'
       INCLUDE 'STDSTK.F77'
       INCLUDE 'METRIC.F77'
 COMMONS

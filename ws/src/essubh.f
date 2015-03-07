@@ -1,5 +1,8 @@
       SUBROUTINE ESSUBH (I,HHT,EMSQR,DILATE,DELAY,EL,IHTSER,
      &  GENTIM,TRAGE)
+      use esparm_mod
+      use escomn_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -16,12 +19,6 @@ C     CYCLE.  AGE IS TREE AGE UP TO THE TIME REGENT WILL BEGIN GROWING
 C     THE TREE.
 C----------
 C  COMMONS
-C
-      INCLUDE 'ESPARM.F77'
-C
-      INCLUDE 'ESCOMN.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
 C----------
 C   DECLARATIONS

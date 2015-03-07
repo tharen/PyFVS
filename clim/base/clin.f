@@ -1,4 +1,6 @@
       SUBROUTINE CLIN (DEBUG,LKECHO)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -7,8 +9,6 @@ C----------
 C
 C     CLIMATE EXTENSION
 C
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'CLIMATE.F77'
 C
       INTEGER    KWCNT

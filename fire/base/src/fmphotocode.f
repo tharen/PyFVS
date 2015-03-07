@@ -1,4 +1,5 @@
       SUBROUTINE FMPHOTOCODE (FotoRef, CFotoCode, Fotocode, Icall)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -15,8 +16,6 @@ C     ICALL = 1 MEANS THAT YOU ARE GIVING THE CHARACTER CODE AND WANT THE INTEGE
 C     ICALL = 0 MEANS THAT YOU ARE GIVING THE INTEGER CODE AND WANT THE CHARACTER CODE
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
 C----------
       CHARACTER*13 CFOTOCODE, CFOTOTMP
       INTEGER FOTOCODE, FOTOREF, I, N, ICALL

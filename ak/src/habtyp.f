@@ -1,4 +1,6 @@
       SUBROUTINE HABTYP (KARD2,ARRAY2)
+      use contrl_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -9,10 +11,6 @@ C  DUMMY HABITAT ROUTINE USED IN VARIANTS THAT DON'T USE
 C  HABITAT TYPE AS A VARIABLE IN GROWTH FUNCTIONS.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'VARCOM.F77'
-C
 C----------
       INTEGER KODTYP,ITYPE
       REAL ARRAY2

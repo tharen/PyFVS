@@ -1,7 +1,12 @@
       SUBROUTINE DISPLY
       use contrl_mod, only: nofortype
+      use plot_mod
       use arrays_mod
+      use contrl_mod
+      use econ_mod
       use prgprm_mod
+      use varcom_mod
+      use screen_mod
       implicit none
 C----------
 C  $Id$
@@ -11,19 +16,9 @@ C  OF THE PROJECTION, AND AT THE END OF EACH CYCLE.  ESTIMATES
 C  STAND AGE IF MISSING FROM THE STNDINFO KEYWORD
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
       INCLUDE 'OUTCOM.F77'
 C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'ECON.F77'
-C
-      INCLUDE 'SCREEN.F77'
-C
       INCLUDE 'SUMTAB.F77'
-C
-      INCLUDE 'VARCOM.F77'
 C
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES (USED AS OUTPUT LABELS):

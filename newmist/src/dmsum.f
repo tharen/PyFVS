@@ -1,4 +1,6 @@
       SUBROUTINE DMSUM(DMTRCW, IDMSHP)
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -66,8 +68,6 @@ C     [FVS commons are not documented]
 C
 C********************************************************************
 
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'DMCOM.F77'
 
 C Argument list variables.

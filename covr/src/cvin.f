@@ -1,4 +1,6 @@
       SUBROUTINE CVIN (PASKEY,ARRAY,LNOTBK,LKECHO)
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -71,10 +73,6 @@ C       -- LSHOW -- LOGICAL FLAG FOR SHOWSHRB OPTION
 C       -- NSHOW -- NUMBER OF SPECIES FOR DISPLAY
 C 1-6   -- ISHOW(6)-- SUBSCRIPTS OF SPECIES FOR DISPLAY
 C----------
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
       INCLUDE 'CVCOM.F77'
 C

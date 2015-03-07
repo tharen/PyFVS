@@ -1,4 +1,7 @@
       SUBROUTINE ESADDT(ICALL)
+      use contrl_mod
+      use varcom_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -10,12 +13,9 @@ C     ADD NEW TREES FROM A FILE OR EXTERNAL DATA BASE.
 
 C     COMMONS
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'OUTCOM.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'ESHAP.F77'
       INCLUDE 'ESHAP2.F77'
-      INCLUDE 'VARCOM.F77'
 
       INTEGER       ICALL
 

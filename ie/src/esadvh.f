@@ -1,14 +1,12 @@
       SUBROUTINE ESADVH (EMSQR,I,HHT,DELAY,ELEV,DILATE,IHTSER,
      &  GENTIM,TRAGE)
+      use esparm_mod
+      use escomn_mod
       use prgprm_mod
       implicit none
 C----------
 C  **ESADVH--NI23   DATE OF LAST REVISION:   04/01/08
 C----------
-C
-      INCLUDE 'ESPARM.F77'
-C
-      INCLUDE 'ESCOMN.F77'
 C
       INCLUDE 'ESCOM2.F77'
 C

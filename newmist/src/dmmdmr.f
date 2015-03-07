@@ -1,4 +1,5 @@
       SUBROUTINE DMMDMR(New, Old)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -36,7 +37,6 @@ C     MAXTRE  PRGPRM
 C
 C**********************************************************************
 
-      INCLUDE 'CONTRL.F77'
 
       INTEGER New
       INTEGER Old

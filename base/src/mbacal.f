@@ -1,5 +1,10 @@
       SUBROUTINE MBACAL
+      use htcal_mod
+      use pden_mod
       use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -9,16 +14,6 @@ C   THIS SUBROUTINE IDENTIFIES THE SITE SPECIES (IE SPECIES OF
 C   MAXIMUM BASAL AREA IN THE STAND. THIS ROUTINE IS CALLED FROM
 C   CRATET AND DENSE.
 C----------
-C
-      INCLUDE 'COEFFS.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'HTCAL.F77'
-C
-      INCLUDE 'PDEN.F77'
 C
       INCLUDE 'ESHAP.F77'
 C

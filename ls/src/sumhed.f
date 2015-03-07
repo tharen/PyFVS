@@ -1,4 +1,6 @@
       SUBROUTINE SUMHED
+      use screen_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -8,11 +10,7 @@ C  THIS SUBROUTINE WRITES A HEADER FOR THE SUMMARY OUTPUT ON THE
 C  SCREEN.
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
       INCLUDE 'OUTCOM.F77'
-C
-      INCLUDE 'SCREEN.F77'
 C
 C----------
       CHARACTER*7 FMT

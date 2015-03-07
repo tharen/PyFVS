@@ -834,6 +834,9 @@ C     RELEASE STATEMENT HANDLE
 C-------------------------------------------------------------------------------
 
       SUBROUTINE DBSMIS5(IYEAR,KODE)
+      use contrl_mod
+      use varcom_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -849,10 +852,7 @@ C                     ADDITION TO
 C
 C---
 
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'ESTREE.F77'
-      INCLUDE 'VARCOM.F77'
       INCLUDE 'WORKCM.F77'
 	INCLUDE 'MISCOM.F77'
       INCLUDE 'DMCOM.F77'
@@ -1285,6 +1285,7 @@ C     RELEASE STATEMENT HANDLE
 c------------------------
 
       SUBROUTINE DBSMIS6(IYEAR,KODE)
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -1295,7 +1296,6 @@ C     PURPOSE: TO POPULATE A DATABASE WITH THE LIGHT PENETRATION
 C     AT EACH 2M POSITION IN THE STAND
 C     AUTH: D. ROBINSON, ESSA - BASED ON D. GAMMEL (DBSFUELS)
 
-      INCLUDE 'PLOT.F77'
       INCLUDE 'DBSCOM.F77'
       INCLUDE 'DMCOM.F77'
 

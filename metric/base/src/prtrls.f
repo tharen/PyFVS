@@ -1,4 +1,7 @@
       SUBROUTINE PRTRLS (IWHO)
+      use contrl_mod
+      use varcom_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -10,13 +13,7 @@ C     PRINT THE TREE LIST.
 C
 C     IWHO = 1 IF CALLED NORMALLY, AND 2 OR 3 IF CALLED FROM CUTS.
 C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
       INCLUDE 'ESTREE.F77'
-C
-      INCLUDE 'VARCOM.F77'
 C
       INCLUDE 'WORKCM.F77'
 C

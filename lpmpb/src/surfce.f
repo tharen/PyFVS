@@ -1,4 +1,6 @@
       SUBROUTINE SURFCE
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -39,9 +41,7 @@ C
 
 
 
-      INCLUDE 'CONTRL.F77'
 
-      INCLUDE 'PLOT.F77'
 
       INCLUDE 'MPBCOM.F77'
 C

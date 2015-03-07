@@ -1,6 +1,8 @@
       SUBROUTINE FILOPN
       use contrl_mod
+      use fvsstdcm_mod
       use svdata_mod
+      use econ_mod
       use prgprm_mod
       implicit none
 C----------
@@ -11,8 +13,6 @@ C  THIS ROUTINE OPENS THE FILES FOR THE PROGNOSIS MODEL.
 C  TO PROMPT FOR FILE NAMES, SET LPT TRUE,
 C  IF PROMPTS ARE NOT WANTED, SET LPT FALSE.
 C
-      INCLUDE 'ECON.F77'
-      INCLUDE 'FVSSTDCM.F77'
 
 COMMONS
       INTEGER LENKEY,KODE,I,LENNAM,ISTLNB,IRTNCD

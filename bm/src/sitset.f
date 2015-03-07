@@ -1,4 +1,7 @@
       SUBROUTINE SITSET
+      use contrl_mod
+      use plot_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -8,12 +11,6 @@ C THIS SUBROUTINE LOADS THE SITELG ARRAY WITH A SITE INDEX FOR EACH
 C SPECIES WHICH WAS NOT ASSIGNED A SITE INDEX BY KEYWORD.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'VARCOM.F77'
-C
       INCLUDE 'VOLSTD.F77'
 C
 C----------

@@ -1,4 +1,6 @@
       SUBROUTINE RDSPRD
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -116,8 +118,6 @@ C.... PARAMETER INCLUDE FILES
 
 C.... COMMON INCLUDE FILES
 
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
       INCLUDE 'RDADD.F77'

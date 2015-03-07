@@ -1,4 +1,5 @@
       SUBROUTINE BMINIT (JOPRT)
+      use contrl_mod
       use prgprm_mod
       implicit none
 ***********************************************************************
@@ -40,7 +41,6 @@ C.... Parameter include files.
 
 C.... Common include files.
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BMCOM.F77'
       INCLUDE 'BMRRCM.F77'
       INCLUDE 'BMPCOM.F77'

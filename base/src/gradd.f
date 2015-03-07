@@ -1,7 +1,10 @@
       SUBROUTINE GRADD (DEBUG,IPMODI,LTMGO,LMPBGO,LDFBGO,
      1                  LBWEGO,LCVATV,LBGCGO)
-      use arrays_mod, only: barkrat
+      use plot_mod
       use arrays_mod
+      use arrays_mod, only: barkrat
+      use contrl_mod
+      use coeffs_mod
       use prgprm_mod
       implicit none
 C----------
@@ -14,13 +17,7 @@ C     END-OF-CYCLE STATISTICS.
 C
 C     CALLED FROM: TREGRO AND PPMAIN
 C
-      INCLUDE 'COEFFS.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
       INCLUDE 'OUTCOM.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
       INCLUDE 'OPCOM.F77'
 C

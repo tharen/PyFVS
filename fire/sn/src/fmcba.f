@@ -1,7 +1,9 @@
       SUBROUTINE FMCBA (IYR,ISWTCH)
+      use plot_mod
       use arrays_mod
       use fmcom_mod
       use fmparm_mod
+      use varcom_mod
       use contrl_mod
       use fmfcom_mod
       use prgprm_mod
@@ -27,10 +29,6 @@ C              =0 if called by any other subroutine (FMMAIN, FMPPHV, FMBURN)
 C     TOTBA:   THE TOTAL BASAL AREA IN THE STAND
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'VARCOM.F77'
-C
 C----------
 C  LOCAL VARIABLE DECLARATIONS
 C----------

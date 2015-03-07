@@ -1,4 +1,5 @@
       SUBROUTINE RDROUT
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -23,7 +24,6 @@ C
 
       INCLUDE 'RDPARM.F77'
 
-      INCLUDE 'CONTRL.F77'
 
       INCLUDE 'RDCOM.F77'
 C

@@ -1,4 +1,6 @@
       SUBROUTINE MPBCUP
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -8,10 +10,6 @@ C
 C     INTERFACING PROGRAM TO CALL EITHER MPBDRV OR COLDRV.
 C
       INCLUDE 'MPBCOM.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
 C
 C Revision History
 C   02/08/88 Last noted revision date.

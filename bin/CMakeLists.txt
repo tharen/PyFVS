@@ -292,7 +292,7 @@ set(temp_src)
 foreach(fn ${common_source})
     file(READ ${fn} foo)
     if ((NOT ${fn} MATCHES ".*main\\.(f|f90)$")
-        # Variant specific code includes the prgprm and esparm files
+#       Variant specific code includes the prgprm and esparm files
         AND (NOT "${foo}" MATCHES ".*PRGPRM.F77.*")
         AND (NOT "${foo}" MATCHES ".*ESPARM.F77.*")
         AND (NOT "${foo}" MATCHES ".*prgprm_mod.*")
@@ -306,14 +306,14 @@ set(common_source ${temp_src})
 # Parse each configured variant source file list keeping files common to all
 foreach (sl ${source_lists})
     set(temp_src)
-    # Read the list of source files for this variant
+#   Read the list of source files for this variant
     file(STRINGS ${sl} fl)
     string(REPLACE "../" "${src_root}/" fl "${fl}")
     
-    # Compare each file currently in the common list with the variant file list
+#   Compare each file currently in the common list with the variant file list
     foreach(fn ${common_source})
         list(FIND fl ${fn} m)
-        # FIND returns -1 for files not in the variant file list
+#       FIND returns -1 for files not in the variant file list
         if (NOT m EQUAL -1)
             list(APPEND temp_src ${fn})
         endif()
@@ -615,17 +615,22 @@ if (WITH_PYMOD)
     set(_pymod_src 
                 "apisubs.f" "cmdline.f" "filopn.f" "fvs.f" "htcalc.f" "rann.f"
                 "htdbh.f"
-                "prgprm_mod.f90" "arrays_mod.f90" "contrl_mod.f90"
-                "workcm_mod.f90" "plot_mod.f90" "varcom_mod.f90"
-                "outcom_mod.f90" "volstd_mod.f90" "fmparm_mod.f90"
-                "fmcom_mod.f90" "fmfcom_mod.f90"
+                
+                "prgprm_mod.f90" "esparm_mod.f90" "arrays_mod.f90" "contrl_mod.f90"
+                "coeffs_mod.f90" "econ_mod.f90" "escomn_mod.f90" "eshap_mod.f90"
+                "estree_mod.f90" "htcal_mod.f90" "multcm_mod.f90" "pden_mod.f90"
+                "workcm_mod.f90" "plot_mod.f90" "rancom_mod.f90" "screen_mod.f90"
+                "fvsstdcm_mod.f90" "varcom_mod.f90" "outcom_mod.f90" "volstd_mod.f90"
+                "fmparm_mod.f90" "fmcom_mod.f90" "fmfcom_mod.f90" "fmprop_mod.f90"
+#                "fmsvcm_mod.f90" "svdata_mod.f90"
+                "metric_mod.f90"
                 
                 "carbon_data.f90" "downwood_data.f90" "tree_data.f90"
                 "fvs_step.f90" "snag_data.f90" "siteht_mod.f90"
                 "findage_mod.f90"
                 
 #                "step_grincr.f90" "dbs_commons.f" "fire_commons.f"
-#                "fvs_commons.f" "fvs_prgpm.f" "snag_data.f90"
+#                "fvs_commons.f"
                 )
     # Routines to be skipped by F2PY
     set(pymod_skip "") #required by f2py_gen 
@@ -638,6 +643,12 @@ if (WITH_PYMOD)
             if (x GREATER -1)
                 list(APPEND pymod_source ${fn})
             endif()
+            
+            # Add all the common common data modules
+#            if (${filename} MATCHES ".*_mod.f90")
+#                list(APPEND pymod_source ${fn})
+#            endif()
+            
             unset(filename)
         endif()
     endforeach(fn)

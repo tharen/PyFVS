@@ -1,4 +1,5 @@
       SUBROUTINE BWELIT
+      use contrl_mod
       use prgprm_mod
       implicit none
 C-----------
@@ -155,7 +156,6 @@ C----------------------------------------------------------------------
 C
 C     COMMONS
 C
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECOM.F77'
       INCLUDE 'BWECM2.F77'

@@ -1,4 +1,5 @@
       SUBROUTINE BWEOUT
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -27,7 +28,6 @@ C       Changed local variable name from RECORD to RECRD.
 C    14-JUL-2010 Lance R. David (FMSC)
 C----------------------------------------------------------------------
 C
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECOM.F77'
       INCLUDE 'BWEBOX.F77'

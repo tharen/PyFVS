@@ -1,4 +1,5 @@
       SUBROUTINE DMSLOP(Dstnce, Offset)
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -45,7 +46,6 @@ C     SLOPE   PLOT
 C
 C*********************************************************************
 
-      INCLUDE 'PLOT.F77'
 
 C Argument list variables.
 

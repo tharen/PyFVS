@@ -1,4 +1,5 @@
       SUBROUTINE SVSNAD(IYEAR,ISNADD,NSNGS,ISWTCH)
+      use plot_mod
       use arrays_mod
       use fmcom_mod
       use fmparm_mod
@@ -31,8 +32,6 @@ C
 C----------
 C
       INCLUDE 'SVDEAD.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
 
 C

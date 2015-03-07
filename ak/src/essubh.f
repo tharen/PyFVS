@@ -1,4 +1,6 @@
       SUBROUTINE ESSUBH (I,HHT,DELAY,GENTIM,TRAGE,WMAX)
+      use esparm_mod
+      use escomn_mod
       use prgprm_mod
       implicit none
 C----------
@@ -7,10 +9,6 @@ C
 C     ASSIGNS HEIGHTS TO SUBSEQUENT AND PLANTED TREE RECORDS
 C     CREATED BY THE ESTABLISHMENT MODEL.
 C----------
-C
-      INCLUDE 'ESPARM.F77'
-C
-      INCLUDE 'ESCOMN.F77'
 C
       INCLUDE 'ESCOM2.F77'
 C

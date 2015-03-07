@@ -1,4 +1,5 @@
       SUBROUTINE SVRMOV (REMOVE,ISWTCH,SSNG,DSNG,CTCRWN,ICURYEAR)
+      use plot_mod
       use contrl_mod
       use svdata_mod
       use arrays_mod
@@ -33,7 +34,6 @@ C
 
 
 
-      INCLUDE 'PLOT.F77'
 
       INCLUDE 'SVDEAD.F77'
 

@@ -1,4 +1,5 @@
       SUBROUTINE BRCRED
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -34,7 +35,6 @@ C**********************************************************************
 
 C.... Common include files.
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BRCOM.F77'
 
 C.... Local variable declarations.

@@ -1,4 +1,5 @@
       SUBROUTINE DIST(N,ATTR,PCTWK)
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -15,8 +16,6 @@ C  WITH SUBSCRIPTS TO TREE RECORDS TO BE PRINTED.  N IS THE CURRENT
 C  LENGTH OF THE TREE RECORD LIST (ITRN).
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES.
 C----------

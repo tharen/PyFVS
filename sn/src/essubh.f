@@ -1,16 +1,13 @@
       SUBROUTINE ESSUBH (I,HHT,EMSQR,DILATE,DELAY,ELEV,IHTSER,GENTIM,
      &  TRAGE)
+      use esparm_mod
+      use contrl_mod
+      use escomn_mod
       use prgprm_mod
       implicit none
 C----------
 C  **ESSUBH--SN   DATE OF LAST REVISION:  06/05/08
 C----------
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'ESPARM.F77'
-C
-      INCLUDE 'ESCOMN.F77'
 C
 C     ASSIGNS HEIGHTS TO SUBSEQUENT AND PLANTED TREE RECORDS
 C     CREATED BY THE ESTABLISHMENT MODEL.

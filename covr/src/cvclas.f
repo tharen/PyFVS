@@ -1,4 +1,6 @@
       SUBROUTINE CVCLAS (LTHIN)
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -47,10 +49,6 @@ C  -- STRUCT -- STAND STRUCTURE CODE
 C
 C  HEIGHT CLASS CODES: 1=0-10', 2=10-20',...   ...16=150' AND UP.
 C----------
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
       INCLUDE 'CVCOM.F77'
 C

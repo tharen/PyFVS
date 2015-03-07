@@ -1,4 +1,6 @@
       SUBROUTINE BRICAL
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C**********************************************************************
@@ -34,8 +36,6 @@ C**********************************************************************
 C.... Common include files.
 
       INCLUDE 'BRCOM.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'CONTRL.F77'
 
 C.... Local variable declarations.
 

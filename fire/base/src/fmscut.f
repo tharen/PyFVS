@@ -1,4 +1,5 @@
       SUBROUTINE FMSCUT (MXVOL,NR,NC,SSNG,DSNG,CTCRWN,TKCRWN)
+      use plot_mod
       use arrays_mod
       use fmcom_mod
       use fmparm_mod
@@ -26,7 +27,6 @@ C           FMSADD
 C           FMCBIO
 C
 
-      INCLUDE 'PLOT.F77'
 C
 C  Local Variable Definitions:
 C

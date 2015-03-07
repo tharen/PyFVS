@@ -1,4 +1,5 @@
       SUBROUTINE BWEINT
+      use contrl_mod
       use prgprm_mod
       implicit none
 C---------
@@ -59,7 +60,6 @@ C   28-AUG-2013 Lance R. David (FMSC)
 C      Modified initialization of IEVENT array.
 C------------------------------------------------------------------------
 COMMONS
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECOM.F77'
       INCLUDE 'BWECM2.F77'

@@ -1,8 +1,9 @@
       SUBROUTINE FMSOILHEAT (IYR, LNMOUT)
-      use contrl_mod
+      use plot_mod
       use fmcom_mod
-      use fmfcom_mod
       use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -23,8 +24,6 @@ C     LNMOUT: TRUE IF NORMAL OUTPUT PROCESS, FALSE TO SUPPRESS ALL OUTPUTS
 C
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
       integer iyr
       logical lnmout
       character fofem_msg(101), VVER*7

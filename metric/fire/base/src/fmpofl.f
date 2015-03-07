@@ -1,4 +1,6 @@
       SUBROUTINE FMPOFL (IYR, FMD, LNMOUT)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 
@@ -29,10 +31,6 @@ C     SFWT:   SEVERE FUEL MODEL WEIGHT.  USED WITH SFMOD.
 C     SNFMODS:NUMBER OF FUEL MODELS USED IN THE SEVERE CASE.
 C
       INCLUDE 'FMPARM.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'FMCOM.F77'
 C
@@ -553,6 +551,7 @@ C
 
 
       SUBROUTINE FMPOFL_FMPTRH(IYR,MXI,PRB,FLM1,FLM2,PTR1,PTR2)
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -566,7 +565,6 @@ C
 C     NL CROOKSTON -- RMRS MOSCOW -- MAY 2004
 C
       INCLUDE 'FMPARM.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'FMCOM.F77'
       INCLUDE 'FMFCOM.F77'
 C

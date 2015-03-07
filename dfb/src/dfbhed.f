@@ -1,4 +1,5 @@
       SUBROUTINE DFBHED
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -28,8 +29,6 @@ C        Updated for expansion of FVS stand id (variable NPLT)
 C        from 8 to 26 characters.
 C
 C**********************************************************************
-C
-      INCLUDE 'PLOT.F77'
 C
       INCLUDE 'DFBCOM.F77'
 C

@@ -1,4 +1,6 @@
       SUBROUTINE BWEDR
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -60,9 +62,7 @@ C      Added loading of weather year into IEVENT array.
 C
 C----------------------------------------------------------------------
 COMMONS
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'OPCOM.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECOM.F77'
       INCLUDE 'BWECM2.F77'

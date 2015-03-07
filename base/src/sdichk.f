@@ -1,4 +1,7 @@
       SUBROUTINE SDICHK
+      use contrl_mod
+      use plot_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -11,12 +14,6 @@ C  THIS ROUTINE IS CALLED FROM **SITSET** IN VARIANTS THAT USE
 C  THE SDI-BASED MORTALITY MODEL.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'VARCOM.F77'
-C
 C----------
 C  DEFINITIONS:
 C----------

@@ -1,16 +1,13 @@
       SUBROUTINE SDEFET (LNOTBK,ARRAY,KEYWRD,
      >                   LOPEVN,IACTK,KARD,IPRMPT)
+      use contrl_mod
+      use plot_mod
+      use coeffs_mod
       use prgprm_mod
       implicit none
 C----------
 C  $Id$
 C----------
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'COEFFS.F77'
-C
-      INCLUDE 'CONTRL.F77'
 C
 C     PROCESSES BFDEFECT OR MCDEFECT KEYWORDS - CALLED FROM INITRE.
 C

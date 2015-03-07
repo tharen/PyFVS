@@ -1,4 +1,6 @@
       SUBROUTINE DUBSCR(LVER,ISPC,XC,D,H,BAX,BAL,CR)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -12,8 +14,6 @@ C  USED TO REPLACE CROWN RATIO ESTIMATES FOR ALL TREES THAT
 C  CROSS THE THRESHOLD BETWEEN THE SMALL AND LARGE TREE MODELS.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'BCPLOT.F77'
 
 COMMONS

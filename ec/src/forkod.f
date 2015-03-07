@@ -1,4 +1,6 @@
       SUBROUTINE FORKOD
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -8,10 +10,6 @@ C     TRANSLATES FOREST CODE INTO A SUBSCRIPT, IFOR, AND IF
 C     KODFOR IS ZERO, THE ROUTINE RETURNS THE DEFAULT CODE.
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
 C----------
 C  NATIONAL FORESTS:
 C  606 = MT HOOD

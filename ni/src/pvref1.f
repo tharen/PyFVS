@@ -1,4 +1,5 @@
       SUBROUTINE PVREF1 (KARD2,ARRAY2,I1,I2,LPVCOD,LPVREF)
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -23,8 +24,6 @@ C                      FROM FSVEG DATA BASE
 C     HABPVR         - FVS HABITAT/ECOCLASS CODE CORRESPONDING TO
 C                      PV CODE/REFERENCE CODE COMBINATION
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
 C  DECLARATIONS
 C
       REAL         ARRAY2

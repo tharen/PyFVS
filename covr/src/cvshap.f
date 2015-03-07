@@ -1,4 +1,6 @@
       SUBROUTINE CVSHAP (LTHIN)
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -33,10 +35,6 @@ C  TPA     -- TREES PER ACRE
 C  SCORE(5) -- DISCRIMINANT FUNCTION SCORE
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
       INCLUDE 'CVCOM.F77'
 C
 C----------

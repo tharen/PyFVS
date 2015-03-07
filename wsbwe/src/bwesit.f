@@ -1,6 +1,9 @@
       SUBROUTINE BWESIT
-      use arrays_mod
+      use contrl_mod
       use prgprm_mod
+      use plot_mod
+      use coeffs_mod
+      use arrays_mod
       implicit none
 C----------
 C  **BWESIT                 DATE OF LAST REVISION:  07/14/10
@@ -56,9 +59,6 @@ C      .Added call to opdone for setprbio between statement lables 80 & 90.
 C   14-JUL-2010 Lance R. David (FMSC)
 C----------
 C
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'COEFFS.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECOM.F77'
       INCLUDE 'BWECM2.F77'

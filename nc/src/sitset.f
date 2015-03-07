@@ -1,4 +1,7 @@
       SUBROUTINE SITSET
+      use contrl_mod
+      use plot_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -13,12 +16,6 @@ C
 C THIS SUBROUTINE ALSO SETS VARIABLES WHICH ARE FOREST SPECIFIC.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'VARCOM.F77'
-C
       INCLUDE 'VOLSTD.F77'
 C
 C----------

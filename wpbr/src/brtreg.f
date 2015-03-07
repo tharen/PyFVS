@@ -1,4 +1,6 @@
       SUBROUTINE BRTREG
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -76,8 +78,6 @@ C     BRECAN call modified by removal of RI(J) call parameter.
 C**********************************************************************
 C.... Common include files
 
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'BRCOM.F77'
 
 C.... Local variable declarations

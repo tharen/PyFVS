@@ -1,4 +1,5 @@
       SUBROUTINE FMCBA (IYR,ISWTCH)
+      use plot_mod
       use arrays_mod
       use fmcom_mod
       use fmparm_mod
@@ -63,7 +64,6 @@ C     I=4  SELECTIVELY HARVESTED
 C     I=5  THINNED
 C     I=6  PATCH CLEARCUT
 COMMONS
-      INCLUDE 'PLOT.F77'
       INCLUDE 'SSTGMC.F77'
 COMMONS
 

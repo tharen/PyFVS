@@ -1,4 +1,5 @@
       SUBROUTINE SVOUT(IYEAR,IFMCLFG,AMSG)
+      use plot_mod
       use arrays_mod
       use fmcom_mod
       use fmparm_mod
@@ -57,7 +58,6 @@ C
 
 
 
-      INCLUDE 'PLOT.F77'
 
 
       INCLUDE 'SVDEAD.F77'

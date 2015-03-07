@@ -1,5 +1,6 @@
       SUBROUTINE SPDECD (IPOS,ISP,CNSP,JOSTND,IRECNT,
      >                   KEYWRD,ARRAY,KARD)
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -18,8 +19,6 @@ C     IRECNT= RECORD COUNT.
 C     KEYWRD= C*8 KEYWORD.
 C     ARRAY = R*4 ARRAY OF PARAMETERS.
 C     KARD  = C*10 ARRAY OF PARAMETERS.
-C
-      INCLUDE 'PLOT.F77'
 C
       INTEGER IRECNT,JOSTND,ISP,IPOS,IFLAG,J,I
       CHARACTER*10 KARD(7)

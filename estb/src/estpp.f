@@ -1,13 +1,11 @@
       SUBROUTINE ESTPP (VAL,TPP)
+      use esparm_mod
+      use escomn_mod
       use prgprm_mod
       implicit none
 C----------
 C  **ESTPP  DATE OF LAST REVISION:   07/25/08
 C----------
-C
-      INCLUDE 'ESPARM.F77'
-C
-      INCLUDE 'ESCOMN.F77'
 C
       INCLUDE 'ESCOM2.F77'
 C

@@ -1,4 +1,6 @@
       SUBROUTINE DBSPRSSQL(ORIGSTR,LSCHED,KODE)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C
@@ -14,11 +16,7 @@ C            KODE     - RETURN KODE 0 - FAILED IN PARSING, 1 - OK
 C
       INCLUDE 'OPCOM.F77'
 C
-      INCLUDE 'CONTRL.F77'
-C
       INCLUDE 'KEYCOM.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
       INCLUDE 'DBSCOM.F77'
 C

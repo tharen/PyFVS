@@ -1,4 +1,6 @@
       SUBROUTINE EVLDX (XLDREG,NXLDX,INSTR,IRC)
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -20,8 +22,6 @@ C             2=INSTRUCTION CODE COULD NOT BE DECIPHERED.
 C
       INCLUDE 'OPCOM.F77'
       INCLUDE 'OUTCOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'STDSTK.F77'
       INCLUDE 'WORKCM.F77'
       INCLUDE 'SSTGMC.F77'

@@ -1,4 +1,6 @@
       SUBROUTINE SITSET
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -11,10 +13,6 @@ C ARRAY FOR EACH SPECIES WHICH WAS NOT ASSIGNED AN SDI MAXIMUM
 C BY KEYWORD.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
       INCLUDE 'EMCOM.F77'
 C
       INCLUDE 'VOLSTD.F77'

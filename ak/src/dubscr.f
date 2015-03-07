@@ -1,4 +1,7 @@
       SUBROUTINE DUBSCR(ISPC,D,H,CR,TPCT,TPCCF)
+      use plot_mod
+      use contrl_mod
+      use pden_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -11,12 +14,6 @@ C  FOR TREES IN THE INVENTORY THAT ARE MISSING CROWN RATIO
 C  MEASUREMENTS AND MEET CERTAIN CRITERIA.
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PDEN.F77'
-C
       EXTERNAL RANN
       INTEGER ISPC
       REAL TPCCF,TPCT,CR,H,D,BCR10(MAXSP),BCR9(MAXSP),BCR8(MAXSP)

@@ -1,4 +1,6 @@
       SUBROUTINE SITSET
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -8,10 +10,6 @@ C THIS SUBROUTINE LOADS THE SITEAR ARRAY WITH A SITE INDEX FOR EACH
 C SPECIES WHICH WAS NOT ASSIGNED A SITE INDEX BY KEYWORD.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
       INCLUDE 'VOLSTD.F77'
 C
 C----------

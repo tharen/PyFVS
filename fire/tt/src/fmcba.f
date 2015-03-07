@@ -1,8 +1,9 @@
       SUBROUTINE FMCBA (IYR,ISWTCH)
-      use contrl_mod
-      use fmcom_mod
+      use plot_mod
       use arrays_mod
+      use fmcom_mod
       use fmparm_mod
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -42,8 +43,6 @@ COMMONS
 Cppe      INCLUDE 'PPEPRM.F77'
 C
 Cppe      INCLUDE 'PPCNTL.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
       INCLUDE 'CICOM.F77'
 C

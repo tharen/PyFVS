@@ -1,4 +1,6 @@
       SUBROUTINE SMHTGF (MODE,ICYC,I,H,CR1,DTIME,HHT,JOSTND,DEBUG)
+      use pden_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -23,10 +25,6 @@ C
 C  RETURN VARIABLES
 C  HHT    - HEIGHT GROWTH OVER TIME INCREMENT DTIME (REGENT)
 C  HHT    - HEIGHT 5 YEARS INTO CYCLE, OR END OF CYCLE FINT<5 (ESSUBH)
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'PDEN.F77'
 C
       LOGICAL  DEBUG
       INTEGER  I,ICYC,JOSTND,MODE

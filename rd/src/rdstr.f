@@ -1,4 +1,5 @@
       SUBROUTINE RDSTR (IT,PREM,PREPRB)
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -44,7 +45,6 @@ C
       INCLUDE 'RDARRY.F77'
 
 
-      INCLUDE 'CONTRL.F77'
 
       INCLUDE 'RDADD.F77'
 C

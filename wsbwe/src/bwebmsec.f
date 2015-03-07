@@ -1,4 +1,6 @@
       SUBROUTINE BWEBMS (TRFBMS,ICVOPT)
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -39,9 +41,6 @@ C    14-JUL-2010 Lance R. David (FMSC)
 C    19-MAR-2012 Lance R. David (FMSC)
 C       Updated for the East Cascades species expansion to 32 species.
 C----------
-C
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
 C
 C----------
 C  DECLARATIONS AND DIMENSIONS FOR INTERNAL VARIABLES

@@ -1,4 +1,5 @@
       SUBROUTINE FORMCL(ISPC,IFOR,D,FC)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -9,8 +10,6 @@ C THIS PROGRAM CALCULATES FORM FACTORS FOR CALCULATING CUBIC AND
 C BOARD FOOT VOLUMES.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
 C----------
       REAL GIFPFC(MAXSP,5),MTHDFC(MAXSP,5),OKANFC(MAXSP,5)
       REAL WENAFC(MAXSP,5),FC,D

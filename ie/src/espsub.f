@@ -1,19 +1,15 @@
       SUBROUTINE ESPSUB
+      use esparm_mod
       use prgprm_mod
+      use escomn_mod
+      use pden_mod
+      use plot_mod
       implicit none
 C----------
 C  **ESPSUB--NI23   DATE OF LAST REVISION:   04/01/08
 C----------
 C
-      INCLUDE 'ESPARM.F77'
-C
-      INCLUDE 'ESCOMN.F77'
-C
       INCLUDE 'ESCOM2.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'PDEN.F77'
 C
       INCLUDE 'ESHAP.F77'
 C

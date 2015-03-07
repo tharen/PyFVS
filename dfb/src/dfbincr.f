@@ -1,4 +1,6 @@
       SUBROUTINE DFBIN (PASKEY,ARRAY,LNOTBK)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -80,9 +82,7 @@ C
 C---------------------------------
 C
 
-      INCLUDE 'CONTRL.F77'
 
-      INCLUDE 'PLOT.F77'
 
       INCLUDE 'DFBCOM.F77'
 C

@@ -1,5 +1,10 @@
       SUBROUTINE CROWN
+      use plot_mod
       use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use pden_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -34,17 +39,7 @@ C                MCREQN(1,MAXSP) = 3.0  LIN LINEAR EQUATION
 C                MCREQN(1,MAXSP) = 4.0  LOG LOGARITHMIC EQUATION
 C                MCREQN(1,MAXSP) = 5.0  INVERSE OR HYPERBOLIC EQUATION
 C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'COEFFS.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
       INCLUDE 'OUTCOM.F77'
-C
-      INCLUDE 'PDEN.F77'
-C
-      INCLUDE 'VARCOM.F77'
 C
       LOGICAL DEBUG
       REAL CRNEW(MAXTRE),WEIBUL(5,MAXSP)

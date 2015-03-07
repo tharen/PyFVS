@@ -1,4 +1,5 @@
       FUNCTION ADJMAI(INSPEC,SINDEX,POINTS,IERROR)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -12,8 +13,6 @@ C                             SINDEX, THE SITE INDEX,
 C                             POINTS, THE NUMBER OF STOCKABLE POINTS.
 C         THE VARIABLE IERROR RETURNS A VALUE OF 1 IF A SPECIES
 C         CODE IS UNACCEPTABLE. OTHERWISE, IERROR IS SET TO ZERO.
-C
-      INCLUDE 'CONTRL.F77'
 C
       INTEGER IMAP(32),ISP(32),IERROR,INSPEC,NCALLS,I,INUM
       REAL POINTS,SINDEX,ADJMAI

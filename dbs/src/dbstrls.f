@@ -1,4 +1,7 @@
       SUBROUTINE DBSTRLS(IWHO,KODE,TEM)
+      use contrl_mod
+      use varcom_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -15,13 +18,7 @@ C            KODE  - FOR LETTING CALLING ROUTINE KNOW IF THIS IS A
 C                     REDIRECT OF THE FLAT FILE REPORT OR IN
 C                     ADDITION TO
 C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
       INCLUDE 'ESTREE.F77'
-C
-      INCLUDE 'VARCOM.F77'
 C
       INCLUDE 'WORKCM.F77'
 C

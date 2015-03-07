@@ -1,4 +1,5 @@
       SUBROUTINE DMTLST (Sp, tDMR, Ptr, Index, P, TLst)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -65,7 +66,6 @@ C     MAXTRE  PRGPRM
 C
 C**********************************************************************
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'DMCOM.F77'
 
 C Subroutine arguments.

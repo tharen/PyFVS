@@ -1,4 +1,5 @@
       SUBROUTINE TREGRO
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -7,8 +8,6 @@ C----------
 C    CALLED FROM **MAIN** AND PPMAIN EACH CYCLE.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
 C----------
 C  DECLARATIONS:
 C----------

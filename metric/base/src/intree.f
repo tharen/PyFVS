@@ -1,4 +1,7 @@
       SUBROUTINE INTREE (RECORD,IRDPLV,ISDSP,SDLO,SDHI,LKECHO)
+      use htcal_mod
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -12,9 +15,6 @@ C
 C  THIS ROUTINE READS THE STAND TREE DATA AND SETS ALL VARIABLES
 C  WHICH ARE TREE RECORD SPECIFIC.
 C
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'HTCAL.F77'
       INCLUDE 'ESTREE.F77'
       INCLUDE 'STDSTK.F77'
       INCLUDE 'METRIC.F77'

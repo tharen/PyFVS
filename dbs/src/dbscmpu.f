@@ -1,4 +1,6 @@
       SUBROUTINE DBSCMPU
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C
@@ -10,13 +12,9 @@ C              INFORMATION
 C
       INCLUDE 'OPCOM.F77'
 C
-      INCLUDE 'CONTRL.F77'
-C
       INCLUDE 'KEYCOM.F77'
 C
       INCLUDE 'DBSCOM.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
 
       CHARACTER*4000 SQLStmtStr, TABLESTR

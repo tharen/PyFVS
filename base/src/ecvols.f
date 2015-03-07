@@ -1,5 +1,8 @@
       SUBROUTINE ECVOLS
+      use contrl_mod
+      use plot_mod
       use arrays_mod
+      use econ_mod
       use prgprm_mod
       implicit none
 C----------
@@ -11,12 +14,6 @@ C  FOR REMOVALS WHEN THEY OCCUR.
 C  ENTRY POINTS FOR OTHER ECONOMIC ANALYSIS RELATED SUBROUTINES
 C  ARE ALSO CONTAINED WITHIN THIS SUBROUTINE.
 C----------
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'ECON.F77'
 C
       REAL P,D
       INTEGER I,ICLASS,IOAGE,IYEAR,II,IIDBH,ISPC,J,K,IDBH

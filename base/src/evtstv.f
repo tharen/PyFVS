@@ -1,4 +1,7 @@
       SUBROUTINE EVTSTV (IUSERV)
+      use contrl_mod
+      use varcom_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -27,13 +30,7 @@ C
 C
       INCLUDE 'OUTCOM.F77'
 C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
       INCLUDE 'SUMTAB.F77'
-C
-      INCLUDE 'VARCOM.F77'
 C
       LOGICAL LDEB,LDEB2,LSET
       CHARACTER VVER*7

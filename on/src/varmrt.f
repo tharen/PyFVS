@@ -1,5 +1,9 @@
       SUBROUTINE VARMRT(TOKILL,DEBUG,SUMKIL,DQ10)
+      use plot_mod
       use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use pden_mod
       use prgprm_mod
       implicit none
 C----------
@@ -9,13 +13,9 @@ C SUBROUTINE TO DISTRIBUTE MORTALITY ACCORDING TO PERCENTILE AND
 C SPECIES TOLERANCE.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'OUTCOM.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'COEFFS.F77'
       INCLUDE 'ESTREE.F77'
       INCLUDE 'MULTCM.F77'
-      INCLUDE 'PDEN.F77'
       INCLUDE 'METRIC.F77'
 
       LOGICAL DEBUG

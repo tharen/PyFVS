@@ -1,4 +1,7 @@
       SUBROUTINE HABTYP (KARD2,ARRAY2)
+      use contrl_mod
+      use plot_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -10,12 +13,6 @@ C     KODTYP IS ZERO, THE ROUTINE RETURNS 0.
 C
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'VARCOM.F77'
-C
 C----------
       INTEGER NR5,I,I2,I1,IHB
       PARAMETER (NR5=406)

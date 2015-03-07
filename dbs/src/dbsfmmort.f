@@ -1,5 +1,6 @@
       SUBROUTINE DBSFMMORT(IYEAR,KILLED,TOTAL,BAKILL,
      -  VOKILL,KODE)
+      use plot_mod
       use prgprm_mod
       implicit none
 C
@@ -17,8 +18,6 @@ C              4: MORTALITY IN TERMS OF CUFT VOLUME
 C              5: KODE FOR WHETHER THE REPORT ALSO DUMPS TO FILE
 C
       INCLUDE 'DBSCOM.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
 C---
       INTEGER MXSP1

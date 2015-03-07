@@ -1,4 +1,5 @@
       SUBROUTINE BADIST(DEBUG)
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -7,8 +8,6 @@ C CR $Id$
 C----------
 C
 C COMMONS
-C
-      INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'GGCOM.F77'
 C

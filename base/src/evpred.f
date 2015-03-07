@@ -1,4 +1,6 @@
       SUBROUTINE EVPRED
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -11,10 +13,6 @@ C
 C  THIS ROUTINE IS CALLED FROM **EVTSTV**.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
 C----------
       INTEGER I,ISPC,INDEX(MAXTRE),ISRTI
       REAL FINDX,TEMP,CCPCT,BASM,ADHW,DMAX,DSNMAX,D,SUMTPA,P

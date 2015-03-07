@@ -1,4 +1,6 @@
       SUBROUTINE ESTUMP (JSSP,DBH,PREM,JPLOT,ISHAG)
+      use esparm_mod
+      use escomn_mod
       use prgprm_mod
       implicit none
 C----------
@@ -10,13 +12,9 @@ C  STRP AND ESTB VERSIONS ARE IDENTICAL; IF YOU UPDATE ONE,
 C  UPDATE BOTH.
 C----------
 C
-      INCLUDE 'ESPARM.F77'
-C
       INCLUDE 'ESHOOT.F77'
 C
       INCLUDE 'ESHAP.F77'
-C
-      INCLUDE 'ESCOMN.F77'
 C
 C----------
       CHARACTER VVER*7

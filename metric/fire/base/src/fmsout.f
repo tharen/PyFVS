@@ -1,4 +1,6 @@
       SUBROUTINE FMSOUT (IYR)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -42,8 +44,6 @@ C.... COMMON INCLUDE FILES.
 
 Csng  INCLUDE 'CONTRL.F77'
 Csng  INCLUDE 'PLOT.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'FMCOM.F77'
       INCLUDE 'FMFCOM.F77'
 C

@@ -1,4 +1,5 @@
       SUBROUTINE SVGTPL
+      use plot_mod
       use contrl_mod
       use svdata_mod
       use arrays_mod
@@ -25,7 +26,6 @@ C     NCF IS THE NUMBER OF THE FIRST COLUMN THAT CONTAINS AN
 C         EXTRA ROW...0 IF NONE CONTAIN EXTRA ROWS.
 C
 
-      INCLUDE 'PLOT.F77'
 
 
 

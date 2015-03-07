@@ -1,4 +1,5 @@
       SUBROUTINE RDESIN
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -28,7 +29,6 @@ C   08/28/14 Lance R. David (FMSC)
 C
 C----------------------------------------------------------------------
 C
-      INCLUDE 'PLOT.F77'
       INCLUDE 'ESHAP.F77'
 C
       MINREP = 30

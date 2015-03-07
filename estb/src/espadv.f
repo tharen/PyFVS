@@ -1,19 +1,15 @@
       SUBROUTINE ESPADV
+      use esparm_mod
       use prgprm_mod
+      use escomn_mod
+      use pden_mod
+      use plot_mod
       implicit none
 C----------
 C   **ESPADV--ESTB   DATE OF LAST REVISION:   07/25/08
 C----------
 COMMONS
-      INCLUDE 'ESPARM.F77'
-C
-      INCLUDE 'ESCOMN.F77'
-C
       INCLUDE 'ESCOM2.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'PDEN.F77'
 C
       INCLUDE 'ESHAP.F77'
 C

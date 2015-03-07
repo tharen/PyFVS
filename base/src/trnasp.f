@@ -1,4 +1,5 @@
       SUBROUTINE TRNASP
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -9,8 +10,6 @@ C  THE VALUE TO RADIANS. THE VALUE IS THEN ASSIGNED TO THE VARIABLE
 C  ASPECT.
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
 C----------
 C   CONVERT ASPECT TO RADIANS.
 C----------

@@ -1,4 +1,6 @@
       SUBROUTINE CCFCAL(ISPC,D,H,JCR,P,LTHIN,CCFT,CRWDTH,MODE)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -13,10 +15,6 @@ C  FOR SPECIES 11 IS FROM ANALYSIS BY NICK CROOKSTON USING CVS DATA
 C  FROM THE COLVILLE NF.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
 C----------
 C  ARGUMENT DEFINITIONS:
 C    ISPC = NUMERIC SPECIES CODE

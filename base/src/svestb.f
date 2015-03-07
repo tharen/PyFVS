@@ -1,4 +1,5 @@
       SUBROUTINE SVESTB (I1)
+      use plot_mod
       use contrl_mod
       use svdata_mod
       use arrays_mod
@@ -26,7 +27,6 @@ COMMONS
 
       INCLUDE 'SVDEAD.F77'
 
-      INCLUDE 'PLOT.F77'
 
       INCLUDE 'WORKCM.F77'
 

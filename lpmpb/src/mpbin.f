@@ -1,4 +1,6 @@
       SUBROUTINE MPBIN (PASKEY,ARRAY,LNOTBK,LKECHO)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -21,8 +23,6 @@ C----------
 C
 C------------------------------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'MPBCOM.F77'
       INCLUDE 'COLCOM.F77'
 C

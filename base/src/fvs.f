@@ -1,5 +1,9 @@
       SUBROUTINE FVS(IRTNCD)
+      use pden_mod
       use arrays_mod
+      use contrl_mod
+      use econ_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -20,15 +24,7 @@ C
 C     PHONE (208) 882-3557
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
       INCLUDE 'OUTCOM.F77'
-C
-      INCLUDE 'PDEN.F77'
-C
-      INCLUDE 'ECON.F77'
 C
       INCLUDE 'WORKCM.F77'
 C

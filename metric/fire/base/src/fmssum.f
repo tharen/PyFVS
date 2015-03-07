@@ -1,4 +1,5 @@
       SUBROUTINE FMSSUM (IYR)
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -11,7 +12,6 @@ C     coinside with a FVS cycle boundary.
 C
       INCLUDE 'FMPARM.F77'
       INCLUDE 'FMCOM.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'METRIC.F77'
 C
       INTEGER I, II, JOUT, K

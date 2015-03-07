@@ -1,4 +1,5 @@
       SUBROUTINE DBSCASE(IFORSURE)
+      use plot_mod
       use prgprm_mod
       implicit none
 C
@@ -19,8 +20,6 @@ C
       INCLUDE 'OUTCOM.F77'
 C
       INCLUDE 'KEYCOM.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
 C---
 

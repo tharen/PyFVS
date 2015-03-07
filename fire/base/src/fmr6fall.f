@@ -1,4 +1,6 @@
       SUBROUTINE FMR6FALL(KSP,SML,JADJ,X)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -68,10 +70,6 @@ C
 ***********************************************************************
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
 C----------
 C  Variable declarations.
 C----------

@@ -1,5 +1,10 @@
       SUBROUTINE MORTS
+      use plot_mod
       use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use pden_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -23,14 +28,9 @@ C  IF A BASAL AREA MAXIMUM HAS BEEN SET BY THE USER, A CHECK IS MADE TO
 C  MAKE SURE BASAL AREA HAS NOT EXCEEDED THE SPECIFIED LIMIT.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'OUTCOM.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'COEFFS.F77'
       INCLUDE 'ESTREE.F77'
       INCLUDE 'MULTCM.F77'
-      INCLUDE 'PDEN.F77'
-      INCLUDE 'VARCOM.F77'
       INCLUDE 'WORKCM.F77'
       INCLUDE 'METRIC.F77'
 C

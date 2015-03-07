@@ -1,4 +1,5 @@
       SUBROUTINE TRNSLO
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -7,8 +8,6 @@ C----------
 C  TRNSLO DECODES THE INPUT SLOPE VALUE TO A RATIO.
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
 C     CONVERT SLOPE TO A RATIO.
 C
       SLOPE=SLOPE/100.

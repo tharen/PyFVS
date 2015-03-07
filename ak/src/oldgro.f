@@ -1,4 +1,5 @@
       SUBROUTINE OLDGRO(ISPC,VN,D,H,BBFV)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -10,8 +11,6 @@ C
 C   FROM DON DEMARS --- PNW, JUNEAU AK
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
 C----------
       LOGICAL DEBUG
       INTEGER ISPC,I,K,N,NN,KBD,NNN,JJ,NM,ICK,KB

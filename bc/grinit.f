@@ -1,5 +1,11 @@
        SUBROUTINE GRINIT
+      use htcal_mod
+      use plot_mod
       use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use econ_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -8,17 +14,11 @@ C----------
 C
 C  INITIALIZE PROGNOSIS MODEL VARIABLES
 C
-      INCLUDE 'COEFFS.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'OPCOM.F77'
       INCLUDE 'WORKCM.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'HTCAL.F77'
-      INCLUDE 'ECON.F77'
       INCLUDE 'MULTCM.F77'
       INCLUDE 'SUMTAB.F77'
       INCLUDE 'VOLSTD.F77'
-      INCLUDE 'VARCOM.F77'
       INCLUDE 'CWDCOM.F77'
       INCLUDE 'CALCOM.F77'
       INCLUDE 'BCPLOT.F77'

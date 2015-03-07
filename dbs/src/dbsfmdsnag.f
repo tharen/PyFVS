@@ -1,5 +1,6 @@
       SUBROUTINE DBSFMDSNAG(IYEAR,SDBH,SHTH,SHTS,SVLH,SVLS,
      -  SDH,SDS,YRLAST,KODE)
+      use plot_mod
       use prgprm_mod
       implicit none
 C
@@ -21,8 +22,6 @@ C              8: YRLAST
 C              9: KODE FOR WHETHER THE REPORT ALSO DUMPS TO FILE
 C
       INCLUDE 'DBSCOM.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
 
       INTEGER IYEAR,IRCODE,KODE,YRDEAD,SVLH,SVLS,SVLT,YRLAST,JYR,IDC,JCL

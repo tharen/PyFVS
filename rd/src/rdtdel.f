@@ -1,4 +1,5 @@
       SUBROUTINE RDTDEL(IVAC,IREC,IDUM)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -27,7 +28,6 @@ C
 C----------------------------------------------------------------------
 C
       INCLUDE 'RDPARM.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDADD.F77'
       INCLUDE 'RDARRY.F77'

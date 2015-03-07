@@ -1,4 +1,5 @@
       SUBROUTINE CLMAXDEN (SDIDEF,XMAX)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -7,7 +8,6 @@ C----------
 C
 C     CLIMATE EXTENSION
 C
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'CLIMATE.F77'
 C
 

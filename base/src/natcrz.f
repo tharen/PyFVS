@@ -1,5 +1,10 @@
       SUBROUTINE NATCRZ (IWHO)
+      use htcal_mod
+      use plot_mod
       use arrays_mod
+      use contrl_mod
+      use econ_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -11,15 +16,7 @@ C     VOLUME ROUTINE
 C
 C     IWHO=1 IF CALLED FROM MAIN, IWHO=2 IF CALLED FROM CUTS
 C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'HTCAL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
       INCLUDE 'ESTREE.F77'
-C
-      INCLUDE 'VARCOM.F77'
 C
       INCLUDE 'WORKCM.F77'
 C
@@ -28,8 +25,6 @@ C
       INCLUDE 'SUMTAB.F77'
 C
       INCLUDE 'OUTCOM.F77'
-C
-      INCLUDE 'ECON.F77'
 C
       INCLUDE 'OPCOM.F77'
 C

@@ -1,4 +1,5 @@
       SUBROUTINE RDSHST
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -26,7 +27,6 @@ C
       INCLUDE 'RDCOM.F77'
 
 
-      INCLUDE 'CONTRL.F77'
 C
       INTEGER I, J, K, KK
 

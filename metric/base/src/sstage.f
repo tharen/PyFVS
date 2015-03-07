@@ -1,4 +1,6 @@
       SUBROUTINE SSTAGE(INBA,INICYCLE,LSUPRT)
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -17,9 +19,7 @@ C           THINNING.
 C   INICYCLE = THE CYCLE NUMBER.
 C   LSUPRT = IF TRUE, SUPPRESS THE PRINTING, EVEN IF IT IS REQUESTED.
 C
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'OUTCOM.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'SSTGMC.F77'
       INCLUDE 'METRIC.F77'
 COMMONS

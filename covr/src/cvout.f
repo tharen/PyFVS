@@ -1,4 +1,6 @@
       SUBROUTINE CVOUT
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -9,10 +11,6 @@ C  PRINTS (PRE- AND POST-THIN) **COVER** STATISTICS BY CYCLE.
 C  CALLED FROM **MAIN** ONCE PER STAND, AT THE END OF PROJECTION.
 C---------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
       INCLUDE 'OUTCOM.F77'
 C
       INCLUDE 'CVCOM.F77'

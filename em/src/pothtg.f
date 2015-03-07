@@ -1,4 +1,5 @@
       SUBROUTINE POTHTG (I,ISPEC,H,SI50,SI100,PHTG,DEBUG)
+      use contrl_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -10,8 +11,6 @@ C THIS ROUTINE CALCULATES POTENTIAL HTG USING A VARIETY OF
 C SITE OR HTG GROWTH CURVES.
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
 C----------
       LOGICAL DEBUG
 C

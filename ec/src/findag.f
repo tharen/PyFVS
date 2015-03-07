@@ -1,5 +1,7 @@
       SUBROUTINE FINDAG(I,ISPC,D1,D2,H,SITAGE,SITHT,AGMAX1,HTMAX1,
      &                  HTMAX2,DEBUG)
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -16,10 +18,6 @@ C  SITHT   --  LOADED WITH POTENTIAL HEIGHT CORRESPONDING TO
 C              AGE IN SITAGE ARRAY
 C----------
 COMMONS
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
 C----------
 C  DECLARATIONS
 C----------

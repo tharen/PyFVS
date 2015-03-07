@@ -1,4 +1,5 @@
       SUBROUTINE MISDAM(ITREE,ICODES)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -42,7 +43,6 @@ C.... Parameter include files.
 
 C.... Common include files.
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'MISCOM.F77'
       INCLUDE 'DMCOM.F77'
 

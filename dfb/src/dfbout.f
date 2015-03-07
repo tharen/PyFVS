@@ -1,4 +1,5 @@
       SUBROUTINE DFBOUT
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -32,8 +33,6 @@ C     LDFBON - (DFBCOM)  INPUT
 C     NCYC   - (CONTRL)  INPUT
 C     PRBDFB - (DFBCOM)  INPUT
 C     WORKIN - (DFBCOM)  INPUT
-C
-      INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'DFBCOM.F77'
 C

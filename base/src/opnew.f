@@ -1,4 +1,5 @@
       SUBROUTINE OPNEW (KODE,IDT,IACTK,NPRMS,PRMS)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -24,8 +25,6 @@ C     NPRMS= THE NUMBER OF PARAMETERS ASSOCIATED WITH THE ACTIVITY.
 C     PRMS = THE PARAMETER LIST.
 C
       INCLUDE 'OPCOM.F77'
-C
-      INCLUDE 'CONTRL.F77'
 C
       INTEGER NPRMS,IACTK,IDT,KODE,IPEND,I,J
       REAL PRMS(*)

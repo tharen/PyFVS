@@ -1,4 +1,6 @@
       SUBROUTINE DFBMOD
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -39,10 +41,6 @@ C     PREKLL - (DFBCOM)  INPUT
 C     START  - (DFBCOM)  INPUT
 C
       INCLUDE 'DFBCOM.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'PLOT.F77'
 C
       INTEGER NUMYRS
       REAL    BACHLO

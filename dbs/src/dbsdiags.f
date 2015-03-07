@@ -1,4 +1,5 @@
       SUBROUTINE DBSDIAGS(HndlType,Hndl,CallFrom)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C
@@ -8,8 +9,6 @@ C      THIS SUBROUTINE PRINTS ERROR DIAGNOSTICS FOR THE DBS
 C      CALLS TO THE SQL ODBC API
 C
 C----
-C
-      INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'DBSCOM.F77'
 C

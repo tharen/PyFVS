@@ -1,4 +1,5 @@
       SUBROUTINE HTDBH (IFORXX,ISPC,D,H,MODE)
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -10,8 +11,6 @@ C  HEIGHTS, AND FROM REGENT TO ESTIMATE DIAMETERS (PROVIDED IN BOTH
 C  CASES THAT LHTDRG IS SET TO .TRUE.).
 C----------
 C  COMMONS
-C
-      INCLUDE 'PLOT.F77'
 C
 C  COMMONS
 C----------

@@ -1,4 +1,6 @@
       SUBROUTINE CLAUESTB
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -8,8 +10,6 @@ C----------
 C
 C     CLIMATE EXTENSION--AUTOMATIC ESTABLISHMENT ROUTINE
 C
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'CLIMATE.F77'
 C
 

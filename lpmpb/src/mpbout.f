@@ -1,4 +1,6 @@
       SUBROUTINE MPBOUT
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -13,10 +15,6 @@ C Revision History
 C   02/08/88 Last noted revision date.
 C   07/02/10 Lance R. David (FMSC)
 C----------
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
 C
       INCLUDE 'MPBCOM.F77'
 C

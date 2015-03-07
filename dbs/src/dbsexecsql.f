@@ -1,4 +1,6 @@
       SUBROUTINE DBSEXECSQL (SQLCMD,ConnHndl,LSCHED,IRC)
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C
@@ -12,11 +14,7 @@ C            ConnHndl - THE CONNECTION HANDLE TO THE DBMS
 C            LSCHED   - SPECIFIES WHETHER THIS IS COMING FROM THE EVENT
 C                       MONITOR
 COMMONS
-      INCLUDE  'CONTRL.F77'
-C
       INCLUDE  'OPCOM.F77'
-C
-      INCLUDE  'PLOT.F77'
 C
       INCLUDE  'DBSCOM.F77'
 C

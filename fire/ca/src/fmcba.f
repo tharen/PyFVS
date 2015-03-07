@@ -1,4 +1,5 @@
       SUBROUTINE FMCBA (IYR,ISWTCH)
+      use plot_mod
       use arrays_mod
       use fmcom_mod
       use fmparm_mod
@@ -40,7 +41,6 @@ C  Common block variables and parameters:
 C     Parameter include files.
 
 C     Common include files.
-      INCLUDE 'PLOT.F77'
 
 C     Variable declarations.
 

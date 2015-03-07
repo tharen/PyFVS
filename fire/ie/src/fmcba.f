@@ -1,4 +1,5 @@
       SUBROUTINE FMCBA (IYR,ISWTCH)
+      use plot_mod
       use arrays_mod
       use fmcom_mod
       use fmparm_mod
@@ -35,8 +36,6 @@ C     TOTBA:   THE TOTAL BASAL AREA IN THE STAND (USED IN THE FUELS CALCS)
 C     TOTCRA:  THE SUM OF THE AREA OF THE CROWNS, PER ACRE (SQFT)
 C----------
 COMMONS
-      INCLUDE 'PLOT.F77'
-C
 Cppe      INCLUDE 'PPEPRM.F77'
 Cppe      INCLUDE 'PPCNTL.F77'
 COMMONS

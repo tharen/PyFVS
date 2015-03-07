@@ -1,4 +1,5 @@
       SUBROUTINE BMCBET(ABETA, MINSIZE, MAXSIZE, BETA)
+      use contrl_mod
       use prgprm_mod
       implicit none
 
@@ -34,7 +35,6 @@ C     PARAMETER INCLUDE FILE
 
 C     COMMON INCLUDE FILES
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BMCOM.F77'
 
 C     FUNCTION DEFINITIONS

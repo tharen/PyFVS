@@ -1,4 +1,6 @@
       SUBROUTINE FORKOD
+      use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
 C----------
@@ -11,10 +13,6 @@ C     KODFOR IS ZERO, THE ROUTINE RETURNS THE DEFAULT CODE.
 C
 C     CODES 902-913 ARE FROM THE LS VARIANT
 C     CODES 915 & 916 ARE FOR ONTARIO
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'CONTRL.F77'
 C
       INTEGER JFOR(11),KFOR(11),NUMFOR,I
       DATA JFOR/902,903,904,906,907,909,910,913,915,916,924/

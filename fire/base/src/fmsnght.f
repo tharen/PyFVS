@@ -1,5 +1,6 @@
       SUBROUTINE FMSNGHT(VVER,KSP,HTD,HTCURR,IHRD,HTSNEW)
       use fmcom_mod
+      use plot_mod
       use fmparm_mod
       use prgprm_mod
       implicit none
@@ -28,8 +29,6 @@ C     HTSNEW:  Updated height for snag pool/record.
 C     HTD:     Height of current snag pool/record, at time of death.
 C     KSP:     Species number for current snag pool/record.
 C----------
-C
-      INCLUDE 'PLOT.F77'
 C
       CHARACTER VVER*7
       INTEGER HTINDX1, HTINDX2, IHRD, KSP

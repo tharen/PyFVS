@@ -1,4 +1,6 @@
       SUBROUTINE DFTMGO(L)
+      use contrl_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -30,9 +32,7 @@ C----------
 C
 
 
-      INCLUDE 'CONTRL.F77'
 
-      INCLUDE 'PLOT.F77'
 
       INCLUDE 'TMCOM1.F77'
 C

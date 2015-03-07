@@ -10,9 +10,9 @@ c     Created in late 2011 by Nick Crookston, RMRS-Moscow
       subroutine fvsDimSizes(ntrees,ncycles,nplots,maxtrees,maxspecies,
      -                       maxplots,maxcycles)
       use contrl_mod
+      use plot_mod
       use prgprm_mod
       implicit none
-      include "PLOT.F77"
 
 !Python F2PY Interface Directives
 !f2py intent(out) :: ntrees,ncycles,nplots
@@ -218,6 +218,7 @@ c
 
 
       subroutine fvsSpeciesAttr(name,nch,action,attr,rtnCode)
+      use plot_mod
       use prgprm_mod
       implicit none
 
@@ -229,7 +230,6 @@ c     attr    = a vector of length data, always "double"
 c     rtnCode = 0 is OK, 1= "name" not found,
 c               4= the length of the "name" string was too big or small
 c
-      include "PLOT.F77"
 
 !Python F2PY Interface Directives
 !f2py intent(in) :: name
@@ -617,6 +617,8 @@ c
       subroutine fvsAddTrees(in_dbh,in_species,in_ht,in_cratio,
      -                       in_plot,in_tpa,ntrees,rtnCode)
       use contrl_mod
+      use varcom_mod
+      use plot_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -626,8 +628,6 @@ c               1 when there is no room for the ntrees
 c                 or when ntrees is zero
 
       include "OUTCOM.F77"
-      include "PLOT.F77"
-      include "VARCOM.F77"
       include "ESTREE.F77"
       include "STDSTK.F77"
 
@@ -717,6 +717,7 @@ c     next time dist is called.
 
       subroutine fvsSpeciesCode(fvs_code,fia_code,plant_code,
      -                          indx,nchfvs,nchfia,nchplant,rtnCode)
+      use plot_mod
       use prgprm_mod
       implicit none
 
@@ -724,7 +725,6 @@ c     rtnCode = 0 when all is OK
 c               1 when index is out of bounds
 c     indx    = species index
 
-      include "PLOT.F77"
 
 !Python F2PY Interface Directives
 !f2py intent(out) :: fvs_code
@@ -797,10 +797,10 @@ c     indx    = species index
       end
 
       subroutine fvsStandID(sID,sCN,mID,ncsID,ncCN,ncmID)
+      use plot_mod
       use prgprm_mod
       implicit none
 
-      include "PLOT.F77"
 
 !Python F2PY Interface Directives
 !f2py intent(out) :: sID
@@ -931,8 +931,9 @@ C     add an activity to the schedule.
 
       subroutine fvsSVSObjData(name,nch,action,nobjs,attr,rtnCode)
       use contrl_mod
-      use svdata_mod
       use prgprm_mod
+      use svdata_mod
+      use plot_mod
       implicit none
 
 c     set and/or gets the named SVS object attributes
@@ -947,7 +948,6 @@ c               2= nobjs is greater than the corresponding max, no data transfer
 c               3= there were more/fewer than nobjs.
 c               4= the length of the "name" string was too big or small
 
-      include "PLOT.F77"
       include "SVDEAD.F77"
 
 !Python F2PY Interface Directives

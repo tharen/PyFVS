@@ -1,4 +1,5 @@
       SUBROUTINE DFBIN (PASKEY,ARRAY,LNOTBK,LKECHO)
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -78,7 +79,6 @@ C     Added LFLAG to KEYRDR call statement argument list.
 C
 C---------------------------------
 C
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'DFBCOM.F77'
       INCLUDE 'METRIC.F77'
 C

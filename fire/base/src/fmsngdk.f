@@ -1,5 +1,6 @@
       SUBROUTINE FMSNGDK(VVER,KSP,D,DKTIME)
       use fmcom_mod
+      use plot_mod
       use fmparm_mod
       use prgprm_mod
       implicit none
@@ -27,8 +28,6 @@ C     D:       Diameter of current snag pool/record.
 C     DKTIME:  Years, since death, for snag to become soft.
 C     KSP:     Species number for current snag pool/record.
 C----------
-C
-      INCLUDE 'PLOT.F77'
 C
       CHARACTER VVER*7
       INTEGER JADJ, JSML, JYRSOFT, KSP
