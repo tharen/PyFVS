@@ -1,8 +1,9 @@
       SUBROUTINE EVTSTV (IUSERV)
-      use contrl_mod
-      use varcom_mod
       use plot_mod
       use arrays_mod
+      use contrl_mod
+      use outcom_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -27,8 +28,6 @@ C            VARIABLE TO UNSET.
 C     EVGET4 CALLED TO GET THE VALUE OF A STORED VARIABLE.
 C
       INCLUDE 'OPCOM.F77'
-C
-      INCLUDE 'OUTCOM.F77'
 C
       INCLUDE 'SUMTAB.F77'
 C

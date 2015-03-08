@@ -1,8 +1,11 @@
       SUBROUTINE DBSCUTS(IWHO,KODE)
-      use contrl_mod
-      use varcom_mod
       use plot_mod
       use arrays_mod
+      use workcm_mod
+      use estree_mod
+      use contrl_mod
+      use metric_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -21,10 +24,7 @@ C
 C---
 COMMONS
 
-      INCLUDE 'ESTREE.F77'
-      INCLUDE 'WORKCM.F77'
       INCLUDE 'DBSCOM.F77'
-      INCLUDE 'METRIC.F77'
 
 COMMONS
       CHARACTER*8 TID,CSPECIES

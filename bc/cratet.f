@@ -4,6 +4,8 @@
       use arrays_mod
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
+      use metric_mod
       use varcom_mod
       use prgprm_mod
       implicit none
@@ -29,8 +31,6 @@ C        VARIABLES.
 C----------
 C
       INCLUDE 'BCPLOT.F77'
-      INCLUDE 'OUTCOM.F77'
-      INCLUDE 'METRIC.F77'
 C
 C----------
 C  INTERNAL VARIABLES.

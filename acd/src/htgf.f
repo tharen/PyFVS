@@ -1,5 +1,6 @@
       SUBROUTINE HTGF
       use htcal_mod
+      use multcm_mod
       use pden_mod
       use arrays_mod
       use contrl_mod
@@ -19,8 +20,6 @@ C  IS CALLED FROM **RCON** TO LOAD SITE DEPENDENT CONSTANTS
 C  THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-      INCLUDE 'MULTCM.F77'
-C
       LOGICAL DEBUG
 C
       INTEGER ISPC,I1,I2,I3,I,MODE0,IVAR,ITFN

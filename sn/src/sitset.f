@@ -1,8 +1,9 @@
       SUBROUTINE SITSET
-      use contrl_mod
-      use varcom_mod
       use plot_mod
+      use contrl_mod
       use coeffs_mod
+      use volstd_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -16,8 +17,6 @@ C  THIS SUBROUTINE FOLLOWS SE-TWIGS SUBROUTINES BLOCK1, CONV1, AND
 C  CONV2.
 C----------
 COMMONS
-      INCLUDE 'VOLSTD.F77'
-C
       INCLUDE 'SNCOM.F77'
 C
       INTEGER IFIASP, ERRFLAG

@@ -1,5 +1,6 @@
       SUBROUTINE ESPLT2 (IPTKNT)
       use contrl_mod
+      use eshap_mod
       use plot_mod
       use prgprm_mod
       implicit none
@@ -8,8 +9,6 @@ C  **ESPLT2-STRP DATE OF LAST REVISION:   09/17/08
 C----------
 C
 C     CALLED BY INITRE TO TRANSLATE PLOT SPECIFIC VARIABLES FOR ESTAB
-C
-      INCLUDE 'ESHAP.F77'
 C
       INCLUDE 'ESHAP2.F77'
 C

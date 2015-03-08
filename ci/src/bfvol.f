@@ -1,18 +1,16 @@
       SUBROUTINE BFVOL(ISPC,D,H,D2H,BBFV,TKILL,LCONE,BARK,VMAX,ITHT,
      1                 BTKFLG)
-      use contrl_mod
-      use prgprm_mod
       use plot_mod
-      use coeffs_mod
       use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use volstd_mod
+      use prgprm_mod
       implicit none
 C----------
 C  **BFVOL--BASE   DATE OF LAST REVISION:   06/06/11
 C----------
-C
-      INCLUDE 'OUTCOM.F77'
-C
-      INCLUDE 'VOLSTD.F77'
 C
 C----------
 C  ************** BOARD FOOT MERCHANTABILITY SPECIFICATIONS ********

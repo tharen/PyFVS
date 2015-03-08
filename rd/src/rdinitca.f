@@ -1,5 +1,6 @@
       SUBROUTINE RDINIT
       use contrl_mod
+      use metric_mod
       use plot_mod
       use arrays_mod
       use prgprm_mod
@@ -107,7 +108,6 @@ C----------------------------------------------------------------------
 C.... Parameter include files.
 
       INCLUDE 'RDPARM.F77'
-      INCLUDE 'METRIC.F77'
 
 C.... Common include files.
 

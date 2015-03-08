@@ -40,12 +40,15 @@
 ../api/variants/wc/findage_mod.f90
 ../api/variants/wc/cratet.f90
 ../api/variants/wc/htgf.f90
+../api/variants/wc/cubrds_mod.f90
 ../api/comcup.f90
 ../api/prtrls.f90
 ../api/fmcrbout.f90
 ../api/fmchrvout.f90
 ../api/fmdout.f90
 ../api/strp/escprs.f90
+../api/strp/esrncm_mod.f90
+../api/strp/esblkd_mod.f90
 
 ../base/src/algcmp.f
 ../base/src/algevl.f
@@ -273,7 +276,7 @@
 ../common/ESHAP2.F77
 
 ../common/ESHOOT.F77
-../common/ESRNCM.F77
+
 ../common/ESTCOR.F77
 
 ../common/ESWSBW.F77
@@ -531,7 +534,6 @@
 ../so/src/avht40.f
 ../so/src/r6crwd.f
 ../strp/src/esaddt.f
-../strp/src/esblkd.f
 
 ../strp/src/esetpr.f
 ../strp/src/esfltr.f
@@ -598,7 +600,7 @@
 ../wc/src/ccfcal.f
 
 ../wc/src/crown.f
-../wc/src/cubrds.f
+
 ../wc/src/dgbnd.f
 ../wc/src/dgdriv.f
 ../wc/src/dgf.f

@@ -1,12 +1,16 @@
       SUBROUTINE DBSSTANDIN(SQLSTR,LKECHO)
       use htcal_mod
+      use multcm_mod
       use plot_mod
       use arrays_mod
       use contrl_mod
       use coeffs_mod
       use econ_mod
+      use outcom_mod
+      use volstd_mod
       use prgprm_mod
       use varcom_mod
+      use metric_mod
       use screen_mod
       implicit none
 C----------
@@ -18,12 +22,8 @@ C     OVERHAUL: NL CROOKTON -- RMRS MOSCOW -- SEPTEMBER 2004
 C---
 COMMONS
 
-      INCLUDE  'OUTCOM.F77'
       INCLUDE  'KEYCOM.F77'
-      INCLUDE  'MULTCM.F77'
-      INCLUDE  'VOLSTD.F77'
       INCLUDE  'DBSCOM.F77'
-      INCLUDE  'METRIC.F77'
 COMMONS
       CHARACTER*100 ColName
       CHARACTER*5000 SQLSTR

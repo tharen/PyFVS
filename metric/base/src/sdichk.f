@@ -1,5 +1,6 @@
       SUBROUTINE SDICHK
       use contrl_mod
+      use metric_mod
       use plot_mod
       use varcom_mod
       use prgprm_mod
@@ -13,8 +14,6 @@ C  IS RESET AND A MESSAGE IS PRINTED.
 C  THIS ROUTINE IS CALLED FROM **SITSET** IN VARIANTS THAT USE
 C  THE SDI-BASED MORTALITY MODEL.
 C----------
-COMMONS
-      INCLUDE 'METRIC.F77'
 COMMONS
 C----------
 C  DEFINITIONS:

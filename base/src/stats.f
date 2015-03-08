@@ -1,5 +1,6 @@
       SUBROUTINE STATS
       use contrl_mod
+      use volstd_mod
       use plot_mod
       use arrays_mod
       use prgprm_mod
@@ -13,8 +14,6 @@ C  **MAIN**.  **TVALUE** IS CALLED TO CALCULATE STUDENT'S T FOR
 C  CONSTRUCTION OF CONFIDENCE INTERVALS.
 C---------
 COMMONS
-      INCLUDE 'VOLSTD.F77'
-C
       CHARACTER*16 LABELS(4)
       REAL TOTCF(MAXSP),
      &   TOTTR(MAXSP),TOTBA(MAXSP),TOTBF(MAXSP),

@@ -1,10 +1,11 @@
       SUBROUTINE CUTS
-      use plot_mod
+      use pden_mod
       use arrays_mod
       use contrl_mod
       use coeffs_mod
       use econ_mod
-      use pden_mod
+      use outcom_mod
+      use plot_mod
       use varcom_mod
       use prgprm_mod
       implicit none
@@ -17,7 +18,6 @@ C  INDICATED.  CALLS **CLSSTK** AND **AUTSTK** WHICH ARE ENTRY
 C  POINTS IN SUBROUTINE **CUTSTK**.  ALSO CALLS **SDICLS**, **CCCLS**,
 C  AND **RDCLS** WHICH ARE ENTRY POINTS IN **SDICAL**
 C
-      INCLUDE 'OUTCOM.F77'
       INCLUDE 'ESHOOT.F77'
 C
 C----------

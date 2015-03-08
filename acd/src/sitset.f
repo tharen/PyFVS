@@ -1,5 +1,6 @@
       SUBROUTINE SITSET
       use contrl_mod
+      use volstd_mod
       use plot_mod
       use coeffs_mod
       use prgprm_mod
@@ -14,8 +15,6 @@ C EQUATIONS AND COEFFICIENTS FOR THIS SUBROUTINE COME FROM 'SITE INDEX
 C CONVERSION EQUATIONS FOR THE NORTHEAST' BY DON HILT.  FILE REPORT
 C NUMBER 1: RESEARCH WORK UNIT FS-NE-4153.
 C----------
-C
-      INCLUDE 'VOLSTD.F77'
 C
       REAL SICOEF(28,28),BAMAXA(MAXSP)
       INTEGER IPOINT(MAXSP)

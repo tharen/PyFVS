@@ -1,4 +1,5 @@
       SUBROUTINE CVBROW (LTHIN)
+      use outcom_mod
       use contrl_mod
       use plot_mod
       use arrays_mod
@@ -228,8 +229,6 @@ C  31) SORB:SORBUS SPP.
 C
 C-----------------------------------------------------------------------
 COMMONS
-      INCLUDE 'OUTCOM.F77'
-C
       INCLUDE 'CVCOM.F77'
 C
       LOGICAL LTHIN,DEBUG

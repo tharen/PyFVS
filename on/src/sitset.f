@@ -1,9 +1,11 @@
       SUBROUTINE SITSET
+      use plot_mod
       use esparm_mod
       use contrl_mod
-      use prgprm_mod
+      use volstd_mod
+      use metric_mod
       use escomn_mod
-      use plot_mod
+      use prgprm_mod
       implicit none
 C----------
 C  **SITSET-- ON  DATE OF LAST REVISION:  05/11/11
@@ -15,10 +17,6 @@ C
 C CALLED BY INITRE
 C----------
 COMMONS
-      INCLUDE 'VOLSTD.F77'
-C
-      INCLUDE 'METRIC.F77'
-C
       LOGICAL DEBUG
       REAL SICOEF1(MAXSP,MAXSP),SICOEF2(MAXSP,MAXSP),
      &          BAMAX1(MAXSP)

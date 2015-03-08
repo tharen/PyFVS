@@ -1,4 +1,5 @@
       SUBROUTINE BRCOUT
+      use outcom_mod
       use contrl_mod
       use plot_mod
       use arrays_mod
@@ -40,7 +41,6 @@ C**********************************************************************
 C.... Common include files.
 
       INCLUDE 'BRCOM.F77'
-      INCLUDE 'OUTCOM.F77'
 
 C.... Local variable declarations.
 C....    LPRALL - logical variable used to control when all columns

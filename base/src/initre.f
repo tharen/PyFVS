@@ -1,10 +1,14 @@
       SUBROUTINE INITRE
       use htcal_mod
+      use multcm_mod
       use plot_mod
       use arrays_mod
+      use workcm_mod
       use contrl_mod
       use coeffs_mod
       use econ_mod
+      use outcom_mod
+      use volstd_mod
       use prgprm_mod
       use varcom_mod
       use screen_mod
@@ -16,21 +20,13 @@ C
 C  THIS ROUTINE PROCESSES OPTIONS AND INITIATES THE
 C  PROGNOSIS RUN.  CALLED FROM **MAIN**.
 C
-      INCLUDE  'OUTCOM.F77'
-C
       INCLUDE  'KEYCOM.F77'
-C
-      INCLUDE  'MULTCM.F77'
-C
-      INCLUDE  'VOLSTD.F77'
 C
       INCLUDE  'SNCOM.F77'
 C
       INCLUDE  'CWDCOM.F77'
 C
       INCLUDE  'CALCOM.F77'
-C
-      INCLUDE  'WORKCM.F77'
 C
       INTEGER IDUM1,IDUM2,IDUM3,IHAB,NEWYR,ISPEC,IFOREST,INTDIST,IFORST
       INTEGER IREGN,IRDUM,INUM,IDFLG,IDTYPE,IXF,IXTMP,ITB,ITC,JJTAB

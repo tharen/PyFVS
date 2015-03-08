@@ -1,4 +1,5 @@
       SUBROUTINE SPLARD (SCALOC,SCAREA,INPUT,NRECS,IRC)
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -16,8 +17,6 @@ C
       INCLUDE 'PPEPRM.F77'
 C
       INCLUDE 'PPSPLA.F77'
-C
-      INCLUDE 'METRIC.F77'
 C
       CHARACTER ID*26,CXL*10,CYL*10,CA*10
       INTEGER IRC,NRECS,INPUT

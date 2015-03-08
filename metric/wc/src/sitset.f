@@ -1,6 +1,8 @@
       SUBROUTINE SITSET
-      use contrl_mod
       use plot_mod
+      use contrl_mod
+      use volstd_mod
+      use metric_mod
       use varcom_mod
       use prgprm_mod
       implicit none
@@ -13,10 +15,6 @@ C SPECIES, GIVEN A SITE INDEX AND SITE SPECIES, AND LOADS THE SDIDEF
 C ARRAY WITH SDI MAXIMUMS FOR SPECIES WHICH WERE NOT ASSIGNED A VALUE
 C USING THE SDIMAX KEYWORD.
 C----------
-C
-      INCLUDE 'VOLSTD.F77'
-C
-	INCLUDE 'METRIC.F77'
 C
       INTEGER IFIASP, ERRFLAG
       CHARACTER FORST*2,DIST*2,PROD*2,VAR*2,VOLEQ*10

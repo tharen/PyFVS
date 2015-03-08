@@ -30,6 +30,8 @@ module fvs_step
     use outcom_mod, only: ititle,ocvcur,obfcur,omccur
     use tree_data, only: init_tree_data
     use blkdat_mod, only: blkdat
+    use esblkd_mod, only: esblkd
+    use cubrds_mod, only: cubrds
 
     contains
 
@@ -69,6 +71,8 @@ module fvs_step
 
         ! Initialize the variant parameters and arrays
         call blkdat()
+        call esblkd()
+        call cubrds()
 
         ! Zero the API report arrays
         call init_tree_data()

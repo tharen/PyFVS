@@ -1,4 +1,5 @@
       BLOCK DATA RDBLK1
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -27,7 +28,6 @@ C
 C.... PARAMETER INCLUDE FILES
 
       INCLUDE 'RDPARM.F77'
-      INCLUDE 'METRIC.F77'
 
 C.... COMMON INCLUDE FILES
 

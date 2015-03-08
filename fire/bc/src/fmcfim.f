@@ -3,6 +3,7 @@
       use fmcom_mod
       use fmparm_mod
       use contrl_mod
+      use metric_mod
       use fmfcom_mod
       use prgprm_mod
       implicit none
@@ -27,8 +28,6 @@ C     FMD:  FUEL MODEL THAT IS USED IN THE STATIC CASE
 C
 C----------
 COMMONS
-      INCLUDE 'METRIC.F77'
-C
       integer iyr, RC
       integer FMD
       character VVER*7

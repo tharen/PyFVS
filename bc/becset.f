@@ -1,5 +1,6 @@
       SUBROUTINE BECSET
       use contrl_mod
+      use metric_mod
       use plot_mod
       use coeffs_mod
       use prgprm_mod
@@ -48,7 +49,6 @@ C     - DON ROBINSON:  OCTOBER 10, 2000: UPDATE FD,PL LARGE TREE
 c     - DON ROBINSON:  FEBRUARY 12, 2001; ADD IDFdk SMALL TREE HEIGHT GROWTH FROM C. LENCAR
 C----------
 
-      INCLUDE  'METRIC.F77'
       INCLUDE  'BCPLOT.F77'
 
 C     NUMBER OF ENTRIES FOR NELSON (NCNT) AND KAMLOOPS (KCNT)

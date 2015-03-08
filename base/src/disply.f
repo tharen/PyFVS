@@ -4,9 +4,10 @@
       use arrays_mod
       use contrl_mod
       use econ_mod
-      use prgprm_mod
-      use varcom_mod
+      use outcom_mod
       use screen_mod
+      use varcom_mod
+      use prgprm_mod
       implicit none
 C----------
 C  $Id$
@@ -16,8 +17,6 @@ C  OF THE PROJECTION, AND AT THE END OF EACH CYCLE.  ESTIMATES
 C  STAND AGE IF MISSING FROM THE STNDINFO KEYWORD
 C----------
 COMMONS
-      INCLUDE 'OUTCOM.F77'
-C
       INCLUDE 'SUMTAB.F77'
 C
 C----------

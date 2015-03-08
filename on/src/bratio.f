@@ -1,4 +1,5 @@
       FUNCTION BRATIO(IS,D,H)
+      use metric_mod
       use coeffs_mod
       use prgprm_mod
       implicit none
@@ -9,8 +10,6 @@ C----------
 C
 C FUNCTION TO COMPUTE BARK RATIOS. THIS ROUTINE IS VARIANT SPECIFIC
 C AND EACH VARIANT USES ONE OR MORE OF THE ARGUMENTS PASSED TO IT.
-C
-      INCLUDE 'METRIC.F77'
 C
       INTEGER IS
       REAL H,D,BRATIO

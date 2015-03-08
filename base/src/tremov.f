@@ -1,4 +1,5 @@
       SUBROUTINE TREMOV (IREC1,IREC2)
+      use estree_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -7,8 +8,6 @@ C  $Id$
 C----------
 C
 C      SWITCH THE TREES FROM POSITION IREC1 AND POSITION IREC2.
-C
-      INCLUDE 'ESTREE.F77'
 C
       INCLUDE 'STDSTK.F77'
 C

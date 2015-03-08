@@ -1,5 +1,6 @@
       SUBROUTINE SITSET
       use contrl_mod
+      use volstd_mod
       use plot_mod
       use prgprm_mod
       implicit none
@@ -10,8 +11,6 @@ C THIS SUBROUTINE LOADS THE SITELG ARRAY WITH A SITE INDEX FOR EACH
 C SPECIES WHICH WAS NOT ASSIGNED A SITE INDEX BY KEYWORD.
 C----------
 COMMONS
-      INCLUDE 'VOLSTD.F77'
-C
       LOGICAL DEBUG
       REAL BAMAXA(MAXSP)
       INTEGER I,J,JJ,K

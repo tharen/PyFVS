@@ -1,5 +1,6 @@
       SUBROUTINE CWIDTH
       use contrl_mod
+      use metric_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -14,7 +15,6 @@ C  WIDTHS, AND FROM **UPDATE** TO LOAD THE END-OF-CYCLE VALUES.
 C----------
 COMMONS
       INCLUDE 'CWDCOM.F77'
-      INCLUDE 'METRIC.F77'
 C
 C----------
 C  DEFINITIONS:

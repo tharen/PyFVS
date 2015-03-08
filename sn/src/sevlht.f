@@ -1,6 +1,7 @@
       SUBROUTINE SEVLHT(D,H,PULPVO,SWVOL,HT,ISPC,
      &           DEBUG,GR,VLSP)
       use contrl_mod
+      use volstd_mod
       use plot_mod
       use prgprm_mod
       implicit none
@@ -14,8 +15,6 @@ C 39-41, AND 66-73.
 C----------
 C
       INCLUDE 'SNCOM.F77'
-C
-      INCLUDE 'VOLSTD.F77'
 C
 C----------
 C  DECLARE AND DIMENSION VARIABLES

@@ -4,6 +4,7 @@
       use arrays_mod
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -14,8 +15,6 @@ C  STAND ARE LESS THAN 3 INCHES DBH, THEN THIS SUBROUTINE COMPUTES
 C  NEW COEFFICIENTS FOR THE SMALL-TREE LINEAR HEIGHT DUBBING
 C  EQUATION.
 C----------
-C
-      INCLUDE 'OUTCOM.F77'
 C
 C----------
 C  INTERNAL VARIABLES:

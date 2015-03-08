@@ -1,9 +1,11 @@
       SUBROUTINE HTGF
       use htcal_mod
+      use multcm_mod
       use plot_mod
       use arrays_mod
       use contrl_mod
       use coeffs_mod
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -18,9 +20,7 @@ C  DEPENDENT CONSTANTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
-      INCLUDE 'MULTCM.F77'
       INCLUDE 'BCPLOT.F77'
-      INCLUDE 'METRIC.F77'
 C
 C----------
 C   MODEL COEFFICIENTS AND CONSTANTS:
@@ -2057,11 +2057,11 @@ C     THIS PRIVATE FUNCTION LOCALIZES THE V3 CALCULATIONS FOR HEIGHT GROWTH;
 C     OTHERWISE THEY WOULD BE REPEATED SEVERAL TIMES
 
       REAL FUNCTION V3HTG(ISPC,HT,DBH,DG)
+      use metric_mod
       use prgprm_mod
       implicit none
 
       INCLUDE 'BCPLOT.F77'
-      INCLUDE 'METRIC.F77'
 
       INTEGER ISPC
       REAL    HT,DBH,DG

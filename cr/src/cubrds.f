@@ -1,4 +1,5 @@
       BLOCK DATA CUBRDS
+      use volstd_mod
       use prgprm_mod
       implicit none
 C----------
@@ -7,8 +8,6 @@ C----------
 C  DEFAULT PARAMETERS FOR THE CUBIC AND BOARD FOOT VOLUME EQUATIONS.
 C----------
 COMMONS
-      INCLUDE 'VOLSTD.F77'
-C
 C----------
 C  SPECIES ORDER:
 C   1=AF,  2=CB,  3=DF,  4=GF,  5=WF,  6=MH,  7=RC,  8=WL,  9=BC, 10=LM,

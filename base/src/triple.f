@@ -1,8 +1,9 @@
       SUBROUTINE TRIPLE
+      use estree_mod
       use contrl_mod
-      use prgprm_mod
-      use arrays_mod
       use arrays_mod, only: barkrat
+      use arrays_mod
+      use prgprm_mod
       implicit none
 C----------
 C  $Id$
@@ -14,8 +15,6 @@ C  DIAMETER GROWTH IN REGENT).  DBH IS ALSO TRIPPLED IN **DGDRIV**.
 C  NOW, OTHER TREE ATTRIBUTES ARE COPIED TO THE TRIPLES.
 C----------
 COMMONS
-      INCLUDE 'ESTREE.F77'
-C
       INCLUDE 'STDSTK.F77'
 C
       INTEGER I,ITFN,IDMR

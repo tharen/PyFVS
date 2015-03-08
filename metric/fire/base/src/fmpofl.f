@@ -1,5 +1,6 @@
       SUBROUTINE FMPOFL (IYR, FMD, LNMOUT)
       use contrl_mod
+      use metric_mod
       use plot_mod
       use prgprm_mod
       implicit none
@@ -35,8 +36,6 @@ C
       INCLUDE 'FMCOM.F77'
 C
       INCLUDE 'FMFCOM.F77'
-C
-      INCLUDE 'METRIC.F77'
 C
 C  VARIABLE DECLARATIONS.
 

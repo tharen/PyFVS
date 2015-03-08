@@ -1,4 +1,5 @@
       SUBROUTINE ONSTHG(HTG, ISPC, D, HT, SI, BAL)
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -9,7 +10,6 @@ C  SMALL TREES.  THE HEIGHT INCREMENT MODEL IS INTNDED FOR TREES
 C  THAT ARE LESS THAN 12 CM DBH
 C----------
 COMMONS
-      INCLUDE 'METRIC.F77'
 
 C     OUTPUT:
 C     HTG  = REAL annual height growth (ft)

@@ -3,8 +3,10 @@
       use arrays_mod
       use contrl_mod
       use econ_mod
+      use outcom_mod
       use prgprm_mod
       use varcom_mod
+      use metric_mod
       use screen_mod
       implicit none
 C----------
@@ -15,9 +17,7 @@ C  OF THE PROJECTION, AND AT THE END OF EACH CYCLE.  ESTIMATES
 C  STAND AGE IF MISSING FROM THE STNDINFO KEYWORD
 C----------
 COMMONS
-      INCLUDE 'OUTCOM.F77'
       INCLUDE 'SUMTAB.F77'
-      INCLUDE 'METRIC.F77'
 C
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES (USED AS OUTPUT LABELS):

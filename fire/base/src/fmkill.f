@@ -4,6 +4,7 @@
       use fmcom_mod
       use fmparm_mod
       use contrl_mod
+      use outcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -25,8 +26,6 @@ C     CALLED FROM:  PPMAIN [PPE]
 C                   GRADD  [SINGLE-STAND]
 C     CALLS:   FMSSEE
 C              FMSADD
-C
-      INCLUDE 'OUTCOM.F77'
 C
       INTEGER I, YEAR, ICALL, ISHAG
       LOGICAL DEBUG

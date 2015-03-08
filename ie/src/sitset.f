@@ -1,5 +1,6 @@
       SUBROUTINE SITSET
       use contrl_mod
+      use volstd_mod
       use plot_mod
       use prgprm_mod
       implicit none
@@ -9,8 +10,6 @@ C----------
 C  THIS SUBROUTINE IS USED TO SET SIMULATION CONTROLLING VALUES
 C  THAT HAVE NOT BEEN SET USING THE KEYWORDS --- SDIMAX, BAMAX.
 C----------
-C
-      INCLUDE 'VOLSTD.F77'
 C
 C----------
 C  SPECIES EXPANSION

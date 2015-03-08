@@ -1,10 +1,13 @@
       SUBROUTINE REGENT(LESTB,ITRNIN)
       use htcal_mod
+      use multcm_mod
       use pden_mod
       use arrays_mod
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
       use plot_mod
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -34,11 +37,8 @@ C  COMPUTES INCREMENTS FROM AGE 5 TO THE END OF THE CYCLE.
 COMMONS
 
       INCLUDE 'CALCOM.F77'
-      INCLUDE 'OUTCOM.F77'
-      INCLUDE 'MULTCM.F77'
       INCLUDE 'ESTCOR.F77'
       INCLUDE 'BCPLOT.F77'
-      INCLUDE 'METRIC.F77'
 
 COMMONS
 

@@ -1,4 +1,5 @@
       SUBROUTINE BMOUTM (I,IYEAR)
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -46,7 +47,6 @@ C
       INCLUDE 'BMCOM.F77'
       INCLUDE 'BMPCOM.F77'
 
-	INCLUDE 'METRIC.F77'
 C
 C     Added real array LBAKL1, LBAH1, LVREM1 to store annual landscape
 C     summaries (RNH July98)

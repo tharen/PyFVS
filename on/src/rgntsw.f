@@ -1,9 +1,12 @@
       SUBROUTINE RGNTSW(LESTB,ITRNIN)
       use htcal_mod
+      use multcm_mod
       use plot_mod
       use arrays_mod
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
+      use metric_mod
       use varcom_mod
       use prgprm_mod
       implicit none
@@ -37,10 +40,7 @@ C  COMPUTES INCREMENTS FROM AGE 5 TO THE END OF THE CYCLE.
 
 COMMONS
       INCLUDE 'CALCOM.F77'
-      INCLUDE 'OUTCOM.F77'
-      INCLUDE 'MULTCM.F77'
       INCLUDE 'ESTCOR.F77'
-      INCLUDE 'METRIC.F77'
 
 COMMONS
 

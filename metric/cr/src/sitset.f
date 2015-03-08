@@ -3,6 +3,8 @@
       use esparm_mod
       use contrl_mod
       use coeffs_mod
+      use volstd_mod
+      use metric_mod
       use escomn_mod
       use varcom_mod
       use prgprm_mod
@@ -20,10 +22,6 @@ C  KEYWORD.
 C
       INCLUDE 'GGCOM.F77'
 C
-      INCLUDE 'VOLSTD.F77'
-C
-      INCLUDE 'METRIC.F77'
-COMMONS
 C----------
       CHARACTER FORST*2,DIST*2,PROD*2,VAR*2,VOLEQ*10
       INTEGER IFIASP,ERRFLAG,I,J,JJ,K,INTFOR,IREGN,ISPC

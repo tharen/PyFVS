@@ -1,5 +1,6 @@
       SUBROUTINE SITSET
       use contrl_mod
+      use volstd_mod
       use plot_mod
       use prgprm_mod
       implicit none
@@ -10,8 +11,6 @@ C THIS SUBROUTINE LOADS THE SITEAR ARRAY WITH A SITE INDEX FOR EACH
 C SPECIES WHICH WAS NOT ASSIGNED A SITE INDEX BY KEYWORD.
 C----------
 COMMONS
-      INCLUDE 'VOLSTD.F77'
-C
 C----------
       LOGICAL DEBUG
       CHARACTER FORST*2,DIST*2,PROD*2,VAR*2,VOLEQ*10

@@ -1,5 +1,6 @@
       SUBROUTINE SITSET
       use contrl_mod
+      use volstd_mod
       use plot_mod
       use varcom_mod
       use prgprm_mod
@@ -16,8 +17,6 @@ C
 C THIS SUBROUTINE ALSO SETS VARIABLES WHICH ARE FOREST SPECIFIC.
 C----------
 COMMONS
-      INCLUDE 'VOLSTD.F77'
-C
 C----------
       LOGICAL DEBUG
       CHARACTER FORST*2,FORDUM*2,DIST*2,PROD*2,VAR*2,VOLEQ*10

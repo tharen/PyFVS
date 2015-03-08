@@ -1,14 +1,20 @@
       SUBROUTINE PUTSTD
       use htcal_mod
+      use multcm_mod
+      use esrncm_mod
       use plot_mod
       use arrays_mod
       use esparm_mod
       use rancom_mod
+      use estree_mod
       use contrl_mod
       use svdata_mod
       use coeffs_mod
       use econ_mod
+      use eshap_mod
+      use outcom_mod
       use pden_mod
+      use volstd_mod
       use fvsstdcm_mod
       use escomn_mod
       use varcom_mod
@@ -31,25 +37,13 @@ C
 C
       INCLUDE 'CALDEN.F77'
 C
-      INCLUDE 'ESHAP.F77'
-C
       INCLUDE 'ESHAP2.F77'
 C
       INCLUDE 'ESCOM2.F77'
 C
       INCLUDE 'ESTCOR.F77'
 C
-      INCLUDE 'ESTREE.F77'
-C
-      INCLUDE 'MULTCM.F77'
-C
       INCLUDE 'OPCOM.F77'
-C
-      INCLUDE 'OUTCOM.F77'
-C
-      INCLUDE 'VOLSTD.F77'
-C
-      INCLUDE 'ESRNCM.F77'
 C
       INCLUDE 'DBSTK.F77'
 C

@@ -1,16 +1,17 @@
       BLOCK DATA BLKDAT
       use htcal_mod
-      use fvsstdcm_mod
       use pden_mod
       use esparm_mod
       use rancom_mod
       use contrl_mod
       use coeffs_mod
       use econ_mod
-      use plot_mod
-      use prgprm_mod
-      use escomn_mod
       use screen_mod
+      use plot_mod
+      use fvsstdcm_mod
+      use escomn_mod
+      use metric_mod
+      use prgprm_mod
       implicit none
 C----------
 C  $Id$
@@ -19,7 +20,6 @@ C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
 C
       INCLUDE 'BCPLOT.F77'
-      INCLUDE 'METRIC.F77'
 C
 C     birch,aspen,cottonwood - from B. Snowdon: LS uses 0.94, 0.92, 0.93
 C

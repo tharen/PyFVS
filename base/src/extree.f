@@ -1,4 +1,5 @@
       SUBROUTINE EXTREE
+      use outcom_mod
       use contrl_mod
       use plot_mod
       use arrays_mod
@@ -9,8 +10,6 @@ C  $Id$
 C----------
 C
 C     ASSIGNS THE EXAMPLE TREES TO THE OUTPUT ARRAYS.
-C
-      INCLUDE 'OUTCOM.F77'
 C
       INTEGER I,INS1,IMCI,ISP1
       CHARACTER*3 NS

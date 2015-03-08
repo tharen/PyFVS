@@ -2,7 +2,9 @@
       use plot_mod
       use arrays_mod
       use esparm_mod
+      use estree_mod
       use contrl_mod
+      use eshap_mod
       use pden_mod
       use escomn_mod
       use varcom_mod
@@ -12,10 +14,6 @@ C----------
 C AK $Id$
 C----------
 COMMONS
-      INCLUDE 'ESTREE.F77'
-C
-      INCLUDE 'ESHAP.F77'
-C
       INCLUDE 'ESHAP2.F77'
 C
       INCLUDE 'CALDEN.F77'

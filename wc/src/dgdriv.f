@@ -1,6 +1,8 @@
       SUBROUTINE DGDRIV
+      use multcm_mod
       use plot_mod
       use arrays_mod
+      use workcm_mod
       use arrays_mod, only: barkrat
       use contrl_mod
       use coeffs_mod
@@ -26,11 +28,7 @@ C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
 C
-      INCLUDE 'MULTCM.F77'
-C
       INCLUDE 'ESTCOR.F77'
-C
-      INCLUDE 'WORKCM.F77'
 C
 C----------
 C  DIMENSIONS AND DATA STATEMENTS FOR INTERNAL VARIABLES.

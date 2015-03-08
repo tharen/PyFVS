@@ -1,8 +1,9 @@
       SUBROUTINE ESPADV (RTOP40)
       use esparm_mod
-      use escomn_mod
-      use plot_mod
       use prgprm_mod
+      use escomn_mod
+      use eshap_mod
+      use plot_mod
       implicit none
 C----------
 C   **ESPADV--AK     DATE OF LAST REVISION:   05/08/12
@@ -11,8 +12,6 @@ C     SUBROUTINE TO PREDICT THE PROBS OF ADVANCE SPECIES.
 C----------
 COMMONS
       INCLUDE 'ESCOM2.F77'
-C
-      INCLUDE 'ESHAP.F77'
 C
       INTEGER I
       REAL RTOP40

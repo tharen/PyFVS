@@ -1,9 +1,14 @@
       SUBROUTINE MORTS
+      use multcm_mod
       use plot_mod
       use arrays_mod
+      use workcm_mod
+      use estree_mod
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
       use pden_mod
+      use metric_mod
       use varcom_mod
       use prgprm_mod
       implicit none
@@ -28,12 +33,6 @@ C  IF A BASAL AREA MAXIMUM HAS BEEN SET BY THE USER, A CHECK IS MADE TO
 C  MAKE SURE BASAL AREA HAS NOT EXCEEDED THE SPECIFIED LIMIT.
 C----------
 COMMONS
-      INCLUDE 'OUTCOM.F77'
-      INCLUDE 'ESTREE.F77'
-      INCLUDE 'MULTCM.F77'
-      INCLUDE 'WORKCM.F77'
-      INCLUDE 'METRIC.F77'
-C
 C  DEFINITIONS OF LOCAL VARIABLES:
 C
 C    BKG_MAP = MAPPING FUNCTION RELATING ONTARIO SPECIES TO ONE OF

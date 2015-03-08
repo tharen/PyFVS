@@ -2,10 +2,14 @@
       use htcal_mod
       use plot_mod
       use arrays_mod
+      use workcm_mod
+      use estree_mod
       use contrl_mod
       use econ_mod
+      use outcom_mod
       use fvsstdcm_mod
       use varcom_mod
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -16,13 +20,9 @@ C     CREATE A FILE FOR FVSTAND POST-PROCESSOR INPUT.
 C
 C     IWHO=1 IF CALLED FROM MAIN, IWHO=2 IF CALLED FROM CUTS
 C
-      INCLUDE 'ESTREE.F77'
-      INCLUDE 'WORKCM.F77'
       INCLUDE 'STDSTK.F77'
       INCLUDE 'SUMTAB.F77'
-      INCLUDE 'OUTCOM.F77'
       INCLUDE 'OPCOM.F77'
-      INCLUDE 'METRIC.F77'
 C
 C----------
       INTEGER IWHO,MYACT(1),KSDI,IOPEN,I,NTODO,ITODO,NPRMS,IACTK,IDT

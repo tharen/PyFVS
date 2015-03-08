@@ -5,6 +5,7 @@
       use fmparm_mod
       use contrl_mod
       use svdata_mod
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -62,7 +63,6 @@ C
 
       INCLUDE 'SVDEAD.F77'
 
-      INCLUDE 'METRIC.F77'
 
 COMMONS
 

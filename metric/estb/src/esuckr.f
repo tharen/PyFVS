@@ -2,8 +2,11 @@
       use plot_mod
       use arrays_mod
       use esparm_mod
+      use estree_mod
       use contrl_mod
       use coeffs_mod
+      use eshap_mod
+      use metric_mod
       use escomn_mod
       use varcom_mod
       use prgprm_mod
@@ -14,11 +17,8 @@ C----------
 COMMONS
       INCLUDE 'ESHOOT.F77'
       INCLUDE 'ESCOM2.F77'
-      INCLUDE 'ESHAP.F77'
       INCLUDE 'ESHAP2.F77'
-      INCLUDE 'ESTREE.F77'
       INCLUDE 'STDSTK.F77'
-      INCLUDE 'METRIC.F77'
 C
 C     CREATE STUMP & ROOT SPROUTS FROM TREES CUT AT BEGINNING OF CYCLE.
 C     ASSUMPTION: THE TREE LIST HAS BEEN COMPRESSED TO ABOUT 1/2 THE

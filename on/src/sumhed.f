@@ -1,7 +1,8 @@
       SUBROUTINE SUMHED
-      use screen_mod
-      use plot_mod
+      use outcom_mod
       use prgprm_mod
+      use plot_mod
+      use screen_mod
       implicit none
 C----------
 C  **SUMHED--LS/M DATE OF LAST REVISION:  07/11/08
@@ -10,8 +11,6 @@ C  THIS SUBROUTINE WRITES A HEADER FOR THE SUMMARY OUTPUT ON THE
 C  SCREEN.
 C----------
 COMMONS
-      INCLUDE 'OUTCOM.F77'
-C
 C----------
       INTEGER I1,I2,ISTFNB,ISTLNB
       CHARACTER*7 FMT

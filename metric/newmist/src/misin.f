@@ -1,5 +1,6 @@
       SUBROUTINE MISIN(PASKEY,ARRAY,LNOTBK,LKECHO)
       use contrl_mod
+      use metric_mod
       use plot_mod
       use prgprm_mod
       implicit none
@@ -110,7 +111,6 @@ C.... Common include files.
 
       INCLUDE 'MISCOM.F77'
       INCLUDE 'DMCOM.F77'
-      INCLUDE 'METRIC.F77'
 
 C.... Variable declarations.
 

@@ -1,5 +1,6 @@
       SUBROUTINE OPRDAT (JEXOPT,KODE)
       use contrl_mod
+      use metric_mod
       use plot_mod
       use prgprm_mod
       implicit none
@@ -18,7 +19,6 @@ C     KODE   = IF POSITIVE, THE NUMBER OF ACTIVITIES ADDED
 C              IF NEGATIVE, THE NUMBER OF FAILURES TO ADD ACTIVITIES
 C
       INCLUDE 'OPCOM.F77'
-      INCLUDE 'METRIC.F77'
 C
       INTEGER MXADDP,IPASS,NADD,I,NPRMS,IACTK,IDT,KODE,JEXOPT,
      >        NFAIL

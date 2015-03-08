@@ -1,6 +1,7 @@
       SUBROUTINE SVCMP2(ITARG,ISOUR)
       use contrl_mod
       use svdata_mod
+      use workcm_mod
       use prgprm_mod
       implicit none
 C----------
@@ -18,11 +19,7 @@ C     ISOUR IS THE INDEX OF THE TREE BEING MOVED.
 C
 C     CALLED FROM COMPRS AND TREDEL.
 C
-      INCLUDE 'WORKCM.F77'
-C
       INTEGER ISOUR,ITARG
-      INTEGER IWKCM1(MAXTRE)
-      EQUIVALENCE (IWKCM1,WORK1)
 C
       IF (JSVOUT.EQ.0) RETURN
 C

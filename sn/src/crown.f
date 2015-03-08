@@ -3,6 +3,7 @@
       use arrays_mod
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
       use pden_mod
       use varcom_mod
       use prgprm_mod
@@ -38,8 +39,6 @@ C                MCREQN(1,MAXSP) = 2.0  PWR POWER EQUATION
 C                MCREQN(1,MAXSP) = 3.0  LIN LINEAR EQUATION
 C                MCREQN(1,MAXSP) = 4.0  LOG LOGARITHMIC EQUATION
 C                MCREQN(1,MAXSP) = 5.0  INVERSE OR HYPERBOLIC EQUATION
-C
-      INCLUDE 'OUTCOM.F77'
 C
       LOGICAL DEBUG
       REAL CRNEW(MAXTRE),WEIBUL(5,MAXSP)

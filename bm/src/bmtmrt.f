@@ -1,8 +1,11 @@
       SUBROUTINE BMTMRT(TOKILL,DEBUG,SUMKIL)
+      use multcm_mod
       use plot_mod
       use arrays_mod
+      use estree_mod
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
       use pden_mod
       use prgprm_mod
       implicit none
@@ -12,12 +15,6 @@ C----------
 C SUBROUTINE TO DISTRIBUTE MORTALITY ACCORDING TO PERCENTILE AND
 C SPECIES TOLERANCE.
 C----------
-C
-      INCLUDE 'OUTCOM.F77'
-C
-      INCLUDE 'ESTREE.F77'
-C
-      INCLUDE 'MULTCM.F77'
 C
 C----------
       REAL VARADJ(MAXSP),TEMWK2(MAXTRE),EFFTR(MAXTRE)

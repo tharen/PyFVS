@@ -3,6 +3,7 @@
       use pden_mod
       use arrays_mod
       use contrl_mod
+      use outcom_mod
       use plot_mod
       use prgprm_mod
       implicit none
@@ -17,8 +18,6 @@ C   TO RELATIVE DENSITY FOR NON-STOCKABLE POINTS, AND LOADS PCT
 C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
-C
-      INCLUDE 'OUTCOM.F77'
 C
 C----------
       INTEGER I,IS,IP,ISPC,I1,I2,I3,II

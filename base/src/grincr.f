@@ -5,6 +5,8 @@
       use plot_mod
       use arrays_mod
       use contrl_mod
+      use eshap_mod
+      use outcom_mod
       use pden_mod
       use varcom_mod
       use prgprm_mod
@@ -17,11 +19,7 @@ C     COMPUTES GROWTH AND MORTALITY ON EACH TREE RECORD.
 C
 C     CALLED FROM: PPMAIN AND TREGRO.
 C
-      INCLUDE 'OUTCOM.F77'
-C
       INCLUDE 'STDSTK.F77'
-C
-      INCLUDE 'ESHAP.F77'
 C
       REAL PRM(6)
       INTEGER MYACTS(3)

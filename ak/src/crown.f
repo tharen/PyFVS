@@ -3,6 +3,7 @@
       use arrays_mod
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
       use pden_mod
       use varcom_mod
       use prgprm_mod
@@ -18,8 +19,6 @@ C  BE RESOLVED ONCE.  A CALL TO **DUBSCR** IS ISSUED TO DUB
 C  CROWN RATIO FOR DEAD TREES.
 C----------
 COMMONS
-      INCLUDE 'OUTCOM.F77'
-C
 C----------
       INTEGER ICFLG(MAXSP),MYACTS(1),JJ,NTODO,I,NP,IACTK,IDATE,IDT
       INTEGER ISPCC,IGRP,IULIM,IG,IGSP,J1,ISPC,I1,I2,I3,IITRE

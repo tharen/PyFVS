@@ -4,6 +4,8 @@
       use arrays_mod, only: barkrat
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
+      use volstd_mod
       use prgprm_mod
       implicit none
 C----------
@@ -22,10 +24,6 @@ C
 C  NATCRS, OCFVOL, AND OBFVOL ARE ENTRY POINTS IN SUBROUTINE
 C  **VARVOL**, WHICH IS VARIANT SPECIFIC.
 C----------
-C
-      INCLUDE 'OUTCOM.F77'
-C
-      INCLUDE 'VOLSTD.F77'
 C
       INCLUDE 'GGCOM.F77'
 C

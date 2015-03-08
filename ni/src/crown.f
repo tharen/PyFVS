@@ -1,9 +1,10 @@
       SUBROUTINE CROWN
-      use contrl_mod
-      use prgprm_mod
       use plot_mod
-      use coeffs_mod
       use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use prgprm_mod
       implicit none
 C----------
 C NI $Id:
@@ -27,8 +28,6 @@ C  **REGENT**.
 C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
-C
-      INCLUDE 'OUTCOM.F77'
 C
 C----------
 C  DECLARATIONS AND DIMENSIONS FOR INTERNAL VARIABLES:

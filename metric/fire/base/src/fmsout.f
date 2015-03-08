@@ -1,5 +1,6 @@
       SUBROUTINE FMSOUT (IYR)
       use contrl_mod
+      use metric_mod
       use plot_mod
       use prgprm_mod
       implicit none
@@ -38,7 +39,6 @@ C.... PARAMETER INCLUDE FILES.
 Cppe      INCLUDE 'PPEPRM.F77'
 Cppe      INCLUDE 'PPCNTL.F77'
       INCLUDE 'FMPARM.F77'
-	INCLUDE 'METRIC.F77'
 
 C.... COMMON INCLUDE FILES.
 

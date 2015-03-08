@@ -3,6 +3,7 @@
       use arrays_mod
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
       use pden_mod
       use prgprm_mod
       implicit none
@@ -33,8 +34,6 @@ C  STEMS GROWTH MODEL FOR WISCONSIN FORESTS.' RES. PAP. NC-267.
 C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
-C
-      INCLUDE 'OUTCOM.F77'
 C
 C----------
 C  VARIABLES DEFINED:

@@ -4,6 +4,7 @@
       use svdata_mod
       use fmsvcm_mod
       use fmfcom_mod
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -23,7 +24,6 @@ C
 
 
 
-      INCLUDE 'METRIC.F77'
 
 COMMONS
 

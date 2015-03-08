@@ -1,5 +1,6 @@
       SUBROUTINE HTONT(ISPC,D_IN,Q_IN,BA_FT,HT_FT)
       use contrl_mod
+      use metric_mod
       use plot_mod
       use prgprm_mod
       implicit none
@@ -14,7 +15,6 @@ C  CALLED FROM HTGF AND CRATET
 C----------
 COMMONS
 
-      INCLUDE 'METRIC.F77'
 
 COMMONS
 

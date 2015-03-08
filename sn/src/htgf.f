@@ -1,5 +1,6 @@
       SUBROUTINE HTGF
       use htcal_mod
+      use multcm_mod
       use plot_mod
       use arrays_mod
       use contrl_mod
@@ -21,8 +22,6 @@ C  DEPENDENT CONSTANTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
-C
-      INCLUDE 'MULTCM.F77'
 C
 C----------
 C

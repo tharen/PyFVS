@@ -2,7 +2,9 @@
       use plot_mod
       use arrays_mod
       use esparm_mod
+      use estree_mod
       use contrl_mod
+      use eshap_mod
       use pden_mod
       use prgprm_mod
       implicit none
@@ -12,10 +14,6 @@ C----------
 C
 C      CALLED AFTER CRATET TO COLLECT INVENTORY INFORMATION FOR
 C      UNDERSTORY/OVERSTORY DENSITIES AND TO FLAG BEST TREES
-C
-      INCLUDE 'ESTREE.F77'
-C
-      INCLUDE 'ESHAP.F77'
 C
       INCLUDE 'CALDEN.F77'
 C

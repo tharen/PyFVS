@@ -1,5 +1,6 @@
       SUBROUTINE DFBIN (PASKEY,ARRAY,LNOTBK,LKECHO)
       use contrl_mod
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -80,7 +81,6 @@ C
 C---------------------------------
 C
       INCLUDE 'DFBCOM.F77'
-      INCLUDE 'METRIC.F77'
 C
 
       INTEGER IDT, KODE, ISIZE, I, NUMBER

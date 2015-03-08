@@ -1,5 +1,6 @@
       SUBROUTINE ESXCSH (TIME,II,HHT,WMAX)
       use esparm_mod
+      use eshap_mod
       use prgprm_mod
       implicit none
 C----------
@@ -8,8 +9,6 @@ C
 C     SUBROUTINE TO ASSIGN HEIGHTS TO EXCESS TREES
 C----------
 COMMONS
-      INCLUDE 'ESHAP.F77'
-C
 C----------
 C
       INTEGER II

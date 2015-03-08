@@ -1,31 +1,31 @@
       SUBROUTINE MCNVRT(IKEY,JD,X)
-      IMPLICIT NONE
+      use metric_mod
+      implicit none
 C----------
 C  $Id$
 C----------
-C     
+C
 C     PURPOSE: RETURNS A VECTOR 'X(NP)' OF CONVERSION FACTORS TO BE USED
 C              IN CONJUNCTION WITH THE OPTION PROCESSOR'S PARAMETERS.
 C              THE ACTIVITY
 C              CODE 'KEY' LINKS THE ACTIVITY TO THE REQUIRED
 C              DEATILS OF THE CONVERSION
-C     
+C
 C     CODED BY: DON ROBINSON, ESSA TECHNOLOGIES
 C
 C     THIS IS A **PRELIMINARY** IMPLEMENTATION. IT COULD EVENTUALLY REPLACE
 C     ALL THE CONVERSION MESSINESS FOUND IN INITRE, RDIN, ESTAB, AND OPLIST.
 C
 C     JD = DIRECTION OF CONVERSION
-C           
+C
 
-      INCLUDE     'METRIC.F77'
 
       CHARACTER*8 KEYWRD
       INTEGER     IKEY, JD
       INTEGER     KEY
       INTEGER     I,IARY,LOC
       REAL        X(N_METRIC_PRMS)
-      
+
       KEY = IKEY
 
 C     SET DEFAULT VECTOR TO 1
@@ -33,15 +33,15 @@ C     SET DEFAULT VECTOR TO 1
       DO I=1,N_METRIC_PRMS
         X(I) = 1.0
       ENDDO
-      
+
       CALL OPKEY(KEY)
       IF (KEY.LE.0) RETURN
       LOC=(KEY/100)+1
       KEY=MOD(KEY,100)
       GOTO (42,42,43,44,45,46,47,48,49,52,53,54,55,56,57,58),LOC
-        
-C     DETERMINE THE PARAMETER MULTIPLIERS FOR THE BASE ACTIVITIES 
-      
+
+C     DETERMINE THE PARAMETER MULTIPLIERS FOR THE BASE ACTIVITIES
+
    42 GOTO (1000,1000,1003,1000,1000,1000,1000,1000,1000,1000,
      >      1000,1000,1000,1000,1000,1000,1000,1000,1000,1000,
      >      1000,1000,1000,1024,1025,1026,1027,1000,1029,1000,
@@ -54,7 +54,7 @@ C     DETERMINE THE PARAMETER MULTIPLIERS FOR THE BASE ACTIVITIES
      >      1000,1000,1000,1000,1000,1096,1000,1000,1000,1000,
      >      1000,1000,1000,1000,1000,1000,1000,1108,1000,1110,
      >      1111,1112,1000,1000,1115) KEY
-           
+
  1000 CONTINUE
       GO TO 61
 
@@ -203,7 +203,7 @@ C     ESTABLISHMENT MODEL ACTIVITY CODES.
      >      2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,
      >      2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,
      >      2000,2000,2000,2000,2000,2000,2000,2000,2000,2000) KEY
-     
+
  2000 CONTINUE
       GO TO 61
  2020 CONTINUE  ! Multipliers for the PLANT (302) activity code.
@@ -216,12 +216,12 @@ C     ESTABLISHMENT MODEL ACTIVITY CODES.
       GO TO 61
  2150 CONTINUE  ! Multipliers for the HTADJ (315) activity code.
       X(2)=FTtoM
-      GO TO 61 
+      GO TO 61
  2260 CONTINUE  ! Multipliers for the SPROUT (450) activity code.
       X(4)=INtoCM
-      X(5)=INtoCM      
-      GO TO 61 
-      
+      X(5)=INtoCM
+      GO TO 61
+
 C     PLACEHOLDERS FOR CONVERSION OF OTHER KEYWORDS
 
    44 CONTINUE
@@ -261,7 +261,7 @@ C     DFB ACTIVITY CODES
  3010 CONTINUE  ! Multipliers for the WINDTHR (302) activity code.
       X(2)=1.0/ACRtoHA
       GO TO 61
-      
+
    56 CONTINUE
 c      CALL BMKEY(KEY,KEYWRD)
       GO TO 61
@@ -270,9 +270,9 @@ C  ROOT DISESASE ACTIVITY CODES
 C
 C  PRODUCE METRIC VALUES FOR GENERAL ROOT DISEASE MODEL. NOTE
 C  THAT THE X() INDICES ARE +1 COMPARED TO THE PRMS() OR
-C  PARMS() ARRAY THAT THEY ARE USED WITH. THIS IS BECAUSE OF 
+C  PARMS() ARRAY THAT THEY ARE USED WITH. THIS IS BECAUSE OF
 C  THE DIFFERENT WAY THAT THESE ARE STORED, COMPARED TO THE
-C  BASE MODEL KEYWORDS. SO IF PRMS(2) IS DBH THAT SHOULD BE 
+C  BASE MODEL KEYWORDS. SO IF PRMS(2) IS DBH THAT SHOULD BE
 C  CONVERTED FROM INCHES TO CM, X(3) IS LOADED WITH THE
 C  CONVERSION FACTOR 'IN2CM'
 
@@ -288,16 +288,16 @@ C  CONVERSION FACTOR 'IN2CM'
       X(2) = FTtoM
       X(3) = FTtoM
       GO TO 61
-        
+
  5703 CONTINUE   ! pstump
       X(2) = INtoCM
       GO TO 61
-        
+
  5714 CONTINUE   ! windthr  << may not be metric in RDIN
       X(3) = HAtoACR
       GO TO 61
 
- 5715 CONTINUE   ! bbtype1   
+ 5715 CONTINUE   ! bbtype1
       X(2) = INtoCM
       X(3) = HAtoACR
       GO TO 61
@@ -341,7 +341,7 @@ C noted that the indexes for ??ALL?? the metric FFE keywords seem to be
 C off-by-one. This is probably because some extensions (e.g. ESTAB) pass ARRAY(*)
 C to OPLIST, but others pass PRMS(*). When building metrification in MCNVRT using
 C FMIN/ESIN as a guide to indexes, ARRAY(i) values should be indexed using (i+1)
-C and PRM(i) values should be indexed using (i). 
+C and PRM(i) values should be indexed using (i).
 C
 C I have changed **and not yet tested** these keywords:
 C
@@ -351,18 +351,18 @@ C
 C DEFULMOD, FIRECALC - both work correctly (EBt#1633)
 C
 C Remove this comment when confirmed. - DR 19 Jan 2009
-C 
+C
 
  5806 CONTINUE    !SIMFIRE
       X(1) = MItoKM
-C             NOTE THAT FtoC1 ISN'T QUITE ACCURATE BECAUSE ACTUAL TRANSLATION IS: 
+C             NOTE THAT FtoC1 ISN'T QUITE ACCURATE BECAUSE ACTUAL TRANSLATION IS:
 C              val*FtoC1 +FtoC2 BUT THIS WILL HAVE TO BE CLOSE ENOUGH
       X(3) = FtoC1
       GO TO 61
 
  5807 CONTINUE    !FLAMEADJ
       X(2) = FTtoM
-      X(4) = FTtoM      
+      X(4) = FTtoM
       GO TO 61
 
  5820 CONTINUE    !SALVAGE
@@ -401,9 +401,9 @@ C              val*FtoC1 +FtoC2 BUT THIS WILL HAVE TO BE CLOSE ENOUGH
       X(10) = FTtoM
       X(12) = MtoFT
       X(13) = M2toFT2/KGtoLB
-      GO TO 61      
+      GO TO 61
 
- 5849 CONTINUE   ! FIRECALC      
+ 5849 CONTINUE   ! FIRECALC
       X(3)  = FTtoM
       X(4)  = FTtoM
       X(5)  = FTtoM
@@ -424,5 +424,5 @@ C     OTHERWISE A TYPE 2 CONVERSION (JD .EQ. 2) AND THE FACTORS ARE UNINVERTED
 	  ENDIF
       ENDDO
 
-      RETURN   
+      RETURN
       END

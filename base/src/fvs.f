@@ -1,8 +1,10 @@
       SUBROUTINE FVS(IRTNCD)
       use pden_mod
       use arrays_mod
+      use workcm_mod
       use contrl_mod
       use econ_mod
+      use outcom_mod
       use plot_mod
       use prgprm_mod
       implicit none
@@ -24,10 +26,6 @@ C
 C     PHONE (208) 882-3557
 C----------
 COMMONS
-      INCLUDE 'OUTCOM.F77'
-C
-      INCLUDE 'WORKCM.F77'
-C
 
 !Python F2PY Interface Directives
 !f2py intent(out) :: irtncd

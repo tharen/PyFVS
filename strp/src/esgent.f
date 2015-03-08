@@ -1,16 +1,15 @@
       SUBROUTINE ESGENT (ITRNIN)
+      use arrays_mod
       use esparm_mod
       use contrl_mod
+      use eshap_mod
       use escomn_mod
-      use arrays_mod
       use prgprm_mod
       implicit none
 C----------
 C   **ESGENT--STRP   DATE OF LAST REVISION:   09/17/08
 C----------
 C     USES REGENT TO ADD HEIGHT INCREMENT TO REGENERATED TREES
-C
-      INCLUDE 'ESHAP.F77'
 C
       INTEGER ITRNIN,I,N
       REAL HTEMP

@@ -3,6 +3,7 @@
       use arrays_mod
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
       use pden_mod
       use varcom_mod
       use prgprm_mod
@@ -21,8 +22,6 @@ C  BE RESOLVED ONCE.  A CALL TO **DUBSCR** IS ISSUED TO DUB
 C  CROWN RATIO WHEN DBH IS LESS THAN 1 INCH.
 C----------
 COMMONS
-      INCLUDE 'OUTCOM.F77'
-C
 C----------
       LOGICAL DEBUG
       INTEGER MYACTS(1),ICFLG(MAXSP),ISORT(MAXTRE)

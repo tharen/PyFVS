@@ -1,4 +1,5 @@
       SUBROUTINE TWIGCF(ISPC,H,D,VN,VM,I)
+      use volstd_mod
       use plot_mod
       use arrays_mod
       use prgprm_mod
@@ -11,8 +12,6 @@ C CUBIC FOOT VOLUME FOR A TREE.  CORRECTIONS FOR TOP KILL AND
 C DEFECT ARE STILL CALCULATED IN VOLS.
 C----------
 COMMONS
-      INCLUDE 'VOLSTD.F77'
-C
 C----------
 C  DIMENSION STATEMENT FOR INTERNAL ARRAYS.
 C----------

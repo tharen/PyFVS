@@ -1,5 +1,6 @@
       SUBROUTINE BWEPPPT (WK3, IPNT, ILIMIT, IB)
       use contrl_mod
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -45,7 +46,6 @@ C----------
 
 C.... Parameter include files.
 
-      INCLUDE 'METRIC.F77'
       INCLUDE 'PPEPRM.F77'
 
 C.... Common include files.

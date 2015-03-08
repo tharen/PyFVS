@@ -1,5 +1,6 @@
       SUBROUTINE TWIGCF(ISPC,H,D,VN,VM,I)
       use contrl_mod
+      use volstd_mod
       use plot_mod
       use arrays_mod
       use prgprm_mod
@@ -12,8 +13,6 @@ C CUBIC FOOT VOLUME FOR A TREE.  CORRECTIONS FOR TOP KILL AND
 C DEFECT ARE STILL CALCULATED IN VOLS.
 C----------
 COMMONS
-      INCLUDE 'VOLSTD.F77'
-C
 C---------
 C  BHB1 --  INTERCEPT COEFFICIENT IN THE MODEL PREDICTING BOLE HEIGHT
 C           TO A 4-INCH TOP (ONE COEFFICIENT PER SPECIES).

@@ -3,6 +3,7 @@
       use fmcom_mod
       use fmparm_mod
       use contrl_mod
+      use metric_mod
       use fmfcom_mod
       use prgprm_mod
       implicit none
@@ -46,7 +47,6 @@ C     PARAMETER STATEMENTS.
 C     PARAMETER INCLUDE FILES.
 
 C     COMMON INCLUDE FILES.
-      INCLUDE 'METRIC.F77'
 
 C     VARIABLE DECLARATIONS.
 

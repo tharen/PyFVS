@@ -1,6 +1,7 @@
       SUBROUTINE SVTDEL(INDEX,IVACT)
       use contrl_mod
       use svdata_mod
+      use workcm_mod
       use prgprm_mod
       implicit none
 C----------
@@ -15,12 +16,8 @@ C     BEING DELETED.
 C
 C     CALLED FROM TREDEL.
 C
-      INCLUDE 'WORKCM.F77'
-C
       INTEGER IVACT,I,II,ISVOBJ,IPT
       INTEGER INDEX(MAXTRE)
-      INTEGER IWKCM1(MAXTRE)
-      EQUIVALENCE (IWKCM1,WORK1)
 C
       IF (JSVOUT.EQ.0) RETURN
       IF (IVACT.EQ.0) RETURN

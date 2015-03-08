@@ -1,8 +1,11 @@
       SUBROUTINE PRTRLS (IWHO)
-      use contrl_mod
-      use varcom_mod
       use plot_mod
       use arrays_mod
+      use workcm_mod
+      use estree_mod
+      use contrl_mod
+      use metric_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -12,12 +15,6 @@ C
 C     PRINT THE TREE LIST.
 C
 C     IWHO = 1 IF CALLED NORMALLY, AND 2 OR 3 IF CALLED FROM CUTS.
-C
-      INCLUDE 'ESTREE.F77'
-C
-      INCLUDE 'WORKCM.F77'
-C
-      INCLUDE 'METRIC.F77'
 C
       INTEGER I,J,NUMREQ,NTODO,ITODO,NPRMS,IACTK,IDT,JYR,IP,ITPLAB
       INTEGER IWHO,KOLIST,KNTREC,ISPC,I1,I2,I3,IICR,IDMR,ICDF,IBDF

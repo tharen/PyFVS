@@ -1,6 +1,7 @@
       SUBROUTINE SVCMP1
       use contrl_mod
       use svdata_mod
+      use workcm_mod
       use prgprm_mod
       implicit none
 C----------
@@ -15,10 +16,6 @@ C     REFERENCING DATA.
 C
 C     CALLED FROM COMPRS AND TREDEL.
 C
-      INCLUDE 'WORKCM.F77'
-C
-      INTEGER IWKCM1(MAXTRE)
-      EQUIVALENCE (IWKCM1,WORK1)
       INTEGER I
 C
       IF (JSVOUT.EQ.0) RETURN

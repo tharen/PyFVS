@@ -1,8 +1,9 @@
       SUBROUTINE FMCONS(FMOIS,BTYPE,PLAREA,IYR,ICALL,PSMOKE,PSBURN)
-      use contrl_mod
       use fmcom_mod
-      use fmfcom_mod
       use fmparm_mod
+      use contrl_mod
+      use eshap_mod
+      use fmfcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -38,7 +39,6 @@ C      INCLUDE 'PPEPRM.F77'
 
 C.... COMMON INCLUDE FILES.
 
-      INCLUDE 'ESHAP.F77'
 
 C.... VARIABLE DECLARATIONS.
 

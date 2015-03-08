@@ -1,9 +1,10 @@
       SUBROUTINE ESPSUB
-      use esparm_mod
-      use prgprm_mod
-      use escomn_mod
-      use pden_mod
       use plot_mod
+      use esparm_mod
+      use eshap_mod
+      use pden_mod
+      use escomn_mod
+      use prgprm_mod
       implicit none
 C----------
 C  **ESPSUB--CI   DATE OF LAST REVISION:   06/20/11
@@ -12,8 +13,6 @@ C  PREDICT THE PROBABILITY OF SUBSEQUENT SPECIES.
 C----------
 C
       INCLUDE 'ESCOM2.F77'
-C
-      INCLUDE 'ESHAP.F77'
 C
       INCLUDE 'ESHAP2.F77'
 C

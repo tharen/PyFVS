@@ -3,6 +3,7 @@
       use arrays_mod
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
       use pden_mod
       use varcom_mod
       use prgprm_mod
@@ -23,8 +24,6 @@ C  DEPENDENT AND NEED ONLYBE RESOLVED ONCE.  PROCESSING OF
 C  CROWN CHANGE FOR SMALL TREES IS CONTROLLED BY **REGENT**.
 C----------
 COMMONS
-      INCLUDE 'OUTCOM.F77'
-C
       INCLUDE 'TWIGCOM.F77'
 C
       LOGICAL DEBUG

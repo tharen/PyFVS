@@ -1,9 +1,10 @@
       SUBROUTINE SVRMOV (REMOVE,ISWTCH,SSNG,DSNG,CTCRWN,ICURYEAR)
       use plot_mod
+      use arrays_mod
       use contrl_mod
       use svdata_mod
-      use arrays_mod
       use prgprm_mod
+      use metric_mod
       implicit none
 C----------
 C  $Id$
@@ -37,7 +38,6 @@ C
 
       INCLUDE 'SVDEAD.F77'
 
-      INCLUDE 'METRIC.F77'
 
 C
 C     WPP     - SUM OF REMOVE PER PLOT

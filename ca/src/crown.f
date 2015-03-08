@@ -3,6 +3,7 @@
       use arrays_mod
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
       use pden_mod
       use varcom_mod
       use prgprm_mod
@@ -22,8 +23,6 @@ C  CROWN RATIO WHEN DBH IS LESS THAN 1 INCH.  PROCESSING OF
 C  CROWN CHANGE FOR SMALL TREES IS CONTROLLED BY **REGENT**.
 C----------
 COMMONS
-      INCLUDE 'OUTCOM.F77'
-C
 C----------
       REAL CRNEW(MAXTRE),WEIBA(17),WEIBB0(17)
       REAL WEIBB1(17),WEIBC0(17),WEIBC1(17),C0(17),C1(17)

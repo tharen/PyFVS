@@ -1,5 +1,6 @@
       SUBROUTINE FMIN (ICALL,NSP,LKECHO)
       use contrl_mod
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -20,7 +21,6 @@ COMMONS
       INCLUDE 'FMPARM.F77'
       INCLUDE 'FMCOM.F77'
       INCLUDE 'FMFCOM.F77'
-      INCLUDE 'METRIC.F77'
 C
       INTEGER    KWCNT
       PARAMETER (KWCNT = 55)

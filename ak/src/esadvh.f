@@ -1,5 +1,6 @@
       SUBROUTINE ESADVH (I,HHT,DELAY,GENTIM,TRAGE,WMAX)
       use esparm_mod
+      use eshap_mod
       use escomn_mod
       use prgprm_mod
       implicit none
@@ -10,8 +11,6 @@ C     CALCULATES HEIGHTS OF ADVANCE TREES FOR REGENERATION MODEL
 C----------
 C
       INCLUDE 'ESCOM2.F77'
-C
-      INCLUDE 'ESHAP.F77'
 C
       INTEGER I,N
       REAL WMAX,TRAGE,GENTIM,DELAY,HHT,AGE,BB,X

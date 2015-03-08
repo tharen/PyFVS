@@ -1,4 +1,5 @@
       SUBROUTINE RDESIN
+      use eshap_mod
       use plot_mod
       use prgprm_mod
       implicit none
@@ -28,8 +29,6 @@ C   08/24/89 - Last revision date.
 C   08/28/14 Lance R. David (FMSC)
 C
 C----------------------------------------------------------------------
-C
-      INCLUDE 'ESHAP.F77'
 C
       MINREP = 30
 

@@ -1,15 +1,13 @@
       SUBROUTINE ESCPRS (ITRGT,DEBUG)
+      use outcom_mod
       use contrl_mod
+      use eshap_mod
       use arrays_mod
       use prgprm_mod
       implicit none
 C----------
 C  **ESCPRS DATE OF LAST REVISION:   06/21/11
 C----------
-C
-      INCLUDE 'ESHAP.F77'
-C
-      INCLUDE 'OUTCOM.F77'
 C
       LOGICAL DEBUG
       REAL PRMS(2)

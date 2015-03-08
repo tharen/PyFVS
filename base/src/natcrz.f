@@ -2,8 +2,11 @@
       use htcal_mod
       use plot_mod
       use arrays_mod
+      use workcm_mod
+      use estree_mod
       use contrl_mod
       use econ_mod
+      use outcom_mod
       use varcom_mod
       use prgprm_mod
       implicit none
@@ -16,15 +19,9 @@ C     VOLUME ROUTINE
 C
 C     IWHO=1 IF CALLED FROM MAIN, IWHO=2 IF CALLED FROM CUTS
 C
-      INCLUDE 'ESTREE.F77'
-C
-      INCLUDE 'WORKCM.F77'
-C
       INCLUDE 'STDSTK.F77'
 C
       INCLUDE 'SUMTAB.F77'
-C
-      INCLUDE 'OUTCOM.F77'
 C
       INCLUDE 'OPCOM.F77'
 C

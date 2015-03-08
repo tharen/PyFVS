@@ -1,5 +1,6 @@
       SUBROUTINE BMPPIN (IREADx,IRECNTx,IJOPPR,LKECHO)
       use contrl_mod
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -89,7 +90,6 @@ C Adding CONTRL for varialbe KWDFIL used with BMPPIN AJM 4/01
       INCLUDE 'BMCOM.F77'
       INCLUDE 'BMRRCM.F77'
       INCLUDE 'BMPCOM.F77'
-	INCLUDE 'METRIC.F77'
 C
       PARAMETER (KWCNT = 40)
 

@@ -1,5 +1,6 @@
       SUBROUTINE MISPRT
       use contrl_mod
+      use metric_mod
       use plot_mod
       use arrays_mod
       use prgprm_mod
@@ -194,7 +195,6 @@ C     Common include files.
 
       INCLUDE 'MISCOM.F77'
       INCLUDE 'DMCOM.F77'
-      INCLUDE 'METRIC.F77'
 
 C     Variable declarations.
 

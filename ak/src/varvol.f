@@ -1,9 +1,10 @@
         SUBROUTINE VARVOL
-      use contrl_mod
-      use prgprm_mod
       use plot_mod
-      use coeffs_mod
       use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use volstd_mod
+      use prgprm_mod
       implicit none
 C----------
 C  **VARVOL--AK    DATE OF LAST REVISION:   09/29/11
@@ -18,8 +19,6 @@ C  All FLEWELLING EQS. (TONGASS NF, EXCEPT SP.NO. 1) USE STANDARD LOG
 C  LENGTH OF 32 FT FOR BD FT CALCULATIONS AND 16 FT LOGS FOR CU FT
 C  CALCULATIONS. ALL CHUGACH NF EQS. USE 16 FT LOGS.
 C----------
-C
-      INCLUDE 'VOLSTD.F77'
 C
 C----------
       INTEGER IT,ITRNC,ISPC,INTFOR,IERR,IZERO

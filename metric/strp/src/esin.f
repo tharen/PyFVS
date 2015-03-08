@@ -1,9 +1,11 @@
       SUBROUTINE ESIN (PASKEY,ARRAY,LNOTBK,KARD,LKECHO)
+      use plot_mod
       use esparm_mod
       use contrl_mod
-      use prgprm_mod
+      use eshap_mod
+      use metric_mod
       use escomn_mod
-      use plot_mod
+      use prgprm_mod
       implicit none
 C----------
 C    ESIN--STRP/M  DATE OF LAST REVISION:   06/03/10
@@ -11,9 +13,7 @@ C----------
 C
 C     OPTION PROCESSOR FOR ESTABLISHMENT MODEL
 C
-      INCLUDE 'ESHAP.F77'
       INCLUDE 'ESWSBW.F77'
-      INCLUDE 'METRIC.F77'
 COMMONS
 
 C     INTERNAL STORAGE

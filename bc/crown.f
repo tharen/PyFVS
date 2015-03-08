@@ -1,8 +1,10 @@
       SUBROUTINE CROWN
-      use contrl_mod
-      use arrays_mod
       use plot_mod
+      use arrays_mod
+      use contrl_mod
       use coeffs_mod
+      use outcom_mod
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -27,9 +29,7 @@ C  **REGENT**.
 C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
-      INCLUDE 'OUTCOM.F77'
       INCLUDE 'BCPLOT.F77'
-      INCLUDE 'METRIC.F77'
 C
 C----------
 C  DECLARATIONS AND DIMENSIONS FOR INTERNAL VARIABLES:
@@ -678,12 +678,12 @@ C
 C     PRIVATE SUBROUTINE TO CALCULATE CROWN PROPORTION
 
       SUBROUTINE CRNMD(IISP, YCON, YD, YH, YBAL, YCR, YSD)
+      use metric_mod
       use varcom_mod
       use prgprm_mod
       implicit none
 
       INCLUDE 'BCPLOT.F77'
-      INCLUDE 'METRIC.F77'
 
       EXTERNAL RANN
 

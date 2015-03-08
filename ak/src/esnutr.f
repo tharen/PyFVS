@@ -1,7 +1,9 @@
       SUBROUTINE ESNUTR
-      use contrl_mod
       use plot_mod
       use arrays_mod
+      use contrl_mod
+      use eshap_mod
+      use outcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -13,10 +15,6 @@ C  ALSO, ONLY AUTOESTAB IN ALASKA IF STAND CCF IS LT 250
 C----------
 C
 C     INTERFACE ROUTINE TO COUPLE THE REGEN MODEL AND PROGNOSIS.
-C
-      INCLUDE 'OUTCOM.F77'
-C
-      INCLUDE 'ESHAP.F77'
 C
       INCLUDE 'ESHAP2.F77'
 C

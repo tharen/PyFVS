@@ -1,8 +1,10 @@
       SUBROUTINE SSTAGE(INBA,INICYCLE,LSUPRT)
-      use contrl_mod
       use plot_mod
       use arrays_mod
+      use contrl_mod
+      use outcom_mod
       use prgprm_mod
+      use metric_mod
       implicit none
 C----------
 C  $Id$
@@ -19,9 +21,7 @@ C           THINNING.
 C   INICYCLE = THE CYCLE NUMBER.
 C   LSUPRT = IF TRUE, SUPPRESS THE PRINTING, EVEN IF IT IS REQUESTED.
 C
-      INCLUDE 'OUTCOM.F77'
       INCLUDE 'SSTGMC.F77'
-      INCLUDE 'METRIC.F77'
 COMMONS
       INTEGER IOUT,ICD,MSP1,MSP2,IS3OK,IS2OK,I2,IS1OK,IS3I2,IS3I1
       INTEGER IS2I2,IS2I1,IS1I2,IS1I1,ILARGE,IILG,ID2I2,ID2I1,IHTLS3

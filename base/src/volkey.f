@@ -1,9 +1,11 @@
       SUBROUTINE VOLKEY(DEBUG)
-      use contrl_mod
-      use prgprm_mod
       use plot_mod
-      use coeffs_mod
       use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use volstd_mod
+      use prgprm_mod
       implicit none
 C----------
 C  $Id$
@@ -13,10 +15,6 @@ C  THIS SUBROUTINE PROCESSES THE KEYWORDS USED TO MODIFY VOLUME
 C  STANDARDS AND EQUATIONS.
 C----------
 COMMONS
-      INCLUDE 'OUTCOM.F77'
-C
-      INCLUDE 'VOLSTD.F77'
-C
 C----------
       LOGICAL DEBUG
       INTEGER MYACTS(4)

@@ -1,9 +1,10 @@
       SUBROUTINE DGF(DIAM)
-      use contrl_mod
-      use prgprm_mod
       use plot_mod
-      use coeffs_mod
       use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use prgprm_mod
+      use metric_mod
       implicit none
 C----------
 C  $Id$
@@ -22,7 +23,6 @@ C
 
 COMMONS
       INCLUDE 'CALCOM.F77'
-      INCLUDE 'METRIC.F77'
       INCLUDE 'BCPLOT.F77'
 C
 C  DIMENSIONS FOR INTERNAL VARIABLES.

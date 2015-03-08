@@ -4,6 +4,7 @@
       use arrays_mod
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -12,8 +13,6 @@ C----------
 C  THIS SUBROUTINE CALCULATES THE MAI FOR THE STAND. IT IS CALLED
 C  FROM CRATET.
 C----------
-C
-      INCLUDE 'OUTCOM.F77'
 C
 C----------
       LOGICAL DEBUG

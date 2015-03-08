@@ -1,9 +1,10 @@
       SUBROUTINE DGF(DIAM)
-      use contrl_mod
-      use prgprm_mod
       use plot_mod
-      use coeffs_mod
       use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use prgprm_mod
       implicit none
 C----------
 C  **DGF--AK    DATE OF LAST REVISION:   02/14/08
@@ -23,8 +24,6 @@ C   (FROM PN VARIANT)
 C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
-C
-      INCLUDE 'OUTCOM.F77'
 C
 C  DIMENSIONS FOR INTERNAL VARIABLES.
 C

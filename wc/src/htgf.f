@@ -1,10 +1,12 @@
       SUBROUTINE HTGF
       use htcal_mod
+      use multcm_mod
       use pden_mod
       use arrays_mod
       use arrays_mod, only: barkrat
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
       use plot_mod
       use varcom_mod
       use prgprm_mod
@@ -22,10 +24,6 @@ C  CONSTANTS THAT NEED ONLY BE RESOLVED ONCE. CALLS **FINDAG
 c  TO CALCULATE TREE AGE.
 C----------
 COMMONS
-      INCLUDE 'OUTCOM.F77'
-C
-      INCLUDE 'MULTCM.F77'
-C
 C----------
       LOGICAL DEBUG
       INTEGER MAPHD(MAXSP)

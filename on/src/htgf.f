@@ -1,10 +1,12 @@
       SUBROUTINE HTGF
       use htcal_mod
+      use multcm_mod
       use pden_mod
       use arrays_mod
       use contrl_mod
       use coeffs_mod
       use plot_mod
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -20,9 +22,6 @@ C  IS CALLED FROM **RCON** TO LOAD SITE DEPENDENT CONSTANTS
 C  THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-      INCLUDE 'MULTCM.F77'
-      INCLUDE 'METRIC.F77'
-C
       LOGICAL DEBUG
       INTEGER I,ISPC,I1,I2,I3,IS,ITFN
       REAL SCALE,BA10,BARK,BRATIO,DBH10,XHT,XHT2,HTNOW,HT10,GM,TEMHTG

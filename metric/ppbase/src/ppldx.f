@@ -1,5 +1,6 @@
       SUBROUTINE PPLDX (X,INSTR,IRC)
-      IMPLICIT NONE
+      use metric_mod
+      implicit none
 C----------
 C  **PPLDX  DATE OF LAST REVISION:  08:35:00 06/03/10
 C----------
@@ -15,15 +16,7 @@ C     INSTR = THE CODE THAT SAYS WHICH VALUE IS REQUESTED.
 C     IRC   = RETURN CODE, 0=OK, 1=VARIABLE IS CURRENTLY UNDEFINED,
 C             2=INSTRUCTION CODE COULD NOT BE DECIPHERED.
 C
-COMMONS
-C
-C
       INCLUDE 'PPEXCM.F77'
-      INCLUDE 'METRIC.F77'
-C
-C
-COMMONS
-C
 C
       INTEGER IRC,INSTR,I
       REAL X
@@ -50,7 +43,7 @@ C
  1103            CONTINUE
                    X = PTSTV1(I) * FT2pACRtoM2pHA
                    GOTO 1000
- 1000            CONTINUE           
+ 1000            CONTINUE
                  IRC=0
                  RETURN
                ELSE

@@ -1,9 +1,13 @@
       SUBROUTINE MORTS
+      use multcm_mod
       use plot_mod
       use arrays_mod
+      use workcm_mod
+      use estree_mod
       use contrl_mod
       use coeffs_mod
       use pden_mod
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -20,11 +24,7 @@ C  **MORCON** IS ACCESSED TO LOAD SITE DEPENDENT CONSTANTS.
 C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
-      INCLUDE 'ESTREE.F77'
-      INCLUDE 'MULTCM.F77'
-      INCLUDE 'WORKCM.F77'
       INCLUDE 'BCPLOT.F77'
-      INCLUDE 'METRIC.F77'
 C
 C----------
 C  DEFINITIONS:

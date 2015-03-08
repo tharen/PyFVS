@@ -1,8 +1,10 @@
       SUBROUTINE SVESTB (I1)
       use plot_mod
+      use arrays_mod
+      use workcm_mod
       use contrl_mod
       use svdata_mod
-      use arrays_mod
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -28,9 +30,7 @@ COMMONS
       INCLUDE 'SVDEAD.F77'
 
 
-      INCLUDE 'WORKCM.F77'
 
-      INCLUDE 'METRIC.F77'
 
 COMMONS
 

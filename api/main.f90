@@ -1,5 +1,7 @@
       PROGRAM MAIN
       use blkdat_mod, only: blkdat
+      use esblkd_mod, only: esblkd
+      use cubrds_mod, only: cubrds
       use siteht_mod
       use plot_mod, only: sitear
       IMPLICIT NONE
@@ -32,6 +34,8 @@
 
       ! Initialize the variant parameters and arrays
       call blkdat()
+      call esblkd()
+      call cubrds()
 
 !
 !     PROCSS THE COMMAND LINE. Passing an empty string signals that the

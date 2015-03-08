@@ -1,8 +1,12 @@
       SUBROUTINE MORTS
+      use multcm_mod
       use plot_mod
       use arrays_mod
+      use workcm_mod
+      use estree_mod
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
       use pden_mod
       use varcom_mod
       use prgprm_mod
@@ -22,14 +26,6 @@ C  BAMAX BASED MORTALITY TAKES OVER. IF NOT SET BY THE USER, BAMAX IS
 C  DETERMINED FROM MAX SDI AT 10" DBH.
 C----------
 COMMONS
-      INCLUDE 'OUTCOM.F77'
-C
-      INCLUDE 'ESTREE.F77'
-C
-      INCLUDE 'MULTCM.F77'
-C
-      INCLUDE 'WORKCM.F77'
-C
 C----------
 C  DEFINITIONS:
 C

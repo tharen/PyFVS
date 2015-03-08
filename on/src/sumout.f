@@ -1,5 +1,6 @@
       SUBROUTINE SUMOUT(IOSUM,I20,ICFLAG,JOPRT,JOSTND,JOSUM,
      >                  LEN,MGMID,NPLT,SAMWT,ITITLE,IPTINV)
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -50,7 +51,6 @@ C     NPLT  = PLOT IDENTIFICATION FIELD. ASSUMED ALPHANUMERIC.
 C NOTE: * Indicates R8 and R9 specific (CS, LS, NE, OZ, SE, SN)
 C
       INCLUDE 'SUMTAB.F77'
-      INCLUDE 'METRIC.F77'
 C
       CHARACTER CISN*11,NPLT*26,TIM*8,DAT*10,MGMID*4,VVER*7,REV*10
       CHARACTER ITITLE*72

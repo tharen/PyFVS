@@ -1,9 +1,11 @@
       SUBROUTINE HTGF
       use htcal_mod
+      use multcm_mod
       use plot_mod
       use arrays_mod
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -19,10 +21,6 @@ C  CONSTANTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
-C
-      INCLUDE 'OUTCOM.F77'
-C
-      INCLUDE 'MULTCM.F77'
 C
 C----------
 C   MODEL COEFFICIENTS AND CONSTANTS:

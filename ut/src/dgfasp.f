@@ -3,6 +3,7 @@
       use arrays_mod
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
       use pden_mod
       use prgprm_mod
       implicit none
@@ -11,8 +12,6 @@ C  **DGFASP--UT  DATE OF LAST REVISION:  11/17/09
 C
 C   CALCULATES DIAMETER GROWTH RATES FOR LARGE ASPEN TREES
 C----------
-C
-      INCLUDE 'OUTCOM.F77'
 C
 C----------
       LOGICAL DEBUG

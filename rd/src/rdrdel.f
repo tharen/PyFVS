@@ -1,4 +1,5 @@
       SUBROUTINE RDRDEL
+      use outcom_mod
       use contrl_mod
       use plot_mod
       use arrays_mod
@@ -40,7 +41,6 @@ C
 C
 C.... COMMON INCLUDE FILES
 C
-      INCLUDE 'OUTCOM.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
       INCLUDE 'RDADD.F77'

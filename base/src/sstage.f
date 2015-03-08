@@ -1,4 +1,5 @@
       SUBROUTINE SSTAGE(INBA,INICYCLE,LSUPRT)
+      use outcom_mod
       use contrl_mod
       use plot_mod
       use arrays_mod
@@ -18,8 +19,6 @@ C   INIBA = 1 IF CALL IS PRIOR TO THINNINGS.  OTHER VALUES MEAN AFTER
 C           THINNING.
 C   INICYCLE = THE CYCLE NUMBER.
 C   LSUPRT = IF TRUE, SUPPRESS THE PRINTING, EVEN IF IT IS REQUESTED.
-C
-      INCLUDE 'OUTCOM.F77'
 C
       INCLUDE 'SSTGMC.F77'
 C

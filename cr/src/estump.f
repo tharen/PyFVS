@@ -1,5 +1,6 @@
       SUBROUTINE ESTUMP (JSSP,DBH,PREM,JPLOT,ISHAG)
       use esparm_mod
+      use eshap_mod
       use escomn_mod
       use prgprm_mod
       implicit none
@@ -8,8 +9,6 @@ C CR $Id$
 C----------
 C
       INCLUDE 'ESHOOT.F77'
-C
-      INCLUDE 'ESHAP.F77'
 C
 C     STORE INFORMATION FOR STUMP SPROUT SUBROUTINE.
 C

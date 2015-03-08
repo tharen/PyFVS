@@ -1,16 +1,14 @@
       BLOCK DATA ESBLKD
       use esparm_mod
       use prgprm_mod
+      use esrncm_mod
+      use eshap_mod
       implicit none
 C----------
 C   **ESBLKD--ESTB   DATE OF LAST REVISION:   05/12/11
 C----------
 COMMONS
       INCLUDE 'ESCOM2.F77'
-C
-      INCLUDE 'ESRNCM.F77'
-C
-      INCLUDE 'ESHAP.F77'
 C
       INCLUDE 'ESHAP2.F77'
 C

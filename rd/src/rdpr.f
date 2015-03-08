@@ -1,5 +1,6 @@
       SUBROUTINE RDPR
       use contrl_mod
+      use metric_mod
       use plot_mod
       use arrays_mod
       use prgprm_mod
@@ -54,7 +55,6 @@ C
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDCRY.F77'
       INCLUDE 'RDADD.F77'
-      INCLUDE 'METRIC.F77'
 
       LOGICAL  DEBUG, FIRSTL
       INTEGER  I, I1, I2, IDI, IEND, IOAGE, IOUT, J, JYR, M,

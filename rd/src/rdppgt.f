@@ -1,5 +1,6 @@
       SUBROUTINE RDPPGT (WK3, IPNT, ILIMIT)
       use contrl_mod
+      use metric_mod
       use prgprm_mod
       implicit none
 ***********************************************************************
@@ -45,7 +46,6 @@ C.... Parameter statements.
 C.... Parameter include files.
 
       INCLUDE 'RDPARM.F77'
-      INCLUDE 'METRIC.F77'
       INCLUDE 'PPEPRM.F77'
 
 C.... Common include files.

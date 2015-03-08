@@ -1,4 +1,5 @@
       SUBROUTINE CVOUT
+      use outcom_mod
       use contrl_mod
       use plot_mod
       use arrays_mod
@@ -11,8 +12,6 @@ C  PRINTS (PRE- AND POST-THIN) **COVER** STATISTICS BY CYCLE.
 C  CALLED FROM **MAIN** ONCE PER STAND, AT THE END OF PROJECTION.
 C---------
 COMMONS
-      INCLUDE 'OUTCOM.F77'
-C
       INCLUDE 'CVCOM.F77'
 C
       INTEGER NCYCP1,I,ITHN,J,K,KODE

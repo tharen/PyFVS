@@ -1,6 +1,9 @@
       SUBROUTINE MORTS
+      use multcm_mod
       use plot_mod
       use arrays_mod
+      use workcm_mod
+      use estree_mod
       use contrl_mod
       use coeffs_mod
       use pden_mod
@@ -21,13 +24,7 @@ C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
 C
-      INCLUDE 'ESTREE.F77'
-C
-      INCLUDE 'MULTCM.F77'
-C
       INCLUDE 'CICOM.F77'
-C
-      INCLUDE 'WORKCM.F77'
 C
 C----------
 C  DEFINITIONS:

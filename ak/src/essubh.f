@@ -1,5 +1,6 @@
       SUBROUTINE ESSUBH (I,HHT,DELAY,GENTIM,TRAGE,WMAX)
       use esparm_mod
+      use eshap_mod
       use escomn_mod
       use prgprm_mod
       implicit none
@@ -11,8 +12,6 @@ C     CREATED BY THE ESTABLISHMENT MODEL.
 C----------
 C
       INCLUDE 'ESCOM2.F77'
-C
-      INCLUDE 'ESHAP.F77'
 C
 C----------
 C

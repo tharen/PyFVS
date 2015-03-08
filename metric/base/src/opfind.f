@@ -1,4 +1,5 @@
       SUBROUTINE OPFIND (NMYA,MYACTS,NTODO)
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -18,7 +19,6 @@ C     NTODO = THE NUMBER OF ACTIVITIES WHICH ARE TO BE DONE THIS
 C             CYCLE.
 C
       INCLUDE 'OPCOM.F77'
-      INCLUDE 'METRIC.F77'
 C
       REAL PRMS(*)
       INTEGER MYACTS(*)

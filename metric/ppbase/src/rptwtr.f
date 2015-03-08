@@ -1,8 +1,10 @@
       SUBROUTINE RPTWTR (NCYC2,IONER)
-      use contrl_mod
       use plot_mod
       use arrays_mod
+      use contrl_mod
+      use outcom_mod
       use prgprm_mod
+      use metric_mod
       implicit none
 C----------
 C  **RPTWTR--PPBASE  DATE OF LAST REVISION:  06/03/10
@@ -22,11 +24,7 @@ C             OUTPUT FOR THE REPORT.
 C
       INCLUDE 'PPEPRM.F77'
 C
-      INCLUDE 'OUTCOM.F77'
-C
       INCLUDE 'PPCNTL.F77'
-C
-      INCLUDE 'METRIC.F77'
 C
 C     STORAGE ALLOCATION:
 C

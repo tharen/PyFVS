@@ -1,5 +1,6 @@
       SUBROUTINE RDTOUT
       use contrl_mod
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -40,7 +41,6 @@ C
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
       INCLUDE 'RDADD.F77'
-      INCLUDE 'METRIC.F77'
 
       INTEGER IDI, J
       CHARACTER*1 DITYPE(4)

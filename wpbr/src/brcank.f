@@ -1,8 +1,9 @@
       SUBROUTINE BRCANK
       use htcal_mod
-      use contrl_mod
       use plot_mod
       use arrays_mod
+      use estree_mod
+      use contrl_mod
       use prgprm_mod
       implicit none
 C**********************************************************************
@@ -28,7 +29,6 @@ C**********************************************************************
 
 C.... Common include files.
 
-      INCLUDE 'ESTREE.F77'
       INCLUDE 'BRCOM.F77'
 
 C.... Local variable declarations.

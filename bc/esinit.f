@@ -1,15 +1,15 @@
       SUBROUTINE ESINIT
       use esparm_mod
-      use escomn_mod
       use prgprm_mod
+      use escomn_mod
+      use esrncm_mod
+      use eshap_mod
       implicit none
 C----------
 C  $Id$
 C----------
 C     CALLED FROM INITRE, ONLY ONCE, TO INITIALIZE REGEN. MODEL.
 C
-      INCLUDE 'ESHAP.F77'
-      INCLUDE 'ESRNCM.F77'
       INCLUDE 'ESWSBW.F77'
 COMMONS
 

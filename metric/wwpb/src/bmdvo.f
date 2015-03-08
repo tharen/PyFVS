@@ -1,4 +1,5 @@
       SUBROUTINE BMDVO (I,IYEAR)
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -21,7 +22,6 @@ C
       INCLUDE 'BMCOM.F77'
       INCLUDE 'BMPCOM.F77'
 
-      INCLUDE 'METRIC.F77'
 
       INTEGER ryear,ryear2, RYEARP
 

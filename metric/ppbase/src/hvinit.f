@@ -1,4 +1,5 @@
       SUBROUTINE HVINIT
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -15,8 +16,6 @@ C
       INCLUDE 'PPHVCM.F77'
 C
       INCLUDE 'HVDNCM.F77'
-C
-      INCLUDE 'METRIC.F77'
 C
       INTEGER IHV
 C

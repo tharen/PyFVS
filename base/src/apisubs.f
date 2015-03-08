@@ -38,11 +38,11 @@ c     Created in late 2011 by Nick Crookston, RMRS-Moscow
 
       subroutine fvsSummary(summary,icycle,ncycles,maxrow,maxcol,
      -                      rtnCode)
+      use outcom_mod
       use contrl_mod
       use prgprm_mod
       implicit none
 
-      include "OUTCOM.F77"
 
 !Python F2PY Interface Directives
 !f2py intent(out) :: summary
@@ -616,10 +616,12 @@ c
 
       subroutine fvsAddTrees(in_dbh,in_species,in_ht,in_cratio,
      -                       in_plot,in_tpa,ntrees,rtnCode)
-      use contrl_mod
-      use varcom_mod
       use plot_mod
       use arrays_mod
+      use estree_mod
+      use contrl_mod
+      use outcom_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 
@@ -627,8 +629,6 @@ c     rtnCode = 0 when all is OK
 c               1 when there is no room for the ntrees
 c                 or when ntrees is zero
 
-      include "OUTCOM.F77"
-      include "ESTREE.F77"
       include "STDSTK.F77"
 
 !Python F2PY Interface Directives

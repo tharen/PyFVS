@@ -1,7 +1,9 @@
       SUBROUTINE SITSET
       use contrl_mod
-      use plot_mod
       use prgprm_mod
+      use plot_mod
+      use metric_mod
+      use volstd_mod
       implicit none
 C----------
 C  $Id$
@@ -10,9 +12,7 @@ C  THIS SUBROUTINE IS USED TO SET SIMULATION CONTROLLING VALUES
 C  THAT HAVE NOT BEEN SET USING THE KEYWORDS --- SDIMAX, BAMAX.
 C----------
 C
-      INCLUDE 'VOLSTD.F77'
       INCLUDE 'BCPLOT.F77'
-      INCLUDE 'METRIC.F77'
 C
       INTEGER IFIASP, ERRFLAG
       CHARACTER FORST*2,DIST*2,PROD*2,VAR*2,VOLEQ*10,VVER*7

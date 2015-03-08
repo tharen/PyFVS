@@ -1,7 +1,9 @@
       SUBROUTINE SITSET
       use contrl_mod
-      use plot_mod
       use prgprm_mod
+      use plot_mod
+      use metric_mod
+      use volstd_mod
       implicit none
 C----------
 C  **SITSET--UT/M  DATE OF LAST REVISION:  06/03/10
@@ -12,9 +14,6 @@ C  THE SDIDEF ARRAY WITH SDI MAXIMUMS FOR EACH SPECIES WHICH WAS NOT
 C  ASSIGNED AN SDI MAXIMUM USING THE SDIMAX KEYWORD.
 C----------
 COMMONS
-      INCLUDE 'VOLSTD.F77'
-      INCLUDE 'METRIC.F77'
-C
 C----------
       INTEGER IFIASP, ERRFLAG
       CHARACTER FORST*2,DIST*2,PROD*2,VAR*2,VOLEQ*10

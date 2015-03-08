@@ -2,8 +2,11 @@
       use plot_mod
       use arrays_mod
       use esparm_mod
+      use estree_mod
       use contrl_mod
+      use eshap_mod
       use pden_mod
+      use metric_mod
       use escomn_mod
       use varcom_mod
       use prgprm_mod
@@ -12,11 +15,8 @@ C----------
 C STRP/M $ID$
 C----------
 COMMONS
-      INCLUDE 'ESTREE.F77'
-      INCLUDE 'ESHAP.F77'
       INCLUDE 'CALDEN.F77'
       INCLUDE 'STDSTK.F77'
-      INCLUDE 'METRIC.F77'
 COMMONS
 
 C     REGENERATION ESTABLISHMENT MODEL   --   VERSION 2.0

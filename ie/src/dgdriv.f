@@ -1,9 +1,11 @@
       SUBROUTINE DGDRIV
-      use contrl_mod
-      use prgprm_mod
+      use multcm_mod
       use plot_mod
-      use coeffs_mod
       use arrays_mod
+      use workcm_mod
+      use contrl_mod
+      use coeffs_mod
+      use prgprm_mod
       implicit none
 C----------
 C NI23 $Id$
@@ -25,11 +27,7 @@ C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
 C
-      INCLUDE 'MULTCM.F77'
-C
       INCLUDE 'ESTCOR.F77'
-C
-      INCLUDE 'WORKCM.F77'
 C
 C----------
 C  DIMENSIONS AND DATA STATEMENTS FOR INTERNAL VARIABLES.

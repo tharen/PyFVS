@@ -4,6 +4,7 @@
       use arrays_mod
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
       use varcom_mod
       use prgprm_mod
       implicit none
@@ -28,8 +29,6 @@ C        AND ISCT.
 C    8)  PRINT A TABLE DESCRIBING CONTROL PARAMETERS AND INPUT
 C        VARIABLES.
 C----------
-C
-      INCLUDE 'OUTCOM.F77'
 C
 C----------
 C  INTERNAL VARIABLES.

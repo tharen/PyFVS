@@ -1,8 +1,9 @@
       SUBROUTINE ESPXCS (RTOP40)
       use esparm_mod
-      use escomn_mod
-      use plot_mod
       use prgprm_mod
+      use escomn_mod
+      use eshap_mod
+      use plot_mod
       implicit none
 C----------
 C  **ESPXCS--AK     DATE OF LAST REVISION:   05/08/12
@@ -11,8 +12,6 @@ C    PREDICT THE PROBABILITY OF EXCESS SPECIES
 C----------
 C
       INCLUDE 'ESCOM2.F77'
-C
-      INCLUDE 'ESHAP.F77'
 C
 C----------
 C     P(EXCESS WHITE SPRUCE).

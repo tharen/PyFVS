@@ -3,7 +3,9 @@
       use arrays_mod
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
       use pden_mod
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -30,8 +32,6 @@ C
 C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
-      INCLUDE 'OUTCOM.F77'
-      INCLUDE 'METRIC.F77'
 C
 C----------
 C  VARIABLES DEFINED:

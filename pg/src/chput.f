@@ -1,7 +1,9 @@
       SUBROUTINE CHPUT
-      use contrl_mod
       use plot_mod
       use arrays_mod
+      use contrl_mod
+      use outcom_mod
+      use volstd_mod
       use prgprm_mod
       implicit none
 C----------
@@ -16,13 +18,9 @@ C
 C
       INCLUDE 'OPCOM.F77'
 C
-      INCLUDE 'OUTCOM.F77'
-C
       INCLUDE 'DBSTK.F77'
 C
       INCLUDE 'GGCOM.F77'
-C
-      INCLUDE 'VOLSTD.F77'
 C
       INTEGER LNCBUF,IRECLN
       PARAMETER (IRECLN=1024)

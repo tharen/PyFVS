@@ -1,4 +1,5 @@
       SUBROUTINE DBSCASE(IFORSURE)
+      use outcom_mod
       use plot_mod
       use prgprm_mod
       implicit none
@@ -16,8 +17,6 @@ COMMONS
       INCLUDE 'DBSCOM.F77'
 C
       INCLUDE 'OPCOM.F77'
-C
-      INCLUDE 'OUTCOM.F77'
 C
       INCLUDE 'KEYCOM.F77'
 C

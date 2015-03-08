@@ -2,6 +2,7 @@
       use contrl_mod
       use svdata_mod
       use arrays_mod
+      use workcm_mod
       use prgprm_mod
       implicit none
 C----------
@@ -13,11 +14,7 @@ C     N.L.CROOKSTON -- RMRS MOSCOW -- NOVEMBER 1998
 C
 C     CALLED FROM COMPRS AND TREDEL.
 C
-      INCLUDE 'WORKCM.F77'
-C
       INTEGER ISVOBJ,IPT
-      INTEGER IWKCM1(MAXTRE)
-      EQUIVALENCE (IWKCM1,WORK1)
 C
       IF (JSVOUT.EQ.0) RETURN
       IF (NSVOBJ.EQ.0) RETURN

@@ -1,10 +1,12 @@
       SUBROUTINE REGENT(LESTB,ITRNIN)
       use htcal_mod
+      use multcm_mod
       use pden_mod
       use arrays_mod
       use arrays_mod, only: barkrat
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
       use plot_mod
       use varcom_mod
       use prgprm_mod
@@ -28,10 +30,6 @@ C  INCREMENT
 C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
-C
-      INCLUDE 'OUTCOM.F77'
-C
-      INCLUDE 'MULTCM.F77'
 C
       INCLUDE 'ESTCOR.F77'
 C

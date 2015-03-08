@@ -1,5 +1,6 @@
       SUBROUTINE FMDOUT (IYR)
       use contrl_mod
+      use metric_mod
       use plot_mod
       use arrays_mod
       use prgprm_mod
@@ -32,7 +33,6 @@ C.... COMMON INCLUDE FILES.
 
       INCLUDE 'FMCOM.F77'
       INCLUDE 'FMFCOM.F77'
-      INCLUDE 'METRIC.F77'
 
 C.... VARIABLE DECLARATIONS.
       REAL      TOTSNG(2), TOTLIV(2), TONREM, CONV, CONV2

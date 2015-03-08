@@ -1,9 +1,11 @@
       SUBROUTINE HTGF
       use htcal_mod
+      use multcm_mod
       use pden_mod
       use arrays_mod
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
       use plot_mod
       use prgprm_mod
       implicit none
@@ -20,10 +22,6 @@ C  CONSTANTS THAT NEED ONLY BE RESOLVED ONCE.
 C  CALLS ***FINDAG
 C----------
 COMMONS
-      INCLUDE 'OUTCOM.F77'
-C
-      INCLUDE 'MULTCM.F77'
-C
 C----------
       LOGICAL DEBUG
       INTEGER I,ISPC,I1,I2,I3,ITFN,J,K,IICR,L,IXAGE,KEYCR

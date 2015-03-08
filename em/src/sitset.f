@@ -1,5 +1,6 @@
       SUBROUTINE SITSET
       use contrl_mod
+      use volstd_mod
       use plot_mod
       use prgprm_mod
       implicit none
@@ -14,8 +15,6 @@ C BY KEYWORD.
 C----------
 COMMONS
       INCLUDE 'EMCOM.F77'
-C
-      INCLUDE 'VOLSTD.F77'
 C
 C----------
       LOGICAL DEBUG

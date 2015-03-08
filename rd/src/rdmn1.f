@@ -1,4 +1,5 @@
       SUBROUTINE RDMN1(INUM)
+      use outcom_mod
       use contrl_mod
       use arrays_mod
       use prgprm_mod
@@ -56,7 +57,6 @@ C
 C.... COMMON INCLUDE FILES
 C
       INCLUDE 'RDCOM.F77'
-      INCLUDE 'OUTCOM.F77'
 C
       LOGICAL  LGO, LTEE, DEBUG
       INTEGER  I, ICCY, IDI, II, IM, INUM, IS, KDT, MYACT(1)

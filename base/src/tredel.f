@@ -1,5 +1,6 @@
       SUBROUTINE TREDEL (IVACT,INDEX)
       use contrl_mod
+      use estree_mod
       use arrays_mod
       use prgprm_mod
       implicit none
@@ -23,8 +24,6 @@ C     AVAILABLE FOR FURTHER CALCULATIONS (SUCH AS SPMCDBH ON CUT TREES).
 C     GARY DIXON, MAY 1998.
 C
 C     NL CROOKSTON-FORESTRY SCIENCES LAB, MOSCOW, ID.-JUNE 1982.
-C
-      INCLUDE 'ESTREE.F77'
 C
       INTEGER INDEX(MAXTRE),IVACT,IV,IR,IVAC,IREC
 C

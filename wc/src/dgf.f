@@ -4,6 +4,7 @@
       use arrays_mod, only: barkrat
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
       use pden_mod
       use prgprm_mod
       implicit none
@@ -26,8 +27,6 @@ C     FROM PNW STATION DATE 04/19/10 ESM
 C----------
 COMMONS
       INCLUDE 'CALCOM.F77'
-C
-      INCLUDE 'OUTCOM.F77'
 C
 C  DIMENSIONS FOR INTERNAL VARIABLES.
 C

@@ -1,7 +1,9 @@
         SUBROUTINE VOLONT
-      use contrl_mod
       use plot_mod
       use arrays_mod
+      use contrl_mod
+      use volstd_mod
+      use metric_mod
       use prgprm_mod
       implicit none
 C
@@ -23,8 +25,6 @@ C
 C  THIS SUBROUTINE IS CALLED IF THE USER ENTERS METHOD 8 IN
 C  THE VOLUME KEYWORD.
 C
-      INCLUDE 'VOLSTD.F77'
-      INCLUDE 'METRIC.F77'
 
 COMMONS
 

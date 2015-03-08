@@ -1,4 +1,5 @@
       BLOCK DATA CUBRDS
+      use volstd_mod
       use prgprm_mod
       implicit none
 C----------
@@ -7,8 +8,6 @@ C----------
 C  DEFAULT PARAMETERS FOR THE CUBIC AND BOARD FOOT VOLUME EQUATIONS.
 C----------
 COMMONS
-      INCLUDE 'VOLSTD.F77'
-C
 C----------
 C SPECIES ORDER FOR TETONS VARIANT:
 C

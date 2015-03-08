@@ -1,5 +1,6 @@
       SUBROUTINE RDDOUT
       use contrl_mod
+      use metric_mod
       use plot_mod
       use arrays_mod
       use prgprm_mod
@@ -131,7 +132,6 @@ C.... Common include files.
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
       INCLUDE 'RDADD.F77'
-      INCLUDE 'METRIC.F77'
 
 C.... Dimension statements for local variables.
 

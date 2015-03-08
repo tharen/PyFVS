@@ -1,4 +1,5 @@
       SUBROUTINE BRTOUT
+      use outcom_mod
       use contrl_mod
       use plot_mod
       use arrays_mod
@@ -42,7 +43,6 @@ C**********************************************************************
 C.... Common include files.
 
       INCLUDE 'BRCOM.F77'
-      INCLUDE 'OUTCOM.F77'
 
 C.... Local variable declarations.
 C....    CNOCNK - char. rep. of tree canker status: no cankers

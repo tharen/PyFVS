@@ -1,8 +1,9 @@
       SUBROUTINE RDDAM (II,ICODES)
       use htcal_mod
-      use contrl_mod
       use plot_mod
       use arrays_mod
+      use estree_mod
+      use contrl_mod
       use prgprm_mod
       implicit none
 C----------
@@ -82,7 +83,6 @@ C.... Common include files.
 
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
-      INCLUDE 'ESTREE.F77'
       INCLUDE 'RDADD.F77'
 
 C.... Argument variable declarations.

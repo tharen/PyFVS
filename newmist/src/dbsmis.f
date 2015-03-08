@@ -834,10 +834,12 @@ C     RELEASE STATEMENT HANDLE
 C-------------------------------------------------------------------------------
 
       SUBROUTINE DBSMIS5(IYEAR,KODE)
-      use contrl_mod
-      use varcom_mod
       use plot_mod
       use arrays_mod
+      use workcm_mod
+      use estree_mod
+      use contrl_mod
+      use varcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -852,8 +854,6 @@ C                     ADDITION TO
 C
 C---
 
-      INCLUDE 'ESTREE.F77'
-      INCLUDE 'WORKCM.F77'
 	INCLUDE 'MISCOM.F77'
       INCLUDE 'DMCOM.F77'
       INCLUDE 'DBSCOM.F77'

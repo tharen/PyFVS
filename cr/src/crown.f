@@ -3,6 +3,7 @@
       use arrays_mod
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
       use pden_mod
       use varcom_mod
       use prgprm_mod
@@ -21,8 +22,6 @@ C  CROWN CHANGE FOR SMALL TREES IS CONTROLLED BY **REGENT**.
 C----------
 COMMONS
       INCLUDE  'GGCOM.F77'
-C
-      INCLUDE  'OUTCOM.F77'
 C
       REAL CRNMLT(MAXSP),DLOW(MAXSP),DHI(MAXSP),CRNEW(MAXTRE),PRM(5)
       INTEGER ICFLG(MAXSP),MYACTS(1)

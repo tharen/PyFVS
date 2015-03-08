@@ -1,4 +1,5 @@
       SUBROUTINE HVSEL
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -16,8 +17,6 @@ C
       INCLUDE 'PPHVCM.F77'
 C
       INCLUDE 'PPCNTL.F77'
-C
-      INCLUDE 'METRIC.F77'
 C
       INTEGER IRC,IHV,ICPRT,IST,II,IST1,N,JJ,I,IHVST
       REAL XC,CONTIG,PNEED,THNYLD,HRVYLD

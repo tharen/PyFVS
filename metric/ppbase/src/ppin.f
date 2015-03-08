@@ -1,5 +1,6 @@
       SUBROUTINE PPIN
       use contrl_mod
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -19,7 +20,6 @@ C
       INCLUDE 'PPHVCM.F77'
       INCLUDE 'HVDNCM.F77'
       INCLUDE 'PPCNTL.F77'
-      INCLUDE 'METRIC.F77'
 C
       INTEGER ISIZE
       PARAMETER (ISIZE=72)

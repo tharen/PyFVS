@@ -1,9 +1,10 @@
       SUBROUTINE SITSET
+      use plot_mod
       use esparm_mod
       use contrl_mod
-      use prgprm_mod
+      use volstd_mod
       use escomn_mod
-      use plot_mod
+      use prgprm_mod
       implicit none
 C----------
 C  **SITSET-- LS  DATE OF LAST REVISION:  05/11/11
@@ -12,8 +13,6 @@ C THIS SUBROUTINE LOADS THE SITELG ARRAY WITH A SITE INDEX FOR EACH
 C SPECIES WHICH WAS NOT ASSIGNED A SITE INDEX BY KEYWORD.
 C----------
 COMMONS
-      INCLUDE 'VOLSTD.F77'
-C
       LOGICAL DEBUG
       REAL SICOEF1(MAXSP,MAXSP),SICOEF2(MAXSP,MAXSP),BAMAXA(MAXSP)
       INTEGER J,I,JJ,K,METHB8,METHC8

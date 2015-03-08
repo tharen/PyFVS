@@ -1,7 +1,10 @@
       SUBROUTINE EVLDX (XLDREG,NXLDX,INSTR,IRC)
-      use contrl_mod
       use plot_mod
       use arrays_mod
+      use workcm_mod
+      use contrl_mod
+      use outcom_mod
+      use metric_mod
       use prgprm_mod
       implicit none
 C----------
@@ -21,11 +24,8 @@ C     IRC   = RETURN CODE, 0=OK, 1=VARIABLE IS CURRENTLY UNDEFINED,
 C             2=INSTRUCTION CODE COULD NOT BE DECIPHERED.
 C
       INCLUDE 'OPCOM.F77'
-      INCLUDE 'OUTCOM.F77'
       INCLUDE 'STDSTK.F77'
-      INCLUDE 'WORKCM.F77'
       INCLUDE 'SSTGMC.F77'
-      INCLUDE 'METRIC.F77'
 
 COMMONS
 

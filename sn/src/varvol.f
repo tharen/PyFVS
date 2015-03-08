@@ -1,5 +1,6 @@
         SUBROUTINE VARVOL
       use contrl_mod
+      use volstd_mod
       use plot_mod
       use arrays_mod
       use prgprm_mod
@@ -22,8 +23,6 @@ C
 C  THIS SUBROUTINE INCLUDES LOGIC FOR ALL REGION 8 VARIANTS -- SN, SE
 C
 C----------
-C
-      INCLUDE 'VOLSTD.F77'
 C
       INCLUDE 'SNCOM.F77'
 COMMONS

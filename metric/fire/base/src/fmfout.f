@@ -1,5 +1,6 @@
       SUBROUTINE FMFOUT(IYR, FLAME, FMD, IFIRE, CFTMP)
       use contrl_mod
+      use metric_mod
       use plot_mod
       use arrays_mod
       use prgprm_mod
@@ -45,7 +46,6 @@ C.... COMMON INCLUDE FILES.
 C
       INCLUDE 'FMCOM.F77'
       INCLUDE 'FMFCOM.F77'
-      INCLUDE 'METRIC.F77'
 
 C.... VARIABLE DECLARATIONS.
 C        note: if change MAXCL,must also change the formats 335,345!

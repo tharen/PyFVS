@@ -1,5 +1,6 @@
       SUBROUTINE SITSET
       use contrl_mod
+      use volstd_mod
       use plot_mod
       use prgprm_mod
       implicit none
@@ -14,8 +15,6 @@ C  WITHIN A VARIANT.
 C----------
 C
       INCLUDE 'CICOM.F77'
-C
-      INCLUDE 'VOLSTD.F77'
 C
 C----------
       CHARACTER FORST*2,DIST*2,PROD*2,VAR*2,VOLEQ*10

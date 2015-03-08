@@ -5,6 +5,7 @@
       use arrays_mod, only: barkrat
       use contrl_mod
       use coeffs_mod
+      use outcom_mod
       use prgprm_mod
       implicit none
 C----------
@@ -16,8 +17,6 @@ C     CVBROW STATISTICS, ESTABLISHIES NEW TREES, AND COMPUTES OTHER
 C     END-OF-CYCLE STATISTICS.
 C
 C     CALLED FROM: TREGRO AND PPMAIN
-C
-      INCLUDE 'OUTCOM.F77'
 C
       INCLUDE 'OPCOM.F77'
 C

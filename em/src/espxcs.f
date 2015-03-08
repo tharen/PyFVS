@@ -1,9 +1,10 @@
       SUBROUTINE ESPXCS
-      use esparm_mod
-      use prgprm_mod
-      use escomn_mod
-      use pden_mod
       use plot_mod
+      use esparm_mod
+      use eshap_mod
+      use pden_mod
+      use escomn_mod
+      use prgprm_mod
       implicit none
 C----------
 C  **ESPXCS--EM   DATE OF LAST REVISION:   03/26/09
@@ -12,8 +13,6 @@ C     PREDICT THE PROBABILITY OF EXCESS SPECIES
 C----------
 C
       INCLUDE 'ESCOM2.F77'
-C
-      INCLUDE 'ESHAP.F77'
 C
       INCLUDE 'ESHAP2.F77'
 C

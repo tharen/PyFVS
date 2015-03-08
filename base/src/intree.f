@@ -4,6 +4,7 @@
       use arrays_mod
       use arrays_mod, only: barkrat
       use contrl_mod
+      use estree_mod
       use prgprm_mod
       implicit none
 C----------
@@ -15,8 +16,6 @@ C             1 IF THEY ARE BEING READ.
 C
 C  THIS ROUTINE READS THE STAND TREE DATA AND SETS ALL VARIABLES
 C  WHICH ARE TREE RECORD SPECIFIC.
-C
-      INCLUDE 'ESTREE.F77'
 C
       INCLUDE 'STDSTK.F77'
 C
