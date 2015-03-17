@@ -1,4 +1,5 @@
       SUBROUTINE ESTAB (KDT)
+      use arrays_mod, only: barkrat
       IMPLICIT NONE
 C----------
 C STRP $ID$
@@ -70,6 +71,9 @@ C
       INTEGER KDT,NOFSPE,ITRNIN,I,N,IDUP,NTODO,ITODO,NN,J,ISER,II
       INTEGER MYDO,IZERO,NP,IACTK,IPYEAR,NCOUNT,ISTART,IEND,ITYPEP
       INTEGER IPOLD,NTIMES,IREP
+
+      real bratio
+
 C
       DATA CBLANK/'  '/,CPREP/'NONE','MECH','BURN','ROAD'/,CTOPO/
      &  'BOTM','LOWR',' MID','UPPR','RIDG'/,MYTYPE/9*1,2*5,2*2,3*3,4,
@@ -637,6 +641,9 @@ C
       IESTAT(ITRN)=0
       PTBALT(ITRN)=PTBAA(NNID)
       IDTREE(ITRN)=IDCMP1+ITMP+ITRN
+
+      barkrat(itrn) = bratio(isp(itrn),dbh(itrn),ht(itrn))
+
       CALL MISPUTZ(ITRN,0)
 C
 C     CALL BLISTER RUST TO PROCESS PLANTED TREES.

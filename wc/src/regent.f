@@ -215,6 +215,7 @@ C----------
       BARK=BARKRAT(I)
       IF(LSKIPH) THEN
         HTG(K)=0.0
+        DGR=0.0
         GO TO 4
       ENDIF
 C----------

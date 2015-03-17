@@ -103,7 +103,7 @@ elseif (CMAKE_GENERATOR MATCHES "Unix Makefiles")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
     add_definitions(-DANSI -DCMPgcc)
 
-# TODO: Add MSYS and Cygwin GNU toolchains
+# TODO: Cygwin GNU toolchains
 
 # MinGW-64
 #SET(PREFIX x86_64-w64-mingw32)
@@ -122,7 +122,7 @@ if (CMAKE_COMPILER_IS_GNUCC)
     message(STATUS "Add GCC compiler flags.")
 
     # BUILD_TYPE = Debug 
-    set (flags "-g -O0 -mfpmath=sse -msse -march=native -fcheck=all -Wall")
+    set (flags "-g -O0 -march=native -mfpmath=sse -msse -ffpe-trap=invalid,zero,underflow,overflow") #-fcheck=all -Wall")
     set (CMAKE_Fortran_FLAGS_DEBUG "${flags}")
     set (CMAKE_CXX_FLAGS_DEBUG "${flags}")
     set (CMAKE_C_FLAGS_DEBUG "${flags}")
