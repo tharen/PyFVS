@@ -122,7 +122,7 @@ if (CMAKE_COMPILER_IS_GNUCC)
     message(STATUS "Add GCC compiler flags.")
 
     # BUILD_TYPE = Debug 
-    set (flags "-g -O0 -march=native -mfpmath=sse -msse -ffpe-trap=invalid,zero,underflow,overflow") #-fcheck=all -Wall")
+    set (flags "-g -O0 -march=native -mfpmath=sse -msse -ffpe-trap=invalid,zero,underflow,overflow -fcheck=all -Wall")
     set (CMAKE_Fortran_FLAGS_DEBUG "${flags}")
     set (CMAKE_CXX_FLAGS_DEBUG "${flags}")
     set (CMAKE_C_FLAGS_DEBUG "${flags}")

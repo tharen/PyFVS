@@ -1,5 +1,4 @@
       SUBROUTINE ESTAB (KDT)
-      use arrays_mod, only: barkrat
       IMPLICIT NONE
 C----------
 C STRP $ID$
@@ -641,8 +640,6 @@ C
       IESTAT(ITRN)=0
       PTBALT(ITRN)=PTBAA(NNID)
       IDTREE(ITRN)=IDCMP1+ITMP+ITRN
-
-      barkrat(itrn) = bratio(isp(itrn),dbh(itrn),ht(itrn))
 
       CALL MISPUTZ(ITRN,0)
 C

@@ -1,5 +1,4 @@
       SUBROUTINE TRIPLE
-      use arrays_mod, only: barkrat
       IMPLICIT NONE
 C----------
 C  $Id$
@@ -59,7 +58,6 @@ C----------
       NCFDEF(ITFN)=NCFDEF(I)
       NBFDEF(ITFN)=NBFDEF(I)
       HT(ITFN)=HT(I)
-      BARKRAT(ITFN)=BARKRAT(I)
       OLDPCT(ITFN)=OLDPCT(I)
       PCT(ITFN)=PCT(I)
       PROB(ITFN)=PROB(I)*WEIGHT

@@ -1,5 +1,4 @@
       SUBROUTINE UPDATE
-      use arrays_mod, only: barkrat
       IMPLICIT NONE
 C----------
 C  $Id$
@@ -110,20 +109,13 @@ C----------
 C  UPDATE DIAMETERS TO END OF CYCLE VALUES.
 C----------
       IF (ITRN.EQ.0) THEN
-        BARKRAT(:)=0.0
         RETURN
       ENDIF
 
       DO 110 I=1,ITRN
       IS=ISP(I)
-!      DBH(I)=DBH(I)+DG(I)/BRATIO(IS,DBH(I),HT(I))
-      DBH(I)=DBH(I)+DG(I)/BARKRAT(I)
+      DBH(I)=DBH(I)+DG(I)/BRATIO(IS,DBH(I),HT(I))
   110 CONTINUE
-
-      ! Update the bark ratio array
-      do i=1,itrn
-        barkrat(i) = bratio(isp(i),dbh(i),ht(i))
-      enddo
 
       RETURN
       END

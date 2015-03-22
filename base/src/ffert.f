@@ -1,5 +1,4 @@
       SUBROUTINE FFERT
-      use arrays_mod, only: barkrat
       IMPLICIT NONE
 C----------
 C  $Id$
@@ -148,8 +147,7 @@ C
 C
       I = IND1(I3)
       D=DBH(I)
-!      BARKS=BRATIO(ISPC,D,HT(I))
-      BARKS=BARKRAT(I)
+      BARKS=BRATIO(ISPC,D,HT(I))
       IF (D .LE. 0.0) GOTO 35
 C
       BAL = (1.-(PCT(I)/100.))*BA

@@ -1,5 +1,4 @@
       SUBROUTINE INTREE (RECORD,IRDPLV,ISDSP,SDLO,SDHI,LKECHO)
-      use arrays_mod, only: barkrat
       IMPLICIT NONE
 C----------
 C  $Id$
@@ -462,8 +461,6 @@ C----------
       IF(IDG.EQ.1 .OR. IDG.EQ.3) PDBH(I)=DG(I)
       IF(IHTG.EQ.1 .OR. IHTG.EQ.3) PHT(I)=HTG(I)
 
-      BARKRAT(I)= BRATIO(ISP(I),DBH(I),HT(I))
-
 C----------
 C  STORE ALL DEAD TREES IN THE BOTTOM OF THE ARRAYS
 C  TREES WITH HISTORY CODES 6,7 ARE RECENT DEAD (GET IMC()=7)
@@ -481,7 +478,6 @@ C----------
       DBH(IREC2)= DBH(I)
       DG(IREC2)= DG(I)
       HT(IREC2)= HT(I)
-      BARKRAT(IREC2)= BRATIO(ISP(I),DBH(I),HT(I))
       ITRUNC(IREC2) = ITRUNC(I)
       NORMHT(IREC2) = NORMHT(I)
       ICR(IREC2)= ICR(I)
@@ -505,7 +501,6 @@ C----------
       DBH(I)=0.
       DG(I)=0.
       HT(I)=0.
-      BARKRAT(I)=0.
       ITRUNC(I)=0
       NORMHT(I)=0
       ICR(I)=0

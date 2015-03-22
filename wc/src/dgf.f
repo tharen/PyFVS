@@ -1,5 +1,4 @@
       SUBROUTINE DGF(DIAM)
-      use arrays_mod, only: barkrat
       IMPLICIT NONE
 C----------
 C  **DGF--WC    DATE OF LAST REVISION:  11/18/11
@@ -315,8 +314,7 @@ C  FUNCTION BOTTOMS OUT AT D=18. DECREASE LINERALY AFTER THAT TO
 C  DG=0 AT D=28, AND LIMIT TO .1 ON LOWER END.  GED 4-15-93.
 C----------
       IF(JSPC .EQ. 13) THEN
-!        BARK=BRATIO(22,D,HT(I))
-        BARK=BARKRAT(I)
+        BARK=BRATIO(22,D,HT(I))
         CONST=3.250531 - 0.003029*BA
         IF(D .LE. 18.) THEN
           DIAGR = CONST - 0.166496*D + 0.004618*D*D

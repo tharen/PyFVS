@@ -33,7 +33,6 @@
 ../api/variants/wc/cratet.f90
 ../api/variants/wc/htgf.f90
 ../api/comcup.f90
-../api/variants/wc/htgf.f90
 ../api/prtrls.f90
 ../api/fmcrbout.f90
 ../api/fmchrvout.f90

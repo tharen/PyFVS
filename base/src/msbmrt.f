@@ -1,5 +1,4 @@
       SUBROUTINE MSBMRT(EFFMRT,T2KILL,DLO,DHI,MFLAG,DEBUG)
-      use arrays_mod, only: barkrat
       IMPLICIT NONE
 C----------
 C  $Id$
@@ -69,8 +68,7 @@ C----------
       IF(MFLAG.EQ.1 .OR. MFLAG.EQ.3)THEN
         DO K=1,ITRN
         IJ=IND(K)
-!        BARK=BRATIO(ISP(IJ),DBH(IJ),HT(IJ))
-        BARK=BARKRAT(IJ)
+        BARK=BRATIO(ISP(IJ),DBH(IJ),HT(IJ))
         DBHEND=DBH(IJ)+(DG(IJ)/BARK)*(FINT/10.0)
         IF(DBHEND.GE.DLO .AND. DBHEND.LT.DHI)THEN
           XKILL=(PROB(IJ)-WK2(IJ))*EFFMRT
@@ -91,8 +89,7 @@ C----------
       ELSE
         DO K=ITRN,1,-1
         IJ=IND(K)
-!        BARK=BRATIO(ISP(IJ),DBH(IJ),HT(IJ))
-        BARK=BARKRAT(IJ)
+        BARK=BRATIO(ISP(IJ),DBH(IJ),HT(IJ))
         DBHEND=DBH(IJ)+(DG(IJ)/BARK)*(FINT/10.0)
         IF(DBHEND.GE.DLO .AND. DBHEND.LT.DHI)THEN
           XKILL=(PROB(IJ)-WK2(IJ))*EFFMRT
