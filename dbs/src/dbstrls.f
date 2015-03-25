@@ -1,7 +1,7 @@
       SUBROUTINE DBSTRLS(IWHO,KODE,TEM)
       IMPLICIT NONE
 C----------
-C $Id: dbstrls.f 1399 2015-01-09 00:44:58Z tod.haren $
+C $Id$
 C----------
 C     PURPOSE: TO OUTPUT THE TREELIST DATA TO THE DATABASE
 C

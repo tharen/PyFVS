@@ -1,7 +1,7 @@
       SUBROUTINE FMCANC (IYR,FMOIS,CFTMP,CANBURN,ROS,INTSTY,FCLS)
       IMPLICIT NONE
 C
-C  $Id: fmcanc.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C
 C----------
 C  **FMCANC FIRE-BC

@@ -1,7 +1,7 @@
       SUBROUTINE UPCASE (C)
       IMPLICIT NONE
 C----------
-C  $Id: upcase.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
       INTEGER IP
       CHARACTER C

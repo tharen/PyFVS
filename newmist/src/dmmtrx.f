@@ -1,7 +1,7 @@
       SUBROUTINE DMMTRX
       IMPLICIT NONE
 C----------
-C  $Id: dmmtrx.f 594 2013-03-08 21:36:18Z drobinsonessa@gmail.com $
+C  $Id$
 C--------------------------------------------------------------------
 C **DMMTRX -- NISI Date of last revision: April 9, 1994
 C--------------------------------------------------------------------

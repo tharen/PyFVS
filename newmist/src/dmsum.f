@@ -1,7 +1,7 @@
       SUBROUTINE DMSUM(DMTRCW, IDMSHP)
       IMPLICIT NONE
 C----------
-C  $Id: dmsum.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C **DMSUM --     DATE OF LAST REVISION:  02/23/96   
 C This code was adapted from the CVSUM subroutine of the COVER model.

@@ -1,5 +1,5 @@
 //
-// $Id: win_ccwf.h 767 2013-04-10 22:29:22Z rhavis@msn.com $
+// $Id$
 //
 
 /* Soil Type  Arguments...........                        */

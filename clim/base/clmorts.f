@@ -1,7 +1,7 @@
       SUBROUTINE CLMORTS
       IMPLICIT NONE
 C----------
-C  $Id: clmorts.f 1333 2014-10-23 17:49:02Z tod.haren $
+C  $Id$
 C----------
 C
 C     CLIMATE EXTENSION - COMPUTES CLIMATE-CAUSED MORTALITY

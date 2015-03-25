@@ -3,7 +3,7 @@
       use arrays_mod, only: barkrat
       IMPLICIT NONE
 C----------
-C  $Id: gradd.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     UPDATES TREE DESCRIPTIONS, COMPUTES END-OF-CYCLE SHRUB AND
@@ -96,7 +96,7 @@ C
 C
 C     CALL MISTLETOE SUBROUTINE
 C
-!      CALL MISTOE
+      CALL MISTOE
 C
 C     CALL **TMCOUP** IF THERE IS A TUSSOCK MOTH OUTBREAK THIS CYCLE.
 C

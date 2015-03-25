@@ -1,7 +1,7 @@
       SUBROUTINE DMNDMR
       IMPLICIT NONE
 C----------
-C  $Id: dmndmr.f 594 2013-03-08 21:36:18Z drobinsonessa@gmail.com $
+C  $Id$
 C----------
 C **DMNDMR -- NISI  Date of last revision: 04/06/04
 C----------------------------------------------------------------------

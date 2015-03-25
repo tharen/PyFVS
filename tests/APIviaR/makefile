@@ -1,5 +1,5 @@
 
-# $Id: makefile 469 2012-11-15 04:39:49Z ncrookston.fs@gmail.com $
+# $Id$
 
 all : Rapi
 

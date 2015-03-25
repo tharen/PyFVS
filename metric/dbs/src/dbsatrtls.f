@@ -1,7 +1,7 @@
       SUBROUTINE DBSATRTLS(IWHO,KODE,TEM)
       IMPLICIT NONE      
 C----------
-C  $Id: dbsatrtls.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C     PURPOSE: TO OUTPUT THE ATRTLIST DATA TO THE DATABASE
 C

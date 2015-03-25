@@ -1,7 +1,7 @@
       BLOCK DATA KEYWDS
       IMPLICIT NONE
 C----------
-C  $Id: keywds.f 1399 2015-01-09 00:44:58Z tod.haren $
+C  $Id$
 C----------
 C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.

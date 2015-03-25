@@ -1,6 +1,6 @@
       BLOCK DATA DBSBLKD
 C
-C $Id: dbsblkd.f 1399 2015-01-09 00:44:58Z tod.haren $
+C $Id$
 C
 C     INITIALIZE DATABASE VARIABLES
 C

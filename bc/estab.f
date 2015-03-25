@@ -1,7 +1,7 @@
       SUBROUTINE ESTAB (KDT)
       IMPLICIT NONE
 C----------
-C  $Id: estab.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 COMMONS
       INCLUDE 'PRGPRM.F77'

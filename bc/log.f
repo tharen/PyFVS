@@ -1,7 +1,7 @@
       SUBROUTINE LOG(IO,IZ,IM,DBH,HT,SH,TD,GOL,NL,VLOG,TDL,HLL,DBT,TVOL,
      1               GROS,BAR,HTRUNC)
 C----------
-C  $Id: log.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 CC         ***** V E R S I O N    # 4.1   F E B R U A R Y    1 9 9 4 *****

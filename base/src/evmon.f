@@ -1,7 +1,7 @@
       SUBROUTINE EVMON (IPH,IPPCL)
       IMPLICIT NONE
 C----------
-C  $Id: evmon.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     CALLED FROM TREGRO.

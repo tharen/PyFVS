@@ -1,7 +1,7 @@
       SUBROUTINE TREMOV (IREC1,IREC2)
       IMPLICIT NONE
 C----------
-C  $Id: tremov.f 1333 2014-10-23 17:49:02Z tod.haren $
+C  $Id$
 C----------
 C
 C      SWITCH THE TREES FROM POSITION IREC1 AND POSITION IREC2.

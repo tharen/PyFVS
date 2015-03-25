@@ -1,7 +1,7 @@
       SUBROUTINE DMFDNS (Sp, Ptr, Index, P, D)
       IMPLICIT NONE
 C----------
-C  $Id: dmfdns.f 594 2013-03-08 21:36:18Z drobinsonessa@gmail.com $
+C  $Id$
 C----------
 C **DMFDNS -- NISI  Date of last revision April 7 1994
 C--------------------------------------------------------------------

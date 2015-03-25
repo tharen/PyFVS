@@ -1,6 +1,6 @@
 CODE SEGMENT CLIMATE
 C----------
-C  $Id: CLIMATE.F77 341 2012-08-15 22:19:22Z ncrookston.fs@gmail.com $
+C  $Id$
 C----------     
       INTEGER    MXCLATTRS,MXCLYEARS
       PARAMETER (MXCLATTRS=130)

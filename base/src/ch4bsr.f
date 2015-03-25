@@ -1,7 +1,7 @@
       SUBROUTINE CH4BSR(N,A,IORD,F,IP)
       IMPLICIT NONE
 C----------
-C  $Id: ch4bsr.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     CHARACTER*4 KEYED BINARY SEARCH

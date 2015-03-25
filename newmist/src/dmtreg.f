@@ -1,7 +1,7 @@
       SUBROUTINE DMTREG
       IMPLICIT NONE
 C----------
-C  $Id: dmtreg.f 594 2013-03-08 21:36:18Z drobinsonessa@gmail.com $
+C  $Id$
 C----------
 C **DMTREG -- NISI  Date of last revision: 12/20/03
 C--------------------------------------------------------------------

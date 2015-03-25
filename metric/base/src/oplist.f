@@ -1,7 +1,7 @@
       SUBROUTINE OPLIST (LFIRST,NPLT,MGMID,ITITLE)
       IMPLICIT NONE
 C----------
-C  $Id: oplist.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     OPTION PROCESSING ROUTINE - NL CROOKSTON - JAN 1981 - MOSCOW

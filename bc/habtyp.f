@@ -1,7 +1,7 @@
       SUBROUTINE HABTYP (KARD2,ARRAY2)
       IMPLICIT NONE
 C----------
-C  $Id: habtyp.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     TRANSLATES BEC STRINGS INTO VARIOUS USEFUL FORMATS;

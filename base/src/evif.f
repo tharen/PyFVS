@@ -2,7 +2,7 @@
      >                 KARD,JOSTND,LDEBUG,LKECHO)
       IMPLICIT NONE
 C----------
-C  $Id: evif.f 1046 2013-09-16 20:00:33Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     COMPILES AND STORES THE IF EXPRESSION.

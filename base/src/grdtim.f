@@ -1,7 +1,7 @@
       SUBROUTINE GRDTIM (DAT,TIM)
       IMPLICIT NONE
 C----------
-C  $Id: grdtim.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     THE TIME AND DATE STAMPS FOR THE PROGNOSIS HEADING.

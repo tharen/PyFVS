@@ -2,7 +2,7 @@
      >                  LEN,MGMID,NPLT,SAMWT,ITITLE,IPTINV)
       IMPLICIT NONE
 C----------
-C  $Id: sumout.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     WRITES SUMMARY OUTPUT.

@@ -1,7 +1,7 @@
       SUBROUTINE SVRMOV (REMOVE,ISWTCH,SSNG,DSNG,CTCRWN,ICURYEAR)
       IMPLICIT NONE
 C----------
-C  $Id: svrmov.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     STAND VISUALIZATION GENERATION

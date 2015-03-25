@@ -1,5 +1,5 @@
 //----------
-//  $Id: nrutilcpp.h 767 2013-04-10 22:29:22Z rhavis@msn.com $
+//  $Id$
 //----------
 #ifndef _NR_UTILS_H_
 #define _NR_UTILS_H_

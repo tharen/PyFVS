@@ -1,7 +1,7 @@
       FUNCTION CMRANG (LEN,INDX,ARR)
       IMPLICIT NONE
 C----------
-C  $Id: cmrang.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     FINDS THE MAX RANGE, CMRANG, OF THE VECTOR ARR.  ONLY THE

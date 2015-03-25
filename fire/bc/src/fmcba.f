@@ -1,7 +1,7 @@
       SUBROUTINE FMCBA (IYR,ISWTCH)
       IMPLICIT NONE
 C
-C  $Id: fmcba.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C
 C----------
 C  **FMCBA   FIRE-BC

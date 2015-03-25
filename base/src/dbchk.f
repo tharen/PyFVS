@@ -1,7 +1,7 @@
       SUBROUTINE DBCHK (LDEBG,SUBIN,NC,ICYC)
       IMPLICIT NONE
 C----------
-C  $Id: dbchk.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     CALLED TO FIND OUT IF 'SUBIN' IS BEING DEBUGED DURING CYCLE

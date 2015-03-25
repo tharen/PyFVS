@@ -1,7 +1,7 @@
       SUBROUTINE LBSPLW (JOSTND)
       IMPLICIT NONE
 C----------
-C  $Id: lbsplw.f 968 2013-07-12 18:49:16Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     WRITE THE STAND POLICY LABEL SET ON DATA SET JOSTND

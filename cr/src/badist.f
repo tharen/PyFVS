@@ -1,7 +1,7 @@
       SUBROUTINE BADIST(DEBUG)
       IMPLICIT NONE
 C----------
-C CR $Id: badist.f 968 2013-07-12 18:49:16Z rhavis@msn.com $
+C CR $Id$
 C----------
 C
 C COMMONS

@@ -2,7 +2,7 @@
      >                   ARRAY,KARD)
       IMPLICIT NONE
 C----------
-C  $Id: keyopn.f 968 2013-07-12 18:49:16Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     PROCESSES THE OPEN KEYWORD.

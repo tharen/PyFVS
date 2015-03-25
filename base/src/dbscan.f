@@ -1,7 +1,7 @@
       SUBROUTINE DBSCAN (LDEBG,SUBIN,NC,ICYC)
       IMPLICIT NONE
 C----------
-C  $Id: dbscan.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C

@@ -1,7 +1,7 @@
       SUBROUTINE SUMHED
       IMPLICIT NONE
 C----------
-C  $Id: sumhed.f 968 2013-07-12 18:49:16Z rhavis@msn.com $
+C  $Id$
 C----------
 C  THIS SUBROUTINE WRITES A HEADER FOR THE SUMMARY OUTPUT ON THE
 C  SCREEN.

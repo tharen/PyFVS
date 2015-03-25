@@ -1,7 +1,7 @@
       SUBROUTINE LBINTR (LEN1,SET1,LEN2,SET2,LNINTR,INTRST,KODE)
       IMPLICIT NONE
 C----------
-C  $Id: lbintr.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     SET INTERSECTION OPERATION

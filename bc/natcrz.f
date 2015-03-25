@@ -1,7 +1,7 @@
       SUBROUTINE NATCRZ (IWHO)
       IMPLICIT NONE
 C----------
-C  $Id: natcrz.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     CREATE A FILE FOR PROCESSING THROUGH THE NATIONAL CRUISE SYSTEM

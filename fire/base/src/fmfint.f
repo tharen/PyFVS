@@ -1,7 +1,7 @@
       SUBROUTINE FMFINT (IYR, BYRAM, FLAME, FTYP, HPA, ICALL)
       IMPLICIT NONE
 C----------
-C  $Id: fmfint.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 *     CALLED FROM FMBURN
 *                 FMPOFL

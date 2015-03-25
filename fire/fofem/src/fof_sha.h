@@ -1,5 +1,5 @@
 //
-// $Id: fof_sha.h 767 2013-04-10 22:29:22Z rhavis@msn.com $
+// $Id$
 //
 
 #define  e_SHA_Init  -999               /* Init Value                        */

@@ -1,7 +1,7 @@
       SUBROUTINE FMKILL(ICALL)
       IMPLICIT NONE
 C----------
-C  $Id: fmkill.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C     SINGLE-STAND VERSION
 C

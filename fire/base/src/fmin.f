@@ -1,7 +1,7 @@
       SUBROUTINE FMIN (ICALL,NSP,LKECHO)
       IMPLICIT NONE
 C----------
-C  FIRE $Id: fmin.f 1399 2015-01-09 00:44:58Z tod.haren $
+C  FIRE $Id$
 C----------
 C
 C     FIRE - FIRE & SNAG MODEL

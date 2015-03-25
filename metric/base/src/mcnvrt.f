@@ -1,7 +1,7 @@
       SUBROUTINE MCNVRT(IKEY,JD,X)
       IMPLICIT NONE
 C----------
-C  $Id: mcnvrt.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C     
 C     PURPOSE: RETURNS A VECTOR 'X(NP)' OF CONVERSION FACTORS TO BE USED

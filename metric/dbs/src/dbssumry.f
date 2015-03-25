@@ -4,7 +4,7 @@
      -  IFORTP,ISZCL,ISTCL)
       IMPLICIT NONE      
 C----------
-C  $Id: dbssumry.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C     PURPOSE: TO POPULATE A DATABASE WITH THE PROGNOSIS MODEL
 C              OUTPUT.

@@ -1,7 +1,7 @@
       SUBROUTINE SVCMP3
       IMPLICIT NONE
 C----------
-C  $Id: svcmp3.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     STAND VISUALIZATION GENERATION

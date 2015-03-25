@@ -1,6 +1,6 @@
       SUBROUTINE DBSCKNROWS(IRCODE,TABLENAME,NRESERV,ISEXCEL)
 C
-C $Id: dbscknrows.f 1399 2015-01-09 00:44:58Z tod.haren $
+C $Id$
 C
 C     PURPOSE: SEE IF THE NUMBER OF ROWS ON AN OUTPUT DATABASE
 C              IS TOO LARGE FOR EXCEL...OR EVEN IF THE DATA BASE 
@@ -50,9 +50,11 @@ C     IF IT DOESNT THEN WE NEED TO CREATE IT
           if (IRCNT .GE. 65535-NRESERV) then
             IRCODE = 2
             iRet = fvsSQLFreeHandle(SQL_HANDLE_STMT, StmtHndlOut)
+            return
           endif
         endif
       endif
+      iRet = fvsSQLCloseCursor(StmtHndlOut)
       return
       end
  

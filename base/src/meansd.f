@@ -1,7 +1,7 @@
       SUBROUTINE MEANSD (A,N,ABAR,VAR,STD)
       IMPLICIT NONE
 C----------
-C  $Id: meansd.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     COMPUTE THE MEAN AND STANDARD DEVIATION OF A REAL VECTOR.

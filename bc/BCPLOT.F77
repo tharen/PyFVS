@@ -1,6 +1,6 @@
 CODE SEGMENT BCPLOT
 C----------
-C  $Id: BCPLOT.F77 874 2013-05-16 19:44:36Z drobinsonessa@gmail.com $
+C  $Id$
 C----------
 C  DEFINITIONS OF VARIABLES IN 'BCPLOT' COMMON BLOCK:
 C----------

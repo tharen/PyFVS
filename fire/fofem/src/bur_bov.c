@@ -1,5 +1,5 @@
 //
-// $Id: bur_bov.c 767 2013-04-10 22:29:22Z rhavis@msn.com $
+// $Id$
 //
 /*{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}{*}
 * Name: bur_BOV.c     Burnups Output Values  Structure & Time Heat values

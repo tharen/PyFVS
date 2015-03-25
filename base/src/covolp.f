@@ -1,7 +1,7 @@
       SUBROUTINE COVOLP (DEBUG,JOSTND,NTREES,INDEX,CRAREA,COVER)
       IMPLICIT NONE
 C----------
-C  $Id: covolp.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     N.L.CROOKSTON - RMRS MOSCOW - OCTOBER 1997

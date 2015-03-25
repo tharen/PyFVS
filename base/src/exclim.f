@@ -1,7 +1,7 @@
       SUBROUTINE EXCLIM
       IMPLICIT NONE
 C----------
-C  $Id: exclim.f 1127 2013-12-16 20:06:44Z tod.haren $
+C  $Id$
 C----------
 C
 C     EXTRA EXTERNAL REFERENCES FOR CLIMATE EXTENSION CALLS

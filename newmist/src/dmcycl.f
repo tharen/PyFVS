@@ -1,7 +1,7 @@
       SUBROUTINE DMCYCL
       IMPLICIT NONE
 C----------
-C  $Id: dmcycl.f 799 2013-04-26 16:09:19Z drobinsonessa@gmail.com $
+C  $Id$
 C----------
 C **DMCYCL -- NISI  Date of last revision April 7 1994
 C----------------------------------------------------------------------

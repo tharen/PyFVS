@@ -2,7 +2,7 @@
      >                   ISIZE,KODE,DEBUG,IOUT)
       IMPLICIT NONE
 C----------
-C  $Id: fndkey.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C    FUNCTION TO FIND A KEYWORD IN A TABLE.
 C

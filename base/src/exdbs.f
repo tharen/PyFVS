@@ -1,7 +1,7 @@
       SUBROUTINE EXDBS
       IMPLICIT NONE
 C----------
-C  $Id: exdbs.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C  EXTERNAL REFERENCES FOR THE DATA BASE CONNECTION CODE.
 C----------

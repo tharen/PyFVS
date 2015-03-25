@@ -1,7 +1,7 @@
       SUBROUTINE CLMAXDEN (SDIDEF,XMAX) 
       IMPLICIT NONE
 C----------
-C  $Id: clmaxden.f 1127 2013-12-16 20:06:44Z tod.haren $
+C  $Id$
 C----------
 C
 C     CLIMATE EXTENSION 

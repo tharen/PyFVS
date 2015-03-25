@@ -1,7 +1,7 @@
       LOGICAL FUNCTION FMCHKFWT(I2)
       IMPLICIT NONE
 C----------
-C  $Id: fmchkfwt.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C     CALLED FROM: FMDYN, FMCFMD (WS,NC,IC)
 C

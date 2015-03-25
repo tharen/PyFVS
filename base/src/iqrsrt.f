@@ -1,7 +1,7 @@
       SUBROUTINE IQRSRT(LIST,N)
       IMPLICIT NONE
 C----------
-C  $Id: iqrsrt.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     THIS ASCENDING SORT IS AN FORTRAN ADAPTATION OF THE SORT

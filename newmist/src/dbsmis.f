@@ -3,7 +3,7 @@
      -  KODE)
       IMPLICIT NONE
 C--------
-C  $Id: dbsmis.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C  **DBSMIS1--DBS  DATE OF LAST REVISION:  08/31/04
 C----------

@@ -1,7 +1,7 @@
       SUBROUTINE DMFINF (Ptr, Index)
       IMPLICIT NONE
 C----------
-C  $Id: dmfinf.f 594 2013-03-08 21:36:18Z drobinsonessa@gmail.com $
+C  $Id$
 C----------
 C **DMFINF --  DATE OF LAST REVISION: 02/16/96 
 C----------

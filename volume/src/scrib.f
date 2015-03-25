@@ -205,8 +205,6 @@ C************************************************************
       REAL LOGVOL 
       REAL SEDIAM !small end diameter
       INTEGER LOGSEG,IRNDVOL,JJJ,J
-!      INTEGER J
-!      REAL LOGSEG
       
       !if diameter inside bark is lt 4 there is no bd ft volume
       IF(DIB .LT. 4.0) THEN
@@ -216,7 +214,6 @@ C************************************************************
       
       LOGVOL = 0.0
       !calculate the number of 4'segments in the passed in log
-!      LOGSEG = INT(LENGTH/4.0)
       LOGSEG = INT(LENGTH * 0.25)
       
       !get the leftover piece .25, .5 or .75% of 4' piece

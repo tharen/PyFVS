@@ -1,7 +1,7 @@
       SUBROUTINE GRINIT
       IMPLICIT NONE
 C----------
-C WC $Id: grinit.f 1399 2015-01-09 00:44:58Z tod.haren $
+C WC $Id$
 C----------
 C
 C  INITIALIZE PROGNOSIS MODEL VARIABLES

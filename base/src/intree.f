@@ -2,7 +2,7 @@
       use arrays_mod, only: barkrat
       IMPLICIT NONE
 C----------
-C  $Id: intree.f 1127 2013-12-16 20:06:44Z tod.haren $
+C  $Id$
 C----------
 C
 C     IRDPLV= 0 IF PLOT SPECIFIC SITE VARIABLES ARE NOT BEING READ,

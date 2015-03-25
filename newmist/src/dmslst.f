@@ -1,7 +1,7 @@
       SUBROUTINE DMSLST (DMRCls, n, SInd, SCD, SPtr, SLst)
       IMPLICIT NONE
 C----------
-C  $Id: dmslst.f 594 2013-03-08 21:36:18Z drobinsonessa@gmail.com $
+C  $Id$
 C----------
 C **DMSLST -- NISI  Date of last revision: April 14 1994 
 C--------------------------------------------------------------------

@@ -1,6 +1,6 @@
       SUBROUTINE CLHAB(MAT, LOK)
 C----------
-C  $Id: clhab.f 799 2013-04-26 16:09:19Z drobinsonessa@gmail.com $
+C  $Id$
 C----------
 C
 C     CLIMATE EXTENSION -- ASSIGNS DEFAULT MEAN ANNUAL TEMPERATURE BASED

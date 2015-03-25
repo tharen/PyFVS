@@ -1,10 +1,9 @@
       PROGRAM MAIN
       IMPLICIT NONE
 C----------
-C  $Id: main.f 1399 2015-01-09 00:44:58Z tod.haren $
+C  $Id$
 C----------
       INTEGER rtnCode,lenCL,i
-
 C
 C     PROCSS THE COMMAND LINE. Passing an empty string signals that the 
 C     real command line arguments will be fetched.
@@ -24,7 +23,7 @@ C     RUN ALL THE CYCLES and STANDS--unless there is a stop point!
    
       call fvsGetICCode(i)
 
-      IF (i .EQ. 0) STOP
+      IF (i .EQ. 0) STOP	
 
       GO TO (11,12,13,14,15), i 
    11 CONTINUE

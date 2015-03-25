@@ -1,7 +1,7 @@
       SUBROUTINE FMGFMV(IYR, IFMD)
       IMPLICIT NONE
 C----------
-C  $Id: fmgfmv.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 *  PURPOSE:
 *     THIS SUBROUTINE LOADS THE FUEL MODEL PARAMETER VALUES FOR

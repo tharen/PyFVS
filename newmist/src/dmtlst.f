@@ -1,7 +1,7 @@
       SUBROUTINE DMTLST (Sp, tDMR, Ptr, Index, P, TLst)
       IMPLICIT NONE
 C----------
-C  $Id: dmtlst.f 594 2013-03-08 21:36:18Z drobinsonessa@gmail.com $
+C  $Id$
 C----------
 C  **DMTLST -- NISI  Date of last revision April 16 1994
 C--------------------------------------------------------------------

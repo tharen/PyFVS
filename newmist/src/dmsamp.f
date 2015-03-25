@@ -1,7 +1,7 @@
       SUBROUTINE DMSAMP (TotD, D, CNB, Prop, S)
       IMPLICIT NONE
 C----------
-C  $Id: dmsamp.f 594 2013-03-08 21:36:18Z drobinsonessa@gmail.com $
+C  $Id$
 C----------
 C **DMSAMP -- NISI  Date of last revision: April 12 1994 
 C----------------------------------------------------------------------

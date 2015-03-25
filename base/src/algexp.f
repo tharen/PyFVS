@@ -2,7 +2,7 @@
      >                   IRECNT,IREAD,JOSTND,IRC)
       IMPLICIT NONE
 C----------
-C  $Id: algexp.f 968 2013-07-12 18:49:16Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     CALLED FROM EVUSRV, HVIN, AND PPUSRV (AND PERHAPS OTHER PLACES).

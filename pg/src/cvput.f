@@ -1,7 +1,7 @@
       SUBROUTINE CVPUT (WK3, IPNT, ILIMIT, ICYC, ITRN)
       IMPLICIT NONE
 C----------
-C  $Id: cvput.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     STORE THE COVER DATA FOR A GIVEN STAND.

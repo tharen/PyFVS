@@ -1,7 +1,7 @@
       SUBROUTINE EXMPB
       IMPLICIT NONE
 C----------
-C  $Id: exmpb.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     EXTRA EXTERNAL REFERENCES FOR MPB CALLS

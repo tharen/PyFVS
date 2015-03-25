@@ -1,7 +1,7 @@
       SUBROUTINE SVCROL (X1,Y1,R1,X2,Y2,R2,KODE)
       IMPLICIT NONE
 C----------
-C  $Id: svcrol.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     STAND VISUALIZATION GENERATION

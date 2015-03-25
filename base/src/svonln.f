@@ -1,7 +1,7 @@
       SUBROUTINE SVONLN (X,Y,X1,Y1,X2,Y2,KODE)
       IMPLICIT NONE
 C----------
-C  $Id: svonln.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     STAND VISUALIZATION GENERATION

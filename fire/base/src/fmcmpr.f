@@ -1,7 +1,7 @@
       SUBROUTINE FMCMPR (NCLAS)
       IMPLICIT NONE
 C----------
-C  $Id: fmcmpr.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C  THIS SUBROUTINE IS USED TO COMPRESS THE TREE RECORDS ARRAYS FOR

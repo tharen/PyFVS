@@ -1,7 +1,7 @@
       SUBROUTINE MISTOE
       IMPLICIT NONE
 C----------
-C  $Id: mistoe.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 *  **MISTOE--MS  Date of last revision:  03/10/05
 *----------------------------------------------------------------------

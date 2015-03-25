@@ -1,7 +1,7 @@
       LOGICAL FUNCTION LBMEMR (LENMEM,MEM,LENSET,SET)
       IMPLICIT NONE
 C----------
-C  $Id: lbmemr.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     TRUE IF MEM IS A MEMBER OF SET, FALSE OTHERWISE.

@@ -1,7 +1,7 @@
       SUBROUTINE EIGEN(A,R,N,MV)
       IMPLICIT NONE
 C----------
-C  $Id: eigen.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     FROM: SYSTEM/360 SCIENTIFIC SUBROUTINE PACKAGE VERSION III

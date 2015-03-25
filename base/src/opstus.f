@@ -2,7 +2,7 @@
      >                  NTIMES,IDT,NPRMS,ISTAT,KODE)
       IMPLICIT NONE
 C----------
-C  $Id: opstus.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     OPSTUS IS USED TO CHECK THE STATUS OF AN ACTIVITY.  THE

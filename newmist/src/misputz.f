@@ -1,7 +1,7 @@
       SUBROUTINE MISPUTZ(ITREE,IDMR)
       IMPLICIT NONE
 C----------
-C  $Id: misputz.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 *  **MISPUTZ--MS  Date of last revision:  03/06/01
 *----------------------------------------------------------------------

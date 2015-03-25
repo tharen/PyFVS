@@ -1,7 +1,7 @@
       SUBROUTINE SVSNAD(IYEAR,ISNADD,NSNGS,ISWTCH)
       IMPLICIT NONE
 C----------
-C  $Id: svsnad.f 803 2013-04-26 18:20:32Z drobinsonessa@gmail.com $
+C  $Id$
 C----------
 C
 C     STAND VISUALIZATION GENERATION

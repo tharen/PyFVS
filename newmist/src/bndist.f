@@ -1,7 +1,7 @@
       SUBROUTINE BNDIST(M, V, err, UBound, PDF, End) 
       IMPLICIT NONE
 C----------
-C  $Id: bndist.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C **BNDIST -- NISI  Date of last revision: April 15 1994 
 C--------------------------------------------------------------------

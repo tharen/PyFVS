@@ -1,7 +1,7 @@
       SUBROUTINE EVMKV(CTOK)
       IMPLICIT NONE
 C----------
-C  $Id: evmkv.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     CREATES A NEW VARIABLE, IF IT CAN!

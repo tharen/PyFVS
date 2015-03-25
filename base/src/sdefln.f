@@ -1,7 +1,7 @@
       SUBROUTINE SDEFLN (LNOTBK,ARRAY,KEYWRD,B0,B1,KARD,IS)
       IMPLICIT NONE
 C----------
-C  $Id: sdefln.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 COMMONS
 C

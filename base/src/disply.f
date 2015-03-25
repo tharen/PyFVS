@@ -2,7 +2,7 @@
       use contrl_mod, only: nofortype
       IMPLICIT NONE
 C----------
-C  $Id: disply.f 1048 2013-09-18 14:42:04Z rhavis@msn.com $
+C  $Id$
 C----------
 C  **DISPLY** PRINTS STAND AND TREE STATISTICS AT THE BEGINNING
 C  OF THE PROJECTION, AND AT THE END OF EACH CYCLE.  ESTIMATES

@@ -1,7 +1,7 @@
       SUBROUTINE FMSVFL (NOUT)
       IMPLICIT NONE
 C----------
-C  $Id: fmsvfl.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C     FIRE MODEL STAND VISUALIZATION GENERATION
 C     N.L.CROOKSTON -- RMRS MOSCOW -- JANUARY 2000

@@ -1,7 +1,7 @@
       SUBROUTINE FMCROWW (SPI,D,H,ITRNC,IC,HP,SG,XV)
       IMPLICIT NONE
 C----------
-C  $Id: fmcroww.f 1127 2013-12-16 20:06:44Z tod.haren $
+C  $Id$
 C----------
 C     CALLED FROM: FMCROW
 

@@ -1,7 +1,7 @@
       SUBROUTINE BCSPP(VARNAME, SPKODE, INDX)
       IMPLICIT NONE
 C----------
-C  $Id: bcspp.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     PURPOSE: TAKES TREELIST FILE SPECIES CODE AS INPUT, AND RETURNS

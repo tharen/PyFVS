@@ -1,7 +1,7 @@
       SUBROUTINE MISIN0
       IMPLICIT NONE
 C----------
-C  $Id: misin0.f 799 2013-04-26 16:09:19Z drobinsonessa@gmail.com $
+C  $Id$
 C----------
 *  **MISIN0--    Date of last revision:  04/01/11
 *                Spatial model

@@ -1,7 +1,7 @@
       SUBROUTINE SVLSOL (XJ1,XJ2,XK1,XK2,XS,KODE)
       IMPLICIT NONE
 C----------
-C  $Id: svlsol.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     STAND VISUALIZATION GENERATION

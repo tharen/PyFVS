@@ -1,7 +1,7 @@
       SUBROUTINE DMNB (RQ, D, CNB)
       IMPLICIT NONE
 C----------
-C  $Id: dmnb.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C **DMNB -- NISI  Date of last revision: 12/19/03
 C----------------------------------------------------------------------

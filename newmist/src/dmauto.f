@@ -1,7 +1,7 @@
       SUBROUTINE DMAUTO (TrgDMR, RQ, D, S)
       IMPLICIT NONE
 C----------
-C  $Id: dmauto.f 594 2013-03-08 21:36:18Z drobinsonessa@gmail.com $
+C  $Id$
 C----------
 C **DMAUTO -- NISI  Date of last revision: April 7 1994 
 C--------------------------------------------------------------------

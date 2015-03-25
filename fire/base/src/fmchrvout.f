@@ -1,7 +1,7 @@
       SUBROUTINE FMCHRVOUT (IYR)
       IMPLICIT NONE
 C----------
-C  $Id: fmchrvout.f 1333 2014-10-23 17:49:02Z tod.haren $
+C  $Id$
 C----------
 *     SINGLE-STAND VERSION
 *     CALLED FROM: FMMAIN

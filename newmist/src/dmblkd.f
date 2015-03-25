@@ -1,7 +1,7 @@
       BLOCK DATA DMBLKD
       IMPLICIT NONE
 C----------
-C  $Id: dmblkd.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C  **DMBLKD  DATE OF LAST REVISION:  02/15/96
 C----------

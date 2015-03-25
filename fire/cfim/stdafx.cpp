@@ -1,5 +1,5 @@
 //----------
-//  $Id: stdafx.cpp 767 2013-04-10 22:29:22Z rhavis@msn.com $
+//  $Id$
 //----------
 // stdafx.cpp : source file that includes just the standard includes
 // cfim.pch will be the pre-compiled header

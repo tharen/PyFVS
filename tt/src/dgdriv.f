@@ -1,7 +1,7 @@
       SUBROUTINE DGDRIV
       IMPLICIT NONE
 C----------
-C TT $Id: dgdriv.f 1399 2015-01-09 00:44:58Z tod.haren $
+C TT $Id$
 C----------
 C  THIS SUBROUTINE SERVES TWO PURPOSES:
 C

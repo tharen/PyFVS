@@ -2,7 +2,7 @@
       use arrays_mod, only: barkrat
       IMPLICIT NONE
 C----------
-C WC $Id: dgdriv.f 1399 2015-01-09 00:44:58Z tod.haren $
+C WC $Id$
 C----------
 C  THIS SUBROUTINE SERVES TWO PURPOSES:
 C

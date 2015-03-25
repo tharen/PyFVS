@@ -1,7 +1,7 @@
       SUBROUTINE RANN(SEL)
       IMPLICIT NONE
 C----------
-C  $Id: rann.f 1380 2014-12-06 00:47:57Z tod.haren $
+C  $Id$
 C----------
 C
 C     THIS RANDOM NUMBER GENERATED WAS MODIFIED FROM THE ALGORTHM

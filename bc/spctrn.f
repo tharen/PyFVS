@@ -1,7 +1,7 @@
       SUBROUTINE SPCTRN (SPCIN, ISPC1)
       IMPLICIT NONE
 C----------
-C  $Id: spctrn.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C     PURPOSE:
 C     TAKES TREELIST FILE UPPER CASE SPECIES CODE AS INPUT AND RETURNS

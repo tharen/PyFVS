@@ -1,7 +1,7 @@
       SUBROUTINE FMPRUN(CTCRWN)
       IMPLICIT NONE
 C----------
-C  $Id: fmprun.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     PART OF THE FIRE MODEL EXTENSION.

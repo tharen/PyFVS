@@ -1,8 +1,8 @@
       SUBROUTINE FMUSRFM (IYR, FMD)
       IMPLICIT NONE
 C----------
-C  $Id: fmusrfm.f 1333 2014-10-23 17:49:02Z tod.haren $
-C  $Id: fmusrfm.f 1333 2014-10-23 17:49:02Z tod.haren $
+C  $Id$
+C  $Id$
 C----------
 C     PROCESSES THE FUELMODL KEYWORD AND THE FUELTRET KEYWORD.
 C

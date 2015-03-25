@@ -1,7 +1,7 @@
       SUBROUTINE DAMPRO
       IMPLICIT NONE
 C----------
-C  $Id: dampro.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C  THIS SUBROUTINE CONTROLS THE PROCESSING DAMAGE AND SEVERITY CODES 

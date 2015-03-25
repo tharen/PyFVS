@@ -1,7 +1,7 @@
       REAL FUNCTION CLCWD(Q10,REF)
       IMPLICIT NONE
 C----------
-C  $Id: clcwd.f 933 2013-06-11 15:19:27Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     CLIMATE EXTENSION -- COMPUTES MAT_BASED DECAY MODIFIER BASED ON HABITAT

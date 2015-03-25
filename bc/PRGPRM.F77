@@ -1,6 +1,6 @@
 CODE SEGMENT PRGPRM
 C----------
-C  $Id: PRGPRM.F77 799 2013-04-26 16:09:19Z drobinsonessa@gmail.com $
+C  $Id$
 C----------
 C
 C     PARAMETERS FOR THE PROGNOSIS MODEL ARE:

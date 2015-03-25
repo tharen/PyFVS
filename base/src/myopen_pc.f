@@ -2,7 +2,7 @@
      >                   ICNTRL,KODE)
       IMPLICIT NONE
 C----------
-C  $Id: myopen_pc.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     THIS ROUTINE CONTAINS MACHINE-DEPENDENT FILE OPEN COMMANDS

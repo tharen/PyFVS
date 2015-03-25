@@ -1,7 +1,7 @@
       SUBROUTINE FORKOD
       IMPLICIT NONE
 C----------
-C  $Id: forkod.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     DUMMY ENTRY POINT; KODFOR NOT USED BY SEI VARIANT

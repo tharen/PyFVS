@@ -1,7 +1,7 @@
       SUBROUTINE FMCFIM (IYR, FMD, UWIND, IBYRAM, FLAMEHT, CANBURN, ROS)
       IMPLICIT NONE
 C
-C  $Id: fmcfim.f 1333 2014-10-23 17:49:02Z tod.haren $
+C  $Id$
 C
 C----------
 C  **FMCFIM  FIRE-BC

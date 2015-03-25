@@ -2,7 +2,7 @@
      -                   LKECHO,KODE)
       IMPLICIT NONE
 C
-C $Id: dbsopen.f 1399 2015-01-09 00:44:58Z tod.haren $
+C $Id$
 C
 C     PURPOSE: TO OPEN A DATABASE CONNECTION
 C     INPUT: CONNECT  - THE INPUT CONNECTION STRING (or file name)

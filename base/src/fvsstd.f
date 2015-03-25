@@ -1,7 +1,7 @@
       SUBROUTINE FVSSTD (IWHO)
       IMPLICIT NONE
 C----------
-C  $Id: fvsstd.f 968 2013-07-12 18:49:16Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     CREATE A FILE FOR FVSTAND POST-PROCESSOR INPUT.

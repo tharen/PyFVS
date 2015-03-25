@@ -1,6 +1,6 @@
 CODE SEGMENT DBSCOM
 C----------
-C  $Id: DBSCOM.F77 1399 2015-01-09 00:44:58Z tod.haren $
+C  $Id$
 C----------
 
       INCLUDE 'DBSTYPEDEFS.F77'

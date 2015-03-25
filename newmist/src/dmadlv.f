@@ -2,7 +2,7 @@
      &                      Level, Shd, Shd0, II, EB)
       IMPLICIT NONE
 C----------
-C  $Id: dmadlv.f 594 2013-03-08 21:36:18Z drobinsonessa@gmail.com $
+C  $Id$
 C----------
 C  **DMADLV --  DATE OF LAST REVISION: 02/26/96        
 C----------

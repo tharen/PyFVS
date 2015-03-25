@@ -1,7 +1,7 @@
       SUBROUTINE PRTRLS (IWHO)
       IMPLICIT NONE
 C----------
-C  $Id: prtrls.f 933 2013-06-11 15:19:27Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     PRINT THE TREE LIST.

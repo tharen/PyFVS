@@ -1,7 +1,7 @@
       SUBROUTINE BFREAD (BUFFER,IPNT,ILIMIT,VARBLE,ILEN,IBEGIN)
       IMPLICIT NONE
 C----------
-C  $Id: putgetsubs.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     READ A VARIABLE FROM A BUFFER.

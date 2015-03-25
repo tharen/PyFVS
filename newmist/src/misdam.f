@@ -1,7 +1,7 @@
       SUBROUTINE MISDAM(ITREE,ICODES)
       IMPLICIT NONE
 C----------
-C  $Id: misdam.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 *  **MISDAM--MS  Date of last revision:  07/15/94
 *----------------------------------------------------------------------

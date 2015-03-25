@@ -1,7 +1,7 @@
       SUBROUTINE FMCBIO (D, KSP, ABIO, MBIO, RBIO)
       IMPLICIT NONE
 C----------
-C  $Id: fmcbio.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 *     SINGLE-STAND VERSION
 *     CALLED FROM: FMSCUT

@@ -1,5 +1,5 @@
 
-# $Id: makefile 1293 2014-07-10 21:14:42Z sarebain@fs.fed.us $
+# $Id$
 
 all : iet01 iet02 iet03  \
  ffe_svs climate climatePutGet

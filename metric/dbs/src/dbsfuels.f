@@ -4,7 +4,7 @@
      -  REMOVED,KODE)
       IMPLICIT NONE
 C----------
-C  $Id: dbsfuels.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C     PURPOSE: TO POPULATE A DATABASE WITH THE FUELS REPORT INFORMATION
 C     AUTH: D. GAMMEL -- RMRS -- NOVEMBER 2002

@@ -1,6 +1,6 @@
 CODE SEGMENT FMPARM
 C----------
-C  $Id: FMPARM.F77 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C  **FMPARM FIRE
 C----------

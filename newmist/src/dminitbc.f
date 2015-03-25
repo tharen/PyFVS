@@ -1,7 +1,7 @@
       SUBROUTINE DMINIT
       IMPLICIT NONE
 C----------
-C  $Id: dminitbc.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C **DMINIT--NI  DATE OF LAST REVISION: 02/22/96
 C----------

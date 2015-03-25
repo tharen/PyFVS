@@ -1,7 +1,7 @@
       SUBROUTINE DMNTRD
       IMPLICIT NONE
 C----------
-C  $Id: dmntrd.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C **DMNTRD -- NISI  Date of last revision: April 10 1994 
 C----------------------------------------------------------------------

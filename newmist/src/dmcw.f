@@ -1,7 +1,7 @@
       SUBROUTINE DMCW(DMTRCW)
       IMPLICIT NONE
 C----------
-C  $Id: dmcw.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C **DMCW --NISI Date of last revision: 15-July-2008
 C This module has been made by modifing the COVER MODEL module CVCW

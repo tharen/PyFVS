@@ -1,7 +1,7 @@
       SUBROUTINE EXBGC
       IMPLICIT NONE
 C----------
-C  $Id: exbgc.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     EXTERNAL REFERENCES FOR THE BGC MODEL (KELSEY MILNER)

@@ -2,7 +2,7 @@
      >                   LDEBUG,IRECNT)
       IMPLICIT NONE
 C----------
-C  $Id: evusrv.f 968 2013-07-12 18:49:16Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     CALLED FROM INITRE.  READS, COMPILES, AND STORES USER

@@ -1,7 +1,7 @@
       SUBROUTINE SVKEY(KEYWRD,LNOTBK,ARRAY)
       IMPLICIT NONE
 C----------
-C  $Id: svkey.f 1004 2013-08-01 16:04:44Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     STAND VISUALIZATION GENERATION

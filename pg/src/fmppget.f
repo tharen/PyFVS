@@ -1,7 +1,7 @@
       SUBROUTINE FMPPGET (WK3, IPNT, ILIMIT)
       IMPLICIT NONE
 C----------
-C  $Id: fmppget.f 1333 2014-10-23 17:49:02Z tod.haren $
+C  $Id$
 C----------
 C  Purpose:
 C     Get (read) the Fire Model data for a given stand from DA file.

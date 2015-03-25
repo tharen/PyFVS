@@ -1,7 +1,7 @@
       SUBROUTINE GETSTD
       IMPLICIT NONE
 C----------
-C  $Id: getstd.f 1399 2015-01-09 00:44:58Z tod.haren $
+C  $Id$
 C----------
 C
 C     READS A STAND FROM MASS STORAGE, AND THE ALL

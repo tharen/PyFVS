@@ -2,7 +2,7 @@
      -  VOKILL,KODE)
       IMPLICIT NONE
 C
-C $Id: dbsfmmort.f 1399 2015-01-09 00:44:58Z tod.haren $
+C $Id$
 C
 C     PURPOSE: TO POPULATE A DATABASE WITH THE MORTALITY REPORT
 C              INFORMATION

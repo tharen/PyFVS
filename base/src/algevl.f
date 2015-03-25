@@ -2,7 +2,7 @@
      >                   LDB,JOUT,IRC)
       IMPLICIT NONE
 C----------
-C  $Id: algevl.f 1399 2015-01-09 00:44:58Z tod.haren $
+C  $Id$
 C----------
 C
 C     CALLED FROM EVMON, OPEVAL, EVTSTV, EVAGRP, HVTHN1, HVHRV1,

@@ -1,7 +1,7 @@
       SUBROUTINE DMSHAP(DMTRCW, IDMSHP)
       IMPLICIT NONE
 C----------
-C  $Id: dmshap.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C **DMSHAP -- NISI Date of last revision: 08/05/94
 C This module was made by modifying the COVER MODEL module CVSHAP

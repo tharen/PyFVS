@@ -1,7 +1,7 @@
       SUBROUTINE CLINIT 
       IMPLICIT NONE
 C----------
-C  $Id: clinit.f 341 2012-08-15 22:19:22Z ncrookston.fs@gmail.com $
+C  $Id$
 C----------
 C
 C     CLIMATE EXTENSION 

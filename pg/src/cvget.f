@@ -1,7 +1,7 @@
       SUBROUTINE CVGET (WK3, IPNT, ILIMIT)
       IMPLICIT NONE
 C----------
-C  $Id: cvget.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     GET THE COVER DATA FOR A GIVEN STAND.

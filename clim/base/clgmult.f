@@ -1,7 +1,7 @@
       SUBROUTINE CLGMULT(TREEMULT)
       IMPLICIT NONE
 C----------
-C  $Id: clgmult.f 1127 2013-12-16 20:06:44Z tod.haren $
+C  $Id$
 C----------
 C
 C     CLIMATE EXTENSION -- COMUTES TREE-LEVEL GROWTH MULTIPLIER

@@ -1,7 +1,7 @@
       SUBROUTINE OPBISR(N,IA,IF,IP)
       IMPLICIT NONE
 C----------
-C  $Id: opbisr.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     OPTION PROCESSING ROUTINE - NL CROOKSTON - JAN 1981 - MOSCOW

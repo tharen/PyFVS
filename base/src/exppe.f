@@ -1,7 +1,7 @@
       SUBROUTINE EXPPE
       IMPLICIT NONE
 C----------
-C  $Id: exppe.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     EXTRY EXTERNAL REGERENCES FOR THE PARALLEL PROCESSING EXTENSION.

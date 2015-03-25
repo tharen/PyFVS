@@ -2,7 +2,7 @@
       use arrays_mod, only: barkrat
       IMPLICIT NONE
 C----------
-C  $Id: msbmrt.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C  THIS SUBROUTINE IS USED TO SIMULATE BREAKUP OF OVERMATURE STANDS
 C  OF TREES BY INFLICTING ADDITIONAL MORTALITY IN THE SPECIFIED

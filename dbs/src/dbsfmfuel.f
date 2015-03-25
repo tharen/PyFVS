@@ -3,7 +3,7 @@
      -  PERTRCR,SM25,SM10,KODE)
       IMPLICIT NONE
 C----------
-C $Id: dbsfmfuel.f 1399 2015-01-09 00:44:58Z tod.haren $
+C $Id$
 C----------
 C
 C     PURPOSE: TO POPULATE A DATABASE WITH THE FUELS CONSUMPTION REPORT

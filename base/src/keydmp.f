@@ -1,7 +1,7 @@
       SUBROUTINE KEYDMP (IOUT,IRECNT,KEYWRD,ARRAY,KARD)
       IMPLICIT NONE
 C----------
-C  $Id: keydmp.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
       INTEGER IRECNT,IOUT
       REAL ARRAY(7)

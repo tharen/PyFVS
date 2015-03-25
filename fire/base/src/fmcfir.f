@@ -1,7 +1,7 @@
       SUBROUTINE FMCFIR (IYR,FMOIS,WMULT,SWIND,CFTMP,OINIT1,OACT1,HPA)
       IMPLICIT NONE
 C----------
-C  $Id: fmcfir.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 *     SINGLE-STAND VERSION
 *     CALLED FROM: FMPOFL

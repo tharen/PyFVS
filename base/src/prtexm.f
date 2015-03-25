@@ -1,7 +1,7 @@
       SUBROUTINE PRTEXM (INPUT,IPRINT,ITITLE)
       IMPLICIT NONE
 C----------
-C  $Id: prtexm.f 968 2013-07-12 18:49:16Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     READS THE DATA THAT COMPRISES THE EXAMPLE TREE AND STAND

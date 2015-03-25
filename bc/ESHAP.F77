@@ -1,6 +1,6 @@
 CODE SEGMENT ESHAP
 C----------
-C  $Id: ESHAP.F77 799 2013-04-26 16:09:19Z drobinsonessa@gmail.com $
+C  $Id$
 C----------
 C
       LOGICAL LINGRW,LAUTAL,LSPRUT

@@ -1,7 +1,7 @@
       SUBROUTINE CLPUT (WK3,IPNT,ILIMIT)
       IMPLICIT NONE
 C----------
-C  $Id: clputget.f 341 2012-08-15 22:19:22Z ncrookston.fs@gmail.com $
+C  $Id$
 C----------
 C
 C     CLIMATE EXTENSION - STORES THE CLIMATE COMMON

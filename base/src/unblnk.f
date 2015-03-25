@@ -1,7 +1,7 @@
       SUBROUTINE UNBLNK (RECORD,IRLEN)
       IMPLICIT NONE
 C----------
-C  $Id: unblnk.f 933 2013-06-11 15:19:27Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     THIS SUBROUTINE REMOVES ALL BLANKS FROM A CHARACTER

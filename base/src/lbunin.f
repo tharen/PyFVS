@@ -1,7 +1,7 @@
       SUBROUTINE LBUNIN (LEN1,SET1,LEN2,SET2,LNUNIN,UNION,KODE)
       IMPLICIT NONE
 C----------
-C  $Id: lbunin.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     SET UNION OPERATION

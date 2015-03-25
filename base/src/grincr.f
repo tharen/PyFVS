@@ -4,7 +4,7 @@
      &                     ,copy_mort_data
       IMPLICIT NONE
 C----------
-C  $Id: grincr.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     COMPUTES GROWTH AND MORTALITY ON EACH TREE RECORD.

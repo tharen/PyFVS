@@ -1,7 +1,7 @@
       SUBROUTINE DMNAC(A,B)
       IMPLICIT NONE
 C----------
-C  $Id: dmnac.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C **DMNAC -- NISI  Date of last revision: January 10, 2002
 C----------------------------------------------------------------------

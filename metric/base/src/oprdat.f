@@ -1,7 +1,7 @@
       SUBROUTINE OPRDAT (JEXOPT,KODE)
       IMPLICIT NONE
 C----------
-C  $Id: oprdat.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     READS A FILE OF "MORE ACTIVITIES" AND SCHEDULES THEM FOR

@@ -1,7 +1,7 @@
       SUBROUTINE OPMERG (NMYA,MYACTS,NTODO)
       IMPLICIT NONE
 C----------
-C  $Id: opmerg.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     OPTION PROCESSING ROUTINE - NL CROOKSTON - JAN 1981 - MOSCOW

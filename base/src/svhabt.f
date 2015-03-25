@@ -1,7 +1,7 @@
       SUBROUTINE SVHABT(XMOD)
       IMPLICIT NONE
 C----------
-C  $Id: svhabt.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     STAND VISUALIZATION GENERATION

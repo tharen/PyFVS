@@ -1,7 +1,7 @@
       SUBROUTINE FMPHOTOCODE (FotoRef, CFotoCode, Fotocode, Icall)
       IMPLICIT NONE
 C----------
-C  $Id: fmphotocode.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     TRANSLATES THE CHARACTER PHOTO SERIES PHOTO CODE INTO AN 

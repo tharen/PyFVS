@@ -1,7 +1,7 @@
       SUBROUTINE SVOUT(IYEAR,IFMCLFG,AMSG)
       IMPLICIT NONE
 C----------
-C  $Id: svout.f 1042 2013-09-04 21:57:58Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     STAND VISUALIZATION GENERATION

@@ -1,7 +1,7 @@
       SUBROUTINE GHEADS(NPLT,MGMID,JOSTND,JOTREE,ITITLE)
       IMPLICIT NONE
 C----------
-C  $Id: gheads.f 968 2013-07-12 18:49:16Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     PRINTS HEADINGS. IF I/O UNIT(S) IS/ARE ZERO THE PRINTING

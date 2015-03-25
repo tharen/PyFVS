@@ -1,6 +1,6 @@
        SUBROUTINE MIN(ISC,AGE,FIZ,DBH,HT,SH,TD,HTRUNC,GROSIMP,TVOLIMP)
 C----------
-C  $Id: min.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 CC  -by Tim Hammond.

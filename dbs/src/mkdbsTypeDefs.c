@@ -1,4 +1,4 @@
-//  $Id: mkdbsTypeDefs.c 361 2012-09-27 18:51:49Z ncrookston.fs@gmail.com $
+//  $Id$
 
 // c program to build DBSTYPEDEFS.F77 for the system on which it is run.
 

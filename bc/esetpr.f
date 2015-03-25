@@ -3,7 +3,7 @@
      &                   IDSDAT,KDT,IP)
       IMPLICIT NONE
 C----------
-C  $Id: esetpr.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     SET SITE PREPARATION FOR THE REGENERATION MODEL.

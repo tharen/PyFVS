@@ -2,7 +2,7 @@
       use arrays_mod, only: barkrat
       IMPLICIT NONE
 C----------
-C  $Id: ffert.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C---------
 C  THIS SUBROUTINE COMPUTES A RATIO OF THE FERTILIZATION TREATMENT
 C  TO A CONTROL ON DIAMETER GROWTH, AND USES IT AS A MULTIPLICATIVE

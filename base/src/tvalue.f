@@ -1,7 +1,7 @@
       SUBROUTINE TVALUE(N,P,T,IERR)
       IMPLICIT NONE
 C----------
-C  $Id: tvalue.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C  THIS SUBROUTINE APPROXIMATES THE VALUE OF STUDENT'S T ASSOCIATED

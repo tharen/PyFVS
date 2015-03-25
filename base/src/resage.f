@@ -1,7 +1,7 @@
       SUBROUTINE RESAGE
       IMPLICIT NONE
 C----------
-C  $Id: resage.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C     RESAGE RESETS THE AGE OF THE STAND TO THE VALUE SPECIFIED

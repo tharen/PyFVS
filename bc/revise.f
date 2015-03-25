@@ -1,7 +1,7 @@
       SUBROUTINE REVISE (VAR,REV)
       IMPLICIT NONE
 C----------
-C  $Id: revise.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C    $$ DON'T CHANGE THIS DATE UNLESS THE SUBROUTINE LOGIC CHANGES.
 C----------

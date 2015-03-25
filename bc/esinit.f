@@ -1,7 +1,7 @@
       SUBROUTINE ESINIT
       IMPLICIT NONE
 C----------
-C  $Id: esinit.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C     CALLED FROM INITRE, ONLY ONCE, TO INITIALIZE REGEN. MODEL.
 C

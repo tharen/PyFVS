@@ -1,7 +1,7 @@
       SUBROUTINE ISSTAG
       IMPLICIT NONE
 C----------
-C  $Id: isstag.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 C
 C   INITIALIZE THE STAND STRUCTURAL STAGE CLASSES CALCULATIONS.

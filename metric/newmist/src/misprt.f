@@ -1,7 +1,7 @@
       SUBROUTINE MISPRT
 		  IMPLICIT NONE
 C----------
-C  $Id: misprt.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+C  $Id$
 C----------
 *  Purpose:
 *     Produces dwarf mistletoe infection information and mortality

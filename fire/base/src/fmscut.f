@@ -1,8 +1,8 @@
       SUBROUTINE FMSCUT (MXVOL,NR,NC,SSNG,DSNG,CTCRWN,TKCRWN)
       IMPLICIT NONE
 C----------
-C  $Id: fmscut.f 1333 2014-10-23 17:49:02Z tod.haren $
-C  $Id: fmscut.f 1333 2014-10-23 17:49:02Z tod.haren $
+C  $Id$
+C  $Id$
 C----------
 C     SINGLE-STAND VERSION
 C

@@ -1,7 +1,7 @@
       SUBROUTINE FMVINIT
       IMPLICIT NONE
 C
-C  $Id: fmvinit.f 960 2013-07-09 20:17:17Z sarebain@fs.fed.us $
+C  $Id$
 C
 C----------
 C  **FMVINIT  FIRE-BC
