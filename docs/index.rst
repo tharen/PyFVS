@@ -6,10 +6,15 @@
 Open-FVS
 ========
 
-Open-FVS is both the official code base for the Forest Vetation Simulator (FVS)
-mantained by the USFS RMRS as well as a development workspace to foster 
+Open-FVS is both the official code base for the `Forest Vetation Simulator (FVS)`_, 
+maintained by the USFS RMRS, as well as a development workspace to foster 
 open collaboration on developement and enhancement of FVS.
 
+The official Open-FVS project is hosted on `Google Code`_.
+
+.. _Forest Vetation Simulator (FVS): http://www.fs.fed.us/fmsc/fvs/
+.. _Google Code: https://code.google.com/p/open-fvs/
+ 
 Contents:
 
 .. toctree::

@@ -1,7 +1,3 @@
-_build
-_static
-_templates
-
 .hg
 .hgignore
 .svn
