@@ -1,3 +1,7 @@
+_build
+_static
+_templates
+
 .hg
 .hgignore
 .svn
@@ -62,3 +66,4 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
