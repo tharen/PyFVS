@@ -1,3 +1,14 @@
+!> Calculate site height.
+!> Calculate potential height given a species site and age.
+!! It is used to calculate potential height and site.
+!! White oak is not base directly on SI and Age
+!! @param sindx Site Index
+!! @param ispc FVS Species index
+!! @param ag Tree age
+!! @param hguess Estimated potential height
+!! @param jostnd File unit number for debug messages
+!! @param debug Debgging flag
+
       SUBROUTINE HTCALC(SINDX,ISPC,AG,HGUESS,JOSTND,DEBUG)
       IMPLICIT NONE
 
