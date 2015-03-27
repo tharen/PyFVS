@@ -70,7 +70,11 @@ class FVS(object):
         Load the requested FVS variant library.
         """
         libname = self.config['fvs_lib']['variants'][variant.lower()]
-        fvs_root = self.config['fvs_lib']['fvs_root']
+        fvs_root = os.path.abspath(self.config['fvs_lib']['fvs_root'])
+        
+        log.debug('FVS root: {}'.format(fvs_root))
+        if not os.path.exists(fvs_root):
+            raise IOError('FVS root does not exist: {}'.format(fvs_root))
 
         # Temporarily override the Python path
         oldpath = sys.path
@@ -92,7 +96,7 @@ class FVS(object):
                     'variant library.'.format(self.variant))
             raise
 
-        log.debug('Lib path FVS{}: {}'.format(
+        log.debug('FVS{} library path: {}'.format(
                 self.variant, self.fvslib.__file__))
 
         # Reset the Python path
