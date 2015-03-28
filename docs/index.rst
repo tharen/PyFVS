@@ -24,7 +24,6 @@ Contents:
 
 .. doxygenindex:: Open-FVS
    :project: Open-FVS
-   :members:
    
 Indices and tables
 ==================
