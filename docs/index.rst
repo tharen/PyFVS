@@ -6,7 +6,7 @@
 Open-FVS
 ========
 
-Open-FVS is both the official code base for the `Forest Vetation Simulator (FVS)`_, 
+Open-FVS is both the official code base for the `Forest Vegetation Simulator (FVS)`_, 
 maintained by the USFS RMRS, as well as a development workspace to foster 
 open collaboration on developement and enhancement of FVS.
 
