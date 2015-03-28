@@ -44,8 +44,8 @@ extensions = [
 read_the_docs_build = os.environ.get('READTHEDOCS', None) == 'True'
 if read_the_docs_build:
     subprocess.call('cd ../doxygen; doxygen', shell=True)
-    extensions.append('breathe')
-    breathe_projects = {'open-fvs':'./xml',}
+    # extensions.append('breathe')
+    # breathe_projects = {'open-fvs':'./xml',}
     
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
