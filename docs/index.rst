@@ -12,7 +12,7 @@ open collaboration on developement and enhancement of FVS.
 
 The official Open-FVS project is hosted on `Google Code`_.
 
-.. _Forest Vetation Simulator (FVS): http://www.fs.fed.us/fmsc/fvs/
+.. _Forest Vegetation Simulator (FVS): http://www.fs.fed.us/fmsc/fvs/
 .. _Google Code: https://code.google.com/p/open-fvs/
  
 Contents:
