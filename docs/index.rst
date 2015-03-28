@@ -22,7 +22,10 @@ Contents:
 
    pyfvs
 
-
+.. doxygenclass:: Open-FVS
+   :project: open-fvs
+   :members:
+   
 Indices and tables
 ==================
 
