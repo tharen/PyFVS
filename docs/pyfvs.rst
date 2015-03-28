@@ -4,9 +4,13 @@ PyFVS
 PyFVS provides Python wrappers and helper code to make automation of FVS
 a breeze.
 
-You can find `PyFVS on GitHub`_.
+| View the `code`_
+| Visit the `wiki`_
+| Read the `docs`_
 
-.. _PyFVS on GitHub: https://github.com/tharen/PyFVS
+.. _code: https://github.com/tharen/PyFVS
+.. _wiki: https://github.com/tharen/PyFVS/wiki/PyFVS
+.. _docs: http://pyfvs.readthedocs.org/index.html
 
 Example Usage::
 

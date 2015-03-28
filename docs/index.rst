@@ -7,8 +7,8 @@ Open-FVS
 ========
 
 Open-FVS is both the official code base for the `Forest Vegetation Simulator (FVS)`_, 
-maintained by the USFS RMRS, as well as a development workspace to foster 
-open collaboration on developement and enhancement of FVS.
+maintained by the USFS Rocky Mountain Research Station, as well as a development
+workspace to foster open collaboration on developement and enhancement of FVS.
 
 The official Open-FVS project is hosted on `Google Code`_.
 
