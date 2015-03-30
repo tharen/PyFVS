@@ -1,3 +1,13 @@
+#documentation
+docs/*
+!docs/doxyfile
+!docs/index.rst
+!docs/pyfvs.rst
+!docs/Makefile
+!docs/make.bat
+!docs/requirements.txt
+!docs/conf.py
+
 .hg
 .hgignore
 .svn
@@ -16,6 +26,7 @@
 *.h5
 *.mdb
 *.zip
+*.log
 
 *.out
 *.sng
