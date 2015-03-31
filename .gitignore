@@ -8,6 +8,9 @@ docs/*
 !docs/requirements.txt
 !docs/conf.py
 !docs/.nojekyll
+!docs/header.html
+!docs/footer.html
+!docs/customdoxygen.css
 
 .hg
 .hgignore
