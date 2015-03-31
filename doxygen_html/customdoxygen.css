@@ -292,3 +292,42 @@ span.vhdlkeyword {
 span.vhdllogic { 
 	color: #ff0000 
 }
+
+/* My Hacks 
+Override bootstrap formatting where !important
+*/
+.table {
+    table-layout: fixed;
+    word-wrap: break-word;
+    }
+
+.icona {
+    height: 16px !important;
+}
+
+td.desc {
+    padding: 0px !important;
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
+}
+
+.memItemLeft {
+    white-space: normal;
+    word-wrap: break-word;
+    text-indent: -59px !important;
+    padding-left: 60px !important;
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
+    padding-right: 1px !important;
+}
+  
+  td.memSeparator {
+    padding: 0px !important;
+    line-height: 1px !important;
+}
+
+td.entry {
+    padding: 0px !important;
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
+}
