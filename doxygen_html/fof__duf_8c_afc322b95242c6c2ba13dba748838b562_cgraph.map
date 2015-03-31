@@ -1,0 +1,23 @@
+<map id="DUF_InteriorWest" name="DUF_InteriorWest">
+<area shape="rect" id="node2" href="$fof__ci_8c.html#acac95d76ac4503b6b2cf70a617b55503" title="CI_isPiles" alt="" coords="353,5,433,32"/>
+<area shape="rect" id="node5" href="$fof__ci_8c.html#a07c69289cef1fc870f00c8153317d4de" title="CI_isNatural" alt="" coords="347,56,439,83"/>
+<area shape="rect" id="node6" href="$fof__ci_8c.html#a336d87710b45e28076a9c954ade18b7e" title="CI_isSlash" alt="" coords="351,107,435,133"/>
+<area shape="rect" id="node7" href="$fof__ci_8c.html#a871f1b2863359cb57a51cb330a75af0b" title="CI_isDufLower" alt="" coords="341,157,445,184"/>
+<area shape="rect" id="node8" href="$fof__duf_8c.html#ad497dd2080e046a59010edf3e98a4a58" title="Equ_1_Per" alt="" coords="187,208,274,235"/>
+<area shape="rect" id="node9" href="$fof__duf_8c.html#aa6c8dbd59861d5ddbc2337f3db881839" title="Equ_5_Red" alt="" coords="186,259,275,285"/>
+<area shape="rect" id="node10" href="$fof__duf_8c.html#aa8fd8d322d19dff9115aec2f62632557" title="Equ_9_MSE" alt="" coords="183,309,278,336"/>
+<area shape="rect" id="node11" href="$fof__ci_8c.html#a7313e8bc3f58e28d49fabdefd3d8c92d" title="CI_isDufEntire" alt="" coords="341,284,445,311"/>
+<area shape="rect" id="node12" href="$fof__duf_8c.html#ae2c52427c7d7368cf5027bafdd7408d3" title="Equ_2_Per" alt="" coords="187,411,274,437"/>
+<area shape="rect" id="node13" href="$fof__duf_8c.html#a56db849e139ffa2ff5ac3db2ea46860f" title="Equ_6_Red" alt="" coords="186,461,275,488"/>
+<area shape="rect" id="node14" href="$fof__duf_8c.html#aa8ef5b4feb38affaf81f869952c4b629" title="Equ_10_MSE" alt="" coords="179,512,282,539"/>
+<area shape="rect" id="node15" href="$fof__duf_8c.html#a6179d86f9910c305dbfac17d0208282d" title="Equ_3_Per" alt="" coords="187,664,274,691"/>
+<area shape="rect" id="node17" href="$fof__duf_8c.html#a4640d2954d7c36e9d361247a90eb4367" title="Equ_7_Red" alt="" coords="186,715,275,741"/>
+<area shape="rect" id="node18" href="$fof__duf_8c.html#a675c890b1fbcadcb60c597d4a3bc7e12" title="Equ_11_MSE" alt="" coords="179,563,282,589"/>
+<area shape="rect" id="node19" href="$fof__ci_8c.html#aebcec5d3d23b3c527eafcab11948c276" title="CI_isPonderosa" alt="" coords="337,765,450,792"/>
+<area shape="rect" id="node20" href="$fof__duf_8c.html#ac04b164bd75c526673cac948bcbc225e" title="Equ_4_Per" alt="" coords="187,765,274,792"/>
+<area shape="rect" id="node21" href="$fof__duf_8c.html#abec033cc20494f86ea682e1212cb4e1b" title="Equ_13_MSE" alt="" coords="179,816,282,843"/>
+<area shape="rect" id="node22" href="$fof__duf_8c.html#af9b5087e927a14d849a0a0de797f3a6a" title="Equ_12_MSE" alt="" coords="179,613,282,640"/>
+<area shape="rect" id="node3" href="$fof__ansi_8h.html#ae4a2af8fafbd412557cbf887bb828c13" title="xstrcmpi" alt="" coords="504,157,576,184"/>
+<area shape="rect" id="node4" href="$fof__unix_8c.html#a597515502edd92634b421f7f86824375" title="xstrupr" alt="" coords="625,157,687,184"/>
+<area shape="rect" id="node16" href="$fof__ci_8c.html#ae0c9eed5d7856b096c50bc8d39544fa7" title="CI_isDufAdjNFDR" alt="" coords="331,613,455,640"/>
+</map>

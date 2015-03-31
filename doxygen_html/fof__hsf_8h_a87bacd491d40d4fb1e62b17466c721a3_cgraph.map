@@ -1,0 +1,15 @@
+<map id="Calc_Shrub" name="Calc_Shrub">
+<area shape="rect" id="node2" href="$fof__ci_8c.html#a396777a525bab614bbcaee0eb7456a35" title="CI_isSageBrush" alt="" coords="147,5,261,32"/>
+<area shape="rect" id="node5" href="$fof__ci_8c.html#a00abde20b9bb3f4b849b04b9870804bb" title="CI_isFall" alt="" coords="168,56,240,83"/>
+<area shape="rect" id="node6" href="$fof__ci_8c.html#a77798e442b3785db1d4def7f647c105d" title="CI_isShrubGroup" alt="" coords="144,107,264,133"/>
+<area shape="rect" id="node7" href="$fof__ci_8c.html#a3c38c2d4b1bced3ff317ec9abe2abe84" title="CI_isSouthEast" alt="" coords="148,157,260,184"/>
+<area shape="rect" id="node8" href="$fof__ci_8c.html#a958f4ebc11233cac1459e2b6989f576e" title="CI_isPocosin" alt="" coords="155,208,253,235"/>
+<area shape="rect" id="node9" href="$fof__ci_8c.html#a32fec1f1a37f4f90491ef631fa5a8725" title="CI_isSpring" alt="" coords="160,259,248,285"/>
+<area shape="rect" id="node10" href="$fof__ci_8c.html#a4f4c929a15dd8d77f13dcfac6928c358" title="CI_isWinter" alt="" coords="159,309,249,336"/>
+<area shape="rect" id="node11" href="$fof__hsf_8c.html#ab2bb690d15d21d06f2edf43ec5fad97c" title="Shrub_Equ" alt="" coords="161,360,247,387"/>
+<area shape="rect" id="node3" href="$fof__ansi_8h.html#ae4a2af8fafbd412557cbf887bb828c13" title="xstrcmpi" alt="" coords="327,157,399,184"/>
+<area shape="rect" id="node4" href="$fof__unix_8c.html#a597515502edd92634b421f7f86824375" title="xstrupr" alt="" coords="478,157,541,184"/>
+<area shape="rect" id="node12" href="$fof__hsf_8c.html#af3ee099dd221717d73c69fdd173c69cf" title="Equ_234_Per" alt="" coords="313,335,413,361"/>
+<area shape="rect" id="node14" href="$fof__lem_8c.html#a00efce80221ecd585021817edce5ea70" title="LEM_Put" alt="" coords="325,385,401,412"/>
+<area shape="rect" id="node13" href="$fof__hsf_8c.html#a17642e3bb3b01ffee94e9125d21a8759" title="Equation_16" alt="" coords="462,335,557,361"/>
+</map>

@@ -1,0 +1,31 @@
+<map id="HSF_Check" name="HSF_Check">
+<area shape="rect" id="node2" href="$fof__hsf_8c.html#a087697f6572c77b52246185dd6b309e0" title="_ChkLim" alt="" coords="173,5,246,32"/>
+<area shape="rect" id="node3" href="$fof__hsf_8c.html#a575e03844aa7a1504ddb91df1a1c9752" title="_Pc_CroBrn" alt="" coords="163,56,255,83"/>
+<area shape="rect" id="node4" href="$fof__hsf_8c.html#a794472e02673a3696699e17bd127b86b" title="_DuffChk" alt="" coords="172,107,247,133"/>
+<area shape="rect" id="node5" href="$fof__ci_8c.html#a3c38c2d4b1bced3ff317ec9abe2abe84" title="CI_isSouthEast" alt="" coords="153,157,265,184"/>
+<area shape="rect" id="node8" href="$fof__ci_8c.html#ab546f4602aa52712183b3e4403e2d1e3" title="CI_isInteriorWest" alt="" coords="149,208,270,235"/>
+<area shape="rect" id="node9" href="$fof__ci_8c.html#a8cac1179f67d615aaa915739e6a2c554" title="CI_isPacificWest" alt="" coords="149,259,270,285"/>
+<area shape="rect" id="node10" href="$fof__ci_8c.html#a16cd99f1f86f56bcd8a6a95e5373eff1" title="CI_isNorthEast" alt="" coords="155,309,264,336"/>
+<area shape="rect" id="node11" href="$fof__ci_8c.html#acac95d76ac4503b6b2cf70a617b55503" title="CI_isPiles" alt="" coords="169,360,249,387"/>
+<area shape="rect" id="node12" href="$fof__ci_8c.html#a07c69289cef1fc870f00c8153317d4de" title="CI_isNatural" alt="" coords="163,411,255,437"/>
+<area shape="rect" id="node13" href="$fof__ci_8c.html#a336d87710b45e28076a9c954ade18b7e" title="CI_isSlash" alt="" coords="167,461,251,488"/>
+<area shape="rect" id="node14" href="$fof__ci_8c.html#a7313e8bc3f58e28d49fabdefd3d8c92d" title="CI_isDufEntire" alt="" coords="157,512,261,539"/>
+<area shape="rect" id="node15" href="$fof__ci_8c.html#a871f1b2863359cb57a51cb330a75af0b" title="CI_isDufLower" alt="" coords="157,563,261,589"/>
+<area shape="rect" id="node16" href="$fof__ci_8c.html#a4dc21adf226a404c9f6ad34dd4df3687" title="CI_isDufNFDR" alt="" coords="157,613,262,640"/>
+<area shape="rect" id="node17" href="$fof__ci_8c.html#ae0c9eed5d7856b096c50bc8d39544fa7" title="CI_isDufAdjNFDR" alt="" coords="147,664,271,691"/>
+<area shape="rect" id="node18" href="$fof__ci_8c.html#a32fec1f1a37f4f90491ef631fa5a8725" title="CI_isSpring" alt="" coords="165,715,253,741"/>
+<area shape="rect" id="node19" href="$fof__ci_8c.html#a00abde20b9bb3f4b849b04b9870804bb" title="CI_isFall" alt="" coords="173,765,245,792"/>
+<area shape="rect" id="node20" href="$fof__ci_8c.html#a17543d800b236c76e34c4db9ddd4649e" title="CI_isSummer" alt="" coords="159,816,259,843"/>
+<area shape="rect" id="node21" href="$fof__ci_8c.html#a4f4c929a15dd8d77f13dcfac6928c358" title="CI_isWinter" alt="" coords="165,867,254,893"/>
+<area shape="rect" id="node22" href="$fof__ci_8c.html#a1f7b0b30492c6c18d520fb967cd0588d" title="CI_isGrassGroup" alt="" coords="149,917,270,944"/>
+<area shape="rect" id="node23" href="$fof__ci_8c.html#a77798e442b3785db1d4def7f647c105d" title="CI_isShrubGroup" alt="" coords="149,968,269,995"/>
+<area shape="rect" id="node24" href="$fof__ci_8c.html#a396777a525bab614bbcaee0eb7456a35" title="CI_isSageBrush" alt="" coords="152,1019,267,1045"/>
+<area shape="rect" id="node25" href="$fof__ci_8c.html#a958f4ebc11233cac1459e2b6989f576e" title="CI_isPocosin" alt="" coords="160,1069,259,1096"/>
+<area shape="rect" id="node26" href="$fof__ci_8c.html#aebcec5d3d23b3c527eafcab11948c276" title="CI_isPonderosa" alt="" coords="153,1120,266,1147"/>
+<area shape="rect" id="node27" href="$fof__ci_8c.html#ab1779194887fc47974d2e6c62a9a88ad" title="CI_isWhiPinHem" alt="" coords="149,1171,269,1197"/>
+<area shape="rect" id="node28" href="$fof__ci_8c.html#ac22b59b40f5a16a081ff664f0ec06d03" title="CI_isRedJacPin" alt="" coords="153,1221,266,1248"/>
+<area shape="rect" id="node29" href="$fof__ci_8c.html#a5e9d76857efb58db36adebf5a60cf1c4" title="CI_isBalBRWSpr" alt="" coords="149,1272,270,1299"/>
+<area shape="rect" id="node30" href="$fof__ci_8c.html#a65adf9dfe898ff297afc07aaa6086715" title="CI_isCoverGroup" alt="" coords="150,1323,269,1349"/>
+<area shape="rect" id="node6" href="$fof__ansi_8h.html#ae4a2af8fafbd412557cbf887bb828c13" title="xstrcmpi" alt="" coords="320,740,392,767"/>
+<area shape="rect" id="node7" href="$fof__unix_8c.html#a597515502edd92634b421f7f86824375" title="xstrupr" alt="" coords="441,740,503,767"/>
+</map>

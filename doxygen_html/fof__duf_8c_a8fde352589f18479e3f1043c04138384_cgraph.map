@@ -1,0 +1,15 @@
+<map id="DUF_SouthEast" name="DUF_SouthEast">
+<area shape="rect" id="node2" href="$fof__ci_8c.html#a958f4ebc11233cac1459e2b6989f576e" title="CI_isPocosin" alt="" coords="337,5,436,32"/>
+<area shape="rect" id="node5" href="$fof__duf_8c.html#ae3dc96d908dc6a043f095e928b82621e" title="Equ_20_RedPer" alt="" coords="171,93,287,120"/>
+<area shape="rect" id="node12" href="$fof__duf_8c.html#a8708df586ed23de3c8fbd37045c6dd8e" title="Equ_202_MSE" alt="" coords="175,144,284,171"/>
+<area shape="rect" id="node13" href="$fof__duf_8c.html#a9669cc6d2adf44fc5f0609ec4f346aad" title="Equ_16_Per" alt="" coords="183,195,276,221"/>
+<area shape="rect" id="node14" href="$fof__duf_8c.html#a393a738dac2c30c33ecb49d61be1a243" title="Equ_14_MSE" alt="" coords="178,245,281,272"/>
+<area shape="rect" id="node3" href="$fof__ansi_8h.html#ae4a2af8fafbd412557cbf887bb828c13" title="xstrcmpi" alt="" coords="659,93,731,120"/>
+<area shape="rect" id="node4" href="$fof__unix_8c.html#a597515502edd92634b421f7f86824375" title="xstrupr" alt="" coords="779,93,842,120"/>
+<area shape="rect" id="node6" href="$fof__ci_8c.html#a1e39db4eab761116ee4cd066f1edd7c8" title="CI_isDuffWet" alt="" coords="338,93,435,120"/>
+<area shape="rect" id="node11" href="$fof__duf_8c.html#a7205d707b5f14ede315edab1b40fa43d" title="Equ_201_Per" alt="" coords="337,144,437,171"/>
+<area shape="rect" id="node7" href="$fof__ci_8c.html#a7313e8bc3f58e28d49fabdefd3d8c92d" title="CI_isDufEntire" alt="" coords="496,43,600,69"/>
+<area shape="rect" id="node8" href="$fof__ci_8c.html#a871f1b2863359cb57a51cb330a75af0b" title="CI_isDufLower" alt="" coords="496,93,600,120"/>
+<area shape="rect" id="node9" href="$fof__ci_8c.html#a4dc21adf226a404c9f6ad34dd4df3687" title="CI_isDufNFDR" alt="" coords="495,144,601,171"/>
+<area shape="rect" id="node10" href="$fof__ci_8c.html#ae0c9eed5d7856b096c50bc8d39544fa7" title="CI_isDufAdjNFDR" alt="" coords="486,195,610,221"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="dbsppget" name="dbsppget">
+<area shape="rect" id="node2" href="$putgetsubs_8f.html#aae44ec2c04e88e7741becf1a58fbb4a8" title="ifread" alt="" coords="139,31,192,57"/>
+<area shape="rect" id="node6" href="$dbsclose_8f.html#aed2197b8dac3e7cc05ea998c5322bca4" title="dbsclose" alt="" coords="128,81,203,108"/>
+<area shape="rect" id="node3" href="$stash_8f.html#ab9c9d9d960b9ff5fd282ad87c8a9259e" title="dstash" alt="" coords="269,5,331,32"/>
+<area shape="rect" id="node5" href="$cmdline_8f.html#a0772cb6ab1daa15981fb8fcb46971c27" title="fvsgetrtncode" alt="" coords="251,56,349,83"/>
+<area shape="rect" id="node4" href="$cmdline_8f.html#a079170808ee3336a99645e9e57dfe5a9" title="fvssetrtncode" alt="" coords="397,5,496,32"/>
+</map>

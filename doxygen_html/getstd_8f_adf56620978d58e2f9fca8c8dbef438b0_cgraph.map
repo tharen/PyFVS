@@ -1,0 +1,30 @@
+<map id="getstd" name="getstd">
+<area shape="rect" id="node2" href="$putgetsubs_8f.html#aae44ec2c04e88e7741becf1a58fbb4a8" title="ifread" alt="" coords="245,459,299,486"/>
+<area shape="rect" id="node5" href="$cmdline_8f.html#a0772cb6ab1daa15981fb8fcb46971c27" title="fvsgetrtncode" alt="" coords="477,383,576,410"/>
+<area shape="rect" id="node6" href="$putgetsubs_8f.html#a70b92b9b2d5b3716250eaf1a83a813a7" title="lfread" alt="" coords="245,333,299,359"/>
+<area shape="rect" id="node7" href="$putgetsubs_8f.html#a1a2dc8b186f0d0a32a4902e0054088fb" title="bfread" alt="" coords="243,395,301,422"/>
+<area shape="rect" id="node8" href="$fof__soi_8c.html#ac490823ca6d42e8898c5254c70a316ff" title="slope" alt="" coords="123,54,176,81"/>
+<area shape="rect" id="node10" href="$varget_8f.html#abca09c4cca80995d2111f389445d4a8e" title="varget" alt="" coords="121,257,177,283"/>
+<area shape="rect" id="node11" href="$cvget_8f.html#a9e6bf61ab90acfe7f7192c012ea8fbec" title="cvget" alt="" coords="123,206,175,233"/>
+<area shape="rect" id="node12" href="$misact_8f.html#a79a9f8718b51ed1fa7b080cef84af964" title="misact" alt="" coords="119,358,180,385"/>
+<area shape="rect" id="node13" href="$msppgt_8f.html#a1303afdd4536c593ad50e20543a31279" title="msppgt" alt="" coords="117,307,182,334"/>
+<area shape="rect" id="node14" href="$fmppget_8f.html#ad45aa746c8203169eac159344580c942" title="fmppget" alt="" coords="115,409,183,435"/>
+<area shape="rect" id="node15" href="$ecnget_8f.html#a0313209b188cf00fb892f5661fc31737" title="ecnget" alt="" coords="119,459,180,486"/>
+<area shape="rect" id="node16" href="$dbsppget_8f.html#af6122521f055ab39b7088afcf33f37e7" title="dbsppget" alt="" coords="112,611,187,638"/>
+<area shape="rect" id="node18" href="$clputget_8f.html#aefd52fee58c52c2faeae5944c02cc466" title="clget" alt="" coords="124,510,175,537"/>
+<area shape="rect" id="node19" href="$chget_8f.html#ae35c2bb66a5fddb3c676973ce00e9619" title="chget" alt="" coords="122,662,177,689"/>
+<area shape="rect" id="node3" href="$stash_8f.html#ab9c9d9d960b9ff5fd282ad87c8a9259e" title="dstash" alt="" coords="363,434,424,461"/>
+<area shape="rect" id="node4" href="$cmdline_8f.html#a079170808ee3336a99645e9e57dfe5a9" title="fvssetrtncode" alt="" coords="733,503,832,530"/>
+<area shape="rect" id="node9" href="$fof__soi_8c.html#a1a35cac9977f5ee55e3378655cb905d4" title="sqr" alt="" coords="252,54,292,81"/>
+<area shape="rect" id="node17" href="$dbsclose_8f.html#aed2197b8dac3e7cc05ea998c5322bca4" title="dbsclose" alt="" coords="489,554,564,581"/>
+<area shape="rect" id="node20" href="$putgetsubs_8f.html#af12b5be375db0d3b1e6afd0b43065fb7" title="chread" alt="" coords="363,605,424,631"/>
+<area shape="rect" id="node22" href="$dbsppget_8f.html#ad06c59f1f8dc0afb11589bc7b1caf467" title="dbschget" alt="" coords="235,655,309,682"/>
+<area shape="rect" id="node29" href="$varget_8f.html#a3d8d451c06ca814745fc3519dcfc50a2" title="varchget" alt="" coords="237,706,307,733"/>
+<area shape="rect" id="node21" href="$stash_8f.html#a5b4d3948b1f946106ddaf4ba5e2ad524" title="chdsth" alt="" coords="624,503,685,530"/>
+<area shape="rect" id="node23" href="$dbsopen_8f.html#a3e8dabe730ff2a86c085489e3e88b637" title="dbsopen" alt="" coords="358,655,429,682"/>
+<area shape="rect" id="node24" href="$upcase_8f.html#a412a50f91650f78ed984862cdcd7a60d" title="upcase" alt="" coords="495,655,559,682"/>
+<area shape="rect" id="node25" href="$dbsprs_8f.html#a115f4b725c9a25082da8a39e199486cf" title="dbsprs" alt="" coords="496,706,557,733"/>
+<area shape="rect" id="node26" href="$dbsdiags_8f.html#a15a17a1fbf3da59a37155705f6dc1d98" title="dbsdiags" alt="" coords="489,605,564,631"/>
+<area shape="rect" id="node27" href="$bur__brn_8c.html#a3c8b7f0fcc184328ecbdff756e8bb21a" title="loc" alt="" coords="635,605,674,631"/>
+<area shape="rect" id="node28" href="$rcdset_8f.html#a1dba8a40ee085d920a3ebb27fcd34a59" title="rcdset" alt="" coords="625,554,684,581"/>
+</map>

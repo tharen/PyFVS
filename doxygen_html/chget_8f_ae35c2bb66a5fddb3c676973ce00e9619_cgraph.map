@@ -1,0 +1,15 @@
+<map id="chget" name="chget">
+<area shape="rect" id="node2" href="$putgetsubs_8f.html#af12b5be375db0d3b1e6afd0b43065fb7" title="chread" alt="" coords="237,24,299,51"/>
+<area shape="rect" id="node6" href="$dbsppget_8f.html#ad06c59f1f8dc0afb11589bc7b1caf467" title="dbschget" alt="" coords="109,75,184,101"/>
+<area shape="rect" id="node14" href="$varget_8f.html#a3d8d451c06ca814745fc3519dcfc50a2" title="varchget" alt="" coords="111,125,182,152"/>
+<area shape="rect" id="node3" href="$stash_8f.html#a5b4d3948b1f946106ddaf4ba5e2ad524" title="chdsth" alt="" coords="499,49,560,76"/>
+<area shape="rect" id="node5" href="$cmdline_8f.html#a0772cb6ab1daa15981fb8fcb46971c27" title="fvsgetrtncode" alt="" coords="352,24,451,51"/>
+<area shape="rect" id="node4" href="$cmdline_8f.html#a079170808ee3336a99645e9e57dfe5a9" title="fvssetrtncode" alt="" coords="608,139,707,165"/>
+<area shape="rect" id="node7" href="$dbsopen_8f.html#a3e8dabe730ff2a86c085489e3e88b637" title="dbsopen" alt="" coords="233,125,303,152"/>
+<area shape="rect" id="node8" href="$dbsclose_8f.html#aed2197b8dac3e7cc05ea998c5322bca4" title="dbsclose" alt="" coords="364,75,439,101"/>
+<area shape="rect" id="node9" href="$upcase_8f.html#a412a50f91650f78ed984862cdcd7a60d" title="upcase" alt="" coords="369,125,433,152"/>
+<area shape="rect" id="node10" href="$dbsprs_8f.html#a115f4b725c9a25082da8a39e199486cf" title="dbsprs" alt="" coords="371,176,432,203"/>
+<area shape="rect" id="node11" href="$dbsdiags_8f.html#a15a17a1fbf3da59a37155705f6dc1d98" title="dbsdiags" alt="" coords="364,227,439,253"/>
+<area shape="rect" id="node12" href="$bur__brn_8c.html#a3c8b7f0fcc184328ecbdff756e8bb21a" title="loc" alt="" coords="510,176,549,203"/>
+<area shape="rect" id="node13" href="$rcdset_8f.html#a1dba8a40ee085d920a3ebb27fcd34a59" title="rcdset" alt="" coords="500,227,559,253"/>
+</map>

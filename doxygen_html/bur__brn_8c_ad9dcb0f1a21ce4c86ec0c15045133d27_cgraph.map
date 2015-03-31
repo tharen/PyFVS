@@ -1,0 +1,37 @@
+<map id="BRN_Run" name="BRN_Run">
+<area shape="rect" id="node2" href="$fof__sgv_8c.html#ac55e3c24f7fa0b7261640b74e552e8ae" title="SGV_Init" alt="" coords="160,208,235,235"/>
+<area shape="rect" id="node3" href="$fof__util_8c.html#ab66b71a54ead81a0010519c7e416121d" title="TPA_To_KiSq" alt="" coords="146,259,249,285"/>
+<area shape="rect" id="node4" href="$bur__brn_8c.html#aeaf6d18030a51d21834b053f0d970575" title="ES_Init" alt="" coords="165,309,229,336"/>
+<area shape="rect" id="node5" href="$bur__brn_8c.html#a77e0496a80295d6d9d299a46fd026421" title="EFM_Open" alt="" coords="153,360,241,387"/>
+<area shape="rect" id="node7" href="$bur__brn_8c.html#ad8a0468d7e378b40f035d2460a2a670f" title="Arrays" alt="" coords="167,411,227,437"/>
+<area shape="rect" id="node13" href="$bur__brn_8c.html#a1e21606fd54e4513593b43c01c47b798" title="DuffBurn" alt="" coords="327,1019,398,1045"/>
+<area shape="rect" id="node15" href="$bur__brn_8c.html#a420d4d97ace9bf91da7e20c07da4fb3f" title="Start" alt="" coords="172,563,223,589"/>
+<area shape="rect" id="node23" href="$bur__brn_8c.html#a074a9af8304e6bacfdd7eac776b8b11d" title="FireIntensity" alt="" coords="316,157,409,184"/>
+<area shape="rect" id="node24" href="$bur__brn_8c.html#a5d92351021a2e17933df1a375026af96" title="Duff_CPTS" alt="" coords="155,715,240,741"/>
+<area shape="rect" id="node25" href="$bur__brn_8c.html#aa1e8aec936f8cc9e962fa2c10bb91904" title="BRN_Intensity" alt="" coords="145,765,250,792"/>
+<area shape="rect" id="node26" href="$bur__brn_8c.html#aa5df4c584293df9241d1944005299795" title="ES_Calc" alt="" coords="161,816,234,843"/>
+<area shape="rect" id="node27" href="$bur__brn_8c.html#a6e645f98a9ef65557dbb2199ca98f58f" title="EFM_Write" alt="" coords="153,867,241,893"/>
+<area shape="rect" id="node28" href="$bur__bov_8c.html#acddc1562e97e5cc1faa5109d164ce5c6" title="BOV_Set_TimHea" alt="" coords="133,917,261,944"/>
+<area shape="rect" id="node29" href="$bur__brn_8c.html#a9903496d2a7a517d589171a5f9e9b4fc" title="Save_SGV" alt="" coords="155,968,240,995"/>
+<area shape="rect" id="node31" href="$bur__brn_8c.html#aba3deda9b9463debb5f59e51165098d1" title="Step" alt="" coords="173,613,222,640"/>
+<area shape="rect" id="node33" href="$bur__brn_8c.html#aad76dce261e096d6f3426ebe944e0b35" title="Summary" alt="" coords="323,259,402,285"/>
+<area shape="rect" id="node36" href="$bur__brn_8c.html#a929cf029018ec923e3e6e99dee6f5d59" title="EFM_Close" alt="" coords="152,1019,243,1045"/>
+<area shape="rect" id="node6" href="$bur__brn_8c.html#a91512eed9881759556bef7fcc28a7be5" title="Heat_Heading" alt="" coords="311,5,414,32"/>
+<area shape="rect" id="node8" href="$bur__brn_8c.html#a6487fedcaeda8740bb6c976309f875a7" title="Sorter" alt="" coords="334,56,391,83"/>
+<area shape="rect" id="node9" href="$bur__brn_8c.html#aaae4320cd30f02a6abb7f67b98d6f839" title="OverLaps" alt="" coords="325,309,401,336"/>
+<area shape="rect" id="node10" href="$bur__brn_8c.html#a3c8b7f0fcc184328ecbdff756e8bb21a" title="loc" alt="" coords="509,208,547,235"/>
+<area shape="rect" id="node11" href="$bur__brn_8c.html#af1264880bf4b0941f3855bd7d5cbf1aa" title="pow2" alt="" coords="502,816,554,843"/>
+<area shape="rect" id="node12" href="$bur__brn_8c.html#a0e70cfda35b505c318014730ce6ec883" title="Min" alt="" coords="507,335,549,361"/>
+<area shape="rect" id="node14" href="$bur__brn_8c.html#a2d9de390e0eb72f263bb065db39a0115" title="ff" alt="" coords="509,968,547,995"/>
+<area shape="rect" id="node16" href="$bur__brn_8c.html#a504f4cbfcd0a016af013c37922881c36" title="TempF" alt="" coords="331,563,394,589"/>
+<area shape="rect" id="node17" href="$bur__brn_8c.html#a006c3d4573fe3e3c2c7f67a12f8355ef" title="HeatExchange" alt="" coords="309,715,416,741"/>
+<area shape="rect" id="node18" href="$bur__brn_8c.html#a0037c55efa9a8b83966af3da8b1e9abf" title="Max" alt="" coords="505,563,551,589"/>
+<area shape="rect" id="node19" href="$bur__brn_8c.html#ae7ca47822caaac872f0dd0b8151fcec3" title="DryTime" alt="" coords="327,867,398,893"/>
+<area shape="rect" id="node21" href="$bur__brn_8c.html#a8c5a8e5847fb5f3d86d7d628e6d984a5" title="TIgnite" alt="" coords="333,917,393,944"/>
+<area shape="rect" id="node22" href="$bur__brn_8c.html#a72ad8a53c5a551c2ea5e4126b1b1c6bc" title="Get_Cons" alt="" coords="323,512,403,539"/>
+<area shape="rect" id="node20" href="$bur__brn_8c.html#a953d8bd7000bd606685e6dabfc02e52a" title="func" alt="" coords="505,867,551,893"/>
+<area shape="rect" id="node30" href="$fof__sgv_8c.html#a7f1df8580ffa5907452a570bb2dc349f" title="SGV_Set" alt="" coords="324,1069,401,1096"/>
+<area shape="rect" id="node32" href="$bur__brn_8c.html#ad286b369ed79f2f813fc1a6cc810acd2" title="Nint" alt="" coords="340,968,385,995"/>
+<area shape="rect" id="node34" href="$bur__bov_8c.html#a8271618b1be151d75c2760a918a511aa" title="BOV_PutRemAmt" alt="" coords="464,259,592,285"/>
+<area shape="rect" id="node35" href="$bur__bov_8c.html#ae077167ab00748b032ffb19f6419b55b" title="BOV_Last" alt="" coords="640,259,723,285"/>
+</map>

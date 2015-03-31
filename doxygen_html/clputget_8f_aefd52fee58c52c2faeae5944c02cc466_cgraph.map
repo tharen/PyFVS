@@ -1,0 +1,7 @@
+<map id="clget" name="clget">
+<area shape="rect" id="node2" href="$putgetsubs_8f.html#aae44ec2c04e88e7741becf1a58fbb4a8" title="ifread" alt="" coords="107,5,160,32"/>
+<area shape="rect" id="node6" href="$putgetsubs_8f.html#a1a2dc8b186f0d0a32a4902e0054088fb" title="bfread" alt="" coords="105,56,162,83"/>
+<area shape="rect" id="node3" href="$stash_8f.html#ab9c9d9d960b9ff5fd282ad87c8a9259e" title="dstash" alt="" coords="229,5,291,32"/>
+<area shape="rect" id="node5" href="$cmdline_8f.html#a0772cb6ab1daa15981fb8fcb46971c27" title="fvsgetrtncode" alt="" coords="211,56,309,83"/>
+<area shape="rect" id="node4" href="$cmdline_8f.html#a079170808ee3336a99645e9e57dfe5a9" title="fvssetrtncode" alt="" coords="357,5,456,32"/>
+</map>

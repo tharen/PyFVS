@@ -1,0 +1,10 @@
+<map id="Equ_20_RedPer" name="Equ_20_RedPer">
+<area shape="rect" id="node2" href="$fof__ci_8c.html#a1e39db4eab761116ee4cd066f1edd7c8" title="CI_isDuffWet" alt="" coords="173,81,270,108"/>
+<area shape="rect" id="node9" href="$fof__duf_8c.html#a7205d707b5f14ede315edab1b40fa43d" title="Equ_201_Per" alt="" coords="171,132,271,159"/>
+<area shape="rect" id="node3" href="$fof__ci_8c.html#a7313e8bc3f58e28d49fabdefd3d8c92d" title="CI_isDufEntire" alt="" coords="331,5,435,32"/>
+<area shape="rect" id="node6" href="$fof__ci_8c.html#a871f1b2863359cb57a51cb330a75af0b" title="CI_isDufLower" alt="" coords="331,56,435,83"/>
+<area shape="rect" id="node7" href="$fof__ci_8c.html#a4dc21adf226a404c9f6ad34dd4df3687" title="CI_isDufNFDR" alt="" coords="330,107,435,133"/>
+<area shape="rect" id="node8" href="$fof__ci_8c.html#ae0c9eed5d7856b096c50bc8d39544fa7" title="CI_isDufAdjNFDR" alt="" coords="321,157,445,184"/>
+<area shape="rect" id="node4" href="$fof__ansi_8h.html#ae4a2af8fafbd412557cbf887bb828c13" title="xstrcmpi" alt="" coords="493,81,565,108"/>
+<area shape="rect" id="node5" href="$fof__unix_8c.html#a597515502edd92634b421f7f86824375" title="xstrupr" alt="" coords="614,81,677,108"/>
+</map>
