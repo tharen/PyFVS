@@ -1,4 +1,25 @@
 //Adapted from: https://biogearsengine.com/documentation/bootstrap/js/doxy-boot.js
+
+function getOriginalWidthOfImg(img_element) {
+    var t = new Image();
+    t.src = (img_element.getAttribute ? img_element.getAttribute("src") : false) || img_element.src;
+    return t.width;
+}
+
+function resizeGraphs() {
+    $('div.dyncontent').find('img').each(function(){
+        var iw = getOriginalWidthOfImg($(this)[0]);
+        var cw = document.getElementsByClassName('container-fluid')[0].offsetWidth - 80;
+		if((iw) > cw){
+			$(this).css('width', '100%');
+        } else {
+            $(this).css('width', 'auto');
+        }
+    })
+}
+
+$(window).resize(resizeGraphs);
+
 $( document ).ready(function() {
 
     $("div.headertitle").addClass("page-header");
@@ -56,7 +77,7 @@ $( document ).ready(function() {
     $("div.ttname a").css("color", 'white');
     $("div.ttdef,div.ttdoc,div.ttdeci").addClass("panel-body");
 
-    $('#MSearchBox').parent().remove();
+    //$('#MSearchBox').parent().remove();
 
     $('div.fragment.well div.line:first').css('margin-top', '15px');
     $('div.fragment.well div.line:last').css('margin-bottom', '15px');
@@ -89,7 +110,7 @@ $( document ).ready(function() {
 	}
 	
 	$('div.dyncontent').find('img').each(function(){
-		if(getOriginalWidthOfImg($(this)[0]) > $('#content>div.container').width())
+		if(getOriginalWidthOfImg($(this)[0]) > document.getElementById('content').offsetWidth)
 			$(this).css('width', '100%');
 	});
 	
@@ -120,4 +141,9 @@ $( document ).ready(function() {
 			$(this).siblings('.memItemRight').remove();
 		}
 	});
+    
+    //init_search();
+    // Align call graphs to the left
+    $("div.center img").css('float', 'left');
+    
 });
