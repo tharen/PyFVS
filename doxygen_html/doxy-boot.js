@@ -1,19 +1,24 @@
 //Adapted from: https://biogearsengine.com/documentation/bootstrap/js/doxy-boot.js
 
 function getOriginalWidthOfImg(img_element) {
-		var t = new Image();
-		t.src = (img_element.getAttribute ? img_element.getAttribute("src") : false) || img_element.src;
-		return t.width;
-	}
+    var t = new Image();
+    t.src = (img_element.getAttribute ? img_element.getAttribute("src") : false) || img_element.src;
+    return t.width;
+}
 
-//Fix ME
-$(window).resize(function () {
+function resizeGraphs() {
     $('div.dyncontent').find('img').each(function(){
-		if(getOriginalWidthOfImg($(this)[0]) > document.getElementById('content').offsetWidth-90)
-        //if(getOriginalWidthOfImg($(this)[0]) > document.getElementById('top').offsetWidth)
+        var iw = getOriginalWidthOfImg($(this)[0]);
+        var cw = document.getElementsByClassName('container-fluid')[0].offsetWidth - 80;
+		if((iw) > cw){
 			$(this).css('width', '100%');
-	});
-});
+        } else {
+            $(this).css('width', 'auto');
+        }
+    })
+}
+
+$(window).resize(resizeGraphs);
 
 $( document ).ready(function() {
 
@@ -98,9 +103,14 @@ $( document ).ready(function() {
         $(this).siblings('.memItemLeft').attr('align', 'left');
     });
 	
+	function getOriginalWidthOfImg(img_element) {
+		var t = new Image();
+		t.src = (img_element.getAttribute ? img_element.getAttribute("src") : false) || img_element.src;
+		return t.width;
+	}
+	
 	$('div.dyncontent').find('img').each(function(){
-		if(getOriginalWidthOfImg($(this)[0]) > document.getElementById('content').offsetWidth-90)
-        //if(getOriginalWidthOfImg($(this)[0]) > document.getElementById('top').offsetWidth)
+		if(getOriginalWidthOfImg($(this)[0]) > document.getElementById('content').offsetWidth)
 			$(this).css('width', '100%');
 	});
 	
