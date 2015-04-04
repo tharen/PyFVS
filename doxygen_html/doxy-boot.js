@@ -22,8 +22,8 @@ $(window).resize(resizeGraphs);
 
 $( document ).ready(function() {
 
-    $("div.headertitle").addClass("page-header");
-    $("div.title").addClass("h1");
+    //$("div.headertitle").addClass("page-header");
+    //$("div.title").addClass("h1");
 
     $('li > a[href="index.html"] > span').before("<i class='fa fa-home'></i> ");
     $('li > a[href="index.html"] > span').text("Open-FVS");
@@ -41,9 +41,9 @@ $( document ).ready(function() {
     $('img[src="ftv2ns.png"]').replaceWith('<span class="label label-danger">N</span> ');
     $('img[src="ftv2cl.png"]').replaceWith('<span class="label label-danger">C</span> ');
 
-    $("ul.tablist").addClass("nav nav-pills nav-justified");
-    $("ul.tablist").css("margin-top", "0.5em");
-    $("ul.tablist").css("margin-bottom", "0.5em");
+    // $("ul.tablist").addClass("nav nav-pills nav-justified");
+    // $("ul.tablist").css("margin-top", "0.5em");
+    // $("ul.tablist").css("margin-bottom", "0.5em");
     $("li.current").addClass("active");
     $("iframe").attr("scrolling", "yes");
 
@@ -145,5 +145,32 @@ $( document ).ready(function() {
     //init_search();
     // Align call graphs to the left
     $("div.center img").css('float', 'left');
+
+    //Replace tabs with bootstrap sidebar
+    $("#navrow1").addClass("col-sm-3 col-md-2 sidebar");
+    $("#navrow1").removeClass("tabs");
+    $("ul.tablist").addClass("nav nav-sidebar");
     
+    //TODO: inset or add lines to separate
+    $("#navrow1").append($("#navrow2 > ul"))
+    $("#navrow2").remove()
+    $("#navrow1").append($("#navrow3 > ul"))
+    $("#navrow3").remove()
+    
+    //Move the page index to the main panel
+    var bar = $("#navrow4 > ul.tablist")
+    $("#navrow4 > ul.tablist").remove()
+    bar.addClass("pagination")
+    bar.removeClass("tablist")
+    
+    //Position the header
+    // TODO: Alternatively inject a bootstrap row 
+    $("[class^=header]").addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main');
+    
+    //Move contents to main panel
+    var foo = $("[class^=contents]")
+    foo.addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main');
+    foo.removeClass('contents')
+    foo.prepend(bar)
+   
 });
