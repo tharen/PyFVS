@@ -150,13 +150,27 @@ $( document ).ready(function() {
     $("#navrow1").addClass("col-sm-3 col-md-2 sidebar");
     $("#navrow1").removeClass("tabs");
     $("ul.tablist").addClass("nav nav-sidebar");
-
+    
+    //TODO: inset or add lines to separate
+    $("#navrow1").append($("#navrow2 > ul"))
+    $("#navrow2").remove()
+    $("#navrow1").append($("#navrow3 > ul"))
+    $("#navrow3").remove()
+    
+    //Move the page index to the main panel
+    var bar = $("#navrow4 > ul.tablist")
+    $("#navrow4 > ul.tablist").remove()
+    bar.addClass("pagination")
+    bar.removeClass("tablist")
+    
     //Position the header
     // TODO: Alternatively inject a bootstrap row 
     $("[class^=header]").addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main');
     
     //Move contents to main panel
-    $("[class^=contents]").addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main');
-    $("[class^=contents]").removeClass('contents')
-    
+    var foo = $("[class^=contents]")
+    foo.addClass('col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main');
+    foo.removeClass('contents')
+    foo.prepend(bar)
+   
 });
