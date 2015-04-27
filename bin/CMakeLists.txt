@@ -40,7 +40,7 @@
 # Generated binaries are placed in the Open-FVS subfolder.
 #
 # Additional cmake arguments:
-#   -DSTATIC_LINK=ON/OFF - Statically link FOFEM & SQL with the FVS binaries.
+#   -DSTATIC_LINK=ON/OFF - Statically link FFE & SQL with the FVS binaries.
 #   -DWITH_PYMOD=ON/OFF - Include Python module targets, default is OFF
 #   -DFVS_VARIANTS=<variant list> - Explicitly list the variants to include in
 #           the build as a semicolon seperated list of variant abbreviations,
@@ -65,10 +65,11 @@ set(source_list_dir ${CMAKE_CURRENT_LIST_DIR})
 # Define default values for build configuration options
 set(FVS_VARIANTS "all" CACHE STRING "FVS variants to configure")
 set(WITH_PYMOD OFF CACHE BOOL "Build the Python module module.")
-set(STATIC_LINK ON CACHE BOOL "Statically link FOFEM & SQL.")
+set(STATIC_LINK ON CACHE BOOL "Statically link FFE & SQL.")
 set(BUILD_TYPE DEBUG CACHE STRING "Select the build type (Debug; Release).")
 set(ENABLE_LTO OFF CACHE BOOL "Enable link time optimizations.")
 set(PROFILING OFF CACHE BOOL "Compile with profiling information.")
+set(BIT64 OFF CACHE BOOL "Compile for 64 bit architecture.")
 
 set(CMAKE_BUILD_TYPE ${BUILD_TYPE})
 message(STATUS "Build Type:" ${CMAKE_BUILD_TYPE})
@@ -99,14 +100,14 @@ elseif (
     
 elseif (CMAKE_GENERATOR MATCHES "Unix Makefiles")
     message(STATUS "Configure FVS build for ${CMAKE_GENERATOR} (gcc, gfortran)")
-    set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -static")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
+    set(CMAKE_CXX_FLAGS "-fPIC ${CMAKE_CXX_FLAGS}")
+    set(CMAKE_C_FLAGS "-fPIC ${CMAKE_C_FLAGS}")
+    set(CMAKE_Fortran_FLAGS "-fPIC ${CMAKE_Fortran_FLAGS}")
+    set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS}")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
     add_definitions(-DANSI -DCMPgcc)
 
 # TODO: Cygwin GNU toolchains
-
-# MinGW-64
-#SET(PREFIX x86_64-w64-mingw32)
 
 else ()
     message(FATAL_ERROR "Unknown compiler toolchain; exiting")    
@@ -114,16 +115,24 @@ else ()
 endif()
 
 if (CMAKE_COMPILER_IS_GNUCC)
-    
-    #TODO: Check for 32bit target
-    set(CMAKE_SHARED_LINKER_FLAGS "-m32 ${CMAKE_SHARED_LINKER_FLAGS}")
-    set(CMAKE_EXE_LINKER_FLAGS "-m32 ${CMAKE_EXE_LINKER_FLAGS}")
-    
     message(STATUS "Add GCC compiler flags.")
+    
+    # TODO: Additional architecture flags, -march=..., -mtune=, -mfpmath=sse, etc.
+    # TODO: Is this necessary MinGW-64
+    #       SET(PREFIX x86_64-w64-mingw32)
+    
+    # Set the architecture flags
+    if (BIT64)
+        set(CMAKE_SHARED_LINKER_FLAGS "-m64 ${CMAKE_SHARED_LINKER_FLAGS}")
+        set(CMAKE_EXE_LINKER_FLAGS "-m64 ${CMAKE_EXE_LINKER_FLAGS}")
+    else ()
+        set(CMAKE_SHARED_LINKER_FLAGS "-m32 ${CMAKE_SHARED_LINKER_FLAGS}")
+        set(CMAKE_EXE_LINKER_FLAGS "-m32 ${CMAKE_EXE_LINKER_FLAGS}")
+    endif()
 
     # BUILD_TYPE = Debug 
-    set (flags "-g -O0 -march=native -mfpmath=sse -msse -ffpe-trap=invalid,zero,underflow,overflow") #-fcheck=all -Wall")
-    set (CMAKE_Fortran_FLAGS_DEBUG "${flags}")
+    set (flags "-g -O0 -march=native -mfpmath=sse -msse") #-fcheck=all -Wall")
+    set (CMAKE_Fortran_FLAGS_DEBUG "${flags} -ffpe-trap=invalid,zero,underflow,overflow")
     set (CMAKE_CXX_FLAGS_DEBUG "${flags}")
     set (CMAKE_C_FLAGS_DEBUG "${flags}")
     set(CMAKE_EXE_LINKER_FLAGS "${flags} ${CMAKE_EXE_LINKER_FLAGS}")
@@ -149,7 +158,8 @@ if (CMAKE_COMPILER_IS_GNUCC)
     endif ()
     
     #TODO: Check for 32bit target
-    set(flags "-m32 -pipe")
+    set(flags "-pipe -pthread")
+    
     if (ENABLE_LTO)
         set(flags "${flags} -flto")
     endif()
@@ -161,7 +171,6 @@ if (CMAKE_COMPILER_IS_GNUCC)
 
 endif ()
 
-# TODO: Add architecture flags, -m32; -march=..., -mtune=, -mfpmath=sse, etc.
 ##-----END COMPILER FLAGS-----##
 
 #Process the variant list command line argument and make a list of source lists
@@ -256,29 +265,29 @@ else ()
 endif ()
 add_dependencies(sql_lib gen_dbstypedefs)
 
-#---FOFEM
-# Get the list of FOFEM C/C++ source files
-set(fofem_source)
+#---FFE
+# Get the list of FFE C/C++ source files
+set(ffe_source)
 foreach (fn ${source_file_list})
-    # FOFEM Source files are C/C++, excluding the SQL code
+    # FFE Source files are C/C++, excluding the SQL code
     if((${fn} MATCHES "(.*\\.c$)|(.*\\.cpp$)")
             AND (NOT ${fn} MATCHES "(.*mkdbsTypeDefs.c$)|(.*fvsSQL.c$)"))
-        list (APPEND fofem_source ${fn})  
+        list (APPEND ffe_source ${fn})  
     endif()
 endforeach(fn)
-list(REMOVE_DUPLICATES fofem_source)
+list(REMOVE_DUPLICATES ffe_source)
 
-# Compile the FOFEM object library
+# Compile the FFE object library
 if (STATIC_LINK EQUAL OFF)
-    add_library(fofem_lib SHARED ${fofem_source})
-    set_target_properties(fofem_lib PROPERTIES
+    add_library(ffe_lib SHARED ${ffe_source})
+    set_target_properties(ffe_lib PROPERTIES
             LINKER_LANGUAGE CXX
-            OUTPUT_NAME FVSfofem
+            OUTPUT_NAME FVSffe
             #TODO: is stdcall alias necessary
             #LINK_FLAGS -Wl,--add-stdcall-alias
             )
 else ()
-    add_library(fofem_lib OBJECT ${fofem_source})
+    add_library(ffe_lib OBJECT ${ffe_source})
 endif ()
 
 #---Common Objects
@@ -495,8 +504,8 @@ list(APPEND include_dirs ${CMAKE_CURRENT_BINARY_DIR})
 # Add the newly found include dirs
 include_directories(BEFORE ${include_dirs})
 
-# Remove source files already in common, FOFEM, SQL
-set(sl ${common_source} ${fofem_source} ${sql_source})
+# Remove source files already in common, FFE, SQL
+set(sl ${common_source} ${ffe_source} ${sql_source})
 foreach(fn ${sl})
     list(FIND fvs_source ${fn} i)
     if (NOT ${i} EQUAL -1)
@@ -530,24 +539,24 @@ if (STATIC_LINK EQUAL OFF)
     add_library(${fvs_lib} SHARED
 #        $<TARGET_OBJECTS:common_objs>
         $<TARGET_OBJECTS:${fvs_objs}>)
-    target_link_libraries(${fvs_lib} fofem_lib sql_lib)
+    target_link_libraries(${fvs_lib} ffe_lib sql_lib)
     
     add_executable (${fvs_exe} ${main_source}
 #        $<TARGET_OBJECTS:common_objs>
         $<TARGET_OBJECTS:${fvs_objs}>)
-    target_link_libraries(${fvs_exe} fofem_lib sql_lib)
+    target_link_libraries(${fvs_exe} ffe_lib sql_lib)
     
 else ()
     add_library(${fvs_lib} SHARED
 #        $<TARGET_OBJECTS:common_objs>
         $<TARGET_OBJECTS:${fvs_objs}>
-        $<TARGET_OBJECTS:fofem_lib>
+        $<TARGET_OBJECTS:ffe_lib>
         $<TARGET_OBJECTS:sql_lib>
         )
     add_executable (${fvs_exe} ${main_source}
 #        $<TARGET_OBJECTS:common_objs>
         $<TARGET_OBJECTS:${fvs_objs}>
-        $<TARGET_OBJECTS:fofem_lib>
+        $<TARGET_OBJECTS:ffe_lib>
         $<TARGET_OBJECTS:sql_lib>
         )
         
@@ -672,14 +681,14 @@ if (WITH_PYMOD)
         add_library(${pymod_name} SHARED ${f2py_wrappers}
 #            $<TARGET_OBJECTS:common_objs>
             $<TARGET_OBJECTS:${fvs_objs}>)
-        target_link_libraries(${pymod_name} fofem_lib sql_lib)
+        target_link_libraries(${pymod_name} ffe_lib sql_lib)
         
     else ()
         add_library(${pymod_name} SHARED ${f2py_wrappers}
 #            $<TARGET_OBJECTS:common_objs>
             $<TARGET_OBJECTS:${fvs_objs}>
             $<TARGET_OBJECTS:sql_lib>
-            $<TARGET_OBJECTS:fofem_lib>)
+            $<TARGET_OBJECTS:ffe_lib>)
             
         if (WIN32)
             target_link_libraries(${pymod_name} odbc32)
