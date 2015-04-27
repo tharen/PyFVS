@@ -78,11 +78,12 @@ c     Created in late 2011 by Nick Crookston, RMRS-Moscow
       use arrays_mod
       use fmparm_mod
       use prgprm_mod
+      use varcom_mod
       implicit none
 
 c     set and/or gets the named tree attributes
 c     name    = char string of the variable name, (case sensitive)
-c     nch     = the number of characters in "name" 
+c     nch     = the number of characters in "name"
 c     action  = char string that is one of "set" or "get" (case sensitive)
 c     ntrees  = the number of trees, length of data
 c     attr    = a vector of length data, always "double"
@@ -224,7 +225,7 @@ c
 
 c     set and/or gets the named species attributes
 c     name    = char string of the variable name, (case sensitive)
-c     nch     = the number of characters in "name" 
+c     nch     = the number of characters in "name"
 c     action  = char string that is one of "set" or "get" (case sensitive)
 c     attr    = a vector of length data, always "double"
 c     rtnCode = 0 is OK, 1= "name" not found,
@@ -287,7 +288,7 @@ c
 
 c     set and/or gets the named tree attributes
 c     name    = char string of the variable name, (case sensitive)
-c     nch     = the number of characters in "name" 
+c     nch     = the number of characters in "name"
 c     action  = char string that is one of "set" or "get" (case sensitive)
 c     attr    = a vector of length data, always "double"
 c     rtnCode = 0 is OK, 1=action is "get" and variable
@@ -931,14 +932,14 @@ C     add an activity to the schedule.
 
       subroutine fvsSVSObjData(name,nch,action,nobjs,attr,rtnCode)
       use contrl_mod
-      use prgprm_mod
       use svdata_mod
       use plot_mod
+      use prgprm_mod
       implicit none
 
 c     set and/or gets the named SVS object attributes
 c     name    = char string of the variable name, (case sensitive)
-c     nch     = the number of characters in "name" 
+c     nch     = the number of characters in "name"
 c     action  = char string that is one of "set" or "get" (case sensitive)
 c     nobjs   = the number of objects, length of data
 c     attr    = a vector of length data, always "double"
@@ -1270,7 +1271,7 @@ C     CWD section:
 
 c     set and/or gets the named FFE variables
 c     name    = char string of the variable name, (case sensitive)
-c     nch     = the number of characters in "name" 
+c     nch     = the number of characters in "name"
 c     action  = char string that is one of "set" or "get" (case sensitive)
 c     nobjs   = the number of objects, length of data
 c     attr    = a vector of length data, always "double"
@@ -1373,14 +1374,15 @@ c               4= the length of the "name" string was too big or small
 
       return
       end
-      
-      
+
+
       subroutine fvsUnitConversion(name,nch,value,rtnCode)
+      use metric_mod
       implicit none
-      
+
 c     get the named unit conversion
 c     name    = char string of the variable name (case sensitive)
-c     rtnCode = 0 is OK, 
+c     rtnCode = 0 is OK,
 c               1= "name" not found,
 
 !Python F2PY Interface Directives
@@ -1395,18 +1397,17 @@ c               1= "name" not found,
 !DEC$ ATTRIBUTES REFERENCE :: NAME, NCH, VALUE, RTNCODE
 #endif
 
-      include "METRIC.F77"
-      
+
       integer :: nch,rtnCode
       real(kind=8)       :: value
       character(len=15)  :: name
 
-      rtnCode = 0      
+      rtnCode = 0
       if (nch == 0 .or. nch > 15) then
         rtnCode = 1
         return
       endif
-        
+
       select case(name(1:nch))
 
       case ("CMtoIN")
@@ -1416,9 +1417,9 @@ c               1= "name" not found,
       case ("MtoIN")
         value = MtoIN
       case ("MtoFT")
-        value = MtoFT  
+        value = MtoFT
       case ("KMtoMI")
-        value = KMtoMI 
+        value = KMtoMI
       case ("M2toFT2")
         value = M2toFT2
       case ("HAtoACR")
@@ -1426,39 +1427,39 @@ c               1= "name" not found,
       case ("M3toFT3")
         value = M3toFT3
       case ("KGtoLB")
-        value = KGtoLB 
+        value = KGtoLB
       case ("TMtoTI")
-        value = TMtoTI 
+        value = TMtoTI
       case ("CtoF1")
-        value = CtoF1  
+        value = CtoF1
       case ("CtoF2")
-        value = CtoF2  
+        value = CtoF2
       case ("INtoCM")
-        value = INtoCM 
+        value = INtoCM
       case ("FTtoCM")
-        value = FTtoCM 
+        value = FTtoCM
       case ("INtoM")
-        value = INtoM  
+        value = INtoM
       case ("FTtoM")
-        value = FTtoM  
+        value = FTtoM
       case ("MItoKM")
-        value = MItoKM 
+        value = MItoKM
       case ("FT2toM2")
-        value = FT2toM2 
+        value = FT2toM2
       case ("ACRtoHA")
-        value = ACRtoHA 
+        value = ACRtoHA
       case ("FT3toM3")
-        value = FT3toM3 
+        value = FT3toM3
       case ("LBtoKG")
-        value = LBtoKG 
+        value = LBtoKG
       case ("TItoTM")
-        value = TItoTM 
+        value = TItoTM
       case ("FtoC1")
-        value = FtoC1 
+        value = FtoC1
       case ("FtoC2")
-        value = FtoC2  
+        value = FtoC2
       case ("BTUtoKJ")
-        value = BTUtoKJ       
+        value = BTUtoKJ
       case ("M2pHAtoFT2pACR")
         value = M2pHAtoFT2pACR
       case ("M3pHAtoFT3pACR")
@@ -1466,11 +1467,11 @@ c               1= "name" not found,
       case ("FT2pACRtoM2pHA")
         value = FT2pACRtoM2pHA
       case ("FT3pACRtoM3pHA")
-        value = FT3pACRtoM3pHA 
+        value = FT3pACRtoM3pHA
       case default
         rtnCode = 1
       end select
       return
       end
-      
+
 

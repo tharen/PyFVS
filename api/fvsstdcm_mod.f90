@@ -5,7 +5,6 @@ module fvsstdcm_mod
     !----------
     INTEGER KOLIST
     LOGICAL FSTOPEN
-    COMMON /FVSSTDCM/ KOLIST,FSTOPEN
     !----------
     !  DEFINITIONS OF VARIABLES IN 'FVSSTDCM' COMMON BLOCK:
     !----------

@@ -5,6 +5,5 @@ module screen_mod
     !----------
     LOGICAL LSCRN
     INTEGER JOSCRN
-    COMMON /SCREEN/ LSCRN,JOSCRN
     !-----END SEGMENT
 end module screen_mod

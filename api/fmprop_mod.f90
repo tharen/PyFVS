@@ -25,5 +25,4 @@ module fmprop_mod
       REAL     FAPROP(2,101,3,2,2)
       INTEGER  BIOGRP(MAXSP)
 
-      COMMON /FMBLK2/ FAPROP, BIOGRP
 end module fmprop_mod
