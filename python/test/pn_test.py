@@ -1,5 +1,5 @@
 """
-Demonstrate and test the use of the pyfvs package.
+Demonstrate usage of the pyfvs package.
 
 Created on Dec 5, 2014
 
@@ -7,10 +7,12 @@ Created on Dec 5, 2014
 """
 
 import os
+from matplotlib import pyplot
 
-import pylab
-
+import pyfvs
 import pyfvs.fvs
+
+pyfvs.fvs.log.setLevel('DEBUG')
 
 def test():
     # Config file for testing
@@ -18,10 +20,11 @@ def test():
     # The config file is used to initialize logging and FVS library paths.
     pyfvs.config_path = os.path.join(os.path.split(__file__)[0], 'pyfvs.cfg')
 
+    # As with commandline FVS a keyword file is required
     kwds = os.path.join(os.path.split(__file__)[0], 'pn_test.key')
 
     # Demonstrate the stochastic variability in the FVS routines.
-    iters = 10
+    iters = 50
     fvs = pyfvs.fvs.FVS('pnc', random=True)
 
     # Get species codes
@@ -34,11 +37,12 @@ def test():
         fvs.filclose()
 
         # Plot the BDFT volume
+        # get_summary is a helper method of the FVS class
         bdft = fvs.get_summary('merch bdft')
         years = fvs.get_summary('year')
-        pylab.plot(years, bdft)
+        pyplot.plot(years, bdft)
 
-    pylab.show()
+    pyplot.show(block=True)
 
 if __name__ == '__main__':
     test()

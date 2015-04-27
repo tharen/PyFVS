@@ -1,0 +1,26 @@
+1 ICON "./fvs.ico"
+
+2 VERSIONINFO
+FILEVERSION     1,0,0,0
+PRODUCTVERSION  1,0,0,0
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "040904E4"
+    BEGIN
+      VALUE "CompanyName", "Tod's Tools"
+      VALUE "FileDescription", "FVS with Python Extensions"
+      VALUE "FileVersion", "0.1a"
+      VALUE "InternalName", "pyfvs"
+      VALUE "LegalCopyright", "PyFVS"
+      VALUE "OriginalFilename", "pyfvspnc.pyd"
+      VALUE "ProductName", "PyFVS"
+      VALUE "ProductVersion", "0.1a"
+    END
+  END
+
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x409, 1252
+  END
+END
