@@ -6,7 +6,6 @@ module pden_mod
     !----------
           REAL          OVER(MAXSP,MAXPLT),BAAA(MAXPLT), &
                         OLDFNT,REGNBK,PCCF(MAXPLT),PTPA(MAXPLT)
-          COMMON /PDEN/ OVER,BAAA,PCCF,OLDFNT,REGNBK,PTPA
     !
     !       PCCF = POINT CCF, LOADED IN **DENSE**.
     !       PTPA = POINT TPA, LOADED IN **DENSE**.

@@ -5,6 +5,5 @@ module econ_mod
     !----------
     LOGICAL LECON,LECBUG
     INTEGER JOSUME
-    COMMON /ECON/ JOSUME,LECON,LECBUG
     !-----END SEGMENT
 end module econ_mod

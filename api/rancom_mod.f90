@@ -5,6 +5,5 @@ module rancom_mod
     !----------
     DOUBLE PRECISION S0,S1
     REAL             SS
-    COMMON /RANCOM/ S0,S1,SS
     !-----END SEGMENT
 end module rancom_mod

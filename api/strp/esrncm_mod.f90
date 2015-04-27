@@ -5,6 +5,5 @@ module esrncm_mod
     !----------
     DOUBLE PRECISION ESS0,ESS1
     REAL             ESSS
-    COMMON /ESRNCM/ ESS0,ESS1,ESSS
     !-----END SEGMENT
 end module esrncm_mod

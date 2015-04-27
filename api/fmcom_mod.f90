@@ -325,31 +325,6 @@ module fmcom_mod
       REAL     DBHC(MAXTRE),HTC(MAXTRE),CROWNWC(MAXTRE,0:5)
       INTEGER  ICYCRM,ITRNL
 
-      COMMON /FMCOM/                                                 &
-            ALLDWN, BURNYR, CANMHT, CBHCUT,                          &
-            COVTYP, CRBURN, CROWNW, CURKIL, CWD, CWD2B,              &
-            CWD2B2, CWDCUT, CWDNEW, CWDVOL, CWDCOV,                  &
-            DBHS, DECAYX, DENIH, DENIS, DEND, DKR, DKRCLS,           &
-            DKRDEF, DSPDBH,                                          &
-            FALLX, FLIVE, FIRKIL, FOLMC, FMPROB, FMTBA, NFMSVPX,     &
-            FMICR, FMKOD, FMSLOP,FTREAT,                             &
-            FUAREA, GROW, HARD, HARTYP, HARVYR, HTDEAD, HTIH,        &
-            HTIS, HTR1, HTR2, HTX, HTXSFT, ICANSP, ICBHMT,           &
-            ICYCRM,IFMYR1, IFMYR2, IFTYR, ISALVC, ISALVS, ISNGSM,    &
-            ITRNL,JCOUT, JFROUT,                                     &
-            JLOUT,  LANHED, LEAFLF,  LFMON, LFMON2, LFROUT,          &
-            LDYNFM, LIMBRK, LDHEAD, LSHEAD, LVWEST, MAXHT, MINHT,    &
-            NSNAG, NYRS, NZERO, OLDCOVTYP, OLDCRL, OLDHT, OLDCRW,    &
-            OLDICT,OLDICT2,OLDICTWT,                                 &
-            PBFRIH, PBFRIS, PBSCOR, PBSOFT, PBSIZE,                  &
-            PBSMAL, PBTIME, PBURNYR, PERCOV,                         &
-            PRDUFF, PRSNAG, PSOFT, PRPILE, SALVSPA,                  &
-            SCCF, SETDECAY, SNGNEW, SNPRCL, SPS, TCWD, TCWD2, TFALL, &
-            TODUFF, TONRMC, TONRMS, TONRMH,                          &
-            TOTACR, V2T, YRDEAD, LREMT, NSNAGSALV, HTDEADSALV,       &
-            SPSSALV, DBHSSALV, HTIHSALV, HTISSALV, HARDSALV,         &
-            PREMST,PREMCR,ISPCC,DBHC,HTC,CROWNWC
-
 !**********************************************************************
 !     COMMON BLOCK **FMCLCOM**
 !     VARIABLES RELATED TO THE EFFECT OF CLIMATE ON FFE PARAMETERS
