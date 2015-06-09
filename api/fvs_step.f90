@@ -35,6 +35,15 @@ module fvs_step
 
     contains
 
+    subroutine init_blkdata()
+        ! Initialize the variant parameters and arrays
+        ! TODO: This should probably be elevated to a toplevel routine.
+        ! TODO: Perhaps this should initialize whatever setcmdline is doing.
+        call blkdat()
+        call esblkd()
+        call cubrds()
+    end subroutine init_blkdata
+
     subroutine fvs_init(keywords, irtncd)
         ! Initialize an FVS run.  Extracted from fvs.f to break the execution
         ! into explicit components for improved interaction with external code.
@@ -69,10 +78,9 @@ module fvs_step
 
         character(len=100) :: fmt
 
-        ! Initialize the variant parameters and arrays
-        call blkdat()
-        call esblkd()
-        call cubrds()
+        ! Initialize parameters and arrays
+        ! TODO: This should probably be elevated to a toplevel call
+        call init_blkdata()
 
         ! Zero the API report arrays
         call init_tree_data()
