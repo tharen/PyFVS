@@ -1,7 +1,6 @@
       SUBROUTINE VOLS
       use plot_mod
       use arrays_mod
-      use arrays_mod, only: barkrat
       use contrl_mod
       use coeffs_mod
       use outcom_mod
@@ -119,8 +118,7 @@ C----------
 C----------
 C  IF NOT INITIAL SUMMARY, ADD DG TO DBH; ASSIGN D2H.
 C----------
-!      BARK=BRATIO(ISPC,D,H)
-      BARK=BARKRAT(I)
+      BARK=BRATIO(ISPC,D,H)
       IF(.NOT.LSTART) D=D+DG(I)/BARK
       D2H=D*D*H
 C**************************************************

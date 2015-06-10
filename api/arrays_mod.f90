@@ -11,7 +11,6 @@ module arrays_mod
             ISPECL(MAXTRE),KUTKOD(MAXTRE),DAMSEV(6,MAXTRE)
       REAL ABIRTH(MAXTRE),BFV(MAXTRE),CFV(MAXTRE),HT2TD(MAXTRE,2), &
             DBH(MAXTRE),DG(MAXTRE),HT(MAXTRE),                     &
-            barkrat(maxtre),                                       &
             OLDRN(MAXTRE),OLDPCT(MAXTRE),PCT(MAXTRE),PROB(MAXTRE), &
             WK1(MAXTRE),WK2(MAXTRE),WK3(MAXTRE),WK4(MAXTRE),       &
             WK5(MAXTRE),WK6(MAXTRE),ZRAND(MAXTRE),                 &

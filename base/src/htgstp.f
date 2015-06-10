@@ -2,7 +2,6 @@
       use contrl_mod
       use prgprm_mod
       use arrays_mod
-      use arrays_mod, only: barkrat
       implicit none
 C----------
 C  $Id$
@@ -87,8 +86,7 @@ C     LOAD HEIGHT AND CHECK HEIGHT RANGE.  IF OUT-OF-RANGE, THEN SKIP
 C     TREE RECORD.
 C
       H=HT(I)
-!      BRK=BRATIO(IS,DBH(I),H)
-      BRK=BARKRAT(I)
+      BRK=BRATIO(IS,DBH(I),H)
       IF (H.LE.HT1 .OR. H.GT.HT2) GOTO 100
 C
 C     IF A RANDOM NUMBER IS GREATER THAN THE PROBABILITY OF DAMAGE,

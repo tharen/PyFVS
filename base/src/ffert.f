@@ -1,6 +1,5 @@
       SUBROUTINE FFERT
       use contrl_mod
-      use arrays_mod, only: barkrat
       use plot_mod
       use arrays_mod
       use prgprm_mod
@@ -134,8 +133,7 @@ C
 C
       I = IND1(I3)
       D=DBH(I)
-!      BARKS=BRATIO(ISPC,D,HT(I))
-      BARKS=BARKRAT(I)
+      BARKS=BRATIO(ISPC,D,HT(I))
       IF (D .LE. 0.0) GOTO 35
 C
       BAL = (1.-(PCT(I)/100.))*BA

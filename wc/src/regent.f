@@ -3,7 +3,6 @@
       use multcm_mod
       use pden_mod
       use arrays_mod
-      use arrays_mod, only: barkrat
       use contrl_mod
       use coeffs_mod
       use outcom_mod
@@ -186,8 +185,7 @@ C----------
       K=I
       L=0
       H=HT(I)
-!      BARK=BRATIO(ISPC,D,H)
-      BARK=BARKRAT(I)
+      BARK=BRATIO(ISPC,D,H)
       IF(LSKIPH) THEN
         HTG(K)=0.0
         DGR=0.0
@@ -294,8 +292,7 @@ C----------
 C         APPLY USER SUPPLIED MULTIPLIERS, AND CHECK TO SEE IF
 C         COMPUTED VALUE IS WITHIN BOUNDS.
 C----------
-!          BARK=BRATIO(ISPC,D,H)
-          BARK=BARKRAT(I)
+          BARK=BRATIO(ISPC,D,H)
           IF(DEBUG)WRITE(JOSTND,*)' BARK,XRDGRO= ',BARK,XRDGRO
           IF((D.LT.0.).OR.(DG(K).LT.0.))THEN
             DG(K)=HTG(K)*0.2*BARK*XRDGRO

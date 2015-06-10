@@ -615,8 +615,6 @@ C
       PTBALT(ITRN)=PTBAA(NNID)
       IDTREE(ITRN)=IDCMP1+ITMP+ITRN
 
-      barkrat(itrn) = bratio(isp(itrn),dbh(itrn),ht(itrn))
-
       CALL MISPUTZ(ITRN,0)
 C
 C     CALL BLISTER RUST TO PROCESS PLANTED TREES.

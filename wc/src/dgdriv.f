@@ -3,7 +3,6 @@
       use plot_mod
       use arrays_mod
       use workcm_mod
-      use arrays_mod, only: barkrat
       use contrl_mod
       use coeffs_mod
       use prgprm_mod
@@ -181,8 +180,7 @@ C----------
       DO 40 I3=I1,I2
       I=IND1(I3)
       WKI=0.0
-!      D=DBH(I)*BRATIO(ISPC,DBH(I),HT(I))
-      D=DBH(I)*BARKRAT(I)
+      D=DBH(I)*BRATIO(ISPC,DBH(I),HT(I))
       DDS=EXP(WK2(I) + XDGROW) * WK4(I)
       DSQ=D*D
       WKI=(SQRT(DSQ+DDS)-D)
@@ -310,8 +308,7 @@ C----------
       IF(IDG.EQ.0.OR.IDG.EQ.2) GO TO 110
       DO 105 I=1,ITRN
       ISPC=ISP(I)
-!      DG(I)=DG(I)*BRATIO(ISPC,DBH(I),HT(I))
-      DG(I)=DG(I)*BARKRAT(I)
+      DG(I)=DG(I)*BRATIO(ISPC,DBH(I),HT(I))
   105 CONTINUE
   110 CONTINUE
 C----------
@@ -384,8 +381,7 @@ C  INITIALIZE OLDRN.
 C----------
       OLDRN(I)=0.0
       P=PROB(I)
-!      BARK=BRATIO(ISPC,DBH(I),HT(I))
-      BARK=BARKRAT(I)
+      BARK=BRATIO(ISPC,DBH(I),HT(I))
 C----------
 C  EXCLUDE TREES THAT ARE OUTSIDE OF THE GST DBH RANGE FROM THE
 C  POPULATION TOTALS.
@@ -690,8 +686,7 @@ C  CURRENT DIAMETER, REPLACE AND PRINT WARNING MESSAGE.
 C----------
       DO 220 I = 1,ITRN
       ISPC=ISP(I)
-!      BARK=BRATIO(ISPC,DBH(I),HT(I))
-      BARK=BARKRAT(I)
+      BARK=BRATIO(ISPC,DBH(I),HT(I))
       D=WK3(I)*BARK
       IF(DG(I).GT.0.0.AND.HT(I).GT.4.5) THEN
         IF(IDG.LT.2 .AND. DG(I).GT.DBH(I)*BARK) THEN

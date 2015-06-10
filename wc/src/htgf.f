@@ -3,7 +3,6 @@
       use multcm_mod
       use pden_mod
       use arrays_mod
-      use arrays_mod, only: barkrat
       use contrl_mod
       use coeffs_mod
       use outcom_mod
@@ -140,8 +139,7 @@ C
       AGMAX = 0.0
       HTMAX = 0.0
       HTMAX2 = 0.0
-!      BARK=BRATIO(ISPC,D,H)
-      BARK=BARKRAT(I)
+      BARK=BRATIO(ISPC,D,H)
       D2 = D + DG(I)/BARK
       IF (PROB(I).LE.0.0) GO TO 161
       IF(DEBUG)WRITE(JOSTND,*)' IN HTGF, CALLING FINDAG I= ',I
