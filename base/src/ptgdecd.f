@@ -3,7 +3,7 @@
       use prgprm_mod
       implicit none
 C----------
-C  $Id$
+C  $Id: ptgdecd.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
 C----------
 C
 C     DECODE THE POINT GROUP NAME CODE

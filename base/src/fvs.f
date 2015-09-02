@@ -48,6 +48,11 @@ C
 C     ******************     EXECUTION BEGINS     ******************
 C
       DEBUG=.FALSE.
+C-----------
+C  SEE IF WE NEED TO DO SOME DEBUG.
+C  NEEDED FOR STOP/RESTART DEBUG OPTION TO CONTINUE.
+C-----------
+      CALL DBCHK (DEBUG,'MAIN',4,0)
 
 C     Check the current return code, if -1 the cmdLine has never been processed.
 
@@ -406,7 +411,7 @@ C
       CALL DFBOUT
       CALL TMOUT
       CALL BWEOUT
-      CALL RDROUT
+C      CALL RDROUT ! RD output now handled by GENPRT 12/5/14 LD
       CALL BRROUT
 C
       CALL GENPRT

@@ -6,7 +6,7 @@
       use prgprm_mod
       implicit none
 C----------
-C  **SITSET--WC   DATE OF LAST REVISION:  05/11/11
+C  WC $ID$
 C----------
 C
 C THIS SUBROUTINE LOADS THE SITEAR ARRAY WITH A SITE INDEX FOR EACH

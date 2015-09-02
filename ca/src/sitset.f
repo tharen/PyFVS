@@ -6,7 +6,7 @@
       use prgprm_mod
       implicit none
 C----------
-C  **SITSET--CA   DATE OF LAST REVISION:  05/11/11
+C CA $Id$
 C----------
 C THIS SUBROUTINE LOADS THE SITEAR ARRAY WITH A SITE INDEX FOR EACH
 C SPECIES WHICH WAS NOT ASSIGNED A SITE INDEX BY KEYWORD.
@@ -208,7 +208,7 @@ C----------
 C  LOAD VOLUME DEFAULT MERCH. SPECS.
 C----------
       SELECT CASE(IFOR)
-      CASE(6,7)
+      CASE(6:10)
         DO I=1,MAXSP
         IF(TOPD(I) .LE. 0.) TOPD(I) = 4.5
         IF(BFTOPD(I) .LE. 0.) BFTOPD(I) = 4.5
