@@ -4,6 +4,7 @@
       use escomn_mod
       use esrncm_mod
       use eshap_mod
+      use contrl_mod, only : kwdfil
       implicit none
 C----------
 C   **ESINIT DATE OF LAST REVISION:   01/06/09

@@ -1,5 +1,12 @@
       SUBROUTINE VOLS
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use volstd_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **VOLS--OP    DATE OF LAST REVISION:   05/11/11
 C----------
@@ -17,36 +24,9 @@ C  NATCRS, OCFVOL, AND OBFVOL ARE ENTRY POINTS IN SUBROUTINE
 C  **VARVOL**, WHICH IS VARIANT SPECIFIC.
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
       INCLUDE 'GGCOM.F77'
 C
-C
       INCLUDE 'ORGANON.F77'
-C
-COMMONS
 C
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES.
@@ -187,7 +167,7 @@ C----------
       IF(CTKFLG .AND. TKILL .AND. VMAX .GT. 0.)
      1 CALL CFTOPK (ISPC,D,H,VN,VM,VMAX,LCONE,BARK,ITRUNC(I))
 C----------
-C  ORGANON: IF USING THE ORGVOLS DLL, THEN COMPUTE THE 
+C  ORGANON: IF USING THE ORGVOLS DLL, THEN COMPUTE THE
 C  MERCH CUBIC VOLUME USING THE VOLCAL SUBROUTINE
 C----------
       IF( LORGVOLS ) THEN
@@ -217,7 +197,7 @@ C----------
 C----------
 C  ORGANON: PERFORM A BASIC ERROR CHECK.
 C         INTEGER*4   VERROR(5)  ! VOLUME ERROR FLAG BUFFER
-C         INTEGER*4   TERROR(4)  ! TREE ERROR FLAG BUFFER          
+C         INTEGER*4   TERROR(4)  ! TREE ERROR FLAG BUFFER
 C         INTEGER*4   VWARNING(5) ! VOLUME WARNING FLAG BUFFER
 C         INTEGER*4   TWARNING   ! TREE VARIABLE WARNING FLAG
 C         INTEGER*4   IERROR     ! SOME GENERIC ERROR FLAG
@@ -227,7 +207,7 @@ C----------
         IF( ORGVOL_TWARNING .EQ. 1 ) THEN
           IF (DEBUG) WRITE(JOSTND,12) ICYC, I, ORGVOL_TWARNING
    12     FORMAT(' CALLING ORGANON DLL::VOLCAL::BETA, CYCLE=',I2,
-     &         ' IDX=',I2, 
+     &         ' IDX=',I2,
      &         ' TWARNING=',I2 )
         END IF
         IF( ORGVOL_IERROR .EQ. 1 ) THEN
@@ -236,15 +216,15 @@ C----------
      &          ' ORGVOL_IERROR=',I2 )
 C----------
 C  ORGANON: PROCESS THE VOLUME WARNINGS AND ERRORS ARRAYS
-C           VWARNING(5) AND VERROR(5) 
+C           VWARNING(5) AND VERROR(5)
 C----------
           DO Z = 1, 5
             IF( ORGVOL_VERROR(Z) .eq. 1 ) THEN
-               IF (DEBUG) WRITE(JOSTND,14) ICYC, I, ORGVOL_VERROR(Z), 
+               IF (DEBUG) WRITE(JOSTND,14) ICYC, I, ORGVOL_VERROR(Z),
      &                                       ORGVOL_VWARNING(Z)
    14          FORMAT(' CALLING ORGANON DLL::VOLCAL::BETA, CYCLE=',I2,
-     &              ' IDX=',I2, 
-     &              ' VERROR=',I2, 
+     &              ' IDX=',I2,
+     &              ' VERROR=',I2,
      &              ' VWARNING=',I2 )
             END IF
           END DO
@@ -256,13 +236,13 @@ C----------
             IF( ORGVOL_TERROR(Z) .EQ. 1 ) THEN
                IF (DEBUG) WRITE(JOSTND,16) ICYC, I, ORGVOL_TERROR(Z)
    16          FORMAT(' CALLING ORGANON DLL::VOLCAL::BETA, CYCLE=',I2,
-     &              ' IDX=',I2, 
+     &              ' IDX=',I2,
      &              ' TERROR=',I2 )
             END IF
           END DO
         END IF
 C-----------
-C  ORGANON: ASSIGN THE FVS INTERNAL VARIABLES 
+C  ORGANON: ASSIGN THE FVS INTERNAL VARIABLES
 C           TO THE VALUES SET BY THE ORGANON DLL
 C-----------
         VN      = VM     !! ASSIGN THIS TO THE TOTAL VOLUME
@@ -381,7 +361,7 @@ C----------
      5                  ORGVOL_TWARNING,ORGVOL_IERROR,
      6                  VM,BBFV)
 C-----------
-C  ORGANON: ASSIGN THE FVS INTERNAL VARIABLES 
+C  ORGANON: ASSIGN THE FVS INTERNAL VARIABLES
 C           TO THE VALUES SET BY THE ORGANON DLL
 C-----------
         BFV(I)  = BBFV

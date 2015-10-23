@@ -1,5 +1,14 @@
       SUBROUTINE MORTS
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use workcm_mod
+      use estree_mod
+      use contrl_mod
+      use coeffs_mod
+      use pden_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **MORTS--OP  DATE OF LAST REVISION:  08/13/15
 C----------
@@ -12,10 +21,10 @@ C  CONSTANTS.
 C
 C  IF THERE ARE SOME VALID ORGANON TREES IN THE STAND, THEN
 C  ORGANON MORTALITY RATES FOR EACH TREE RECORD (REGARDLESS OF IORG(i)
-C  VALUE) WERE LOADED IN THE CALL TO **EXECUTE** FROM **DGDRIV**. 
+C  VALUE) WERE LOADED IN THE CALL TO **EXECUTE** FROM **DGDRIV**.
 C  USE ORGANON RATES FOR ALL TREES; APPLY USER ADJUSTMENTS.
 C
-C  IF THERE ARE NO VALID ORGANON TREES, THEN ORGANON MORTALITY RATES HAVE 
+C  IF THERE ARE NO VALID ORGANON TREES, THEN ORGANON MORTALITY RATES HAVE
 C  NOT BEEN CALCULATED (**EXECUTE** WAS NOT CALLED); USE FVS MORTALITY LOGIC
 C----------
 C  SF , WF, GF, AF, RF,SS, NF, ES:     USE GF FROM NW ORGANON
@@ -31,44 +40,12 @@ C  PY:                                 USE PY FROM SW ORGANON
 C  DG, HT, CH:                         USE DG FROM NW ORGANON
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'ESTREE.F77'
-C
 C
       INCLUDE 'MULTCM.F77'
 C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'WORKCM.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
       INCLUDE 'ORGANON.F77'
 C
-COMMONS
 C----------
 C  DEFINITIONS:
 C
@@ -105,7 +82,7 @@ C----------
       DATA MVALUES/ 1.00, 1.500, 2.250, 3.375, 5.062/
       DATA MCLASS/ 1, 2, 2, 2, 2, 2, 3, 2, 3, 2, 4, 4, 3,
      & 3, 4, 3, 1, 1, 1, 1, 1, 4, 3, 4, 3, 5, 5, 5, 5, 4,
-     & 4, 5, 1, 1, 3, 3, 5, 1, 5/  
+     & 4, 5, 1, 1, 3, 3, 5, 1, 5/
 C
        DATA BETA /
      & 0.247354, 0.217481, 0.179705, 0.205647, 0.216823,
@@ -115,7 +92,7 @@ C
      & 0.216823, 0.216823, 0.216823, 0.216823, 0.216823,
      & 0.216823, 0.216823, 0.216823, 0.216823, 0.216823,
      & 0.216823, 0.216823, 0.216823, 0.216823, 0.216823,
-     & 0.216823, 0.216823, 0.216823, 0.216823/ 
+     & 0.216823, 0.216823, 0.216823, 0.216823/
 C
       DATA MYACTS/94,97/
       DATA PSP/ 10*0.0, 6*1.0, 14*0.0, 2*1.0, 7*0.0 /
@@ -124,7 +101,7 @@ C----------
 C THESE SETTINGS ARE FOR NWO MODEL TYPE; IF SMC MODEL TYPE THEN
 C CHANGE SOME OF THE SETTINGS FOR DF. THIS IS DONE BELOW.
 C----------
-      DATA MORTMAP/ 
+      DATA MORTMAP/
      & 2,2,2,2,2,2,2,4,4,2,
      & 4,4,4,4,4,1,1,3,3,3,                              ! DF NWO
 C SMC     & 4,4,4,4,4,4,1,3,3,3,                         ! DF SMC
@@ -133,26 +110,26 @@ C SMC     & 4,4,4,4,4,4,1,3,3,3,                         ! DF SMC
 C
       DATA BM0/
      & -7.60159    ,-7.60159    ,-7.60159    ,-7.60159    ,-7.60159   ,
-     & -7.60159    ,-7.60159    ,-1.922689902,-1.922689902,-7.60159   , 
+     & -7.60159    ,-7.60159    ,-1.922689902,-1.922689902,-7.60159   ,
      & -1.050000682,-1.050000682,-1.050000682,-1.050000682,-1.050000682,
-     & -4.13142    ,-4.13142    ,-0.761609   ,-0.761609   ,-0.761609  , 
-C SMC     & -3.12161659 ,-4.13142    ,-0.761609   ,-0.761609   ,-0.761609  ,     
+     & -4.13142    ,-4.13142    ,-0.761609   ,-0.761609   ,-0.761609  ,
+C SMC     & -3.12161659 ,-4.13142    ,-0.761609   ,-0.761609   ,-0.761609  ,
      & -2.976822456,-2.0        ,-2.0        ,-2.0        ,-4.317549852,
      & -2.0        ,-2.0        ,-0.0        ,-1.050000682,-1.050000682,
      & -1.050000682,-1.050000682,-4.072781265,-3.020345211,-3.020345211,
      & -3.020345211,-2.0,        -4.13142    ,-4.13412/
-C     
+C
       DATA BM1/
      & -0.200523   ,-0.200523   ,-0.200523   ,-0.200523   ,-0.200523  ,
-     & -0.200523   ,-0.200523   ,-0.136081990,-0.136081990,-0.200523  , 
+     & -0.200523   ,-0.200523   ,-0.136081990,-0.136081990,-0.200523  ,
      & -.194363402 ,-.194363402 ,-.194363402 ,-.194363402 ,-.194363402,
      & -1.13736    ,-1.13736    ,-0.529366   ,-0.529366   ,-0.529366  ,
-C SMC     & -0.44724396 ,-1.13736    ,-0.529366   ,-0.529366   ,-0.529366  , 
+C SMC     & -0.44724396 ,-1.13736    ,-0.529366   ,-0.529366   ,-0.529366  ,
      & 0.0         ,-0.5        ,-0.5        ,-0.5        ,-0.057696253,
      & -0.5        ,-0.5        ,-0.0        ,-.194363402 ,-.194363402,
      & -.194363402 ,-.194363402 ,-0.176433475,0.0         ,0.0        ,
      & 0.0         ,-0.5        ,-1.13736    ,-1.13736/
-C      
+C
       DATA BM2/
      & 0.0         ,0.0         ,0.0         ,0.0         ,0.0        ,
      & 0.0         ,0.0         ,0.002479863 ,0.002479863 ,0.0        ,
@@ -162,10 +139,10 @@ C
      & 0.015       ,0.015       ,0.0         ,0.003803100 ,0.003803100,
      & 0.003803100 ,0.003803100 ,0.0         ,0.0         ,0.0        ,
      & 0.0         ,0.015       ,0.0         ,0.0/
-C      
+C
       DATA BM3/
      & 0.0         ,0.0         ,0.0         ,0.0         ,0.0       ,
-     & 0.0         ,0.0         ,-3.178123293,-3.178123293,0.0       , 
+     & 0.0         ,0.0         ,-3.178123293,-3.178123293,0.0       ,
      & -3.557300286,-3.557300286,-3.557300286,-3.557300286,-3.557300286,
      & -0.823305   ,-0.823305   ,-4.74019    ,-4.74019    ,-4.74019   ,
 C SMC     & -2.48387172 ,-0.823305   ,-4.74019    ,-4.74019    ,-4.74019   ,
@@ -173,19 +150,19 @@ C SMC     & -2.48387172 ,-0.823305   ,-4.74019    ,-4.74019    ,-4.74019   ,
      & -3.0        ,-3.0        ,0.0         ,-3.557300286,-3.557300286,
      & -3.557300286,-3.557300286,-1.729453975,-8.467882343,-8.467882343,
      & -8.467882343,-3.0        ,-0.823305   ,-0.823305/
-C      
+C
       DATA BM4/
      & 0.0441333   ,0.0441333   ,0.0441333   ,0.0441333   ,0.0441333  ,
-     & 0.0441333   ,0.0441333   ,0.0         ,0.0         ,0.0441333  , 
+     & 0.0441333   ,0.0441333   ,0.0         ,0.0         ,0.0441333  ,
      & 0.003971638 ,0.003971638 ,0.003971638 ,0.003971638 ,0.003971638,
      & 0.0307749   ,0.0307749   ,0.0119587   ,0.0119587   ,0.0119587  ,
-C SMC     & 0.01843137  ,0.0307749   ,0.0119587   ,0.0119587   ,0.0119587  ,     
+C SMC     & 0.01843137  ,0.0307749   ,0.0119587   ,0.0119587   ,0.0119587  ,
      & 0.0         ,0.015       ,0.015       ,0.015       ,0.004861355,
      & 0.015       ,0.015       ,0.0         ,0.003971638 ,0.003971638,
      & 0.003971638 ,0.003971638 ,0.0         ,0.013966388 ,0.013966388,
      & 0.013966388 ,0.015       ,0.0307749   ,0.0307749/
 C
-      DATA BM5/                                                       
+      DATA BM5/
      & 0.00063849  ,0.00063849  ,0.00063849  ,0.00063849  ,0.00063849  ,
      & 0.00063849  ,0.00063849  ,0.004684133 ,0.004684133 ,0.00063849  ,
      & 0.005573601 ,0.005573601 ,0.005573601 ,0.005573601 ,0.005573601,
@@ -194,8 +171,8 @@ C SMC     & 0.01353918  ,0.00991005  ,0.00756365  ,0.00756365  ,0.00756365  ,
      & 0.0         ,0.01        ,0.01        ,0.01        ,0.00998129,
      & 0.01        ,0.01        ,0.0         ,0.005573601 ,0.005573601,
      & 0.005573601 ,0.005573601 ,0.012525642 ,0.009461545 ,0.009461545,
-     & 0.009461545 ,0.01        ,0.00991005  ,0.00991005/                     
-C 
+     & 0.009461545 ,0.01        ,0.00991005  ,0.00991005/
+C
 C-----------
 C  CHECK FOR DEBUG.
 C-----------
@@ -241,7 +218,7 @@ C FOR MODELING CLIMATE CHANGE.
 C----------
       CALL SDICAL(SDIMAX)
       IF(DEBUG)WRITE(JOSTND,*)'IN MORTS CYCLE= ',ICYC,'  BAMAX= ',
-     &BAMAX,'  SDIMAX= ',SDIMAX 
+     &BAMAX,'  SDIMAX= ',SDIMAX
 C----------
 C  ESTIMATE QUADRATIC MEAN DIAMETER 5 YEARS HENCE.
 C----------
@@ -263,7 +240,7 @@ C----------
       SD2SQ=SD2SQ+P*(D*D+CIOBDS)
       IF(LZEIDE)THEN
         SUMDR10=SUMDR10+P*(D+G)**1.605
-      ENDIF 
+      ENDIF
       IF(DEBUG)WRITE(JOSTND,*)'SUMDR10,G= ',
      &SUMDR10,G
       T=T+P
@@ -271,7 +248,7 @@ C----------
       DQ10=SQRT(SD2SQ/T)
       IF(LZEIDE)THEN
         DQ10=(SUMDR10/T)**(1/1.605)
-      ENDIF 
+      ENDIF
       IF(DEBUG)WRITE(JOSTND,*)'SD2SQ,SUMDR10,DQ10= ',
      &SD2SQ,SUMDR10,DQ10
 C----------
@@ -332,7 +309,7 @@ C----------
         WK2(I) = MORTEXP(I)
         WKI = MORTEXP(I)
         IF(DEBUG) WRITE(JOSTND,*) ' IN MORTS I,ISPC,D,WK2,IORG= ',
-     *  I,ISPC,D,WK2(I),IORG(I) 
+     *  I,ISPC,D,WK2(I),IORG(I)
         GO TO 39
       ENDIF
 C
@@ -354,13 +331,13 @@ C----------
       IF(D.LE.5.0)IP=2
 C----------
 C WC AND PN MORTALITY FUNCTIONS WERE REPLACED WITH ORGANON NWO AND A
-C FEW FROM ORGANON SWO BECAUSE OF ISSUES THAT WERE FOUND THAT THE 
+C FEW FROM ORGANON SWO BECAUSE OF ISSUES THAT WERE FOUND THAT THE
 C OLD EQUATIONS WERE APPLYING MORTALITY TOO EQUALLY BY SIZE, TREE DBH
 C COEFFICIENT IS MORE SIGNIFICANT IN THE ORGANON EQUATIONS AND SEEMS
 C TO WORK BETTER. ESM07/10/2014
 C IF USERS WANTS TO TEST SMC EQUATION FOR DF SEE COMMENTED OUT
 C CODE IN DATA STATEMETNS.
-C OREGON WHITE OAK USES A DIFFERENT EQUATION BUILT 
+C OREGON WHITE OAK USES A DIFFERENT EQUATION BUILT
 C BY HARRINGTON AND GOULD.
 C SMALL TREES USE EQUATIONS BY GOULD AND HARRINGTON
 C----------
@@ -371,14 +348,14 @@ C----------
       XSITE1=SITEAR(16)
 C----------
 C IF SMC MODEL TYPE USE MORTMAP(26)=4 INSTEAD OF 1
-C----------    
+C----------
       IMRTMP = MORTMAP(ISPC)
       RBM0=BM0(ISPC)
       RBM1=BM1(ISPC)
       RBM2=BM2(ISPC)
       RBM3=BM3(ISPC)
-      RBM4=BM4(ISPC) 
-      RBM5=BM5(ISPC)    
+      RBM4=BM4(ISPC)
+      RBM5=BM5(ISPC)
       IF(IMODTY .EQ. 3 .AND. ISPC .EQ.16) THEN
         IMRTMP=4
         RBM0 = -3.12161659
@@ -387,9 +364,9 @@ C----------
         RBM4 = 0.01843137
         RBM5 = 0.01353918
       ENDIF
-C 
+C
       SELECT CASE(IMRTMP)
-        CASE(1)  
+        CASE(1)
           RIP = RBM0 + RBM1*D**.5 + RBM3*CR**.25 +
      &        RBM4*(XSITE1+4.5) + RBM5*BAL
           RIP = (1.0/(1.0+EXP(-(RIP))))                         !5 yr RIP
@@ -422,14 +399,14 @@ C
       END SELECT
 C----------
 C SMALL-TREE MORTALITY MODEL DEVELOPED BY GOULD AND HARRINGTON
-C----------  
+C----------
       IF (D .LT. 3.0) THEN
         RELHT = 0.0
         IF(AVH .GT. 0.0) RELHT=HT(I)/AVH
         IF(RELHT .GT. 1.5)RELHT=1.5
         HBH = HT(I)
         IF (HBH .GE. 4.5) HBH = 4.5
-        DBHA = D+BETA(ISPC)*HBH  
+        DBHA = D+BETA(ISPC)*HBH
         PTBAL=PTBALT(I)
         ACLASS = MCLASS(ISPC)
         AVALUE = MVALUES(ACLASS)
@@ -489,12 +466,12 @@ C----------
       ENDIF
 C----------
 C  RECALCULATE VALUES AFTER MORTALITY HAS BEEN APPLIED
-C---------- 
+C----------
       TA=TA+(PROB(I)-WKI)
       WK2(I)=WKI
       IF(DEBUG)WRITE(JOSTND,*)'IN MORTS INITIAL PASS: IXX WKI WK2=',
      &I,WKI,WK2(I)
-   40 CONTINUE 
+   40 CONTINUE
    50 CONTINUE
       GOTO 59
 C----------
@@ -519,9 +496,9 @@ C----------
 C      IF ((SDIA.LT.SDIMAX).AND.(BAA.LT.SDIMAX*0.65+25)) GO TO 70
       PASS=PASS+1
       SD2SQA=0
-      SUMDR10=0   
+      SUMDR10=0
       TA=0
-  59  CONTINUE    
+  59  CONTINUE
       DO 60 I=1,ITRN
       WKI=WK2(I)*(PASS)
       IF(WKI.GT.PROB(I)) WKI=PROB(I)
@@ -529,7 +506,7 @@ C      IF ((SDIA.LT.SDIMAX).AND.(BAA.LT.SDIMAX*0.65+25)) GO TO 70
       SD2SQA=SD2SQA+(PROB(I)-WKI)*(DBH(I)*DBH(I)+CIOBDS1(I))
       IF(LZEIDE)THEN
         SUMDR10=SUMDR10+(PROB(I)-WKI)*(DBH(I)+G1(I))**1.605
-      ENDIF 
+      ENDIF
       TA=TA+(PROB(I)-WKI)
       WKII(I)=WKI
       IF(DEBUG)WRITE(JOSTND,*)'IN MORT PASS,I,DBH,WKI,WKIT2,SD2SQA,
@@ -540,7 +517,7 @@ C----------
 C  END OF TREE LOOPING.  PRINT DEBUG INFO IF DESIRED.
 C----------
    70 CONTINUE
-      DO 80 I=1,ITRN 
+      DO 80 I=1,ITRN
       IF (PASS.GT.1) WK2(I)=WKII(I)
       IF(.NOT.DEBUG) GO TO 80
       PRES=PROB(I)-WK2(I)
@@ -564,7 +541,6 @@ C  COMPUTE THE CLIMATE-PREDICTED MORTALITY RATES BY SPECIES
 C---------
       CALL CLMORTS
 C
-C
 C----------
 C  COMPUTE THE FIXMORT OPTION.  LOOP OVER ALL SCHEDULED FIXMORT'S
 C  LINCL IS USED TO INDICATE WHETHER A TREE GETS AFFECTED OR NOT
@@ -587,7 +563,7 @@ C----------
             IF(PRM(5).LT.3.)THEN
                IF(PRM(2).GT. 1.0)PRM(2)=1.0
                IF(PRM(2).LT. 0.0)PRM(2)=0.0
-            ENDIF 
+            ENDIF
             IF (PRM(5).EQ.1.0) THEN
                IP=2
             ELSEIF (PRM(5).EQ.2.0) THEN

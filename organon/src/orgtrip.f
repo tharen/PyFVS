@@ -1,19 +1,14 @@
       SUBROUTINE ORGTRIP(I,ITFN)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **ORGTRIP  ORGANON--DATE OF LAST REVISION:  04/05/2015
 C----------
 C
 C     TRIPLES TREE VARIABLES NEEDED FOR ORGANON PROCESSING.
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ORGANON.F77'
 C
-COMMONS
 C----------
 C
       INTEGER I,ITFN
@@ -21,4 +16,4 @@ C
       IORG(ITFN)=IORG(I)
 C
       RETURN
-      END       
+      END

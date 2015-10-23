@@ -1,5 +1,9 @@
       SUBROUTINE FMCBA (IYR,ISWTCH)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMCBA   FIRE-OC-DATE OF LAST REVISION:  06/15/15
 C----------
@@ -32,13 +36,9 @@ C     CALLED FROM: FMMAIN
 C  Common block variables and parameters:
 
 C     Parameter include files.
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'FMPARM.F77'
 
 C     Common include files.
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'FMCOM.F77'
       INCLUDE 'FMFCOM.F77'
 
@@ -84,7 +84,7 @@ C     OR COLD (3).  (MAPPING PROVIDED BY KIM MELLEN-MCLEAN.)
      & 2, 2, 2, 2, 1, 1, 2, 2, 2, 2,
      & 2, 2, 2, 2, 1, 2, 2, 2, 1, 2/
 
-C     EACH CA HABITAT CODE (in R6) MAPS TO EITHER WET (1), MESIC (2) OR DRY (3).  
+C     EACH CA HABITAT CODE (in R6) MAPS TO EITHER WET (1), MESIC (2) OR DRY (3).
 C    (MAPPING PROVIDED BY KIM MELLEN-MCLEAN.)
 
       DATA (CAWMD(I), I=   1,  90) /
@@ -98,7 +98,7 @@ C    (MAPPING PROVIDED BY KIM MELLEN-MCLEAN.)
      & 2, 2, 2, 2, 3, 3, 1, 2, 2, 2,
      & 2, 2, 2, 2, 3, 2, 2, 2, 3, 2/
 
-      DATA (((DKRADJ(I,J,K), K=1,3), J=1,3), I=1,3) /           
+      DATA (((DKRADJ(I,J,K), K=1,3), J=1,3), I=1,3) /
      &  1.7,    2,  1.7, 1.49, 1.91, 1.49,  0.75, 0.85,  0.75,
      & 1.35, 1.85, 1.35,    1,  1.7,    1, 0.875,  1.2, 0.875,
      & 1.21, 1.79, 1.21, 1.14, 1.76, 1.14,  0.75, 0.85,  0.75/
@@ -581,9 +581,9 @@ C       STEPHANIE REBAIN, 2003).
 C       DECAY RATES IN R5 ARE SUBSEQUENTLY MODIFIED BY A
 C       MULTIPLIER BASED ON R5 SITE CODE .
 C
-C       CA R6 DECAY RATES BASED ON KIM MELLEN-MCLEAN'S CWD MODEL.  
+C       CA R6 DECAY RATES BASED ON KIM MELLEN-MCLEAN'S CWD MODEL.
 C       (RATES FOR SO WERE USED HERE.)
-C       DECAY RATES IN R6 ARE SUBSEQUENTLY MODIFIED BY A MULTIPLIER 
+C       DECAY RATES IN R6 ARE SUBSEQUENTLY MODIFIED BY A MULTIPLIER
 C       BASED ON HABITAT TYPE.
 
         IF (KODFOR .GE. 500 .AND. KODFOR .LT. 600) THEN
@@ -603,8 +603,8 @@ C       BASED ON HABITAT TYPE.
             ENDDO
           ENDDO
 
-        ELSE ! Oregon 
-        
+        ELSE ! Oregon
+
 C       DECAY RATES BASED ON WORKSHOP RESULTS FOR KIM MELLEN-MCLEAN'S CWD MODEL
 C       FIRST BASE RATES ARE SET (BY DECAY RATE CLASS) AND THEN THEY ARE ADJUSTED
 C       BASED ON HABITAT TYPE (TEMPERATURE AND MOISTURE CATEGORY)
@@ -618,7 +618,7 @@ C       BASED ON HABITAT TYPE (TEMPERATURE AND MOISTURE CATEGORY)
           DKRT(7,1) = 0.019  ! 20 - 35"
           DKRT(8,1) = 0.019  ! 35 - 50"
           DKRT(9,1) = 0.019  !  > 50"
-          
+
           DKRT(1,2) = 0.081 ! < 0.25"
           DKRT(2,2) = 0.081 ! 0.25 - 1"
           DKRT(3,2) = 0.081 ! 1 - 3"
@@ -628,7 +628,7 @@ C       BASED ON HABITAT TYPE (TEMPERATURE AND MOISTURE CATEGORY)
           DKRT(7,2) = 0.025  ! 20 - 35"
           DKRT(8,2) = 0.025  ! 35 - 50"
           DKRT(9,2) = 0.025  !  > 50"
-          
+
           DKRT(1,3) = 0.090 ! < 0.25"
           DKRT(2,3) = 0.090 ! 0.25 - 1"
           DKRT(3,3) = 0.090 ! 1 - 3"
@@ -637,8 +637,8 @@ C       BASED ON HABITAT TYPE (TEMPERATURE AND MOISTURE CATEGORY)
           DKRT(6,3) = 0.033  ! 12 - 20"
           DKRT(7,3) = 0.033  ! 20 - 35"
           DKRT(8,3) = 0.033  ! 35 - 50"
-          DKRT(9,3) = 0.033  !  > 50"      
-          
+          DKRT(9,3) = 0.033  !  > 50"
+
           DKRT(1,4) = 0.113 ! < 0.25"
           DKRT(2,4) = 0.113 ! 0.25 - 1"
           DKRT(3,4) = 0.113 ! 1 - 3"
@@ -648,17 +648,17 @@ C       BASED ON HABITAT TYPE (TEMPERATURE AND MOISTURE CATEGORY)
           DKRT(7,4) = 0.058  ! 20 - 35"
           DKRT(8,4) = 0.058  ! 35 - 50"
           DKRT(9,4) = 0.058  !  > 50"
-          
+
           TEMP = CAHMC(ITYPE)
           MOIST = CAWMD(ITYPE)
-          
+
           DO I = 1,9
             DO J = 1,4
               IF (I .LE. 3) THEN
                 K = 1
-              ELSEIF (I .LE. 5) THEN 
+              ELSEIF (I .LE. 5) THEN
                 K = 2
-              ELSE 
+              ELSE
                 K = 3
               ENDIF
               DKRT(I,J) = DKRT(I,J)*DKRADJ(TEMP,MOIST,K)
@@ -671,8 +671,8 @@ C       in this case, bump up the decay rate of the smaller wood to that of the 
 
           DO I = 9,2,-1
             DO J = 1,4
-              IF ((DKRT(I,J)-DKRT(I-1,J)) .GT. 0) THEN 
-                  DKRT(I-1,J) = DKRT(I,J)                         
+              IF ((DKRT(I,J)-DKRT(I-1,J)) .GT. 0) THEN
+                  DKRT(I-1,J) = DKRT(I,J)
               ENDIF
             ENDDO
           ENDDO
@@ -706,13 +706,13 @@ C     IF FUELMULT WAS USED, USE THE MULTIPLIER WITH THE DEFAULT RATES.
                   DKR(I,J) = DKRT(I,J)
                 ELSE
                   DKR(I,J) = -1*DKR(I,J)*DKRT(I,J)
-                ENDIF  
+                ENDIF
               ENDIF
             ENDDO
           ENDDO
           DO I = 1,10
             DO J = 1,4
-              IF (PRDUFF(I,J) .LT. 0.0) PRDUFF(I,J) = PRDUFFT(I,J) 
+              IF (PRDUFF(I,J) .LT. 0.0) PRDUFF(I,J) = PRDUFFT(I,J)
               TODUFF(I,J) = DKR(I,J) * PRDUFF(I,J)
             ENDDO
           ENDDO
@@ -735,14 +735,14 @@ C       ONLY DO THIS IF DURING THE NORMAL CALL, NOT FROM SVSTART
             YSR(I) = YS(IXS(J))
             J=J-1
           ENDDO
-          
+
           DCYMLT = ALGSLP(ALGSLP(SITEAR(ISISP),XSR,YSR,8),XD,YD,8)
-          
+
           DO I = 1,MXFLCL
             DO J = 1,4
               IF (SETDECAY(I,J) .LT. 0) THEN
                 DKR(I,J) = DKR(I,J) * DCYMLT
-                IF (I .LE. 10) TODUFF(I,J) = DKR(I,J) * PRDUFF(I,J) 
+                IF (I .LE. 10) TODUFF(I,J) = DKR(I,J) * PRDUFF(I,J)
               ENDIF
             ENDDO
           ENDDO
@@ -763,19 +763,19 @@ C       IN WS,NC,CA VARIANTS, THE TOP 2 SPECIES ARE USED TO INTIALIZE THE POOLS
             ENDIF
           ENDDO
         ENDDO
-        
+
 C       CHANGE THE INITIAL FUEL LEVELS BASED ON PHOTO SERIES INFO INPUT
 
         CALL OPFIND(1,MYACT(2),J)
         IF (J .GT. 0) THEN
           CALL OPGET(J,2,JYR,IACTK,NPRM,PRMS)
           IF ((PRMS(1) .GE. 0) .AND. (PRMS(2) .GE. 0)) THEN
-            CALL FMPHOTOVAL(NINT(PRMS(1)), NINT(PRMS(2)), FOTOVAL, 
+            CALL FMPHOTOVAL(NINT(PRMS(1)), NINT(PRMS(2)), FOTOVAL,
      >                      FOTOVALS)
             DO I = 1, MXFLCL
               IF (FOTOVAL(I) .GE. 0) STFUEL(I,2) = FOTOVAL(I)
               IF (I .LE. 9) STFUEL(I,1) = FOTOVALS(I)
-            ENDDO                 
+            ENDDO
 
 C           IF FOTOVAL(1) IS NEGATIVE, THEN AN INVALID CODE WAS ENTERED.
 C           DON'T MARK EVENT DONE IF THIS IS A CALL FROM SVSTART--WILL
@@ -790,7 +790,7 @@ C           NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.
             CALL RCDSET (2,.TRUE.)
           ENDIF
         ENDIF
-        
+
 C       CHANGE THE INITIAL FUEL LEVELS BASED ON INPUT FROM THE USER
 C       FIRST DO FUELHARD (FUELINIT) THEN FUELSOFT
 
@@ -803,23 +803,23 @@ C       FIRST DO FUELHARD (FUELINIT) THEN FUELSOFT
           IF (PRMS(5) .GE. 0) STFUEL(6,2) = PRMS(5)
           IF (PRMS(6) .GE. 0) STFUEL(10,2) = PRMS(6)
           IF (PRMS(7) .GE. 0) STFUEL(11,2) = PRMS(7)
-          IF (PRMS(8) .GE. 0) STFUEL(1,2) = PRMS(8)          
-          IF (PRMS(9) .GE. 0) STFUEL(2,2) = PRMS(9)           
+          IF (PRMS(8) .GE. 0) STFUEL(1,2) = PRMS(8)
+          IF (PRMS(9) .GE. 0) STFUEL(2,2) = PRMS(9)
           IF (PRMS(1) .GE. 0) THEN
             IF ((PRMS(8) .LT. 0) .AND. (PRMS(9) .LT. 0)) THEN
               STFUEL(1,2) = PRMS(1) * 0.5
               STFUEL(2,2) = PRMS(1) * 0.5
-            ENDIF                 
+            ENDIF
             IF ((PRMS(8) .LT. 0) .AND. (PRMS(9) .GE. 0)) THEN
               STFUEL(1,2) = MAX(PRMS(1) - PRMS(9),0.)
-            ENDIF  
+            ENDIF
             IF ((PRMS(8) .GE. 0) .AND. (PRMS(9) .LT. 0)) THEN
               STFUEL(2,2) = MAX(PRMS(1) - PRMS(8),0.)
-            ENDIF  
-          ENDIF                
-          IF (PRMS(10) .GE. 0) STFUEL(7,2) = PRMS(10) 
-          IF (PRMS(11) .GE. 0) STFUEL(8,2) = PRMS(11) 
-          IF (PRMS(12) .GE. 0) STFUEL(9,2) = PRMS(12)   
+            ENDIF
+          ENDIF
+          IF (PRMS(10) .GE. 0) STFUEL(7,2) = PRMS(10)
+          IF (PRMS(11) .GE. 0) STFUEL(8,2) = PRMS(11)
+          IF (PRMS(12) .GE. 0) STFUEL(9,2) = PRMS(12)
 
 C         DON'T MARK EVENT DONE IF THIS IS A CALL FROM SVSTART--WILL
 C         NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.
@@ -837,9 +837,9 @@ C         NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.
           IF (PRMS(4) .GE. 0) STFUEL(4,1) = PRMS(4)
           IF (PRMS(5) .GE. 0) STFUEL(5,1) = PRMS(5)
           IF (PRMS(6) .GE. 0) STFUEL(6,1) = PRMS(6)
-          IF (PRMS(7) .GE. 0) STFUEL(7,1) = PRMS(7)          
-          IF (PRMS(8) .GE. 0) STFUEL(8,1) = PRMS(8)                           
-          IF (PRMS(9) .GE. 0) STFUEL(9,1) = PRMS(9)         
+          IF (PRMS(7) .GE. 0) STFUEL(7,1) = PRMS(7)
+          IF (PRMS(8) .GE. 0) STFUEL(8,1) = PRMS(8)
+          IF (PRMS(9) .GE. 0) STFUEL(9,1) = PRMS(9)
 
 C         DON'T MARK EVENT DONE IF THIS IS A CALL FROM SVSTART--WILL
 C         NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.

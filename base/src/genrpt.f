@@ -3,7 +3,7 @@
       use prgprm_mod
       implicit none
 C----------
-C  $Id$
+C  $Id: genrpt.f 996 2013-07-26 20:32:02Z drobinsonessa@gmail.com $
 C----------
 C
 C     THIS ROUTINE HANDLES MULTIPLE PRINT REPORTS.  THAT IS

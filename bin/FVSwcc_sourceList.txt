@@ -19,12 +19,12 @@
 ../api/varcom_mod.f90
 ../api/outcom_mod.f90
 ../api/volstd_mod.f90
+../api/svdata_mod.f90
 ../api/fmparm_mod.f90
 ../api/fmcom_mod.f90
 ../api/fmfcom_mod.f90
 ../api/fmprop_mod.f90
 ../api/fmsvcm_mod.f90
-../api/svdata_mod.f90
 ../api/metric_mod.f90
 
 ../api/carbon_data.f90

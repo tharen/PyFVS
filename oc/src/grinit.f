@@ -1,63 +1,33 @@
       SUBROUTINE GRINIT
-      IMPLICIT NONE
+      use htcal_mod
+      use plot_mod
+      use arrays_mod
+      use workcm_mod
+      use contrl_mod
+      use coeffs_mod
+      use econ_mod
+      use volstd_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C OC $Id: grinit.f 1388 2014-12-19 16:34:36Z rhavis@msn.com $
 C----------
 C
 C  INITIALIZE PROGNOSIS MODEL VARIABLES
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
       INCLUDE 'OPCOM.F77'
-C
-C
-      INCLUDE 'WORKCM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'ECON.F77'
-C
 C
       INCLUDE 'MULTCM.F77'
 C
-C
       INCLUDE 'SUMTAB.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
 C
       INCLUDE 'CWDCOM.F77'
 C
-C
       INCLUDE 'CALCOM.F77'
-C
 C
       INCLUDE 'ORGANON.F77'
 C
-C
-COMMONS
 C----------
       INTEGER I,J,K
       CHARACTER*26 DBLK
@@ -321,7 +291,7 @@ C----------
       LORGPREP  = .FALSE.       ! TREE DATA HAS NOT GONE THROUGH THE PREPARATION PROCESS
       VERSION   = 1             ! ORGANON VERSION, DEFAULT SWO
       STAGE     = 0             ! total stand age (even aged only)
-      BHAGE     = 0             ! breast height age            
+      BHAGE     = 0             ! breast height age
       SITE_1    = 0.0           ! the default site index dependant on variant
       SITE_2    = 0.0           ! the default site index dependant on variant
       MSDI_1    = 0.0
@@ -333,12 +303,12 @@ C
       INDS(1) = 1     ! HEIGHT CALIBRATION ON
       INDS(2) = 1     ! HEIGHT-TO-CROWN BASE CALIBRATION ON
       INDS(3) = 1     ! DIAMETER GROWTH CALIBRATION ON
-      INDS(4) = 1     ! STAND IS EVEN-AGED      
+      INDS(4) = 1     ! STAND IS EVEN-AGED
       INDS(5) = 0     ! ORGANON TRIPPLING OFF
       INDS(6) = 0     ! STAND HAS NOT BEEN PRUNED
       INDS(7) = 0     ! STAND HAS NOT BEEN THINNED
-      INDS(8) = 0     ! STAND HAS NOT BEEN FERTILIZED      
-      INDS(9) = 1     ! USE SDI-BASED MORTALITY      
+      INDS(8) = 0     ! STAND HAS NOT BEEN FERTILIZED
+      INDS(9) = 1     ! USE SDI-BASED MORTALITY
       INDS(10)= 0     ! WOOD QUALITY VARIABLES ARE NOT BEING COMPUTED.
       INDS(11)= 0     ! OVERSTORY TREES WERE NOT REMOVED AT START OF CURRENT CYCLE
       INDS(12)= 0     ! INGROWTH WAS NOT ADDED AT START OF GROWTH CYCLE
@@ -358,11 +328,11 @@ C
 C     FOR NOW, ASSIGN THE DBH, HEIGHT, AND CR CALIBRATIONS TO UNITY.
 C     TODO: THIS NEED TO BE CONVERTED UPDATED FROM FVS.
       DO I=1,18
-         ACALIB(1,I)  = 1.0 
+         ACALIB(1,I)  = 1.0
          ACALIB(2,I)  = 1.0
          ACALIB(3,I)  = 1.0
       ENDDO
-      
+
 C     CLEAR OUT THE TREE VARIABLES
 C     THIS SHOULD ALSO BE PERFORMED EACH CYCLE AS THE TREE
 C     RECORDS ARE RE-INITIALIZED FROM THE NATIVE FVS ARRAYS
@@ -370,7 +340,7 @@ C     RECORDS ARE RE-INITIALIZED FROM THE NATIVE FVS ARRAYS
          TREENO(I)   = 0
          PTNO(I)     = 0
          SPECIES(I)  = 0
-         DBH1(I)     = 0.0 
+         DBH1(I)     = 0.0
          HT1OR(I)    = 0.0
          CR1(I)      = 0.0
          SCR1B(I)    = 0.0
@@ -380,7 +350,7 @@ C     RECORDS ARE RE-INITIALIZED FROM THE NATIVE FVS ARRAYS
          TWARNING(I) = 0
       ENDDO
 
-C     INITIALIZE THE VOLUME VARIABLES NOT NATIVE TO FVS 
+C     INITIALIZE THE VOLUME VARIABLES NOT NATIVE TO FVS
 C     THESE ONLY APPLY TO THE ORGANON SUBROUTINE VOLCAL_
 C     THE DEFAULTS ARE DOCUMENTED IN THE HELP FILE
       LOGTA =  10.0             ! LOG TRIM, IN INCHES.
@@ -388,7 +358,7 @@ C     THE DEFAULTS ARE DOCUMENTED IN THE HELP FILE
       LOGLL =  32.0             ! TARGET LOG LENGTH, IN FEET.
 
 
-C     INITIALIZE THE STOR VARIABLES TO ZERO TO ENSURE 
+C     INITIALIZE THE STOR VARIABLES TO ZERO TO ENSURE
 C     THE VALUES ARE NOT CORRUPT FOR EVERY STAND
       DO I=1,30
          STOR(I) = 0.0
@@ -403,7 +373,7 @@ C     MOVE THE VARIABLES FROM THE PREVIOUS THINNINGS, IF THERE ARE ANY
       END DO
       BABT    = 0.0
 
-      
+
 C     NULL OUT THE FERTILIZATION VARIABLES TOO.
       DO I=1,5
         YSF(I) = 0.0

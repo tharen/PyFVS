@@ -1,5 +1,9 @@
       SUBROUTINE FMCFMD (IYR, FMD)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 
 C   **FMCFMD FIRE-PN-DATE OF LAST REVISION: 06/15/15
 
@@ -23,16 +27,12 @@ C   **FMCFMD FIRE-PN-DATE OF LAST REVISION: 06/15/15
 
 C     PARAMETER INCLUDE FILES.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'FMPARM.F77'
 
 C     COMMON INCLUDE FILES.
 
       INCLUDE 'FMFCOM.F77'
       INCLUDE 'FMCOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'SSTGMC.F77'
 
 C     LOCAL VARIABLE DECLARATIONS

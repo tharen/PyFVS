@@ -1,5 +1,6 @@
       SUBROUTINE VARPUT (WK3,IPNT,ILIMIT,REALS,LOGICS,INTS)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id: varput.f 874 2013-05-16 19:44:36Z drobinsonessa@gmail.com $
 C----------
@@ -9,15 +10,8 @@ C
 C     PART OF THE PARALLEL PROCESSING EXTENSION TO PROGNOSIS.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'ORGANON.F77'
 C
-C
-COMMONS
 C----------
 C     NOTE: THE ACTUAL STORAGE LIMIT FOR INTS, LOGICS, AND REALS
 C     IS MAXTRE (SEE PRGPRM).
@@ -168,12 +162,12 @@ C
       END
 
       SUBROUTINE VARCHPUT (CBUFF, IPNT, LNCBUF)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C     Put variant-specific character data
 C----------
 
-      INCLUDE 'PRGPRM.F77'
 
       INTEGER LNCBUF
       CHARACTER CBUFF(LNCBUF)

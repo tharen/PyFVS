@@ -220,7 +220,9 @@ c
 
       subroutine fvsSpeciesAttr(name,nch,action,attr,rtnCode)
       use plot_mod
+      use contrl_mod
       use prgprm_mod
+      use volstd_mod
       implicit none
 
 c     set and/or gets the named species attributes

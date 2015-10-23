@@ -1,5 +1,6 @@
       SUBROUTINE ORGSPC(INSPEC,OUTSPC)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **ORGSPC--OC   DATE OF LAST REVISION:  06/16/15
 C----------
@@ -8,12 +9,6 @@ C ORGANON SPECIES FIA CODE.
 C
 C CALLED FROM SUBROUTINES **CRATET** AND **DGDRIV**
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
 COMMONS
 C----------
       INTEGER OSPMAP(MAXSP),INSPEC,OUTSPC
@@ -26,7 +21,7 @@ C 21=JU 22=BR 23=GS 24=PY 25=OS 26=LO 27=CY 28=BL 29=EO 30=WO
 C 31=BO 32=VO 33=IO 34=BM 35=BU 36=RA 37=MA 38=GC 39=DG 40=FL
 C 41=WN 42=TO 43=SY 44=AS 45=CW 46=WI 47=CN 48=CL 49=OH
 C----------
-C MAPPING OF FVS SPECIES TO VALID ORGANON SPECIES FOR THE 
+C MAPPING OF FVS SPECIES TO VALID ORGANON SPECIES FOR THE
 C ORGANON SOUTHWEST OREGON MODEL TYPE:
 C
 C VALID
@@ -53,16 +48,16 @@ C 920=WI    WI
 C *SPECIES INCLUDED IN ORGANON "BIG 6"
 C----------
       DATA OSPMAP/
-C       PC   IC   RC   GF   RF   SH   DF   WH   MH   WB      
-     & 242, 081, 242, 017, 202, 202, 202, 263, 263, 122, 
-C       KP   LP   CP   LM   JP   SP   WP   PP   MP   GP      
-     & 122, 122, 122, 122, 122, 117, 122, 122, 122, 122, 
-C       WJ   BR   GS   PY   OS   LO   CY   BL   EO   WO      
-     & 231, 017, 122, 231, 231, 805, 805, 805, 805, 815, 
-C       BO   VO   IO   BM   BU   RA   MA   GC   DG   FL      
-     & 818, 805, 805, 312, 312, 351, 361, 431, 492, 312, 
-C       WN   TO   SY   AS   CW   WI   CN   CL   OH        
-     & 312, 631, 312, 312, 312, 920, 492, 492, 492/ 
+C       PC   IC   RC   GF   RF   SH   DF   WH   MH   WB
+     & 242, 081, 242, 017, 202, 202, 202, 263, 263, 122,
+C       KP   LP   CP   LM   JP   SP   WP   PP   MP   GP
+     & 122, 122, 122, 122, 122, 117, 122, 122, 122, 122,
+C       WJ   BR   GS   PY   OS   LO   CY   BL   EO   WO
+     & 231, 017, 122, 231, 231, 805, 805, 805, 805, 815,
+C       BO   VO   IO   BM   BU   RA   MA   GC   DG   FL
+     & 818, 805, 805, 312, 312, 351, 361, 431, 492, 312,
+C       WN   TO   SY   AS   CW   WI   CN   CL   OH
+     & 312, 631, 312, 312, 312, 920, 492, 492, 492/
 C
       OUTSPC = OSPMAP(INSPEC)
 C

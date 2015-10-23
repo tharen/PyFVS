@@ -1,5 +1,8 @@
       SUBROUTINE FMVINIT
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMVINIT  FIRE-OC-DATE OF LAST REVISION: 06/15/15
 C----------
@@ -16,10 +19,7 @@ C----------
 ***********************************************************************
 COMMONS
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'FMPARM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'FMCOM.F77'
       INCLUDE 'FMFCOM.F77'
 
@@ -459,7 +459,7 @@ C       CLASSES, AND THE FUELPOOL KEYWORD TO REASSIGN CLASS
 
         SELECT CASE (I)
 
-C         some pines, doug-fir, cedars 
+C         some pines, doug-fir, cedars
           CASE (1:3,7,10,14,16,17,21,23,24)
             DKRCLS(I)  =   1
 
@@ -474,7 +474,7 @@ C         firs, some pines, oak
 C         aspen, cottonwood, other hardwoods
           CASE (34:36,39:41,43:48)
             DKRCLS(I)  =   4
-            
+
         END SELECT
 
 C       HARD SNAGS NEVER BECOME SOFT

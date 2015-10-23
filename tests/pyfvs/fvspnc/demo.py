@@ -47,7 +47,7 @@ for rep in xrange(reps):
     #initialize the run
     i = fvs.fvssetcmdline(cl)
     
-    num_cycles = fvs.contrl.ncyc
+    num_cycles = fvs.contrl_mod.ncyc
     
     # fvs.contrl.ncyc = numpy.int(num_cycles)
     fvs.ransed(True,random.random())
@@ -57,7 +57,7 @@ for rep in xrange(reps):
     cycle = 0
     while 1:
         #set the stop point to the end of the next cycle
-        cycle_year = fvs.contrl.iy[cycle]
+        cycle_year = fvs.contrl_mod.iy[cycle]
         fvs.fvssetstoppointcodes(6,cycle_year)
         
         #call the main FVS grower loop

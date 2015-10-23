@@ -1,5 +1,8 @@
       SUBROUTINE FMCROW
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMCROW  FIRE-OP DATE OF LAST REVISION:  06/15/15
 C----------
@@ -34,13 +37,10 @@ C                  PCTILE
 ***********************************************************************
 
 C.... Parameter include files.
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'FMPARM.F77'
 
 C.... Common include files.
       INCLUDE 'FMCOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
 
 C.... Parameter statements.
 

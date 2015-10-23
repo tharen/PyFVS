@@ -4,7 +4,7 @@ module fmcom_mod
     implicit none
 !Code segment FMCOM.
 !----------
-!  $Id: FMCOM.F77 960 2013-07-09 20:17:17Z sarebain@fs.fed.us $
+!  $Id: FMCOM.F77 1521 2015-05-15 15:07:40Z ncrookston.fs@gmail.com $
 !----------
 !  PURPOSE:
 !     COMMON BLOCK VARIABLES RELATED TO THE FIRE MODEL ROUTINES.
@@ -82,6 +82,7 @@ module fmcom_mod
 !     FMTBA:     Fire Model Total Basal Area, by species.
 !     NFMSVPX:   The number of pictures to render for a fire using the
 !                SVS keyword.
+!     FMORTMLT:  Tree mortality multiplier, set in FMMAIN for a given cycle
 !     FTREAT:    Fuel treatment type: 0=none,1=lopping (inc.flailing),
 !                2=trampling (inc chopping, crushing, chipping)
 !     FUAREA:    Number of acres in various loading categories: for
@@ -227,7 +228,7 @@ module fmcom_mod
 !     ITRNL:     Lenght of tree list at time of call to FMTREM from CUTS.
 !                Estab trees may enter simulation between the call
 !                to FMTREM and the call to FMEVTBM.
-!
+!,FMORTMLT(MAXTRE)
 !     VARIABLE DECLARATIONS: COMMON BLOCK FMCOM
 
       REAL     ALLDWN(MAXSP)
@@ -256,6 +257,7 @@ module fmcom_mod
       REAL     FALLX(MAXSP)
       REAL     FIRKIL(MAXTRE), FOLMC
       INTEGER  FMICR(MAXTRE)
+      REAL     FMORTMLT(MAXTRE)
       INTEGER  FMKOD
       REAL     FLIVE(2)
       REAL     FMPROB(MAXTRE)
@@ -324,6 +326,31 @@ module fmcom_mod
       INTEGER  ISPCC(MAXTRE)
       REAL     DBHC(MAXTRE),HTC(MAXTRE),CROWNWC(MAXTRE,0:5)
       INTEGER  ICYCRM,ITRNL
+
+      COMMON /FMCOM/ &
+            ALLDWN, BURNYR, CANMHT, CBHCUT, &
+            COVTYP, CRBURN, CROWNW, CURKIL, CWD, CWD2B, &
+            CWD2B2, CWDCUT, CWDNEW, CWDVOL, CWDCOV, &
+            DBHS, DECAYX, DENIH, DENIS, DEND, DKR, DKRCLS, &
+            DKRDEF, DSPDBH, &
+            FALLX, FLIVE, FIRKIL, FOLMC, FMPROB, FMTBA, NFMSVPX, &
+            FMICR, FMKOD, FMSLOP,FTREAT, FMORTMLT, &
+            FUAREA, GROW, HARD, HARTYP, HARVYR, HTDEAD, HTIH, &
+            HTIS, HTR1, HTR2, HTX, HTXSFT, ICANSP, ICBHMT, &
+            ICYCRM, IFMYR1, IFMYR2, IFTYR, ISALVC, ISALVS, ISNGSM, &
+            ITRNL, JCOUT, JFROUT, &
+            JLOUT,  LANHED, LEAFLF,  LFMON, LFMON2, LFROUT, &
+            LDYNFM, LIMBRK, LDHEAD, LSHEAD, LVWEST, MAXHT, MINHT, &
+            NSNAG, NYRS, NZERO, OLDCOVTYP, OLDCRL, OLDHT, OLDCRW, &
+            OLDICT,OLDICT2,OLDICTWT, &
+            PBFRIH, PBFRIS, PBSCOR, PBSOFT, PBSIZE, &
+            PBSMAL, PBTIME, PBURNYR, PERCOV, &
+            PRDUFF, PRSNAG, PSOFT, PRPILE, SALVSPA, &
+            SCCF, SETDECAY, SNGNEW, SNPRCL, SPS, TCWD, TCWD2, TFALL, &
+            TODUFF, TONRMC, TONRMS, TONRMH, &
+            TOTACR, V2T, YRDEAD, LREMT, NSNAGSALV, HTDEADSALV, &
+            SPSSALV, DBHSSALV, HTIHSALV, HTISSALV, HARDSALV, &
+            PREMST,PREMCR,ISPCC,DBHC,HTC,CROWNWC
 
 !**********************************************************************
 !     COMMON BLOCK **FMCLCOM**

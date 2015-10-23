@@ -84,7 +84,7 @@ C----------
         CALL DBSVKFN(KWDFIL)
 
 c       open the scratch file (should be removed sometime)
-        open(unit=JOTREE,status="scratch",form="unformatted")
+        open(unit=JOTREE,status="unknown",form="unformatted")
 
         return
   101   continue

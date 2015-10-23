@@ -8,6 +8,7 @@
       use pden_mod
       use estree_mod
       use prgprm_mod
+      use varcom_mod, only : ptbalt
       implicit none
 C----------
 C  **MORTS--WC  DATE OF LAST REVISION:  08/13/15

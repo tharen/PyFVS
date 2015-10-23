@@ -1,12 +1,13 @@
       SUBROUTINE PUTSTD
       use htcal_mod
       use multcm_mod
-      use esrncm_mod
+      use fvsstdcm_mod
       use plot_mod
       use arrays_mod
       use esparm_mod
       use rancom_mod
       use estree_mod
+      use screen_mod
       use contrl_mod
       use svdata_mod
       use coeffs_mod
@@ -15,7 +16,7 @@
       use outcom_mod
       use pden_mod
       use volstd_mod
-      use fvsstdcm_mod
+      use esrncm_mod
       use escomn_mod
       use varcom_mod
       use prgprm_mod
@@ -60,8 +61,6 @@ C
       INCLUDE 'CWDCOM.F77'
 C
       INCLUDE 'GGCOM.F77'
-C
-      INCLUDE 'SCREEN.F77'
 C
 C     WRITE ALL INTEGER VARIABLES WITH IFWRIT, LOGICAL VARIABLES
 C     WITH LFWRIT, AND REAL VARIABLES WITH BFWRIT.  ONE EXCEPTION

@@ -1,5 +1,13 @@
       SUBROUTINE CRATET
-      IMPLICIT NONE
+      use htcal_mod
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **CRATET--OP   DATE OF LAST REVISION:  07/16/15
 C----------
@@ -21,37 +29,7 @@ C    8)  PRINT A TABLE DESCRIBING CONTROL PARAMETERS AND INPUT
 C        VARIABLES.
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
       INCLUDE 'ORGANON.F77'
-C
-C
-COMMONS
 C
 C----------
 C  INTERNAL VARIABLES.
@@ -69,7 +47,7 @@ C----------
       REAL SITAGE,SITHT,AGMAX,HTMAX,HTMAX2,D1,D2
       REAL SPCNT(MAXSP,3),AX,Q,SUMX,H,BX,XX,YY,XN,HS,D
 C----------
-C     ORGANON:  
+C     ORGANON:
 C    ACALIB(i,j) IS AN ARRAY IN THE ORGANON.F77 COMMON BLOCK THAT IS
 C                USED TO STORE CALIBRATION VALUES READ IN VIA KEYWORDS
 C                OR CALCULATED IN **PREPARE** AND PASSED TO **EXECUTE**
@@ -78,11 +56,11 @@ C                FROM **PREPARE**. IF THE USER ENTERED CALIBRATION VALUES, THEN
 C                KEEP THOSE; IF THE USER DID NOT ENTER CALIBRATION VALUES, USE
 C                THE ONES FROM **PREPARE**.
 C    NEWCAL(j)   AN ARRAY INDICATING THAT SOME NEW CALIBRATION VALUES CAME
-C                FROM **PREPARE** WHICH NEED TO BE PRINTED IN THE 
+C                FROM **PREPARE** WHICH NEED TO BE PRINTED IN THE
 C                CALIBRATION STATISTICS TABLE
 C----------
       CHARACTER*31 LABEL(11)
-      INTEGER*4   ORGEDIT_STATUS ! STATUS VARIABLE FOR THE DLL      
+      INTEGER*4   ORGEDIT_STATUS ! STATUS VARIABLE FOR THE DLL
       INTEGER*4   IEVEN          ! ORGANON::INDS(4)
       INTEGER*4   IRAD
       INTEGER     NBIG6,NVALID,NLOAD,NUNLOAD,ORGFIA,IHFLAG
@@ -121,7 +99,7 @@ C  LORGPREP=.TRUE. IF DATA HAS ALREADY BEEN PREPARED/EDITED
 C  IF THIS IS A BARE GROUND PLANT, THEN SKIP THIS SECTION
 C----------
       DO I=1,18
-         TMPCAL(1,I)  = 1.0 
+         TMPCAL(1,I)  = 1.0
          TMPCAL(2,I)  = 1.0
          TMPCAL(3,I)  = 1.0
          NEWCAL(I)    = 0
@@ -142,16 +120,16 @@ C----------
       IF(DEBUG)WRITE(JOSTND,*)' RVARS(1-5)= ',(RVARS(I),I=1,5)
       IF(DEBUG)WRITE(JOSTND,*)' INDS(1-10)= ',(INDS(I),I=1,10)
 C----------
-C  SET ORGANON TREE INDICATOR (0 = NO, 1 = YES). 
+C  SET ORGANON TREE INDICATOR (0 = NO, 1 = YES).
 C  VALID TREE:
-C    SPECIES 3=GF, 16=DF, 18=RC 19=WH, 21=BM, 22=RA, 23=MA, 28=WO, 
+C    SPECIES 3=GF, 16=DF, 18=RC 19=WH, 21=BM, 22=RA, 23=MA, 28=WO,
 C           33=PY, 34=DG, 37=WI
 C    HEIGHT HT > 4.5 FEET
 C    DBH    DBH >= 0.1 INCH
 C
 C THE CALL TO PREPARE IS TO EDIT THE DATA, DUB MISSING VALUES, AND CALIBRATE THE
 C ORGANON EQUATIONS TO THE INPUT DATA. WE WILL ONLY PASS VALID ORGANON TREES TO
-C PREPARE FOR THIS PURPOSE. 
+C PREPARE FOR THIS PURPOSE.
 C
 C ALSO CHECK FOR MAJOR TREE SPECIES; IF NONE, SKIP CALL TO PREPARE AND
 C USE FVS LOGIC.
@@ -191,7 +169,7 @@ C----------
         ENDIF
       ENDDO
       IF(DEBUG)WRITE(JOSTND,*)' IN CRATET IREC1,NVALID,NBIG6= ',
-     &IREC1,NVALID,NBIG6 
+     &IREC1,NVALID,NBIG6
 C----------
 C IF THERE ARE NO "BIG 6" TREES ORGANON WON'T RUN. FLAG ALL TREES AS
 C NON-VALID ORGANON TREES AND SKIP CALL TO PREPARE.
@@ -209,7 +187,7 @@ C----------
         GO TO 261
       ENDIF
 C-----------
-C  FOR ALL LIVE TREE RECORDS, MOVE THE DATA FROM THE EXISTING FVS TREE  
+C  FOR ALL LIVE TREE RECORDS, MOVE THE DATA FROM THE EXISTING FVS TREE
 C  ARRAYS INTO THE FORMAT THAT ORGANON REQUIRES.
 C  ASSIGNMENT OF FVS-VARIABLES TO ORGANON-VARIABLES
 C  ORGANON VARIABLE = FVS VARIABLE
@@ -217,15 +195,15 @@ C-----------
       NLOAD = 0
       DO I = 1, IREC1
         TREENO(I) = I        ! FVS TREE NUMBER
-        PTNO(I)= ITRE(I)     ! POINT NUMBER OF THE TREE RECORD          
-        DBH1(I)= DBH(I)      ! DBH 
+        PTNO(I)= ITRE(I)     ! POINT NUMBER OF THE TREE RECORD
+        DBH1(I)= DBH(I)      ! DBH
         IF(DBH1(I) .LT. 0.1) DBH1(I)=0.1
         HT1OR(I)= HT(I)      ! TOTAL HEIGHT AT BEGINNING OF PERIOD
         IF(HT(I).GT.0. .AND. HT1OR(I).LT.4.6) HT1OR(I)=4.6
         CR1(I)= REAL(ICR(I)) / 100.0 ! MEASURED/PREDICTED CROWN RATIO
         EXPAN1(I)= PROB(I)   ! EXPANSION FACTOR
-        RADGRO(I)= DG(I)     ! INSIDE BARK RADIAL GROWTH 
-        USER(I)= ISPECL(I)   ! USER CODE AT BEGINNING OF PERIOD   
+        RADGRO(I)= DG(I)     ! INSIDE BARK RADIAL GROWTH
+        USER(I)= ISPECL(I)   ! USER CODE AT BEGINNING OF PERIOD
         NLOAD = NLOAD + 1
         ITEM(NLOAD) = I
 C----------
@@ -255,10 +233,10 @@ C----------
 C----------
 C  CALL PREPARE
 C----------
-      CALL PREPARE(IMODTY, IPTINV, IREC1, STAGE, BHAGE, SPECIES, 
-     1              USER, IEVEN, DBH1, HT1OR, CR1, EXPAN1, 
-     2              RADGRO, RVARS, SERROR, TERROR, 
-     3              SWARNING, TWARNING, IERROR, IRAD, 
+      CALL PREPARE(IMODTY, IPTINV, IREC1, STAGE, BHAGE, SPECIES,
+     1              USER, IEVEN, DBH1, HT1OR, CR1, EXPAN1,
+     2              RADGRO, RVARS, SERROR, TERROR,
+     3              SWARNING, TWARNING, IERROR, IRAD,
      4              GROWTH, TMPCAL )
       LORGPREP = .TRUE.
 C----------
@@ -277,7 +255,7 @@ C----------
 C
         DO I = 1, 35
           IF( SERROR(I) .NE. 0 ) THEN
-C----------          
+C----------
 C  IGNORE THE FOLLOWING ERRORS:
 C     6 -- BHAGE HAS BEEN SET TO 0 FOR AN UNEVEN-AGED STAND
 C     7 -- BHAGE > 0 FOR AN UNEVEN-AGED STAND
@@ -285,8 +263,8 @@ C     8 -- STAGE IS TOO SMALL FOR THE BHAGE
 C     9 --
 C    11 --
 C----------
-            IF( ( I .EQ. 6  ) .OR. 
-     &          ( I .EQ. 7  ) .OR. 
+            IF( ( I .EQ. 6  ) .OR.
+     &          ( I .EQ. 7  ) .OR.
      &          ( I .EQ. 8  ) .OR.
      &          ( I .EQ. 9  ) .OR.
      &          ( I .EQ. 11 ) ) THEN
@@ -296,7 +274,7 @@ C----------
               IERROR = 0
               SERROR(I) = 0
             ELSE
-               
+
               WRITE(JOSTND,9126) ICYC, I, SERROR(I)
  9126         FORMAT(' CRATET ORGANON ERROR CODE, CYCLE= ',I2,
      &              ' IDX= ',I2, ' SERROR= ',I2 )
@@ -310,13 +288,13 @@ C
  9128       FORMAT(' CRATET ORGANON ERROR CODE, CYCLE= ',I2,
      &           ' TWARNING= ',I2 )
           END IF
-C         
+C
           DO J = 1, 6
             IF( TERROR(I,J) .NE. 0 ) THEN
               WRITE(JOSTND,9129) ICYC, TERROR(I,J), I, J
  9129         FORMAT(' CRATET ORGANON ERROR CODE, CYCLE=' ,I2,
      &              ', TERROR(I,J)= ',I2,
-     &              ', TREE NUMBER= ',I4, 
+     &              ', TREE NUMBER= ',I4,
      &              ', ERROR NUMBER= ',I4 )
             END IF
           END DO
@@ -353,27 +331,27 @@ C----------
         ENDIF
       ENDDO
       IF(DEBUG)WRITE(JOSTND,*)' NVALID,NUNLOAD= ',NVALID,NUNLOAD
-C----------      
+C----------
 C  IF DEBUGGING PRINT OUT THE CALIBRATION VALUES.
 C----------
       IF( DEBUG) THEN
         DO I=1,18
-          WRITE(JOSTND,9220) I, ACALIB(1,I), 
-     >           I, ACALIB(2,I), 
+          WRITE(JOSTND,9220) I, ACALIB(1,I),
+     >           I, ACALIB(2,I),
      >           I, ACALIB(3,I)
- 9220       FORMAT ('   ORGANON ', 
+ 9220       FORMAT ('   ORGANON ',
      >           ' ACALIB(1,',I2,') = ',F9.6,
      >           ' ACALIB(2,',I2,') = ',F9.6,
      >           ' ACALIB(3,',I2,') = ',F9.6 )
           WRITE(JOSTND,9221) I, TMPCAL(1,I),
-     >           I, TMPCAL(2,I), 
+     >           I, TMPCAL(2,I),
      >           I, TMPCAL(3,I), I, NEWCAL(I)
- 9221       FORMAT ('   ORGANON ', 
+ 9221       FORMAT ('   ORGANON ',
      >           ' TMPCAL(1,',I2,') = ',F9.6,
      >           ' TMPCAL(2,',I2,') = ',F9.6,
      >           ' TMPCAL(3,',I2,') = ',F9.6,
      >           ' NEWCAL('I2') = ',I3)
-        ENDDO         
+        ENDDO
       ENDIF
 C----------
 C  LOAD ACALIB(I,J) WITH ANY CALIBRATION VALUES COMPUTED IN **PREPARE**
@@ -381,7 +359,7 @@ C  WHICH WERE NOT LOADED BY KEYWORD ENTRY
 C----------
       DO I=1,18
         DO J=1,3
-          IF((ACALIB(J,I) .EQ. 1.0) .AND. 
+          IF((ACALIB(J,I) .EQ. 1.0) .AND.
      &    ((TMPCAL(J,I) .GT. 0.0) .AND. (TMPCAL(J,I) .NE. 1.0))) THEN
             ACALIB(J,I) = TMPCAL(J,I)
             NEWCAL(I) = 1
@@ -689,7 +667,7 @@ C  OFF, OR IF WYKOFF CALIBRATION DID NOT OCCUR.
 C  NOTE: THIS SIMPLIFIES TO IF(IABFLB(ISPC).EQ.1) BUT IS SHOWN IN IT'S
 C        ENTIRITY FOR CLARITY.
 C----------
-      IF(.NOT.LHTDRG(ISPC) .OR. 
+      IF(.NOT.LHTDRG(ISPC) .OR.
      &   (LHTDRG(ISPC) .AND. IABFLG(ISPC).EQ.1))THEN
         CALL HTDBH (IFOR,ISPC,D,H,0)
         IF(DEBUG)WRITE(JOSTND,*)'INVENTORY EQN DUBBING IFOR,ISPC,D,H= '
@@ -723,7 +701,7 @@ C
   130 CONTINUE
       KNT2(IPTR)=K4 + KNTOHT(ISPC)
       IF(DEBUG)WRITE(JOSTND,*)' ISPC,IPTR,K4,KNTOHT,KNT2= ',
-     &ISPC,IPTR,K4,KNTOHT(ISPC),KNT2(IPTR) 
+     &ISPC,IPTR,K4,KNTOHT(ISPC),KNT2(IPTR)
 C----------
 C  END OF SPECIES LOOP.  PRINT HEIGHT-DIAMETER COEFFICIENTS ON
 C  DEBUG UNIT IF DESIRED.
@@ -783,7 +761,7 @@ C  OFF, OR IF WYKOFF CALIBRATION DID NOT OCCUR.
 C  NOTE: THIS SIMPLIFIES TO IF(IABFLB(ISPC).EQ.1) BUT IS SHOWN IN IT'S
 C        ENTIRITY FOR CLARITY.
 C----------
-      IF(.NOT.LHTDRG(ISPC) .OR. 
+      IF(.NOT.LHTDRG(ISPC) .OR.
      &   (LHTDRG(ISPC) .AND. IABFLG(ISPC).EQ.1))THEN
         CALL HTDBH (IFOR,ISPC,D,H,0)
         IF(DEBUG)WRITE(JOSTND,*)'INVENTORY EQN DUBBING IFOR,ISPC,D,H= '

@@ -1,5 +1,14 @@
       SUBROUTINE HTGF
-      IMPLICIT NONE
+      use htcal_mod
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use pden_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **HTGF--OP    DATE OF LAST REVISION:  06/17/15
 C----------
@@ -13,42 +22,10 @@ C  CONSTANTS THAT NEED ONLY BE RESOLVED ONCE. CALLS **FINDAG
 c  TO CALCULATE TREE AGE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'MULTCM.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
 C
       INCLUDE 'ORGANON.F77'
 C
-C
-COMMONS
 C----------
       LOGICAL DEBUG
       INTEGER MAPHD(MAXSP)
@@ -228,7 +205,7 @@ C----------
      &ISPC,I,HGUESS,AGP10
 C
       HGUESS = 0.0
-      CALL HTCALC(SINDX,ISPC,AGP10,HGUESS,JOSTND,DEBUG) 
+      CALL HTCALC(SINDX,ISPC,AGP10,HGUESS,JOSTND,DEBUG)
       POTHTG= HGUESS-SITHT
 C----------
 C  PATCH FOR OREGON WHITE OAK - WORK BY GOULD AND HARRINGTON, PNW
@@ -356,7 +333,7 @@ C----------
       HTG(I)=SCALE*XHT*HTG(I)*EXP(HTCON(ISPC))
       IF(DEBUG)WRITE(JOSTND,*)' I,ISPC,TEMPH,TEMPD,DBH,DG,H,HTG,MAP,',
      &'HTMAX2,SCALE,XHT,HTCON= ',I,ISPC,TEMPH,TEMPD,DBH(I),DG(I),H,
-     &HTG(I),MAPPHD,HTMAX2,SCALE,XHT,HTCON(ISPC) 
+     &HTG(I),MAPPHD,HTMAX2,SCALE,XHT,HTCON(ISPC)
 C
   161 CONTINUE
 C----------

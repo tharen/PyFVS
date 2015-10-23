@@ -1,5 +1,9 @@
       SUBROUTINE FMCBA (IYR,ISWTCH)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMCBA   FIRE-OP-DATE OF LAST REVISION:  06/15/15
 C----------
@@ -36,13 +40,9 @@ C     CALLED FROM: FMMAIN
 C     Parameter statements.
 
 C     Parameter include files.
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'FMPARM.F77'
 
 C     Common include files.
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'FMCOM.F77'
       INCLUDE 'FMFCOM.F77'
 
@@ -98,10 +98,10 @@ C     EACH PN HABITAT CODE MAPS TO EITHER WET (1), MESIC (2) OR DRY (3).  (FROM 
      & 1, 1, 1, 1, 1/
 
       DATA (((DKRADJ(I,J,K), K=1,3), J=1,3), I=1,3) /
-     &  1.21,   2,  1.21, 1.35, 2, 1.35,   1.7,   2,  1.7, 
-     & 0.825, 1.3, 0.825,    1, 2,    1,  1.35,   2, 1.35, 
-     &  0.75,   1,  0.75, 0.75, 1, 0.75, 0.925, 1.7, 0.925/	
-     
+     &  1.21,   2,  1.21, 1.35, 2, 1.35,   1.7,   2,  1.7,
+     & 0.825, 1.3, 0.825,    1, 2,    1,  1.35,   2, 1.35,
+     &  0.75,   1,  0.75, 0.75, 1, 0.75, 0.925, 1.7, 0.925/
+
 C     BREAKPOINTS (% CC) OF INTERPOLATION FUNCTION TO PROVIDE WEIGHTED
 C     ESTIMATE OF LIVE (EVERY TIMESTEP) AND DEAD (INITIAL) FUEL
 
@@ -138,7 +138,7 @@ C                  herbs, shrubs
      >             0.25, 0.25, !25 = giant chinkapin - use QA Ottmar and others 2000b
      >             0.25, 0.25, !26 = quaking aspen - Ottmar and others 2000b
      >             0.25, 0.25, !27 = black cottonwood - use QA Ottmar and others 2000b
-     >             0.23, 0.22, !28 = Or. white oak/Cal. black oak - Gambel oak Ottmar 
+     >             0.23, 0.22, !28 = Or. white oak/Cal. black oak - Gambel oak Ottmar
      >             0.14, 0.35, !29 = juniper (Ottmar Volume I)
      >             0.20, 0.20, !30 = subalpine larch - use WL
      >             0.20, 0.10, !31 = whitebark pine - use LP
@@ -468,9 +468,9 @@ C     INITIALIZE THE DEAD FUELS ONLY FOR THE FIRST YEAR OF THE SIMULATION
           DO J = 1,4
             IF (I .LE. 3) THEN
               K = 1
-            ELSEIF (I .LE. 5) THEN 
+            ELSEIF (I .LE. 5) THEN
               K = 2
-            ELSE 
+            ELSE
               K = 3
             ENDIF
 C       adjust the decay rates only if the user hasn't reset them with FuelDcay
@@ -486,11 +486,11 @@ C       in this case, bump up the decay rate of the smaller wood to that of the 
 
         DO I = 9,2,-1
           DO J = 1,4
-            IF (((DKR(I,J)-DKR(I-1,J)) .GT. 0).AND.(ISWTCH.NE.1)) THEN 
+            IF (((DKR(I,J)-DKR(I-1,J)) .GT. 0).AND.(ISWTCH.NE.1)) THEN
               IF (SETDECAY(I-1,J) .LT. 0) THEN
                 DKR(I-1,J) = DKR(I,J)
-                TODUFF(I-1,J) = DKR(I-1,J) * PRDUFF(I-1,J)                
-              ENDIF             
+                TODUFF(I-1,J) = DKR(I-1,J) * PRDUFF(I-1,J)
+              ENDIF
             ENDIF
           ENDDO
         ENDDO
@@ -505,19 +505,19 @@ C       IN WS,NC,CA VARIANTS, THE TOP 2 SPECIES ARE USED TO INTIALIZE THE POOLS
           STFUEL(ISZ,2) = ALGSLP(PERCOV,XCOV,YLOAD,2)
           STFUEL(ISZ,1) = 0
         ENDDO
-        
+
 C       CHANGE THE INITIAL FUEL LEVELS BASED ON PHOTO SERIES INFO INPUT
 
         CALL OPFIND(1,MYACT(2),J)
         IF (J .GT. 0) THEN
           CALL OPGET(J,2,JYR,IACTK,NPRM,PRMS)
           IF ((PRMS(1) .GE. 0) .AND. (PRMS(2) .GE. 0)) THEN
-            CALL FMPHOTOVAL(NINT(PRMS(1)), NINT(PRMS(2)), FOTOVAL, 
+            CALL FMPHOTOVAL(NINT(PRMS(1)), NINT(PRMS(2)), FOTOVAL,
      >                      FOTOVALS)
             DO I = 1, MXFLCL
               IF (FOTOVAL(I) .GE. 0) STFUEL(I,2) = FOTOVAL(I)
               IF (I .LE. 9) STFUEL(I,1) = FOTOVALS(I)
-            ENDDO                 
+            ENDDO
 
 C           IF FOTOVAL(1) IS NEGATIVE, THEN AN INVALID CODE WAS ENTERED.
 C           DON'T MARK EVENT DONE IF THIS IS A CALL FROM SVSTART--WILL
@@ -532,7 +532,7 @@ C           NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.
             CALL RCDSET (2,.TRUE.)
           ENDIF
         ENDIF
-        
+
 C       CHANGE THE INITIAL FUEL LEVELS BASED ON INPUT FROM THE USER
 C       FIRST DO FUELHARD (FUELINIT) THEN FUELSOFT
 
@@ -545,23 +545,23 @@ C       FIRST DO FUELHARD (FUELINIT) THEN FUELSOFT
           IF (PRMS(5) .GE. 0) STFUEL(6,2) = PRMS(5)
           IF (PRMS(6) .GE. 0) STFUEL(10,2) = PRMS(6)
           IF (PRMS(7) .GE. 0) STFUEL(11,2) = PRMS(7)
-          IF (PRMS(8) .GE. 0) STFUEL(1,2) = PRMS(8)          
-          IF (PRMS(9) .GE. 0) STFUEL(2,2) = PRMS(9)           
+          IF (PRMS(8) .GE. 0) STFUEL(1,2) = PRMS(8)
+          IF (PRMS(9) .GE. 0) STFUEL(2,2) = PRMS(9)
           IF (PRMS(1) .GE. 0) THEN
             IF ((PRMS(8) .LT. 0) .AND. (PRMS(9) .LT. 0)) THEN
               STFUEL(1,2) = PRMS(1) * 0.5
               STFUEL(2,2) = PRMS(1) * 0.5
-            ENDIF                 
+            ENDIF
             IF ((PRMS(8) .LT. 0) .AND. (PRMS(9) .GE. 0)) THEN
               STFUEL(1,2) = MAX(PRMS(1) - PRMS(9),0.)
-            ENDIF  
+            ENDIF
             IF ((PRMS(8) .GE. 0) .AND. (PRMS(9) .LT. 0)) THEN
               STFUEL(2,2) = MAX(PRMS(1) - PRMS(8),0.)
-            ENDIF  
-          ENDIF                
-          IF (PRMS(10) .GE. 0) STFUEL(7,2) = PRMS(10) 
-          IF (PRMS(11) .GE. 0) STFUEL(8,2) = PRMS(11) 
-          IF (PRMS(12) .GE. 0) STFUEL(9,2) = PRMS(12)  
+            ENDIF
+          ENDIF
+          IF (PRMS(10) .GE. 0) STFUEL(7,2) = PRMS(10)
+          IF (PRMS(11) .GE. 0) STFUEL(8,2) = PRMS(11)
+          IF (PRMS(12) .GE. 0) STFUEL(9,2) = PRMS(12)
 
 C         DON'T MARK EVENT DONE IF THIS IS A CALL FROM SVSTART--WILL
 C         NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.
@@ -579,9 +579,9 @@ C         NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.
           IF (PRMS(4) .GE. 0) STFUEL(4,1) = PRMS(4)
           IF (PRMS(5) .GE. 0) STFUEL(5,1) = PRMS(5)
           IF (PRMS(6) .GE. 0) STFUEL(6,1) = PRMS(6)
-          IF (PRMS(7) .GE. 0) STFUEL(7,1) = PRMS(7)          
-          IF (PRMS(8) .GE. 0) STFUEL(8,1) = PRMS(8)                           
-          IF (PRMS(9) .GE. 0) STFUEL(9,1) = PRMS(9)           
+          IF (PRMS(7) .GE. 0) STFUEL(7,1) = PRMS(7)
+          IF (PRMS(8) .GE. 0) STFUEL(8,1) = PRMS(8)
+          IF (PRMS(9) .GE. 0) STFUEL(9,1) = PRMS(9)
 
 C         DON'T MARK EVENT DONE IF THIS IS A CALL FROM SVSTART--WILL
 C         NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.

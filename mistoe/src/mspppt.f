@@ -142,6 +142,7 @@ C.... Note that MISCYC, PRFMST, PMCSP, and DGPDMR are 2-d arrays.
       END
 
       SUBROUTINE MSCHPUT (CBUFF, IPNT, LNCBUF)
+      use prgprm_mod
       IMPLICIT NONE
 C----------
 C  **MSCHPUT--MS  DATE OF LAST REVISION:  07/10/15
@@ -152,12 +153,6 @@ C  This is part of the Stop/Restart utility.
 C
 C
 COMMONS
-C
-C
-C.... Parameter include files.
-
-      INCLUDE 'PRGPRM.F77'
-
 C.... Common include files.
 
       INCLUDE 'MISCOM.F77'

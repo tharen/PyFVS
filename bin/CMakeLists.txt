@@ -338,43 +338,43 @@ endif ()
 #---Common Objects
 # Generate a list of fortran source code files common to all variants
 set(common_source)
-list(GET source_lists 0 sl)
-file(STRINGS ${sl} common_source REGEX "(.*f$)|(.*f90$)")
-string(REPLACE "../" "${src_root}/" common_source "${common_source}")
+#list(GET source_lists 0 sl)
+#file(STRINGS ${sl} common_source REGEX "(.*f$)|(.*f90$)")
+#string(REPLACE "../" "${src_root}/" common_source "${common_source}")
 
-set(temp_src)
-foreach(fn ${common_source})
-    file(READ ${fn} foo)
-    if ((NOT ${fn} MATCHES ".*main\\.(f|f90)$")
-        # Variant specific code includes the prgprm and esparm files
-        AND (NOT "${foo}" MATCHES ".*PRGPRM.F77.*")
-        AND (NOT "${foo}" MATCHES ".*ESPARM.F77.*")
-        AND (NOT "${foo}" MATCHES ".*prgprm_mod.*")
-        AND (NOT "${foo}" MATCHES ".*siteht_mod.*")
-        AND (NOT "${foo}" MATCHES ".*snag_data.*"))
-        list(APPEND temp_src ${fn})
-    endif()
-endforeach()
-set(common_source ${temp_src})
+#set(temp_src)
+#foreach(fn ${common_source})
+#    file(READ ${fn} foo)
+#    if ((NOT ${fn} MATCHES ".*main\\.(f|f90)$")
+#        # Variant specific code includes the prgprm and esparm files
+#        AND (NOT "${foo}" MATCHES ".*PRGPRM.F77.*")
+#        AND (NOT "${foo}" MATCHES ".*ESPARM.F77.*")
+#        AND (NOT "${foo}" MATCHES ".*prgprm_mod.*")
+#        AND (NOT "${foo}" MATCHES ".*siteht_mod.*")
+#        AND (NOT "${foo}" MATCHES ".*snag_data.*"))
+#        list(APPEND temp_src ${fn})
+#    endif()
+#endforeach()
+#set(common_source ${temp_src})
 
 # Parse each configured variant source file list keeping files common to all
-foreach (sl ${source_lists})
-    set(temp_src)
-    # Read the list of source files for this variant
-    file(STRINGS ${sl} fl)
-    string(REPLACE "../" "${src_root}/" fl "${fl}")
-
-    # Compare each file currently in the common list with the variant file list
-    foreach(fn ${common_source})
-        list(FIND fl ${fn} m)
-        # FIND returns -1 for files not in the variant file list
-        if (NOT m EQUAL -1)
-            list(APPEND temp_src ${fn})
-        endif()
-    endforeach()
-    set(common_source ${temp_src})
-endforeach()
-list(REMOVE_DUPLICATES common_source)
+#foreach (sl ${source_lists})
+#    set(temp_src)
+#    # Read the list of source files for this variant
+#    file(STRINGS ${sl} fl)
+#    string(REPLACE "../" "${src_root}/" fl "${fl}")
+#
+#    # Compare each file currently in the common list with the variant file list
+#    foreach(fn ${common_source})
+#        list(FIND fl ${fn} m)
+#        # FIND returns -1 for files not in the variant file list
+#        if (NOT m EQUAL -1)
+#            list(APPEND temp_src ${fn})
+#        endif()
+#    endforeach()
+#    set(common_source ${temp_src})
+#endforeach()
+#list(REMOVE_DUPLICATES common_source)
 
 # Compile the  object libraries
 add_library(common_objs OBJECT ${common_source})

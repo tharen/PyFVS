@@ -25,5 +25,5 @@ inc = {'prgprm.f77':'prgprm_mod'
         ,'esrncm.f77':'esrncm_mod'
         }
 
-x = rf.search_depends('.','ESRNCM.F77')
+x = rf.search_depends('.','SCREEN.F77')
 rf.refactor_files(x,inc)

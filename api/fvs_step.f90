@@ -503,7 +503,7 @@ module fvs_step
         CALL DFBOUT
         CALL TMOUT
         CALL BWEOUT
-        CALL RDROUT
+!        CALL RDROUT
         CALL BRROUT
 
         CALL GENPRT
