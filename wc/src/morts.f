@@ -308,7 +308,16 @@ C SMALL TREES USE EQUATIONS BY GOULD AND HARRINGTON
 C----------
       CR=ICR(I)*0.01
       BAL=(1.0 - (PCT(I)/100.)) * BA
-      CRADJ=1.0-EXP(-(25.0*CR)**2.0)
+
+      ! For CR >=20% CRADJ is effectively 1.0
+      ! When CR exceeds about 30% the exp function underflows
+      !   this was makes debugging difficult
+      IF (CR>=0.2) THEN
+        CRADJ = 1.0
+      ELSE
+        CRADJ=1.0-EXP(-(25.0*CR)**2.0)
+      END IF
+
       XSITE2=SITEAR(19)
       XSITE1=SITEAR(16)
 C----------

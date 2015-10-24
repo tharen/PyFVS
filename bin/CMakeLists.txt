@@ -133,7 +133,7 @@ if (CMAKE_COMPILER_IS_GNUCC)
     message(STATUS "Add GCC compiler flags.")
 
     # CMAKE_BUILD_TYPE = Debug
-    set(debug_flags "-Og -g -mfpmath=sse -msse")
+    set(debug_flags "-g3 -mfpmath=sse -msse -ffpe-trap=invalid,zero,overflow,underflow")
     set(CMAKE_Fortran_FLAGS_DEBUG "${debug_flags}")
     set(CMAKE_CXX_FLAGS_DEBUG "${debug_flags}")
     set(CMAKE_C_FLAGS_DEBUG "${debug_flags}")
@@ -168,9 +168,12 @@ if (CMAKE_COMPILER_IS_GNUCC)
     # set(flags "-pipe -pthread")
     if (32BIT_TARGET)
         set(flags "${flags} -m32 -pipe")
-    else()
+    else ()
+        if (WIN32)
+            add_definitions(-DMS_WIN64)
+        endif ()
         set(flags "${flags} -m64 -pipe")
-    endif()
+    endif ()
 
     # Specify the target OS; perhaps useful for use with MinGW.
     if (UNIX_TARGET)
