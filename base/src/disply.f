@@ -1,5 +1,5 @@
       SUBROUTINE DISPLY
-      use contrl_mod, only: nofortype
+      use contrl_mod, only: calc_forest_type
       use plot_mod
       use arrays_mod
       use contrl_mod
@@ -216,7 +216,7 @@ C----------
       DUM1=0.
       IXF=2
       ISNOFT=IFORTP
-      if (.not. nofortype) then
+      if (calc_forest_type) then
         CALL FORTYP(IXF,DUM1)
       endif
 C-------
