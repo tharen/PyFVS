@@ -442,7 +442,9 @@ module fvs_step
 
     subroutine fvs_end(irtncd)
         !Finalize an FVS run.  Extracted from fvs.f
-
+        use tree_data, only: &
+                save_tree_data,copy_tree_data &
+                ,copy_cuts_data,copy_mort_data
         use contrl_mod
         use arrays_mod
         use plot_mod
@@ -486,6 +488,13 @@ module fvs_step
         CALL SDICLS(0,0.,999.,1,SDIBC,SDIBC2,STAGEA,STAGEB,0)
         SDIAC=SDIBC
         SDIAC2=SDIBC2
+
+        ! Copy tree attributes for the final of the period
+        if (save_tree_data) then
+            call copy_tree_data()
+            call copy_cuts_data()
+            call copy_mort_data()
+        endif
 
         CALL DISPLY
         CALL fvsGetRtnCode(IRTNCD)

@@ -13,7 +13,8 @@ module contrl_mod
             LMORT,LSITE,LFIRE,                                        &
             LSTART,LSUMRY,LTRIP,MORDAT,NOTRIP,LBKDEN,LAUTON,LCVOLS,   &
             LBVOLS,LFIA,LZEIDE
-      logical :: nofortype=.true.
+      logical :: calc_forest_type=.true.
+      logical :: fast_age_search=.false.
       INTEGER ICCODE,ICFLAG,ICL1,ICL2,ICL3,ICL4,ICL5,ICL6,ICYC,       &
             IDG,IFST,INS(6),IBEGIN(MAXSP),IREAD,IREC1,IREC2,          &
             IRECNT,IRECRD,IREF(MAXSP),ISCT(MAXSP,2),ISTDAT,ITRN,      &
