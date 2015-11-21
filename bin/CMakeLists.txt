@@ -87,9 +87,9 @@ message(STATUS "Build Type:" ${CMAKE_BUILD_TYPE})
 
 #FIXME: There is possibly more than one destination for the resulting binaries
 #      Perhaps this should be handled with installer packaging.
-set(INSTALL_DIR "${CMAKE_BINARY_DIR}/${version}" CACHE PATH
-        "Install location for compiled binaries.")
-set(CMAKE_INSTALL_PREFIX ${INSTALL_DIR})
+#set(INSTALL_DIR "${CMAKE_BINARY_DIR}/${version}" CACHE PATH
+#        "Install location for compiled binaries.")
+#set(CMAKE_INSTALL_PREFIX ${INSTALL_DIR})
 set(EXECUTABLE_OUTPUT_PATH ${INSTALL_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${INSTALL_DIR}/bin)
 set(INCLUDE_INSTALL_PATH ${INSTALL_DIR}/lib)
@@ -669,7 +669,9 @@ set_target_properties(${fvslib_shared} PROPERTIES
            # )
 # endif ()
 
-install(TARGETS ${fvslib_shared} ${fvsexe} DESTINATION "./")
+install(TARGETS ${fvsexe} DESTINATION bin)
+install(TARGETS ${fvslib_shared} DESTINATION lib)
+install(TARGETS ${fvslib_static} DESTINATION lib/static)
 
 # Create a header file for the variant library
 #generate_export_header(${fvslib_shared})
@@ -681,7 +683,7 @@ install(TARGETS ${fvslib_shared} ${fvsexe} DESTINATION "./")
 #    )
 
 # FIXME: Installation is not working
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${fvslib_shared}_Export.h DESTINATION "./")
+#install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${fvslib_shared}_Export.h DESTINATION "./")
 
 # Build the Python module if requested
 if (WITH_PYMOD)
@@ -807,7 +809,7 @@ if (WITH_PYMOD)
     add_custom_target(${pymod_name}-targ ALL DEPENDS ${pymod_name})
 
     #TODO: setup a destination relative to Python site-packages or equivalent
-    install(TARGETS ${pymod_name} DESTINATION "./")
+    install(TARGETS ${pymod_name} DESTINATION python)
 
     # Add the build folder to the clean target
     set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES
@@ -833,9 +835,9 @@ if (WITH_PYMOD)
                 )
     endif ()
 
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${pymod_name}.html"
-            DESTINATION "${INSTALL_DIR}/doc"
-            )
+#    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${pymod_name}.html"
+#            DESTINATION "${INSTALL_DIR}/doc"
+#            )
     set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES
             "${CMAKE_CURRENT_BINARY_DIR}/${pymod_name}.html"
             )
