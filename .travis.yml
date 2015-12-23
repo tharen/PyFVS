@@ -12,7 +12,7 @@ addons:
     - unixodbc-dev
     
 script:
-  - ./build_pyfvs.sh
+  - bash ./build_pyfvs.sh
   - make
 
 branches:
