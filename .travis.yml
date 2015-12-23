@@ -3,17 +3,8 @@ language: python
 python:
   - 2.7
     
-before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq gfortran g77 cmake unixodbc unixodbc-dev
-
-install: true
-
 script:
   - ./build_pyfvs.sh
-
-deploy:
-  - make install
 
 branches:
   only:
