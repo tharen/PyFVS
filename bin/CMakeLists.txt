@@ -501,7 +501,7 @@ return()
 
 ##The text below this tag becomes the CMakeLists.txt file in the variant subdirectory
 ##-----DO NOT REMOVE THIS TAG-----##
-cmake_minimum_required(VERSION 2.8.8 FATAL_ERROR)
+cmake_minimum_required(VERSION 2.8.7 FATAL_ERROR)
 
 project(FVS<<variant>> C CXX Fortran)
 #include(GenerateExportHeader)
