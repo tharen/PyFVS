@@ -3,8 +3,19 @@ language: python
 python:
   - 2.7
     
+apt:
+  packages:
+    - cmake
+    - gfortran
+    - unixodbc
+    - unixodbc-dev
+    
 script:
-  - ./build_pyfvs.sh
+  - bash ./build_pyfvs.sh
+  - make
+
+deploy:
+  - make install
 
 branches:
   only:
