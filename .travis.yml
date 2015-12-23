@@ -12,11 +12,8 @@ addons:
     - unixodbc-dev
     
 script:
-  - bash ./build_pyfvs.sh
+  - ./build_pyfvs.sh
   - make
-
-deploy:
-  - make install
 
 branches:
   only:
