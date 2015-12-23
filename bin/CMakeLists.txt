@@ -60,7 +60,7 @@
 # CMake Variables:
 #   -DCMAKE_BUILD_TYPE=<build type> - Adjust compiler & linker flags. Debug;Release
 
-cmake_minimum_required (VERSION 2.8.8 FATAL_ERROR)
+cmake_minimum_required (VERSION 2.8.7 FATAL_ERROR)
 
 project(OPEN_FVS C CXX Fortran)
 enable_language(Fortran)
@@ -408,18 +408,18 @@ if (WITH_PYMOD)
         
     # Discover key Python configuration variables
     execute_process(
-            COMMAND ${PYTHON_EXECUTABLE} -c "import sysconfig\nprint sysconfig.get_config_var('py_version_nodot')"
+            COMMAND ${PYTHON_EXECUTABLE} -c "import sysconfig;print(sysconfig.get_config_var('py_version_nodot'))"
             OUTPUT_VARIABLE PYTHON_VER
             OUTPUT_STRIP_TRAILING_WHITESPACE
             )
     execute_process(
-            COMMAND ${PYTHON_EXECUTABLE} -c "import sysconfig\nprint sysconfig.get_config_var('SO')"
+            COMMAND ${PYTHON_EXECUTABLE} -c "import sysconfig;print(sysconfig.get_config_var('SO'))"
             OUTPUT_VARIABLE PYMOD_EXT
             OUTPUT_STRIP_TRAILING_WHITESPACE
             )
     # TODO: Add error handling to report that Numpy is not available
     execute_process(
-            COMMAND ${PYTHON_EXECUTABLE} -c "import numpy as n\nprint n.get_include()"
+            COMMAND ${PYTHON_EXECUTABLE} -c "import numpy as n;print(n.get_include())"
             OUTPUT_VARIABLE NUMPY_INCLUDE
             OUTPUT_STRIP_TRAILING_WHITESPACE
             )

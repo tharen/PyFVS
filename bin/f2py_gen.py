@@ -81,4 +81,4 @@ for fn in wrappers.values():
         open(os.path.join(build_dir, fn), 'w')
 
 # Cmake captures the return values from stdout
-print ';'.join(os.path.join(build_dir, fn).replace('\\','/') for fn in gen_files)
+print(';'.join(os.path.join(build_dir, fn).replace('\\','/') for fn in gen_files))
