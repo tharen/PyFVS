@@ -6,10 +6,10 @@ python:
 addons:
   apt:
     packages:
-      - cmake
-      - gfortran
-      - unixodbc
-      - unixodbc-dev
+    - cmake
+    - gfortran
+    - unixodbc
+    - unixodbc-dev
     
 script:
   - bash ./build_pyfvs.sh
