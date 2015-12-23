@@ -6,7 +6,7 @@ python:
 addons:
   apt:
     packages:
-    - cmake
+    - cmake-2.8.12
     - gfortran
     - unixodbc
     - unixodbc-dev
