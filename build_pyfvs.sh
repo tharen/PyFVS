@@ -10,4 +10,4 @@ cmake -G"MSYS Makefiles" .. -DFVS_VARIANTS="pnc;wcc" -DWITH_PYMOD=Yes \
     -DENABLE_LTO=OFF -DCMAKE_BUILD_TYPE=Debug \
     -DCMAKE_INSTALL_PREFIX=(pwd)/Open-FVS
 
-make pnc
+make
