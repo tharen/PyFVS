@@ -1,0 +1,16 @@
+before_install:
+    - sudo apt-get update -qq
+    - sudo apt-get install -qq gfortran cmake unixodbc
+
+install: true
+
+script:
+    - ./build_pyfvs.sh
+
+deploy:
+    - make install
+
+branches:
+    only:
+        - module_refactor
+        
