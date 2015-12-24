@@ -90,9 +90,9 @@ message(STATUS "Build Type:" ${CMAKE_BUILD_TYPE})
 #set(INSTALL_DIR "${CMAKE_BINARY_DIR}/${version}" CACHE PATH
 #        "Install location for compiled binaries.")
 #set(CMAKE_INSTALL_PREFIX ${INSTALL_DIR})
-set(EXECUTABLE_OUTPUT_PATH ${INSTALL_DIR}/bin)
-set(LIBRARY_OUTPUT_PATH ${INSTALL_DIR}/bin)
-set(INCLUDE_INSTALL_PATH ${INSTALL_DIR}/lib)
+#set(EXECUTABLE_OUTPUT_PATH ${INSTALL_DIR}/bin)
+#set(LIBRARY_OUTPUT_PATH ${INSTALL_DIR}/bin)
+#set(INCLUDE_INSTALL_PATH ${INSTALL_DIR}/lib)
 
 # If targetting the native architecture adjust the bit and OS flags
 if (NATIVE_ARCH)
