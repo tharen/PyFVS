@@ -7,6 +7,8 @@ addons:
   apt:
     sources:
     - george-edison55-precise-backports
+    - kubuntu-backports
+
     packages:
     - cmake
     - gfortran
