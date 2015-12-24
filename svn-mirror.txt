@@ -1,0 +1,47 @@
+# Git SVN Mirroring
+# Goal:
+#   Branches in the remote Github repo will support integration of local commits
+#   and mirroring of remote commits into the local repository.
+
+# Useful Links:
+# https://objectpartners.com/2014/02/04/getting-started-with-git-svn/
+# http://blog.tfnico.com/2013/10/more-git-svn-woes.html
+
+# Clone the Github repository
+>git clone https://github.com/tharen/PyFVS.git pyfvs
+
+# Initialize the SVN remote.
+>git svn init --username=todharen --prefix=git-svn/ -Ttrunk -bbranches https://svn.code.sf.net/p/open-fvs/code/
+
+# Edit branches to limit fetching to the desired branch.
+>vim .git/cnofigure
+    [svn-remote "svn"]
+        url = https://svn.code.sf.net/p/open-fvs/code
+        fetch = trunk:refs/remotes/git-svn/trunk
+        branches = branches/{PyFVS}:refs/remotes/git-svn/*
+
+# Fetch the range of relevant commits.
+>git svn fetch -r1150:HEAD
+
+# Checkout a local branch that will track the SVN remote branch.
+# This branch will be the only connection to the upstream SVN.
+# It will retain a linear history.
+>git checkout -b mirror-svn-pyfvs refs/remotes/git-svn/PyFVS
+
+# Checkout a local branch for integration, edits, etc.
+>git checkout -b local-svn-pyfvs
+
+# Integrate commits with the mirror branch
+>git checkout mirror-svn-pyfvs
+# Ensure remote commits are included first
+>git svn rebase
+# If remote changes are applied, rebase the local commits first
+>git checkout local-svn-pyfvs
+>git rebase mirror-svn-pyfvs
+# Now the local commits are ready to be brought into the mirror
+>git checkout mirror-svn-pyfvs
+>git merge local-svn-pyfvs
+
+# Ready to push to SVN
+# Do a --dry-run to ensure the commit will be to the correct branch
+>git svn dcommit #--dry-run

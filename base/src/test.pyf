@@ -1,0 +1,53 @@
+!    -*- f90 -*-
+! Note: the context of this file is case sensitive.
+
+python module test ! in 
+    interface  ! in :test
+        subroutine fvssetcmdline(thecmdline,lencl,irtncd) ! in :test:cmdline.f
+            character*(*) intent(in) :: thecmdline
+            integer, optional,depend(thecmdline) :: lencl=slen(thecmdline)
+            integer :: irtncd
+        end subroutine fvssetcmdline
+        block data setglblcntl ! in :test:cmdline.f
+        end block data setglblcntl
+        subroutine fvsgetstoppointcodes(spptcd,spptyr) ! in :test:cmdline.f
+            integer :: spptcd
+            integer :: spptyr
+        end subroutine fvsgetstoppointcodes
+        subroutine fvssetstoppointcodes(spptcd,spptyr) ! in :test:cmdline.f
+            integer intent(in) :: spptcd
+            integer intent(in) :: spptyr
+        end subroutine fvssetstoppointcodes
+        subroutine fvsgetrestartcode(restrtcd) ! in :test:cmdline.f
+            integer :: restrtcd
+            entry clearrestartcode()
+        end subroutine fvsgetrestartcode
+        subroutine fvsrestart(restrtcd) ! in :test:cmdline.f
+            integer :: restrtcd
+        end subroutine fvsrestart
+        subroutine fvsrestartlaststand(restrtcd) ! in :test:cmdline.f
+            integer :: restrtcd
+        end subroutine fvsrestartlaststand
+        subroutine fvsgetkeywordfilename(fn,mxch,nch) ! in :test:cmdline.f
+            character*mxch :: fn
+            integer :: mxch
+            integer :: nch
+        end subroutine fvsgetkeywordfilename
+        subroutine fvssetrtncode(rtncode) ! in :test:cmdline.f
+            integer :: rtncode
+        end subroutine fvssetrtncode
+        subroutine fvsgetrtncode(rtncode) ! in :test:cmdline.f
+            integer :: rtncode
+        end subroutine fvsgetrtncode
+        subroutine fvsstoppoint(locode,istopdone) ! in :test:cmdline.f
+            use contrl_mod
+            use prgprm_mod
+            integer intent(in) :: locode
+            integer :: istopdone
+            entry getamstopping(istopdone)
+        end subroutine fvsstoppoint
+    end interface 
+end python module test
+
+! This file was auto-generated with f2py (version:2).
+! See http://cens.ioc.ee/projects/f2py2e/
