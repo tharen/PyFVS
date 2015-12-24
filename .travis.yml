@@ -7,8 +7,9 @@ addons:
   apt:
     sources:
     - ppa:george-edison55/precise-backports
+    - ppa:kubuntu-ppa/backports
     packages:
-    - cmake-3.2.3
+    - cmake-2.8.12
     - gfortran
     - unixodbc
     - unixodbc-dev
