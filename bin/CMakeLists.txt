@@ -392,17 +392,7 @@ if (WITH_PYMOD)
     ##      with a template setup.py script and avoid all the F2PY command
     ##      line manipulation. Link to the static FVS library.
     
-    if (NOT DEFINED PYTHON_EXECUTABLE)
-        # No user supplied python executable
-        find_package(PythonInterp 2.7 REQUIRED)
-    else ()
-        # Ensure the supplied executable exists
-        if (NOT EXISTS ${PYTHON_EXECUTABLE})
-            message(SEND_ERROR "Python executable not found: ${PYTHON_EXECUTABLE}")
-        else ()
-            set(PYTHONINTERP_FOUND 1)
-        endif ()
-    endif ()
+    find_package(PythonInterp 3.5 REQUIRED)
     
     get_filename_component(PYTHON_INSTALL_PATH ${PYTHON_EXECUTABLE} DIRECTORY)
         
