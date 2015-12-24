@@ -394,7 +394,7 @@ if (WITH_PYMOD)
     
     find_package(PythonInterp 3.5 REQUIRED)
     
-    get_filename_component(PYTHON_INSTALL_PATH ${PYTHON_EXECUTABLE} DIRECTORY)
+    get_filename_component(PYTHON_INSTALL_PATH ${PYTHON_EXECUTABLE} PATH)
         
     # Discover key Python configuration variables
     execute_process(
