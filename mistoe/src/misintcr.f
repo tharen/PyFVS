@@ -1,4 +1,8 @@
       SUBROUTINE MISINT
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 ***********************************************************************
 *  **MISINT--CR  Date of last revision:  07/12/11
 *----------------------------------------------------------------------
@@ -45,7 +49,7 @@
 *     In response to Bulletin #363 (CR species list expanded to include
 *       24 species -- realigned the surrogate species assignments for
 *       consistency between model types for a given species).
-*     Expanded the data statements to include the new, global species 
+*     Expanded the data statements to include the new, global species
 *       list, changed dimension of ACSP(5,MAXSP) to (MAXSP).
 *     Blank data statements for the future Aspen model type (6) were
 *       added and commented out.
@@ -53,10 +57,10 @@
 *       across model types, I chose to keep this model type-
 *       specific structure for flixibiltiy -- we may find the need for
 *       species x model type specific parameters in the future. The
-*       only data block that was collapsed to 1 dimension was the 
+*       only data block that was collapsed to 1 dimension was the
 *       'species character representations'.
 *     Blank data statements for the future Aspen model type (6) were
-*       added and commented out.    
+*       added and commented out.
 *
 *  15-MAR-00 Update Lance David
 *     The species identified as dwarf mistletoe host had not been
@@ -65,10 +69,10 @@
 *       types. As a result, only 5 tree species were recognized as host.
 *       Parameters assigned for growth and mortality are the same across
 *       all model types. Having mistletoe available for the Black Hills
-*       model type is not a concern, because the model won't be 
+*       model type is not a concern, because the model won't be
 *       automatically activated unless there are mistletoe damage codes
 *       in the data set, in which case the data may not be Black Hills
-*       data and inclusion of mistletoe may be appropriate. 
+*       data and inclusion of mistletoe may be appropriate.
 *  21-APR-09 Lance R. David (FMSC)
 *     Changed species code WP to SW (Southwestern White Pine).
 *  17-JUN-09 Gary Dixon (FMSC)
@@ -77,14 +81,10 @@
 *    Added arrays for height growth impacts.
 *    Impact values must be supplied by MistHMod keyword.
 ***********************************************************************
-      IMPLICIT NONE
 
 C.... Parameter statements.
 C.... Parameter include files.
-      INCLUDE 'PRGPRM.F77'
 C.... Common include files.
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'MISCOM.F77'
 C.... Variable declarations.
       LOGICAL DEBUG
@@ -344,7 +344,7 @@ C.... Lodgepole Pine.
      &   1.0,1.0,1.0,1.0,.94,.80,.59, ! 35 AZ (    LP  )
      &   1.0,1.0,1.0,.98,.86,.73,.50, ! 36 CI (      PP)
      &   1.0,1.0,1.0,1.0,1.0,1.0,1.0, ! 37 OS not host
-     &   1.0,1.0,1.0,1.0,1.0,1.0,1.0/ ! 38 OH not host 
+     &   1.0,1.0,1.0,1.0,1.0,1.0,1.0/ ! 38 OH not host
 C.... Aspen.
 C      DATA (((ADGP(I,J,K),K=1,7),J=1,MAXSP),I=6,6)/
 C     &   1.0,1.0,1.0,1.0,1.0,1.0,1.0, !  1
@@ -394,7 +394,7 @@ C.... Marshall, Katy 2007. Permanent plots for measuring spread and
 C.... impact of Douglas-fir dwarf mistletoe in the Southern Oregon
 C.... Cascades, Pacific Northwest Region: Results of the ten year
 C.... remeasurement. USDA Forest Service, Pacific Northwest Region,
-C.... Southwest Oregon Forest Insect and Disease Service Center, 
+C.... Southwest Oregon Forest Insect and Disease Service Center,
 C.... Central Point, Oregon. SWOFIDSC-07-04. 34 pp.
 C....
 C.... Default values for DF in this table would be:
@@ -405,16 +405,16 @@ C.... when appropriat default values are developed, they will be
 C.... set here.
 C....
 C.... Special note: Height growth potential values are not set
-C.... based on Model type (subvariant) like diameter growth and 
+C.... based on Model type (subvariant) like diameter growth and
 C.... mortaility.
 C....
       DATA ((AHGP(I,J),J=1,7),I=1,MAXSP)
-     &  /1.0,1.0,1.0,1.0,1.0,1.0,1.0, ! 1  AF 
-     &   1.0,1.0,1.0,1.0,1.0,1.0,1.0, ! 2  CB 
-     &   1.0,1.0,1.0,1.0,1.0,1.0,1.0, ! 3  DF 
-     &   1.0,1.0,1.0,1.0,1.0,1.0,1.0, ! 4  GF 
-     &   1.0,1.0,1.0,1.0,1.0,1.0,1.0, ! 5  WF 
-     &   1.0,1.0,1.0,1.0,1.0,1.0,1.0, ! 6  MH 
+     &  /1.0,1.0,1.0,1.0,1.0,1.0,1.0, ! 1  AF
+     &   1.0,1.0,1.0,1.0,1.0,1.0,1.0, ! 2  CB
+     &   1.0,1.0,1.0,1.0,1.0,1.0,1.0, ! 3  DF
+     &   1.0,1.0,1.0,1.0,1.0,1.0,1.0, ! 4  GF
+     &   1.0,1.0,1.0,1.0,1.0,1.0,1.0, ! 5  WF
+     &   1.0,1.0,1.0,1.0,1.0,1.0,1.0, ! 6  MH
      &   1.0,1.0,1.0,1.0,1.0,1.0,1.0, ! 7  RC not host
      &   1.0,1.0,1.0,1.0,1.0,1.0,1.0, ! 8  WL
      &   1.0,1.0,1.0,1.0,1.0,1.0,1.0, ! 9  BC
@@ -446,7 +446,7 @@ C....
      &   1.0,1.0,1.0,1.0,1.0,1.0,1.0, ! 35 AZ
      &   1.0,1.0,1.0,1.0,1.0,1.0,1.0, ! 36 CI
      &   1.0,1.0,1.0,1.0,1.0,1.0,1.0, ! 37 OS not host
-     &   1.0,1.0,1.0,1.0,1.0,1.0,1.0/ ! 38 OH not host 
+     &   1.0,1.0,1.0,1.0,1.0,1.0,1.0/ ! 38 OH not host
 
 C.... Mortality coefficients.
 C.... Southwest Mixed Conifer.
@@ -457,7 +457,7 @@ C.... Southwest Mixed Conifer.
      &   0.0,     0.00159, 0.00508, ! 4  GF (GF      )
      &   0.0,     0.00159, 0.00508, ! 5  WF (GF      )
      &   0.00681,-0.00580, 0.00935, ! 6  MH (      PP)
-     &   0.0,0.0,0.0,               ! 7  RC not host  
+     &   0.0,0.0,0.0,               ! 7  RC not host
      &   0.01319,-0.01627, 0.00822, ! 8  WL (  DF    )
      &   0.00681,-0.00580, 0.00935, ! 9  BC (      PP)
      &   0.00112, 0.02170,-0.00171, ! 10 LM (    LP  )
@@ -466,29 +466,29 @@ C.... Southwest Mixed Conifer.
      &   0.00681,-0.00580, 0.00935, ! 13 PP (      PP)
      &   0.00112, 0.02170,-0.00171, ! 14 WB (    LP  )
      &   0.00112, 0.02170,-0.00171, ! 15 SW (    LP  )
-     &   0.0,0.0,0.0,               ! 16 UJ not host  
+     &   0.0,0.0,0.0,               ! 16 UJ not host
      &   0.00681,-0.00580, 0.00935, ! 17 BS (      PP)
      &   0.01319,-0.01627, 0.00822, ! 18 ES (  DF    )
-     &   0.0,0.0,0.0,               ! 19 WS not host  
-     &   0.0,0.0,0.0,               ! 20 AS not host  
-     &   0.0,0.0,0.0,               ! 21 NC not host  
-     &   0.0,0.0,0.0,               ! 22 PW not host  
-     &   0.0,0.0,0.0,               ! 23 GO not host  
-     &   0.0,0.0,0.0,               ! 24 AW not host  
-     &   0.0,0.0,0.0,               ! 25 EM not host  
-     &   0.0,0.0,0.0,               ! 26 BK not host  
-     &   0.0,0.0,0.0,               ! 27 SO not host  
-     &   0.0,0.0,0.0,               ! 28 PB not host  
-     &   0.0,0.0,0.0,               ! 29 AJ not host  
-     &   0.0,0.0,0.0,               ! 30 RM not host  
-     &   0.0,0.0,0.0,               ! 31 OJ not host  
-     &   0.0,0.0,0.0,               ! 32 ER not host  
+     &   0.0,0.0,0.0,               ! 19 WS not host
+     &   0.0,0.0,0.0,               ! 20 AS not host
+     &   0.0,0.0,0.0,               ! 21 NC not host
+     &   0.0,0.0,0.0,               ! 22 PW not host
+     &   0.0,0.0,0.0,               ! 23 GO not host
+     &   0.0,0.0,0.0,               ! 24 AW not host
+     &   0.0,0.0,0.0,               ! 25 EM not host
+     &   0.0,0.0,0.0,               ! 26 BK not host
+     &   0.0,0.0,0.0,               ! 27 SO not host
+     &   0.0,0.0,0.0,               ! 28 PB not host
+     &   0.0,0.0,0.0,               ! 29 AJ not host
+     &   0.0,0.0,0.0,               ! 30 RM not host
+     &   0.0,0.0,0.0,               ! 31 OJ not host
+     &   0.0,0.0,0.0,               ! 32 ER not host
      &   0.00112, 0.02170,-0.00171, ! 33 PM (    LP  )
      &   0.00112, 0.02170,-0.00171, ! 34 PD (    LP  )
      &   0.00112, 0.02170,-0.00171, ! 35 AZ (    LP  )
      &   0.00681,-0.00580, 0.00935, ! 36 CI (      PP)
-     &   0.0,0.0,0.0,               ! 37 OS not host  
-     &   0.0,0.0,0.0/               ! 38 OH not host  
+     &   0.0,0.0,0.0,               ! 37 OS not host
+     &   0.0,0.0,0.0/               ! 38 OH not host
 
 C.... Southwest PP and PJ.
       DATA (((APMC(I,J,K),K=1,3),J=1,MAXSP),I=2,2)/
@@ -498,7 +498,7 @@ C.... Southwest PP and PJ.
      &   0.0,     0.00159, 0.00508, ! 4  GF (GF      )
      &   0.0,     0.00159, 0.00508, ! 5  WF (GF      )
      &   0.00681,-0.00580, 0.00935, ! 6  MH (      PP)
-     &   0.0,0.0,0.0,               ! 7  RC not host  
+     &   0.0,0.0,0.0,               ! 7  RC not host
      &   0.01319,-0.01627, 0.00822, ! 8  WL (  DF    )
      &   0.00681,-0.00580, 0.00935, ! 9  BC (      PP)
      &   0.00112, 0.02170,-0.00171, ! 10 LM (    LP  )
@@ -507,29 +507,29 @@ C.... Southwest PP and PJ.
      &   0.00681,-0.00580, 0.00935, ! 13 PP (      PP)
      &   0.00112, 0.02170,-0.00171, ! 14 WB (    LP  )
      &   0.00112, 0.02170,-0.00171, ! 15 SW (    LP  )
-     &   0.0,0.0,0.0,               ! 16 UJ not host  
+     &   0.0,0.0,0.0,               ! 16 UJ not host
      &   0.00681,-0.00580, 0.00935, ! 17 BS (      PP)
      &   0.01319,-0.01627, 0.00822, ! 18 ES (  DF    )
-     &   0.0,0.0,0.0,               ! 19 WS not host  
-     &   0.0,0.0,0.0,               ! 20 AS not host  
-     &   0.0,0.0,0.0,               ! 21 NC not host  
-     &   0.0,0.0,0.0,               ! 22 PW not host  
-     &   0.0,0.0,0.0,               ! 23 GO not host  
-     &   0.0,0.0,0.0,               ! 24 AW not host  
-     &   0.0,0.0,0.0,               ! 25 EM not host  
-     &   0.0,0.0,0.0,               ! 26 BK not host  
-     &   0.0,0.0,0.0,               ! 27 SO not host  
-     &   0.0,0.0,0.0,               ! 28 PB not host  
-     &   0.0,0.0,0.0,               ! 29 AJ not host  
-     &   0.0,0.0,0.0,               ! 30 RM not host  
-     &   0.0,0.0,0.0,               ! 31 OJ not host  
-     &   0.0,0.0,0.0,               ! 32 ER not host  
+     &   0.0,0.0,0.0,               ! 19 WS not host
+     &   0.0,0.0,0.0,               ! 20 AS not host
+     &   0.0,0.0,0.0,               ! 21 NC not host
+     &   0.0,0.0,0.0,               ! 22 PW not host
+     &   0.0,0.0,0.0,               ! 23 GO not host
+     &   0.0,0.0,0.0,               ! 24 AW not host
+     &   0.0,0.0,0.0,               ! 25 EM not host
+     &   0.0,0.0,0.0,               ! 26 BK not host
+     &   0.0,0.0,0.0,               ! 27 SO not host
+     &   0.0,0.0,0.0,               ! 28 PB not host
+     &   0.0,0.0,0.0,               ! 29 AJ not host
+     &   0.0,0.0,0.0,               ! 30 RM not host
+     &   0.0,0.0,0.0,               ! 31 OJ not host
+     &   0.0,0.0,0.0,               ! 32 ER not host
      &   0.00112, 0.02170,-0.00171, ! 33 PM (    LP  )
      &   0.00112, 0.02170,-0.00171, ! 34 PD (    LP  )
      &   0.00112, 0.02170,-0.00171, ! 35 AZ (    LP  )
      &   0.00681,-0.00580, 0.00935, ! 36 CI (      PP)
-     &   0.0,0.0,0.0,               ! 37 OS not host  
-     &   0.0,0.0,0.0/               ! 38 OH not host  
+     &   0.0,0.0,0.0,               ! 37 OS not host
+     &   0.0,0.0,0.0/               ! 38 OH not host
 
 C.... Black Hills.
       DATA (((APMC(I,J,K),K=1,3),J=1,MAXSP),I=3,3)/
@@ -539,7 +539,7 @@ C.... Black Hills.
      &   0.0,     0.00159, 0.00508, ! 4  GF (GF      )
      &   0.0,     0.00159, 0.00508, ! 5  WF (GF      )
      &   0.00681,-0.00580, 0.00935, ! 6  MH (      PP)
-     &   0.0,0.0,0.0,               ! 7  RC not host  
+     &   0.0,0.0,0.0,               ! 7  RC not host
      &   0.01319,-0.01627, 0.00822, ! 8  WL (  DF    )
      &   0.00681,-0.00580, 0.00935, ! 9  BC (      PP)
      &   0.00112, 0.02170,-0.00171, ! 10 LM (    LP  )
@@ -548,29 +548,29 @@ C.... Black Hills.
      &   0.00681,-0.00580, 0.00935, ! 13 PP (      PP)
      &   0.00112, 0.02170,-0.00171, ! 14 WB (    LP  )
      &   0.00112, 0.02170,-0.00171, ! 15 SW (    LP  )
-     &   0.0,0.0,0.0,               ! 16 UJ not host  
+     &   0.0,0.0,0.0,               ! 16 UJ not host
      &   0.00681,-0.00580, 0.00935, ! 17 BS (      PP)
      &   0.01319,-0.01627, 0.00822, ! 18 ES (  DF    )
-     &   0.0,0.0,0.0,               ! 19 WS not host  
-     &   0.0,0.0,0.0,               ! 20 AS not host  
-     &   0.0,0.0,0.0,               ! 21 NC not host  
-     &   0.0,0.0,0.0,               ! 22 PW not host  
-     &   0.0,0.0,0.0,               ! 23 GO not host  
-     &   0.0,0.0,0.0,               ! 24 AW not host  
-     &   0.0,0.0,0.0,               ! 25 EM not host  
-     &   0.0,0.0,0.0,               ! 26 BK not host  
-     &   0.0,0.0,0.0,               ! 27 SO not host  
-     &   0.0,0.0,0.0,               ! 28 PB not host  
-     &   0.0,0.0,0.0,               ! 29 AJ not host  
-     &   0.0,0.0,0.0,               ! 30 RM not host  
-     &   0.0,0.0,0.0,               ! 31 OJ not host  
-     &   0.0,0.0,0.0,               ! 32 ER not host  
+     &   0.0,0.0,0.0,               ! 19 WS not host
+     &   0.0,0.0,0.0,               ! 20 AS not host
+     &   0.0,0.0,0.0,               ! 21 NC not host
+     &   0.0,0.0,0.0,               ! 22 PW not host
+     &   0.0,0.0,0.0,               ! 23 GO not host
+     &   0.0,0.0,0.0,               ! 24 AW not host
+     &   0.0,0.0,0.0,               ! 25 EM not host
+     &   0.0,0.0,0.0,               ! 26 BK not host
+     &   0.0,0.0,0.0,               ! 27 SO not host
+     &   0.0,0.0,0.0,               ! 28 PB not host
+     &   0.0,0.0,0.0,               ! 29 AJ not host
+     &   0.0,0.0,0.0,               ! 30 RM not host
+     &   0.0,0.0,0.0,               ! 31 OJ not host
+     &   0.0,0.0,0.0,               ! 32 ER not host
      &   0.00112, 0.02170,-0.00171, ! 33 PM (    LP  )
      &   0.00112, 0.02170,-0.00171, ! 34 PD (    LP  )
      &   0.00112, 0.02170,-0.00171, ! 35 AZ (    LP  )
      &   0.00681,-0.00580, 0.00935, ! 36 CI (      PP)
-     &   0.0,0.0,0.0,               ! 37 OS not host  
-     &   0.0,0.0,0.0/               ! 38 OH not host  
+     &   0.0,0.0,0.0,               ! 37 OS not host
+     &   0.0,0.0,0.0/               ! 38 OH not host
 
 C.... Spruce-Fir.
       DATA (((APMC(I,J,K),K=1,3),J=1,MAXSP),I=4,4)/
@@ -580,7 +580,7 @@ C.... Spruce-Fir.
      &   0.0,     0.00159, 0.00508, ! 4  GF (GF      )
      &   0.0,     0.00159, 0.00508, ! 5  WF (GF      )
      &   0.00681,-0.00580, 0.00935, ! 6  MH (      PP)
-     &   0.0,0.0,0.0,               ! 7  RC not host  
+     &   0.0,0.0,0.0,               ! 7  RC not host
      &   0.01319,-0.01627, 0.00822, ! 8  WL (  DF    )
      &   0.00681,-0.00580, 0.00935, ! 9  BC (      PP)
      &   0.00112, 0.02170,-0.00171, ! 10 LM (    LP  )
@@ -589,29 +589,29 @@ C.... Spruce-Fir.
      &   0.00681,-0.00580, 0.00935, ! 13 PP (      PP)
      &   0.00112, 0.02170,-0.00171, ! 14 WB (    LP  )
      &   0.00112, 0.02170,-0.00171, ! 15 SW (    LP  )
-     &   0.0,0.0,0.0,               ! 16 UJ not host  
+     &   0.0,0.0,0.0,               ! 16 UJ not host
      &   0.00681,-0.00580, 0.00935, ! 17 BS (      PP)
      &   0.01319,-0.01627, 0.00822, ! 18 ES (  DF    )
-     &   0.0,0.0,0.0,               ! 19 WS not host  
-     &   0.0,0.0,0.0,               ! 20 AS not host  
-     &   0.0,0.0,0.0,               ! 21 NC not host  
-     &   0.0,0.0,0.0,               ! 22 PW not host  
-     &   0.0,0.0,0.0,               ! 23 GO not host  
-     &   0.0,0.0,0.0,               ! 24 AW not host  
-     &   0.0,0.0,0.0,               ! 25 EM not host  
-     &   0.0,0.0,0.0,               ! 26 BK not host  
-     &   0.0,0.0,0.0,               ! 27 SO not host  
-     &   0.0,0.0,0.0,               ! 28 PB not host  
-     &   0.0,0.0,0.0,               ! 29 AJ not host  
-     &   0.0,0.0,0.0,               ! 30 RM not host  
-     &   0.0,0.0,0.0,               ! 31 OJ not host  
-     &   0.0,0.0,0.0,               ! 32 ER not host  
+     &   0.0,0.0,0.0,               ! 19 WS not host
+     &   0.0,0.0,0.0,               ! 20 AS not host
+     &   0.0,0.0,0.0,               ! 21 NC not host
+     &   0.0,0.0,0.0,               ! 22 PW not host
+     &   0.0,0.0,0.0,               ! 23 GO not host
+     &   0.0,0.0,0.0,               ! 24 AW not host
+     &   0.0,0.0,0.0,               ! 25 EM not host
+     &   0.0,0.0,0.0,               ! 26 BK not host
+     &   0.0,0.0,0.0,               ! 27 SO not host
+     &   0.0,0.0,0.0,               ! 28 PB not host
+     &   0.0,0.0,0.0,               ! 29 AJ not host
+     &   0.0,0.0,0.0,               ! 30 RM not host
+     &   0.0,0.0,0.0,               ! 31 OJ not host
+     &   0.0,0.0,0.0,               ! 32 ER not host
      &   0.00112, 0.02170,-0.00171, ! 33 PM (    LP  )
      &   0.00112, 0.02170,-0.00171, ! 34 PD (    LP  )
      &   0.00112, 0.02170,-0.00171, ! 35 AZ (    LP  )
      &   0.00681,-0.00580, 0.00935, ! 36 CI (      PP)
-     &   0.0,0.0,0.0,               ! 37 OS not host  
-     &   0.0,0.0,0.0/               ! 38 OH not host  
+     &   0.0,0.0,0.0,               ! 37 OS not host
+     &   0.0,0.0,0.0/               ! 38 OH not host
 
 C.... Lodgepole Pine.
       DATA (((APMC(I,J,K),K=1,3),J=1,MAXSP),I=5,5)/
@@ -621,7 +621,7 @@ C.... Lodgepole Pine.
      &   0.0,     0.00159, 0.00508, ! 4  GF (GF      )
      &   0.0,     0.00159, 0.00508, ! 5  WF (GF      )
      &   0.00681,-0.00580, 0.00935, ! 6  MH (      PP)
-     &   0.0,0.0,0.0,               ! 7  RC not host  
+     &   0.0,0.0,0.0,               ! 7  RC not host
      &   0.01319,-0.01627, 0.00822, ! 8  WL (  DF    )
      &   0.00681,-0.00580, 0.00935, ! 9  BC (      PP)
      &   0.00112, 0.02170,-0.00171, ! 10 LM (    LP  )
@@ -630,29 +630,29 @@ C.... Lodgepole Pine.
      &   0.00681,-0.00580, 0.00935, ! 13 PP (      PP)
      &   0.00112, 0.02170,-0.00171, ! 14 WB (    LP  )
      &   0.00112, 0.02170,-0.00171, ! 15 SW (    LP  )
-     &   0.0,0.0,0.0,               ! 16 UJ not host  
+     &   0.0,0.0,0.0,               ! 16 UJ not host
      &   0.00681,-0.00580, 0.00935, ! 17 BS (      PP)
      &   0.01319,-0.01627, 0.00822, ! 18 ES (  DF    )
-     &   0.0,0.0,0.0,               ! 19 WS not host  
-     &   0.0,0.0,0.0,               ! 20 AS not host  
-     &   0.0,0.0,0.0,               ! 21 NC not host  
-     &   0.0,0.0,0.0,               ! 22 PW not host  
-     &   0.0,0.0,0.0,               ! 23 GO not host  
-     &   0.0,0.0,0.0,               ! 24 AW not host  
-     &   0.0,0.0,0.0,               ! 25 EM not host  
-     &   0.0,0.0,0.0,               ! 26 BK not host  
-     &   0.0,0.0,0.0,               ! 27 SO not host  
-     &   0.0,0.0,0.0,               ! 28 PB not host  
-     &   0.0,0.0,0.0,               ! 29 AJ not host  
-     &   0.0,0.0,0.0,               ! 30 RM not host  
-     &   0.0,0.0,0.0,               ! 31 OJ not host  
-     &   0.0,0.0,0.0,               ! 32 ER not host  
+     &   0.0,0.0,0.0,               ! 19 WS not host
+     &   0.0,0.0,0.0,               ! 20 AS not host
+     &   0.0,0.0,0.0,               ! 21 NC not host
+     &   0.0,0.0,0.0,               ! 22 PW not host
+     &   0.0,0.0,0.0,               ! 23 GO not host
+     &   0.0,0.0,0.0,               ! 24 AW not host
+     &   0.0,0.0,0.0,               ! 25 EM not host
+     &   0.0,0.0,0.0,               ! 26 BK not host
+     &   0.0,0.0,0.0,               ! 27 SO not host
+     &   0.0,0.0,0.0,               ! 28 PB not host
+     &   0.0,0.0,0.0,               ! 29 AJ not host
+     &   0.0,0.0,0.0,               ! 30 RM not host
+     &   0.0,0.0,0.0,               ! 31 OJ not host
+     &   0.0,0.0,0.0,               ! 32 ER not host
      &   0.00112, 0.02170,-0.00171, ! 33 PM (    LP  )
      &   0.00112, 0.02170,-0.00171, ! 34 PD (    LP  )
      &   0.00112, 0.02170,-0.00171, ! 35 AZ (    LP  )
      &   0.00681,-0.00580, 0.00935, ! 36 CI (      PP)
-     &   0.0,0.0,0.0,               ! 37 OS not host  
-     &   0.0,0.0,0.0/               ! 38 OH not host  
+     &   0.0,0.0,0.0,               ! 37 OS not host
+     &   0.0,0.0,0.0/               ! 38 OH not host
 
 C.... Aspen.
 C      DATA (((APMC(I,J,K),K=1,3),J=1,MAXSP),I=6,6)/
@@ -696,7 +696,7 @@ C     &   0.0,0.0,0.0, ! 37
 C     &   0.0,0.0,0.0/ ! 38
 C.... Check for debug.
       CALL DBCHK(DEBUG,'MISINT',6,ICYC)
- 
+
       IF(DEBUG) WRITE(JOSTND,10)ICYC,IMODTY
    10 FORMAT(' Begin MISINTCR: Cycle = ',I5,' IMODTY = ',I5)
 C.... Mistletoe model initializations.

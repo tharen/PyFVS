@@ -1,7 +1,11 @@
       SUBROUTINE FMSNGHT(VVER,KSP,HTD,HTCURR,IHRD,HTSNEW)
-      IMPLICIT NONE
+      use fmcom_mod
+      use plot_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
-C  $Id$
+C  $Id: fmsnght.f 709 2013-03-19 22:06:06Z drobinsonessa@gmail.com $
 C----------
 C
 C     SNAG HEIGHT PREDICTION
@@ -25,21 +29,6 @@ C     HTSNEW:  Updated height for snag pool/record.
 C     HTD:     Height of current snag pool/record, at time of death.
 C     KSP:     Species number for current snag pool/record.
 C----------
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
 C
       CHARACTER VVER*7
       INTEGER HTINDX1, HTINDX2, IHRD, KSP
@@ -88,7 +77,7 @@ C       CI variant has special rules for WP & RC
               ENDIF
           END SELECT
 
-        CASE('PN', 'WC', 'BM', 'EC')
+        CASE('PN', 'WC', 'BM', 'EC', 'OP')
 C       First, get the height loss rate from fmr6htls. But if the
 C       height loss is adjusted by user (snagbrk keyword), make sure
 C       you use their values.
@@ -97,17 +86,17 @@ C       you use their values.
           IF (HTCURR .GT. (0.5 * HTD)) THEN
             IF ((HTX(KSP,HTINDX1) .GT. 1.01) .OR.
      &          (HTX(KSP,HTINDX1) .LT. 0.99)) THEN
-              HTSNEW = HTCURR * 
+              HTSNEW = HTCURR *
      &                   (1.0 - HTR1 * HTX(KSP,HTINDX1)*SFTMULT)**NYRS
-            ELSE	 
+            ELSE
               HTSNEW = HTCURR * (1.0 - X2)**NYRS
             ENDIF
           ELSE
             IF ((HTX(KSP,HTINDX2) .GT. 1.01) .OR.
      &          (HTX(KSP,HTINDX2) .LT. 0.99)) THEN
-              HTSNEW = HTCURR * 
+              HTSNEW = HTCURR *
      &                   (1.0 - HTR2 * HTX(KSP,HTINDX2)*SFTMULT)**NYRS
-            ELSE	 
+            ELSE
               HTSNEW = HTCURR * (1.0 - X2)**NYRS
             ENDIF
           ENDIF
@@ -118,10 +107,10 @@ C       you use their values.
      &         KODFOR .GE. 700) THEN                        ! CALIFORNIA
 
             IF (HTCURR .GT. (0.5 * HTD)) THEN
-              HTSNEW = HTCURR * 
+              HTSNEW = HTCURR *
      &                   (1.0 - HTR1 * HTX(KSP,HTINDX1) *SFTMULT)**NYRS
             ELSE
-              HTSNEW = HTCURR * 
+              HTSNEW = HTCURR *
      &                   (1.0 - HTR2 * HTX(KSP,HTINDX2) *SFTMULT)**NYRS
             ENDIF
           ELSE                                              ! OREGON
@@ -134,7 +123,7 @@ C         you use their values.
             IF (HTCURR .GT. (0.5 * HTD)) THEN
               IF ((HTX(KSP,HTINDX1) .GT. 1.01) .OR.
      &            (HTX(KSP,HTINDX1) .LT. 0.99)) THEN
-                HTSNEW = HTCURR * 
+                HTSNEW = HTCURR *
      &                    (1.0 - HTR1 *HTX(KSP,HTINDX1)*SFTMULT)**NYRS
               ELSE
                 HTSNEW = HTCURR * (1.0 - X2)**NYRS
@@ -142,7 +131,7 @@ C         you use their values.
             ELSE
               IF ((HTX(KSP,HTINDX2) .GT. 1.01) .OR.
      &            (HTX(KSP,HTINDX2) .LT. 0.99)) THEN
-                HTSNEW = HTCURR * 
+                HTSNEW = HTCURR *
      &                     (1.0 - HTR2 *HTX(KSP,HTINDX2)*SFTMULT)**NYRS
               ELSE
                 HTSNEW = HTCURR * (1.0 - X2)**NYRS
@@ -152,10 +141,10 @@ C         you use their values.
 
         CASE DEFAULT
           IF (HTCURR .GT. (0.5 * HTD)) THEN
-            HTSNEW = HTCURR * 
+            HTSNEW = HTCURR *
      &                (1.0 - HTR1 * HTX(KSP,HTINDX1) * SFTMULT)**NYRS
           ELSE
-            HTSNEW = HTCURR * 
+            HTSNEW = HTCURR *
      &                 (1.0 - HTR2 * HTX(KSP,HTINDX2) * SFTMULT)**NYRS
           ENDIF
 

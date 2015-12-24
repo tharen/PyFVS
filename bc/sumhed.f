@@ -1,18 +1,15 @@
       SUBROUTINE SUMHED
-      IMPLICIT NONE
+      use outcom_mod
+      use prgprm_mod
+      use plot_mod
+      use screen_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C  THIS SUBROUTINE WRITES A HEADER FOR THE SUMMARY OUTPUT ON THE
 C  SCREEN.
 C----------
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'OUTCOM.F77'
-      INCLUDE 'SCREEN.F77'
-C
 COMMONS
 C----------
       INTEGER I1,I2,ISTFNB,ISTLNB
@@ -42,7 +39,7 @@ C
          WRITE (JOSCRN,FMT) ITITLE(I1:I2)
       ENDIF
       WRITE (JOSCRN,11)
-            
+
    11 FORMAT (/T17,'SUMMARY STATISTICS (BASED ON TOTAL STAND AREA)'
      >  /1X,76('-')/
      >  T8,'START OF SIMULATION PERIOD    REMOVALS/HA  ',4X,
@@ -52,7 +49,7 @@ C
      >  'CU  M  /HA  CU  M CU  M  BA SDI  HT  QMD ACC MOR',/,1X,
      >  '---- ----- --- --- --- ---- ----- ----- ----- ----- ',
      >  '--- --- --- ---- --- ---')
-     
+
  1000 CONTINUE
       RETURN
       END

@@ -1,5 +1,6 @@
       BLOCK DATA MPBLKD
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **MPBLKD--BM   DATE OF LAST REVISION:  08/22/14
 C----------
@@ -9,24 +10,19 @@ C     SEE MPBCUP OR MPBMOD FOR VARIABLE DISCRIPTIONS.
 C
 C Revision History
 C   06/08/09 LANCE DAVID (FMSC)
-C     CREATED THIS 18 SPECIES BLUE MOUNTAINS VARIANT VERSION TO 
-C     ACCOMODATE THE 18 SPECIES REPRESENTED. SURROGATE SPECIES 
+C     CREATED THIS 18 SPECIES BLUE MOUNTAINS VARIANT VERSION TO
+C     ACCOMODATE THE 18 SPECIES REPRESENTED. SURROGATE SPECIES
 C     ASSIGNMENTS ARE BASED ON THOSE MADE IN THE SORNEC AND
 C     CENTRAL ROCKIES VARIANTS.
 C   07/02/10 Lance R. David (FMSC)
-C     Added IMPLICIT NONE.
 C   08/22/14 Lance R. David (FMSC)
 C     Function name was used as variable name.
 C     changed variable INT to INCRS
 C----------------------------------------------------------------------
 C
-COMMONS
 
-      INCLUDE 'PRGPRM.F77'
 
       INCLUDE 'MPBCOM.F77'
-C
-COMMONS
 C
       DATA  JOMPB  / 7 /
 
@@ -35,28 +31,28 @@ C
 
 C----------
 C vv---- MPB surface area calculation surrogate specie (surfce.f)
-C !!   
+C !!
 C !!   SPECIES LIST FOR BM VARIANT.
-C !!   # CD NAME                  CD  NAME                               
+C !!   # CD NAME                  CD  NAME
 C !!  -- -- --------------------- --- -----------------------------------
-C WP   1 WP WESTERN WHITE PINE    119 PINUS MONTICOLA                   
-C WL   2 WL WESTERN LARCH         073 LARIX OCCIDENTALIS                 
-C DF   3 DF DOUGLAS-FIR           202 PSEUDOTSUGA MENZIESII             
-C DF   4 GF GRAND FIR              17 ABIES GRANDIS                      
-C WL   5 MH MOUNTAIN HEMLOCK      264 TSUGA MERTENSIANA                  
-C WL   6 WJ WESTERN JUNIPER       064 JUNIPERUS OCCIDENTALIS             
-C LP   7 LP LODGEPOLE PINE        108 PINUS CONTORTA                     
-C WP   8 ES ENGELMANN SPRUCE      093 PICEA ENGELMANNII                  
-C DF   9 AF SUBALPINE FIR         019 ABIES LASIOCARPA                   
-C PP  10 PP PONDEROSA PINE        122 PINUS PONDEROSA                    
-C WL  11 WB WHITEBARK PINE        101 PINUS ALBICAULIS             
-C LP  12 LM LIMBER PINE           113 PINUS FLEXILIS                
+C WP   1 WP WESTERN WHITE PINE    119 PINUS MONTICOLA
+C WL   2 WL WESTERN LARCH         073 LARIX OCCIDENTALIS
+C DF   3 DF DOUGLAS-FIR           202 PSEUDOTSUGA MENZIESII
+C DF   4 GF GRAND FIR              17 ABIES GRANDIS
+C WL   5 MH MOUNTAIN HEMLOCK      264 TSUGA MERTENSIANA
+C WL   6 WJ WESTERN JUNIPER       064 JUNIPERUS OCCIDENTALIS
+C LP   7 LP LODGEPOLE PINE        108 PINUS CONTORTA
+C WP   8 ES ENGELMANN SPRUCE      093 PICEA ENGELMANNII
+C DF   9 AF SUBALPINE FIR         019 ABIES LASIOCARPA
+C PP  10 PP PONDEROSA PINE        122 PINUS PONDEROSA
+C WL  11 WB WHITEBARK PINE        101 PINUS ALBICAULIS
+C LP  12 LM LIMBER PINE           113 PINUS FLEXILIS
 C WL  13 PY PACIFIC YEW           231 TAXUS BREVIFOLIA
 C WL  14 YC ALASKA CEDAR           42 CHAMAECYPARIS NOOTKATENSIS
 C DF  15 AS QUAKING ASPEN         746 POPULUS TREMULOIDES
-C DF  16 CW BLACK COTTONWOOD      747 POPULUS BALSAMIFERA           
-C WL  17 PB OTHER SOFTWOODS       298                
-C DF  18 OS OTHER HARDWOODS       998                                    
+C DF  16 CW BLACK COTTONWOOD      747 POPULUS BALSAMIFERA
+C WL  17 PB OTHER SOFTWOODS       298
+C DF  18 OS OTHER HARDWOODS       998
 C
 C----------
 
@@ -73,6 +69,6 @@ C        WP  WL  DF  DF  WL  WL  LP  WP  DF  PP  WL -- surfce surrogate
 C        12  13  14  15  16  17  18                 -- EM index
 C        LM  PY  YC  AS  CW  OS  OH                 -- EM species
 C        WL  WL  WL  DF  DF  WL  DF                 -- surfce surrogate
-     &    2,  2,  2,  3,  3,  2,  3/     
+     &    2,  2,  2,  3,  3,  2,  3/
 
       END

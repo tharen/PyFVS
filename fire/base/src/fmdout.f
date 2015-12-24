@@ -1,5 +1,12 @@
       SUBROUTINE FMDOUT (IYR)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C  $Id$
@@ -23,16 +30,9 @@ C.... PARAMETER STATEMENTS.
 
 C.... PARAMETER INCLUDE FILES.
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... COMMON INCLUDE FILES.
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
 
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
 
 C.... VARIABLE DECLARATIONS.
       REAL      TOTSNG(2), TOTLIV(2), TONREM
@@ -72,7 +72,7 @@ C     PRINT FLAG TO TRUE (DEFAULT IS FALSE)
 
  45   CONTINUE
 
-C     DO THIS AGAIN FOR THE DOWN WOOD VOLUME AND COVER REPORTS 
+C     DO THIS AGAIN FOR THE DOWN WOOD VOLUME AND COVER REPORTS
 
       LPRINT2 = .TRUE.
       IF (IYR .EQ. 0 .AND. IYR.EQ. IDWRPE) GOTO 46
@@ -118,11 +118,11 @@ C     ACCUMULATE SURFACE FUELS FOR PRINTING
          JSZ = ISZ + 3
          KSZ = ISZ + 6
          SMALL2 = SMALL2 + CWD(3,ISZ,1,5) + CWD(3,ISZ,2,5)
-         LARGE2 = LARGE2 + CWD(3,JSZ,1,5) + CWD(3,JSZ,2,5) 
+         LARGE2 = LARGE2 + CWD(3,JSZ,1,5) + CWD(3,JSZ,2,5)
      &                   + CWD(3,KSZ,1,5) + CWD(3,KSZ,2,5)
       ENDDO
-      LARGE12 = CWD(3,6,1,5)+CWD(3,6,2,5)+CWD(3,7,1,5)+CWD(3,7,2,5) 
-     &         +CWD(3,8,1,5)+CWD(3,8,2,5)+CWD(3,9,1,5)+CWD(3,9,2,5) 
+      LARGE12 = CWD(3,6,1,5)+CWD(3,6,2,5)+CWD(3,7,1,5)+CWD(3,7,2,5)
+     &         +CWD(3,8,1,5)+CWD(3,8,2,5)+CWD(3,9,1,5)+CWD(3,9,2,5)
 
       TOTDUF = CWD(3,11,1,5) + CWD(3,11,2,5)
       TOTLIT = CWD(3,10,1,5) + CWD(3,10,2,5)
@@ -284,7 +284,7 @@ C     CARBON REPORT
       BIOREM(2) = TONREM
       BIOCON(1) = BURNED(3,10) + BURNED(3,11)
       BIOCON(2) = TOTCON - BIOCON(1)
-      
+
       TONRMS = 0.
       TONRMH = 0.
       TONRMC = 0.
@@ -302,7 +302,7 @@ C     FIRST CLEAR THE ARRAYS
          ENDDO
       ENDDO
 
-C     FILL IN DENSITY VALUES TO USE IN DOWN WOOD VOLUME CALCULATIONS. 
+C     FILL IN DENSITY VALUES TO USE IN DOWN WOOD VOLUME CALCULATIONS.
 C     CWDDEN ARRAY HOLDS VALUES IN LBS/CUFT.  CURRENT VALUES ARE BASED
 C     ON SPECIFIC GRAVITY VALUE OF 0.4 FOR BOTH SOFT AND HARD MATERIAL,
 C     FROM BROWN (1974), GTR-INT-16, HANDBOOK FOR INVENTORYING DOWNED WOODY MATERIAL
@@ -316,18 +316,18 @@ C     FROM BROWN (1974), GTR-INT-16, HANDBOOK FOR INVENTORYING DOWNED WOODY MATE
          DO J = 1, 9
             DO K = 1, 2
                DO L = 1, 4
-                  CWDVOL(I,J,K,L) = CWD(I,J,K,L)*2000/CWDDEN(K,L)                
+                  CWDVOL(I,J,K,L) = CWD(I,J,K,L)*2000/CWDDEN(K,L)
                ENDDO
             ENDDO
          ENDDO
       ENDDO
-      
-C                         total stuff up 
+
+C                         total stuff up
       DO I = 1, 2
          DO J = 1, 9
             DO K = 1, 2
-               DO L = 1, 4             
-                 CWDVOL(3,J,K,L) = CWDVOL(3,J,K,L) + CWDVOL(I,J,K,L) 
+               DO L = 1, 4
+                 CWDVOL(3,J,K,L) = CWDVOL(3,J,K,L) + CWDVOL(I,J,K,L)
                ENDDO
             ENDDO
          ENDDO
@@ -336,8 +336,8 @@ C                         total stuff up
       DO I = 1, 3
          DO J = 1, 9
             DO K = 1, 2
-               DO L = 1, 4             
-                 CWDVOL(I,J,K,5) = CWDVOL(I,J,K,5) + CWDVOL(I,J,K,L) 
+               DO L = 1, 4
+                 CWDVOL(I,J,K,5) = CWDVOL(I,J,K,5) + CWDVOL(I,J,K,L)
                ENDDO
             ENDDO
          ENDDO
@@ -346,8 +346,8 @@ C                         total stuff up
       DO I = 1, 3
          DO J = 1, 9
             DO K = 1, 2
-               DO L = 1, 5             
-                 CWDVOL(I,10,K,L) = CWDVOL(I,10,K,L) + CWDVOL(I,J,K,L) 
+               DO L = 1, 5
+                 CWDVOL(I,10,K,L) = CWDVOL(I,10,K,L) + CWDVOL(I,J,K,L)
                ENDDO
             ENDDO
          ENDDO
@@ -356,14 +356,14 @@ C                         total stuff up
       DO I = 3,3
          DO J = 1, 9
             DO K = 1, 2
-               DO L = 5,5                  
+               DO L = 5,5
                   SELECT CASE (J)
                     CASE (1,2,3)
                       CWDCOV(I,J,K,L) = 0
                     CASE (4)
                       CWDCOV(I,J,K,L) = 0.0166*CWDVOL(I,J,K,L)**0.8715
                     CASE (5)
-                      CWDCOV(I,J,K,L) = 0.0092*CWDVOL(I,J,K,L)**0.8795                 
+                      CWDCOV(I,J,K,L) = 0.0092*CWDVOL(I,J,K,L)**0.8795
                     CASE (6)
                       CWDCOV(I,J,K,L) = 0.0063*CWDVOL(I,J,K,L)**0.8728
                     CASE (7)
@@ -378,7 +378,7 @@ C                         total stuff up
             ENDDO
          ENDDO
       ENDDO
-      
+
 C     STOP HERE IF WE ARE NOT PRINTING THE FUELS REPORT
       IF (.NOT. LPRINT) GOTO 750
 C
@@ -463,12 +463,12 @@ C
       V1(8) = CWDVOL(3,10,2,5)
       V1(9) = CWDVOL(3,1,1,5)+CWDVOL(3,2,1,5)+CWDVOL(3,3,1,5)
       V1(10) = CWDVOL(3,4,1,5)
-      V1(11) = CWDVOL(3,5,1,5)    
+      V1(11) = CWDVOL(3,5,1,5)
       V1(12) = CWDVOL(3,6,1,5)
-      V1(13) = CWDVOL(3,7,1,5)                                         
+      V1(13) = CWDVOL(3,7,1,5)
       V1(14) = CWDVOL(3,8,1,5)
       V1(15) = CWDVOL(3,9,1,5)
-      V1(16) = CWDVOL(3,10,1,5)  
+      V1(16) = CWDVOL(3,10,1,5)
 
       CALL DBSFMDWVOL(IYR,NPLT,V1,16,DBSKODE)
       IF(DBSKODE.EQ.0) GOTO 850
@@ -527,12 +527,12 @@ C
       V2(6) = CWDCOV(3,9,2,5)
       V2(7) = CWDCOV(3,10,2,5)
       V2(8) = CWDCOV(3,4,1,5)
-      V2(9) = CWDCOV(3,5,1,5)    
+      V2(9) = CWDCOV(3,5,1,5)
       V2(10) = CWDCOV(3,6,1,5)
-      V2(11) = CWDCOV(3,7,1,5)                                         
+      V2(11) = CWDCOV(3,7,1,5)
       V2(12) = CWDCOV(3,8,1,5)
       V2(13) = CWDCOV(3,9,1,5)
-      V2(14) = CWDCOV(3,10,1,5)         
+      V2(14) = CWDCOV(3,10,1,5)
 
       CALL DBSFMDWCOV(IYR,NPLT,V2,14,DBSKODE)
       IF(DBSKODE.EQ.0) RETURN

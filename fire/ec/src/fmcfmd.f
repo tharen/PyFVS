@@ -1,5 +1,12 @@
       SUBROUTINE FMCFMD (IYR, FMD)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C   **FMCFMD FIRE-EC-DATE OF LAST REVISION: 03/12/12
 C----------
@@ -23,31 +30,8 @@ C----------
 ***********************************************************************
 C----------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'FMFCOM.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
       INCLUDE 'SSTGMC.F77'
 C
-COMMONS
 C----------
 C  LOCAL VARIABLE DECLARATIONS
 C
@@ -187,7 +171,7 @@ C    6 = OM = OLD FOREST MULTISTRATA
 C----------
       CALL FMSSTAGE(TPAMIN,CCMIN,PCTSMX,SAWDBH,SSDBH,GAPPCT,IFMST,X3,
      &     FMPROB,FMICR)
-C 
+C
       SELECT CASE (IFMST)
         CASE (0,1,2,5)
           LSNGL = .TRUE.

@@ -1,5 +1,9 @@
       SUBROUTINE BRDOUT
-      IMPLICIT NONE
+      use outcom_mod
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C**********************************************************************
 C  **BRDOUT       DATE OF LAST REVISION:  06/05/2014
 C----------------------------------------------------------------------
@@ -29,11 +33,7 @@ C**********************************************************************
 
 C.... Common include files.
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BRCOM.F77'
-      INCLUDE 'OUTCOM.F77'
-      INCLUDE 'PLOT.F77'
 
       CHARACTER*3 BRVER
 C.... Local variable declarations.

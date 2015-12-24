@@ -1,5 +1,6 @@
       SUBROUTINE VARGET (WK3,IPNT,ILIMIT,REALS,LOGICS,INTS)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C CR $Id$
 C----------
@@ -8,19 +9,10 @@ C     READ THE VARIANT SPECIFIC VARIABLES.
 C
 C     PART OF THE PARALLEL PROCESSING EXTENSION TO PROGNOSIS.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'GGCOM.F77'
 C
-C
-COMMONS
-C
 C     NOTE: THE ACTUAL STORAGE LIMIT FOR INTS, LOGICS, AND REALS
-C     IS MAXTRE (SEE PRGPRM).  
+C     IS MAXTRE (SEE PRGPRM).
 C
       INTEGER ILIMIT,IPNT,MXL,MXI,MXR
       PARAMETER (MXL=1,MXI=1,MXR=5)
@@ -68,14 +60,11 @@ C
       END
 
       SUBROUTINE VARCHGET (CBUFF, IPNT, LNCBUF)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C     Get variant-specific character data
 C----------
-C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
 C
       INTEGER LNCBUF
       CHARACTER CBUFF(LNCBUF)

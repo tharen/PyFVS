@@ -1,5 +1,8 @@
       SUBROUTINE BRCREM
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C**********************************************************************
 C  **BRCREM       DATE OF LAST REVISION:  06/05/2014
 C----------------------------------------------------------------------
@@ -35,14 +38,11 @@ C**********************************************************************
 
 C.... Common include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BRCOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
 
 C.... Local variable declarations.
 
-      INTEGER I1, I2, I3, ICNDX(10), ITSTAT, IVAC, J, K, M, NLCAN, 
+      INTEGER I1, I2, I3, ICNDX(10), ITSTAT, IVAC, J, K, M, NLCAN,
      &        ICANT
       REAL HITE, PRHT, PRHTST, VALUE
       LOGICAL DEBUG,PRUNED
@@ -184,7 +184,7 @@ C....       NOTE: units are in centimeters
             PRHTST=HITE*HTPRPR*30.48
             IF(PRHTST.GT.PRHT) PRHTST=PRHT
             IF(DEBUG) THEN
-               WRITE(JOSTND,*) 
+               WRITE(JOSTND,*)
      &         ' tree pruned: BRHTBC old=',BRHTBC(J),
      &         ' new(if>)=',PRHTST
             ENDIF

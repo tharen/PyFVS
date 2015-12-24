@@ -1,5 +1,6 @@
       SUBROUTINE LBTRIM (MAE,MAELNK)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -17,16 +18,7 @@ C             ASSOCIATED WITH IT.
 C             (1,.)= POINTS TO THE ENTRY IN IEVACT, AGLSET, & LENAGL
 C             (2,.)= POINTS TO THE ENTRY IN IEVNTS
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'OPCOM.F77'
-C
-C
-COMMONS
 C
       INTEGER MAELNK(2,50),MAE,IDEL,I,J,KODE,LEN
 C

@@ -1,5 +1,14 @@
       SUBROUTINE HTGF
-      IMPLICIT NONE
+      use htcal_mod
+      use multcm_mod
+      use pden_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **HTGF--SO   DATE OF LAST REVISION:  07/08/11
 C----------
@@ -12,37 +21,6 @@ C  **HTCONS** IS CALLED FROM **RCON** TO LOAD SITE DEPENDENT
 C  CONSTANTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'MULTCM.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-COMMONS
-C
 C----------
       LOGICAL DEBUG
       INTEGER ISPC,I,I1,I2,I3,INDEX,ITFN
@@ -441,7 +419,7 @@ C  CALL HTCALC HERE TO CALCULATE POTENTIAL HT GROWTH FOR ALL
 C  SPECIES EXCEPT 9, 11, 16, 24 AND 27
 C----------
         IF(DEBUG)WRITE(JOSTND,*)' IN HTGF, CALLING HTCALC 2'
-        CALL HTCALC(IFOR,SINDX,ISPC,AGP10,HGUESS,JOSTND,DEBUG) 
+        CALL HTCALC(IFOR,SINDX,ISPC,AGP10,HGUESS,JOSTND,DEBUG)
         IF(DEBUG)WRITE(JOSTND,*)' SINDX,ISPC,AGP10,I,HGUESS= '
         IF(DEBUG)WRITE(JOSTND,*) SINDX,ISPC,AGP10,I,HGUESS
 C
@@ -462,7 +440,7 @@ C----------
 C  HEIGHT GROWTH MODIFIERS
 C----------
       IF(DEBUG)WRITE(JOSTND,*) ' AT 1320 CONTINUE FOR TREE',I,' HT= ',
-     &HT(I),' AVH= ',AVH 
+     &HT(I),' AVH= ',AVH
       RELHT = 0.0
       IF(AVH .GT. 0.0) RELHT=HT(I)/AVH
       IF(RELHT .GT. 1.5)RELHT=1.5

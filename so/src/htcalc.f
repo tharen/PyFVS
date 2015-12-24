@@ -1,5 +1,7 @@
       SUBROUTINE HTCALC(JFOR,SINDX,ISPC,AG,HGUESS,JOSTND,DEBUG)
-      IMPLICIT NONE
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 
 !f2py intent(in) :: jfor,sindx,ispc,ag
 !f2py intent(hide) :: jostnd,debug
@@ -11,17 +13,6 @@ C----------
 C THIS ROUTINE CALCULATES A POTENTIAL HT GIVEN AN SPECIES SITE AND AGE
 C IT IS USED TO CAL POTHTG AND SITE
 C----------
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-COMMONS
 C
 C----------
       LOGICAL DEBUG
@@ -71,7 +62,7 @@ C-------
       CASE(1)
         HGUESS=SINDX/(B0*(1.0-B1*EXP(B2*AG))**B3)
 C------
-C DOUGLAS FIR USE COCHRAN PNW 251. THIS EQUATION ALSO USED FOR 
+C DOUGLAS FIR USE COCHRAN PNW 251. THIS EQUATION ALSO USED FOR
 C OTHER SOFTWOODS
 C------
       CASE(3,32)

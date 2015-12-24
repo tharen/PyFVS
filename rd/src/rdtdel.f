@@ -1,5 +1,7 @@
       SUBROUTINE RDTDEL(IVAC,IREC,IDUM)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDTDEL      LAST REVISION:  09/04/14
 C----------
@@ -22,20 +24,13 @@ C    22-JUL-02 Lance R. David (FHTET)
 C      Removed unused array PROBO. It was also unused in the old
 C      annosus model.
 C   09/04/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDADD.F77'
       INCLUDE 'RDARRY.F77'
-C
-COMMONS
 C
       LOGICAL LGO, LTEE
       INTEGER IDI, IDUM, IP, IREC, ITSTP, IVAC, J, JINF
@@ -51,7 +46,7 @@ C
       TPAREA = 0.0
       DO 700 IDI=MINRR,MAXRR
          TPAREA = TPAREA + PAREA(IDI)
-  700 CONTINUE       
+  700 CONTINUE
       IF (.NOT. LGO .OR. TPAREA .EQ. 0.0) RETURN
       IF (.NOT. LTEE .AND. LSTART) RETURN
 

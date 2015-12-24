@@ -1,5 +1,7 @@
       SUBROUTINE SVINIT
-      IMPLICIT NONE
+      use svdata_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -10,17 +12,15 @@ C     D. ROBINSON   -- ESSA        -- MAY 2005
 C
 C     INITIALIZE VISUALIZATION VARIABLES
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
 
-      INCLUDE 'SVDATA.F77'
 
       INCLUDE 'SVDEAD.F77'
 C
-COMMONS
 
       INTEGER I
+
+      call svblkd()
+
       JSVOUT   =   0
       JSVPIC   =  91
       ICOLIDX  =   2

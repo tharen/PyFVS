@@ -1,5 +1,7 @@
       SUBROUTINE MISINT
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **MISINT--CI  Date of last revision:  07/12/11
 C----------
@@ -33,17 +35,8 @@ C    Impact values must be supplied by MistHMod keyword.
 C
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C     
-C
       INCLUDE 'MISCOM.F77'
 C
-COMMONS
 C----------
 C  Variable declarations.
 C
@@ -155,7 +148,7 @@ C  Marshall, Katy 2007. Permanent plots for measuring spread and
 C  impact of Douglas-fir dwarf mistletoe in the Southern Oregon
 C  Cascades, Pacific Northwest Region: Results of the ten year
 C  remeasurement. USDA Forest Service, Pacific Northwest Region,
-C  Southwest Oregon Forest Insect and Disease Service Center, 
+C  Southwest Oregon Forest Insect and Disease Service Center,
 C  Central Point, Oregon. SWOFIDSC-07-04. 34 pp.
 C
 C  Default values for DF in this table would be:

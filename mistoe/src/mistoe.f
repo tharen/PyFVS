@@ -1,4 +1,9 @@
       SUBROUTINE MISTOE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 ***********************************************************************
 *  **MISTOE--MS  Date of last revision:  03/10/08
 *----------------------------------------------------------------------
@@ -90,14 +95,14 @@
 *        current tree is overtoried its DMR is more than 2 ratings below
 *        the DMI of the sample point. The probability of DMR increase is
 *        still in effect for this situation. So, if a tree's DMR is to
-*        increase, it may increase by 2 instead of 1. 
+*        increase, it may increase by 2 instead of 1.
 *     27-FEB-1998; Lance R. David (FHTET)
 *        This update replaces (14-OCT-97).
-*        Intensification and spread of mistletoe when infected 
+*        Intensification and spread of mistletoe when infected
 *        overstory is present on the plot (sample point) is addressed
 *        in this modification.
 *        Overstoried is defined as the height of a tree being less
-*        than 70% the height of the tallest infected tree of the 
+*        than 70% the height of the tallest infected tree of the
 *        same species on the same plot.
 *        Intensification in overstoried trees:
 *          The DMR on individual tree records will be increased by
@@ -135,21 +140,16 @@
 *        Removed local declaration of DMFLAG, variable is now in common.
 *        Also removed it as argument in call to MISINF.
 ***********************************************************************
-      IMPLICIT NONE
 
 C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C.... Common include files.
 
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'MISCOM.F77'
-      INCLUDE 'PLOT.F77'
- 
+
 C.... Variable declarations.
 
       LOGICAL DEBUG
@@ -294,7 +294,7 @@ C....    (DMRs of infected trees only) by the total number of infected
 C....    trees.
 
          DO 185 IPLT = 1, MAXPLT
-            IF (SPPDMI(ISPC,IPLT) .GT. 0.0 
+            IF (SPPDMI(ISPC,IPLT) .GT. 0.0
      &         .AND. SPPTPA(ISPC,IPLT) .GT. 0.0) THEN
                SPPDMI(ISPC,IPLT) = SPPDMI(ISPC,IPLT)/SPPTPA(ISPC,IPLT)
             ENDIF
@@ -466,7 +466,7 @@ C....          Check to see if decrease in DMR will occur.
 C....          The tree is not infected (DMR=0), introduce infection.
 C....          Trees have a 55% chance of being infected when overstoried.
 C....          Probability of infection is based on a random number draw.
-C....          A tree is considered overstoried when it is 70% or less the 
+C....          A tree is considered overstoried when it is 70% or less the
 C....          height of the tallest infected tree of the same species on
 C....          the plot. Overstoried tree's that are selected for infection
 C....          will begin with a DMR of 1 (69%), 2 (18%) or 3 (13%).

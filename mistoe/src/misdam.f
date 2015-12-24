@@ -1,4 +1,7 @@
       SUBROUTINE MISDAM(ITREE,ICODES)
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 ***********************************************************************
 *  **MISDAM--MS  Date of last revision:  07/15/94
 *----------------------------------------------------------------------
@@ -29,19 +32,16 @@
 *     MISFLG: From MISCOM; logical flag to turn DM effects on or off.
 *
 ***********************************************************************
-      IMPLICIT NONE
 
 C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C.... Common include files.
- 
-      INCLUDE 'CONTRL.F77'
+
       INCLUDE 'MISCOM.F77'
- 
+
 C.... Variable declarations.
 
       LOGICAL DEBUG

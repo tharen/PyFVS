@@ -1,4 +1,8 @@
       SUBROUTINE MISINF
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 ***********************************************************************
 *  **MISINF--MS  Date of last revision:  03/10/08
 *----------------------------------------------------------------------
@@ -65,18 +69,14 @@
 *    10-MAR-2008  Lance R. David (FHTET)
 *       DMFLAG removed from argument list because it is now in common.
 ***********************************************************************
-      IMPLICIT NONE
 
 C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C.... Common include files.
 
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'MISCOM.F77'
 
 C.... Variable declarations.

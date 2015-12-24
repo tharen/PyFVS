@@ -1,5 +1,11 @@
       SUBROUTINE SITSET
-      IMPLICIT NONE
+      use plot_mod
+      use contrl_mod
+      use coeffs_mod
+      use volstd_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **SITSET--SN   DATE OF LAST REVISION:  10/19/11
 C----------
@@ -11,31 +17,7 @@ C  THIS SUBROUTINE FOLLOWS SE-TWIGS SUBROUTINES BLOCK1, CONV1, AND
 C  CONV2.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
       INCLUDE 'SNCOM.F77'
-C
-C
-COMMONS
-C
 C
       INTEGER IFIASP, ERRFLAG
       INTEGER I,IMAPSP,IGRP,IMGSP,IXTMP

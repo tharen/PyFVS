@@ -1,4 +1,8 @@
       SUBROUTINE BMRRSS
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BMRRSS--WWPB   DATE OF LAST REVISION:  07/10/94
 C     A quick model that will provide some sensitivity to root
@@ -7,10 +11,7 @@ C     replaced as soon as possible by a proper landscape level
 C     model for these pests.
 C----------
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BMRRCM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
 
       LOGICAL     L,LNOTBK,LTR,LTEE
       CHARACTER*8 KEYWRD,NORR
@@ -21,7 +22,7 @@ C----------
       DIMENSION   ARRAY(7),LNOTBK(7),ICODES(6)
       DIMENSION   RX1(MAXTRE)
       DIMENSION   PROB(MAXTRE), IND(MAXTRE), IND1(MAXTRE)
-      
+
       DATA NORR/'*NO RROT'/
 
 C     Keyword control is not available with this model.
@@ -42,7 +43,7 @@ C     No records are required for root diseased trees in this model.
 
 C     Called from INITRE. Normally initialization would happen here,
 C     for each stand. Because there is only landscape control, this
-C     is kludged in BMPPIN. 
+C     is kludged in BMPPIN.
 
       ENTRY RRINIT
       DO 90 I = 1, MAXTRE
@@ -58,7 +59,7 @@ C     not used.
 
       ENTRY RRDAM (II,IITH,IDD,ICODES,PROBB,HHT,DDBH,IISPI,
      >                  ITREII,TTHT)
-      
+
       IF (IITH .LT. 6 .OR. IITH .GT. 9) THEN
         IF (LRRON) THEN
           DO 100 J = 1, 5, 2
@@ -72,7 +73,7 @@ C     not used.
             IF (IC.GE.35.AND.IC.LE.39) BMSR(II)= 0.001
   101     CONTINUE
         ENDIF
-        
+
       ENDIF
 
       RETURN
@@ -108,93 +109,93 @@ c     Option 2: 10% increase. This requires testing if the value is > 0,
 c     or everything will get infected. This is what is used in the code.
 
       ENTRY RRTREG
-      IF (LRRON) THEN      
+      IF (LRRON) THEN
         X1 = BMRRSR * FINT / 10.
         DO 201 I = 1, ITRN
           IF (BMRR(I) .GT. 0.0) BMRR(I) = AMIN1(1.0, BMRR(I) + X1)
   201   CONTINUE
       ENDIF
-      
-      IF (LSRON) THEN      
+
+      IF (LSRON) THEN
         X1 = BMSRSR * FINT / 10.
         DO 202 I = 1, ITRN
           IF (BMSR(I) .GT. 0.0) BMSR(I) = AMIN1(1.0, BMSR(I) + X1)
   202   CONTINUE
       ENDIF
-      
+
       RETURN
 
 C     Compress BMRR and BMSR if they are in use.
       ENTRY RRCMPR (NCLAS,PROB,IND,IND1)
 
-      IF (LRRON) THEN 
+      IF (LRRON) THEN
         I1 = 1
         DO 500 ICL=1,NCLAS
-                  
+
           I2 = IND1(ICL)
           IREC1 = IND(I1)
           IF (I1 .EQ. I2) GOTO 480
-              
+
           XP = PROB(IREC1)
           TXP = XP
           K = I1 + 1
           TXP1 = BMRR(IREC1) * XP
-              
+
           DO 215 I=K,I2
             IREC = IND(I)
             XP = PROB(IREC)
             TXP = TXP + XP
             TXP1 = TXP1 + BMRR(IREC) * XP
   215     CONTINUE
-      
+
 C         DIVIDE BY THE TOTAL PROB AND MOVE THE VALUES INTO
 C         THE 'IREC1' POSITION IN THE ARRAYS.
-      
+
           IF (TXP .LE. 0.0) THEN
             BMRR(IREC1) = 0.0
           ELSE
             BMRR(IREC1) = TXP1 / TXP
           ENDIF
-      
+
   480     CONTINUE
           I1 = I2+1
   500   CONTINUE
       ENDIF
 
-      IF (LSRON) THEN 
+      IF (LSRON) THEN
         I1 = 1
         DO 501 ICL=1,NCLAS
-                  
+
           I2 = IND1(ICL)
           IREC1 = IND(I1)
           IF (I1 .EQ. I2) GOTO 481
-              
+
           XP = PROB(IREC1)
           TXP = XP
           K = I1 + 1
           TXP1 = BMSR(IREC1) * XP
-              
+
           DO 216 I=K,I2
             IREC = IND(I)
             XP = PROB(IREC)
             TXP = TXP + XP
             TXP1 = TXP1 + BMSR(IREC) * XP
   216     CONTINUE
-      
+
 C         DIVIDE BY THE TOTAL PROB AND MOVE THE VALUES INTO
 C         THE 'IREC1' POSITION IN THE ARRAYS.
-      
+
           IF (TXP .LE. 0.0) THEN
             BMSR(IREC1) = 0.0
           ELSE
             BMSR(IREC1) = TXP1 / TXP
           ENDIF
-      
+
   481     CONTINUE
           I1 = I2+1
   501   CONTINUE
       ENDIF
-      
+
       RETURN
 
 C     Not relevant to this model.

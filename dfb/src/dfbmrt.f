@@ -1,5 +1,8 @@
       SUBROUTINE DFBMRT
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **DFBMRT  DATE OF LAST REVISION:  06/30/10
 C----------
@@ -52,22 +55,7 @@ C     PROB   - (ARRAYS)  INPUT
 C     START  - (DFBCOM)  INPUT
 C     WK2    - (ARRAYS)  OUTPUT
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
       INCLUDE 'DFBCOM.F77'
-C
-C
-COMMONS
 C
 
       INTEGER I, I1, I2, DCLAS, J

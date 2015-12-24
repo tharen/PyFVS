@@ -1,49 +1,23 @@
       SUBROUTINE ESUCKR
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use esparm_mod
+      use estree_mod
+      use contrl_mod
+      use coeffs_mod
+      use eshap_mod
+      use metric_mod
+      use escomn_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **ESUCKR--WC/M   DATE OF LAST REVISION:  02/08/13
 C----------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
       INCLUDE 'ESHOOT.F77'
 C
-C
-      INCLUDE 'ESCOMN.F77'
-C
-C
-      INCLUDE 'ESHAP.F77'
-C
-C
-      INCLUDE 'ESTREE.F77'
-C
-C
       INCLUDE 'STDSTK.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-      INCLUDE 'METRIC.F77'
-C
-COMMONS
 C
 C     CREATE STUMP & ROOT SPROUTS FROM TREES CUT AT BEGINNING OF CYCLE.
 C     ASSUMPTION: THE TREE LIST HAS BEEN COMPRESSED TO ABOUT 1/2 THE
@@ -64,7 +38,7 @@ C
       REAL DMIN(NSPSPE,100),DMAX(NSPSPE,100)
       REAL COUNTR(NSPSPE),TPASUM(NSPSPE),HTAVE(NSPSPE)
       DATA MDBH/10000000/,MSP/10000/,NUMSPR/2/
-      DATA MYACTS/450/      
+      DATA MYACTS/450/
       CALL DBCHK (DEBUG,'ESUCKR',6,ICYC)
       IF(ITRNRM.LT.1) GO TO 900
       DO 10 I=1,NSPSPE
@@ -73,7 +47,7 @@ C
       HTAVE(I)=0.0
    10 CONTINUE
       TPATOT=0.0
-C 
+C
 C  PROCESS SPROUT KEYWORD OPTIONS.
 C  INITIALIZE VARIABLES
 C
@@ -119,7 +93,7 @@ C
 C  ALL SPROUTABLE SPECIES
 C
       ELSEIF (J .EQ. 0) THEN
-        DO JJ=1,NSPSPE 	
+        DO JJ=1,NSPSPE
         IF(J.EQ.ISPSPE(JJ))THEN
           SPRMLT(JJ,IT)=PRMS(2)
           HTMSPR(JJ,IT)=PRMS(3)
@@ -131,7 +105,7 @@ C
       CALL OPDONE(IT,IDT)
    50 CONTINUE
 C
-   60 CONTINUE      
+   60 CONTINUE
       DO 500 I=1,ITRNRM
       INUMB=ISHOOT(I)
       ICL = INUMB/MDBH

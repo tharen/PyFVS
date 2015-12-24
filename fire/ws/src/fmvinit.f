@@ -1,5 +1,11 @@
       SUBROUTINE FMVINIT
-      IMPLICIT NONE
+      use plot_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMVINIT  FIRE-WS-DATE OF LAST REVISION: 04/23/13
 C----------
@@ -14,15 +20,6 @@ C----------
 *  Local variable definitions:
 *
 ***********************************************************************
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
-C
 COMMONS
 C----------
       INTEGER I,J
@@ -473,8 +470,8 @@ C----------
 C         Great Basin bristlecone pine
 C----------
           CASE (21)
-            TFALL(I,0) = 3.0   
-            DKRCLS(I)  = 4  
+            TFALL(I,0) = 3.0
+            DKRCLS(I)  = 4
             V2T(I)     = 23.7
             LEAFLF(I)  = 3.0
             TFALL(I,3) = 20.0
@@ -510,7 +507,7 @@ C----------
             DKRCLS(I)  =   2
             LSW(I)     = .TRUE.
 C----------
-C         mountain hemlock 
+C         mountain hemlock
 C----------
           CASE (24)
             V2T(I)     =  26.2
@@ -589,10 +586,10 @@ C----------
           CASE (41)
              V2T(I)     = 21.8
              LEAFLF(I)  = 1.0
-             TFALL(I,0) = 1.0 
-             TFALL(I,3) = 15.0 
+             TFALL(I,0) = 1.0
+             TFALL(I,3) = 15.0
              ALLDWN(I)  = 90.0
-             FALLX(I)   = 1.0 
+             FALLX(I)   = 1.0
              DKRCLS(I)  = 4
              LSW(I)     = .FALSE.
              DO J= 1,4

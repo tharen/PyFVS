@@ -1,4 +1,8 @@
       SUBROUTINE MISCNT(MSPCNT)
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 ***********************************************************************
 *  **MISCNT--MS  Date of last revision:  12/26/91
 *----------------------------------------------------------------------
@@ -28,18 +32,14 @@
 *     MAXSP:  From PRGPRM; maximum number of species.
 *
 ***********************************************************************
-      IMPLICIT NONE
 
 C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C.... Common include files.
 
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'MISCOM.F77'
 
 C.... Variable declarations.

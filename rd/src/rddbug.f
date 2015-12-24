@@ -1,5 +1,7 @@
       SUBROUTINE RDDBUG (ICODE)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDDBUG      LAST REVISION:  08/28/14
 C---------
@@ -32,18 +34,15 @@ C
 C  Revision History :
 C   03/18/93 - Last revision date.
 C   08/28/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
 C.... PARAMETER INCLUDE FILES
 C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 C
 C.... COMMON INCLUDE FILES
 C
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'RDCOM.F77'
 C
 C.... Local variables

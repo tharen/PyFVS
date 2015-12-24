@@ -1,6 +1,12 @@
       SUBROUTINE FMEFF (IYR, FM, FLAME, ICALL, POMORT, PVOLKL, MKODE,
      >                  PSBURN)
-      IMPLICIT NONE
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -24,9 +30,9 @@ C----------
 *     ICALL:   WHERE IS THIS CALLED FROM? (0=FMBURN, 1=FMPOFL)
 *     POMORT:  POTENTIAL MORTALITY (AS PROP OF BASAL AREA)
 *     PVOLKL:  VOLUME KILLED.
-*     MKODE:   MORTALITY CODE (0=TURN OFF FFE MORTALITY, 
+*     MKODE:   MORTALITY CODE (0=TURN OFF FFE MORTALITY,
 *                              1=FFE ESTIMATES MORTALITY)
-*     PSBURN:  PERCENTAGE OF STAND THAT IS BURNED 
+*     PSBURN:  PERCENTAGE OF STAND THAT IS BURNED
 *
 *  LOCAL VARIABLE DEFINITIONS:
 *     CLSP:    PROPORTION OF CROWN LENGTH SCORCHED
@@ -57,17 +63,11 @@ C.... PARAMETER STATEMENTS.
 C.... PARAMETER INCLUDE FILES.
 Cppe  INCLUDE 'PPEPRM.F77'
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... COMMON INCLUDE FILES.
 
 Cppe  INCLUDE 'PPCNTL.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
 
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
 
 C.... VARIABLE DECLARATIONS.
 
@@ -84,12 +84,13 @@ C.... VARIABLE DECLARATIONS.
       DIMENSION TCROWN(0:5)
       DIMENSION TOLDCR(0:5)
 
+      
 C     COEFFICIENTS FOR SOME SN MORTALITY EQUATIONS
 
       DATA     MORTB0 / 1.0229, 0.1683, 1.2165, 0.8221, 2.775 /
       DATA     MORTB1 / -0.2646, -0.1332, -0.4758, -0.4098, -1.1224 /
       DATA     MORTB2 / 2.6232, 3.4152, 6.0415, 8.4682, 2.8312 /
-      
+
 C-----------
 C  CHECK FOR DEBUG.
 C-----------
@@ -104,13 +105,14 @@ C.... BEGIN ROUTINE
 Cppe  YRSCYC = FLOAT( MIY(MICYC)-IYR )
 Csng  YRSCYC = FLOAT( IY(ICYC+1)-IYR )
       YRSCYC = FLOAT( IY(ICYC+1)-IYR )
-
+      
       BAMORT = 0.0
       TOTBA  = 0.0
       POMORT = 0.0
       PVOLKL = 0.0
 
       CALL VARVER(VVER)
+
 C
 C     Burn the entire crown of pre-existing snags caught in the area with
 C     crown fire (if crown fire occurred).  This is done here so that
@@ -154,17 +156,17 @@ C
         PMORT = 0.0
         LPSBURN = .TRUE.
         CALL RANN(XRAN)
-      
+
         IF (DEBUG) WRITE(JOSTND,12) IYR,I,XRAN,ISP(I),DBH(I)
    12   FORMAT(' FMEFF YEAR = ',I5,
-     >       ' I=',I5,' XRAN=',F6.4,' KSP=',I4,' DBH=',F6.2) 
+     >       ' I=',I5,' XRAN=',F6.4,' KSP=',I4,' DBH=',F6.2)
 
         XRAN = XRAN*100
         IF (XRAN .GT. PSBURN) THEN
           LPSBURN = .FALSE.
-          GOTO 90     
+          GOTO 90
         ENDIF
-        
+
         KSP = ISP(I)
 C
 C       COMPUTE SCORCH LENGTH
@@ -176,7 +178,7 @@ C
 
         IF (SL .LT. 0.0) SL = 0.0
         IF (SL .GT. CRL) SL = CRL
-        
+
         IF ((FMPROB(I) .GT. 0.0) .AND. (MKODE .NE. 0)) THEN
 C
 C         PERCENT OF CROWN LENGTH SCORCHED & % CROWN VOLUME SCORCHED
@@ -191,23 +193,23 @@ C
 
           XM = EXP(-1.941 + 6.316 * (1 - EXP(-FMBRKT(DBH(I),KSP)))
      &          - .000535 * CSV * CSV)
-     
+
           PMORT = (1.0 / (1.0 + XM))
-  
+
 C         ADJUST MORTALITY FOR SOME SOUTHERN SPECIES BASED ON
 C         EQUATIONS IN REGELBRUGGE AND SMITH (NJAF 11(3) 1994)
-       
+
           IF ((VVER(1:2) .EQ. 'SN') .OR. (VVER(1:2) .EQ. 'CS')) THEN
-            
-C           THESE EQUATIONS USE MAX (UPHILL) CHAR HT.  OPINION AT 
+
+C           THESE EQUATIONS USE MAX (UPHILL) CHAR HT.  OPINION AT
 C           MISSOULA FIRE LAB IS THAT DOWNHILL CHAR HT IS 70% OF FLAME
 C           LENGTH AND THAT UPHILL CHAR HT APPROX. EQUALS FLAME LENGTH.
 C           HOWEVER, AN ARTICLE BY MICHAEL CAIN IN FIRE MANAGEMENT NOTES
-C           SUGGESTS THAT MAX CHAR HT IS 50-65% OF FLAME LENGTH.  I 
+C           SUGGESTS THAT MAX CHAR HT IS 50-65% OF FLAME LENGTH.  I
 C           WENT IN BETWEEN WITH THE ASSUMPTION BELOW.
-           
+
             CHARHT = FLAME*.7
-            
+
             IF (VVER(1:2) .EQ. 'SN') THEN
               SELECT CASE (KSP)
                 CASE (63,74)      ! white oak and chestnut oak
@@ -220,9 +222,9 @@ C           WENT IN BETWEEN WITH THE ASSUMPTION BELOW.
                   MORTGP = 4
                 CASE (54)         ! black gum
                   MORTGP = 5
-                CASE DEFAULT         
-                  MORTGP = 6               
-              END SELECT  
+                CASE DEFAULT
+                  MORTGP = 6
+              END SELECT
             ELSE    !vver = cs
               SELECT CASE (KSP)
                 CASE (47,59)      ! white oak and chestnut oak
@@ -235,30 +237,30 @@ C           WENT IN BETWEEN WITH THE ASSUMPTION BELOW.
                   MORTGP = 4
                 CASE (11,13)      ! black and swamp tupelo
                   MORTGP = 5
-                CASE DEFAULT         
-                  MORTGP = 6               
-              END SELECT            
+                CASE DEFAULT
+                  MORTGP = 6
+              END SELECT
             ENDIF
-            
+
             SELECT CASE (MORTGP)
               CASE (1:5)
-                XM = -1*(MORTB0(MORTGP) + 
-     &                  MORTB1(MORTGP)*DBH(I)*2.54 + 
+                XM = -1*(MORTB0(MORTGP) +
+     &                  MORTB1(MORTGP)*DBH(I)*2.54 +
      &                  MORTB2(MORTGP)*CHARHT/3.28)
              ! see whether XM is so large that pmort will be less
-             ! than .000001 and taking the exp of xm may cause a blowup 
-                MNMORT = ALOG(1/.000001 - 1)       
+             ! than .000001 and taking the exp of xm may cause a blowup
+                MNMORT = ALOG(1/.000001 - 1)
                 IF (XM .GE. MNMORT) THEN
                   PMORT = 0
                 ELSE
                   XM = EXP(XM)
-                  PMORT = (1.0 /(1.0 + XM)) 
-                ENDIF           
+                  PMORT = (1.0 /(1.0 + XM))
+                ENDIF
               CASE (6)
                 PMORT = PMORT  ! use old estimate from FOFEM
             END SELECT
           ENDIF
-          
+
 C
 C         ENGELMANN SPRUCE HAS MINIMUM MORTALITY OF 0.8
 C
@@ -269,64 +271,64 @@ C
               PMORT = PMORT
           END SELECT
 C
-C         MAKE SOME ADJUSTMENTS FOR THE LAKE STATES FFE 
-C         CONIFERS GET THEIR MORTALITY REDUCED BY HALF IF 
+C         MAKE SOME ADJUSTMENTS FOR THE LAKE STATES FFE
+C         CONIFERS GET THEIR MORTALITY REDUCED BY HALF IF
 C         THE BURN WAS BEFORE GREENUP.
 C         BALSAM FIR GETS A MINIMUM MORTALITY OF 70%
 C         ALL MAPLES UNDER 4" DIE.
-C         HARDWOODS GET THEIR MORTALITY REDUCED TO 80% IF THE BURN WAS 
-C         BEFORE GREENUP.  OAKS 2.5"+ GET THEIR MORTALITY REDUCED BY 
+C         HARDWOODS GET THEIR MORTALITY REDUCED TO 80% IF THE BURN WAS
+C         BEFORE GREENUP.  OAKS 2.5"+ GET THEIR MORTALITY REDUCED BY
 C         HALF BEFORE GREENUP SINCE THEY ARE ESPECIALLY RESISTANT.
 C         ALL HARDWOODS LESS THAN 1" DIE
 C
           IF (VVER(1:2) .EQ. 'LS') THEN
-            IF ((BURNSEAS .LE. 2) .AND. (KSP .LE. 14)) PMORT = PMORT/2 
-            IF (KSP .EQ. 8) PMORT = MAX(0.7, PMORT)            
+            IF ((BURNSEAS .LE. 2) .AND. (KSP .LE. 14)) PMORT = PMORT/2
+            IF (KSP .EQ. 8) PMORT = MAX(0.7, PMORT)
             SELECT CASE (KSP)
               CASE (18,19,26,27,51,52)
                 IF (DBH(I) .LT. 4) PMORT = 1.0
               CASE DEFAULT
                 PMORT = PMORT
-            END SELECT           
+            END SELECT
             IF ((BURNSEAS .LE. 2) .AND. (KSP .GT. 14)) THEN
             	SELECT CASE (KSP)
             	  CASE (30:36)
             	    IF (DBH(I) .GE. 2.5) THEN
-            	      PMORT=PMORT/2  
+            	      PMORT=PMORT/2
             	    ELSE
-            	    	PMORT=PMORT*0.8  
+            	    	PMORT=PMORT*0.8
             	    ENDIF
             	  CASE DEFAULT
-            	    PMORT=PMORT*0.8      
+            	    PMORT=PMORT*0.8
               END SELECT
             ENDIF
-            IF ((KSP .GT. 14) .AND. (DBH(I) .LE. 1)) PMORT = 1.0 
+            IF ((KSP .GT. 14) .AND. (DBH(I) .LE. 1)) PMORT = 1.0
           ENDIF
 C
 C         MAKE THE SAME ADJUSTMENTS FOR THE NE VARIANT
 C
           IF (VVER(1:2) .EQ. 'NE') THEN
-            IF ((BURNSEAS .LE. 2) .AND. (KSP .LE. 25)) PMORT = PMORT/2 
-            IF (KSP .EQ. 1) PMORT = MAX(0.7, PMORT)            
+            IF ((BURNSEAS .LE. 2) .AND. (KSP .LE. 25)) PMORT = PMORT/2
+            IF (KSP .EQ. 1) PMORT = MAX(0.7, PMORT)
             SELECT CASE (KSP)
               CASE (26:29,99:100)
                 IF (DBH(I) .LT. 4) PMORT = 1.0
               CASE DEFAULT
                 PMORT = PMORT
-            END SELECT           
+            END SELECT
             IF ((BURNSEAS .LE. 2) .AND. (KSP .GT. 25)) THEN
             	SELECT CASE (KSP)
             	  CASE (55:70,89)
             	    IF (DBH(I) .GE. 2.5) THEN
-            	      PMORT=PMORT/2  
+            	      PMORT=PMORT/2
             	    ELSE
-            	    	PMORT=PMORT*0.8  
+            	    	PMORT=PMORT*0.8
             	    ENDIF
             	  CASE DEFAULT
-            	    PMORT=PMORT*0.8      
+            	    PMORT=PMORT*0.8
               END SELECT
             ENDIF
-            IF ((KSP .GT. 25) .AND. (DBH(I) .LE. 1)) PMORT = 1.0 
+            IF ((KSP .GT. 25) .AND. (DBH(I) .LE. 1)) PMORT = 1.0
           ENDIF
 C
 C          ADJUST MORTALITY FOR TREES WITH DBH < 1
@@ -337,7 +339,11 @@ C
 
       IF (DEBUG) WRITE(JOSTND,15) ICYC,IYR,PSBURN
    15 FORMAT(' ENTERING FMEFF CYCLE = ',I2,
-     >       ' IYR=',I5,' PSBURN=',F6.1) 
+     >       ' IYR=',I5,' PSBURN=',F6.1)
+     
+C       MODIFY PMORT BY THE MULTIPLIER
+
+        PMORT = PMORT*FMORTMLT(I)
         
         IF (PMORT .GT. 1.0) PMORT = 1.0
         IF (PMORT .LT. 0.0) PMORT = 0.0
@@ -405,11 +411,11 @@ C        TREES IN THIS RECORD HAD PART OF THEIR CROWN BELOW THE FLAME HEIGHT,
 C        THEIR CROWNS SHOULD BE PARTIALLY BURNT.  CHANGE THE REAL CROWNW
 C        WEIGHTS FOR THIS, BECAUSE IT AFFECTS BOTH THE STILL-LIVING AND THE
 C        KILLED TREES.
-         
+
 C        FIRST, SAVE THE CROWN WEIGHTS.
          DO ISZ = 0, 5
            TCROWN(ISZ) = CROWNW(I,ISZ)
-           TOLDCR(ISZ) = OLDCRW(I,ISZ)           
+           TOLDCR(ISZ) = OLDCRW(I,ISZ)
          ENDDO
 
 C        CHANGED FROM FLAME HEIGHT TO SCORCH HEIGHT (SB & ER: 2/97)
@@ -441,17 +447,17 @@ C          BOTTOM OF THE CURRENT CROWN), JUST ASSUME THAT ALL OF IT WAS
 C          IN WITHIN REACH OF THE FIRE.
 C
            CRW1BN = 0.5 * PROPCR * CROWNW(I,1)
-           
+
            IF (MKODE .NE. 0) THEN
              BCROWN = BCROWN + (1.0 - CRBURN) * FMPROB(I) * P2T *
-     >              CROWNW(I,0) * PROPCR 
+     >              CROWNW(I,0) * PROPCR
              BCROWN = BCROWN + (CRW1BN + 0.5*YRSCYC*OLDCRW(I,1))
-     >              * (1.0 - CRBURN) * FMPROB(I) * P2T 
+     >              * (1.0 - CRBURN) * FMPROB(I) * P2T
            ELSE ! MKODE .EQ. 0
              BCROWN = BCROWN + (1.0) * FMPROB(I) * P2T *
-     >              CROWNW(I,0) * PROPCR 
+     >              CROWNW(I,0) * PROPCR
              BCROWN = BCROWN + (CRW1BN + 0.5*YRSCYC*OLDCRW(I,1))
-     >              * (1.0) * FMPROB(I) * P2T 
+     >              * (1.0) * FMPROB(I) * P2T
            ENDIF
 
            IF (ICALL .EQ. 0) THEN
@@ -470,7 +476,7 @@ C            AND SHOULD ALSO BE PUT IN CWD2B2/CWD2B POOLS. **FMSCRO** CAN DO THI
 C            IF YOU PASS IT ONLY THE WEIGHTS OF THE KILLED CROWN MATERIAL.
 C            REMEMBER THAT HALF OF THE 0-0.25" KILLED MATERIAL HAS BEEN
 C            CONSUMED.
-C            
+C
              DO ISZ = 0, 5
                IF (ISZ .EQ. 0) CROWNW(I,ISZ) = 0
                IF (ISZ .EQ. 1) THEN
@@ -481,17 +487,17 @@ C
                END IF
                OLDCRW(I,ISZ) = 0.0
              ENDDO
-             
+
              IF (MKODE .NE. 0) THEN
-               DTHISC = ((1.0-CRBURN) - (1-CRBURN)*PMORT) 
+               DTHISC = ((1.0-CRBURN) - (1-CRBURN)*PMORT)
      &                 * FMPROB(I)
              ELSE ! MKODE .EQ. 0
-               DTHISC = FMPROB(I)           	
+               DTHISC = FMPROB(I)
              ENDIF
-             CALL FMSCRO(I,ISP(I),IYR,DTHISC,1)  
+             CALL FMSCRO(I,ISP(I),IYR,DTHISC,1)
 C
-C            RE-SET CROWNW TO BE THE ORIGINAL WEIGHTS, MINUS THE WEIGHT 
-C            OF CONSUMED AND FIRE-KILLED MATERIAL.  
+C            RE-SET CROWNW TO BE THE ORIGINAL WEIGHTS, MINUS THE WEIGHT
+C            OF CONSUMED AND FIRE-KILLED MATERIAL.
 C
              DO ISZ = 0,5
                CROWNW(I,ISZ) = TCROWN(ISZ)*(1-PROPCR)
@@ -508,9 +514,9 @@ C            STARTS.
 C
              GROW(I) = -1
 C
-C            SET THE NEW FIRE MODEL VERSION OF CROWN LENGTH.  
+C            SET THE NEW FIRE MODEL VERSION OF CROWN LENGTH.
 C
-             FMICR(I) = 100.0 * (CRL - CRBNL) / HT(I)
+             FMICR(I) = IFIX(100.0 * (CRL - CRBNL) / HT(I))
 
            ENDIF
 C

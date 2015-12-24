@@ -1,5 +1,9 @@
       SUBROUTINE COLMRT
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **COLMRT        DATE OF LAST REVISION:  07/02/10
 C----------
@@ -12,31 +16,11 @@ C
 C Revision History
 C   05/31/00 Last noted revision date.
 C   07/02/10 Lance R. David (FMSC)
-C     Added IMPLICIT NONE.
 C----------
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
 C
       INCLUDE 'MPBCOM.F77'
 C
-C
       INCLUDE 'COLCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-COMMONS
 C
       INTEGER I, I1, I2, J, INDEX, NUMYRS
       REAL    PRKILL(10), CFTVOL(10), SUMDED, XT
@@ -58,7 +42,6 @@ C
 
 C
 C     APPLY MOUNTAIN PINE BEETLE MORTALITY.
-C
 C
 C     Changed pointer array ISCT subscript from 7 to IDXLP to correspond
 C     with new species mapping and new location for LP (RNH Dec98, GEB May2000)

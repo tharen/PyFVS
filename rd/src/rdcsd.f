@@ -1,11 +1,15 @@
       SUBROUTINE RDCSD(ISPI,DBHLIM,THRESH,CRIT)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
-C  **RDCSD       LAST REVISION:  08/28/14     
+C  **RDCSD       LAST REVISION:  08/28/14
 C----------
 C
 C  Purpose :
-C    CALCULATES THE CRITICAL STAND DENSITY THAT DETERMINES WHETHER OR 
+C    CALCULATES THE CRITICAL STAND DENSITY THAT DETERMINES WHETHER OR
 C    NOT AN OUTBREAK OF BARK BEETLE 1 OCCURS.
 C    Depending on the arguments supplied to the keyword DNSCALC, the user
 C    can select from the following to define the critical density:
@@ -23,13 +27,13 @@ C            selected, only BB host trees outside root rot centers are
 C            included.  In neither case is DBHLIM used to screen out trees.
 C    ALL     for SPACE, includes the whole stand area, both inside and
 C             outside of root rot infection centers.
-C            for DTYPE, includes all live trees (whether infected or not), 
+C            for DTYPE, includes all live trees (whether infected or not),
 C             AND all trees that died during the last two years (whether
-C             infected or not, and without regard to the cause of death). 
+C             infected or not, and without regard to the cause of death).
 C    OUTSDE  includes only areas outside root rot-infected areas
 C    LIVE    includes only living trees (both infected and not infected).
 C
-C    The meaning of THRESH depends upon the METHOD; it can be either 
+C    The meaning of THRESH depends upon the METHOD; it can be either
 C    stems/acre or the SDI value.
 C
 C  CALLED BY :
@@ -62,26 +66,17 @@ C               Moved the declaration of DSO, DSII, and DSIU to the
 C               parameter include file RDPARM.
 C     21-MAR-00 Lance David (FHTET)
 C               Changed local variable "SLOPE" to "REISLP" because SLOPE
-C               is a FVS variable in common PLOT.F77. 
+C               is a FVS variable in common PLOT.F77.
 C     15-JUL-02 Lance David (FHTET)
 C               Added debug.
 C   08/28/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'RDADD.F77'
-      INCLUDE 'PLOT.F77'
-C
-COMMONS
 C
       INTEGER  ALLX, DTYPE, I, I1, I2, ISPI, J, LIVE, METHOD,
      &         OUTSDE, RRTYPE, SDI, SPACE, STEM
@@ -136,11 +131,11 @@ C Default options for critical density calculations.
 
     6 CONTINUE
       REISLP = REINEK(4)
-      
+
       CRIT = .FALSE.
       IF (DEBUG) WRITE (JOSTND,*) 'IN RDCSD: METHOD=',METHOD,' SPACE=',
      &           SPACE,' DTYPE=',DTYPE,' REISLP=',REISLP
-     
+
 C Find out what kind of fungus infects the host species
       RRTYPE = MAXRR
       IF (MAXRR .LT. 3) RRTYPE = IDITYP(IRTSPC(ISPI))
@@ -175,17 +170,17 @@ C criteria.
       DO 100 J=I1,I2
          I = IND1(J)
          IF (DBH(I) .LT. DBHLIM) GOTO 100
-         
+
 C        count live stems outside
          DOSUM = DOSUM + FPROB(I)
-         
-C        add recent dead stems outside 
+
+C        add recent dead stems outside
          IF (DTYPE .EQ. ALLX) NSUM = NSUM + ((2/FINT) * PROAKL(DSO,I))
-         
+
          IF (SPACE .EQ. ALLX) THEN
 C           add live stems inside
             NSUM = NSUM + PROBIT(I) + PROBIU(I)
-            
+
 C           add recent dead stems inside
             IF (DTYPE .EQ. ALLX) NSUM = NSUM + ((2/FINT)
      &                  * (PROAKL(DSII,I) + PROAKL(DSIU,I) + PRANKL(I)))
@@ -199,17 +194,17 @@ C whether the threshold was surpassed.
       ELSE
          TOTDEN = DOSUM + NSUM / (SAREA - PAREA(RRTYPE))
       END IF
-      
+
       IF (TOTDEN .GE. THRESH) CRIT = .TRUE.
 
       IF (DEBUG) WRITE (JOSTND,*) 'IN RDCSD: DOSUM=',DOSUM,
      &   ' NSUM=',NSUM,' TOTDEN=',TOTDEN,' CRIT=',CRIT
 
       GOTO 778
-       
 
-  200 CONTINUE 
-  
+
+  200 CONTINUE
+
 C ************************************************************************
 C  METHOD 2:
 C  Calculate threshold densities by Reinecke's SDI method.
@@ -230,22 +225,22 @@ C live and dead trees in the record.
       BASUM = 0.0
       PIBY4 = 0.785398163
       PIABY4 = PIBY4 * SAREA
-      
+
       IF (SPACE .EQ. OUTSDE) GOTO 301
-      
+
 C If SPACE = ALL, consider all tree species everywhere:
 
       IF (DEBUG) WRITE (JOSTND,*) 'IN RDCSD: SPACE = ALL'
 
       DO 300 I = 1,ITRN
-      
+
 C        start with live stems
          NSUM = NSUM + PROBL(I) * SAREA
          BASUM = BASUM + PROBL(I) * PIABY4 * DBH(I)**2
-         
+
 C        add recent dead stems
          IF (DTYPE .EQ. ALLX) THEN
-            TEMP = (2/FINT) * 
+            TEMP = (2/FINT) *
      &           (PROAKL(DSO,I)+PROAKL(DSII,I)+PROAKL(DSIU,I)+PRANKL(I))
             NSUM = NSUM + TEMP
             BASUM = BASUM + TEMP * PIBY4 * DBH(I)**2
@@ -253,7 +248,7 @@ C        add recent dead stems
   300 CONTINUE
       TOTDEN = NSUM / SAREA
       GOTO 401
-      
+
 C If SPACE = OUTSDE, consider only trees outside the disease centers of either root
 C rot type.  This procedure assumes that there is no overlap in the two types of disease
 C centers, but this assumption does not create any error since the end result is a
@@ -267,38 +262,38 @@ C not affect the density of non-host trees.
       RRFREE = SAREA
       DO 340 RRTYPE=MINRR,MAXRR
          RRFREE = RRFREE - PAREA(RRTYPE)
-  340 CONTINUE       
-      
+  340 CONTINUE
+
       DO 400 I = 1,ITRN
-         
+
 C        start with live stems outside
          TEMP = FPROB(I) * RRFREE
          NSUM = NSUM + TEMP
          BASUM = BASUM + (TEMP * PIBY4 * DBH(I)**2)
-         
-C        add recent dead stems outside 
+
+C        add recent dead stems outside
          IF (DTYPE .EQ. ALLX) THEN
             RRTYPE = MAXRR
             IF (MAXRR .LT. 3) RRTYPE = IDITYP(IRTSPC(ISP(I)))
-            TEMP = (2/FINT) * PROAKL(DSO,I) 
-     &                      * RRFREE / (SAREA - PAREA(RRTYPE)) 
+            TEMP = (2/FINT) * PROAKL(DSO,I)
+     &                      * RRFREE / (SAREA - PAREA(RRTYPE))
             NSUM = NSUM + TEMP
             BASUM = BASUM + TEMP * PIBY4 * DBH(I)**2
          END IF
   400 CONTINUE
       TOTDEN = NSUM / RRFREE
-  
+
   401 CONTINUE
-  
+
 C Calculate the ASD of trees that met the user's criteria from the total basal area
-C of these trees:  total BA = #trees * pi * (ASD/2)^2.  Use ASD and TOTDEN to find 
+C of these trees:  total BA = #trees * pi * (ASD/2)^2.  Use ASD and TOTDEN to find
 C the SDIVALue of the stand from a standard equation.  Compare SDIVAL to the threshold
 C and use CRIT to signal whether the conditions for an outbreak have been met.
-      
+
       IF (NSUM .GT. 0.0) THEN
         ASD = SQRT(BASUM / (NSUM * PIBY4))
         SDIVAL = 10.0**(LOG10(TOTDEN) - (REISLP * LOG10(ASD)) + REISLP)
-      
+
         IF (SDIVAL .GE. THRESH) CRIT = .TRUE.
       END IF
 

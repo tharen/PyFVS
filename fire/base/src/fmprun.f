@@ -1,5 +1,12 @@
       SUBROUTINE FMPRUN(CTCRWN)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -8,20 +15,7 @@ C     PART OF THE FIRE MODEL EXTENSION.
 C	    THIS ROUTINE ADDS THE MATERIAL THAT WAS PRUNED IN CUTS.
 C     CALLED FROM -- CUTS
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
-C
-C
-COMMONS
 C
       DIMENSION CTCRWN(MAXTRE)
       LOGICAL   DEBUG

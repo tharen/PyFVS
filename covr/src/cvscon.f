@@ -1,5 +1,9 @@
       SUBROUTINE CVSCON
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **CVSCON DATE OF LAST REVISION:  06/28/13
 C----------
@@ -18,23 +22,7 @@ C  TYPE OF DISTURBANCE.  CALLED ONCE, AT THE BEGINNING OF THE
 C  PROJECTION, AND STORED IN VECTORS SUBSCRIPTED BY SPECIES.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'CVCOM.F77'
-C
-COMMONS
 C
       LOGICAL DEBUG
       REAL PHABOV(5,31),PHABO1(70),PHABO2(85)
@@ -70,7 +58,7 @@ C
      &CHODI(13),CPREM(2),CPRVI(1),CSALX(16),CSAMB(7),CSORB(2)
       INTEGER IHC(31),IPC(31),ILC(31),IDC(31),
      &          ICH(31),ICP(31),ICL(31),ICD(31)
-     
+
       REAL SLOPEC,SXCOS,SXSIN,ALNEL
       INTEGER ISPI,I
 C

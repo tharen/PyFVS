@@ -1,5 +1,8 @@
       SUBROUTINE RDSTR (IT,PREM,PREPRB)
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDSTR       LAST REVISION:  09/03/14
 C----------
@@ -31,13 +34,9 @@ C      infection processes.
 C    16-JUL-2002 Lance R. David (FHTET)
 C      Modified comment and debug statements.
 C   09/03/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
 
       INCLUDE 'RDPARM.F77'
 
@@ -45,13 +44,9 @@ C
 
       INCLUDE 'RDARRY.F77'
 
-      INCLUDE 'ARRAYS.F77'
 
-      INCLUDE 'CONTRL.F77'
 
       INCLUDE 'RDADD.F77'
-C
-COMMONS
 C
 
       LOGICAL DEBUG
@@ -68,16 +63,16 @@ C
       TPAREA = 0.0
       DO 101 IDI=MINRR,MAXRR
          TPAREA = TPAREA + PAREA(IDI)
-  101 CONTINUE       
+  101 CONTINUE
       IF (IROOT .EQ. 0 .OR. PREPRB .EQ. 0.0) GOTO 1100
 
       TP = (1.0 - (PREM / PREPRB))
 C
-C     IF THE ROOT ARRAYS HAVE NOT YET BEEN CREATED (BECAUSE THERE IS 
-C     NO INFECTION IN THE STAND OR BECAUSE A CUT OCCURS IN THE FIRST 
-C     TIMESTEP) THEN DO SO. 
+C     IF THE ROOT ARRAYS HAVE NOT YET BEEN CREATED (BECAUSE THERE IS
+C     NO INFECTION IN THE STAND OR BECAUSE A CUT OCCURS IN THE FIRST
+C     TIMESTEP) THEN DO SO.
 C
-      JJ = ISP(IT) 
+      JJ = ISP(IT)
       IDI = MAXRR
       IF (MAXRR .LT. 3) IDI = IDITYP(IRTSPC(JJ))
 
@@ -89,7 +84,7 @@ C     lrd 01-jul-02
 C      IF (ROOTL(IT) .GT. 0.0 .OR. SPINF(IDI) .LE. 0.0) GOTO 300
 C
 C          CALL RDROOT(JJ,DBH(IT),ANS,PROOT(IRTSPC(JJ)),
-C     &                RSLOP(IRTSPC(JJ)),HT(IT))                           
+C     &                RSLOP(IRTSPC(JJ)),HT(IT))
 C          ROOTL(IT) = ANS
 C
 C  300 CONTINUE
@@ -97,7 +92,7 @@ C---------------
 
       IF (ROOTL(IT) .EQ. 0.0) THEN
           CALL RDROOT(JJ,DBH(IT),ANS,PROOT(IRTSPC(JJ)),
-     &                RSLOP(IRTSPC(JJ)),HT(IT))                           
+     &                RSLOP(IRTSPC(JJ)),HT(IT))
           ROOTL(IT) = ANS
       ENDIF
 C

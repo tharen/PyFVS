@@ -1,28 +1,13 @@
       SUBROUTINE ESCPRS (ITRGT,DEBUG)
-      IMPLICIT NONE
+      use outcom_mod
+      use contrl_mod
+      use eshap_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **ESCPRS DATE OF LAST REVISION:   06/21/11
 C----------
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'ESHAP.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-COMMONS
 C
       LOGICAL DEBUG
       REAL PRMS(2)
@@ -92,7 +77,7 @@ C
 C
 C     (MAKE SURE IFST=1, TO GET A NEW SET OF POINTERS TO THE
 C      DISTRIBUTIONS).
-C     
+C
       IFST=1
       CALL DIST(ITRN,ONTCUR,WK3)
       CALL COMP(OSPCT,IOSPCT,SPCNT)

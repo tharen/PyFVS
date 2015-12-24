@@ -1,4 +1,10 @@
       SUBROUTINE RDSOUT
+      use contrl_mod
+      use metric_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDSOUT                       LAST REVISION:  06/03/10
 C----------
@@ -19,7 +25,7 @@ C  COMMON BLOCK VARIABLES :
 C     MCRATE: ARRAY CONTAINING INDIVIDUAL SIMULATION RESULTS
 C     SDRATE: ARRAY CONTAINING THE STANDARD DEVIATION OF THE RESULTS
 C
-C  LOCAL VARIABLES : 
+C  LOCAL VARIABLES :
 C     CMC:    NAME OF OUTPUT FILE
 C     JOMCS:  NUMBER OF OUTPUT FILE
 C
@@ -29,38 +35,32 @@ C    Added Stand ID and Management ID line to header.
 C----------------------------------------------------------------------
 C.... PARAMETER INCLUDE FILES
 C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 C
 C.... COMMON INCLUDE FILES
 C
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'RDARRY.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDCRY.F77'
       INCLUDE 'RDADD.F77'
-      INCLUDE 'METRIC.F77'
-C
 C
 C      LOGICAL DEBUG
       LOGICAL FIRSTL
 C      CHARACTER*40 CMC
       INTEGER JOMCS
       CHARACTER*1 CHTYPE(ITOTRR)
-      
-      DATA CHTYPE /'P','S','A','W'/  
+
+      DATA CHTYPE /'P','S','A','W'/
       DATA FIRSTL /.FALSE./
 
-      IF (IROOT .EQ. 0) RETURN 
+      IF (IROOT .EQ. 0) RETURN
 
 C     IF MONTE CARLO OUTPUT WAS NOT REQUESTED THEN RETURN
 
-      IF (IMCOUT .LE. 0) RETURN 
+      IF (IMCOUT .LE. 0) RETURN
       JOMCS = IMCOUT
-      
-      IF (ISTEP .EQ. 2) THEN 
+
+      IF (ISTEP .EQ. 2) THEN
 
 C         SINCE THIS IS CALLED FROM RDCNTL, ISTEP=2 THE FIRST TIME IT'S CALLED
 C
@@ -73,31 +73,31 @@ C
           WRITE (JOMCS,1115)
           WRITE (JOMCS,1120)
           WRITE (JOMCS,1155) (N,N=1,10)
-          WRITE (JOMCS,1160) 
-          
+          WRITE (JOMCS,1160)
+
           FIRSTL = .TRUE.
 
       ENDIF
-      
+
       JYR = IY(ISTEP) - 1
-      
+
       DO 5000 IRRSP=MINRR,MAXRR
-         
+
          IF (PAREA(IRRSP) .LE. 0.0) GOTO 5000
-         
+
          SUM = 0.0
          DO 100 IJ = 1,NMONT
             SUM = SUM + MCRATE(IRRSP,IJ)
   100    CONTINUE
          AVG = SUM / FLOAT(NMONT)
-         
-         SFPROB = 0.0         
+
+         SFPROB = 0.0
          IDI = IRRSP
          DO 130 I = 1,ITRN
             IF (IRRSP .LT. 3) IDI = IDITYP(IRTSPC(ISP(I)))
             IF (IDI .EQ. IRRSP) SFPROB = SFPROB + FFPROB(I,1)
   130    CONTINUE
-            
+
          IF (LMTRIC) THEN
             WRITE(JOMCS,2099) JYR,CHTYPE(IRRSP),NMONT,
      &                        AVG*FTTOM,SDRATE(IRRSP)*FTTOM,
@@ -110,7 +110,7 @@ C
             ELSE
                WRITE(JOMCS,2199) (MCTREE(IRRSP,J),J=1,10)
                WRITE(JOMCS,2200) (SPRQMD(IRRSP,J)*INTOCM,J=1,10)
-            ENDIF   
+            ENDIF
          ELSE
             WRITE(JOMCS,2099) JYR,CHTYPE(IRRSP),NMONT,AVG,SDRATE(IRRSP),
      &                        SFPROB,(MCRATE(IRRSP,J),J=1,10)
@@ -121,12 +121,12 @@ C
             ELSE
                WRITE(JOMCS,2199) (MCTREE(IRRSP,J),J=1,10)
                WRITE(JOMCS,2200) (SPRQMD(IRRSP,J),J=1,10)
-            ENDIF   
+            ENDIF
          ENDIF
          IF (ISTEP .NE. 1) WRITE(JOMCS,1121)
 
  5000 CONTINUE
- 
+
   200 CONTINUE
       RETURN
 

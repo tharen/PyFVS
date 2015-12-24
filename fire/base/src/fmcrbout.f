@@ -1,7 +1,15 @@
       SUBROUTINE FMCRBOUT (IYR)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use metric_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
-C  $Id$
+C  $Id: fmcrbout.f 709 2013-03-19 22:06:06Z drobinsonessa@gmail.com $
 C----------
 *     SINGLE-STAND VERSION
 *     CALLED FROM: FMMAIN
@@ -17,18 +25,10 @@ C----------
 
 C     PARAMETER INCLUDE FILES.
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C     COMMON INCLUDE FILES
 
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
 C      INCLUDE 'FMCLCOM.F77'
-      INCLUDE 'METRIC.F77'
 
 C     VARIABLE DECLARATIONS
 
@@ -163,10 +163,10 @@ C     CONVERT UNITS IF NECESSARY
         DO I = 1,11
           V(I) = V(I) * TItoTM / ACRtoHA
         ENDDO
-      ELSEIF (ICMETRC.EQ.2) THEN      
+      ELSEIF (ICMETRC.EQ.2) THEN
         DO I = 1,11
           V(I) = V(I) * TItoTM
-        ENDDO      
+        ENDDO
       ENDIF
 
 C     SUM UP POOLS, POSSIBLY INCLUDING 4
@@ -224,7 +224,7 @@ C
           WRITE(JROUT,709) IDCRPT
         ELSE
           WRITE(JROUT,708) IDCRPT
-        ENDIF        
+        ENDIF
         WRITE(JROUT,699) IDCRPT
         WRITE(JROUT, 44) IDCRPT,NPLT,MGMID
         WRITE(JROUT,700) IDCRPT
@@ -258,7 +258,7 @@ C
   800 FORMAT(1X,I5,1X,I4,10(2X,F7.1),4X,F7.1)
 C
 C     REGARDLESS OF PRINTING STATUS, DECAY ROOTS
-C     CALLING ROUTINE IS ANNUAL (IFMYR1, IFMYR2), SO 
+C     CALLING ROUTINE IS ANNUAL (IFMYR1, IFMYR2), SO
 C     JUST A COMPLEMENT-MULTIPLIER.
 C     CLCWD PROVIDES POSSIBLE CLIMATE-SENSITIVE CHANGE
 C     TO DECAY RATE. SEE SUB FMCWD FOR OTHER CWD EXAMPLES.

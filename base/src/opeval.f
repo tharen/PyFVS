@@ -1,5 +1,7 @@
       SUBROUTINE OPEVAL (IREFN,IRC)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -13,19 +15,7 @@ C     IREFN = THE POINTER TO THE ACTIVITY.
 C     IRC   = 0   ALL WENT OK
 C             1   ERROR IN COMPUTATION OR PARMS IS FULL.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'OPCOM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-COMMONS
 C
       INTEGER IRC,IREFN,J1,NP,I
       LOGICAL LDEB

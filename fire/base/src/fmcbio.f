@@ -1,5 +1,14 @@
       SUBROUTINE FMCBIO (D, KSP, ABIO, MBIO, RBIO)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmprop_mod
+      use metric_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -22,18 +31,9 @@ C----------
 
 C     PARAMETER INCLUDE FILES.
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C     COMMON INCLUDE FILES
 
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
-      INCLUDE 'FMPROP.F77'
-      INCLUDE 'METRIC.F77'
 
 C     VARIABLE DECLARATIONS
 

@@ -1,5 +1,19 @@
       SUBROUTINE INITRE
-      IMPLICIT NONE
+      use htcal_mod
+      use multcm_mod
+      use plot_mod
+      use arrays_mod
+      use workcm_mod
+      use contrl_mod
+      use coeffs_mod
+      use econ_mod
+      use outcom_mod
+      use volstd_mod
+      use screen_mod
+      use varcom_mod
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -7,29 +21,10 @@ C
 C  THIS ROUTINE PROCESSES OPTIONS AND INITIATES THE
 C  PROGNOSIS RUN.  CALLED FROM **MAIN**.
 C
-COMMONS
-C
-C
-      INCLUDE  'PRGPRM.F77'
-      INCLUDE  'ARRAYS.F77'
-      INCLUDE  'COEFFS.F77'
-      INCLUDE  'CONTRL.F77'
-      INCLUDE  'PLOT.F77'
-      INCLUDE  'OUTCOM.F77'
-      INCLUDE  'HTCAL.F77'
-      INCLUDE  'ECON.F77'
       INCLUDE  'KEYCOM.F77'
-      INCLUDE  'MULTCM.F77'
-      INCLUDE  'VOLSTD.F77'
-      INCLUDE  'SCREEN.F77'
-      INCLUDE  'VARCOM.F77'
       INCLUDE  'CWDCOM.F77'
       INCLUDE  'CALCOM.F77'
-      INCLUDE  'WORKCM.F77'
       INCLUDE  'BCPLOT.F77'
-      INCLUDE  'METRIC.F77'
-C
-COMMONS
 C
       INTEGER IDUM1,IDUM2,IDUM3,IHAB,NEWYR,ISPEC,IFOREST,INTDIST,IFORST
       INTEGER IREGN,IRDUM,INUM,IDFLG,IDTYPE,IXF,IXTMP,ITB,ITC,JJTAB
@@ -205,7 +200,6 @@ C----------
      >    12100,12200,12300,12400,12500,12600,12700,12800,12900,13000,
      >    13100,13200,13300,13400,13500,13600,13700,13800,13900,14000)
      >    , NUMBER
-C
 C
 C  ==========  OPTION NUMBER 1: PROCESS  ============================PROCESS
   100 CONTINUE
@@ -767,8 +761,8 @@ C
      >        '; NON-STOCKABLE PLOTS= ',I5,
      >        '; STAND SAMPLING WEIGHT=',F12.5/T13,
      >        'PROPORTION OF STAND CONSIDERED STOCKABLE= ',F6.3)
-      IF(LKECHO)WRITE(JOSTND,2030) 
- 2030 FORMAT (T13,'SEE "OPTIONS SELECTED BY DEFAULT" FOR FINAL ', 
+      IF(LKECHO)WRITE(JOSTND,2030)
+ 2030 FORMAT (T13,'SEE "OPTIONS SELECTED BY DEFAULT" FOR FINAL ',
      >         'DESIGN VALUES.')
       GO TO 10
 C
@@ -816,16 +810,16 @@ C
 C  ==========  OPTION NUMBER 14: STDINFO  ===========================STDINFO
 C
  2400 CONTINUE
- 
+
       ARRAY(6) = ARRAY(6) * MtoFT / 100.
-      
+
       KODFOR=IFIX(ARRAY(1))
       CALL FORKOD
       IF ( LNOTBK(7) )THEN
         WRITE(CPVREF,'(I10)')IFIX(ARRAY(7))
       ELSE
         CPVREF='          '
-      ENDIF 
+      ENDIF
       IF(VVER(:2).EQ.'SE') THEN
         KODTYP=0
         ICL5=0
@@ -881,7 +875,7 @@ C
      >   '; SLOPE= ',F4.0,'%'/
      > T13,'ELEVATION (M)=',F7.1,'; REFERENCE CODE= ',A4)
 C
-      ELSE 
+      ELSE
          IF(LKECHO)WRITE(JOSTND,2410) KEYWRD,KODFOR,KODTYP,
      >     IAGE,ASPECT,SLOPE,ELEV*100.*FTtoM,ADJUSTL(CPVREF)
  2410   FORMAT (/1X,A8,'   FOREST-LOCATION CODE=',I8,
@@ -1187,7 +1181,7 @@ C
       IF (ARRAY(6).LT.0.0) ARRAY(6)=0.0
       CALL OPNEW(KODE,IDT,ICFLAG,6,ARRAY(2))
       IF (KODE.GT.0) GOTO 10
-      IF (ICFLAG.EQ.228) THEN 
+      IF (ICFLAG.EQ.228) THEN
         IF(LKECHO)WRITE(JOSTND,3910)KEYWRD,IDT,
      >                    'DBH=',ARRAY(2)*INtoCM,
      >                    'DBH=',ARRAY(3)*INtoCM,
@@ -1397,7 +1391,7 @@ C
      >    PRMS(4)*INtoCM,
      >    PRMS(5)*FTtoM,
      >    PRMS(6)*FTtoM
-      ELSE 
+      ELSE
         IF(LKECHO)WRITE(JOSTND,4095) KEYWRD,IDT,
      >    PRMS(1)*FT2pACRtoM2pHA,
      >    PRMS(2),
@@ -1411,7 +1405,7 @@ C
      >   T13,'DBH OF REMOVED TREES WILL RANGE FROM ',F6.1,' TO ',
      >   F6.1,' CMS, AND'/
      >   T13,'HEIGHT OF REMOVED TREES WILL RANGE FROM ',F6.1,' TO ',
-     >   F6.1,' METERS.') 
+     >   F6.1,' METERS.')
       GO TO 10
 C
 C  ==========  OPTION NUMBER 39: MCFDLN  ============================MCFDLN
@@ -1749,7 +1743,7 @@ C----------
         DO 4505 IG=2,IULIM
         IGSP = ISPGRP(IGRP,IG)
         IF (LNOTBK(3)) DBHMIN(IGSP)=ARRAY(3)
-        IF(LNOTBK(4).AND.(ITOPD8.LE.0.AND.ITOPD9.LE.0))THEN        
+        IF(LNOTBK(4).AND.(ITOPD8.LE.0.AND.ITOPD9.LE.0))THEN
            TOPD(IGSP)=ARRAY(4)
         ENDIF
         IF (LNOTBK(5)) STMP(IGSP)  =ARRAY(5)
@@ -1819,7 +1813,7 @@ C----------
 C     SPECIES CODE IS SPECIFIED (IS>0).
 C----------
         IF (LNOTBK(3)) DBHMIN(IS)=ARRAY(3)
-        IF (LNOTBK(4).AND.(ITOPD8.LE.0.AND.ITOPD9.LE.0))THEN        
+        IF (LNOTBK(4).AND.(ITOPD8.LE.0.AND.ITOPD9.LE.0))THEN
           TOPD(IS)=ARRAY(4)
         ENDIF
         IF (LNOTBK(5)) STMP(IS)  =ARRAY(5)
@@ -1835,7 +1829,7 @@ C----------
      >      'LOG LENGTH=',F6.2)
         ELSEIF(LNOTBK(4).AND.(ITOPD8.GT.0))THEN
           IF(LKECHO)WRITE(JOSTND,4537) KEYWRD,KARD(2)(1:ILEN),
-     &      IS,DBHMIN(IS)*INtoCM,STMP(IS)*FTtoCM,FRMCLS(IS)           
+     &      IS,DBHMIN(IS)*INtoCM,STMP(IS)*FTtoCM,FRMCLS(IS)
         ELSE
           IF(LKECHO)WRITE(JOSTND,4535) KEYWRD,KARD(2)(1:ILEN),IS,
      &      DBHMIN(IS)*INtoCM,
@@ -1917,7 +1911,7 @@ C----------
         IF (.NOT.LNOTBK(7)) ARRAY(7)=METHC(1)
         ARRAY(2)=0.
         CALL OPNEW(KODE,IDT,217,6,ARRAY(2))
-        IF (KODE.GT.0) GOTO 10 
+        IF (KODE.GT.0) GOTO 10
         IF(VVER(:2).EQ.'AK')THEN
           IF(LKECHO)WRITE(JOSTND,4574) KEYWRD,IDT,(ARRAY(I),I=3,7)
  4574     FORMAT(/1X,A8,'   DATE/CYCLE=',I5,'; ALL SPECIES (CODE= 0)',
@@ -1964,7 +1958,7 @@ C----------
      >      ';  METH OF VOL CALC=',F6.0)
         ELSEIF(ITOPD8.GT.0)THEN
           WRITE(JOSTND,4547) KEYWRD,IDT,KARD(2)(1:ILEN),IS,
-     >      ARRAY(3)*INtoCM, ARRAY(5)*FTtoCM,(ARRAY(I),I=6,7)          
+     >      ARRAY(3)*INtoCM, ARRAY(5)*FTtoCM,(ARRAY(I),I=6,7)
         ELSE
           IF(LKECHO)WRITE(JOSTND,4545) KEYWRD,IDT,KARD(2)(1:ILEN),IS,
      >      ARRAY(3)*INtoCM,
@@ -2170,7 +2164,7 @@ C----------
 C----------
 C     IF (IS=0) ALL SPECIES WILL BE CHANGED IN FOLLOWING CODE:
 C
-C     SPECIES CODE IS BLANK; SET ALL SPECIES DEFAULTS TO DEFAULT 
+C     SPECIES CODE IS BLANK; SET ALL SPECIES DEFAULTS TO DEFAULT
 C     WHICH IS CURRENTLY IN FORCE FOR SPECIES 1.
 C----------
       ELSEIF(IS .EQ. 0)THEN
@@ -2205,7 +2199,7 @@ C----------
      >      '; MINIMUM DBH=',F6.2,'; TOP DIAMETER=',F6.2,
      >      '; STUMP HEIGHT=',F6.2/T13,'FORM CLASS=',F6.2,
      >      '; METH OF VOL CALC=',F6.0)
-        ENDIF 
+        ENDIF
 	ELSE
 C----------
 C     SPECIES CODE IS SPECIFIED (IS>0).
@@ -2596,7 +2590,7 @@ C
         IF(LKECHO)WRITE(JOSTND,6131) KEYWRD,IDT,KARD(2)(1:ILEN),IS,
      >     ARRAY(3)
  6131   FORMAT(/1X,A8,'   DATE/CYCLE=',I5,'; SPECIES= ',A,
-     >    ' (CODE= ',I3,'); MULTIPLIER=',F10.2) 
+     >    ' (CODE= ',I3,'); MULTIPLIER=',F10.2)
         IF((ARRAY(3) .GT. 0.0).AND.LKECHO)WRITE(JOSTND,6130)
      >    ARRAY(4)*INtoCM,
      >    ARRAY(5)*INtoCM
@@ -2949,7 +2943,7 @@ C
      >        'MODEL FOR LOCAL CONDITIONS= ',F6.0/
      >        T13,'MINIMUM NUMBER OF HEIGHT GROWTH OBSERVATIONS PER ',
      >        'SPECIES TO CALIBRATE '/
-     >        T13,'THE SMALL TREE HEIGHT INCREMENT ', 
+     >        T13,'THE SMALL TREE HEIGHT INCREMENT ',
      >        'MODEL FOR LOCAL CONDITIONS= ',I6)
       GOTO 10
 C
@@ -4022,7 +4016,7 @@ C
 
       GOTO 10
 C
-C  ==========  OPTION NUMBER 114: BGCIN   ============================BGCIN 
+C  ==========  OPTION NUMBER 114: BGCIN   ============================BGCIN
 C
 11400 CONTINUE
       IF(LKECHO)WRITE(JOSTND,11410) KEYWRD
@@ -4546,7 +4540,7 @@ C
       IDFLG=IFIX(CAPFLG)
       CAPHT=999.*MtoFT
       IF(LNOTBK(5))CAPHT=ARRAY(5)*MtoFT
-      IF(CAPPRP.LT.0. .OR. CAPPRP.GT.1.0 .OR. CAPDBH.LT.0. .OR. 
+      IF(CAPPRP.LT.0. .OR. CAPPRP.GT.1.0 .OR. CAPDBH.LT.0. .OR.
      &   CAPHT.LT.0. .OR. CAPFLG.LT.0. .OR. CAPFLG.GT.2.) THEN
         CALL KEYDMP (JOSTND,IRECNT,KEYWRD,ARRAY,KARD)
         CALL ERRGRO (.TRUE.,4)
@@ -4659,7 +4653,7 @@ C
       CALL OPNEW (KODE,IDT,ICFLAG,6,PRMS)
       IF (KODE.GT.0) GOTO 10
       IF(LKECHO)WRITE(JOSTND,12420) KEYWRD,IDT,PRMS(1)/M2pHAtoFT2pACR
-12420 FORMAT (/1X,A8,'   DATE/CYCLE=',I5,'; RESIDUAL=',F8.2) 
+12420 FORMAT (/1X,A8,'   DATE/CYCLE=',I5,'; RESIDUAL=',F8.2)
       IF(PRMS(2).EQ.0.)THEN
         ILEN=3
         IF(IS.LT.0)ILEN=ISPGRP(-IS,52)
@@ -4757,7 +4751,7 @@ C
 C
 C  DON'T SAVE OVER 50, COULD DO AN ERROR MSG, BUT DIDN'T
 C
-          IF (INUM.GT.50) INUM=50 
+          IF (INUM.GT.50) INUM=50
           IF (I.EQ.ILEN) THEN      ! store the token in kard(1)
             KARD(1)=RECORD(J:I)
           ELSE
@@ -4814,7 +4808,6 @@ C
 12610 FORMAT (/1X,A8,'   INDIVIDUAL STAND WWPB MODEL OPTIONS:')
       CALL BMIN(LKECHO)
       GOTO 10
-C
 C
 C  ==========  OPTION NUMBER 127: DATASCRN ========================DATASCRN
 C
@@ -4925,7 +4918,7 @@ C
       ENDIF
       GO TO 10
 C
-C  ==========  OPTION NUMBER 129: THINPT   ========================THINPT  
+C  ==========  OPTION NUMBER 129: THINPT   ========================THINPT
 C
 12900 CONTINUE
       ICFLAG=235
@@ -5385,8 +5378,8 @@ C
      &                VEQNNC(IS),ERRFLAG)
               ENDIF
             END SELECT
-          ENDIF  
-C            
+          ENDIF
+C
           IF(ISPEC.NE.8888)THEN
             VEQNNC(IS)='          '
             KARD(2)='***INVALID'
@@ -5728,7 +5721,7 @@ C
       IF (LNOTBK(1)) IDT=IFIX(ARRAY(1))
 C
 C     IF THE KEYWORD RECORD HAS THE 'PARMS' OPTION, CALL OPNEWC
-C     TO PROCESS IT. 
+C     TO PROCESS IT.
 C     NOTE: A NUMERIC VALUE MUST BE PASSED OR THERE WILL BE AN ERROR
 C     COMPILING THE EXPRESSION IN GRINCR. SO IN PASSING A PLANT ASSOCIATION
 C     CODE, USERS SHOULD ENTER THE NUMERIC SEQUENCE NUMBER OF THE PA CODE.
@@ -5835,7 +5828,6 @@ C
       CALL fvsGetRtnCode(IRTNCD)
       IF (IRTNCD.NE.0) RETURN
       GOTO 10
-C
 C
 C  ==========  OPTION NUMBER 1400 SDICALC ===========================SDICALC
 C

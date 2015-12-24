@@ -1,5 +1,8 @@
       SUBROUTINE RDTIM
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDTIM       LAST REVISION:  09/04/14
 C----------
@@ -15,21 +18,13 @@ C
 C  Revision History:
 C   03/01/95 - Last revision date.
 C   09/04/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77' 
       INCLUDE 'RDADD.F77'
-C
-COMMONS
 C
       INTEGER I, IDI
 

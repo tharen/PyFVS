@@ -1,34 +1,18 @@
       SUBROUTINE DGFASP(D,ASPDG,CR,BARK,SI,DEBUG)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use pden_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **DGFASP--UT  DATE OF LAST REVISION:  11/17/09
 C
 C   CALCULATES DIAMETER GROWTH RATES FOR LARGE ASPEN TREES
 C----------
 C
-COMMONS
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-COMMONS
 C----------
       LOGICAL DEBUG
       REAL SI,BARK,CR,ASPDG,D,XSITE,REL,ASPCR,POT,FOFR,GOFAD,BAACT

@@ -1,5 +1,8 @@
       SUBROUTINE DMFBRK
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -16,18 +19,18 @@ C----------------------------------------------------------------------
 C
 C Called by:
 C
-C     DMTREG 
+C     DMTREG
 C
 C Other routines called:
 C
 C     [none]
 C
-C Argument list definitions:                        
+C Argument list definitions:
 C
 C     [none]
-C           
+C
 C Local variable definitions:
-C     
+C
 C     INTEGER i           loop counter for tree records
 C     INTEGER j           loop counter for crown thirds
 C     REAL    x           scalar constant
@@ -44,12 +47,9 @@ C     MESH    DMCOM
 C     CRTHRD  DMCOM
 C     BPCNT   DMCOM
 C     BrkPnt  DMCOM
-C      
+C
 C**********************************************************************
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'DMCOM.F77'
 
 C Local variables.
@@ -63,9 +63,9 @@ C meters.
 
       y= 1.0 / (FPM * MESH)
       x= 0.01 * y / FLOAT(CRTHRD)
-      
+
       DO 100 i = 1, ITRN
-          z = HT(i) * FLOAT(ICR(i)) * x 
+          z = HT(i) * FLOAT(ICR(i)) * x
           BrkPnt(i, 1) = HT(i) * y
           DO 200 j = 2, BPCNT
              BrkPnt(i, j) = BrkPnt(i, j - 1) - z

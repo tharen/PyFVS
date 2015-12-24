@@ -1,5 +1,8 @@
       SUBROUTINE BMMORT (ISTD,IYR,SLOW)
-      
+      use contrl_mod
+      use prgprm_mod
+      implicit none
+
 c     CALLED FROM BMDRV
 ***********************************************************************
 * **BMMORT    Date of last revision:  09/28/05
@@ -30,20 +33,18 @@ C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'PPEPRM.F77'
       INCLUDE 'BMPRM.F77'
 
 C.... Common include files.
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BMCOM.F77'
       INCLUDE 'BMPCOM.F77'
 
 C.... Variable declarations.
-                         
-      INTEGER ISIZ                    
-      LOGICAL SLOW     
+
+      INTEGER ISIZ
+      LOGICAL SLOW
       REAL    PRDEAD
 
       IF(LBMDEB) WRITE(JBMBPR,10) IYR, ISTD
@@ -58,25 +59,25 @@ C     OAKILL AND PBKILL. USE EITHER A TRUE/FALSE ARGUMENT
 c     Convert OAKILL() from a proportion to TPA, decrement host basal
 c     area and tree/acre,add year mortality to the accumulating pool of mortality
 
-      
+
       BAH(ISTD,NSCL+1)= 0.0
       BANH(ISTD,NSCL+1)= 0.0
       TREE(ISTD,NSCL+1,1)=0.0   !AJM 9/05
       TREE(ISTD,NSCL+1,2)=0.0   !AJM 9/05
-                            
+
       DO 800 ISIZ= 1,NSCL
-      
+
 c       PBKILL(ISTD,ISIZ)= PBKILL(ISTD,ISIZ) * TREE(ISTD,ISIZ,1) << done in BMISTD >>
         OAKILL(ISTD,ISIZ,1)= OAKILL(ISTD,ISIZ,1) * TREE(ISTD,ISIZ,1)
         OAKILL(ISTD,ISIZ,2)= OAKILL(ISTD,ISIZ,2) * TREE(ISTD,ISIZ,2)
-        
-c        IF ((OAKILL(ISTD,ISIZ,1) + OAKILL(ISTD,ISIZ,2)) .LE. 0.0) 
+
+c        IF ((OAKILL(ISTD,ISIZ,1) + OAKILL(ISTD,ISIZ,2)) .LE. 0.0)
 c     &         GO TO 800
-        
+
         PRDEAD = 0.0
-        IF (SLOW) THEN 
+        IF (SLOW) THEN
           IF (TREE(ISTD,ISIZ,1) .GT. 0.0) THEN
-             PRDEAD = (PBKILL(ISTD,ISIZ) + OAKILL(ISTD,ISIZ,1) + 
+             PRDEAD = (PBKILL(ISTD,ISIZ) + OAKILL(ISTD,ISIZ,1) +
      &               ALLKLL(ISTD,ISIZ)) / TREE(ISTD,ISIZ,1)
           ELSE
              PRDEAD = 0.0
@@ -85,12 +86,12 @@ c     &         GO TO 800
           TREE(ISTD,ISIZ,1)= TREE(ISTD,ISIZ,1) * (1 - PRDEAD)
 
         ELSE
-          FASTK(ISTD,1) = FASTK(ISTD,1) + OAKILL(ISTD,ISIZ,1) 
+          FASTK(ISTD,1) = FASTK(ISTD,1) + OAKILL(ISTD,ISIZ,1)
      &                                  + OAKILL(ISTD,ISIZ,2)
-          FASTK(ISTD,2) = FASTK(ISTD,2) + OAKILL(ISTD,ISIZ,1) * 
+          FASTK(ISTD,2) = FASTK(ISTD,2) + OAKILL(ISTD,ISIZ,1) *
      &                    TVOL(ISTD,ISIZ,1) + OAKILL(ISTD,ISIZ,2) *
      &                    TVOL(ISTD,ISIZ,2)
-     
+
           IF (TREE(ISTD,ISIZ,1) .GT. 0.0) THEN
              PRDEAD = OAKILL(ISTD,ISIZ,1) / TREE(ISTD,ISIZ,1)
           ELSE
@@ -100,7 +101,7 @@ c     &         GO TO 800
           BAH(ISTD,ISIZ)= BAH(ISTD,ISIZ) * (1 - PRDEAD)
           TREE(ISTD,ISIZ,1)= TREE(ISTD,ISIZ,1) - OAKILL(ISTD,ISIZ,1)
 
-          IF (TREE(ISTD,ISIZ,2) .GT. 0.0) THEN 
+          IF (TREE(ISTD,ISIZ,2) .GT. 0.0) THEN
             PRDEAD = OAKILL(ISTD,ISIZ,2) / TREE(ISTD,ISIZ,2)
           ELSE
             PRDEAD = 0.0
@@ -108,13 +109,13 @@ c     &         GO TO 800
 
           FASTK(ISTD,3) = FASTK(ISTD,3) + BANH(ISTD,ISIZ) * PRDEAD
           BANH(ISTD,ISIZ)= BANH(ISTD,ISIZ) * (1 - PRDEAD)
-          TREE(ISTD,ISIZ,2)= TREE(ISTD,ISIZ,2) - OAKILL(ISTD,ISIZ,2)  
-        
+          TREE(ISTD,ISIZ,2)= TREE(ISTD,ISIZ,2) - OAKILL(ISTD,ISIZ,2)
+
         ENDIF
 
 
 c       Constrain to positive values.
-         
+
         BAH(ISTD,ISIZ)= AMAX1(BAH(ISTD,ISIZ), 0.0)
         BANH(ISTD,ISIZ)= AMAX1(BANH(ISTD,ISIZ), 0.0)
         TREE(ISTD,ISIZ,1)= AMAX1(TREE(ISTD,ISIZ,1), 0.0)
@@ -124,17 +125,17 @@ C       CHECK TO MAKE SURE THAT BA IS GONE IF TREES ARE GONE
 
         IF (TREE(ISTD,ISIZ,1) .LE. 0.0) BAH(ISTD,ISIZ) = 0.0
         IF (TREE(ISTD,ISIZ,2) .LE. 0.0) BANH(ISTD,ISIZ) = 0.0
-        
+
 C       RECALCULATE TOTAL BA IN STAND BY TYPE (NSCL+1) CLASS
 
         BAH(ISTD,NSCL+1)= BAH(ISTD,NSCL+1) + BAH(ISTD,ISIZ)
         BANH(ISTD,NSCL+1)= BANH(ISTD,NSCL+1) + BANH(ISTD,ISIZ)
         TREE(ISTD,NSCL+1,1)=TREE(ISTD,NSCL+1,1)+TREE(ISTD,ISIZ,1)   !AJM 9/05
         TREE(ISTD,NSCL+1,2)=TREE(ISTD,NSCL+1,2)+TREE(ISTD,ISIZ,2)   !AJM 9/05
-        
+
 
         IF (SLOW) THEN
-          TPBK(ISTD,ISIZ,1,3)= TPBK(ISTD,ISIZ,1,3) + PBKILL(ISTD,ISIZ) 
+          TPBK(ISTD,ISIZ,1,3)= TPBK(ISTD,ISIZ,1,3) + PBKILL(ISTD,ISIZ)
      &                          + ALLKLL(ISTD,ISIZ)
           TPBK(ISTD,ISIZ,1,2)= TPBK(ISTD,ISIZ,1,2) + OAKILL(ISTD,ISIZ,1)
           TPBK(ISTD,ISIZ,2,2)= TPBK(ISTD,ISIZ,2,2) + OAKILL(ISTD,ISIZ,2)
@@ -142,16 +143,16 @@ C       RECALCULATE TOTAL BA IN STAND BY TYPE (NSCL+1) CLASS
           TPBK(ISTD,ISIZ,1,1)= TPBK(ISTD,ISIZ,1,1) + OAKILL(ISTD,ISIZ,1)
           TPBK(ISTD,ISIZ,2,1)= TPBK(ISTD,ISIZ,2,1) + OAKILL(ISTD,ISIZ,2)
         ENDIF
-        
+
 C       Zero out the other agent arrays, ready for use next timestep
 C       PBKILL and ALLKLL will get zeroed after BKP emerges
 
         OAKILL(ISTD,ISIZ,1)= 0.0
         OAKILL(ISTD,ISIZ,2)= 0.0
-  800 CONTINUE 
-       
+  800 CONTINUE
+
       IF(LBMDEB) WRITE(JBMBPR,99) IYR, ISTD
    99 FORMAT(' End BMMORT: Year= ',I5, 'Stand= ', I6)
-      
+
       RETURN
       END

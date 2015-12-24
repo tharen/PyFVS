@@ -1,5 +1,11 @@
       SUBROUTINE FMCROW
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMCROW  FIRE-CR DATE OF LAST REVISION:  01/10/12
 C----------
@@ -34,15 +40,9 @@ C                  PCTILE
 ***********************************************************************
 
 C.... Parameter include files.
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... Common include files.
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'PLOT.F77'
-      
+
 C.... Parameter statements.
 
       LOGICAL DEBUG
@@ -181,7 +181,7 @@ C
 C     PLACEHOLDER FOR UNUSED CALLS IN **FMCROWE**
 
       SUBROUTINE HTDBH(I10,I11,X10,X11,I12)
-      IMPLICIT NONE
+      implicit none
 
       INTEGER I10,I11,I12
       REAL    X10,X11

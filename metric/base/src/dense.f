@@ -1,5 +1,13 @@
       SUBROUTINE DENSE
-      IMPLICIT NONE
+      use htcal_mod
+      use pden_mod
+      use arrays_mod
+      use contrl_mod
+      use outcom_mod
+      use plot_mod
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -10,18 +18,7 @@ C   MAINTAINS AN INGROWTH ACCUMULATOR, MAKES THE CORRECTION
 C   TO RELATIVE DENSITY FOR NON-STOCKABLE POINTS, AND LOADS PCT
 C----------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'CALCOM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'OUTCOM.F77'
-      INCLUDE 'HTCAL.F77'
-      INCLUDE 'PDEN.F77'
-      INCLUDE 'METRIC.F77'
-C      
-COMMONS
 C
 C----------
       INTEGER I,IS,IP,ISPC,I1,I2,I3,II
@@ -76,7 +73,7 @@ C----------
 C----------
 C  DG IS SET TO -1.0 IN **CRATET** WHEN THE INPUT VALUE IS ZERO.
 C  THESE OBSERVATIONS ARE NOT INCLUDED IN THE CALCULATION OF THE
-C  BASAL AREA GROWTH RATIO.  WHEN GROWTH IS GREATER THAN THE CURRENT 
+C  BASAL AREA GROWTH RATIO.  WHEN GROWTH IS GREATER THAN THE CURRENT
 C  DIAMETER, THE RECORD IS ALSO EXCLUDED FROM COMPUTING BAGR.
 C----------
       IF(G.LT.0.0) GO TO 3

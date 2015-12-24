@@ -1,5 +1,8 @@
-      SUBROUTINE FMIN (ICALL,NSP,LKECHO)  
-      IMPLICIT NONE
+      SUBROUTINE FMIN (ICALL,NSP,LKECHO)
+      use contrl_mod
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id:
 C----------
@@ -15,16 +18,9 @@ C     PARAMETER DEFINITIONS
 C     ICALL = 1 call is within a stand (called from INITRE)
 C             2 call from outside a stand (called from PPIN)
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'FMPARM.F77'
       INCLUDE 'FMCOM.F77'
       INCLUDE 'FMFCOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'METRIC.F77'
-C
-COMMONS
 C
       INTEGER    KWCNT
       PARAMETER (KWCNT = 55)
@@ -95,7 +91,7 @@ C
    10 CONTINUE
 
 C     THIS WAS INCREASED TO 9, AND THEN 12, BECAUSE WE NEEDED TO ADD FIELDS TO
-C     THE POTFMOIS, MOISTURE, AND FUELINIT KEYWORDS 
+C     THE POTFMOIS, MOISTURE, AND FUELINIT KEYWORDS
 C
       NVALS = 12
       CALL FMKEYRDR (IREAD,JOSTND,.FALSE.,KEYWRD,LNOTBK,
@@ -149,7 +145,7 @@ C
 C                        OPTION NUMBER 1 -- SALVSP
 C
 C     SET THE SPECIES TO BE CUT, OR LEFT, IN A SALVAGE OPERATION. ONCE IN
-C     EFFECT IT STAYS IN EFFECT UNTIL RESET.                             
+C     EFFECT IT STAYS IN EFFECT UNTIL RESET.
 C
 
       IF (ICALL .EQ. 2) THEN
@@ -183,7 +179,7 @@ C
      &             ARRAY,KARD)
       IF (JSP .EQ. -999) GOTO 10
       PRMS(1)=JSP
-      
+
       IF (LNOTBK(3)) PRMS(2)= ARRAY(3)
 
       IF (PRMS(2) .LT. 1.0) PRMS(2) = 0.0
@@ -206,7 +202,7 @@ C
       MYACT = 2501
       CALL OPNEW(KODE,IDT,MYACT,NPARMS,PRMS)
       GOTO 10
-      
+
   200 CONTINUE
 C                        OPTION NUMBER 2 -- END
       IF(LKECHO)WRITE(JOSTND,210) KEYWRD
@@ -339,7 +335,7 @@ C
       IF (PRMS(6) .LT. 1) PRMS(6) = 1
       IF (PRMS(6) .GT. 4) PRMS(6) = 4
 C
-      IF(LKECHO)WRITE(JOSTND,610) KEYWRD, IDT, PRMS(1) * MItoKM, 
+      IF(LKECHO)WRITE(JOSTND,610) KEYWRD, IDT, PRMS(1) * MItoKM,
      >  PRMS(2),PRMS(3)*FtoC1+FtoC2,PRMS(4),PRMS(5),PRMS(6)
   610 FORMAT(/1X,A8,T13,'FIRE CONDITIONS IN DATE/CYCLE ',
      >  I4,' WILL BE: WIND: ',F5.1,' KM/H.'
@@ -459,7 +455,6 @@ C
 C     SET THE NEW FALL RATE PARAMETERS FOR THE SNAG MODEL.
 C        NOTE THAT MORE THAN ONE SUPPLEMENTAL RECORD IS REQUIRED
 C           IF ENTERING MULTIPLE SPECIES.
-C
 C
       JSP = 0
       CALL SPDECD (1,JSP,NSP(1,1),JOSTND,IRECNT,KEYWRD,
@@ -832,12 +827,12 @@ C        set array SETDECAY so we know if the decay rates have been set by the u
          IF (LNOTBK(7)) THEN
             SETDECAY(4,IDEC) = ARRAY(7)
             SETDECAY(5,IDEC) = ARRAY(7)
-            SETDECAY(6,IDEC) = ARRAY(7)   
+            SETDECAY(6,IDEC) = ARRAY(7)
             SETDECAY(7,IDEC) = ARRAY(7)
             SETDECAY(8,IDEC) = ARRAY(7)
-            SETDECAY(9,IDEC) = ARRAY(7)            
+            SETDECAY(9,IDEC) = ARRAY(7)
          ENDIF
-         
+
 C        NOW RE-DETERMINE THE DECAY RATE TO DUFF
          IF (ID .LT. 5) THEN
             DO 1620 I=1,10
@@ -939,7 +934,7 @@ C        NOW RE-DETERMINE THE DECAY RATES TO DUFF AND TO AIR
      &                                   (PRDUFF(I,4),I=1,4)
  1755       FORMAT (/1X,A8,'   THE PROPORTION OF THE DECOMPOSING ',
      &      ' MATERIAL WHICH GOES TO DUFF IS',/T13,'LITTER: ',F4.2,
-     &      ' 0-.64: ',F4.2,  
+     &      ' 0-.64: ',F4.2,
      &      ' .64-2.5: ',F4.2,' 2.5-7.6: ',F4.2,' >7.6: ',F4.2)
          ENDIF
       ELSE
@@ -1075,7 +1070,7 @@ C
         PRMS(I) = -1.0
         IF (LNOTBK(I)) PRMS(I)= ARRAY(I)
       ENDDO
-      
+
       IDT = 1
       IF(LKECHO)WRITE(JOSTND,2110) KEYWRD,(PRMS(I),I=1,12)
  2110 FORMAT(/1X,A8,'   INITIAL HARD FUEL VALUES (TONNES/HA) ARE',
@@ -1355,7 +1350,7 @@ C
             DO 2920 I=1,11
                DKR(I,IDEC) = DKR(I,IDEC) * DKMULT
                IF (DKR(I,IDEC) .GT. 1.0) DKR(I,IDEC) = 1.0
-               IF (I .LE. 10) TODUFF(I,IDEC) = DKR(I,IDEC) 
+               IF (I .LE. 10) TODUFF(I,IDEC) = DKR(I,IDEC)
      !                         * PRDUFF(I,IDEC)
  2920       CONTINUE
          ELSE
@@ -1386,7 +1381,7 @@ C     GET THE DEFAULTS.
       CALL FMMOIS(I,MOIS)
 
 C     LOAD THE VALUES CHANGED BY THE USER
-C     IF THE LIVE HERB MOISTURE IS LEFT BLANK, USE THE LIVE WOODY 
+C     IF THE LIVE HERB MOISTURE IS LEFT BLANK, USE THE LIVE WOODY
 C     MOISTURE.  THIS WAS ASSUMED SO THAT NO ONES RESULTS WOULD CHANGE
 C     (THEY WOULDN'T HAVE TO REDO KEYWORD FILES) WHEN THE NEW MOISTURE
 C     CATEGORY WAS ADDED. SAR
@@ -1861,14 +1856,14 @@ C
         IF (PRMS(I) .LT. 0.0) THEN
           PRMS(I) = FMLOAD(IFMD,2,1)
         ELSE
-          PRMS(I) = PRMS(I) * KGtoLB/M2toFT2        
+          PRMS(I) = PRMS(I) * KGtoLB/M2toFT2
         ENDIF
 
         I = 10
         IF (PRMS(I) .LT. 0.0) THEN
           PRMS(I) = FMDEP(IFMD)
         ELSE
-          PRMS(I) = PRMS(I) * MtoFT        
+          PRMS(I) = PRMS(I) * MtoFT
         ENDIF
 
         I = 11
@@ -1887,8 +1882,8 @@ C
         IF (PRMS(I) .LT. 0.0) THEN
         	PRMS(I) = FMLOAD(IFMD,2,2)
         ELSE
-        	PRMS(I) = PRMS(I) * KGtoLB/M2toFT2        
-        ENDIF 
+        	PRMS(I) = PRMS(I) * KGtoLB/M2toFT2
+        ENDIF
 
       ENDIF
 C
@@ -1926,7 +1921,7 @@ C
      &    (PRMS(I) / FTtoM, I=2,5),PRMS(12)/FTtoM,
      &    (PRMS(I) * LBtoKG/FT2toM2, I=6,9),
      &    PRMS(13) * LBtoKG/FT2toM2,
-     &    PRMS(10) * FTtoM, PRMS(11)  
+     &    PRMS(10) * FTtoM, PRMS(11)
  3910   FORMAT(/1X,A8,'   IN DATE/CYCLE ',I4,' THE VALUES FOR FUEL',
      &    ' MODEL', I3,' WILL BE: ',
      &    /T13, 'SURFACE TO VOL RATIO (/M):',
@@ -1934,13 +1929,13 @@ C
      &    /T15, '(0.64-2.5cm) = ', F6.0,
      &    /T15, ' (2.5-7.6cm) = ', F6.0,
      &    /T15, '(LIVE WOODY) = ', F6.0,
-     &    /T15, ' (LIVE HERB) = ', F6.0, 
+     &    /T15, ' (LIVE HERB) = ', F6.0,
      &    /T13, 'FUEL LOADING (KG/SQ M):',
      &    /T15, '   (<0.64cm) = ', F6.0,
      &    /T15, '(0.64-2.5cm) = ', F6.0,
      &    /T15, ' (2.5-7.6cm) = ', F6.0,
      &    /T15, '(LIVE WOODY) = ', F6.0,
-     &    /T15, ' (LIVE HERB) = ', F6.0, 
+     &    /T15, ' (LIVE HERB) = ', F6.0,
      &    /T15, '   DEPTH (M) = ', F6.3,
      &    /T13,'MOISTURE OF EXTINCTION =', F7.4)
         CALL OPNEW(KODE,IDT,MYACT,NPARMS,PRMS)
@@ -1970,7 +1965,7 @@ C
       IF (LNOTBK(2)) CANMHT = ARRAY(2) * MtoFT
       IF (LNOTBK(3)) ICANSP = IFIX(ARRAY(3))
       IF (LNOTBK(4)) CBHCUT = ARRAY(4)
-      IF (LNOTBK(5)) FOLMC = ARRAY(5)      
+      IF (LNOTBK(5)) FOLMC = ARRAY(5)
 C
       IF(LKECHO)WRITE(JOSTND,4010) KEYWRD, ICBHMT, CANMHT * FTtoM,
      >  ICANSP, CBHCUT, FOLMC
@@ -1978,13 +1973,13 @@ C
      &  'BULK DENSITY WILL USE METHOD ',I1,',',/T13,'TREES ',
      &  'AT LEAST ',F5.1,' M TALL, SPECIES CATEGORY ',I1,
      &  ', A CUTOFF VALUE OF ',F5.1,',',/T13,'AND A FMC OF ',F5.1)
-     
+
 C
  4100 CONTINUE
-C                        OPTION NUMBER 41 -- POTFSEAS 
+C                        OPTION NUMBER 41 -- POTFSEAS
       IF (LNOTBK(1)) POTSEAS(1)=ARRAY(1)
       IF (LNOTBK(2)) POTSEAS(2)=ARRAY(2)
-      
+
       IF(LKECHO)WRITE(JOSTND,4150) KEYWRD, POTSEAS
  4150 FORMAT (/1X,A8,'   SEASONS USED FOR CALCULATING POTENTIAL FIRE ',
      &  'BEHAVIOR ARE ',/T12,' FOR SEVERE FIRE: ',I2,
@@ -1994,11 +1989,11 @@ C                        OPTION NUMBER 41 -- POTFSEAS
 C                        OPTION NUMBER 42 -- POTFPAB
       IF (LNOTBK(1)) POTPAB(1)=ARRAY(1)
       IF (LNOTBK(2)) POTPAB(2)=ARRAY(2)
-      
+
       IF(LKECHO)WRITE(JOSTND,4250) KEYWRD, POTPAB
  4250 FORMAT (/1X,A8,'   % AREA BURNED VALUES USED FOR CALCULATING ',
      &  'POTENTIAL FIRE EFFECTS ARE',/T12,' FOR SEVERE FIRE: ',F5.1,
-     &  ' AND FOR MODERATE FIRE: ',F5.1) 
+     &  ' AND FOR MODERATE FIRE: ',F5.1)
       GOTO 10
  4300 CONTINUE
 C
@@ -2006,12 +2001,12 @@ C                        OPTION NUMBER 43 -- SOILHEAT
 C
       IF (IDSHEAT .EQ. 0) CALL GETID (IDSHEAT)
 C
-      ISHEATB = -IY(1)  ! WHEN NEGATIVE, A HEADING IS NEEDED. 
+      ISHEATB = -IY(1)  ! WHEN NEGATIVE, A HEADING IS NEEDED.
       ISHEATE = IY(1) + 999
       SOILTP = 3
       IF (LNOTBK(3)) SOILTP = INT(ARRAY(3))
       IF (SOILTP .LT. 1) SOILTP = 1
-      IF (SOILTP .GT. 5) SOILTP = 5     
+      IF (SOILTP .GT. 5) SOILTP = 5
 C
       IF(LKECHO)WRITE(JOSTND,4315) KEYWRD, SOILTP
  4315 FORMAT(/1X,A8,'   SOIL HEATING WILL BE ESTIMATED AND',
@@ -2037,7 +2032,7 @@ C
 
       IF(LKECHO)WRITE(JOSTND,4410) KEYWRD
  4410 FORMAT(/1X,A8,'   THE MAIN CARBON REPORT WILL BE PRINTED.')
- 
+
       GOTO 10
  4500 CONTINUE
 C
@@ -2057,7 +2052,7 @@ C
 C
       IF(LKECHO)WRITE(JOSTND,4510) KEYWRD
  4510 FORMAT(/1X,A8,T13,'THE HARVESTED PRODUCTS REPORT WILL BE PRINTED.')
- 
+
       GOTO 10
  4600 CONTINUE
 C
@@ -2105,12 +2100,12 @@ C                        OPTION NUMBER 47 -- CANFPROF
       ENDIF
 
       ICANPR = 1
-      CALL DBSFMLINK(ICANPR)                         
+      CALL DBSFMLINK(ICANPR)
       ICFPB = IY(1)
       ICFPE = IY(1) + 999
 
       IF(LKECHO)WRITE(JOSTND,4710) KEYWRD
- 4710 FORMAT(/1X,A8,'   THE CANOPY FUELS PROFILE TABLE WILL BE PRINTED.')  
+ 4710 FORMAT(/1X,A8,'   THE CANOPY FUELS PROFILE TABLE WILL BE PRINTED.')
 
       GOTO 10
  4800 CONTINUE
@@ -2133,11 +2128,11 @@ C
       IDT = 1
       IF (LNOTBK(1)) PRMS(1)= NINT(ARRAY(1))
       IF (LNOTBK(2)) PRMS(2)= NINT(ARRAY(2))
- 
+
 C     THE PHOTO REFERENCE CODE MUST BE BETWEEN 1 AND 32.
-C     4 AND 10 ARE NOT VALID REFERENCE CODES. 
-      
-      IF ((NINT(PRMS(1)) .EQ. 4) .OR. (NINT(PRMS(1)) .EQ. 10) .OR. 
+C     4 AND 10 ARE NOT VALID REFERENCE CODES.
+
+      IF ((NINT(PRMS(1)) .EQ. 4) .OR. (NINT(PRMS(1)) .EQ. 10) .OR.
      >    (NINT(PRMS(1)) .LT. 1) .OR. (NINT(PRMS(1)) .GT. 32)) THEN
         PRMS(1) = -1.0
       ENDIF
@@ -2147,102 +2142,102 @@ C     4 AND 10 ARE NOT VALID REFERENCE CODES.
       SELECT CASE (NINT(PRMS(1)))
       CASE (1)
       IF (NINT(PRMS(2)) .GT. 22) PRMS(2) = -1.0
-            
+
       CASE (2)
       IF (NINT(PRMS(2)) .GT. 59) PRMS(2) = -1.0
-            
+
       CASE (3)
       IF (NINT(PRMS(2)) .GT. 66) PRMS(2) = -1.0
-            
+
       CASE (5)
       IF (NINT(PRMS(2)) .GT. 17) PRMS(2) = -1.0
-                  
+
       CASE (6)
       IF (NINT(PRMS(2)) .GT. 27) PRMS(2) = -1.0
-                  
+
       CASE (7)
       IF (NINT(PRMS(2)) .GT. 56) PRMS(2) = -1.0
-                  
+
       CASE (8)
       IF (NINT(PRMS(2)) .GT. 86) PRMS(2) = -1.0
-     
+
       CASE (9)
       IF (NINT(PRMS(2)) .GT. 26) PRMS(2) = -1.0
-   
+
       CASE (11)
       IF (NINT(PRMS(2)) .GT. 26) PRMS(2) = -1.0
-      
+
       CASE (12)
       IF (NINT(PRMS(2)) .GT. 90) PRMS(2) = -1.0
-        
+
       CASE (13)
       IF (NINT(PRMS(2)) .GT. 42) PRMS(2) = -1.0
-      
+
       CASE (14)
       IF (NINT(PRMS(2)) .GT. 29) PRMS(2) = -1.0
 
       CASE (15)
       IF (NINT(PRMS(2)) .GT. 29) PRMS(2) = -1.0
-                  
+
       CASE (16)
       IF (NINT(PRMS(2)) .GT. 41) PRMS(2) = -1.0
-        
+
       CASE (17)
       IF (NINT(PRMS(2)) .GT. 35) PRMS(2) = -1.0
-                  
+
       CASE (18)
       IF (NINT(PRMS(2)) .GT. 43) PRMS(2) = -1.0
-            
+
       CASE (19)
       IF (NINT(PRMS(2)) .GT. 34) PRMS(2) = -1.0
-          
+
       CASE (20)
       IF (NINT(PRMS(2)) .GT. 26) PRMS(2) = -1.0
-       
+
       CASE (21)
       IF (NINT(PRMS(2)) .GT. 25) PRMS(2) = -1.0
-                  
+
       CASE (22)
       IF (NINT(PRMS(2)) .GT. 36) PRMS(2) = -1.0
-                  
+
       CASE (23)
       IF (NINT(PRMS(2)) .GT. 26) PRMS(2) = -1.0
-                 
+
       CASE (24)
       IF (NINT(PRMS(2)) .GT. 27) PRMS(2) = -1.0
-                 
+
       CASE (25)
       IF (NINT(PRMS(2)) .GT. 14) PRMS(2) = -1.0
-                  
+
       CASE (26)
       IF (NINT(PRMS(2)) .GT. 16) PRMS(2) = -1.0
-                  
+
       CASE (27)
       IF (NINT(PRMS(2)) .GT. 30) PRMS(2) = -1.0
-                  
+
       CASE (28)
       IF (NINT(PRMS(2)) .GT. 30) PRMS(2) = -1.0
-                 
+
       CASE (29)
       IF (NINT(PRMS(2)) .GT. 16) PRMS(2) = -1.0
-                 
+
       CASE (30)
       IF (NINT(PRMS(2)) .GT. 16) PRMS(2) = -1.0
-                 
+
       CASE (31)
       IF (NINT(PRMS(2)) .GT. 10) PRMS(2) = -1.0
-                        
+
       CASE (32)
-      IF (NINT(PRMS(2)) .GT. 39) PRMS(2) = -1.0            
-   
+      IF (NINT(PRMS(2)) .GT. 39) PRMS(2) = -1.0
+
       END SELECT
 
       IF (NINT(PRMS(1)) .EQ. -1) THEN
         REF = 'UNKNOWN'
-      ELSE  
+      ELSE
         REF = PHOTOREF(NINT(PRMS(1)))
       ENDIF
-   
+
       J = NINT(PRMS(1))
       K = NINT(PRMS(2))
 
@@ -2251,8 +2246,8 @@ C     4 AND 10 ARE NOT VALID REFERENCE CODES.
       ELSE
         CHARCODE = 'UNKNOWN'
       ENDIF
-      
-      IF(LKECHO)WRITE(JOSTND,4810) KEYWRD, NINT(PRMS(1)), 
+
+      IF(LKECHO)WRITE(JOSTND,4810) KEYWRD, NINT(PRMS(1)),
      >    REF, NINT(PRMS(2)), CHARCODE
  4810 FORMAT(/1X,A8,'   PHOTO SERIES REFERENCE IS ',
      >    I4,' = ',A/T13,'PHOTO CODE IS ',I4,' = ',A)
@@ -2260,7 +2255,7 @@ C     4 AND 10 ARE NOT VALID REFERENCE CODES.
       MYACT = 2548
       IF ((J .NE. -1) .AND. (K .NE. -1)) THEN
         CALL OPNEW(KODE,IDT,MYACT,NPARMS,PRMS)
-      ELSE 
+      ELSE
             WRITE (JOSTND,"(/1X,'*** FFE MODEL WARNING: INCORRECT ',
      &      'PHOTO REFERENCE OR PHOTO CODE ENTERED.  BOTH FIELDS ARE ',
      &      'REQUIRED.  KEYWORD IGNORED.',/1X)")
@@ -2337,7 +2332,7 @@ C
 
  4910 FORMAT(/1X,A8,T13,'FIRE CALCULATIONS IN DATE/CYCLE ',
      >    I4,' WILL BE:'
-     >    /T13, 'BASED ON METHOD',I2,' ', 
+     >    /T13, 'BASED ON METHOD',I2,' ',
      >'(0=OLD FM LOGIC, 1=NEW FM LOGIC, 2=USE MODELLED LOADS DIRECTLY)',
      >    /T13, 'FUEL MODEL SET (IF USING NEW FM LOGIC) WILL BE',
      >    I2, ' (0=13, 1=40, 2=53)',/T13,
@@ -2380,21 +2375,21 @@ C
 
 C     PRM1: fuel model
 C     PRM2: -1 = not set/default, 0 = on, 1 = off
-      
+
       PRMS(1) = 1
       PRMS(2) = -1
       NPARMS= 2
       IF (LNOTBK(2)) PRMS(1) = MAX(0,INT(ARRAY(2)))
       IF (LNOTBK(3)) PRMS(2) = MAX(-1,MIN(1,INT(ARRAY(3))))
 C
-      IF(LKECHO)WRITE(JOSTND,5010) KEYWRD,IDT,INT(PRMS(1)),INT(PRMS(2)) 
+      IF(LKECHO)WRITE(JOSTND,5010) KEYWRD,IDT,INT(PRMS(1)),INT(PRMS(2))
 
  5010 FORMAT(/1X,A8,T13,'IN DATE/CYCLE ',I4,' FUEL MODEL ',I3,
      >                  ' WILL BE:',I2,' (-1=DEFAULT, 0=ON, 1=OFF)')
 
       CALL OPNEW(KODE,IDT,MYACT,NPARMS,PRMS)
 
-      GOTO 10      
+      GOTO 10
  5100 CONTINUE
 C                        OPTION NUMBER 51 -- DWDVLOUT
 C
@@ -2551,7 +2546,7 @@ C           canopy_fuel_particle_length(m)---length				0.10
 
       IF(LKECHO)WRITE(JOSTND,5410) KEYWRD,(PRMS(I),I=1,7)
  5410 FORMAT(/1X,A8,'   THE CFIM MODEL WILL BE USED FOR FIRE ',
-     >    'CALCULATIONS.', /T13, 
+     >    'CALCULATIONS.', /T13,
      >    'BULK DENSITY=',F4.0, '; DROUGHT CODE=',I3/T13,
      >    'FUEL DENS(KG/M3)=',F5.1,
      >    '; SAV SURF=',F5.0,'; SAV CANOPY=',F5.0/T13,
@@ -2563,7 +2558,7 @@ C           canopy_fuel_particle_length(m)---length				0.10
 C                        OPTION NUMBER 55 -- CFIMCALC
 C
 C     THIS KEYWORD SETS SOME PARAMETERS THAT CONTROL THE MINI-SIMULATION
-C     INSIDE THE CFIM MODEL. 
+C     INSIDE THE CFIM MODEL.
 C
       IF (ICALL .EQ. 2) THEN
          WRITE(JOSTND,5505) KEYWRD
@@ -2590,7 +2585,7 @@ C           time_step(s)---tstep						1
             CFIM_INPUT(7) = PRMS(1)
 
 C           iterations---iters						150
-            IF (PRMS(2) .LT. 1) PRMS(2) = 1            
+            IF (PRMS(2) .LT. 1) PRMS(2) = 1
             CFIM_INPUT(8) = PRMS(2)
 
 C           x_starting_position(m)---xstart					8.0
@@ -2612,7 +2607,7 @@ C.... Special entry to retrieve keywords.
 	END
 
       SUBROUTINE FMKEYDMP (IOUT,IRECNT,KEYWRD,ARRAY,KARD,NVALS)
-      IMPLICIT NONE
+      implicit none
 C----------
 C  **FMKEYDMP DATE OF LAST REVISION:   08/03/05
 C----------
@@ -2631,10 +2626,10 @@ C----------
 C
       RETURN
       END
-      
+
       SUBROUTINE FMKEYRDR (INUNIT,IOUT,LDEBUG,KEYWRD,LNOTBK,
      >                   ARRAY,IRECNT,KODE,KARD,LFLAG,NVALS)
-      IMPLICIT NONE
+      implicit none
 C----------
 C  **FMKEYRDR DATE OF LAST REVISION:  10/20/09
 C----------
@@ -2793,6 +2788,6 @@ C
 C
       IF ( LDEBUG ) CALL FMKEYDMP (IOUT,IRECNT,KEYWRD,ARRAY,KARD,NVALS)
       RETURN
-      END      
+      END
 
 

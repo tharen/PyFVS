@@ -1,5 +1,8 @@
       SUBROUTINE BWEGO(LBWEGO)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BWEGO                  DATE OF LAST REVISION:  08/28/13
 C----------
@@ -14,7 +17,7 @@ c     major changes by K.Sheehan 8/96+ to add Defoliation Model
 C
 C     CALLED FROM :
 C
-C       GRINCR - 
+C       GRINCR -
 C
 C     SUBROUTINES CALLED :
 C
@@ -58,23 +61,15 @@ C   02-JUN-2009 Lance R. David (FMSC)
 C      Added Stand ID and comma delimiter to output tables, some header
 C      and column labels modified.
 C   14-JUL-2010 Lance R. David (FMSC)
-C      Added IMPLICIT NONE and declared variables as needed.
 C   28-AUG-2013 Lance R. David (FMSC)
 C      Added loading of weather year into IEVENT array.
 C
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECOM.F77'
       INCLUDE 'BWECM2.F77'
       INCLUDE 'BWEBOX.F77'
-C
-COMMONS
 C
       INTEGER I, MYACT(4)
       LOGICAL LBWEGO
@@ -102,22 +97,22 @@ C       CHECK THE REGIONAL OUTBREAK FLAG (LREGO).  IF TRUE, THEN
 C       CONTINUE THE ONGOING OUTBREAK (WILL CHECK FOR END OF OUTBREAK
 C       AT START OF EACH YEAR IN BWEDR).
 C       OTHERWISE, CHECK TO SEE IF A NEW REG. OUTBREAK WILL START DURING
-C       THIS CYCLE.  IYRST (YR THAT NEXT OUTBREAK STARTS) & IYREND (YR 
-C       THAT NEXT OUTBREAK ENDS) WERE SET WHEN THE SIMULATION WAS 
-C       INITIALIZED OR WHEN THE MOST RECENT OUTBREAK ENDED.                            
+C       THIS CYCLE.  IYRST (YR THAT NEXT OUTBREAK STARTS) & IYREND (YR
+C       THAT NEXT OUTBREAK ENDS) WERE SET WHEN THE SIMULATION WAS
+C       INITIALIZED OR WHEN THE MOST RECENT OUTBREAK ENDED.
 C       IF IYREND=-1, THEN BUDLITE ENDS THE OUTBREAK WHEN DEFOLIATION
 C       FALLS BELOW A THRESHOLD.
-C       IF IYREND=-2, THEN ONCE AN OUTBREAK STARTS, BUDLITE CONTINUES 
+C       IF IYREND=-2, THEN ONCE AN OUTBREAK STARTS, BUDLITE CONTINUES
 C       SIMULATING BW POPULATIONS UNTIL THE END OF THE SIMULATION.
 
         LCALBW=.FALSE.
-        IF (LREGO) THEN 
+        IF (LREGO) THEN
            LBWEGO=.TRUE.
 
            IF (IYREND.NE.-1) THEN
              IF (IY(ICYC).LE.IYREND) THEN
                LCALBW=.TRUE.
-             ELSE 
+             ELSE
                LCALBW=.FALSE.
              ENDIF
            ELSEIF (IYREND.EQ.-2) THEN
@@ -162,7 +157,7 @@ C
         ELSE
           LBWEGO=.TRUE.
         ENDIF
-      ENDIF                  
+      ENDIF
 C
 C IF NEITHER LDEFOL OR LCALBW IS TRUE, THEN SOMETHING'S AMISS...
 C

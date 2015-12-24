@@ -1,5 +1,7 @@
       SUBROUTINE OPCACT (KODE,CSTR)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -17,19 +19,7 @@ C            1   STRING COULD NOT BE ADDED BECAUSE STORAGE IS FULL.
 C                A WARNING MESSAGE IS ISSUED VIA ERRGRO.
 C     CSTR = THE STRING THAT IS BEING ADDED.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'OPCOM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-COMMONS
 C
       LOGICAL LDEB
       CHARACTER*(*) CSTR

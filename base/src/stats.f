@@ -1,5 +1,10 @@
       SUBROUTINE STATS
-      IMPLICIT NONE
+      use contrl_mod
+      use volstd_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -9,24 +14,6 @@ C  **MAIN**.  **TVALUE** IS CALLED TO CALCULATE STUDENT'S T FOR
 C  CONSTRUCTION OF CONFIDENCE INTERVALS.
 C---------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
       CHARACTER*16 LABELS(4)
       REAL TOTCF(MAXSP),
      &   TOTTR(MAXSP),TOTBA(MAXSP),TOTBF(MAXSP),
@@ -34,10 +21,6 @@ COMMONS
       INTEGER IFLG(MAXSP),I,ISPC,J,IALP,IERR,NDF
       REAL P,TBA,TBF,TCF,T,SUM,SUMSQ,ST,XBAR,S,SS,SE,UL,UU,CV
       REAL SEU,SEP,SCF,SBF,SBA
-      EQUIVALENCE (WK3,SUMT),(WK3(MAXPLT+1),SUMBA),
-     &            (WK4,SUMCF),(WK4(MAXPLT+1),SUMBF),
-     &            (WK5,TOTTR),(WK5(MAXSP+1),TOTBA),
-     &            (WK6,TOTCF),(WK6(MAXSP+1),TOTBF)
       DATA LABELS/
      &  'BOARD FEET/ACRE ',
      &  'CUBIC FEET/ACRE ',

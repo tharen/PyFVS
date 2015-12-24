@@ -1,5 +1,8 @@
       SUBROUTINE FMR6SDCY (KSP, DBH, X, Y, SML)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -7,10 +10,10 @@ C     CALLED FROM: FMSNAG
 C
 *----------------------------------------------------------------------
 *  Purpose:
-*     This subroutine calculates the time (in years) it takes a hard 
+*     This subroutine calculates the time (in years) it takes a hard
 *     snag to become soft.  This is based on species, plant association,
 *     and size.  An adjustment factor (used in the snag fall calculations)
-*     is also computed. 
+*     is also computed.
 *
 *     The calculations are based on work done by Kim Mellen, regional
 *     wildlife ecologist for region 6.
@@ -23,7 +26,7 @@ C
 *     Y - THE ADJUSTMENT FACTOR (USED IN SNAG FALL CALCULATIONS)
 *         (1 = decrease, 2 = none, 3 = increase)
 *     WSDBH1,WSDBH2,BMDBH1,BMDBH2,ECDBH1,ECDBH2,SODBH1,SODBH2,
-*     AKDBH1,AKDBH2 - THE DBH BREAKPOINTS (IN CM) TO DETERMINE IF A TREE IS 
+*     AKDBH1,AKDBH2 - THE DBH BREAKPOINTS (IN CM) TO DETERMINE IF A TREE IS
 *     SMALL, MEDIUM, OR LARGE FOR EACH VARIANT.
 *     WSSPEC,BMSPEC,ECSPEC,SOSPEC,AKSPEC - THE SPECIES GROUP (1 - 12 ) FOR EACH SPECIES
 *     IN EACH VARIANT:
@@ -53,8 +56,8 @@ C
 *     VALUES FOR VARIOUS:
 *            species (i:1-12),
 *            temperatures (j:1-3),
-*            moistures (k:1-3), and 
-*            sizes (l:1-3, 1=small, 2=medium, 3=large)    
+*            moistures (k:1-3), and
+*            sizes (l:1-3, 1=small, 2=medium, 3=large)
 *     PNDCYADJ,ESDCYADJ,WCDCYADJ (I,J,K,L) - ARRAY WITH SNAG FALL ADJUSTMENT
 *     FACTORS, DIMENSIONED SAME AS YRSOFT ARRAYS.
 *            1 = decrease snag fall
@@ -63,16 +66,6 @@ C
 *
 ***********************************************************************
 C----------
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77' 
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
 COMMONS
 C----------
 C  Variable declarations.
@@ -86,7 +79,7 @@ C----------
       INTEGER PNYRSOFT(12,3,3,3),PNDCYADJ(12,3,3,3),ESYRSOFT(12,3,3,3)
       INTEGER ESDCYADJ(12,3,3,3),WCYRSOFT(12,3,3,3),WCDCYADJ(12,3,3,3)
       REAL    DBH, DBHCM
-      REAL    WSDBH1(39),WSDBH2(39),BMDBH1(18),BMDBH2(18),ECDBH1(32)  
+      REAL    WSDBH1(39),WSDBH2(39),BMDBH1(18),BMDBH2(18),ECDBH1(32)
       REAL    ECDBH2(32),SODBH1(33),SODBH2(33),AKDBH1(13),AKDBH2(13)
 C----------
 C  DETERMINE WHICH VARIANT IS BEING USED.
@@ -142,34 +135,34 @@ C----------
         IF (WSDBH1(I) .EQ. 20) THEN
           WSDBH2(I) = 50
         ELSE
-          WSDBH2(I) = 75        	
+          WSDBH2(I) = 75
         ENDIF
         IF (I .LE. 33) THEN
           IF (SODBH1(I) .EQ. 20) THEN
             SODBH2(I) = 50
           ELSE
-            SODBH2(I) = 75        	
+            SODBH2(I) = 75
           ENDIF
         ENDIF
         IF (I .LE. 18) THEN
           IF (BMDBH1(I) .EQ. 20) THEN
             BMDBH2(I) = 50
           ELSE
-            BMDBH2(I) = 75        	
+            BMDBH2(I) = 75
           ENDIF
         ENDIF
         IF (I .LE. 13) THEN
           IF (AKDBH1(I) .EQ. 20) THEN
             AKDBH2(I) = 50
           ELSE
-            AKDBH2(I) = 75        	
+            AKDBH2(I) = 75
           ENDIF
         ENDIF
         IF (I .LE. 32) THEN
           IF (ECDBH1(I) .EQ. 20) THEN
             ECDBH2(I) = 50
           ELSE
-            ECDBH2(I) = 75        	
+            ECDBH2(I) = 75
           ENDIF
         ENDIF
       ENDDO
@@ -186,7 +179,7 @@ C  THESE ARE THE BM SPECIES GROUPS (1 - 12) TO USE FOR SNAG DECAY
 C----------
       DATA (BMSPEC(I), I= 1, 18) /
      &  2,  2,  2,  8,  7,  1,  5,  6,  8,  3,
-     &  2,  2,  1,  1, 11, 11,  8, 11/  
+     &  2,  2,  1,  1, 11, 11,  8, 11/
 C----------
 C  THESE ARE THE EC SPECIES GROUPS (1 - 12) TO USE FOR SNAG DECAY
 C----------
@@ -198,7 +191,7 @@ C----------
 C----------
 C  THESE ARE THE SO SPECIES GROUPS (1 - 12) TO USE FOR SNAG DECAY
 C----------
-      DATA (SOSPEC(I), I= 1, 33) /     
+      DATA (SOSPEC(I), I= 1, 33) /
      &  2, 2, 2, 8, 7, 1, 5, 6, 9, 3,
      &  1, 8, 8, 8, 8, 2, 2, 1, 7, 1,
      & 12,12,12,11,11,10, 4,11, 4,11,
@@ -206,7 +199,7 @@ C----------
 C----------
 C  THESE ARE THE AK SPECIES GROUPS (1 - 12) TO USE FOR SNAG DECAY
 C----------
-      DATA (AKSPEC(I), I= 1, 13) /     
+      DATA (AKSPEC(I), I= 1, 13) /
      &  6, 1, 9, 7, 7, 1, 5, 6, 8, 12,
      & 11,11, 9/
 C----------
@@ -314,12 +307,12 @@ C  OR COLD (3).
 C----------
       DATA (BMHMC(I), I=   1,  50) /
      & 3, 3, 2, 2, 2, 2, 2, 2, 2, 2,
-     & 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 
+     & 2, 2, 2, 3, 3, 3, 3, 3, 3, 3,
      & 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-     & 2, 3, 3, 2, 3, 2, 2, 2, 3, 3, 
+     & 2, 3, 3, 2, 3, 2, 2, 2, 3, 3,
      & 3, 2, 2, 2, 2, 2, 3, 3, 1, 1/
       DATA (BMHMC(I), I=  51,  92) /
-     & 1, 1, 2, 2, 2, 1, 2, 2, 1, 2, 
+     & 1, 1, 2, 2, 2, 1, 2, 2, 1, 2,
      & 1, 1, 1, 2, 2, 2, 2, 2, 2, 2,
      & 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
      & 2, 2, 2, 2, 2, 2, 3, 2, 2, 2,
@@ -328,15 +321,15 @@ C----------
 C  EACH BM HABITAT CODE MAPS TO EITHER WET (1), MESIC (2) OR DRY (3).
 C----------
       DATA (BMWMD(I), I=   1,  50) /
-     & 3, 3, 3, 3, 3, 2, 3, 3, 3, 3, 
-     & 3, 2, 3, 2, 1, 2, 3, 1, 1, 2, 
+     & 3, 3, 3, 3, 3, 2, 3, 3, 3, 3,
+     & 3, 2, 3, 2, 1, 2, 3, 1, 1, 2,
      & 1, 1, 2, 2, 2, 2, 2, 3, 2, 3,
-     & 2, 3, 3, 1, 1, 1, 2, 1, 2, 3, 
+     & 2, 3, 3, 1, 1, 1, 2, 1, 2, 3,
      & 3, 3, 2, 2, 2, 2, 3, 3, 3, 3/
       DATA (BMWMD(I), I=  51,  92) /
-     & 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 
+     & 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
      & 3, 3, 3, 3, 3, 3, 3, 1, 1, 2,
-     & 2, 2, 2, 1, 1, 1, 3, 3, 3, 2, 
+     & 2, 2, 2, 1, 1, 1, 3, 3, 3, 2,
      & 2, 2, 3, 3, 2, 1, 3, 2, 1, 2,
      & 2, 2/
 C----------
@@ -408,7 +401,7 @@ C----------
      & 3 ,5 ,5 ,3 ,5 ,5 ,3 ,7 ,9 ,3 ,7 ,9 ,3 ,7 ,9 ,6 ,7 ,9 ,6 ,7 ,
      & 9 ,6 ,7 ,9/
 C----------
-C  PN - DECAY RATE ADJUSTMENT FOR SNAG FALL (1 = DECREASE, 2 = NONE, 3 = INCREASE)                
+C  PN - DECAY RATE ADJUSTMENT FOR SNAG FALL (1 = DECREASE, 2 = NONE, 3 = INCREASE)
 C----------
       DATA ((((PNDCYADJ(I,J,K,L), L=1,3), K=1,3), J=1,3), I=1,12) /
      & 3,3,3,3,3,3,3,3,3,3,2,1,3,2,1,3,2,1,2,1,
@@ -429,7 +422,7 @@ C----------
      & 3,3,3,3,3,3,3,2,1,3,2,1,3,2,1,2,1,1,2,1,
      & 1,2,1,1/
 C----------
-C  WC - YEARS TO DECAY FROM HARD TO SOFT W/ LAG                 
+C  WC - YEARS TO DECAY FROM HARD TO SOFT W/ LAG
 C----------
       DATA ((((WCYRSOFT(I,J,K,L), L=1,3), K=1,3), J=1,3), I=1,12) /
      & 36,42,46,36,42,46,36,49,73,36,70,94,36,70,94,41,70,94,69,76,
@@ -448,7 +441,7 @@ C----------
      & 12,9 ,11,12,9 ,11,12,9 ,11,12,4 ,6 ,7 ,4 ,6 ,7 ,4 ,7 ,9 ,4 ,
      & 10,12,4 ,10,12,5 ,10,12,9 ,10,12,9 ,10,12,9 ,10,12,3 ,5 ,5 ,
      & 3 ,5 ,5 ,3 ,5 ,6 ,3 ,7 ,9 ,3 ,7 ,9 ,4 ,7 ,9 ,6 ,7 ,9 ,6 ,7 ,
-     & 9 ,6 ,7 ,9/      
+     & 9 ,6 ,7 ,9/
 C----------
 C  WC - DECAY RATE ADJUSTMENT FOR SNAG FALL (1 = DECREASE, 2 = NONE, 3 = INCREASE)
 C----------
@@ -471,7 +464,7 @@ C----------
      & 3,3,3,3,3,3,3,2,1,3,2,1,3,1,1,2,1,1,2,1,
      & 1,2,1,1/
 C----------
-C  EASTSIDE (BM, SO, EC) - YEARS TO DECAY FROM HARD TO SOFT W/ LAG                 
+C  EASTSIDE (BM, SO, EC) - YEARS TO DECAY FROM HARD TO SOFT W/ LAG
 C----------
       DATA ((((ESYRSOFT(I,J,K,L), L=1,3), K=1,3), J=1,3), I=1,6) /
      & 184,185,246,184,185,246,184,185,246,93 ,125,185,124,185,246,
@@ -485,8 +478,8 @@ C----------
      & 25 ,38 ,49 ,37 ,40 ,49 ,24 ,26 ,29 ,24 ,29 ,38 ,41 ,42 ,49 ,
      & 58 ,59 ,68 ,58 ,59 ,68 ,63 ,59 ,68 ,29 ,40 ,55 ,37 ,55 ,68 ,
      & 54 ,59 ,68 ,34 ,38 ,40 ,37 ,40 ,55 ,58 ,59 ,68/
-C     
-      DATA ((((ESYRSOFT(I,J,K,L), L=1,3), K=1,3), J=1,3), I=7,12) /     
+C
+      DATA ((((ESYRSOFT(I,J,K,L), L=1,3), K=1,3), J=1,3), I=7,12) /
      & 55 ,56 ,67 ,55 ,56 ,67 ,61 ,56 ,67 ,28 ,40 ,54 ,35 ,54 ,67 ,
      & 53 ,56 ,67 ,32 ,36 ,40 ,32 ,40 ,54 ,55 ,56 ,67 ,45 ,46 ,55 ,
      & 48 ,49 ,55 ,48 ,49 ,55 ,24 ,33 ,44 ,29 ,44 ,55 ,43 ,46 ,55 ,
@@ -520,7 +513,7 @@ C----------
      & 1,1,1,1,1,1,3,3,2,3,2,1,2,1,1,3,3,3,3,3,
      & 2,1,1,1/
 C----------
-C  DETERMINE THE SPECIES GROUP, TEMPERATURE CODE, MOISTURE CODE, 
+C  DETERMINE THE SPECIES GROUP, TEMPERATURE CODE, MOISTURE CODE,
 C  AND SIZE CLASS - FIRST GET DBH IN TERMS OF CM.
 C----------
       DBHCM = DBH * 2.54
@@ -530,12 +523,12 @@ C----------
           MOIS = ECWMD(ITYPE)
           SPG = ECSPEC(KSP)
           IF (DBHCM .LT. ECDBH1(KSP)) THEN
-      	    SML = 1 
+      	    SML = 1
           ELSEIF (DBHCM .LT. ECDBH2(KSP)) THEN
-      	    SML = 2 
-          ELSE 
-      	    SML = 3 
-          ENDIF        
+      	    SML = 2
+          ELSE
+      	    SML = 3
+          ENDIF
         CASE('BM')
           TEMP = BMHMC(ITYPE)
           MOIS = BMWMD(ITYPE)
@@ -543,74 +536,74 @@ C----------
           IF (DBHCM .LT. BMDBH1(KSP)) THEN
       	    SML = 1
           ELSEIF (DBHCM .LT. BMDBH2(KSP)) THEN
-      	    SML = 2 
-          ELSE 
-      	    SML = 3 
-          ENDIF          
+      	    SML = 2
+          ELSE
+      	    SML = 3
+          ENDIF
         CASE('SO')
           TEMP = SOHMC(ITYPE)
           MOIS = SOWMD(ITYPE)
           SPG = SOSPEC(KSP)
           IF (DBHCM .LT. SODBH1(KSP)) THEN
-      	    SML = 1 
+      	    SML = 1
           ELSEIF (DBHCM .LT. SODBH2(KSP)) THEN
-      	    SML = 2 
-          ELSE 
-      	    SML = 3 
-          ENDIF          
-        CASE('PN')
+      	    SML = 2
+          ELSE
+      	    SML = 3
+          ENDIF
+        CASE('PN','OP')
           TEMP = PNWMC(ITYPE)
           MOIS = PNWMD(ITYPE)
           SPG = WSSPEC(KSP)
           IF (DBHCM .LT. WSDBH1(KSP)) THEN
-      	    SML = 1 
+      	    SML = 1
           ELSEIF (DBHCM .LT. WSDBH2(KSP)) THEN
-      	    SML = 2 
-          ELSE 
+      	    SML = 2
+          ELSE
       	    SML = 3
-          ENDIF        
+          ENDIF
         CASE('WC')
           TEMP = WCWMC(ITYPE)
           MOIS = WCWMD(ITYPE)
           SPG = WSSPEC(KSP)
           IF (DBHCM .LT. WSDBH1(KSP)) THEN
-      	    SML = 1 
+      	    SML = 1
           ELSEIF (DBHCM .LT. WSDBH2(KSP)) THEN
-      	    SML = 2 
-          ELSE 
+      	    SML = 2
+          ELSE
       	    SML = 3
-          ENDIF    
+          ENDIF
         CASE('AK')
           TEMP = 3 !assume cold
           MOIS = 1 !assume wet
           SPG = AKSPEC(KSP)
           IF (DBHCM .LT. AKDBH1(KSP)) THEN
-      	    SML = 1 
+      	    SML = 1
           ELSEIF (DBHCM .LT. AKDBH2(KSP)) THEN
-      	    SML = 2 
-          ELSE 
+      	    SML = 2
+          ELSE
       	    SML = 3
-          ENDIF 
+          ENDIF
       END SELECT
 C----------
 C  DETERMINE THE NUMBER OF YEARS FROM HARD TO SOFT AND THE SNAG FALL
 C  ADJUSTMENT FACTOR.
 C----------
       SELECT CASE (VVER(1:2))
-        CASE('PN','AK')
+        CASE('PN','AK','OP')
           X = PNYRSOFT(SPG,TEMP,MOIS,SML)
           Y = PNDCYADJ(SPG,TEMP,MOIS,SML)
         CASE('WC')
           X = WCYRSOFT(SPG,TEMP,MOIS,SML)
-          Y = WCDCYADJ(SPG,TEMP,MOIS,SML) 
+          Y = WCDCYADJ(SPG,TEMP,MOIS,SML)
         CASE DEFAULT
           X = ESYRSOFT(SPG,TEMP,MOIS,SML)
-          Y = ESDCYADJ(SPG,TEMP,MOIS,SML)         
+          Y = ESDCYADJ(SPG,TEMP,MOIS,SML)
       END SELECT
-C      
+C
       IF (DEBUG) WRITE(JOSTND,8) X, Y, SPG, TEMP, MOIS, SML, DBHCM
     8 FORMAT(' FMR6SDCY X=',I5,' Y=',I5,' SPG=',I3,' TEMP=',I2,
-     &       ' MOIS=',I2,' SML=',I2,' DBHCM=',F6.2)      
-C      
+     &       ' MOIS=',I2,' SML=',I2,' DBHCM=',F6.2)
+C
       RETURN
       END

@@ -1,5 +1,6 @@
       BLOCK DATA BWEBK
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **BWEBK--SO          DATE OF LAST REVISION:  07/14/10
 C----------
@@ -38,7 +39,7 @@ C       the process of moving initialization of nonstatic variables
 C       to the BWEINT routine.
 C    04-OCT-00 Lance David (FHTET)
 C       Added data statemenst to load weather station names into
-C       WSLOOK that had previously been loaded at runtime from 
+C       WSLOOK that had previously been loaded at runtime from
 C       stations.dat file.
 C    10-NOV-00 Lance David (FHTET)
 C       Put Western Larch back into host species list (IBWSPM). It
@@ -49,18 +50,12 @@ C       Adapted from the SORNEC 11 specie to SORNEC 33 specie variant.
 C    09-SEP-06 Lance David (FHTET)
 C       Moved non-static variables FOLDVY, FOLWTY and IOUT6A to bweint.f.
 C    14-JUL-2010 Lance R. David (FMSC)
-C       Added IMPLICIT NONE and declared variables as needed.
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BWECOM.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECM2.F77'
       INCLUDE 'BWEBOX.F77'
-C
-COMMONS
 C
       INTEGER I
 
@@ -77,7 +72,7 @@ C
 C     FVS SO VARIANT SPECIES INDICES:
 C       1    2    3    4    5    6    7    8    9   10   11   -- SO index
 C      WP   SP   DF   WF   MH   IC   LP   ES   SH   PP   JU   -- SO specie
-C       7,   7,   2,   1,   7,   7,   7,   5,   7,   7,   7, !-- BW index 
+C       7,   7,   2,   1,   7,   7,   7,   5,   7,   7,   7, !-- BW index
 C      12   13   14   15   16   17   18   19   20   21   22   -- SO index
 C      GF   AF   SF   NF   WB   WL   RC   WH   PY   WA   RA   -- SO specie
 C       3,   4,   7,   7,   7,   6,   7,   7,   7,   7,   7, !-- BW index
@@ -85,9 +80,9 @@ C      23   24   25   26   27   28   29   30   31   32   33   -- SO index
 C      BM   AS   CW   CH   WO   WI   GC   MC   MB   OS   OH   -- SO specie
 C       7,   7,   7,   7,   7,   7,   7,   7,   7,   7,   7  !-- BW index
 
-      DATA IBWSPM/ 7, 7, 2, 1, 7, 7, 7, 5, 7, 7, 7, 
-     >             3, 4, 7, 7, 7, 6, 7, 7, 7, 7, 7, 
-     >             7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7/ 
+      DATA IBWSPM/ 7, 7, 2, 1, 7, 7, 7, 5, 7, 7, 7,
+     >             3, 4, 7, 7, 7, 6, 7, 7, 7, 7, 7,
+     >             7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7/
 
       DATA PRCRN3/ 0.05, 0.3, 0.65, 0.15, 0.45, 0.40, 0.15, 0.45, 0.40/
       DATA THEOFL/ 0.70, 0.24, 0.04, 0.02,

@@ -1,5 +1,9 @@
       SUBROUTINE DMCYCL
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -123,11 +127,7 @@ C     DMCAP   DMCOM
 C
 C**********************************************************************
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'DMCOM.F77'
-      INCLUDE 'PLOT.F77'
 
 C Local variables.
 

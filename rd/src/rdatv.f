@@ -1,5 +1,6 @@
       SUBROUTINE RDATV (L,LTREE)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDATV       LAST REVISION:  MARCH 1, 1995
 C----------
@@ -24,17 +25,9 @@ C             BEING RUN.
 C     LTREE - FLAG IS TRUE IF MODEL IS BEING INITIALIZED BY THE
 C             INPUT TREELIST.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77' 
       INCLUDE 'RDPARM.F77'
 C
-C
       INCLUDE 'RDADD.F77'
-C
-C
-COMMONS
 C
       LOGICAL L, LTREE
 

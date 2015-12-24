@@ -1,5 +1,10 @@
       SUBROUTINE DUBSCR(ISPC,D,H,CR,TPCT,TPCCF)
-      IMPLICIT NONE
+      use plot_mod
+      use contrl_mod
+      use pden_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **DUBSCR--WS   DATE OF LAST REVISION:  05/09/12
 C----------
@@ -13,24 +18,6 @@ C  THIS ROUTINE WAS MOVED FROM THE SO11 SOURCE DIRECTORY TO EC
 C  WHEN THE SO11 MODEL WAS RETIRED IN JUNE 2010. IT IS USED BY
 C  THE EC, NC, AND WS VARIANTS
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
 COMMONS
 C----------
       EXTERNAL RANN
@@ -90,7 +77,7 @@ C
 C  SURROGATE EQUATION ASSIGNMENT:
 C
 C    FROM EXISTING WS EQUATIONS --
-C      USE 1(SP) FOR 11(WP) AND 24(MH) 
+C      USE 1(SP) FOR 11(WP) AND 24(MH)
 C      USE 2(DF) FOR 22(BD)
 C      USE 3(WF) FOR 13(SF)
 C      USE 4(GS) FOR 23(RW)
@@ -100,7 +87,7 @@ C      USE 31(BO) FOR 28(LO), 29(CY), 30(BL), 32(VO), 33(IO), 40(BM), AND
 C                     43(OH)
 C
 C    FROM CA VARIANT --
-C      USE CA11(KP) FOR 12(PM), 14(KP), 15(FP), 16(CP), 17(LM), 19(GP), 20(WE), 
+C      USE CA11(KP) FOR 12(PM), 14(KP), 15(FP), 16(CP), 17(LM), 19(GP), 20(WE),
 C                       25(WJ), 26(WJ), AND 27(CJ)
 C      USE CA12(LP) FOR 9(LP) AND 10(WB)
 C
@@ -266,7 +253,6 @@ C     IF(DEBUG)WRITE(JOSTND,600)ISPC,D,H,TBA,TPCCF,CR,FCR,RMAI,TAVH
 C 600 FORMAT(' IN DUBSCR, ISPC=',I2,' DBH=',F4.1,' H=',F5.1,
 C    & ' TBA=',F7.3,' TPCCF=',F8.4,' CR=',F4.3,
 C    &   ' RAN ERR = ',F6.4,' RMAI= ',F9.4,' TAVH=',F9.4)
-C
 C
       RETURN
       END

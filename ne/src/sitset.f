@@ -1,5 +1,10 @@
       SUBROUTINE SITSET
-      IMPLICIT NONE
+      use contrl_mod
+      use volstd_mod
+      use plot_mod
+      use coeffs_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **SITSET--NE   DATE OF LAST REVISION: 10/19/11
 C----------
@@ -10,26 +15,6 @@ C EQUATIONS AND COEFFICIENTS FOR THIS SUBROUTINE COME FROM 'SITE INDEX
 C CONVERSION EQUATIONS FOR THE NORTHEAST' BY DON HILT.  FILE REPORT
 C NUMBER 1: RESEARCH WORK UNIT FS-NE-4153.
 C----------
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
-COMMONS
 C
       REAL SICOEF(28,28),BAMAXA(MAXSP)
       INTEGER IPOINT(MAXSP)
@@ -317,7 +302,7 @@ C----------
       HT1(106)=4.0322
       HT1(107)=3.9678
       HT1(108)=4.4207
-C                  
+C
       HT2(1)=  -6.0116
       HT2(2)=  -6.0116
       HT2(3)=  -6.0116
@@ -329,13 +314,13 @@ C
       HT2(9)=  -6.1896
       HT2(10)= -6.8801
       HT2(11)= -5.0078
-      HT2(12)= -6.0116   
+      HT2(12)= -6.0116
       HT2(13)= -6.0116
       HT2(14)= -5.0078
       HT2(15)= -5.0078
       HT2(16)= -6.0116
       HT2(17)= -6.0116
-      HT2(18)= -5.7183    
+      HT2(18)= -5.7183
       HT2(19)= -6.0116
       HT2(20)= -6.4095
       HT2(21)= -5.7183
@@ -427,7 +412,7 @@ C
       HT2(107)=-3.2510
       HT2(108)=-5.1435
 C----------
-C  FOR ALLEGHENY SUBSTITUTE HT-DBH COEFFICIENTS FIT FROM TECH NOTE 6 
+C  FOR ALLEGHENY SUBSTITUTE HT-DBH COEFFICIENTS FIT FROM TECH NOTE 6
 C  BY A.F.HOUGH
 C----------
       IF(IFOR.EQ.3)THEN
@@ -568,7 +553,7 @@ C
           VOLEQ(1:7)='900DVEE'
         ELSE
           VOLEQ(1:7)='900CLKE'
-        ENDIF        
+        ENDIF
         PROD='02'
         CALL VOLEQDEF(VAR,IREGN,FORST,DIST,IFIASP,PROD,VOLEQ,ERRFLAG)
         VEQNNC(ISPC)=VOLEQ
@@ -581,7 +566,7 @@ C     &VEQNNC(ISPC)
           VOLEQ(1:7)='900DVEE'
         ELSE
           VOLEQ(1:7)='900CLKE'
-        ENDIF        
+        ENDIF
         PROD='01'
         CALL VOLEQDEF(VAR,IREGN,FORST,DIST,IFIASP,PROD,VOLEQ,ERRFLAG)
         VEQNNB(ISPC)=VOLEQ

@@ -1,10 +1,18 @@
       SUBROUTINE DBSCUTS(IWHO,KODE)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use workcm_mod
+      use estree_mod
+      use contrl_mod
+      use metric_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C     PURPOSE: TO OUTPUT THE CUTS LIST DATA TO THE DATABASE
-C 
+C
 C     AUTH: D. GAMMEL -- RMRS -- JULY 2003
 C
 C     INPUT: IWHO  - THE WHO CALLED ME VALUE WHICH MUST BE 2
@@ -16,18 +24,9 @@ C
 C---
 COMMONS
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'ESTREE.F77'
-      INCLUDE 'VARCOM.F77'
-      INCLUDE 'WORKCM.F77'
       INCLUDE 'DBSCOM.F77'
-      INCLUDE 'METRIC.F77'      
 
 COMMONS
-C
       CHARACTER*8 TID,CSPECIES
       CHARACTER*2000 SQLStmtStr
       CHARACTER*20 TABLENAME,DTYPE
@@ -91,7 +90,7 @@ C---------
      -             'Year int null,'//
      -             'PrdLen int null,'//
      -             'TreeId Text null,'//
-     -             'TreeIndex int null,'//     
+     -             'TreeIndex int null,'//
      -             'Species Text null,'//
      -             'TreeVal int null,'//
      -             'SSCD int null,'//
@@ -124,7 +123,7 @@ C---------
      -             'Year INT null,'//
      -             'PrdLen int null,'//
      -             'TreeId Text null,'//
-     -             'TreeIndex int null,'//  
+     -             'TreeIndex int null,'//
      -             'Species Text null,'//
      -             'TreeVal int null,'//
      -             'SSCD int null,'//
@@ -156,7 +155,7 @@ C---------
      -             'Year int null,'//
      -             'PrdLen int null,'//
      -             'TreeId char(8) null,'//
-     -             'TreeIndex int null,'//  
+     -             'TreeIndex int null,'//
      -             'Species char(3) null,'//
      -             'TreeVal int null,'//
      -             'SSCD int null,'//
@@ -278,7 +277,7 @@ C----------
      -           HT,HTG,PctCr,CrWidth,MistCD,
      -           BAPctile,PtBAL,TCuM,
      -           MCuM,NCuM,MDefect,BDefect,TruncHt,
-     -           Ht2TDCF,Ht2TDBF) 
+     -           Ht2TDCF,Ht2TDBF)
      -           VALUES(',CUTSID,',',ICASE,',',CHAR(39),
      -           TRIM(NPLT),CHAR(39),',',JYR,',',IFINT,",'",A
      -           DJUSTL(TID),"',",I,",'",ADJUSTL(NSP(ISP(I),1)(1:2)),

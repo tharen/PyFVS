@@ -1,54 +1,24 @@
       BLOCK DATA BLKDAT
-      IMPLICIT NONE
+      use htcal_mod
+      use fvsstdcm_mod
+      use pden_mod
+      use esparm_mod
+      use rancom_mod
+      use contrl_mod
+      use coeffs_mod
+      use econ_mod
+      use plot_mod
+      use screen_mod
+      use escomn_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BLKDAT--BM   DATE OF LAST REVISION:  04/19/10
 C----------
 C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
-      INCLUDE 'ESCOMN.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'ECON.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'RANCOM.F77'
-C
-C
-      INCLUDE 'SCREEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-      INCLUDE 'FVSSTDCM.F77'
-C
-C
-COMMONS
 C----------
       INTEGER I,J
 
@@ -152,7 +122,7 @@ C----------
 C   COMMON STATEMENT FOR COEFFS VARIABLES
 C----------
       DATA HT1/
-     &   5.035,   5.043,   4.929,   4.874,   4.874, 
+     &   5.035,   5.043,   4.929,   4.874,   4.874,
      &  3.2000,   4.954,   5.035,   4.875,   4.993,
      &  4.1920,  4.1920,  5.1880,   5.143,  4.4421,
      &  5.1520,   4.993,  5.1520/
@@ -177,7 +147,7 @@ C
      &        0.0,     -0.0968,  2.75780,   -0.07831, 128.8952205,
      &        0.0,         0.0,   0.6192,     0.6192,         0.0,
      &     0.6192, 128.8952205,   0.6192/
-      DATA BB1/ 
+      DATA BB1/
      &    0.92503,     1.46897, -0.37496,     1.2383,    0.950234,
      &        0.0,     0.02679,  0.83312,     0.0149,   -0.016959,
      &        0.0,         0.0,  -5.3394,    -5.3394,         0.0,

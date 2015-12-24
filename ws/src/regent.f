@@ -1,5 +1,15 @@
       SUBROUTINE REGENT(LESTB,ITRNIN)
-      IMPLICIT NONE
+      use htcal_mod
+      use multcm_mod
+      use pden_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use plot_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **REGENT--WS   DATE OF LAST REVISION:  05/09/12
 C----------
@@ -20,45 +30,10 @@ C  FROM **TREGRO** DURING CYCLING.  ENTRY **REGCON** IS CALLED FROM
 C  **RCON** TO LOAD MODEL PARAMETERS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'MULTCM.F77'
-C
 C
       INCLUDE 'ESTCOR.F77'
 C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-COMMONS
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES:
 C
@@ -140,7 +115,7 @@ C
 C  SURROGATE EQUATION ASSIGNMENT:
 C
 C    FROM EXISTING WS EQUATIONS --
-C      USE 1(SP) FOR 11(WP) AND 24(MH) 
+C      USE 1(SP) FOR 11(WP) AND 24(MH)
 C      USE 2(DF) FOR 22(BD)
 C      USE 3(WF) FOR 13(SF)
 C      USE 4(GS) FOR 23(RW)
@@ -150,7 +125,7 @@ C      USE 31(BO) FOR 28(LO), 29(CY), 30(BL), 32(VO), 33(IO), 40(BM), AND
 C                     43(OH)
 C
 C    FROM CA VARIANT --
-C      USE CA11(KP) FOR 12(PM), 14(KP), 15(FP), 16(CP), 17(LM), 19(GP), 20(WE), 
+C      USE CA11(KP) FOR 12(PM), 14(KP), 15(FP), 16(CP), 17(LM), 19(GP), 20(WE),
 C                       25(WJ), 26(WJ), AND 27(CJ)
 C      USE CA12(LP) FOR 9(LP) AND 10(WB)
 C
@@ -163,31 +138,31 @@ C----------
 C  DATA STATEMENTS.
 C----------
       DATA XMAX/
-     &  3.5,  3.5,  3.5,  3.5,  3.5,  3.5,  3.5,  3.5,  4.0,  4.0, 
-     &  3.5,  4.0,  3.5,  4.0,  4.0,  4.0,  4.0,  3.5,  4.0,  4.0, 
-     & 199.,  3.5,  3.5,  3.5,  4.0,  4.0,  4.0,  3.5,  3.5,  3.5, 
-     &  3.5,  3.5,  3.5,  3.5,  3.5,  3.5,  3.5,  3.5,  3.5,  3.5, 
+     &  3.5,  3.5,  3.5,  3.5,  3.5,  3.5,  3.5,  3.5,  4.0,  4.0,
+     &  3.5,  4.0,  3.5,  4.0,  4.0,  4.0,  4.0,  3.5,  4.0,  4.0,
+     & 199.,  3.5,  3.5,  3.5,  4.0,  4.0,  4.0,  3.5,  3.5,  3.5,
+     &  3.5,  3.5,  3.5,  3.5,  3.5,  3.5,  3.5,  3.5,  3.5,  3.5,
      &  4.0,  3.5,  3.5/
 C
       DATA XMIN/
-     &  2.0,  2.0,  2.0,  2.0,  2.0,  2.0,  2.0,  2.0,  2.0,  2.0, 
-     &  2.0,  2.0,  2.0,  2.0,  2.0,  2.0,  2.0,  2.0,  2.0,  2.0, 
-     &  99.,  2.0,  2.0,  2.0,  2.0,  2.0,  2.0,  1.0,  1.0,  1.0, 
-     &  1.0,  1.0,  1.0,  2.0,  2.0,  2.0,  2.0,  2.0,  2.0,  1.0, 
+     &  2.0,  2.0,  2.0,  2.0,  2.0,  2.0,  2.0,  2.0,  2.0,  2.0,
+     &  2.0,  2.0,  2.0,  2.0,  2.0,  2.0,  2.0,  2.0,  2.0,  2.0,
+     &  99.,  2.0,  2.0,  2.0,  2.0,  2.0,  2.0,  1.0,  1.0,  1.0,
+     &  1.0,  1.0,  1.0,  2.0,  2.0,  2.0,  2.0,  2.0,  2.0,  1.0,
      &  2.0,  2.0,  1.0/
 C
       DATA SMTMAP/
-     &    1,    2,    2,    2,    1,    1,    2,    1,    0,    0, 
-     &    1,    0,    2,    0,    0,    0,    0,    1,    0,    0, 
-     &    0,    2,    2,    1,    0,    0,    0,    3,    3,    3, 
-     &    3,    3,    3,    4,    4,    4,    4,    4,    4,    3, 
+     &    1,    2,    2,    2,    1,    1,    2,    1,    0,    0,
+     &    1,    0,    2,    0,    0,    0,    0,    1,    0,    0,
+     &    0,    2,    2,    1,    0,    0,    0,    3,    3,    3,
+     &    3,    3,    3,    4,    4,    4,    4,    4,    4,    3,
      &    0,    1,    3/
 C
       DATA DIAM/
-     &  0.3,  0.3,  0.3,  0.2,  0.2,  0.3,  0.3,  0.5,  0.4,  0.4, 
-     &  0.3,  0.5,  0.3,  0.5,  0.5,  0.5,  0.5,  0.5,  0.5,  0.5, 
-     &  0.4,  0.3,  0.2,  0.3,  0.5,  0.5,  0.5,  0.4,  0.4,  0.4, 
-     &  0.4,  0.4,  0.4,  0.2,  0.2,  0.2,  0.2,  0.2,  0.2,  0.4, 
+     &  0.3,  0.3,  0.3,  0.2,  0.2,  0.3,  0.3,  0.5,  0.4,  0.4,
+     &  0.3,  0.5,  0.3,  0.5,  0.5,  0.5,  0.5,  0.5,  0.5,  0.5,
+     &  0.4,  0.3,  0.2,  0.3,  0.5,  0.5,  0.5,  0.4,  0.4,  0.4,
+     &  0.4,  0.4,  0.4,  0.2,  0.2,  0.2,  0.2,  0.2,  0.2,  0.4,
      &  0.2,  0.4,  0.4/
 C
       DATA AB/
@@ -214,7 +189,7 @@ C  CA AND WS VARIANTS; 10-YEAR GROWTH PERIOD FOR SPECIES USING EQUATIONS
 C  FROM THE SO AND UT VARIANTS.  SCALE IS USED TO CONVERT
 C  HEIGHT INCREMENT PREDICTIONS TO A FINT-YEAR PERIOD.  DIAMETER
 C  INCREMENT IS PREDICTED FROM CHANGE IN HEIGHT, AND IS SCALED TO A 10-YEAR
-C  PERIOD USING THE VARIABLE SCALE2.  
+C  PERIOD USING THE VARIABLE SCALE2.
 C  DIAMETER INCREMENT IS CONVERTED TO A FINT-YEAR BASIS IN **GRADD**.
 C----------
       FNT=FINT
@@ -480,7 +455,7 @@ C----------
             AX=  4.80420
             BX=  -9.92422
             IHDW=1
-C            
+C
           END SELECT
 C
           IF(IHDW .EQ. 0) THEN
@@ -515,7 +490,7 @@ C  NOTE: THIS SIMPLIFIES TO IF(IABFLB(ISPC).EQ.1) BUT IS SHOWN IN IT'S
 C        ENTIRITY FOR CLARITY.
 C----------
         CASE(9:10,12,14:17,19:20,25:27,41)
-          IF(.NOT.LHTDRG(ISPC) .OR. 
+          IF(.NOT.LHTDRG(ISPC) .OR.
      &       (LHTDRG(ISPC) .AND. IABFLG(ISPC).EQ.1))THEN
             CALL HTDBH (IFOR,ISPC,DK,HK,1)
             IF(H .LE. 4.5) THEN
@@ -603,7 +578,7 @@ C
             ENDIF
             IF(DEBUG)WRITE(JOSTND,*)'K,DK,DKK,DG,BARK,XRDGRO= ',
      &       K,DK,DKK,DG(K),BARK,XRDGRO
-            IF(LHTDRG(ISPC) .AND. IABFLG(ISPC).EQ.0) 
+            IF(LHTDRG(ISPC) .AND. IABFLG(ISPC).EQ.0)
      &         DG(K)=0.1*HTG(K)*XRDGRO
             IF(DG(K) .LT. 0.0) DG(K)=0.1
             IF (DG(K) .GT. DGMX) DG(K)=DGMX
@@ -615,12 +590,12 @@ C----------
 C         COMPUTE DIAMETER INCREMENT BY SUBTRACTION, APPLY USER
 C         SUPPLIED MULTIPLIERS, AND CHECK TO SEE IF COMPUTED VALUE
 C         IS WITHIN BOUNDS.  FOR SPECIES FROM THE CA AND WS VARIANTS,
-C         THE INCREMENT FOR TREES BETWEEN 1.5 AND 3 INCHES DBH IS A 
-C         WEIGHTED AVERAGE OF PREDICTIONS FROM THE LARGE AND SMALL 
-C         TREE MODELS. SCALE ADJUSTMENT IS ON GROWTH IN DDS TERMS RATHER 
+C         THE INCREMENT FOR TREES BETWEEN 1.5 AND 3 INCHES DBH IS A
+C         WEIGHTED AVERAGE OF PREDICTIONS FROM THE LARGE AND SMALL
+C         TREE MODELS. SCALE ADJUSTMENT IS ON GROWTH IN DDS TERMS RATHER
 C         THAN INCHES OF DG TO MAINTAIN CONSISTENCY WITH GRADD.
-C         
-C         NOTE: LARGE TREE DG IS ON A 10-YR BASIS; SMALL TREE DG IS ON A 
+C
+C         NOTE: LARGE TREE DG IS ON A 10-YR BASIS; SMALL TREE DG IS ON A
 C         FINT-YR BASIS. CONVERT SMALL TREE DG TO A 10-YR BASIS BEFORE
 C         WEIGHTING. DG GETS CONVERTED BACK TO A FINT-YR BASIS IN **GRADD**.
 C----------
@@ -668,7 +643,6 @@ C----------
    25 CONTINUE
    30 CONTINUE
       GO TO 91
-C
 C
 C----------
 C  SMALL TREE HEIGHT CALIBRATION SECTION.
@@ -811,9 +785,9 @@ C----------
       IF(CORNEW.LE.0.0) CORNEW=1.0E-4
       HCOR(ISPC)=ALOG(CORNEW)
 C----------
-C  TRAP CALIBRATION VALUES OUTSIDE 2.5 STANDARD DEVIATIONS FROM THE 
+C  TRAP CALIBRATION VALUES OUTSIDE 2.5 STANDARD DEVIATIONS FROM THE
 C  MEAN. IF C IS THE CALIBRATION TERM, WITH A DEFAULT OF 1.0, THEN
-C  LN(C) HAS A MEAN OF 0.  -2.5 < LN(C) < 2.5 IMPLIES 
+C  LN(C) HAS A MEAN OF 0.  -2.5 < LN(C) < 2.5 IMPLIES
 C  0.0821 < C < 12.1825
 C----------
       IF(CORNEW.LT.0.0821 .OR. CORNEW.GT.12.1825) THEN
@@ -868,7 +842,6 @@ C----------
    91 IF(DEBUG)WRITE(JOSTND,9995)ICYC
  9995 FORMAT('LEAVING SUBROUTINE REGENT  CYCLE =',I5)
       RETURN
-C
 C
       ENTRY REGCON
 C----------

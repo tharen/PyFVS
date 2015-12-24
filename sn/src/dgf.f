@@ -1,5 +1,13 @@
       SUBROUTINE DGF(DIAM)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use pden_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **DGF--SN    DATE OF LAST REVISION:  02/09/2012
 C----------
@@ -15,36 +23,7 @@ C  PREDICTION.  ENTRY **DGCONS** IS CALLED BY **RCON** TO LOAD SITE
 C  DEPENDENT COEFFICIENTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-COMMONS
 C
 C     EUT  -- ECOLOGICAL UNIT TYPE IS A USER INPUT VARIABLE IN THE
 C             STAND LIST FILE (EUT=1 MOUNTAIN, EUT=0 NON MOUNTAIN)
@@ -287,15 +266,15 @@ C----------
       IF(IFOR .EQ. 20)THEN
         BARK = BRATIO(ISPC,D,HT(I))
         IF(ISPC .EQ. 8)THEN
-          DG5=(D*BARK)*((-0.4553*(0.09737-EXP(-0.2428*D))) 
-     &        + 0.05574*(FLOAT(ICR(I))/100.) - 0.0002965*BA 
-     &        - 0.00002481*PBA - 0.001192*((PCT(I)/100.)**(-0.9663)) 
-     &        + 0.0010110*SITEAR(ISPC) - 0.007711*RELHT) 
+          DG5=(D*BARK)*((-0.4553*(0.09737-EXP(-0.2428*D)))
+     &        + 0.05574*(FLOAT(ICR(I))/100.) - 0.0002965*BA
+     &        - 0.00002481*PBA - 0.001192*((PCT(I)/100.)**(-0.9663))
+     &        + 0.0010110*SITEAR(ISPC) - 0.007711*RELHT)
         ELSEIF(ISPC .EQ. 13)THEN
-          DG5=(D*BARK)*((-0.3428*(-0.1741-EXP(-0.1328*D))) 
-     &        + 0.1145*(FLOAT(ICR(I))/100.) - 0.0001682*BA 
-     &        - 0.00003978*PBA - 0.159400*((PCT(I)/100.)**(-0.1299)) 
-     &        + 0.0006204*SITEAR(ISPC) + 0.02474*RELHT) 
+          DG5=(D*BARK)*((-0.3428*(-0.1741-EXP(-0.1328*D)))
+     &        + 0.1145*(FLOAT(ICR(I))/100.) - 0.0001682*BA
+     &        - 0.00003978*PBA - 0.159400*((PCT(I)/100.)**(-0.1299))
+     &        + 0.0006204*SITEAR(ISPC) + 0.02474*RELHT)
         ENDIF
         IF(DG5 .LT. 0.01)DG5=0.01
         DDS = ALOG((DG5*(2.0*D*BARK+DG5)))
@@ -303,7 +282,7 @@ C----------
      &  PCT(I),SITEAR(ISPC),RELHT,DG5,DDS
   220   FORMAT(' ISPC,I,D,H,BARK,ICR,BA,PBA,PCT,SI,',
      &  'RELHT,DG5,DDS= ',/,2I5,2F8.2,F8.5,I5,6F10.4,F10.6)
-        GO TO 225  
+        GO TO 225
       ENDIF
 C----------
 C  CALCULATION OF DDS FOR SOUTHERN VARIENT
@@ -316,7 +295,6 @@ C----------
      &   + HREL(ISPC) * RELHT
      &   + PLTB(ISPC) * BA
      &   + PNTBL(ISPC) * PBAL
-C
 C
       IF(DEBUG) THEN
         D1= CONSPP + INTERC(ISPC)
@@ -1045,7 +1023,7 @@ C
       KP411= 0
 C----------
 C  EXAMINE THE STAND ECOLOGICAL UNIT VARIABLE (PASSED IN PCOM) AND
-C  ASSIGN THE COEFFICIENT '1' IF APPROPRIATE. THE ORIGINAL 
+C  ASSIGN THE COEFFICIENT '1' IF APPROPRIATE. THE ORIGINAL
 C  ASSIGNMENT WAS UPDATED TO INCLUDE 1995 AND 2007 ECOUNIT CODES
 C----------
       SELECT CASE (PCOM(1:1))
@@ -1060,7 +1038,7 @@ C----------
               KPM222= 1
             CASE('231')
               KPM231= 1
-          END SELECT 
+          END SELECT
 C----------
 C  STAND IS IN COASTAL PLAINS, PIEDMONT, LOW PLATTEAU, GULF PRAIRIE ...
 C----------
@@ -1073,12 +1051,12 @@ C----------
                 CASE('EJ','EG','EN')
                   KP222= 1
                 CASE DEFAULT
-                  KP221= 1                              
+                  KP221= 1
               END SELECT
             CASE('222','223')
               KP222= 1
 C----------
-C  PROVINCE 231 IS DIVIDED INTO TWO SECTION LEVEL AREAS. 
+C  PROVINCE 231 IS DIVIDED INTO TWO SECTION LEVEL AREAS.
 C----------
             CASE('231')
               SELECT CASE (PCOM(4:4))
@@ -1093,7 +1071,7 @@ C----------
                     CASE('D','E','F')
                       KP222= 1
                     CASE('H','I')
-                      KP232= 1 
+                      KP232= 1
                   END SELECT
               END SELECT
             CASE('232')
@@ -1117,7 +1095,7 @@ C----------
             CASE('411')
               KP411= 1
           END SELECT
-      END SELECT 
+      END SELECT
 C----------
 C  ENTER LOOP TO LOAD SPECIES DEPENDENT VECTORS.
 C----------

@@ -1,5 +1,6 @@
       SUBROUTINE LOGS(DBH,HT,IBCD,BDMIN,ISP,STMP,BV)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **LOGS--WS   DATE OF LAST REVISION:  05/09/12
 C----------
@@ -8,13 +9,6 @@ C  TAPER EQUATIONS BY G.S.BIGING
 C  BY K.STUMPF, ADAPTED BY B.KRUMLAND, P.J.DAUGHERTY
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-COMMONS
 C----------
       INTEGER IMAP(MAXSP)
       INTEGER ISP,IBCD,JSP,N,NLOGS,IDU,ITEM,J
@@ -73,7 +67,7 @@ C
 C  SURROGATE EQUATION ASSIGNMENT:
 C
 C    FROM EXISTING WS EQUATIONS --
-C      USE 1(SP) FOR 11(WP) AND 24(MH) 
+C      USE 1(SP) FOR 11(WP) AND 24(MH)
 C      USE 2(DF) FOR 22(BD)
 C      USE 3(WF) FOR 13(SF)
 C      USE 4(GS) FOR 23(RW)
@@ -83,7 +77,7 @@ C      USE 31(BO) FOR 28(LO), 29(CY), 30(BL), 32(VO), 33(IO), 40(BM), AND
 C                     43(OH)
 C
 C    FROM CA VARIANT --
-C      USE CA11(KP) FOR 12(PM), 14(KP), 15(FP), 16(CP), 17(LM), 19(GP), 20(WE), 
+C      USE CA11(KP) FOR 12(PM), 14(KP), 15(FP), 16(CP), 17(LM), 19(GP), 20(WE),
 C                       25(WJ), 26(WJ), AND 27(CJ)
 C      USE CA12(LP) FOR 9(LP) AND 10(WB)
 C
@@ -105,14 +99,14 @@ C
      & 0.95204, 0.92368, 0.89659, 0.95411, 0.94976, 0.95222/
 C
       DATA IMAP/
-     &  2,  4,  5,  1,  3,  1,  6,  1,  1,  1, 
-     &  2,  1,  5,  1,  1,  1,  1,  1,  1,  1, 
-     &  1,  4,  1,  2,  1,  1,  1,  1,  1,  1, 
-     &  1,  1,  1,  3,  3,  3,  3,  3,  3,  1, 
+     &  2,  4,  5,  1,  3,  1,  6,  1,  1,  1,
+     &  2,  1,  5,  1,  1,  1,  1,  1,  1,  1,
+     &  1,  4,  1,  2,  1,  1,  1,  1,  1,  1,
+     &  1,  1,  1,  3,  3,  3,  3,  3,  3,  1,
      &  3,  1,  1/
 C
 C  DEFINE NOMINAL SCALING STANDARDS: SLN=STANDARD LOG LENGTH;
-C  TRIM=KERF.  
+C  TRIM=KERF.
 C
       DATA SLN,TRIM/16.3,0.3/
 C
@@ -146,16 +140,16 @@ C----------
         BV = .00124 * DBH**2.68 * HT**0.424
         BV = BV * 5.0
 C
-      CASE DEFAULT 
+      CASE DEFAULT
 C----------
-C  VOLUME FOR OTHER SPECIES IS COMPUTED FROM LOG RULE.  JSP MAPS 
+C  VOLUME FOR OTHER SPECIES IS COMPUTED FROM LOG RULE.  JSP MAPS
 C  SPECIES ONTO A TAPER MODEL.
 C----------
         JSP=IMAP(ISP)
         DTOP=IBCD
 C----------
 C  CHECK FOR MERCHANTABILITY LIMITS.
-C---------- 
+C----------
         IF(DBH.LE.DTOP .OR. DBH.LT.BDMIN) GO TO 100
         Z1= EXP((DTOP/DBH - TPCF1(JSP))/TPCF2(JSP)) - 1.
 C----------
@@ -165,7 +159,7 @@ C----------
         HTM = (Z1/(-XPS(JSP)))**3*HT - STMP
         IF(HTM.LE.(.5*SLN)) GO TO 100
 C----------
-C  NLOGS IS THE TOTAL NUMBER OF LOGS EXCLUDING THE TOP FULL LOG AND ANY 
+C  NLOGS IS THE TOTAL NUMBER OF LOGS EXCLUDING THE TOP FULL LOG AND ANY
 C  PARTIAL LOG ABOVE IT.
 C----------
         NLOGS=HTM/SLN -1
@@ -176,7 +170,7 @@ C----------
         N=0
         IDU=0
         ITEM=1
-   60   CONTINUE  
+   60   CONTINUE
         DO 70 J=1,NLOGS
         HI = FLOAT(J)*S1+AH
         DU = DIBAHI(HI,HT,TPCF1(JSP),TPCF2(JSP),DBH,XPS(JSP))

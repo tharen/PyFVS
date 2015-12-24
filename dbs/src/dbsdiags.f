@@ -1,5 +1,7 @@
       SUBROUTINE DBSDIAGS(HndlType,Hndl,CallFrom)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C
 C $Id$
 C
@@ -8,15 +10,7 @@ C      CALLS TO THE SQL ODBC API
 C
 C----
 C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
       INCLUDE 'DBSCOM.F77'
-C
 C
 C----
 

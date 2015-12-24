@@ -1,5 +1,12 @@
       SUBROUTINE HTGF
-      IMPLICIT NONE
+      use htcal_mod
+      use multcm_mod
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **HTGF--NI23  DATE OF LAST REVISION:  07/08/11
 C----------
@@ -11,33 +18,8 @@ C  CYCLING.  ENTRY **HTCONS** IS CALLED FROM **RCON** TO LOAD SITE
 C  DEPENDENT CONSTANTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
 C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'MULTCM.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-COMMONS
 C----------
 C   MODEL COEFFICIENTS AND CONSTANTS:
 C
@@ -130,7 +112,7 @@ C-----------
       DO 30 I3 = I1,I2
       I=IND1(I3)
       HTG(I)=0.
-      IF (PROB(I).LE.0.0)THEN 
+      IF (PROB(I).LE.0.0)THEN
         IF(LTRIP)THEN
           ITFN=ITRN+2*I-1
           HTG(ITFN)=0.
@@ -177,7 +159,7 @@ C----------
           COF6=COFLM(6,K)
           COF7=COFLM(7,K)
           COF8=COFLM(8,K)
-          COF9=COFLM(9,K)       
+          COF9=COFLM(9,K)
         ELSE
           COF1=COFAS(1,K)
           COF2=COFAS(2,K)
@@ -187,7 +169,7 @@ C----------
           COF6=COFAS(6,K)
           COF7=COFAS(7,K)
           COF8=COFAS(8,K)
-          COF9=COFAS(9,K)         
+          COF9=COFAS(9,K)
         ENDIF
 C-----------
 C  CHECK IF HEIGHT OR DBH EXCEED PARAMETERS
@@ -263,7 +245,7 @@ C-----------
      +     * (EXP(Z*((1.0 - COF7**2  ))**0.5/COF6))
 C
         H= ((PSI/(1.0 + PSI))* COF2) + 4.5
-C 
+C
         IF(.NOT. DEBUG)GO TO 191
         WRITE(JOSTND,9631)D,DIA,HTI,DG(I),Z ,H
  9631   FORMAT(1X,'IN HTGF DIA=',F7.3,'DIA+10=',F7.3,'H=',F7.1,
@@ -305,7 +287,7 @@ C
  9000   FORMAT(' 9000 HTGF, HTG=',F8.4,' CON=',F8.4,' HTCON=',F8.4,
      &  ' H2COF=',F12.8,' D =',F8.4/' WK1=',F8.4,' HGLH=',F8.4,
      &  ' HTNEW=',F8.4,' HDGCOF=',F8.4,' I=',I4,' ISPC=',I2)
-      ENDIF     
+      ENDIF
 C----------
 C CHECK FOR SIZE CAP COMPLIANCE.
 C----------

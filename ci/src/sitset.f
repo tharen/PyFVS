@@ -1,5 +1,9 @@
       SUBROUTINE SITSET
-      IMPLICIT NONE
+      use contrl_mod
+      use volstd_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **SITSET--CI   DATE OF LAST REVISION:  08/16/11
 C----------
@@ -10,25 +14,8 @@ C  IT IS ALSO USED TO SET DEFAULTS WHICH ARE DEPENDENT ON FOREST CODE
 C  WITHIN A VARIANT.
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'CICOM.F77'
 C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
-COMMONS
 C----------
       CHARACTER FORST*2,DIST*2,PROD*2,VAR*2,VOLEQ*10
       INTEGER IFIASP,ERRFLAG,ISPC,I,INTFOR,IREGN,J,JJ,K

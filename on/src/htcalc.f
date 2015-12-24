@@ -1,14 +1,15 @@
       SUBROUTINE HTCALC (N,IVAR,ISPC,SI,BA,YRS,H,AGET,HTMAX,HTG1,
      &                   JOSTND,DEBUG,D,PCT1)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **HTCALC--ON   DATE OF LAST REVISION:  07/11/08
-C  **from LS_NEW: imported to allow age-dubbing for Mowraski volume 
+C  **from LS_NEW: imported to allow age-dubbing for Mowraski volume
 C----------
 C  THIS SUBROUTINE COMPUTES THE PREDICTED HEIGHT USING SITE INDEX
 C  CURVES SHOWN IN:
 C  WILLARD H. CARMEAN, JEROLD T. HAHN, & RODNEY D. JACOBS,
-C  SITE INDEX CURVES FOR FOREST TREE SPECIES IN THE EASTERN UNITED 
+C  SITE INDEX CURVES FOR FOREST TREE SPECIES IN THE EASTERN UNITED
 C  STATES. USDA FOREST SERVICE, NORTH CENTRAL FOREST EXPERIMENT STATION,
 C  GTR: NC-128. 142P.
 C
@@ -37,7 +38,6 @@ C  HTMAX = MAXIMUM HEIGHT FOR SPECIES AT SITE SI
 C   AGET = TREE AGE RETURNED IF N <= 0
 C----------
 
-      INCLUDE  "PRGPRM.F77"
 
       LOGICAL DEBUG
       REAL LTBHEC(6,127),MAPLS(MAXSP)
@@ -341,7 +341,7 @@ C----------
 C   SET COEFFICIENTS
 C----------
       INDX = MAPLS(ISPC) ! based on LS only
-      
+
       B1= LTBHEC(1,INDX)
       B2= LTBHEC(2,INDX)
       B3= LTBHEC(3,INDX)
@@ -382,7 +382,7 @@ C
 C... replace the LS height growth calculation method with Penner 2010
 C... this is identical to small tree height growth done in RGNTSW for
 C... regenerating trees. HTG1 is annual height growh (ft)
-      
+
       BAL=BA*(100.0-PCT1)*0.01
       CALL ONSTHG (HTG1, ISPC, D, H, SI, BAL)
       HTG1 = HTG1*YRS

@@ -1,5 +1,9 @@
       SUBROUTINE BRROUT
-      IMPLICIT NONE
+      use outcom_mod
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C**********************************************************************
 C  **BRROUT       DATE OF LAST REVISION:  06/05/2014
 C----------------------------------------------------------------------
@@ -18,8 +22,8 @@ C     the model now recognizes other pine host species and all are
 C     represented in this table.
 C     Changed version number from 1.0 to 1.1
 C  01-MAR-2001 Lance David (FHTET)
-C     Change summary record format to allow additional decimals for 
-C     GI, RI, and Deviation Factor columns. 
+C     Change summary record format to allow additional decimals for
+C     GI, RI, and Deviation Factor columns.
 C  04-MAY-2001 Lance R. David (FHTET)
 C     Added species loop to process and species dimension to arrays.
 C     Changed version number from 1.1 to 1.2
@@ -35,11 +39,7 @@ C**********************************************************************
 
 C.... Common include files.
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'BRCOM.F77'
-      INCLUDE 'OUTCOM.F77'
 
       CHARACTER*3 BRVER
 C.... Local variable declarations.

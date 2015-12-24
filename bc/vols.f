@@ -1,5 +1,12 @@
       SUBROUTINE VOLS
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use volstd_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -18,34 +25,7 @@ C  **VARVOL**, WHICH IS VARIANT SPECIFIC.
 C
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
       INCLUDE 'GGCOM.F77'
-C
-C
-COMMONS
 C
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES.
@@ -108,7 +88,7 @@ C----------
       IF(BFTOPD(J).LT.2.0) BFTOPD(J)=2.0
       ENDDO
 C
-      IF (ITRN.LE.0) GOTO 205      
+      IF (ITRN.LE.0) GOTO 205
 C----------
 C  ENTER TREE BY TREE LOOP TO CALCULATE VOLUMES AND COMPILE
 C  SUMMARY ARRAYS.
@@ -132,7 +112,7 @@ C----------
       D=DBH(I)
       H = HT(I)
 C----------
-C  INITIALIZE TOP KILL FLAG FOR NEXT TREE; IF TOPKILLED, ASSIGN H TO 
+C  INITIALIZE TOP KILL FLAG FOR NEXT TREE; IF TOPKILLED, ASSIGN H TO
 C  NORMHT.
 C----------
       TKILL = H.GE.4.5 .AND. ITRUNC(I).GT.0

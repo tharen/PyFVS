@@ -1,5 +1,13 @@
       SUBROUTINE DGF(DIAM)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use pden_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **DGF--WS    DATE OF LAST REVISION:  05/09/12
 C----------
@@ -15,40 +23,10 @@ C  PREDICTION.  ENTRY **DGCONS** IS CALLED BY **RCON** TO LOAD SITE
 C  DEPENDENT COEFFICIENTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
 C
       INCLUDE 'GGCOM.F77'
 C
-C
-C
-COMMONS
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES.
 C
@@ -71,7 +49,6 @@ C     DGEL -- ARRAY CONTAINING THE COEFFICIENTS FOR THE ELEVATION TERM.
 C    DGSLP -- ARRAY CONTAINING THE COEFFICIENTS FOR THE SLOPE TERM.
 C    DGSLQ -- ARRAY CONTAINING THE COEFFICIENTS FOR THE SLOPE SQUARED TE
 C    DGLAT -- ARRAY CONTAINING THE COEFFICIENTS FOR THE LATITUDE TERM.
-C
 C
 C IF SPECIES IS 5 OR 9, USE LEROY'S ORIGINAL WS EQUATIONS WITH SITE.
 C IF SPECIES IS 7 OR 11, USE NC EQNS FOR BO & TO.
@@ -146,7 +123,7 @@ C
 C  SURROGATE EQUATION ASSIGNMENT:
 C
 C    FROM EXISTING WS EQUATIONS --
-C      USE 1(SP) FOR 11(WP) AND 24(MH) 
+C      USE 1(SP) FOR 11(WP) AND 24(MH)
 C      USE 2(DF) FOR 22(BD)
 C      USE 3(WF) FOR 13(SF)
 C      USE 4(GS) FOR 23(RW)
@@ -156,7 +133,7 @@ C      USE 31(BO) FOR 28(LO), 29(CY), 30(BL), 32(VO), 33(IO), 40(BM), AND
 C                     43(OH)
 C
 C    FROM CA VARIANT --
-C      USE CA11(KP) FOR 12(PM), 14(KP), 15(FP), 16(CP), 17(LM), 19(GP), 20(WE), 
+C      USE CA11(KP) FOR 12(PM), 14(KP), 15(FP), 16(CP), 17(LM), 19(GP), 20(WE),
 C                       25(WJ), 26(WJ), AND 27(CJ)
 C      USE CA12(LP) FOR 9(LP) AND 10(WB)
 C
@@ -485,7 +462,7 @@ C
      & -0.000338, -0.000338, -0.000338, -0.000373, -0.000373,
      & -0.000373, -0.000373, -0.000373, -0.000373, -0.000338,
      &       0.0, -0.000660, -0.000338/
-C 
+C
 C-----------
 C  CHECK FOR DEBUG.
 C-----------
@@ -496,7 +473,7 @@ C----------
 C  DEBUG OUTPUT: MODEL COEFFICIENTS.
 C----------
       IF(DEBUG)WRITE(JOSTND,9000) DGCON
- 9000 FORMAT(' DGCON =',/,11(1X,F10.5))     
+ 9000 FORMAT(' DGCON =',/,11(1X,F10.5))
 C----------
 C  SPECIES USING SURROGATE EQUATIONS FROM THE CR VARIANT HAVE SPECIAL
 C  NEEDS; COMPUTE THOSE HERE.
@@ -555,7 +532,7 @@ C----------
       DGBAS=DGBA(ISPC)
 C----------
 C  LOAD A CONSPP VALUE (CONSJP) FOR SMALL:
-C  2=DF, 3=WF, 6=JP, 7=RF, 13=SF, 22=BD 
+C  2=DF, 3=WF, 6=JP, 7=RF, 13=SF, 22=BD
 C----------
       SELECT CASE (ISPC)
       CASE(6)
@@ -611,7 +588,7 @@ C----------
         ENDIF
         DDS = CONSPP + DGLDS*ALD + DGCRS*CR + DGCRS2*CR*CR
      &        + DGDSQS*D*D + DGDBLS*BAL/(ALOG(D+1.0))
-     &        + DGPCFS*PCCF(IPCCF) + DGHAHS*HOAVH 
+     &        + DGPCFS*PCCF(IPCCF) + DGHAHS*HOAVH
      &        + DGBAS*ALBA + DGBAL*BAL
 C----------
 C  SPECIES USING EQUATIONS FROM THE SO VARIANT
@@ -643,7 +620,7 @@ C----------
           DDS=-9.21
         ELSE
           DDS = ALOG( (DIAGR * (2.0 * DPP * BARK + DIAGR)) )
-     &          + COR(ISPC) + DGCON(ISPC)     
+     &          + COR(ISPC) + DGCON(ISPC)
           IF(DDS .LT. -9.21) DDS=-9.21
         ENDIF
 C----------
@@ -734,7 +711,6 @@ C----------
       IF(DEBUG)WRITE(JOSTND,100)ICYC
   100 FORMAT(' LEAVING SUBROUTINE DGF  CYCLE =',I5)
       RETURN
-C
 C
       ENTRY DGCONS
 C----------

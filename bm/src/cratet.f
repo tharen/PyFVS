@@ -1,5 +1,13 @@
       SUBROUTINE CRATET
-      IMPLICIT NONE
+      use htcal_mod
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **CRATET--BM   DATE OF LAST REVISION:  04/06/11
 C----------
@@ -21,35 +29,6 @@ C    8)  PRINT A TABLE DESCRIBING CONTROL PARAMETERS AND INPUT
 C        VARIABLES.
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-COMMONS
-C
 C----------
 C  INTERNAL VARIABLES.
 C
@@ -64,7 +43,7 @@ C----------
       INTEGER I,J,II,ISPC,IPTR,I1,I2,I3,K1,K2,K3,K4,JJ,JCR,IS,IM,NH
       INTEGER KNT(MAXSP),KNT2(MAXSP)
       REAL SITAGE,SITHT,AGMAX,HTMAX,HTMAX2,D1,D2
-      REAL SPCNT(MAXSP,3),AX,Q,SUMX,H,D,BX,XX,YY,XN,HS  
+      REAL SPCNT(MAXSP,3),AX,Q,SUMX,H,D,BX,XX,YY,XN,HS
 C----------
 C  SPECIES ORDER:
 C   1=WP,  2=WL,  3=DF,  4=GF,  5=MH,  6=WJ,  7=LP,  8=ES,
@@ -304,7 +283,7 @@ C APPLY TO TREES GREATER THAN 5.0 INCHES.
 C----------
       IF((ISPC.EQ.13 .OR. ISPC.EQ.14 .OR. ISPC.EQ.16 .OR. ISPC.EQ.18)
      &    .AND. D.LT.5.0)GO TO 70
-C 
+C
       K1=K1+1
       XX = BX / (D + 1.)
       YY = ALOG(H - 4.5)
@@ -372,7 +351,7 @@ C  DUBBING FUNCTION, OTHRWISE USE THE WYKOFF EQUATION.
 C----------
       IF((D.LT.5.0) .AND. (ISPC.EQ.13 .OR. ISPC.EQ.14 .OR. ISPC.EQ.16
      &    .OR. ISPC.EQ.18)) THEN
-C        
+C
         SELECT CASE (ISPC)
         CASE (13,14)
           H = 1.5907 + 0.3040*D
@@ -400,7 +379,7 @@ C        ENTIRITY FOR CLARITY.
 C----------
       IF(ISPC.EQ.6 .OR. ISPC.EQ.11 .OR. ISPC.EQ.12 .OR. ISPC.EQ.15)
      & GO TO 105
-      IF(.NOT.LHTDRG(ISPC) .OR. 
+      IF(.NOT.LHTDRG(ISPC) .OR.
      &   (LHTDRG(ISPC) .AND. IABFLG(ISPC).EQ.1))THEN
         CALL HTDBH (IFOR,ISPC,D,H,0)
         IF(DEBUG)WRITE(JOSTND,*)'INVENTORY EQN DUBBING IFOR,ISPC,D,H= '
@@ -477,7 +456,7 @@ C  DUBBING FUNCTION, OTHRWISE USE THE WYKOFF EQUATION.
 C----------
       IF((D.LT.5.0) .AND. (ISPC.EQ.13 .OR. ISPC.EQ.14 .OR. ISPC.EQ.16
      &    .OR. ISPC.EQ.18)) THEN
-C        
+C
         SELECT CASE (ISPC)
         CASE (13,14)
           H = 1.5907 + 0.3040*D
@@ -503,7 +482,7 @@ C        ENTIRITY FOR CLARITY.
 C----------
       IF(ISPC.EQ.6 .OR. ISPC.EQ.11 .OR. ISPC.EQ.12 .OR. ISPC.EQ.15)
      & GO TO 106
-      IF(.NOT.LHTDRG(ISPC) .OR. 
+      IF(.NOT.LHTDRG(ISPC) .OR.
      &   (LHTDRG(ISPC) .AND. IABFLG(ISPC).EQ.1))THEN
         CALL HTDBH (IFOR,ISPC,D,H,0)
         IF(DEBUG)WRITE(JOSTND,*)'INVENTORY EQN DUBBING IFOR,ISPC,D,H= '

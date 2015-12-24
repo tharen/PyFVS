@@ -1,5 +1,12 @@
       SUBROUTINE DBSTRLS(IWHO,KODE,TEM)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use workcm_mod
+      use estree_mod
+      use contrl_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C $Id$
 C----------
@@ -13,34 +20,7 @@ C            KODE  - FOR LETTING CALLING ROUTINE KNOW IF THIS IS A
 C                     REDIRECT OF THE FLAT FILE REPORT OR IN
 C                     ADDITION TO
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ESTREE.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-      INCLUDE 'WORKCM.F77'
-C
-C
       INCLUDE 'DBSCOM.F77'
-C
-C
-COMMONS
 C
       CHARACTER*8 TID,CSPECIES
       CHARACTER*2000 SQLStmtStr
@@ -351,11 +331,11 @@ C
         ELSE
           CSPECIES=ADJUSTL(TRIM(PLNJSP(ISP(I))))
         ENDIF
-C       
+C
         IF(ISPOUT6.EQ.1)CSPECIES=ADJUSTL(TRIM(JSP(ISP(I))))
         IF(ISPOUT6.EQ.2)CSPECIES=ADJUSTL(TRIM(FIAJSP(ISP(I))))
         IF(ISPOUT6.EQ.3)CSPECIES=ADJUSTL(TRIM(PLNJSP(ISP(I))))
-        
+
         WRITE(SQLStmtStr,*)'INSERT INTO ',TABLENAME,
      -       ' (CaseID,StandID,Year,PrdLen,',
      -       'TreeId,TreeIndex,Species,TreeVal,SSCD,PtIndex,TPA,',
@@ -371,17 +351,17 @@ C
      -       CFV(I),',',WK1(I),',',BFV(I),',',ICDF,',',IBDF,',',
      -       ((ITRUNC(I)+5)/100),',',ESTHT,',',IPVEC(ITRE(I)),
      -       ',',HT2TD(I,2),',',HT2TD(I,1),')'
-        
+
         iRet = fvsSQLCloseCursor(StmtHndlOut)
-        
+
         iRet = fvsSQLExecDirect(StmtHndlOut,trim(SQLStmtStr),
      -            int(len_trim(SQLStmtStr),SQLINTEGER_KIND))
-        
+
         IF (iRet.NE.SQL_SUCCESS) ITREELIST = 0
         CALL DBSDIAGS(SQL_HANDLE_STMT,StmtHndlOut,
      -              'DBSTRLS:Inserting Row: '//trim(SQLStmtStr))
 
       ENDDO
-  100 CONTINUE          
+  100 CONTINUE
       iRet = fvsSQLFreeHandle(SQL_HANDLE_STMT, StmtHndlOut)
       END

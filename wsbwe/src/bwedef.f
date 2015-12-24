@@ -1,5 +1,7 @@
       SUBROUTINE BWEDEF
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BWEDEF             DATE OF LAST REVISION:  07/14/10
 C----------
@@ -28,17 +30,10 @@ C   05-OCT-2006 Lance R. David
 C     Previous date noted was 2/25/97 by Kathy Sheehan.
 C     Added debug handling.
 C   14-JUL-2010 Lance R. David (FMSC)
-C     Added IMPLICIT NONE and declared variables as needed.
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECOM.F77'
-C
-COMMONS
 C
       INTEGER IACT, ICRC1, ICRC2, ICRC3, ICROWN, IDT, IHOST,
      &        IS1, IS2, NP

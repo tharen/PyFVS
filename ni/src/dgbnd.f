@@ -1,5 +1,7 @@
       SUBROUTINE DGBND (ISPC,DBH,DDG)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **DGBND--NI  DATE OF LAST REVISION:  04/09/08
 C----------
@@ -7,16 +9,6 @@ C  THIS SUBROUTINE IS INSURES THAT A MAXIMUM VALUE FOR DIAMETER
 C  GROWTH IS NOT EXCEEDED.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-COMMONS
-C
 C----------
 C CHECK FOR SIZE CAP COMPLIANCE.
       INTEGER ISPC

@@ -1,4 +1,6 @@
       SUBROUTINE ECIN(IRECNT, IREAD, JOSTND, NSP, ICYC, LKECHO, ISPGRP)
+      use prgprm_mod
+      implicit none
 C----------
 C **ECIN--ECON  DATE OF LAST REVISION: 03/03/2012
 C----------
@@ -20,9 +22,7 @@ C  Author Fred Martin, WA DNR,
 !  MAXSP  - maximum number of species codes used by a specific variant, from PRGPRM.F77
 !  NSP    - array of species character codes used by a specific variant, includes both species and tree-value-class codes
 
-      implicit none
 
-      include 'PRGPRM.F77'
       include 'ECNCOM.F77'
 
       character (len=5), dimension(2), parameter :: BOOLEAN(0:1) =
@@ -36,7 +36,7 @@ C  Author Fred Martin, WA DNR,
       character (len=12)               :: warn = ' ********   '
       character (len=4), intent(in), dimension(MAXSP,3) :: NSP           !Dimension defined in PLOT.F77
 
-      integer :: i, k, l, activityId, errCode, parmsField, rateCnt, 
+      integer :: i, k, l, activityId, errCode, parmsField, rateCnt,
      &           spId, spGrp, units, IRTNCD
       integer, intent(in out) :: ICYC, IREAD, IRECNT, JOSTND
       integer, dimension (MAX_RATES)        :: tmpDurations
@@ -57,7 +57,7 @@ C  Author Fred Martin, WA DNR,
 !    Read keywords, first keyword expected to be ECON
       readKeyWd: do                                                      !Exit on keyword=END or KEYRDR=EOF, errCode=2
          isEconToBe = .TRUE.
-         CALL KEYRDR(IREAD, JOSTND, .FALSE., KEYWRD, isNotBlank, 
+         CALL KEYRDR(IREAD, JOSTND, .FALSE., KEYWRD, isNotBlank,
      &        realFields, IRECNT, errCode, charFields, LFLAG, LKECHO)    !KEYRDR fills realField w/ 0.0 unless actual number
          if (errCode == 2) then
            call ERRGRO(.FALSE., 2)                                       !.FALSE. causes ERRGRO to flag error condition, 2 = EOF before END keyword
@@ -267,7 +267,7 @@ C  Author Fred Martin, WA DNR,
             elseif (spId < 0) then                                       !A species-group is specified
                spGrp = -spId
                groupSpecies: do l = 2, ISPGRP(spGrp,1) + 1
-                  i = ISPGRP(spGrp,l)                                    !Get the "lth" species of this species-group 
+                  i = ISPGRP(spGrp,l)                                    !Get the "lth" species of this species-group
                   if (hrvRevCnt(i,units)>=MAX_KEYWORDS) then
                      call errMsg(revMaxKeyWds)
                      cycle groupSpecies                                  !Try next species in loop
@@ -339,7 +339,7 @@ C  Author Fred Martin, WA DNR,
             else if (spId < 0) then                                      !A species-group is specified
                spGrp = -spId
                groupSp: do l = 2, ISPGRP(spGrp,1) + 1
-                  i = ISPGRP(spGrp,l)                                    !Get the "lth" species of this species-group 
+                  i = ISPGRP(spGrp,l)                                    !Get the "lth" species of this species-group
                   if (lbsFt3Amt(i) > 0.0) then                           !Value  previously set for this species
                      call errMsg(lbsDupSp)
                      cycle groupSp                                       !Try next species in loop
@@ -662,7 +662,7 @@ C  Author Fred Martin, WA DNR,
 
 !    Checks that correct units-of-measure is found in the specified column
       logical function isCorrectUnit(keyword, units)
-         implicit none
+      implicit none
          character (len=8), intent(in) :: keyword
          integer, intent(in) :: units
          isCorrectUnit = .FALSE.
@@ -692,7 +692,7 @@ C  Author Fred Martin, WA DNR,
 
 !    Determines if a supplemental record indicator is in the given field
       logical function isSupplemental(field)
-         implicit none
+      implicit none
          character (len=10), intent(in) :: field
          character :: test
          isSupplemental = .FALSE.
@@ -707,7 +707,7 @@ C  Author Fred Martin, WA DNR,
 !    Reads appreciation/depreciation rates and durations from a supplemental record.
       subroutine ratesAndDurations(supplemental, numRates, rateCnt,
      &                                                 rates, durations)
-         implicit none
+      implicit none
          character (len=80)                        :: record
          character (len=5)                         :: fieldC
          character (len=10), intent(in)            :: supplemental
@@ -762,6 +762,7 @@ C  Author Fred Martin, WA DNR,
 
 !    Loads keyword parameters submitted via PARMS on the Event Monitor
       subroutine loadParms(activityCode, field)
+      implicit none
          integer, intent(in) :: activityCode, field
          if (parmsField /= field) then                                   !Error, word PARMS does not begin in correct field
             call KEYDMP(JOSTND, IRECNT, KEYWRD, realFields, charFields)
@@ -779,6 +780,7 @@ C  Author Fred Martin, WA DNR,
 
 !    Registers a keyword on the Event Monitor
       subroutine addEvent(activityCode, minDate, NPRMS, prmsIndex)
+      implicit none
          integer, intent(in) :: activityCode, minDate, NPRMS, prmsIndex
          integer activityDate, waitTime
 
@@ -805,6 +807,7 @@ C  Author Fred Martin, WA DNR,
 
 !    Provides for repeatable error messages
       subroutine errMsg(msg)
+      implicit none
          integer, intent(in) :: msg
          select case (msg)
          case (badCycle)
@@ -848,6 +851,7 @@ C  Author Fred Martin, WA DNR,
 
 !    Assigns keyword values to revenue variables
       subroutine assignRevValues()
+      implicit none
          hrvRevCnt(i,units)        = hrvRevCnt(i,units) + 1
          k                         = hrvRevCnt(i,units)     !Index for a diameter
          hrvRevPrice(i,units,k)    = price

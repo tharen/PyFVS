@@ -1,7 +1,7 @@
       SUBROUTINE DBSMIS1(IYEAR,NPLT,CSP,
      -  SPDMR4,SPDMI4,SPINF4,SPMRT4,SPPIN4,SPPMR4,SPPOC4,
      -  KODE)
-      IMPLICIT NONE
+      implicit none
 C--------
 C  $Id$
 C----------
@@ -155,7 +155,7 @@ C       INTEGER COPIES OF REAL VECTOR INPUTS
 
         SPDMR4B = SPDMR4(I)
         SPDMI4B = SPDMI4(I)
-		
+
         ISPINF4 = NINT(SPINF4(I))
         ISPMRT4 = NINT(SPMRT4(I))
         ISPPIN4 = NINT(SPPIN4(I))
@@ -164,7 +164,7 @@ C       INTEGER COPIES OF REAL VECTOR INPUTS
 
         WRITE(SQLStmtStr,*) 'INSERT INTO ',TRIM(TABLENAME),' (Id,CaseID,
      -    StandID,Year,Spp,Mean_DMR,Mean_DMI,Inf_TPA,
-     -    Mort_TPA,Inf_TPA_Pct,Mort_TPA_Pct,Stnd_TPA_Pct) VALUES 
+     -    Mort_TPA,Inf_TPA_Pct,Mort_TPA_Pct,Stnd_TPA_Pct) VALUES
      -    (?,?,',CHAR(39),TRIM(NPLT),CHAR(39),',?,
      -    ',CHAR(39),TRIM(CSP(I)),CHAR(39),',?,?,?,?,?,?,?)'
 
@@ -183,20 +183,20 @@ C       BIND SQL STATEMENT PARAMETERS TO FORTRAN VARIABLES
         iret = fvsSQLBindParameter(StmtHndlOut,ColNumber,
      -    SQL_PARAM_INPUT,SQL_F_INTEGER,SQL_INTEGER,
      -    INT(15,SQLUINTEGER_KIND),INT(0,SQLSMALLINT_KIND),DM1ID,
-     -    INT(4,SQLLEN_KIND), SQL_NULL_PTR) 
+     -    INT(4,SQLLEN_KIND), SQL_NULL_PTR)
 
         ColNumber=ColNumber+1       ! 2 CASEID
         iret = fvsSQLBindParameter(StmtHndlOut,ColNumber,
      -    SQL_PARAM_INPUT,SQL_F_INTEGER,SQL_INTEGER,
      -    INT(15,SQLUINTEGER_KIND),INT(0,SQLSMALLINT_KIND),ICASE,
-     -    INT(4,SQLLEN_KIND), SQL_NULL_PTR) 
-        
+     -    INT(4,SQLLEN_KIND), SQL_NULL_PTR)
+
         ColNumber=ColNumber+1       ! 3 YEAR
         iret = fvsSQLBindParameter(StmtHndlOut,ColNumber,
      -    SQL_PARAM_INPUT,SQL_F_INTEGER,SQL_INTEGER,
      -    INT(15,SQLUINTEGER_KIND),INT(0,SQLSMALLINT_KIND),IYEAR,
      -    INT(4,SQLLEN_KIND), SQL_NULL_PTR)
-        
+
         ColNumber=ColNumber+1       ! 4 MEAN DMR
         iret = fvsSQLBindParameter(StmtHndlOut,ColNumber,
      -    SQL_PARAM_INPUT,SQL_F_DOUBLE,SQL_DOUBLE,
@@ -208,7 +208,7 @@ C       BIND SQL STATEMENT PARAMETERS TO FORTRAN VARIABLES
      -    SQL_PARAM_INPUT,SQL_F_DOUBLE,SQL_DOUBLE,
      -    INT(15,SQLUINTEGER_KIND),INT(5,SQLSMALLINT_KIND),SPDMI4B,
      -    INT(4,SQLLEN_KIND), SQL_NULL_PTR)
-        
+
         ColNumber=ColNumber+1       ! 6 TPA INFECTED
         iret = fvsSQLBindParameter(StmtHndlOut,ColNumber,
      -    SQL_PARAM_INPUT,SQL_F_INTEGER,SQL_INTEGER,
@@ -220,19 +220,19 @@ C       BIND SQL STATEMENT PARAMETERS TO FORTRAN VARIABLES
      -    SQL_PARAM_INPUT,SQL_F_INTEGER,SQL_INTEGER,
      -    INT(15,SQLUINTEGER_KIND),INT(0,SQLSMALLINT_KIND),ISPMRT4,
      -    INT(4,SQLLEN_KIND), SQL_NULL_PTR)
-        
+
         ColNumber=ColNumber+1       ! 8 % TPA INFECTED
         iret = fvsSQLBindParameter(StmtHndlOut,ColNumber,
      -    SQL_PARAM_INPUT,SQL_F_INTEGER,SQL_INTEGER,
      -    INT(15,SQLUINTEGER_KIND),INT(0,SQLSMALLINT_KIND),ISPPIN4,
      -    INT(4,SQLLEN_KIND), SQL_NULL_PTR)
-        
+
         ColNumber=ColNumber+1       ! 9 % TPA MORTALITY
         iret = fvsSQLBindParameter(StmtHndlOut,ColNumber,
      -    SQL_PARAM_INPUT,SQL_F_INTEGER,SQL_INTEGER,
      -    INT(15,SQLUINTEGER_KIND),INT(0,SQLSMALLINT_KIND),ISPPMR4,
      -    INT(4,SQLLEN_KIND), SQL_NULL_PTR)
-        
+
         ColNumber=ColNumber+1       ! 10 % STAND TPA
         iret = fvsSQLBindParameter(StmtHndlOut,ColNumber,
      -    SQL_PARAM_INPUT,SQL_F_INTEGER,SQL_INTEGER,
@@ -250,7 +250,7 @@ C       CLOSE CURSOR
 
 C     RELEASE STATEMENT HANDLE
 
-  100 iRet = fvsSQLFreeHandle(SQL_HANDLE_STMT, StmtHndlOut)      
+  100 iRet = fvsSQLFreeHandle(SQL_HANDLE_STMT, StmtHndlOut)
 
 	RETURN
       END
@@ -259,7 +259,7 @@ C-------------------------------------------------------------------------------
       SUBROUTINE DBSMIS2(IYEAR,NPLT,NAGE,
      -  ISTTPAT,IBA,ISTVOL,ISTTPAI,ISTBAI,ISTVOLI,ISTTPAM,ISTBAM,
      -  ISTVOLM,ISTPIT,ISTPIV,ISTPMT,ISTPMV,STDMR,STDMI,KODE)
-      IMPLICIT NONE
+      implicit none
 C
 C     PURPOSE: TO POPULATE A DATABASE WITH THE 2ND MISTLETOE REPORT INFORMATION
 C     AUTH: D. ROBINSON, ESSA - BASED ON D. GAMMEL (DBSFUELS)
@@ -578,7 +578,7 @@ C-------------------------------------------------------------------------------
 
       SUBROUTINE DBSMIS3(IYEAR,NPLT,NLABS,
      -  DCTPA,DCINF,DCMRT,DCDMR,DCDMI,KODE)
-      IMPLICIT NONE
+      implicit none
 
 C     PURPOSE: TO POPULATE A DATABASE WITH THE 3RD MISTLETOE REPORT INFORMATION
 C     AUTH: D. ROBINSON, ESSA - BASED ON D. GAMMEL (DBSFUELS)
@@ -832,9 +832,16 @@ C     RELEASE STATEMENT HANDLE
       RETURN
       END
 C-------------------------------------------------------------------------------
-      
+
       SUBROUTINE DBSMIS5(IYEAR,KODE)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use workcm_mod
+      use estree_mod
+      use contrl_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C     PURPOSE: TO OUTPUT THE TREELIST DM DATA TO THE DATABASE
 C
@@ -847,13 +854,6 @@ C                     ADDITION TO
 C
 C---
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'ESTREE.F77'
-      INCLUDE 'VARCOM.F77'
-      INCLUDE 'WORKCM.F77'
 	INCLUDE 'MISCOM.F77'
       INCLUDE 'DMCOM.F77'
       INCLUDE 'DBSCOM.F77'
@@ -882,7 +882,7 @@ C     LOCAL VARIABLES
 
       IF(IDM5.EQ.0) RETURN
       IF(IDM5.EQ.2) KODE = 0
-    
+
 C     CALL DBSCASE TO MAKE SURE WE HAVE AN UP TO DATE CASEID
 
       CALL DBSCASE(1)
@@ -911,7 +911,7 @@ C     CHECK TO SEE IF THE DM TABLE EXISTS IN THE DATBASE
 
       iRet=fvsSQLExecDirect(StmtHndlOut,trim(SQLStmtStr),
      -          int(len_trim(SQLStmtStr),SQLINTEGER_KIND))
-      
+
       IF(iRet.NE.SQL_SUCCESS.AND.
      -    iRet.NE.SQL_SUCCESS_WITH_INFO) THEN
         IF(TRIM(DBMSOUT).EQ."ACCESS") THEN
@@ -1166,13 +1166,13 @@ C           BIND SQL STATEMENT PARAMETERS TO FORTRAN VARIABLES
      -      SQL_PARAM_INPUT,SQL_F_INTEGER,SQL_INTEGER,
      -      INT(15,SQLUINTEGER_KIND),INT(0,SQLSMALLINT_KIND),DM5ID,
      -      int(4,SQLLEN_KIND),SQL_NULL_PTR)
-            
+
             ColNumber=ColNumber+1       ! 2 CASEID
             iRet=fvsSQLBindParameter(StmtHndlOut,ColNumber,
      -      SQL_PARAM_INPUT,SQL_F_INTEGER,SQL_INTEGER,
      -      INT(15,SQLUINTEGER_KIND),INT(0,SQLSMALLINT_KIND),ICASE,
      -      int(4,SQLLEN_KIND),SQL_NULL_PTR)
-            
+
 	      ! 3 StandID inserted through SqlStmt
 
             ColNumber=ColNumber+1       ! 4 YEAR
@@ -1180,7 +1180,7 @@ C           BIND SQL STATEMENT PARAMETERS TO FORTRAN VARIABLES
      -      SQL_PARAM_INPUT,SQL_F_INTEGER,SQL_INTEGER,
      -      INT(15,SQLUINTEGER_KIND),INT(0,SQLSMALLINT_KIND),IYEAR,
      -      int(4,SQLLEN_KIND),SQL_NULL_PTR)
-            
+
 	      ! 5 TreeID  inserted through SqlStmt
 	      ! 6 Species inserted through SqlStmt
 
@@ -1189,25 +1189,25 @@ C           BIND SQL STATEMENT PARAMETERS TO FORTRAN VARIABLES
      -         SQL_PARAM_INPUT,SQL_F_DOUBLE,SQL_DOUBLE,
      -         INT(15,SQLUINTEGER_KIND),INT(5,SQLSMALLINT_KIND),
      -         PB,INT(4,SQLLEN_KIND),SQL_NULL_PTR)
-            
+
             ColNumber=ColNumber+1     ! 8 DBH
             iRet=fvsSQLBindParameter(StmtHndlOut,ColNumber,
      -         SQL_PARAM_INPUT,SQL_F_DOUBLE,SQL_DOUBLE,
      -         INT(15,SQLUINTEGER_KIND),INT(5,SQLSMALLINT_KIND),
      -         DBHB,INT(4,SQLLEN_KIND),SQL_NULL_PTR)
-            
+
             ColNumber=ColNumber+1     ! 9 HT
             iRet=fvsSQLBindParameter(StmtHndlOut,ColNumber,
      -         SQL_PARAM_INPUT,SQL_F_DOUBLE,SQL_DOUBLE,
      -         INT(15,SQLUINTEGER_KIND),INT(5,SQLSMALLINT_KIND),
      -         HTB,INT(4,SQLLEN_KIND),SQL_NULL_PTR)
-            
+
             ColNumber=ColNumber+1     ! 10 CW
             iRet=fvsSQLBindParameter(StmtHndlOut,ColNumber,
      -         SQL_PARAM_INPUT,SQL_F_DOUBLE,SQL_DOUBLE,
      -         INT(15,SQLUINTEGER_KIND),INT(5,SQLSMALLINT_KIND),
      -         CWB,INT(4,SQLLEN_KIND),SQL_NULL_PTR)
-            
+
             DO J = 1,BPCNT
               ColNumber=ColNumber+1     ! 11-14 BRKPNT
                iRet=fvsSQLBindParameter(StmtHndlOut,ColNumber,
@@ -1221,7 +1221,7 @@ C           BIND SQL STATEMENT PARAMETERS TO FORTRAN VARIABLES
      -         SQL_PARAM_INPUT,SQL_F_INTEGER, SQL_INTEGER,
      -         INT(15,SQLUINTEGER_KIND),INT(0,SQLSMALLINT_KIND),
      -         DMRATE(I),INT(4,SQLLEN_KIND),SQL_NULL_PTR)
-            
+
             DO J = 1,CRTHRD
                ColNumber=ColNumber+1     ! 16-18 NEWSPR
                iRet=fvsSQLBindParameter(StmtHndlOut,ColNumber,
@@ -1279,26 +1279,26 @@ C           CLOSE CURSOR
 
 C     RELEASE STATEMENT HANDLE
 
-  100 iRet=fvsSQLFreeHandle(SQL_HANDLE_STMT,StmtHndlOut)      
+  100 iRet=fvsSQLFreeHandle(SQL_HANDLE_STMT,StmtHndlOut)
 
       END
 c------------------------
 
       SUBROUTINE DBSMIS6(IYEAR,KODE)
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **DBSMIS6--DBS  DATE OF LAST REVISION:  12/02/03
 C----------
-      IMPLICIT NONE
 
 C     PURPOSE: TO POPULATE A DATABASE WITH THE LIGHT PENETRATION
 C     AT EACH 2M POSITION IN THE STAND
 C     AUTH: D. ROBINSON, ESSA - BASED ON D. GAMMEL (DBSFUELS)
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'DBSCOM.F77'
       INCLUDE 'DMCOM.F77'
-      
+
 C     ARGUMENT LIST
 
       INTEGER IYEAR,KODE
@@ -1346,7 +1346,7 @@ C     CHECK TO SEE IF THE DM TABLE EXISTS IN THE DATBASE
 
       iRet=fvsSQLExecDirect(StmtHndlOut,trim(SQLStmtStr),
      -          int(len_trim(SQLStmtStr),SQLINTEGER_KIND))
-      
+
 
 C     PRINT THE HEADER INFORMATION FOR THE TREELIST CYCLE, YEAR, LIGHT.
 
@@ -1437,13 +1437,13 @@ C     BIND SQL STATEMENT PARAMETERS TO FORTRAN VARIABLES
      -    SQL_F_INTEGER,SQL_INTEGER,INT(15,SQLUINTEGER_KIND),
      -    INT(0,SQLSMALLINT_KIND),DM6ID,int(4,SQLLEN_KIND),
      -    SQL_NULL_PTR)
-        
+
         ColNumber=ColNumber+1       ! 2 CASEID
         iRet=fvsSQLBindParameter(StmtHndlOut,ColNumber,SQL_PARAM_INPUT,
      -    SQL_F_INTEGER,SQL_INTEGER,INT(15,SQLUINTEGER_KIND),
      -    INT(0,SQLSMALLINT_KIND),ICASE,int(4,SQLLEN_KIND),
      -    SQL_NULL_PTR)
-        
+
         ColNumber=ColNumber+1       ! 3 YEAR
         iRet=fvsSQLBindParameter(StmtHndlOut,ColNumber,SQL_PARAM_INPUT,
      -    SQL_F_INTEGER,SQL_INTEGER,INT(15,SQLUINTEGER_KIND),
@@ -1455,13 +1455,13 @@ C     BIND SQL STATEMENT PARAMETERS TO FORTRAN VARIABLES
      -    SQL_F_INTEGER,SQL_INTEGER,INT(15,SQLUINTEGER_KIND),
      -    INT(0,SQLSMALLINT_KIND),IHT,int(4,SQLLEN_KIND),
      -    SQL_NULL_PTR)
-        
+
         ColNumber=ColNumber+1       ! 5 LIGHT
         iRet=fvsSQLBindParameter(StmtHndlOut,ColNumber,
      -    SQL_PARAM_INPUT,SQL_F_DOUBLE,SQL_DOUBLE,
      -    INT(15,SQLUINTEGER_KIND),INT(5,SQLSMALLINT_KIND),
      -    LIGHTB,int(4,SQLLEN_KIND),SQL_NULL_PTR)
-        
+
 
 C       CLOSE CURSOR
 

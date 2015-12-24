@@ -1,5 +1,11 @@
       SUBROUTINE FMVINIT
-      IMPLICIT NONE
+      use plot_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMVINIT  FIRE-AK-DATE OF LAST REVISION: 04/23/13
 C----------
@@ -16,12 +22,6 @@ C----------
 ***********************************************************************
 COMMONS
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
 
 COMMONS
 
@@ -72,7 +72,7 @@ C     ASSUMING COLD/WET PN HABITAT TYPE.
       DKR(6,1) = 0.009 ! 12 - 20"
       DKR(7,1) = 0.009 ! 20 - 35"
       DKR(8,1) = 0.009 ! 35 - 50"
-      DKR(9,1) = 0.009 ! > 50"            
+      DKR(9,1) = 0.009 ! > 50"
       DKR(10,1) = 0.35  ! litter
       DKR(11,1) = 0.002 ! duff
 
@@ -81,10 +81,10 @@ C     ASSUMING COLD/WET PN HABITAT TYPE.
       DKR(3,2) = 0.061 ! 1 - 3"
       DKR(4,2) = 0.025 ! 3 - 6"
       DKR(5,2) = 0.025 ! 6 - 12"
-      DKR(6,2) = 0.018 ! 12 - 20"   
-      DKR(7,2) = 0.018 ! 20 - 35"   
-      DKR(8,2) = 0.018 ! 35 - 50"   
-      DKR(9,2) = 0.018 ! > 50"      
+      DKR(6,2) = 0.018 ! 12 - 20"
+      DKR(7,2) = 0.018 ! 20 - 35"
+      DKR(8,2) = 0.018 ! 35 - 50"
+      DKR(9,2) = 0.018 ! > 50"
       DKR(10,2) = 0.4   ! litter
       DKR(11,2) = 0.002 ! duff
 
@@ -93,10 +93,10 @@ C     ASSUMING COLD/WET PN HABITAT TYPE.
       DKR(3,3) = 0.073 ! 1 - 3"
       DKR(4,3) = 0.041 ! 3 - 6"
       DKR(5,3) = 0.041 ! 6 - 12"
-      DKR(6,3) = 0.031 ! 12 - 20"   
-      DKR(7,3) = 0.031 ! 20 - 35"   
-      DKR(8,3) = 0.031 ! 35 - 50"   
-      DKR(9,3) = 0.031 ! > 50"      
+      DKR(6,3) = 0.031 ! 12 - 20"
+      DKR(7,3) = 0.031 ! 20 - 35"
+      DKR(8,3) = 0.031 ! 35 - 50"
+      DKR(9,3) = 0.031 ! > 50"
       DKR(10,3) = 0.45  ! litter
       DKR(11,3) = 0.003 ! duff
 
@@ -105,10 +105,10 @@ C     ASSUMING COLD/WET PN HABITAT TYPE.
       DKR(3,4) = 0.098 ! 1 - 3"
       DKR(4,4) = 0.077 ! 3 - 6"
       DKR(5,4) = 0.077 ! 6 - 12"
-      DKR(6,4) = 0.058 ! 12 - 20"   
-      DKR(7,4) = 0.058 ! 20 - 35"   
-      DKR(8,4) = 0.058 ! 35 - 50"   
-      DKR(9,4) = 0.058 ! > 50"      
+      DKR(6,4) = 0.058 ! 12 - 20"
+      DKR(7,4) = 0.058 ! 20 - 35"
+      DKR(8,4) = 0.058 ! 35 - 50"
+      DKR(9,4) = 0.058 ! > 50"
       DKR(10,4) = 0.5   ! litter
       DKR(11,4) = 0.003 ! duff
 
@@ -133,8 +133,8 @@ C     ALSO SET LIMBRK.  NZERO COULD BE UNDER USER-CONTROL ONE DAY.
       ENDDO
 
 C     HTR1 and HTR2 are set below, and used for most species (where htx = 1)
-C     for cedar, htx = 0, so no snag height loss is modelled. 
-C     2% a year height loss is based on Hennon and Loopstra (1991) who found that 
+C     for cedar, htx = 0, so no snag height loss is modelled.
+C     2% a year height loss is based on Hennon and Loopstra (1991) who found that
 C     WH snags (ave dbh 23") were 30 ft or shorter after 38 years.
 
       HTR1   =  0.02
@@ -142,8 +142,8 @@ C     WH snags (ave dbh 23") were 30 ft or shorter after 38 years.
 
 C     ** SPECIES-LEVEL VARIABLE ASSIGNMENT **
 
-C     V2T() - UNITS ARE LB/CUFT BY SPECIES - FROM THE 
-C      'WOOD HANDBOOK' USDA FOREST PRODUCTS LAB. 1999.  FPL-GTR-113. 
+C     V2T() - UNITS ARE LB/CUFT BY SPECIES - FROM THE
+C      'WOOD HANDBOOK' USDA FOREST PRODUCTS LAB. 1999.  FPL-GTR-113.
 
 C     [TO CONVERT G/CM**3 TO LB/FT**3, MULTIPLY 'X' G/CM**3 * 62.372]
 
@@ -166,9 +166,9 @@ C     INVOLVING THE VALUE (SEE FMSCRO) MUST BE RE-EXAMINED TO INSURE
 C     THAT THEY BEHAVE PROPERLY.
 
 C     ALLDWN() - YEARS DEAD AT WHICH ALL SNAGS WILL BE FALLEN (NOT USED IN AK-FFE)
-C     DECAYX() - DECAY RATE MULTIPLIER      
-C     FALLX()  - FALL RATE MULTIPLIER        
-C     HTX()    - HEIGHT-LOSS RATE MULTIPLIER 
+C     DECAYX() - DECAY RATE MULTIPLIER
+C     FALLX()  - FALL RATE MULTIPLIER
+C     HTX()    - HEIGHT-LOSS RATE MULTIPLIER
 
 C     DKRCLS() - DECAY RATE CLASS 1 (V.SLOW) TO 4 (FAST). MODEL USERS
 C     CAN USE THE FUELDCAY KEYWORD TO REASSIGN RATES WITHIN THE 4
@@ -199,7 +199,7 @@ C         western redcedar
             DECAYX(I)  =  1
             FALLX(I)   =  1
             DO J= 1,4
-              HTX(I,J) =  0 
+              HTX(I,J) =  0
             ENDDO
             DKRCLS(I)  =  1
             LSW(I)     =  .TRUE.
@@ -234,7 +234,7 @@ C         western hemlock
           CASE (5)
             V2T(I)     =  26.2
             LEAFLF(I)  =  5
-            ALLDWN(I)  =  100 
+            ALLDWN(I)  =  100
             DECAYX(I)  =  1
             FALLX(I)   =  1
             DO J= 1,4
@@ -281,7 +281,7 @@ C         sitka spruce
               HTX(I,J) = 1
             ENDDO
             DKRCLS(I)  = 2
-            LSW(I)     = .TRUE. 
+            LSW(I)     = .TRUE.
 
 
 C         subalpine fir
@@ -295,7 +295,7 @@ C         subalpine fir
               HTX(I,J) = 1
             ENDDO
             DKRCLS(I)  = 3
-            LSW(I)     = .TRUE. 
+            LSW(I)     = .TRUE.
 
 C         red alder
           CASE (10)
@@ -327,13 +327,13 @@ C         black cottonwood / other hardwoods
 
 C       TIME-TO-FALL VALUES
 
-        SELECT CASE (I)        
+        SELECT CASE (I)
         CASE (2,6) ! 	cedar
           TFALL(I,0) = 5
           TFALL(I,1) = 15
           TFALL(I,2) = 15
           TFALL(I,3) = 30
-          TFALL(I,4) = 55        
+          TFALL(I,4) = 55
         CASE (4,5) ! hemlocks
           TFALL(I,0) = 1
           TFALL(I,1) = 5
@@ -357,9 +357,9 @@ C       TIME-TO-FALL VALUES
           TFALL(I,1) = 10
           TFALL(I,2) = 15
           TFALL(I,3) = 15
-          TFALL(I,4) = 50        
+          TFALL(I,4) = 50
         END SELECT
-        
+
         TFALL(I,5) = TFALL(I,4)
 
 C       DEAD LEAF FALL CANNOT BE > LIVE

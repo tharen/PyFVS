@@ -1,5 +1,10 @@
       SUBROUTINE SITSET
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      use plot_mod
+      use metric_mod
+      use volstd_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -7,25 +12,16 @@ C  THIS SUBROUTINE IS USED TO SET SIMULATION CONTROLLING VALUES
 C  THAT HAVE NOT BEEN SET USING THE KEYWORDS --- SDIMAX, BAMAX.
 C----------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'VOLSTD.F77'
       INCLUDE 'BCPLOT.F77'
-      INCLUDE 'METRIC.F77'
-C
-COMMONS
 C
       INTEGER IFIASP, ERRFLAG
       CHARACTER FORST*2,DIST*2,PROD*2,VAR*2,VOLEQ*10,VVER*7
       LOGICAL LBAMX
       INTEGER I,ISPC,INTFOR,IREGN,J,JJ,K,iSeries
-        
+
 C     ASSIGN VERSION 2 PARAMETERS (MS,ESSF,PP)
       CALL BECSET
-      
+
       CALL VARVER(VVER)
 
       LBAMX = .TRUE.
@@ -48,13 +44,13 @@ C     SOME ODD SITE SERIES CASES "01-ys, 01a, 01b" NEED SPECIAL ATTENTION
       ELSE
         READ (BEC%Series,'(I4)') iSeries
       ENDIF
-     
+
       SELECT CASE (BEC%Zone)
 
 	  CASE ("IDF")                      ! IDF: dk differ in V2 - becset.for
 	    SELECT CASE (BEC%SubZone)
 	      CASE ("dk1")
-	        SELECT CASE (iSeries)    
+	        SELECT CASE (iSeries)
 	          CASE (1)
 	            BAMAX = 60.
                 CASE (2,4:7)
@@ -88,8 +84,8 @@ C     SOME ODD SITE SERIES CASES "01-ys, 01a, 01b" NEED SPECIAL ATTENTION
               BAMAX = 47.
             CASE ("xh1","xh2")
 	        BAMAX = 48.
-          END SELECT 
-          
+          END SELECT
+
 	  CASE ("ICH")                   ! ICH
 	    SELECT CASE (BEC%SubZone)
 	      CASE ("mk1")
@@ -127,7 +123,7 @@ C     SOME ODD SITE SERIES CASES "01-ys, 01a, 01b" NEED SPECIAL ATTENTION
 	      CASE ("dw")
 	        BAMAX = 50.
           END SELECT
-          
+
 	  CASE ("ESSF")                         ! ESSF
 		  SELECT CASE (BEC%SubZone)
 	    CASE ("dk")
@@ -143,8 +139,8 @@ C     SOME ODD SITE SERIES CASES "01-ys, 01a, 01b" NEED SPECIAL ATTENTION
 	      END SELECT
 	    CASE ("wc4","wm")
 	      BAMAX =  62.
-          END SELECT 
-          
+          END SELECT
+
 	  CASE ("MS")                          ! MS
 		  SELECT CASE (BEC%SubZone)
 	    CASE ("dk")
@@ -169,7 +165,7 @@ C     SOME ODD SITE SERIES CASES "01-ys, 01a, 01b" NEED SPECIAL ATTENTION
               CASE (6)
 	          BAMAX = 64.
 	      END SELECT
-          END SELECT 
+          END SELECT
 
 	  CASE ("PP")                             ! PP
 		  SELECT CASE (BEC%SubZone)
@@ -194,7 +190,7 @@ C     SOME ODD SITE SERIES CASES "01-ys, 01a, 01b" NEED SPECIAL ATTENTION
             BAMAX = 55.
 	    CASE ("mh")
 	      BAMAX = 60.
-          END SELECT 
+          END SELECT
 
 	  CASE ("SBPS")              ! SBPS
           BAMAX = 50.
@@ -204,8 +200,8 @@ C     SOME ODD SITE SERIES CASES "01-ys, 01a, 01b" NEED SPECIAL ATTENTION
 	    CASE ("mk")
 	      BAMAX = 55.
           END SELECT
-        END SELECT 
-      
+        END SELECT
+
       IF (BAMAX .LE. 0.) THEN
         BAMAX = 10.
         CALL RCDSET(2,.TRUE.)
@@ -242,9 +238,9 @@ C
    93 CONTINUE
 C
 C     RESOLVE BEC/SITE INFORMATION (VERSION 2)
-C      
-      CALL BECSET      
-         
+C
+      CALL BECSET
+
 C----------
 C  SET METHB & METHC DEFAULTS.  DEFAULTS ARE INITIALIZED TO 999 IN
 C  **GRINIT**.  IF THEY HAVE A DIFFERENT VALUE NOW, THEY WERE CHANGED
@@ -291,6 +287,6 @@ C----------
       CALL VOLEQHEAD(JOSTND)
       WRITE(JOSTND,230)(NSP(J,1)(1:2),VEQNNC(J),VEQNNB(J),J=1,MAXSP)
  230  FORMAT(4(3X,A2,4X,A10,1X,A10))
-C     
+C
       RETURN
       END

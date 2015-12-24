@@ -1,6 +1,6 @@
 module findage_mod
     use prgprm_mod
-    use contrl_mod
+    use contrl_mod, only : jostnd,fast_age_search
     use arrays_mod
     use plot_mod
 
@@ -18,6 +18,21 @@ module findage_mod
     !data age_steps /100.0,50.0,26.0,14.0,8.0,4.0,2.0,1.0/
 
     contains
+
+!    subroutine findag(i,ispc,d,d2,h,sitage,sitht,agmax1,htmax,htmax2,debug)
+!        implicit none
+!        logical debug
+!        integer i,ispc
+!        real h
+!        real sitage,sitht,agmax1,htmax,htmax2,d,d2
+!
+!        if (fast_age_search) then
+!            call findag_fast(i,ispc,d,d2,h,sitage,sitht,agmax1,htmax,htmax2,debug)
+!        else
+!            call findag_orig(i,ispc,d,d2,h,sitage,sitht,agmax1,htmax,htmax2,debug)
+!        end if
+!
+!    end subroutine findag
 
     subroutine findag(i,ispc,d,d2,h,sitage,sitht,agmax1,htmax,htmax2,debug)
         ! Estimate the age of a tree using species site curves
@@ -41,15 +56,16 @@ module findage_mod
         !----------
         !  DATA STATEMENTS
         !----------
-
         DATA MAPHD  /3*1,2*2,6,2,2*3,2,4,4*5,2*6,3,2*7,8*8,5*3,4*8,2*6/
         DATA HDRAT1 /4.3396271,4.3149844,3.2412923,2.3475244, &
-                5.5324838,6.3657425,4.0156013,3.9033821/
+                    5.5324838,6.3657425,4.0156013,3.9033821/
         DATA HDRAT2 /43.9957174,39.6317079,62.7139427,65.7622908, &
-                18.6043842,16.2223589,51.9732476,59.3370816/
+                    18.6043842,16.2223589,51.9732476,59.3370816/
         !----------
         !  INITIALIZATIONS
         !----------
+        TOLER = 2.0
+        AG = 2.0
         SINDX = SITEAR(ISPC)
         AGMAX1 = max_age(ISPC)
         MAPPHD = MAPHD(ISPC)
@@ -72,9 +88,44 @@ module findage_mod
             return
         ENDIF
 
-        call guess_age(sindx,ispc,h,sitht,sitage)
+        if (fast_age_search) then
+            call guess_age(sindx,ispc,h,sitht,sitage)
+        else
+            do
+                ! NOTE: This is the original linear search routine
+                !----------
+                !  CALL HTCALC TO CALCULATE POTENTIAL HT GROWTH
+                !----------
+                HGUESS = 0.0
+                CALL HTCALC(SINDX,ISPC,AG,HGUESS,JOSTND,DEBUG)
 
-        continue
+                if (DEBUG) then
+                    WRITE(JOSTND,fmt)AG,HGUESS,H
+                    fmt = "(' IN GUESS AN AGE--AGE,HGUESS,H ',3F10.2)"
+                end if
+
+                DIFF=ABS(HGUESS-H)
+                IF (DIFF .LE. TOLER .OR. H .LT. HGUESS) THEN
+                    SITAGE = AG
+                    SITHT = HGUESS
+                    exit
+                END IF
+                AG = AG + 2.
+
+                IF (AG .GT. AGMAX1) THEN
+                    !----------
+                    !  H IS TOO GREAT AND MAX AGE IS EXCEEDED
+                    !----------
+                    SITAGE = AGMAX1
+                    SITHT = H
+                    exit
+                ELSE
+                    cycle
+                END IF
+
+            end do
+        end if
+
         if (debug) then
             fmt = "(' LEAVING SUBROUTINE FINDAG  I,SITAGE,SITHT =', &
                     I5,2F10.3)"

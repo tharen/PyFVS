@@ -1,5 +1,9 @@
       SUBROUTINE DFBMOD
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **DFBMOD  DATE OF LAST REVISION:  06/30/10
 C----------
@@ -36,25 +40,7 @@ C     PERDD  - (DFBCOM)  INPUT
 C     PREKLL - (DFBCOM)  INPUT
 C     START  - (DFBCOM)  INPUT
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'DFBCOM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
 C
       INTEGER NUMYRS
       REAL    BACHLO

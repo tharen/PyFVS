@@ -1,5 +1,9 @@
       SUBROUTINE DMCW(DMTRCW)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -11,7 +15,7 @@ C Purpose:
 C   Computes crown width for individual trees. Widths are measured
 C in feet. Further documentation can be found in: Moeur, Melinda.
 C 1981. Crown width and foliage weight of northern Rocky Mountain
-C Confifers. USDA Forest Service Res. Pap. INT-283.                 
+C Confifers. USDA Forest Service Res. Pap. INT-283.
 C--------------------------------------------------------------------
 C
 C Called by:
@@ -22,7 +26,7 @@ C Other routines called:
 C
 C     DBCHK
 C
-C Argument list definitions:                        
+C Argument list definitions:
 C
 C     REAL    DMTRCW (O)  Predicted maximum crown width (feet).
 C
@@ -46,20 +50,16 @@ C     [none related to NISI; FVS commons are not documented]
 C
 C********************************************************************C
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'DMCOM.F77'      
+      INCLUDE 'DMCOM.F77'
 
 C Argument list variables
 
       REAL      DMTRCW
-                                                    
+
       DIMENSION DMTRCW(MAXTRE)
-      
+
 C Local variables.
-      
+
       LOGICAL   DEBUG
       DIMENSION BH1(MAXSP)
       DIMENSION BINT2(MAXSP)
@@ -93,7 +93,7 @@ c **only** that position is guaranteed.
 
       DATA BINT2 / 4.30800,  3.02271,  3.02271,  2.20611,
      &            -0.91984, -0.91984,  1.06804,  3.76535,
-     &             1.74558,  1.62365, -0.91984, 
+     &             1.74558,  1.62365, -0.91984,
      &             4.30800,  1.62365,  3.02271,  2.20611,
      &            -0.91984, -0.91984,  1.06804,  3.76535,
      &             1.74558,  1.62365, -0.91984,
@@ -172,7 +172,6 @@ c         BINT2(1)= BINT2(11)
 c         BH2 (1) = BH2 (11)
 c      ENDIF
 c
-C
 C  USE PRE-THIN DENSITY STATISTICS IF A THINNING HAS JUST OCCURRED.
 C
       BAREA = BA

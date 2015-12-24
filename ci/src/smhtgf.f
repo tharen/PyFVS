@@ -1,5 +1,12 @@
       SUBROUTINE SMHTGF(ISPC,I,HTGRTH,CR,TPCCF,LESTB,DEBUG)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use pden_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **SMHTGF--TT   DATE OF LAST REVISION:  09/01/11
 C----------
@@ -9,33 +16,8 @@ C CALLED FROM **REGENT.
 C CALLS **FINDAG
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
 C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-COMMONS
 C----------
       EXTERNAL RANN
       LOGICAL DEBUG,LESTB

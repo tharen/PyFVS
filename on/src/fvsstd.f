@@ -1,5 +1,16 @@
       SUBROUTINE FVSSTD (IWHO)
-      IMPLICIT NONE
+      use htcal_mod
+      use plot_mod
+      use arrays_mod
+      use workcm_mod
+      use estree_mod
+      use contrl_mod
+      use econ_mod
+      use outcom_mod
+      use fvsstdcm_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FVSSTD--BASE/ON   DATE OF LAST REVISION: 08/13/10
 C----------
@@ -8,37 +19,10 @@ C     CREATE A FILE FOR FVSTAND POST-PROCESSOR INPUT.
 C
 C     IWHO=1 IF CALLED FROM MAIN, IWHO=2 IF CALLED FROM CUTS
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ESTREE.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-      INCLUDE 'WORKCM.F77'
       INCLUDE 'STDSTK.F77'
       INCLUDE 'SUMTAB.F77'
-      INCLUDE 'OUTCOM.F77'
-      INCLUDE 'ECON.F77'
       INCLUDE 'OPCOM.F77'
-      INCLUDE 'FVSSTDCM.F77'
 C
-COMMONS
 C----------
       INTEGER IWHO,MYACT(1),KSDI,IOPEN,I,NTODO,ITODO,NPRMS,IACTK,IDT
       INTEGER KODE,ISTLNB,JYR,IP,ITPLAB,ITMFOR,IBA,IKNT,ISITE
@@ -232,7 +216,7 @@ C----------
       IF(LSTART) DGI = WORK1(I)
 C
       IF(IDG.EQ.0 .OR. IDG.EQ.2)THEN
-        IF(DGI .GT. 0. .AND. 
+        IF(DGI .GT. 0. .AND.
      &   ((DGI/BRATIO(ISP(I),DBH(I)-DG(I),HT(I)).LT.DBH(I))))THEN
           PDBHI=DBH(I)-(DG(I)/BRATIO(ISP(I),DBH(I)-DG(I),HT(I)))
         ELSE
@@ -257,7 +241,7 @@ C
 C     In ON variant, CUFT are replaced by Cords using 80 cuft/cord
 C     as a conversion.
       CF2CRD = 1.0/80.0
-     
+
       IF(P.LT.9999.9995 .AND. DP.LT.9999.9995)THEN
         WRITE(KOLIST,21) TID,I,NSP(ISP(I),1)(1:2),ISP(I),IMC(I),
      >  ISPECL(I),ITRE(I),P,DP,DBH(I),DGI,HT(I),HTG(I),ICR(I),CW,

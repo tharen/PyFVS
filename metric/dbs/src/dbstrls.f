@@ -1,5 +1,13 @@
       SUBROUTINE DBSTRLS(IWHO,KODE,TEM)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use workcm_mod
+      use estree_mod
+      use contrl_mod
+      use metric_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -13,19 +21,7 @@ C            KODE  - FOR LETTING CALLING ROUTINE KNOW IF THIS IS A
 C                     REDIRECT OF THE FLAT FILE REPORT OR IN
 C                     ADDITION TO
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'ESTREE.F77'
-      INCLUDE 'VARCOM.F77'
-      INCLUDE 'WORKCM.F77'
       INCLUDE 'DBSCOM.F77'
-      INCLUDE 'METRIC.F77'
-C      
-COMMONS
 C
       CHARACTER*8 TID,CSPECIES
       CHARACTER*2000 SQLStmtStr
@@ -79,7 +75,7 @@ C     IF IT DOESN'T THEN WE NEED TO CREATE IT
 
       iret = fvsSQLExecDirect(StmtHndlOut,trim(SQLStmtStr),
      -                int(len_trim(SQLStmtStr),SQLINTEGER_KIND))
-      
+
       IF(iRet.NE.SQL_SUCCESS.AND.
      -    iRet.NE.SQL_SUCCESS_WITH_INFO) THEN
         IF(TRIM(DBMSOUT).EQ."ACCESS") THEN
@@ -265,8 +261,8 @@ C
 C
             IF(ISPOUT6.EQ.1)CSPECIES=ADJUSTL(TRIM(JSP(ISP(I))))
             IF(ISPOUT6.EQ.2)CSPECIES=ADJUSTL(TRIM(FIAJSP(ISP(I))))
-            IF(ISPOUT6.EQ.3)CSPECIES=ADJUSTL(TRIM(PLNJSP(ISP(I)))) 
-C 
+            IF(ISPOUT6.EQ.3)CSPECIES=ADJUSTL(TRIM(PLNJSP(ISP(I))))
+C
 C           CREATE ENTRY FROM DATA FOR TREELIST TABLE
 
             IF(TREEOUTID.EQ.-1) THEN
@@ -352,7 +348,7 @@ C
             IF(ISPOUT6.EQ.1)CSPECIES=ADJUSTL(TRIM(JSP(ISP(I))))
             IF(ISPOUT6.EQ.2)CSPECIES=ADJUSTL(TRIM(FIAJSP(ISP(I))))
             IF(ISPOUT6.EQ.3)CSPECIES=ADJUSTL(TRIM(PLNJSP(ISP(I))))
-C 
+C
 C           CREATE ENTRY FROM DATA FOR TREELIST TABLE
 
             IF(TREEOUTID.EQ.-1) THEN
@@ -392,9 +388,9 @@ C           MAKE SURE WE DO NOT EXCEED THE MAX TABLE SIZE IN EXCEL
      -                  'DBSTRLS:Inserting Row: '//trim(SQLStmtStr))
 
   150 CONTINUE
- 
+
   100 CONTINUE
 
       iRet = fvsSQLFreeHandle(SQL_HANDLE_STMT, StmtHndlOut)
-      
+
       END

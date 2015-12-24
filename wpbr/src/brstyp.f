@@ -1,5 +1,9 @@
       SUBROUTINE BRSTYP
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C**********************************************************************
 C  **BRSTYP       DATE OF LAST REVISION:  06/05/2014
 C----------------------------------------------------------------------
@@ -19,7 +23,7 @@ C     Added the function INT() to IF statements checking equality just
 C     to eliminate the warning messages from Lahey FORTRAN 90 (LF90).
 C  21-APR-1999 Lance David
 C     Changed some GOTO code to block IF statments. Added some comments
-C     and reworked the stock type assignment code because too many 
+C     and reworked the stock type assignment code because too many
 C     records would be assigned to the highest type included in a mixed
 C     stock type situation.
 C  14-SEP-2000 Lance David (FHTET)
@@ -30,7 +34,7 @@ C     Species loop (label 100) and species temp index variable (I3)
 C     are new.
 C  17-APR-2001 Lance David (FHTET)
 C     Added debug statements.
-C     Change stock type proportions to all stock type 1 if sum of 
+C     Change stock type proportions to all stock type 1 if sum of
 C     proportions is >1.0.
 C     Reworked the stock type assignment method for mixed stock types.
 C  24-APR-2001 Lance R. David (FHTET)
@@ -46,10 +50,6 @@ C**********************************************************************
 
 C.... Common include files.
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'BRCOM.F77'
 
 C.... Local variable declarations.
@@ -118,7 +118,7 @@ C.... Start species loop
 C.... Set blister rust species index
       I4 = BRSPM(I3)
 
-      IF(PRPSTK(I4,1).EQ.1.0 .OR. PRPSTK(I4,2).EQ.1.0 .OR. 
+      IF(PRPSTK(I4,1).EQ.1.0 .OR. PRPSTK(I4,2).EQ.1.0 .OR.
      &   PRPSTK(I4,3).EQ.1.0 .OR. PRPSTK(I4,4).EQ.1.0) THEN
 
 C....    No mixing of stock types is specified.

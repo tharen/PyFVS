@@ -1,5 +1,9 @@
       SUBROUTINE RDIPRP(PROPN,NOPLOT,PRAN)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDIPRP      LAST REVISION:  08/29/14
 C----------
@@ -31,34 +35,29 @@ C  Common Block Variables Used :
 C     <incomplete>
 C
 C  Revision History :
-C  10/16/98 (RNH) 
+C  10/16/98 (RNH)
 C    MOdificaion to more accurately calculate the number of trees
 C    in each species to be inititially infected with root disease
 C    with RRINIT keyword
 C  02-AUG-01 Lance R. David (FHTET)
 C    Changed initialization control loop from MINRR,MAXRR to 1,ITOTRR.
 C  08/29/14 Lance R. David (FMSC)
-C    Added implicit none and declared variables.
 C------------------------------------------------------------------
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 
 C.... Common include files.
 
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'RDADD.F77'
 
 C.... Argument variable declarations.
 
 C.... Local variable declarations.
 
-      LOGICAL  YESSP(MAXSP), FULL(MAXSP)                 
+      LOGICAL  YESSP(MAXSP), FULL(MAXSP)
       INTEGER  I, IDI, II, INUMSP(ITOTRR), KSP, NOPLOT, NUMFUL(ITOTRR)
       REAL     ADDON, AVGYTK, HABSP, OVER, PRAN(ITOTRR),
      &         PROPN(MAXTRE), RDSLP, RELVAL(MAXSP),
@@ -66,7 +65,7 @@ C.... Local variable declarations.
      &         TOTNUM, TOTREE(ITOTRR), TOTSP(MAXSP), TOTVAL(ITOTRR),
      &         TOTYTK(MAXSP), TREENO(MAXSP)
 C
-C     the array SSTVAL(MAXSP) is used in the calculation of initial 
+C     the array SSTVAL(MAXSP) is used in the calculation of initial
 C     root disease in each species (RNH NOV98)
 C
 C.... Initializations.
@@ -81,7 +80,7 @@ C.... Initializations.
          INUMSP(IDI) = 0
          SSTVAL(IDI) = 0.0
          NUMFUL(IDI) = 0
-   99 CONTINUE  
+   99 CONTINUE
 
       DO 100 KSP = 1, MAXSP
          YESSP(KSP) = .FALSE.
@@ -91,8 +90,8 @@ C.... Initializations.
          TREENO(KSP) = 0.0
          RELVAL(KSP) = 0.0
          TMPPRP(KSP) = 0.0
-  100 CONTINUE              
-  
+  100 CONTINUE
+
 C.... Total the number of trees in center by species (TOTSP).
 C.... Figure out the "TOTAL YEARS TO KILL" trees so we can get an
 C.... average for the species in the next set of loops.
@@ -161,7 +160,7 @@ C
             TOTREE(IDI) = TOTREE(IDI) + TOTSP(KSP)
 C
             IF (YESSP(KSP)) INUMSP(IDI) = INUMSP(IDI) + 1
-            
+
       ENDIF
  1600 CONTINUE
 
@@ -177,7 +176,7 @@ C.... PRAN is the proportion of infection in stand or plot.
 C++++++
         DO 1698 KSP= 1, MAXSP
 
-C     The following calculation was nested in this loop to for the 
+C     The following calculation was nested in this loop to for the
 C     new initial ization method used in loop 1700
 C     New array (RNH NOV98)
 C
@@ -187,7 +186,7 @@ C
 C
  1698   CONTINUE
 C++++++
-C    
+C
  1699 CONTINUE
 
       IDI = MAXRR
@@ -200,9 +199,9 @@ C     Modification (RNH, MAR98).  If MAXRR < 3 then annosus disease.
 C     If non-host species then IDI = 0, and loop should be skipped to
 C     prevent array out of bounds error
 C
-      IF (IDI .LE. 0) GO TO 1700            
+      IF (IDI .LE. 0) GO TO 1700
 C
-C     Commented out the following 2 lines and added a new formula to 
+C     Commented out the following 2 lines and added a new formula to
 C     calculate the total number of trees infected per species
 C     (RNH Nov 98)
 C
@@ -214,8 +213,6 @@ C
 C
      2 TREENO(KSP) = TOTINF(IDI)*TOTSP(KSP)*RELVAL(KSP)/SSTVAL(IDI)/
      3 TOTVAL(IDI)
-C
-C
 C
  1700 CONTINUE
 

@@ -1,5 +1,6 @@
       BLOCK DATA BWEBK
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **BWEBK--EC          DATE OF LAST REVISION:  03/19/12
 C----------
@@ -38,7 +39,7 @@ C       the process of moving initialization of nonstatic variables
 C       to the BWEINT routine.
 C    04-OCT-00 Lance David (FHTET)
 C       Added data statemenst to load weather station names into
-C       WSLOOK that had previously been loaded at runtime from 
+C       WSLOOK that had previously been loaded at runtime from
 C       stations.dat file.
 C    10-NOV-00 Lance David (FHTET)
 C       Put Western Larch back into host species list (IBWSPM). It
@@ -49,20 +50,14 @@ C       they chose to leave it as non-host for this reason.
 C    09-SEP-06 Lance David (FHTET)
 C       Moved non-static variables FOLDVY, FOLWTY and IOUT6A to bweint.f.
 C    14-JUL-2010 Lance R. David (FMSC)
-C       Added IMPLICIT NONE and declared variables as needed.
 C    19-MAR-2012 Lance R. David (FMSC)
 C       Updated for the East Cascades species expansion to 32 species.
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BWECOM.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECM2.F77'
       INCLUDE 'BWEBOX.F77'
-C
-COMMONS
 C
       INTEGER I
 
@@ -76,13 +71,13 @@ C       5 = ES - Engelmann spruce
 C       6 = WL - Western Larch
 C       7 = Not a host
 C
-C     FVS EC VARIANT SPECIES 
-C                 WP WL DF SF RC GF LP ES AF PP WH 
+C     FVS EC VARIANT SPECIES
+C                 WP WL DF SF RC GF LP ES AF PP WH
       DATA IBWSPM/ 7, 7, 2, 7, 7, 3, 7, 5, 4, 7, 7,
-C                 MH PY WB NF WF LL YC WJ BM VN RA 
-     &             7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 
-C                 PB GC DG AS CW WO PL WI OS OH 
-     &             7, 7, 7, 7, 7, 7, 7, 7, 7, 7 / 
+C                 MH PY WB NF WF LL YC WJ BM VN RA
+     &             7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
+C                 PB GC DG AS CW WO PL WI OS OH
+     &             7, 7, 7, 7, 7, 7, 7, 7, 7, 7 /
 
       DATA PRCRN3/ 0.05, 0.3, 0.65, 0.15, 0.45, 0.40, 0.15, 0.45, 0.40/
       DATA THEOFL/ 0.70, 0.24, 0.04, 0.02,

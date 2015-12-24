@@ -1,5 +1,7 @@
       SUBROUTINE MISIN0
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -45,7 +47,7 @@ C----------
 *     12/05/01 - Lance R. David (FHTET)
 *                Initialization of DMRMIN that use to be in MISINTxx.f
 *     01/07/04 - Lance R. David (FHTET)
-*                Initialization of IDMSOUT and set default printing of 
+*                Initialization of IDMSOUT and set default printing of
 *                Dwarf Mistletoe summaries 1 and 2.
 *     03/14/05 - Lance R. David (FHTET)
 *                Removed calls to GETID for assignment of report ID Number.
@@ -56,16 +58,14 @@ C----------
 *     04/01/11 - Lance R. David (FMSC)
 *                Added dimension of MISCYC array.
 ***********************************************************************
-      
+
 C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C.... Common include files.
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'DMCOM.F77'
       INCLUDE 'MISCOM.F77'
 

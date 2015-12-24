@@ -1,5 +1,13 @@
       SUBROUTINE CROWN
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use pden_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **CROWN--AK   DATE OF LAST REVISION:  03/31/11
 C----------
@@ -10,33 +18,6 @@ C  LOAD MODEL CONSTANTS THAT ARE SITE DEPENDENT AND NEED ONLY
 C  BE RESOLVED ONCE.  A CALL TO **DUBSCR** IS ISSUED TO DUB
 C  CROWN RATIO FOR DEAD TREES.
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
 COMMONS
 C----------
       INTEGER ICFLG(MAXSP),MYACTS(1),JJ,NTODO,I,NP,IACTK,IDATE,IDT

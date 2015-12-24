@@ -1,26 +1,15 @@
       SUBROUTINE DGSCOR (SSIG,FRM,RHO,RHOCP,IT)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C  THIS SUBROUTINE CALCULATES THE ERROR IN DIAMETER GROWTH PREDICTION
 C  THAT WILL BE CARRIED OVER INTO THE NEXT CYCLE.
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
 COMMONS
       EXTERNAL RANN
 C

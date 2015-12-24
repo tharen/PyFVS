@@ -1,5 +1,10 @@
       SUBROUTINE FMCROW
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use arrays_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMCROW  FIRE-EM DATE OF LAST REVISION:  01/10/12
 C----------
@@ -30,24 +35,6 @@ C     IC:       length of live Crown
 C     SP:       SPecies
 C
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
 COMMONS
 C----------
 C  VARIABLE DECLARATIONS
@@ -163,7 +150,7 @@ C----------
 C  PLACEHOLDER FOR UNUSED CALLS IN **FMCROWE**
 C----------
       SUBROUTINE HTDBH(I10,I11,X10,X11,I12)
-      IMPLICIT NONE
+      implicit none
 C
       INTEGER I10,I11,I12
       REAL    X10,X11

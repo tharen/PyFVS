@@ -1,26 +1,15 @@
       SUBROUTINE SITSET
-      IMPLICIT NONE
+      use contrl_mod
+      use volstd_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **SITSET--WS   DATE OF LAST REVISION:  05/09/12
 C----------
 C THIS SUBROUTINE LOADS THE SITEAR ARRAY WITH A SITE INDEX FOR EACH
 C SPECIES WHICH WAS NOT ASSIGNED A SITE INDEX BY KEYWORD.
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
 COMMONS
 C----------
       LOGICAL DEBUG
@@ -79,7 +68,7 @@ C
 C  SURROGATE EQUATION ASSIGNMENT:
 C
 C    FROM EXISTING WS EQUATIONS --
-C      USE 1(SP) FOR 11(WP) AND 24(MH) 
+C      USE 1(SP) FOR 11(WP) AND 24(MH)
 C      USE 2(DF) FOR 22(BD)
 C      USE 3(WF) FOR 13(SF)
 C      USE 4(GS) FOR 23(RW)
@@ -89,7 +78,7 @@ C      USE 31(BO) FOR 28(LO), 29(CY), 30(BL), 32(VO), 33(IO), 40(BM), AND
 C                     43(OH)
 C
 C    FROM CA VARIANT --
-C      USE CA11(KP) FOR 12(PM), 14(KP), 15(FP), 16(CP), 17(LM), 19(GP), 20(WE), 
+C      USE CA11(KP) FOR 12(PM), 14(KP), 15(FP), 16(CP), 17(LM), 19(GP), 20(WE),
 C                       25(WJ), 26(WJ), AND 27(CJ)
 C      USE CA12(LP) FOR 9(LP) AND 10(WB)
 C
@@ -100,11 +89,11 @@ C    FROM UT VARIANT --
 C      USE UT17(GB) FOR 21(GB)
 C----------
       DATA SDICON/
-     & 647., 547., 759., 588., 706., 571., 800., 571., 622., 675., 
-     & 297., 358., 889., 430., 430., 430., 493., 571., 259., 430., 
-     & 470., 547.,1120., 817., 290., 498., 430., 382., 382., 382., 
-     & 382., 382., 382., 759., 759., 759., 759., 759., 759., 382., 
-     & 353., 624., 382./ 
+     & 647., 547., 759., 588., 706., 571., 800., 571., 622., 675.,
+     & 297., 358., 889., 430., 430., 430., 493., 571., 259., 430.,
+     & 470., 547.,1120., 817., 290., 498., 430., 382., 382., 382.,
+     & 382., 382., 382., 759., 759., 759., 759., 759., 759., 382.,
+     & 353., 624., 382./
 C-----------
 C  SEE IF WE NEED TO DO SOME DEBUG.
 C-----------

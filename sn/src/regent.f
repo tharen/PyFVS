@@ -1,5 +1,15 @@
       SUBROUTINE REGENT(LESTB,ITRNIN)
-      IMPLICIT NONE
+      use htcal_mod
+      use multcm_mod
+      use pden_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use plot_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **REGENT--SN    DATE OF LAST REVISION:  03/05/13
 C----------
@@ -15,44 +25,10 @@ C  FROM **TREGRO** DURING CYCLING.  ENTRY **REGCON** IS CALLED FROM
 C  **RCON** TO LOAD MODEL PARAMETERS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'MULTCM.F77'
-C
 C
       INCLUDE 'ESTCOR.F77'
 C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-COMMONS
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES:
 C
@@ -319,7 +295,7 @@ C  OFF, OR IF WYKOFF CALIBRATION DID NOT OCCUR.
 C  NOTE: THIS SIMPLIFIES TO IF(IABFLB(ISPC).EQ.1) BUT IS SHOWN IN IT'S
 C        ENTIRITY FOR CLARITY.
 C----------
-        IF(.NOT.LHTDRG(ISPC) .OR. 
+        IF(.NOT.LHTDRG(ISPC) .OR.
      &     (LHTDRG(ISPC) .AND. IABFLG(ISPC).EQ.1))THEN
           CALL HTDBH (IFOR,ISPC,DKK,HK,1)
           IF(H .LE. 4.5) THEN
@@ -508,9 +484,9 @@ C----------
       IF(CORNEW.LE.0.0) CORNEW=1.0E-4
       HCOR(ISPC)=ALOG(CORNEW)
 C----------
-C  TRAP CALIBRATION VALUES OUTSIDE 2.5 STANDARD DEVIATIONS FROM THE 
+C  TRAP CALIBRATION VALUES OUTSIDE 2.5 STANDARD DEVIATIONS FROM THE
 C  MEAN. IF C IS THE CALIBRATION TERM, WITH A DEFAULT OF 1.0, THEN
-C  LN(C) HAS A MEAN OF 0.  -2.5 < LN(C) < 2.5 IMPLIES 
+C  LN(C) HAS A MEAN OF 0.  -2.5 < LN(C) < 2.5 IMPLIES
 C  0.0821 < C < 12.1825
 C----------
       IF(CORNEW.LT.0.0821 .OR. CORNEW.GT.12.1825) THEN

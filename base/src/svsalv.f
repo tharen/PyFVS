@@ -1,5 +1,10 @@
       SUBROUTINE SVSALV(IYR,MINDBH,MAXDBH,MAXAGE,OKSOFT,PROP,PROPLV)
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use svdata_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -41,27 +46,7 @@ C              0 = cut this sp/spgroup in a salvage cut;
 C              1 = leave this sp/spgroup in a salvage cut
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
-      INCLUDE 'SVDATA.F77'
-C
-C
       INCLUDE 'SVDEAD.F77'
-C
-C
-COMMONS
-C
 C
       INTEGER B4SNAGS, B4SVSNG, EL_SNAGS, I, IG, IGRP, IPUT,
      &        ISALFG(MXDEAD), ISNAG, ISREF(MXDEAD), ISVOBJ, IT,
@@ -70,7 +55,6 @@ C
       REAL    CULLDIF, CULLPCT, CULLTPA, EL_CULL, EL_FELL,
      &        FELLDIF, FELLPCT, FELLTPA, MAXDBH, MAXAGE, MINDBH,
      &        OVRPCT, PROP, PROPLV, UNDPCT, X
-C
 C
 C----------
 C  Check for debug:
@@ -335,7 +319,7 @@ C                       XXXX XXX XXX.XX XXX. XXXXXX XXXXXX XXXXXX.
         DO 530 I=1,NSVOBJ
           IF (IOBJTP(I).EQ.2) NWSVSNG=NWSVSNG+1
   530   CONTINUE
-        
+
         WRITE (JOSTND,1110) B4SNAGS, B4SVSNG, EL_SNAGS,
      &                      NDEAD, NWSVSNG, NOTFELD,
      &                      FELLPCT, CULLPCT

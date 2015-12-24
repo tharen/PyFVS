@@ -1,5 +1,8 @@
       SUBROUTINE ALGSPP (CTOK,LEN,NUM,IRC)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -13,20 +16,6 @@ C     LEN   = THE LENGTH OF THE TOKEN.
 C     NUM   = THE LOAD OP-CODE FOR THE SPECIES.
 C     IRC   = RETURN CODE, 0=CTOK WAS FOUND, NUM IS DEFINED.
 C             1=CTOK WAS NOT FOUND, NUM IS UNDEFINED.
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
 C
       CHARACTER*20 CTOK,CTEMP
       INTEGER IRC,NUM,LEN,I

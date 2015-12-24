@@ -1,5 +1,10 @@
       SUBROUTINE ECVOLS
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use econ_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -9,26 +14,6 @@ C  FOR REMOVALS WHEN THEY OCCUR.
 C  ENTRY POINTS FOR OTHER ECONOMIC ANALYSIS RELATED SUBROUTINES
 C  ARE ALSO CONTAINED WITHIN THIS SUBROUTINE.
 C----------
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ECON.F77'
-C
-C
-COMMONS
 C
       REAL P,D
       INTEGER I,ICLASS,IOAGE,IYEAR,II,IIDBH,ISPC,J,K,IDBH
@@ -96,7 +81,7 @@ C----------
             WRITE(JOSUME,8002)IYEAR,K,ICLASS,ICVOLT,ICVOLC,
      >               ICVOLB,ICTREE,ICBA,IOAGE,NPLT,MGMID
          ENDIF
-      ELSE 
+      ELSE
          IF (LPPE) THEN
             WRITE(JOSUME,8001)IYEAR,K,ICLASS,ICVOLT,ICVOLC,ICVOLB,
      >           ICTREE,ICBA,IOAGE,NPLT,MGMID,CISN
@@ -150,7 +135,7 @@ C----------
             WRITE(JOSUME,8002)IYEAR,K,ICLASS,ICVOLT,ICVOLC,
      >               ICVOLB,ICTREE,ICBA,IOAGE,NPLT,MGMID
          ENDIF
-      ELSE              
+      ELSE
          IF (LPPE) THEN
             WRITE(JOSUME,8001)IYEAR,K,ICLASS,ICVOLT,ICVOLC,ICVOLB,
      >            ICTREE,ICBA,IOAGE,NPLT,MGMID,CISN

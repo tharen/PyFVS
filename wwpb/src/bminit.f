@@ -1,4 +1,7 @@
       SUBROUTINE BMINIT (JOPRT)
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 ***********************************************************************
 *  **BMINIT  Date of last revision:  12/08/05
 *----------------------------------------------------------------------
@@ -33,15 +36,13 @@ C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'PPEPRM.F77'
       INCLUDE 'BMPRM.F77'
 
 C.... Common include files.
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BMCOM.F77'
-      INCLUDE 'BMRRCM.F77' 
+      INCLUDE 'BMRRCM.F77'
       INCLUDE 'BMPCOM.F77'
 
 C.... Variable declarations.
@@ -71,7 +72,7 @@ C
       X= PIE / (24. * 24.)
       DO 100 ISIZ = 1,NSCL
           IF (ISIZ .EQ. 1) THEN
-              LOW= 0 
+              LOW= 0
           ELSE
               LOW= UPSIZ(ISIZ-1)
           ENDIF
@@ -80,10 +81,10 @@ C
           MSBA(ISIZ) = MID * MID * X
           UPBA(ISIZ) = UPSIZ(ISIZ) * UPSIZ(ISIZ) * X
   100 CONTINUE
-                
-                
+
+
 C     Reproductive "increase" amounts for each beetle. Take the average
-c     of the reproductive amount at each dbh. 
+c     of the reproductive amount at each dbh.
 c     These values can be changed by keyword
 
 C      RSLOPE = 1.0/15.0
@@ -93,14 +94,14 @@ c     values in smaller size classes ajm9/05.
       RSLOPE = 1.0/10.0
       REPMAX = 4.0
       DBHMAX = 36.0
-      REPLAC = 6.0 
+      REPLAC = 6.0
       B = 1 - (RSLOPE * REPLAC)
-      
-      LOW= 0 
+
+      LOW= 0
       DO 110 I= 1,NSCL
       IF (I .GT. 1) LOW = UPSIZ(I-1)
         DBHMID= (UPSIZ(I) + LOW) / 2.0
-        
+
         IF (DBHMID .LT. DBHMAX) THEN
            INC(1,I) = (RSLOPE * DBHMID) + B
         ELSE
@@ -108,7 +109,7 @@ c     values in smaller size classes ajm9/05.
         ENDIF
 C
 C INC(2,-) is provisional (we still need to look up the data in Lindhal thesis)
-  
+
         INC(2,I)= INC(1,I)
 
 c       Ips only attacks the part of a tree that is less than 3"dbh so that should
@@ -116,18 +117,18 @@ c       be the reproductive factor. But, Ips does even less well (this may be to
 c       extreme)
 
        INC(3,I)= INC(1,1) * 0.1
-  
+
   110 CONTINUE
-  
+
 C DEAD WOODY POOL PARAMETER INITIALIZATIONS
 C
-c Defaults: breakpoints for the dead woody pool (host) DBH size classes. 
-c           There can be no more than MXDWHZ of these. The calculation 
+c Defaults: breakpoints for the dead woody pool (host) DBH size classes.
+c           There can be no more than MXDWHZ of these. The calculation
 c           that follows computes another rough basal area.
 
       DO 200 ISIZ = 1,MXDWSZ
         IF (ISIZ .EQ. 1) THEN
-            LOW= 3 
+            LOW= 3
         ELSE
             LOW= WPSIZ(ISIZ-1)
         ENDIF
@@ -140,17 +141,17 @@ c         Some fiddling is done here so that the living class is assigned to the
 c         dead class that contains most of the living class.
       JSIZ = 1
       DO 215 ISIZ= 1,NSCL
-        IF (UPSIZ(ISIZ) .LE. 3) THEN 
-           L2D(ISIZ)= 0 
-        ELSE   
-          DIF = (UPSIZ(ISIZ) - WPSIZ(JSIZ)) + 
+        IF (UPSIZ(ISIZ) .LE. 3) THEN
+           L2D(ISIZ)= 0
+        ELSE
+          DIF = (UPSIZ(ISIZ) - WPSIZ(JSIZ)) +
      &                         (UPSIZ(ISIZ-1) - WPSIZ(JSIZ))
-                  
+
           IF (UPSIZ(ISIZ) .LE. WPSIZ(JSIZ)) THEN
               L2D(ISIZ)= JSIZ
           ELSEIF (DIF .LE. 0.0) THEN
               L2D(ISIZ) = JSIZ
-          ELSE                
+          ELSE
               JSIZ = JSIZ + 1
               L2D(ISIZ) = JSIZ
           ENDIF
@@ -163,18 +164,18 @@ C     Standing dead wood, small and large decay rates: Small is <3, large is eve
       SDECRT(1) = EXP(-.08)
       SDECRT(2) = EXP(-.05)
 
-C     Downed dead wood, small and large decay rates: 
+C     Downed dead wood, small and large decay rates:
 
       DDECRT(1) = EXP(-.06)
       DDECRT(2) = EXP(-.03)
-         
-         
+
+
 C     OTHER PARAMETER INITIALIZATIONS
 
-      DENS= .002       !LIGHTNING DENSITY   
+      DENS= .002       !LIGHTNING DENSITY
 
 c     Number of years prior to first master cycle, from which any
-c     inventoried mountain pine beetle records will be used to 
+c     inventoried mountain pine beetle records will be used to
 c     initialize the run. By default, inventory will NOT be used.
 
       DEDYRS = 2
@@ -197,23 +198,23 @@ c Windthrow default values: values can be changed by Keyword.
 
 c Drought model initializations
 
-      WASDRY = .FALSE.      
+      WASDRY = .FALSE.
 
-c     OUTSIDE WORLD initialization. 
+c     OUTSIDE WORLD initialization.
 
 c     Attractiveness constant for outside world begins by being "not done"
       ACDone= .FALSE.
-c     outside world is not floating      
-      UFLOAT   = 1  
+c     outside world is not floating
+      UFLOAT   = 1
       URMAX(1) = 15
       URMAX(2) = 15
       URMAX(3) = 15
       STOCKO   = 100
       RVOND    = 1.0
       RVOD     = 1.0
-c     outside world is on      
+c     outside world is on
       OUTOFF = .FALSE.
-      
+
       CBAO      = -1
       CRVOND    = -1
       CBKPO(1)  = -1
@@ -225,7 +226,7 @@ c     outside world is on
       CBASPO(2) = -1
       CSPO(2)   = -1
 
-      
+
 C     These are attractiveness parameters that could have different
 c     defaults for each beetle type.
       DO 201 I= 1,3
@@ -261,7 +262,7 @@ C
       LBMAIN= .FALSE.
       LBMTRE= .FALSE.
       LBMBKP= .FALSE.
-      LBMVOL= .FALSE.  
+      LBMVOL= .FALSE.
 
 C     OUTPUT FILE HEADERS (SET TO TRUE WHEN HEADER IS PRINTED)
 
@@ -273,7 +274,7 @@ C     OUTPUT FILE HEADERS (SET TO TRUE WHEN HEADER IS PRINTED)
       LPRHD4=.FALSE.   ! BMVOL       (bmv)
 
       LBMSPR= .FALSE.  ! USED IN BMSETP. TRUE WHEN LOC/AREA DATA FOUND IN SPlaaR
-      LDBINIT=.FALSE.  !USED IN BMSETP. TRUE ONCE THE STAND-LEVEL DB-WRITING FLAGS HAVE BEEN INITIALIZED 
+      LDBINIT=.FALSE.  !USED IN BMSETP. TRUE ONCE THE STAND-LEVEL DB-WRITING FLAGS HAVE BEEN INITIALIZED
       LBMSETP=.FALSE.
       BMSTND= 0
       NSSTND= 0

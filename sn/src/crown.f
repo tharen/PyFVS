@@ -1,5 +1,13 @@
       SUBROUTINE CROWN
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use pden_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **CROWN--SN   DATE OF LAST REVISION:  03/31/11
 C----------
@@ -31,35 +39,6 @@ C                MCREQN(1,MAXSP) = 2.0  PWR POWER EQUATION
 C                MCREQN(1,MAXSP) = 3.0  LIN LINEAR EQUATION
 C                MCREQN(1,MAXSP) = 4.0  LOG LOGARITHMIC EQUATION
 C                MCREQN(1,MAXSP) = 5.0  INVERSE OR HYPERBOLIC EQUATION
-C
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-COMMONS
 C
       LOGICAL DEBUG
       REAL CRNEW(MAXTRE),WEIBUL(5,MAXSP)

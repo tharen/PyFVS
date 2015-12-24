@@ -1,5 +1,10 @@
       SUBROUTINE FMVINIT
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use fmfcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMVINIT  FIRE-NE-DATE OF LAST REVISION: 04/23/13
 C----------
@@ -9,25 +14,6 @@ C----------
 C  CALLED FROM: FMINIT
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
-      INCLUDE 'FMFCOM.F77'
-C
-C
-COMMONS
-C
       INTEGER I,J,TFALLCLS(MAXSP),SNAGCLS(MAXSP)
 
       LVWEST    = .FALSE.  ! EASTERN VARIANT
@@ -76,9 +62,9 @@ C----------
       DKR(4,1)  = 0.07 ! gradient
       DKR(5,1)  = 0.03 ! Foster and Lang
       DKR(6,1)  = 0.03 ! Foster and Lang
-      DKR(7,1)  = 0.03 ! Foster and Lang      
-      DKR(8,1)  = 0.03 ! Foster and Lang      
-      DKR(9,1)  = 0.03 ! Foster and Lang      
+      DKR(7,1)  = 0.03 ! Foster and Lang
+      DKR(8,1)  = 0.03 ! Foster and Lang
+      DKR(9,1)  = 0.03 ! Foster and Lang
 C
       DO I = 1,9
         DO J = 2,4

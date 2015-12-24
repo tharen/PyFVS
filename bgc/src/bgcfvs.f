@@ -1,4 +1,8 @@
       SUBROUTINE BGCFVS(X)
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C--------------------
 C     BGCFVS BGC--DATE OF LAST REVISION: 05/29/01
 C                 Revised 11/12/02.  Removing index ISTND, and removing PPE
@@ -7,7 +11,7 @@ C                                    PRGPRM).  AJM
 C                 These changes--also made in BGCGO, BGCGROW, BGCIN, BGCINT,
 C                 BINITIAL, and BGCCOM.f77--remove all PPE funtionality.
 C                 The FVS-BGC code is now, once again, a single stand model.
-C                 Revised 6/3/03 AJM.  Added line re-setting WK2(I) to 0.0 if 
+C                 Revised 6/3/03 AJM.  Added line re-setting WK2(I) to 0.0 if
 C                                      there is no BGC-projected mortality
 C--------------------
 C
@@ -23,14 +27,10 @@ C     X IS FLAG PASSED FROM FVS INDICATING WHICH INCREMENTS ARE READY TO BE UPDA
 C     WHEN X=1, HT, DIAM, AND PROB ARE UPDATED; WHEN X=2, CROWN RATIOS ARE UPDATED.
 C
 C     CALLED FROM: GRADD OF FVS BASE CODE
-C 
-COMMONS
+C
       INCLUDE 'ENTITY.F77'
       INCLUDE 'BGCCOM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
 C      INCLUDE 'PPCNTL.F77'                            ! removed 11/02 ajm
-      INCLUDE 'PRGPRM.F77'
 C
       INTEGER X     ! FLAG FROM FVS DICTATING WHICH INCREMENT IT IS READY TO HAVE BGC UPDATE.
 C     REAL BGC_DG(*), BGC_HG(*)

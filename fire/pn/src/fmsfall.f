@@ -1,6 +1,10 @@
       Subroutine FMSFALL(IYR,KSP,D,ORIGDEN,DENTTL,ISWTCH,
      &                   RSOFT,RSMAL,DFALLN)
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMSFALL--FIRE-PN  DATE OF LAST REVISION: 06/26/12
 C----------
@@ -59,21 +63,6 @@ C              Internal FALLX values can be overridden by the user, via
 C              the SNAGFALL keyword.
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
-COMMONS
-C
       INTEGER ISWTCH, IYR, JADJ, JSML, JYRSOFT, KSP
       LOGICAL DEBUG
       REAL    BASE, D, DENTTL, DFALLN, DZERO, FALLM2, ORIGDEN,
@@ -126,13 +115,13 @@ C  Call fmr6sdcy now because snag decay affects the snag fall rate through
 C  an adjustment factor.  Also, fmr6sdcy holds the dbh breakpoints used
 C  to determine whether a snag is small, or large.
 C----------
-      
+
       CALL FMR6SDCY(KSP, D, JYRSOFT, JADJ, JSML)
-        
+
 C----------
 C  Call fmr6all to determine the snag fall rate.
 C----------
- 
+
       CALL FMR6FALL(KSP, JSML, JADJ, BASE)
       DFALLN = BASE * FALLX(KSP) * DENTTL
 

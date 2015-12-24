@@ -1,5 +1,9 @@
       SUBROUTINE BRECAN(IBRN,HITE,SSTAR,SSTHT,PROP,PIMX,EXPC)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C**********************************************************************
 C  **BRECAN       DATE OF LAST REVISION:  06/05/2014
 C----------------------------------------------------------------------
@@ -21,7 +25,7 @@ C        SSTAR - summed target area for current tree
 C        SSTHT - this years height in meters for current tree
 C                (current height  +  proportion of height growth)
 C        PROP  - proportion of full cycle represented as of current year
-C        PIMX  - proportion trees infected maximum for the stand 
+C        PIMX  - proportion trees infected maximum for the stand
 C     Returned:
 C        EXPC  - expected number of cankers for current tree (record)
 C                this year.
@@ -49,10 +53,6 @@ C
 C**********************************************************************
 C.... Common include files.
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'BRCOM.F77'
 
 C.... Local variable declarations.
@@ -188,8 +188,8 @@ C....       full then skip adding a canker altogether.
                DUP(ICANB,IBRN)=TUP
                GIRDL(ICANB,IBRN)=0.0
                ISTCAN(ICANB,IBRN)=0
- 
-               IF(DEBUG) WRITE(JOSTND,*) 
+
+               IF(DEBUG) WRITE(JOSTND,*)
      &         ' DOUT=',DOUT(ICANB,IBRN),' DUP=',DUP(ICANB,IBRN)
            ENDIF
          ENDIF

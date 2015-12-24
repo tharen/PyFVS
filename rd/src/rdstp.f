@@ -1,5 +1,7 @@
       SUBROUTINE RDSTP (ISL,IISP,DEN,DIAM,RTD)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDSTP       LAST REVISION:  09/03/14
 C----------
@@ -31,19 +33,16 @@ C        Previous revision date noted was March 2, 1995.
 C        Changed (TST + 1E-6) to just TST in equations below because it
 C        is not possible for TST to be zero at this point.
 C   09/03/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
 C.... PARAMETER INCLUDE FILES
 C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 C
 C.... COMMON INCLUDE FILES
 C
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'RDCOM.F77'  
+      INCLUDE 'RDCOM.F77'
       INCLUDE 'RDADD.F77'
 C
 C.... Local variables
@@ -57,11 +56,11 @@ C
       CALL DBCHK(DEBUG,'RDSTP',5,ICYC)
       IF (DEBUG) WRITE (JOSTND,100) ICYC,ISL,IISP,DEN,DIAM,RTD
   100 FORMAT (' Begin RDSTP : ICYC, ISL, IISP, DEN, DIAM, RTD = ',
-     &          I5, I5, I5, F8.3, F8.3, F8.3)  
-     
+     &          I5, I5, I5, F8.3, F8.3, F8.3)
+
 C     EXIT ROUTINE IF HAVE NO INFECTED STUMPS TO ADD
-      
-      IF (DEN .LE. 0.0) RETURN     
+
+      IF (DEN .LE. 0.0) RETURN
 
       IDI = MAXRR
       IF (MAXRR .LT. 3) IDI = IDITYP(IRTSPC(IISP))
@@ -69,7 +68,7 @@ C
 C     ALLOW DISEASE TYPE TO BE USER SET UPON INITIALIZATION
 C
       IF (ISTFLG .EQ. 1) IDI = IRRSP
-      
+
       IST = AMAX0(1,ISTEP)
       IS  = ISPS(IRTSPC(IISP))
       ROTD = RTD * PCOLO(IRTSPC(IISP),IDI)

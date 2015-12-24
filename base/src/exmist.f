@@ -1,5 +1,6 @@
       SUBROUTINE EXMIST
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -38,7 +39,6 @@ C----------
 C----------
 C  PARAMETER INCLUDE FILES.
 C----------
-      INCLUDE 'PRGPRM.F77'
 C----------
 C  VARIABLE DECLARATIONS.
 C----------
@@ -47,6 +47,7 @@ C----------
       REAL ARRAY(7),PRFCUT(MAXSP),WK3(MAXTRE)
       INTEGER ICODE(6),MSPCNT(MAXSP),IARRAY(MAXTRE)
       CHARACTER*8 KEYWRD,NOMIS
+      CHARACTER*1 CBUFF
 C----------
 C  DATA STATEMENTS.
 C----------
@@ -140,10 +141,14 @@ C  MSPPPT - PPE -
 C----------
       ENTRY MSPPPT (WK3,IPNT,ILIMIT)
       GO TO 9000
+      ENTRY MSCHPUT (CBUFF, IPNT, ILIMIT)
+      GO TO 9000
 C----------
 C  MSPPGT - PPE -
 C----------
       ENTRY MSPPGT (WK3,IPNT,ILIMIT)
+      GO TO 9000
+      ENTRY MSCHGET (CBUFF, IPNT, ILIMIT)
       GO TO 9000
 C----------
 C  MISACT
@@ -159,6 +164,7 @@ C----------
       END
 
       REAL FUNCTION MISDGF(ITREE,ISPC)
+      implicit none
 C----------
 C  **MISDGF--MS  Date of last revision:  04/09/91
 C----------
@@ -186,6 +192,7 @@ C----------
       END
 
       REAL FUNCTION MISHGF(ITREE,ISPC)
+      implicit none
 C----------
 C  **MISDGF--MS  Date of last revision:  04/01/11
 C----------

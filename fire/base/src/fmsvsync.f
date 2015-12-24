@@ -1,5 +1,12 @@
       SUBROUTINE FMSVSYNC
-      IMPLICIT NONE
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use svdata_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -7,31 +14,12 @@ C
 C     STAND VISUALIZATION GENERATION
 C     A.H.DALLMANN -- RMRS MOSCOW -- MAY 2000
 C
-C     SYNCHRONIZES THE SV OUTPUT SNAGS WITH THE SNAGS THAT THE FIRE 
+C     SYNCHRONIZES THE SV OUTPUT SNAGS WITH THE SNAGS THAT THE FIRE
 C     MODEL IS KEEPING TRACK OF.
 C
 C     *****  UNDER DEVELOPMENT ******
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
-C
-C
-      INCLUDE 'SVDATA.F77'
       INCLUDE 'SVDEAD.F77'
-C
-C
-COMMONS
 C
       REAL FMTOTAL
       INTEGER D,S
@@ -62,9 +50,9 @@ C     CLEAR OUT OUT TEMP LIST
 
       FMTOTAL = 0.
       SVTOTAL = 0
-    
+
 C     ADD UP ALL OF THE DIFFERENT DENSITIES FROM THE FIRE SNAGS.
-    
+
       DO I=1,NSNAG
          DBHCL = INT(DBHS(I)/2.0+1)
          IF (DBHCL .GT. 19) DBHCL = 19
@@ -81,27 +69,27 @@ C     ADD UP ALL OF THE STANDING SV SNAGS IN EACH CATEGORY OF THE FIRE SNAGS.
         IF (FALLDIR(IS2F(I)).EQ.-1) THEN
 
 C           THIS IS A STANDING SNAG, GET THE DIAMETER CLASS AND SPECIES
-     
+
             DBHCL = INT(ODIA(IS2F(I)) / 2.0 + 1.0)
             IF (DBHCL .GT. 19) DBHCL = 19
 
 C           NOW THAT WE HAVE THE CORRECT DIAMETER CLASS, WE NEED TO
 C           ADD ONE TO THE MATCHING SPECIES-DIAMETER COUNT
-     
+
             CURSVSN(DBHCL,ISNSP(IS2F(I)))=CURSVSN(DBHCL,ISNSP(IS2F(I)))
      >           + 1
 
 C           ADD ONE TO THE SVTOTAL AS WELL.
-C    
+C
             IF (DBHCL .GE. 2) SVTOTAL = SVTOTAL + 1
          ENDIF
 
       ENDDO
-     
+
 C     DISPLAY THE DIFFERENCE BETWEEN THE PROB AND THE OBJECTS.
 
       IF (DEBUG) THEN
-         
+
          DO S=1,MAXSP
             DO D=2,19
                IF (CURFMSN(D,S)+CURSVSN(D,S).GT.0.) THEN
@@ -116,7 +104,7 @@ C     DISPLAY THE DIFFERENCE BETWEEN THE PROB AND THE OBJECTS.
 
       RETURN
       END
-      
+
 
 
 

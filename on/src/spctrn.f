@@ -1,5 +1,8 @@
       SUBROUTINE SPCTRN (SPCIN, ISPC1)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **SPCTRN--ON DATE OF LAST REVISION: 05/05/08
 C----------
@@ -10,11 +13,8 @@ C     RANGE; NON-MATCHES ARE ASSIGNED 49.
 C
 C     THIS IS DUMMY CODE, SINCE THE SPECIES SHOWN HERE ARE ALL IDENTICAL
 C     TO THOSE DECLARED AND INITIALIZED IN BLKDAT; THIS COULD BE USED
-C     TO EXPAND THE ALPHA CODES THAT ARE RECOGNIZED      
+C     TO EXPAND THE ALPHA CODES THAT ARE RECOGNIZED
 C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'CONTRL.F77'      
 
       CHARACTER*(*)SPCIN
       INTEGER   ISPC1
@@ -36,7 +36,7 @@ C
           ISPC1 = 7
 	  CASE ("BF")
           ISPC1 = 8
-c          
+c
         CASE ("SB")
           ISPC1 = 9
 	  CASE ("TA")
@@ -57,7 +57,7 @@ c
           ISPC1 = 17
 	  CASE ("MV")
           ISPC1 = 18
-c          
+c
 	  CASE ("MR")
           ISPC1 = 19
 	  CASE ("CB")
@@ -78,7 +78,7 @@ c
           ISPC1 = 27
 	  CASE ("BE")
           ISPC1 = 28
-c          
+c
 	  CASE ("AW")
           ISPC1 = 29
 	  CASE ("OW")
@@ -99,7 +99,7 @@ c
           ISPC1 = 37
 	  CASE ("HP")
           ISPC1 = 38
-C          
+C
 	  CASE ("HU")
           ISPC1 = 39
 	  CASE ("PG")
@@ -155,14 +155,14 @@ C
 	  CASE ("WI")
           ISPC1 = 64
 !	  CASE ("WI")   ! 3 willow species... so
-!          ISPC1 = 65 ! 65-66 are not really 
+!          ISPC1 = 65 ! 65-66 are not really
 !	  CASE ("WI")   ! used at all
 !          ISPC1 = 66
 	  CASE ("SS")
           ISPC1 = 67
 	  CASE ("AM")
           ISPC1 = 68
-C          
+C
 	  CASE ("JP")
           ISPC1 = 69
 	  CASE ("WP")
@@ -171,7 +171,7 @@ C
           ISPC1 = 71
 	  CASE ("BP")
           ISPC1 = 72
-C         
+C
         CASE DEFAULT ! non-commercial hardwood
           ISPC1 = 49
 	END SELECT

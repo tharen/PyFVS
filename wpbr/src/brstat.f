@@ -1,5 +1,8 @@
       SUBROUTINE BRSTAT
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C**********************************************************************
 C  **BRSTAT       DATE OF LAST REVISION:  06/05/2014
 C----------------------------------------------------------------------
@@ -42,10 +45,7 @@ C**********************************************************************
 
 C.... Common include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BRCOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
 
 C.... Local variable declarations.
 
@@ -255,7 +255,7 @@ C....    (all cankers, lethal cankers, and expected cankers).
          AVLCPT(I4)=SUMNL(I4)/THPROB(I4)
          AVECPT(I4)=SUMEC(I4)/THPROB(I4)
       ENDIF
- 
+
    32 CONTINUE
 
       IF(DEBUG) THEN
@@ -266,7 +266,7 @@ C....    (all cankers, lethal cankers, and expected cankers).
      &         ' PILCA=',F5.3,' AVTCPT=',F7.3,' AVLCPT=',F5.3,
      &         ' AVECPT=',F5.3)
       ENDIF
- 
+
 C.... End of species loop
    33 CONTINUE
 

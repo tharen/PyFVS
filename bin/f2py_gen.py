@@ -41,7 +41,7 @@ if os.name == 'nt':
     args.append('${include_dirs}')
 else:
     # F2PY expects a colon separated list, not semicolon
-    args = args.append(':'.join('${include_dirs}'.split(';')))
+    args.append(':'.join('${include_dirs}'.split(';')))
 
 pymod_skip = '${pymod_skip}'.split(';')
 if pymod_skip[0] != '':
@@ -81,4 +81,4 @@ for fn in wrappers.values():
         open(os.path.join(build_dir, fn), 'w')
 
 # Cmake captures the return values from stdout
-print ';'.join(os.path.join(build_dir, fn).replace('\\','/') for fn in gen_files)
+print(';'.join(os.path.join(build_dir, fn).replace('\\','/') for fn in gen_files))

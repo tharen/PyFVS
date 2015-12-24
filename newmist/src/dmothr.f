@@ -1,9 +1,12 @@
       SUBROUTINE DMOTHR (Sp)
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
-C **DMOTHR -- NISI  Date of last revision: April 12 1994 
+C **DMOTHR -- NISI  Date of last revision: April 12 1994
 C----------------------------------------------------------------------
 C Purpose:
 C   Spread and intensification are modelled in an abstract way. Real
@@ -12,7 +15,7 @@ C etc. This routine uses some rough guesses about the probability of
 C some of these events, combined with guesses about seed production
 C per female plant, and the relationship between DM rating and the
 C density of plants required to achieve that rating. These *guesses*
-C merely get the number of new infections in the ball park. Fine 
+C merely get the number of new infections in the ball park. Fine
 C tuning is based on user-supplied scaling terms applied through the
 C DMSTUN, DMITUN and DMETUN keywords. Once the model is more
 C mature, I hope that the terms put in those keywords are hardwired,
@@ -33,16 +36,16 @@ C----------------------------------------------------------------------
 C
 C Called by:
 C
-C     DMTREG 
+C     DMTREG
 C
 C Other routines called:
 C
 C     [none]
 C
-C Argument list definitions:                        
+C Argument list definitions:
 C
 C     INTEGER   Sp    (I) Species code for the tree species being
-C                          processed. 
+C                          processed.
 C
 C Local variable definitions:
 C
@@ -73,14 +76,11 @@ C     NewInt    DMCOM
 C
 C**********************************************************************
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'                 
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'DMCOM.F77'                 
+      INCLUDE 'DMCOM.F77'
 
 C Subroutine arguments.
 
-      INTEGER   Sp    
+      INTEGER   Sp
 
 C Local variables.
 
@@ -94,7 +94,7 @@ C Local variables.
 
 C General adjustment based on guesses for the processes.
 
-      Factor = .05 * .15 * .5 * 10. * .25 * (MESH ** 3) * TRAJWT 
+      Factor = .05 * .15 * .5 * 10. * .25 * (MESH ** 3) * TRAJWT
 
 C Fine-tuning for user-supplied overall establishment (DMETUN),
 C Spread (DMSTUN) and Intensification (DMITUN).

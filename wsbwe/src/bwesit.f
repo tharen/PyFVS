@@ -1,5 +1,10 @@
-      SUBROUTINE BWESIT 
-      IMPLICIT NONE
+      SUBROUTINE BWESIT
+      use contrl_mod
+      use prgprm_mod
+      use plot_mod
+      use coeffs_mod
+      use arrays_mod
+      implicit none
 C----------
 C  **BWESIT                 DATE OF LAST REVISION:  07/14/10
 C----------
@@ -44,7 +49,6 @@ C   LDEFOL = TRUE IF USER SUPPLIES ANNUAL DEFOLIATION RATES
 C   LREGO  - TRUE IF A REGIONAL OUTBREAK IS ACTIVE, FALSE IF NOT
 C   LSPRAY - TRUE IF INSECTICIDES ARE TO BE SPRAYED IN THE CURRENT YEAR[BWECM2]
 C
-C
 C Revision History:
 C   25-MAY-00 Lance David (FHTET)
 C      .Added debug handling.
@@ -53,21 +57,11 @@ C   30-NOV-00 Lance David (FHTET)
 C      .Added debug statement for option processing.
 C      .Added call to opdone for setprbio between statement lables 80 & 90.
 C   14-JUL-2010 Lance R. David (FMSC)
-C       Added IMPLICIT NONE and declared variables as needed.
 C----------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'COEFFS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECOM.F77'
       INCLUDE 'BWECM2.F77'
-C
-COMMONS
 C
       LOGICAL LSKBIO, LPRBIN, DEBUG
       INTEGER I, I1, I2, IACTK, ICRC1, ICRC2, ICRC3, ICRI, ICROWN,
@@ -180,7 +174,7 @@ C       IF (IACTK.EQ.2156) GOTO 90
 
    10   CONTINUE
 C
-C       GENDEFOL 
+C       GENDEFOL
 C       IF DEFOL OPTION EXISTS, THEN DELETE GENDEFOL.
 
         IF (LDEFOL) THEN
@@ -194,7 +188,7 @@ C
             CALL OPADD (IY(ICYC+1),2150,0,1,PRMS(1),KODE)
             CALL OPINCR (IY,ICYC,NCYC)
           ENDIF
-        ENDIF  
+        ENDIF
         GOTO 90
 C
 C       BWSPRAY - SPRAY OPTION 1, APPLY IN SPECIFIED YEAR.
@@ -226,10 +220,10 @@ C
    40   CONTINUE
 
 C       PRBIO ARRAY IS INITIALIZED FOR FIRST OCCURENCE OF SETPRBIO ONLY.
-C       
+C
         IF (LPRBIN) GOTO 60
 C
-C       INITIALIZE PRBIO.  
+C       INITIALIZE PRBIO.
 C
         DO 50 I=1,6
           DO 50 J=1,9
@@ -276,7 +270,7 @@ C
         DO 119 J=1,9
           DO 119 K=1,4
             POFPOT(I,J,K)=1.0
-  119   CONTINUE 
+  119   CONTINUE
   120 CONTINUE
       ICUMYR=0
       NCUMYR=0
@@ -524,7 +518,7 @@ C
       IF (DEBUG) WRITE (JOSTND,*) 'IN BWESIT: BWTPHA=',BWTPHA
       IF (DEBUG) WRITE (JOSTND,*) 'IN BWESIT: HTT=',HTT
       IF (DEBUG) WRITE (JOSTND,*) 'IN BWESIT: CRT=',CRT
-      
+
       IF (DEBUG) WRITE (JOSTND,*) 'EXIT BWESIT: ICYC = ',ICYC
       RETURN
       END

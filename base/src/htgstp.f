@@ -1,23 +1,11 @@
       SUBROUTINE HTGSTP
-      use arrays_mod, only: barkrat
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      use arrays_mod
+      implicit none
 C----------
 C  $Id$
 C----------
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-COMMONS
 C
       EXTERNAL RANN
       INTEGER MYACT(2)
@@ -25,8 +13,6 @@ C
       INTEGER ISPC,IDT,IACT,NP,ITODO,NTODO
       REAL STDPBR,AVEPRB,PRB,HT1,HT2,H,BRK,BRATIO,X,PKIL,BACHLO
       REAL TOPK,TOPH,D,AF,DTK,CN
-      EQUIVALENCE (WK6(2),HT1),(WK6(3),HT2),(WK6(4),PRB),
-     >            (WK6(5),AVEPRB),(WK6(6),STDPBR)
       DATA MYACT/110,111/
 C
 C     FIND OPTIONS
@@ -45,6 +31,14 @@ C     LOAD PARAMETERS.  NOTE THAT SEVERAL PARAMETERS ARE EQUIVALENCED
 C     TO WK6 THUS THEY ARE LOADED AUTOMATICALLY.
 C
       ISPC=IFIX(WK6(1))
+
+      ! Assignments to replace original EQUIVALENCE
+      ! TODO: Research how these values are assigned to WK6
+      HT1=WK6(2)
+      HT2=WK6(3)
+      PRB=WK6(4)
+      AVEPRB=WK6(5)
+      STDPBR=WK6(6)
 C
 C     SET INDICIES TO SPECIES COUNTERS.
 C
@@ -92,8 +86,7 @@ C     LOAD HEIGHT AND CHECK HEIGHT RANGE.  IF OUT-OF-RANGE, THEN SKIP
 C     TREE RECORD.
 C
       H=HT(I)
-!      BRK=BRATIO(IS,DBH(I),H)
-      BRK=BARKRAT(I)
+      BRK=BRATIO(IS,DBH(I),H)
       IF (H.LE.HT1 .OR. H.GT.HT2) GOTO 100
 C
 C     IF A RANDOM NUMBER IS GREATER THAN THE PROBABILITY OF DAMAGE,

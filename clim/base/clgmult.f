@@ -1,20 +1,16 @@
       SUBROUTINE CLGMULT(TREEMULT)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C
 C     CLIMATE EXTENSION -- COMUTES TREE-LEVEL GROWTH MULTIPLIER
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'CLIMATE.F77'
-C
-COMMONS
 C
       INTEGER I,I1,I2
       REAL TREEMULT(MAXTRE),THISYR,ALGSLP,BIRTHYR,GROW_TD0,GROW_TD1,
@@ -28,7 +24,7 @@ C
       REAL PRMS(2)
       DATA MYACT/2803/
 
-      CALL DBCHK (DEBUG,'CLGMULT',7,ICYC) 
+      CALL DBCHK (DEBUG,'CLGMULT',7,ICYC)
       IF (DEBUG) WRITE (JOSTND,1) LCLIMATE
     1 FORMAT ('IN CLGMULT, LCLIMATE=',L2)
 
@@ -49,22 +45,22 @@ C
       ENDIF
 
 
-C     INSURE THE MULTIPLIER, AND THE REPORTED SPECIES AVERAGE ARE 
+C     INSURE THE MULTIPLIER, AND THE REPORTED SPECIES AVERAGE ARE
 C     INITIALLY 1.0 (NO CLIMATE EFFECT).
 
       TREEMULT(1:ITRN)=1.
       SPGMULT = 0.
-      SPVIAB = 1.     
+      SPVIAB = 1.
       SPSITGM = 1.
-      
+
       IF (.NOT.LCLIMATE) RETURN
 
       IF (DEBUG) WRITE (JOSTND,2) ICYC,IY(ICYC),IXMTCM,IXMAT,
      >           IXDD5,IXGSP,IXD100,IXMMIN,IXDD0,IXPSITE
-    2 FORMAT ('IN CLGMULT, ICYC,IY(ICYC)=',2I5,' IXMTCM,' 
+    2 FORMAT ('IN CLGMULT, ICYC,IY(ICYC)=',2I5,' IXMTCM,'
      >  'IXDD5,IXMAT=',3I4,' IXGSP,IXD100,IXMMIN,IXDD0,IXPSITE=',5I4)
 
-      IF (IXMTCM*IXDD5*IXMAT*IXGSP*IXD100*IXMMIN*IXDD0.EQ.0) 
+      IF (IXMTCM*IXDD5*IXMAT*IXGSP*IXD100*IXMMIN*IXDD0.EQ.0)
      >    RETURN
 
 C     LOAD THE CLIMATE DATA FOR THIS YEAR.
@@ -80,7 +76,7 @@ C     LOAD THE CLIMATE DATA FOR THIS YEAR.
 
       THISYR=FLOAT(IY(ICYC))+(FINT/2)
 
-      MTCM_NOW = ALGSLP (THISYR, FLOAT(YEARS), ATTRS(1,IXMTCM),NYEARS) 
+      MTCM_NOW = ALGSLP (THISYR, FLOAT(YEARS), ATTRS(1,IXMTCM),NYEARS)
       D100_NOW = ALGSLP (THISYR, FLOAT(YEARS), ATTRS(1,IXD100),NYEARS)
       MMIN_NOW = ALGSLP (THISYR, FLOAT(YEARS), ATTRS(1,IXMMIN),NYEARS)
       DD0_NOW  = ALGSLP (THISYR, FLOAT(YEARS), ATTRS(1,IXDD0), NYEARS)
@@ -109,85 +105,85 @@ C     LOAD THE CLIMATE DATA FOR THIS YEAR.
     5 FORMAT ('IN CLGMULT,MTCM_INVYR,D100_INVYR,MMIN_INVYR,',
      >        ' SMI_INVYR=',4F10.4,'PSITE_INVYR,NOW,XGSITE=',3F10.4)
 
-      VSCORE=1.0    
+      VSCORE=1.0
       DO I=1,MAXSP
-        I2 = INDXSPECIES(I)          
+        I2 = INDXSPECIES(I)
         IF (I2.GT.0) THEN
           VSCORE(I) = ALGSLP (THISYR,FLOAT(YEARS),ATTRS(1,I2),NYEARS)
           SPVIAB(I) = VSCORE(I)  ! used in the report generation
           IF (VSCORE(I).GT. 0.5) THEN
-            VSCORE(I) = 1.            
-          ELSE 
+            VSCORE(I) = 1.
+          ELSE
             VSCORE(I)=-.66666667 + VSCORE(I)*3.3333333
           ENDIF
           IF (VSCORE(I).LT. 0.2) VSCORE(I) = 0.2
           IF (DEBUG) WRITE (JOSTND,7) JSP(I),VSCORE(I)
     7     FORMAT ('IN CLGMULT, SP=',A2,' VSCORE= ',F13.5)
-        ENDIF  
+        ENDIF
       ENDDO
 
       DO I=1,ITRN
-      
+
 C       ABIRTH IS AGE, NOT YEAR OF BIRTH.  COMPUTE BIRTH YEAR:
-        
+
         BIRTHYR   = THISYR-ABIRTH(I)
-        
-        MTCM_BIRTH= ALGSLP (BIRTHYR,FLOAT(YEARS),ATTRS(1,IXMTCM), 
+
+        MTCM_BIRTH= ALGSLP (BIRTHYR,FLOAT(YEARS),ATTRS(1,IXMTCM),
      >                      NYEARS)
-        MAT_BIRTH = ALGSLP (BIRTHYR,FLOAT(YEARS),ATTRS(1,IXMAT), 
+        MAT_BIRTH = ALGSLP (BIRTHYR,FLOAT(YEARS),ATTRS(1,IXMAT),
      >                      NYEARS)
-        MMIN_BIRTH= ALGSLP (BIRTHYR,FLOAT(YEARS),ATTRS(1,IXMMIN), 
+        MMIN_BIRTH= ALGSLP (BIRTHYR,FLOAT(YEARS),ATTRS(1,IXMMIN),
      >                      NYEARS)
-        DD0_BIRTH = ALGSLP (BIRTHYR,FLOAT(YEARS),ATTRS(1,IXDD0),  
+        DD0_BIRTH = ALGSLP (BIRTHYR,FLOAT(YEARS),ATTRS(1,IXDD0),
      >                      NYEARS)
-        D100_BIRTH= ALGSLP (BIRTHYR,FLOAT(YEARS),ATTRS(1,IXD100), 
+        D100_BIRTH= ALGSLP (BIRTHYR,FLOAT(YEARS),ATTRS(1,IXD100),
      >                      NYEARS)
-        SMI_BIRTH = ALGSLP (BIRTHYR,FLOAT(YEARS),ATTRS(1,IXDD5),  
+        SMI_BIRTH = ALGSLP (BIRTHYR,FLOAT(YEARS),ATTRS(1,IXDD5),
      >                      NYEARS)   /
-     >              ALGSLP (BIRTHYR,FLOAT(YEARS),ATTRS(1,IXGSP), 
+     >              ALGSLP (BIRTHYR,FLOAT(YEARS),ATTRS(1,IXGSP),
      >                      NYEARS)
-        
+
 C       FROM LEITES ET AL. ECOLOGICAL APPLICATIONS 22(1)-154-165
-C       b0 (intercept)  373.97 
-C       b1 (MTCM_TD)      6.799  
-C       b2 (MTCM_TD^2)   -3.726 
-C       b3 (MTCM)        38.52 
+C       b0 (intercept)  373.97
+C       b1 (MTCM_TD)      6.799
+C       b2 (MTCM_TD^2)   -3.726
+C       b3 (MTCM)        38.52
 C       b4 (MTCM_TD*MTCM)-3.602
-        
+
 C       NOTE THAT MTCM_TD IS ACTUALLY THE DIFFERENCE BETWEEN TWO PLACES, HERE
 C       WE SUBSTITUE TIME FOR SPACE. MTCM IS THE TEMPERATURE AT THE SEED
 C       SOURCE...WE USE IT HERE AS "BIRTH YEAR".
-        
+
         MTCM_TD = MTCM_NOW - MTCM_BIRTH
         GROW_TD0 = 373.97 + 38.52*MTCM_BIRTH
-        GROW_TD1 = 373.97 + 6.799*MTCM_TD - 3.726*MTCM_TD**2 + 
+        GROW_TD1 = 373.97 + 6.799*MTCM_TD - 3.726*MTCM_TD**2 +
      >              38.52 * MTCM_BIRTH    - 3.602*MTCM_BIRTH*MTCM_TD
         IF (GROW_TD0 .LT. 0.05) GROW_TD0 = 0.05
         IF (GROW_TD1 .LT. 0.05) GROW_TD1 = 0.05
         XDF = GROW_TD1/GROW_TD0
-        
-C       FROM LEITES FINAL LARCH MODEL     
+
+C       FROM LEITES FINAL LARCH MODEL
 C       b0 (intercept)     542.20
 C       b1 (mmin.trds)     17.50
 C       b2 (mmin.trds2)    -1.215
 C       b3 (dd0)           -0.1468
 C       b4 (mmin.trds*dd0) -0.0187
-        
-        MMIN_TD = MMIN_NOW - MMIN_BIRTH            
+
+        MMIN_TD = MMIN_NOW - MMIN_BIRTH
         GROW_TD0= 542.20 - 0.1468*DD0_BIRTH
         GROW_TD1= 542.20 + 17.50*MMIN_TD - 1.215*MMIN_TD**2
      >          - 0.1468*DD0_BIRTH - 0.0187*MMIN_TD*DD0_BIRTH
         IF (GROW_TD0 .LT. 0.05) GROW_TD0 = 0.05
         IF (GROW_TD1 .LT. 0.05) GROW_TD1 = 0.05
         XWL = GROW_TD1/GROW_TD0
-        
+
 C       FROM LEITES PRELIMINARY PONDEROSA PINE MODEL
 C       (Intercept)     551.20221
 C       smi.trds        -14.88483
-C       I(smi.trds^2)   -0.58027 
-C       d100            -2.02135 
-C       smi.trds:d100    0.15582 
-        
+C       I(smi.trds^2)   -0.58027
+C       d100            -2.02135
+C       smi.trds:d100    0.15582
+
         SMI_TD = SMI_NOW - SMI_BIRTH
         GROW_TD0= 551.20221 - 2.02135*D100_BIRTH
         GROW_TD1= 551.20221 -14.88483*SMI_TD -0.58027*SMI_TD**2
@@ -195,7 +191,7 @@ C       smi.trds:d100    0.15582
         IF (GROW_TD0 .LT. 0.05) GROW_TD0 = 0.05
         IF (GROW_TD1 .LT. 0.05) GROW_TD1 = 0.05
         XPP = GROW_TD1/GROW_TD0
-                
+
         IF     (PLNJSP(ISP(I)).EQ.'PSME') THEN
           XRELGR=XDF
         ELSEIF (PLNJSP(ISP(I)).EQ.'PICO') THEN
@@ -210,18 +206,18 @@ C       smi.trds:d100    0.15582
           XRELGR=XWL
         ELSEIF (PLNJSP(ISP(I)).EQ.'TSHE') THEN
           XRELGR=XWL
-        ELSE 
+        ELSE
           XRELGR = 1 + ((((XDF+XPP+XWL)/3.) - 1.) *.5)
         ENDIF
-        
+
         IF (ABS(XRELGR-1.0).LT. .005) XRELGR=1.0
-        
+
         ! If the growth effects are above 1, then apply the one
         ! that results in the most growth. Otherwise apply the one
         ! that results in the least growth.
         PS = MIN(XGSITE,XRELGR,VSCORE(ISP(I)))
         IF (PS.GT. 0.99) PS=MAX(XGSITE,XRELGR,VSCORE(ISP(I)))
-        IF (PS .GT. 3.) PS = 3. 
+        IF (PS .GT. 3.) PS = 3.
         TREEMULT(I)=1.+((PS-1.)*CLGROWMULT(ISP(I)))
         IF (TREEMULT(I) .LT. 0) TREEMULT(I) = 0.
         IF (DEBUG) WRITE (JOSTND,10) I,JSP(ISP(I)),BIRTHYR,
@@ -232,8 +228,8 @@ C       smi.trds:d100    0.15582
       ENDDO
       ! Compute SPSITGM for reporting only (this is a vector operation).
       SPSITGM = XGSITE**CLGROWMULT
-      
-C     CREATE THE REPORTED AVERAGE SCORE. 
+
+C     CREATE THE REPORTED AVERAGE SCORE.
 
       SPWTS = 0.
       DO I=1,ITRN
@@ -247,7 +243,7 @@ C     CREATE THE REPORTED AVERAGE SCORE.
           SPGMULT(I)=SPGMULT(I)/SPWTS(I)
         ELSE
           SPGMULT(I)=1.
-        ENDIF    
+        ENDIF
       ENDDO
 
       IF (DEBUG) THEN
@@ -258,7 +254,7 @@ C     CREATE THE REPORTED AVERAGE SCORE.
      >            ' SPSITGM=',F9.3,' SPGMULT=',F9.3,' SPWTS=',F13.2)
         ENDDO
       ENDIF
-      
+
       RETURN
       END
 

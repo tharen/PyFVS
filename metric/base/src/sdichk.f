@@ -1,30 +1,19 @@
       SUBROUTINE SDICHK
-      IMPLICIT NONE
+      use contrl_mod
+      use metric_mod
+      use plot_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C  THIS SUBROUTINE CHECKS TO SEE IF THE INITIAL STAND SDI
 C  IS ABOVE THE SPECIFIED MAXIMUM SDI.  IF IT IS, THE MAXIMUM SDI
 C  IS RESET AND A MESSAGE IS PRINTED.
-C  THIS ROUTINE IS CALLED FROM **SITSET** IN VARIANTS THAT USE   
-C  THE SDI-BASED MORTALITY MODEL.                                
+C  THIS ROUTINE IS CALLED FROM **SITSET** IN VARIANTS THAT USE
+C  THE SDI-BASED MORTALITY MODEL.
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-      INCLUDE 'METRIC.F77'
 COMMONS
 C----------
 C  DEFINITIONS:

@@ -1,5 +1,11 @@
       SUBROUTINE FMCBA (IYR,ISWTCH)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMCBA   FIRE-BM-DATE OF LAST REVISION:  12/04/14
 C----------
@@ -36,16 +42,10 @@ C
 C.... Parameter statements.
 
 C.... Parameter include files.
-      INCLUDE 'PRGPRM.F77'
 Cppe      INCLUDE 'PPEPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... Common include files.
 Cppe      INCLUDE 'PPCNTL.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'FMCOM.F77'
 C.... Variable declarations.
 C
 C     MAXIMUM NUMBER OF VEGETATION CODES; MUST MATCH THE
@@ -74,12 +74,12 @@ C     OR COLD (3).  (FROM FMR6SDCY)
 
       DATA (BMHMC(I), I=   1,  50) /
      & 3, 3, 2, 2, 2, 2, 2, 2, 2, 2,
-     & 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 
+     & 2, 2, 2, 3, 3, 3, 3, 3, 3, 3,
      & 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-     & 2, 3, 3, 2, 3, 2, 2, 2, 3, 3, 
+     & 2, 3, 3, 2, 3, 2, 2, 2, 3, 3,
      & 3, 2, 2, 2, 2, 2, 3, 3, 1, 1/
       DATA (BMHMC(I), I=  51,  92) /
-     & 1, 1, 2, 2, 2, 1, 2, 2, 1, 2, 
+     & 1, 1, 2, 2, 2, 1, 2, 2, 1, 2,
      & 1, 1, 1, 2, 2, 2, 2, 2, 2, 2,
      & 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
      & 2, 2, 2, 2, 2, 2, 3, 2, 2, 2,
@@ -88,19 +88,19 @@ C     OR COLD (3).  (FROM FMR6SDCY)
 C     EACH BM HABITAT CODE MAPS TO EITHER WET (1), MESIC (2) OR DRY (3).  (FROM FMR6SDCY)
 
       DATA (BMWMD(I), I=   1,  50) /
-     & 3, 3, 3, 3, 3, 2, 3, 3, 3, 3, 
-     & 3, 2, 3, 2, 1, 2, 3, 1, 1, 2, 
+     & 3, 3, 3, 3, 3, 2, 3, 3, 3, 3,
+     & 3, 2, 3, 2, 1, 2, 3, 1, 1, 2,
      & 1, 1, 2, 2, 2, 2, 2, 3, 2, 3,
-     & 2, 3, 3, 1, 1, 1, 2, 1, 2, 3, 
+     & 2, 3, 3, 1, 1, 1, 2, 1, 2, 3,
      & 3, 3, 2, 2, 2, 2, 3, 3, 3, 3/
       DATA (BMWMD(I), I=  51,  92) /
-     & 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 
+     & 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
      & 3, 3, 3, 3, 3, 3, 3, 1, 1, 2,
-     & 2, 2, 2, 1, 1, 1, 3, 3, 3, 2, 
+     & 2, 2, 2, 1, 1, 1, 3, 3, 3, 2,
      & 2, 2, 3, 3, 2, 1, 3, 2, 1, 2,
      & 2, 2/
 
-      DATA (((DKRADJ(I,J,K), K=1,3), J=1,3), I=1,3) /           
+      DATA (((DKRADJ(I,J,K), K=1,3), J=1,3), I=1,3) /
      &  1.7,    2,  1.7, 1.49, 1.91, 1.49,  0.75, 0.85,  0.75,
      & 1.35, 1.85, 1.35,    1,  1.7,    1, 0.875,  1.2, 0.875,
      & 1.21, 1.79, 1.21, 1.14, 1.76, 1.14,  0.75, 0.85,  0.75/
@@ -204,18 +204,17 @@ C     DOMINANT SPECIES FOR EACH (OPTIONAL) VEGETATION CODE.
 C     DERIVED FROM VEG CODES IN PCOML ARRAY IN **HABTYP**
 C
       DATA (COVINI(I), I=   1,  50) /
-     &  9,  9,  3,  3,  3,  3,  3,  3,  3,  3,  
+     &  9,  9,  3,  3,  3,  3,  3,  3,  3,  3,
      &  3,  3,  3,  9,  9,  9,  9,  8,  8,  8,
-     &  8,  8,  9,  9,  9,  9,  9,  9,  9,  9, 
-     &  7,  7,  7,  7,  7,  7,  7,  7,  7,  7, 
+     &  8,  8,  9,  9,  9,  9,  9,  9,  9,  9,
+     &  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,
      &  7,  7,  7,  7,  7,  7,  5,  5, 10, 10/
       DATA (COVINI(I), I=  51,  92) /
-     & 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 
+     & 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
      & 10, 10, 10, 10, 10, 10, 10,  4,  4,  4,
-     &  4,  4,  4,  4,  4,  4,  4,  4,  4,  4, 
+     &  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,
      &  4,  4,  4,  4,  4,  4,  4,  4,  4,  7,
      &  7,  7/
-C
 C
       DATA MYACT / 2521, 2548, 2553 /
 C-----------
@@ -336,14 +335,14 @@ C
 
         TEMP = BMHMC(ITYPE)
         MOIST = BMWMD(ITYPE)
-        
+
         DO I = 1,9
           DO J = 1,4
             IF (I .LE. 3) THEN
               K = 1
-            ELSEIF (I .LE. 5) THEN 
+            ELSEIF (I .LE. 5) THEN
               K = 2
-            ELSE 
+            ELSE
               K = 3
             ENDIF
 C       adjust the decay rates only if the user hasn't reset them with FuelDcay
@@ -352,23 +351,23 @@ C       in this case, bump up the decay rate of the smaller wood to that of the 
             IF ((SETDECAY(I,J) .LT. 0) .AND. (ISWTCH .NE. 1)) THEN
               DKR(I,J) = DKR(I,J)*DKRADJ(TEMP,MOIST,K)
               IF (DKR(I,J) .GT. 1.0) DKR(I,J) = 1.0
-              TODUFF(I,J) = DKR(I,J) * PRDUFF(I,J)              
+              TODUFF(I,J) = DKR(I,J) * PRDUFF(I,J)
             ENDIF
           ENDDO
         ENDDO
 
         DO I = 9,2,-1
           DO J = 1,4
-            IF (((DKR(I,J)-DKR(I-1,J)) .GT. 0).AND.(ISWTCH.NE.1)) THEN 
+            IF (((DKR(I,J)-DKR(I-1,J)) .GT. 0).AND.(ISWTCH.NE.1)) THEN
               IF (SETDECAY(I-1,J) .LT. 0) THEN
                 DKR(I-1,J) = DKR(I,J)
-                TODUFF(I-1,J) = DKR(I-1,J) * PRDUFF(I-1,J)                
-              ENDIF             
+                TODUFF(I-1,J) = DKR(I-1,J) * PRDUFF(I-1,J)
+              ENDIF
             ENDIF
           ENDDO
         ENDDO
 
-C     
+C
 Csng      IF (IYR .EQ. IY(1)) THEN
 Cppe      IF (IYR .EQ. MIY(1)) THEN
 C
@@ -383,14 +382,14 @@ C
             STFUEL(ISZ,2) = ALGSLP(PERCOV,XCOV,YLOAD,2)
             STFUEL(ISZ,1) = 0
          ENDDO
-        
+
 C       CHANGE THE INITIAL FUEL LEVELS BASED ON PHOTO SERIES INFO INPUT
 
         CALL OPFIND(1,MYACT(2),J)
         IF (J .GT. 0) THEN
           CALL OPGET(J,2,JYR,IACTK,NPRM,PRMS)
           IF ((PRMS(1) .GE. 0) .AND. (PRMS(2) .GE. 0)) THEN
-            CALL FMPHOTOVAL(NINT(PRMS(1)), NINT(PRMS(2)), FOTOVAL, 
+            CALL FMPHOTOVAL(NINT(PRMS(1)), NINT(PRMS(2)), FOTOVAL,
      >                      FOTOVALS)
             DO I = 1, MXFLCL
               IF (FOTOVAL(I) .GE. 0) STFUEL(I,2) = FOTOVAL(I)
@@ -409,7 +408,7 @@ C           NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.
             CALL RCDSET (2,.TRUE.)
           ENDIF
         ENDIF
-        
+
 C        CHANGE THE INITIAL FUEL LEVELS BASED ON INPUT FROM THE USER
 C        FIRST DO FUELHARD (FUELINIT) THEN FUELSOFT
 
@@ -422,23 +421,23 @@ C        FIRST DO FUELHARD (FUELINIT) THEN FUELSOFT
           IF (PRMS(5) .GE. 0) STFUEL(6,2) = PRMS(5)
           IF (PRMS(6) .GE. 0) STFUEL(10,2) = PRMS(6)
           IF (PRMS(7) .GE. 0) STFUEL(11,2) = PRMS(7)
-          IF (PRMS(8) .GE. 0) STFUEL(1,2) = PRMS(8)          
-          IF (PRMS(9) .GE. 0) STFUEL(2,2) = PRMS(9)           
+          IF (PRMS(8) .GE. 0) STFUEL(1,2) = PRMS(8)
+          IF (PRMS(9) .GE. 0) STFUEL(2,2) = PRMS(9)
           IF (PRMS(1) .GE. 0) THEN
             IF ((PRMS(8) .LT. 0) .AND. (PRMS(9) .LT. 0)) THEN
               STFUEL(1,2) = PRMS(1) * 0.5
               STFUEL(2,2) = PRMS(1) * 0.5
-            ENDIF                 
+            ENDIF
             IF ((PRMS(8) .LT. 0) .AND. (PRMS(9) .GE. 0)) THEN
               STFUEL(1,2) = MAX(PRMS(1) - PRMS(9),0.)
-            ENDIF  
+            ENDIF
             IF ((PRMS(8) .GE. 0) .AND. (PRMS(9) .LT. 0)) THEN
               STFUEL(2,2) = MAX(PRMS(1) - PRMS(8),0.)
-            ENDIF  
-          ENDIF                
-          IF (PRMS(10) .GE. 0) STFUEL(7,2) = PRMS(10) 
-          IF (PRMS(11) .GE. 0) STFUEL(8,2) = PRMS(11) 
-          IF (PRMS(12) .GE. 0) STFUEL(9,2) = PRMS(12)   
+            ENDIF
+          ENDIF
+          IF (PRMS(10) .GE. 0) STFUEL(7,2) = PRMS(10)
+          IF (PRMS(11) .GE. 0) STFUEL(8,2) = PRMS(11)
+          IF (PRMS(12) .GE. 0) STFUEL(9,2) = PRMS(12)
 
 C           DON'T MARK EVENT DONE IF THIS IS A CALL FROM SVSTART--WILL
 C           NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.
@@ -455,9 +454,9 @@ C           NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.
           IF (PRMS(4) .GE. 0) STFUEL(4,1) = PRMS(4)
           IF (PRMS(5) .GE. 0) STFUEL(5,1) = PRMS(5)
           IF (PRMS(6) .GE. 0) STFUEL(6,1) = PRMS(6)
-          IF (PRMS(7) .GE. 0) STFUEL(7,1) = PRMS(7)          
-          IF (PRMS(8) .GE. 0) STFUEL(8,1) = PRMS(8)                           
-          IF (PRMS(9) .GE. 0) STFUEL(9,1) = PRMS(9)         
+          IF (PRMS(7) .GE. 0) STFUEL(7,1) = PRMS(7)
+          IF (PRMS(8) .GE. 0) STFUEL(8,1) = PRMS(8)
+          IF (PRMS(9) .GE. 0) STFUEL(9,1) = PRMS(9)
 
 C         DON'T MARK EVENT DONE IF THIS IS A CALL FROM SVSTART--WILL
 C         NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.
@@ -491,7 +490,7 @@ C        OF BASAL AREA IN THE STAND.
         ENDDO
 
       ENDIF
-      
+
       ENTRY SNGCOE
 
 C     ENTRY POINT FOR SETTING SNAGFALL/DECAY PARAMETERS WHEN FFE

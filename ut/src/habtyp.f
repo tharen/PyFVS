@@ -1,5 +1,9 @@
       SUBROUTINE HABTYP (KARD2,ARRAY2)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **HABTYP--UT   DATE OF LAST REVISION:  01/29/11
 C----------
@@ -9,26 +13,11 @@ C     KODTYP IS ZERO, THE ROUTINE RETURNS 0.
 C
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-COMMONS
 C----------
       INTEGER NR4,I,I2,I1,IHB
 C
 C  IF NR4 CHANGES FROM 363 TO SOMETHING ELSE, THEN THE MAPPING FUNCTION
-C  AND THE CORRESPONDING MAPPING ARRAY DIMENSION USED IN TETONS  
+C  AND THE CORRESPONDING MAPPING ARRAY DIMENSION USED IN TETONS
 C  SUBROUTINE **DGF** MUST ALSO BE CHANGED.
 C
       PARAMETER (NR4=363)
@@ -106,8 +95,8 @@ C 226-250
      &'43101   ', '43103   ', '43104   ', '43151   ', '43152   ',
      &'43155   ', '43203   ', '43204   ', '43205   ', '43206   ',
      &'43207   ', '43222   ', '43223   ', '43224   ', '43228   '/
-      DATA (R4HABT(I),I=251,300)/                               
-C 251-275                                                       
+      DATA (R4HABT(I),I=251,300)/
+C 251-275
      &'43242   ', '43243   ', '43301   ', '43302   ', '43306   ',
      &'43308   ', '43353   ', '43551   ', '43553   ', '43604   ',
      &'43801   ', '43805   ', '43807   ', '43808   ', '43809   ',
@@ -209,7 +198,7 @@ C----------
 C----------
 C  IF NO MATCH WAS FOUND, TREAT IT AS A SEQUENCE NUMBER.
 C----------
-      IF(KODTYP .EQ. 0)THEN 
+      IF(KODTYP .EQ. 0)THEN
         IF(DEBUG)WRITE(JOSTND,*)'EXAMINING FOR INDEX, ARRAY2= ',ARRAY2
         IHB = IFIX(ARRAY2)
         IF(IHB.LE.NR4)THEN
@@ -221,7 +210,7 @@ C----------
 C  FINISH FINAL SETTINGS OR SET DEFAULT CONDITIONS
 C----------
       IF(KODTYP .NE. 0)THEN
-        ICL5=KODTYP 
+        ICL5=KODTYP
         KARD2=R4HABT(ITYPE)
         IF(LSTART)WRITE(JOSTND,311) KARD2
   311   FORMAT(/,T12,'HABITAT TYPE CODE USED IN THIS PROJECTION',

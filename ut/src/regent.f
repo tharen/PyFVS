@@ -1,5 +1,15 @@
       SUBROUTINE REGENT(LESTB,ITRNIN)
-      IMPLICIT NONE
+      use htcal_mod
+      use multcm_mod
+      use pden_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use plot_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **REGENT--UT  DATE OF LAST REVISION:  08/16/12
 C----------
@@ -19,48 +29,12 @@ C  **RCON** TO LOAD MODEL PARAMETERS THAT NEED ONLY BE RESOLVED ONCE.
 C  CALLS **FINDAG TO CALCULATE ASPEN TREE AGE
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'MULTCM.F77'
-C
 C
       INCLUDE 'ESTCOR.F77'
 C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
       INCLUDE 'GGCOM.F77'
 C
-C
-COMMONS
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES:
 C
@@ -97,7 +71,7 @@ C  DATA STATEMENTS.
 C----------
 C RJ 11/28/88 MAX DIAMETER GROWTHS
 C----------
-      DATA DGMAX/ 
+      DATA DGMAX/
      &  2.8,  2.8,  2.4,  3.6,  3.6,  2.5,  3.5,  3.6,  3.6,  2.8,
      &  2.0,  2.0,  2.0,  2.0,  2.0,  2.0,  2.0,  2.5,  2.5,  2.0,
      &  2.0,  2.5,  2.8,  2.0/
@@ -445,7 +419,7 @@ C  OFF, OR IF WYKOFF CALIBRATION DID NOT OCCUR.
 C  NOTE: THIS SIMPLIFIES TO IF(IABFLB(ISPC).EQ.1) BUT IS SHOWN IN IT'S
 C        ENTIRITY FOR CLARITY.
 C----------
-        IF(.NOT.LHTDRG(ISPC) .OR. 
+        IF(.NOT.LHTDRG(ISPC) .OR.
      &     (LHTDRG(ISPC) .AND. IABFLG(ISPC).EQ.1))THEN
               IF(ISPC .EQ. 20)THEN
                 P2 = 1709.7229
@@ -764,9 +738,9 @@ C----------
       IF(CORNEW.LE.0.0) CORNEW=1.0E-4
       HCOR(ISPC)=ALOG(CORNEW)
 C----------
-C  TRAP CALIBRATION VALUES OUTSIDE 2.5 STANDARD DEVIATIONS FROM THE 
+C  TRAP CALIBRATION VALUES OUTSIDE 2.5 STANDARD DEVIATIONS FROM THE
 C  MEAN. IF C IS THE CALIBRATION TERM, WITH A DEFAULT OF 1.0, THEN
-C  LN(C) HAS A MEAN OF 0.  -2.5 < LN(C) < 2.5 IMPLIES 
+C  LN(C) HAS A MEAN OF 0.  -2.5 < LN(C) < 2.5 IMPLIES
 C  0.0821 < C < 12.1825
 C----------
       IF(CORNEW.LT.0.0821 .OR. CORNEW.GT.12.1825) THEN
@@ -821,7 +795,6 @@ C----------
    91 IF(DEBUG)WRITE(JOSTND,9995)ICYC
  9995 FORMAT('LEAVING SUBROUTINE REGENT  CYCLE =',I5)
       RETURN
-C
 C
       ENTRY REGCON
 C----------

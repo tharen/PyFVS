@@ -1,4 +1,7 @@
       SUBROUTINE BMCBET(ABETA, MINSIZE, MAXSIZE, BETA)
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 
 C     CALLED BY: BMISTD
 C     CALLS: FUNCTIONS ALNGAM AND BETAIN
@@ -27,13 +30,11 @@ C     CALLS: FUNCTIONS ALNGAM AND BETAIN
 
 C     PARAMETER INCLUDE FILE
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'PPEPRM.F77'
       INCLUDE 'BMPRM.F77'
 
 C     COMMON INCLUDE FILES
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BMCOM.F77'
 
 C     FUNCTION DEFINITIONS
@@ -82,8 +83,8 @@ c			could potentially be attacked)
       DO 12 I=1, NSCL
 	BETA(I)=1E-5
    12 CONTINUE
-C...    
-        
+C...
+
       MINX=REAL(MINSIZE)-HALF
       MAXX=REAL(MAXSIZE)+HALF
       LOGBETA=ALNGAM(A,IFAULT) + ALNGAM(B, IFAULT) - ALNGAM(A+B,IFAULT)
@@ -116,10 +117,10 @@ C...
 
       RETURN
       END
-	    	  		
+
 c
 *********************************************************************************
-* This file is copy from Statlib on the WWW with address 
+* This file is copy from Statlib on the WWW with address
 * http://lib.stat.cmu.edu/apstat/245. It is incoporated into BMCBET to calculate
 * the weight to determine the probablity of beetle attacks by diameter classes.
 * Adoption date: 4/22/98
@@ -129,10 +130,8 @@ c This file contains Algorithm AS 245 is gives an accuracy of about
 c 10-12 significant decimal digits except for small regions around X = 1 and
 c X = 2, where the function goes to zero.
 c
-c
-c
       REAL FUNCTION ALNGAM(XVALUE, IFAULT)
-C
+      implicit none
 C     ALGORITHM AS245  APPL. STATIST. (1989) VOL. 38, NO. 2
 C
 C     Calculation of the logarithm of the gamma function
@@ -242,10 +241,11 @@ C
 
 
       REAL FUNCTION BETAIN(X, P, Q, BETA, IFAULT)
+      implicit none
       IMPLICIT REAL (A-H, O-Z)
 
 c***      implicit double precision (a-h, o-z)
-c    
+c
 c    ***************************************************************************
 c    This is an algorithm copied from Statlib on the internet. The web site
 c    for this algorithm is http://lib.stat.cmu.edu/apstat/63

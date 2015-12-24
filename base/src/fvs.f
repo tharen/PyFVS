@@ -1,5 +1,13 @@
       SUBROUTINE FVS(IRTNCD)
-      IMPLICIT NONE
+      use pden_mod
+      use arrays_mod
+      use workcm_mod
+      use contrl_mod
+      use econ_mod
+      use outcom_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -18,34 +26,6 @@ C
 C     PHONE (208) 882-3557
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'ECON.F77'
-C
-C
-      INCLUDE 'WORKCM.F77'
-C
-C
-COMMONS
-C
 
 !Python F2PY Interface Directives
 !f2py intent(out) :: irtncd
@@ -68,6 +48,11 @@ C
 C     ******************     EXECUTION BEGINS     ******************
 C
       DEBUG=.FALSE.
+C-----------
+C  SEE IF WE NEED TO DO SOME DEBUG.
+C  NEEDED FOR STOP/RESTART DEBUG OPTION TO CONTINUE.
+C-----------
+      CALL DBCHK (DEBUG,'MAIN',4,0)
 
 C     Check the current return code, if -1 the cmdLine has never been processed.
 
@@ -426,7 +411,7 @@ C
       CALL DFBOUT
       CALL TMOUT
       CALL BWEOUT
-      CALL RDROUT
+C      CALL RDROUT ! RD output now handled by GENPRT 12/5/14 LD
       CALL BRROUT
 C
       CALL GENPRT

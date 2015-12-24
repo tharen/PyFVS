@@ -1,5 +1,10 @@
       SUBROUTINE FMVINIT
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use fmfcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C
 C  $Id$
 C
@@ -18,15 +23,7 @@ C----------
 *
 ***********************************************************************
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
       INCLUDE 'BCPLOT.F77'
-C
-COMMONS
 C
       INTEGER I,J
 
@@ -57,12 +54,12 @@ C
       LOWDBH(6) = 40.0
       LOWDBH(7) = 50.0
 C----------
-C  SET POTENTIAL FIRE TEMPERATURES AND WINDSPEEDS      
+C  SET POTENTIAL FIRE TEMPERATURES AND WINDSPEEDS
 C----------
       PREWND(1)=20.
       PREWND(2)=6.
       POTEMP(1)=70.
-      POTEMP(2)=70.      
+      POTEMP(2)=70.
 
 c     Annual decay rates (proportion lost/yr) are taken from Kurz et al. 2009
 c     Ecological Modelling 220: 480-504, Table 4
@@ -303,7 +300,7 @@ C         ponderosa pine
 C         BIRCH - paper birch from ie variant
           CASE (11)
             V2T(I)     =  29.9
-            LEAFLF(I)  =   1.0 
+            LEAFLF(I)  =   1.0
             TFALL(I,3) =  15.0
             ALLDWN(I)  = 100.0
             DECAYX(I)  =   1.0
@@ -359,7 +356,7 @@ C         other conifer (use douglas-fir)
 C         other hardwood (use birch from above)
           CASE (15)
             V2T(I)     =  29.9
-            LEAFLF(I)  =   1.0 
+            LEAFLF(I)  =   1.0
             TFALL(I,3) =  15.0
             ALLDWN(I)  = 100.0
             DECAYX(I)  =   1.0

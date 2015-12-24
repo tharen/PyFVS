@@ -1,5 +1,9 @@
       SUBROUTINE FMTDEL (IVAC,IREC)
-      IMPLICIT NONE
+      use fmcom_mod
+      use arrays_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -12,30 +16,13 @@ C
 C  CALLED BY :
 C     TREDEL
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
-COMMONS
-C
       INTEGER IREC,IVAC,JJ
 
       IF (.NOT. LFMON) RETURN
 
 C     fmprob and fmicr MAY not need to be compressed, tre-del'ed, etc???
 
-      FMPROB(IVAC) = FMPROB(IREC)       
+      FMPROB(IVAC) = FMPROB(IREC)
       FMICR(IVAC)  = FMICR(IREC)
 
       OLDHT(IVAC)  = OLDHT(IREC)

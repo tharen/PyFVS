@@ -1,5 +1,8 @@
       SUBROUTINE DUBSCR(LVER,ISPC,XC,D,H,BAX,BAL,CR)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -11,11 +14,6 @@ C  USED TO REPLACE CROWN RATIO ESTIMATES FOR ALL TREES THAT
 C  CROSS THE THRESHOLD BETWEEN THE SMALL AND LARGE TREE MODELS.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'BCPLOT.F77'
 
 COMMONS
@@ -63,6 +61,6 @@ C     V2
       ENDIF
       IF(CR .LT. 0.05) CR = 0.05
       IF(CR .GT. 0.95) CR = 0.95
-      
+
       RETURN
       END

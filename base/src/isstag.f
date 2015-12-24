@@ -1,5 +1,6 @@
       SUBROUTINE ISSTAG
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -10,16 +11,7 @@ C
 C   N.L.CROOKSTON - INT MOSCOW - JUNE 1996 AND WITH
 C   A.R.STAGE - INT MOSCOW - JUNE 1997
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'SSTGMC.F77'
-C
-C
-COMMONS
 C
       LOGICAL LON,LPRT
       INTEGER I,J
@@ -49,5 +41,5 @@ C     ENTRY USED TO REQUEST STRUCTURE CLASSIFICATION WITHOUT KEYWORDS
 
       LCALC = LON
       LPRNT = LPRT
-      
+
       END

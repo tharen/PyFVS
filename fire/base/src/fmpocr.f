@@ -1,5 +1,12 @@
       SUBROUTINE FMPOCR(IYR,ICALL)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -21,17 +28,10 @@ C  THE CALCULATIONS
 C
 C     PARAMETER INCLUDE FILES.
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C     COMMON INCLUDE FILES.
 
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'PLOT.F77'
 
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
 
 C     VARIABLE DECLARATIONS.
 
@@ -55,8 +55,8 @@ C
       ENDDO
 
 C----------
-C SET VARIABLES AND INSERT CODE TO COMPUTE RELATIVE DENSITY FOR NEW 
-C WEIBULL FUNCTION FOR BLACK HILLS PONDEROSA PINE.  
+C SET VARIABLES AND INSERT CODE TO COMPUTE RELATIVE DENSITY FOR NEW
+C WEIBULL FUNCTION FOR BLACK HILLS PONDEROSA PINE.
 C SEE KEYSER AND SMITH, FOREST SCIENCE 56(2) 2010
 C RELATIVE DENSITY IS IN METRIC UNITS.
 C----------
@@ -67,8 +67,8 @@ C----------
       WTRADJ = 0
       TSCL = 0
       SECINT = 0
-      DO I = 1,ITRN 
-        DCM = DBH(I)*2.54   
+      DO I = 1,ITRN
+        DCM = DBH(I)*2.54
         MSDI = MSDI + ((FMPROB(I)*2.47)*(DCM/25.4)**1.6)
       ENDDO
       MRD = MSDI / 1111.97
@@ -84,23 +84,23 @@ C----------
           LBHPP = .FALSE.
           SELECT CASE (VVER(1:2))
           CASE ('SM','SP','BP','SF','LP','CR')
-            IF ((KODFOR .EQ. 203 .OR. KODFOR .EQ. 207) .AND. 
-     &          (ISP(I) .EQ. 13)) LBHPP = .TRUE.                    
+            IF ((KODFOR .EQ. 203 .OR. KODFOR .EQ. 207) .AND.
+     &          (ISP(I) .EQ. 13)) LBHPP = .TRUE.
           CASE ('NI','IE','EM','KT')
-            IF (ISP(I) .EQ. 10) LBHPP = .TRUE.                      
+            IF (ISP(I) .EQ. 10) LBHPP = .TRUE.
           END SELECT
-        
+
           IF (.NOT.(LBHPP)) THEN
- 
+
             CRBOT = HT(I) * (1.0 - (FLOAT(FMICR(I)) * 0.01))
             IF (CRBOT.LT.0.) CRBOT=0.0
-            
+
             ADCRWN = (CROWNW(I,0) + CROWNW(I,1) * 0.5) *
      >        FMPROB(I) / (HT(I) - CRBOT)
-            
+
             I1 = INT(CRBOT) + 1
             I2 = INT(HT(I)) + 1
-            
+
             IF (DEBUG) WRITE (JOSTND,10) I,ADCRWN,HT(I),FMICR(I),
      >        CRBOT,I1,I2,CROWNW(I,0),CROWNW(I,1)
    10       FORMAT (' FMPOCR, I=',I4,' ADCRWN=',F9.4,' HT=',F7.2,
@@ -127,7 +127,7 @@ C----------
                 ENDIF
               ENDDO
             ENDIF
-            
+
           ELSE  ! Black Hill PP uses special shape distribution
             LCR = (FLOAT(FMICR(I)) * 0.01)
             CRBIO = (CROWNW(I,0) + CROWNW(I,1) * 0.5) * FMPROB(I)
@@ -139,7 +139,7 @@ C            WRITE(20,*) 'LCR,CRBIO,CRBOT,'
 C            WRITE(20,*) LCR,',',CRBIO,',',CRBOT
 C
             IF (CRBOT.LT.0.) CRBOT=0.0
-C          
+C
             I1 = INT(CRBOT) + 1
             I2 = INT(HT(I)) + 1
             IF ((I2 - HT(I)) .GE. 1) I2 = I2 - 1
@@ -154,13 +154,13 @@ C----------
 C THE NEW WEIBUL STUFF
 C ESTIMATE THE WEIBULL PARAMETERS B AND C FOR THE TREE
 C B = SHAPE PARAMTER AND C = SCALE PARAMETER
-C MRD = SDI RELATIVE DENSITY AND LCR = LIVE CROWN RATIO 
+C MRD = SDI RELATIVE DENSITY AND LCR = LIVE CROWN RATIO
 C----------
               WEIBB = 7.1386 - (0.0608 * (HT(I) / 3.28))
-              WEIBC = 3.3126 - (0.0214 * (HT(I) / 3.28)) - 
+              WEIBC = 3.3126 - (0.0214 * (HT(I) / 3.28)) -
      >          (1.1622 * MRD)
 C----------
-C DETERMINE THE ADJUSTMENT FOR THE WEIBULL TRUNCATION 
+C DETERMINE THE ADJUSTMENT FOR THE WEIBULL TRUNCATION
 C----------
               WTRADJ = 1 - EXP(-((10/WEIBB)**WEIBC))
 C              WRITE(20,*) 'WEIBB ,', WEIBB
@@ -169,15 +169,15 @@ C              WRITE(20,*) 'WTRADJ ,', WTRADJ
 C----------
 C DETERMINE THE AMOUNT OF FOLIAGE IN EACH 1 FOOT SECTION OF CROWN.
 C SCALE FEET TO A CONTIOUS X VARIABLE FROM 1 TO 10 FOR WEIBULL.
-C DETERMINE THE PROPORTION OF CROWN MASS WITHIN EACH SECTION BY 
+C DETERMINE THE PROPORTION OF CROWN MASS WITHIN EACH SECTION BY
 C SUBTRACTION. MULTIPLY THE PROPORTION BY TOTAL CROWN MASS
 C   TSCL = CROWN LENGTH
 C   SECINT = INTERVAL FOR 1 FOOT SECTION BOUNDARIES SCALED TO 10
 C   SECBND = 1 FOOT SECTION BOUNDARIES SCALED TO 10
-C   WPROP = PROPORTION OF TOTAL FUEL MASS IN A 1 FOOT SECTION 
-C   K = COUNTER (NOT USED BUT HELPS INTERPRET OUTPUT 
+C   WPROP = PROPORTION OF TOTAL FUEL MASS IN A 1 FOOT SECTION
+C   K = COUNTER (NOT USED BUT HELPS INTERPRET OUTPUT
 C----------
-C SET VARIABLES          
+C SET VARIABLES
 C----------
               TSCL = I2-I1
               SECINT =  10.0 / (TSCL + 1) 
@@ -191,19 +191,19 @@ C----------
 C              WRITE(20,*) 'TSCL ,', TSCL
 C              WRITE(20,*) 'SECINT ,', SECINT
 C----------
-C COMPUTE BIOMASS FOR EACH FOOT OF TREE CROWN         
+C COMPUTE BIOMASS FOR EACH FOOT OF TREE CROWN
 C----------
               DO J = I2,I1,-1
                 SECBND = SECBND + SECINT
                 IF (J.EQ.I2) THEN
                   WPROP(J) = (1 - EXP(-((SECBND/WEIBB)**WEIBC)))
-                ELSE 
-                  WPROP(J) = (1 - EXP(-((SECBND/WEIBB)**WEIBC))) - 
+                ELSE
+                  WPROP(J) = (1 - EXP(-((SECBND/WEIBB)**WEIBC))) -
      >              (1 - EXP(-(((SECBND-SECINT)/WEIBB)**WEIBC)))
                 ENDIF
 C                WRITE(20,*) 'K ,', K
                 K  = K + 1
-                ADCRN(J) = (((CROWNW(I,0) + CROWNW(I,1) * 0.5) * 
+                ADCRN(J) = (((CROWNW(I,0) + CROWNW(I,1) * 0.5) *
      >            FMPROB(I)) * WPROP(J)) / WTRADJ
                 ADCRWN = ADCRWN + ADCRN(J)
 C                WRITE(20,*) 'J ,', J
@@ -221,7 +221,7 @@ C----------
                 ENDDO
               ENDIF
             ENDIF
-          ENDIF 
+          ENDIF
         ELSE
           IF (DEBUG) WRITE (JOSTND,11) I,HT(I),FMICR(I)
    11     FORMAT (' FMPOCR, I=',I4,' HT=',F7.2,' FMICR=',I3)
@@ -236,15 +236,15 @@ C
       ENDDO
       TCLOAD = TCLOAD / 43560.0   ! CONVERT LBS/ACRE TO LBS/SQFT
       IF (DEBUG) WRITE (JOSTND,*) 'TCLOAD = ', TCLOAD
-          
+
 C     PASS CANOPY PROFILE INFORMATION TO DATABASE TABLE, IF REQUESTED.
 C     ONLY PRINT IT FOR POST-ACTIVITY VALUES.
 
       IF (IYR .LT. ICFPB .OR. IYR .GT. ICFPE) GOTO 14
-   
+
       IF (ICALL .EQ. 2) CALL DBSFMCANPR(IYR, CRFILL, NPLT)
    14 CONTINUE
-   
+
 C     CALCULATE THE 13-FT RUNNING AVERAGE. THE MAX VALUE OF THE MEAN
 C     IS THE CROWN BULK DENSITY. THE LOWEST HEIGHT AT WHICH
 C     MEAN > 30 LBS/ACRE-FT (CBHCUT) IS THE CROWN BASE HEIGHT
@@ -355,7 +355,7 @@ C     CHANGE THE CBD TO KG/M3:
 C     MULTIPLY BY LBTOKG AND DIVIDE BY (ACRETOM2 * FTTOM)
 C
       CBD = CBD * 0.45359237 / (4046.856422 * 0.3048)
-      
+
 C     CAP CBD AT 0.35 - S. REBAIN - SEPT 2005
       IF (CBD .GT. 0.35) CBD = 0.35
 

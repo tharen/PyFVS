@@ -1,5 +1,14 @@
       SUBROUTINE HTGF
-      IMPLICIT NONE
+      use htcal_mod
+      use multcm_mod
+      use pden_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use plot_mod
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **HTGF--ON  DATE OF LAST REVISION:  11/07/12
 C    ON: 02/27/06
@@ -13,25 +22,11 @@ C  IS CALLED FROM **RCON** TO LOAD SITE DEPENDENT CONSTANTS
 C  THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'COEFFS.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'MULTCM.F77'
-      INCLUDE 'PDEN.F77'
-      INCLUDE 'HTCAL.F77'
-      INCLUDE 'METRIC.F77'
-C
-COMMONS
-C
       LOGICAL DEBUG
       INTEGER I,ISPC,I1,I2,I3,IS,ITFN
       REAL SCALE,BA10,BARK,BRATIO,DBH10,XHT,XHT2,HTNOW,HT10,GM,TEMHTG
       REAL XTREES,SUMDBHSQ,X,QMD10
-      
+
 C----------
 C  SEE IF WE NEED TO DO SOME DEBUG.
 C----------

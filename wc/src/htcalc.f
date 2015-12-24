@@ -1,5 +1,7 @@
       SUBROUTINE HTCALC(SINDX,ISPC,AG,HGUESS,JOSTND,DEBUG)
-      IMPLICIT NONE
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 
 !f2py intent(in) :: sindx,ispc,ag
 !f2py intent(hide) :: jostnd,debug
@@ -13,15 +15,6 @@ C AGE; IT IS USED TO CALCULATE POTENTIAL HEIGHT AND SITE WHITE OAK IS NOT
 C BASED DIRECTLY ON SI AND AGE, CALCULATED IN HTGF
 C----------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-COMMONS
 C----------
       LOGICAL DEBUG
       INTEGER ISPC,IISPC,JOSTND

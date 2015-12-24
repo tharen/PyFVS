@@ -1,5 +1,7 @@
       BLOCK DATA RDBLK1
-      IMPLICIT NONE
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDBLK1-BM     LAST REVISION:  08/27/14
 C----------
@@ -10,14 +12,10 @@ C     extension to FVS.
 C
 C  Previous revision date 06/05/09
 C
-COMMONS
-C
 
 C.... PARAMETER INCLUDE FILES
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
-      INCLUDE 'METRIC.F77'
 
 C.... COMMON INCLUDE FILES
 
@@ -30,7 +28,7 @@ C.... COMMON INCLUDE FILES
 C.... The array IRTSPC is used to index the species dependent arrays
 C.... HABFAC, PNINF, PKILLS, RRJSP, ISPS, DBIFAC, HTIFAC, PROOT,
 C.... RSLOP, ROWDOM, ROWIBP, RRPSWT, SSSFAC, IDITYP, PCOLO.
-C.... In the root disease model, the defaults for these variables 
+C.... In the root disease model, the defaults for these variables
 C.... are indexed as follows :
 C....
 C.... Species #|  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 |
@@ -49,9 +47,9 @@ C.... IRTSPC can be modified for different variants of FVS so
 C.... that species match between FVS and the root disease
 C.... model.
 C
-C RD     
+C RD
 C INDX SP   SPECIES LIST FOR BLUE MOUNTAINS VARIANT.
-C         
+C
 C   1  WP   1 = WESTERN WHITE PINE   119 WP  PIMO3  PINUS MONTICOLA
 C   2  WL   2 = WESTERN LARCH        073 WL  LAOC   LARIX OCCIDENTALIS
 C   3  DF   3 = DOUGLAS-FIR          202 DF  PSME   PSEUDOTSUGA MENZIESII
@@ -82,5 +80,5 @@ C.... The following IRTSPC is used with variant BM 18 species :
 
       DATA IOUNIT /22/
       DATA IRUNIT /18/
-      
+
       END

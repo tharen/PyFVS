@@ -1,9 +1,12 @@
       SUBROUTINE MPBGO(L)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **MPBGO         DATE OF LAST REVISION:  06/14/13
 C----------
-C
 C
 C     L     = TRUE WHEN THE MOUNTAIN PINE BEETLE MODEL IS TO BE CALLED
 C
@@ -17,36 +20,18 @@ C   02/26/88 Last noted revision date.
 C   08/06/01 Lance R. David (FHTET)
 C     Initialization of logical variable L.
 C   07/02/10 Lance R. David (FMSC)
-C     Added IMPLICIT NONE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'MPBCOM.F77'
-C
-C
-COMMONS
 C
       LOGICAL L,NOERR
       INTEGER I, MYACTS(1), NTODO
       REAL  PROTBK, X
-      
+
       DATA MYACTS /555/
 
       L = .FALSE.
-      
+
       IF (.NOT.LMPB1) RETURN
       NACLAS = 0
       PRBMPB(ICYC) = 0.0

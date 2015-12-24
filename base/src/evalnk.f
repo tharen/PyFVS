@@ -1,5 +1,6 @@
       SUBROUTINE EVALNK (JOSTND,IEN,IALNK)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -10,16 +11,7 @@ C     THAT CORRESPONDS TO THE EVENT.
 C
 C     EVENT MONITOR ROUTINE - NL CROOKSTON - JAN 1987 - MOSCOW, ID
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'OPCOM.F77'
-C
-C
-COMMONS
 C
       INTEGER IALNK,IEN,JOSTND,N,I
 C

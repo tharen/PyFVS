@@ -1,4 +1,10 @@
       SUBROUTINE RDIN(PASKEY,ARRAY,LNOTBK,LKECHO)
+      use contrl_mod
+      use metric_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDIN--IE        LAST REVISION:  06/03/10
 C----------
@@ -42,12 +48,11 @@ C     LNOTBK - ELEMENT IS TRUE IF FIELD IS NOT BLANK
 C
 C  Local Variables :
 C
-C
 C  Common Block Variables Used :
 C
 C  Revision History :
 C     05/01/97 - Matthew K. Thompson (FHTET)
-C                Fixed an error with setting the disease type in the   
+C                Fixed an error with setting the disease type in the
 C                PLOTINF keyword.
 C     05/28/97 - Matthew K. Thompson (FHTET)
 C                Removed keyword DATELIST and call to subroutine RDTLS.
@@ -56,7 +61,7 @@ C                Put in warning message print to output file when RRTYPE
 C                is not used to specify disease and default disease type,
 C                annosus is used. new logical (LRTYPE)
 C     01/18/00 - Lance David (FHTET)
-C                Inserted a keyword spaceholder in position 27 of array 
+C                Inserted a keyword spaceholder in position 27 of array
 C                TABLE and increased the array size to 42. Removal of the
 C                keyword that occupied this space and reducing the array
 C                size (possibly mod dated 05/38/97) caused the FVS option
@@ -65,7 +70,7 @@ C                Schedule and Summary reports for all Root Disease activity
 C                keywords in positions 27-42 of array TABLE.
 C     03/20/00 - Lance David (FHTET)
 C                Replaced the literals in option processor calls with
-C                references to array MYACT. 
+C                references to array MYACT.
 C     08/03/00 - Nick Crookston (RMRS)
 C                Fixed up some format statements. (Who coded the old
 C                H edit discriptor in 907?).
@@ -74,7 +79,7 @@ C     Added use of FVS subroutine UPCASE to eliminate case sensitivity in
 C     COMMENT's "END" keyword processing.
 C  06-JUL-01 Lance R. David (FHTET)
 C     Moved several local variables (IDOBB, LBBON and LRTYPE) to RDCOM
-C     and their initialization to RDINIT. 
+C     and their initialization to RDINIT.
 C     The purpose of this change is to allow RD keywords to occur
 C     in multiple sets/blocks within the FVS keyword set. That means the
 C     that certain variables cannot be re-initialized each time this
@@ -82,9 +87,9 @@ C     routine is entered which is triggered by the RDIN keyword.
 C  06-AUG-01 Lance R. David (FHTET)
 C     Handling of tree specie code, number and alpha, (ISPC and KARD(2)) for
 C     BBTYPEx keywords were not set when field 2 of keyword was blank. This
-C     was a problem (undefined variable) for the keyword reporting statements.  
+C     was a problem (undefined variable) for the keyword reporting statements.
 C  13-AUG-02 Lance R. David (FHTET)
-C     Added call to FVS routine GETSED in processing of RSEED keyword 
+C     Added call to FVS routine GETSED in processing of RSEED keyword
 C     for random seeding of the random number generator when field 1 is 0.
 C  10-NOV-2003 Lance R. David (FHTET)
 C     Added LFLAG to KEYRDR call statement argument list.
@@ -96,18 +101,13 @@ C..........................................................................
 C
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 
 C.... Common include files.
 
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'RDADD.F77'
-      INCLUDE 'METRIC.F77'
 
 C.... Local variable declarations.
 
@@ -172,7 +172,7 @@ C     DATA TABLE, alphabetically by keyword
 C
 C     keyword  array index
 C
-C     --RDv3--  27    Put in as a place holder. If removed, indexing in FVS 
+C     --RDv3--  27    Put in as a place holder. If removed, indexing in FVS
 C                     option processor routines must also be corrected.
 C     BBCLEAR   41
 C     BBOUT     35
@@ -281,7 +281,7 @@ C                                3 = ARMILLARIA
 C                                4 = PHELLINUS
 C
       IDT = 1
-      IPOINT = MINRR 
+      IPOINT = MINRR
 
       IF (LNOTBK(1)) IDT = INT(ARRAY(1))
 
@@ -325,7 +325,7 @@ C.... STATIC SPREAD MODEL
          IF (LNOTBK(4)) PRMS(3) = ARRAY(4)
       ENDIF
 
-      IF(LKECHO)WRITE(JOSTND,100) KEYWRD, IDT 
+      IF(LKECHO)WRITE(JOSTND,100) KEYWRD, IDT
   100 FORMAT(/1X,A8,'   STARTING IN YEAR: ',I5,'   USE THE STATIC ',
      >        'SPREAD MODEL')
 
@@ -465,7 +465,6 @@ C             THIS DIAMETER AND GREATER WILL BE REMOVED WITH THE
 C             EFFICIENCY STATED IN FIELD 2.  IF LEFT BLANK, MINIMUM
 C             DBH IS SET TO 0.
 C
-C
       IDT = 1
       IRRPSH = 0
 
@@ -547,9 +546,9 @@ C
       IDI = MINRR
       IF (LNOTBK(7)) IDI = INT(ARRAY(7))
 C
-C     Modification April 17, 1998 (RNH APR98) to correct setting of 
+C     Modification April 17, 1998 (RNH APR98) to correct setting of
 C     root disease type and number of centers (ie. RRMAX and RRMIN
-C     when RRINIT keyword is used without the RRTYPE keyword.  
+C     when RRINIT keyword is used without the RRTYPE keyword.
 C
 C      MAXRR= IDI
 C
@@ -578,7 +577,7 @@ C.... IN.  CHECK THAT ONLY 100, AT MOST CENTERS ARE READ IN
             PCENTS(IDI,IC,1) = PCENTS(IDI,IC,1) * MTOFT
             PCENTS(IDI,IC,2) = PCENTS(IDI,IC,2) * MTOFT
             PCENTS(IDI,IC,3) = PCENTS(IDI,IC,3) * MTOFT
-         ENDIF   
+         ENDIF
 
          IF (PCENTS(IDI,IC,1) .LE. DIMEN) GOTO 506
 
@@ -626,7 +625,7 @@ C.... ARRAY(2) AND THE TOTAL DISEASED AREA IN ARRAY(6)
          IF (LNOTBK(6)) PAREA(IDI) = ARRAY(6) * HATOAC
       ELSE
          IF (LNOTBK(6)) PAREA(IDI) = ARRAY(6)
-      ENDIF   
+      ENDIF
 
       IF (LNOTBK(6)) LPAREA(IDI) = .TRUE.
       IPCFLG(IDI) = 0
@@ -906,7 +905,7 @@ C     PROBABILITY OF INFECTION MULTIPLIERS
 C     CHECK FOR YEAR THAT MULTIPLIERS ARE TO TAKE EFFECT
 C     CHECK THAT ROOT DISEASE TYPE IS ACCEPTABLE
 
-      IPOINT = 0 
+      IPOINT = 0
       IF (ARRAY(1) .GT. 0.0) IRGEN(9) = INT(ARRAY(1))
       IF (LNOTBK(2)) IPOINT = INT(ARRAY(2))
 
@@ -1043,7 +1042,7 @@ C
 
       IF (LNOTBK(1)) NINSIM = INT(ARRAY(1))
       IF (NINSIM .GT. 50) NINSIM = 50
-      
+
       ISDOUT = 0
       IF (LNOTBK(2)) THEN
          ISDOUT = 25
@@ -1078,7 +1077,7 @@ C
       IF(LKECHO)WRITE(JOSTND,901) KEYWRD
   901 FORMAT (/1X,A8,'   END OF ROOT DISEASE KEYWORDS')
 
-C.... IF NEITHER INITIALIZATION METHOD SPECIFIED,THE SIMULATION 
+C.... IF NEITHER INITIALIZATION METHOD SPECIFIED,THE SIMULATION
 C.... CONTINUES WITHOUT ROOT DISEASE IMPACTS.
 
       IF (.NOT. RRTINV .AND. .NOT. RRMAN) THEN
@@ -1273,7 +1272,7 @@ C....    FOR PAREA TO 25% OF SAREA.
 C....    If the LONECT flag has not been set and if there is only one
 C....    center and the requested root disease area is equal to the
 C....    stand area then run the stand as one center.
-C....    This code is here to catch if the SAREA keyword comes before    
+C....    This code is here to catch if the SAREA keyword comes before
 C....    the RRINIT keyword.
 
          IF (LONECT(IDI) .EQ. 0 .AND. NCENTS(IDI) .EQ. 1 .AND.
@@ -1698,8 +1697,8 @@ C....       INVALID SPECIES CODE.
       ELSE
          IF (LNOTBK(3)) PRMS(2) = ARRAY(3)
          IF (LNOTBK(4)) PRMS(3) = ARRAY(4)
-      ENDIF 
-      
+      ENDIF
+
       CALL OPNEW (KODE,IDT,MYACT(5),5,PRMS)
       IF (KODE .GT. 0) GOTO 90
 
@@ -1794,7 +1793,7 @@ C....       INVALID SPECIES CODE.
       ELSE
          IF (LNOTBK(3)) PRMS(2) = ARRAY(3)
          IF (LNOTBK(4)) PRMS(3) = ARRAY(4)
-      ENDIF   
+      ENDIF
 
       IF (LNOTBK(5)) PRMS(5) = ARRAY(5)
       IF (LNOTBK(6)) PRMS(6) = ARRAY(6)
@@ -1807,7 +1806,7 @@ C.... OUTPUT FOR BBTYPE3 KEYWORD
 
       IF (LMTRIC) THEN
 
-         IF(LKECHO)WRITE(JOSTND,1711) KEYWRD, IDT, KARD(2), ISPC, 
+         IF(LKECHO)WRITE(JOSTND,1711) KEYWRD, IDT, KARD(2), ISPC,
      &             PRMS(2)*INTOCM,PRMS(3),ACTOHA, PRMS(4), PRMS(5)
  1711    FORMAT(/1X,A8,'   TYPE 3 BARK BEETLE TO BE ATTEMPTED IN DATE',
      &      '/CYCLE=', I5, ';   SPECIES =', A3, '(', I2, '); ',
@@ -2169,7 +2168,7 @@ C
 C     THIS IS NOT AN ACTUAL KEYWORD. IT IS JUST A PLACEHOLDER OCCUPYING
 C     THE SPACE OF A KEYWORD THAT WAS REMOVED.
 
-C.... OUTPUT 
+C.... OUTPUT
 
       IF(LKECHO)WRITE(JOSTND,2710) KEYWRD
  2710 FORMAT (/1X,A8,'   THIS RD KEYWORD ARRAY POSITION IS NOT USED.')
@@ -2277,7 +2276,7 @@ C
 C  ==========  OPTION NUMBER 30: BORATE  =============================
 C
       IF (MINRR .GT. 2 .AND. MAXRR .GT. 2) THEN
-         WRITE(JOSTND,3002) 
+         WRITE(JOSTND,3002)
  3002    FORMAT(/,' **** BORATE: INVALID DISEASE TYPE ACTIVE. ',
      &         'BORATE APPLIES ONLY TO ANNOSUS.',
      &         /T13,'KEYWORD WILL BE IGNORED.')
@@ -2427,7 +2426,7 @@ C....       INVALID SPECIES CODE.
          IF (LNOTBK(3)) PRMS(2) = ARRAY(3)
          IF (LNOTBK(4)) PRMS(3) = ARRAY(4)
       ENDIF
-      
+
       IF (LNOTBK(5)) PRMS(5) = ARRAY(5)
       IF (LNOTBK(6)) PRMS(9) = ARRAY(6)
       IF (LNOTBK(7)) PRMS(4) = ARRAY(7)
@@ -2532,7 +2531,7 @@ C.... OUTPUT FOR DNSCALC KEYWORD
          ELSE
             IF(LKECHO)WRITE(JOSTND, 3306) REINEK(4)
          ENDIF
-      ENDIF   
+      ENDIF
 
  3302 FORMAT (/1X,A8, '  DNSCALC (REINEKE) OPTIONS:')
  3303 FORMAT (1X, A40, ' USED TO CALCULATE OUTBREAK DENSITY THRESHOLD')
@@ -2545,7 +2544,7 @@ C
 C  ==========  OPTION NUMBER 34: SMCOUT ===============================
 C
 C     OUTPUT FROM THE SPREAD RATE MONTE CARLO SIMULATION
-C     (IN REGULAR TABLE FORMAT, WITH HEADINGS)     
+C     (IN REGULAR TABLE FORMAT, WITH HEADINGS)
 C
       IMCOUT = 26
       IF (ARRAY(1) .GT. 0.0) IMCOUT = INT(ARRAY(1))
@@ -2581,15 +2580,15 @@ C
 C  ==========  OPTION NUMBER 36: PLOTINF ===============================
 C
 C     Set the percent infected in each plot. If a plot is not mentioned,
-C     assume there is no infection and that all trees in that plot are 
+C     assume there is no infection and that all trees in that plot are
 C     outside centers.
 
 C.... Set the root disease type from field 1.
 
-      IDI = MINRR 
+      IDI = MINRR
       IF (LNOTBK(1)) IDI = INT(ARRAY(1))
 
-C.... Set the LONECT flag to show that the model is being run with 
+C.... Set the LONECT flag to show that the model is being run with
 C.... multiple plots and tell the model that PLOTINF is being used.
 
       LONECT(IDI) = 2
@@ -2615,7 +2614,7 @@ C.... Set M to print out sub-plot info.  If there are more then 25
 C.... sub-plots then more then one record needs to be written.
 
       IF (K .LE. 25) M = K
-      IF (K .GT. 25) M = 25 
+      IF (K .GT. 25) M = 25
 
 C.... Write keyword.
 
@@ -2639,7 +2638,7 @@ C.... Set NEXT to print sub-plot numbers 25 to 50.
 
       IF(LKECHO)WRITE(JOSTND,3613) (IANPLT(IDI,J),J=NEXT,K)
  3613 FORMAT (T27,25(I5))
-     
+
  3655 CONTINUE
 
 C.... Print out the proportion of root disease in each sub-plot.
@@ -2839,7 +2838,7 @@ C     IN THE FORM OF INFECTED ROOTS ON DEAD TREES AND STUMPS.
 C     CHANGES AFFECT ALL SIZE CLASSES
 C
 
-      IPOINT = 0 
+      IPOINT = 0
 
       IF (LNOTBK(7)) IPOINT = INT(ARRAY(7))
 
@@ -2873,8 +2872,8 @@ C.... SET THE ROOT DISEASE TYPE TO BE MODIFIED
             IF (LNOTBK(3)) RSITFN(IDI,1) = ARRAY(3) * MTOFT / CMTOIN
             IF (LNOTBK(4)) RSITFN(IDI,2) = ARRAY(4) * MTOFT
             IF (LNOTBK(5)) YRSITF(IDI,1,1) = ARRAY(5) / CMTOIN
-            IF (LNOTBK(6)) YRSITF(IDI,2,1) = ARRAY(6) * MTOFT 
-      
+            IF (LNOTBK(6)) YRSITF(IDI,2,1) = ARRAY(6) * MTOFT
+
 C....       ALSO ASSIGN THESE VARIABLES TO THE LARGER SIZE CLASS,
 C....       IF THEY WERE CHANGED
 
@@ -2888,18 +2887,18 @@ C....       IF THEY WERE CHANGED
             IF (LNOTBK(3)) RSITFN(IDI,1) = ARRAY(3)
             IF (LNOTBK(4)) RSITFN(IDI,2) = ARRAY(4)
             IF (LNOTBK(5)) YRSITF(IDI,1,1) = ARRAY(5)
-            IF (LNOTBK(6)) YRSITF(IDI,2,1) = ARRAY(6) 
-      
+            IF (LNOTBK(6)) YRSITF(IDI,2,1) = ARRAY(6)
+
 C....       ALSO ASSIGN THESE VARIABLES TO THE LARGER SIZE CLASS,
 C....       IF THEY WERE CHANGED
 
             IF (LNOTBK(1)) DECFN(IDI,1,2) = ARRAY(1)
             IF (LNOTBK(2)) DECFN(IDI,2,2) = ARRAY(2)
             IF (LNOTBK(5)) YRSITF(IDI,1,2) = ARRAY(5)
-            IF (LNOTBK(6)) YRSITF(IDI,2,2) = ARRAY(6) 
-         ENDIF   
+            IF (LNOTBK(6)) YRSITF(IDI,2,2) = ARRAY(6)
+         ENDIF
  4030 CONTINUE
-       
+
 C.... OUTPUT FOR INOCLIFE KEYWORD
 
       DO 4040 IDI=IRMIN,IRMAX
@@ -2949,12 +2948,12 @@ C
 C  ==========  OPTION NUMBER 42: RRTYPE ==============================
 C
 C     THIS KEYWORD TELLS THE MODEL WHICH DISEASE TYPES ARE ACTIVE IN
-C     THE STAND.  
-C     FOR NOW, ASSUME THAT WE CAN HAVE ONLY ONE TYPE (1,2=ANNOSUS, 
+C     THE STAND.
+C     FOR NOW, ASSUME THAT WE CAN HAVE ONLY ONE TYPE (1,2=ANNOSUS,
 C     3=ARMILLARIA, 4=PHELLINUS)
 C
       LRTYPE = .TRUE.
-C      
+C
       MINRR = 0
       MAXRR = 0
 
@@ -2963,24 +2962,24 @@ C
             IPOINT = INT(ARRAY(IDI))
             IF (IPOINT .LT. MINRR .OR. MINRR .EQ. 0) MINRR = IPOINT
             IF (IPOINT .GT. MAXRR) MAXRR = IPOINT
-         ENDIF   
- 4205 CONTINUE                     
+         ENDIF
+ 4205 CONTINUE
 
       IF (MINRR .LE. 0) MINRR = 1
       IF (MINRR .GT. ITOTRR) MINRR = ITOTRR
       IF (MAXRR .LE. 0) MAXRR = 1
       IF (MAXRR .GT. ITOTRR) MAXRR = ITOTRR
-      IF (MAXRR .LT. MINRR) MAXRR = MINRR  
+      IF (MAXRR .LT. MINRR) MAXRR = MINRR
 
 C.... THIS NEXT STATEMENT IS TO ENSURE THAT CAN ONLY HAVE ONE TYPE
 C.... IN THE STAND
 
       IF (MAXRR .NE. MINRR .AND. (MINRR .NE. 1 .AND. MAXRR .NE.2)) THEN
-         MAXRR = MINRR 
+         MAXRR = MINRR
 
          WRITE(JOSTND,4209)
  4209    FORMAT (/T13, '***ERROR IN RRTYPE KEYWORD. ONLY ONE DISEASE ',
-     &          'CAN BE SIMULATED IN THE STAND.')   
+     &          'CAN BE SIMULATED IN THE STAND.')
       ENDIF
 
       IF (MINRR .EQ. MAXRR) THEN
@@ -2991,11 +2990,11 @@ C.... IN THE STAND
      &                                DISTYP(MAXRR)
  4215    FORMAT (/1X,A8,3X,A15,' AND ',A15,' WILL BE SIMULATED.')
       ENDIF
-      
+
       GOTO 90
 C
 C ================ ENTRY POINT RDKEY =============================
-C                                
+C
 C     SPECIAL ENTRY TO RETREIVE KEYWORDS
 C
       ENTRY RDKEY(KEY,PASKEY)

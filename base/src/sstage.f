@@ -1,5 +1,10 @@
       SUBROUTINE SSTAGE(INBA,INICYCLE,LSUPRT)
-      IMPLICIT NONE
+      use outcom_mod
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -15,29 +20,7 @@ C           THINNING.
 C   INICYCLE = THE CYCLE NUMBER.
 C   LSUPRT = IF TRUE, SUPPRESS THE PRINTING, EVEN IF IT IS REQUESTED.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'SSTGMC.F77'
-C
-C
-COMMONS
-C
 C
       INTEGER IOUT,ICD,MSP1,MSP2,IS3OK,IS2OK,I2,IS1OK,IS3I2,IS3I1
       INTEGER IS2I2,IS2I1,IS1I2,IS1I1,ILARGE,IILG,ID2I2,ID2I1,IHTLS3
@@ -58,7 +41,7 @@ C
       LOGICAL DEBUG,LSET
 
       CHARACTER*3 SP11,SP21,SP12,SP22,SP13,SP23
-      INTEGER ISP11,ISP21,ISP12,ISP22,ISP13,ISP23,J1,J2 
+      INTEGER ISP11,ISP21,ISP12,ISP22,ISP13,ISP23,J1,J2
 
 C     STAGE CLASS CODES ARE:
 C
@@ -651,13 +634,13 @@ C     SET THE IOSTR, WHICH IS USED BY STRSTAT, AN EVENT MONITOR FUNCTION.
           ENDDO
         ENDDO
       ENDIF
-      
+
       J = 1
       IF (IBA.NE.1) J=2
       OSTRST(1,J) = DBHS1              ! nominal dbh for stratum 1
       OSTRST(2,J) = FLOAT(IHTS1)       ! nominal height for stratum 1
       OSTRST(3,J) = FLOAT(IHTLS1)      ! height of the tallest tree in stratum 1
-      OSTRST(4,J) = FLOAT(IHTSS1)      ! height of the shortest tree in stratum 1      
+      OSTRST(4,J) = FLOAT(IHTSS1)      ! height of the shortest tree in stratum 1
       OSTRST(5,J) = FLOAT(ICRBS1)      ! height to crown base for stratum 1
       OSTRST(6,J) = FLOAT(ICRCV1)      ! canopy cover for stratum 1
       OSTRST(7,J) = ISP11              ! major species 1 for stratum 1
@@ -667,7 +650,7 @@ C     SET THE IOSTR, WHICH IS USED BY STRSTAT, AN EVENT MONITOR FUNCTION.
       OSTRST(11,J) = DBHS2             ! nominal dbh for stratum 2
       OSTRST(12,J) = FLOAT(IHTS2)      ! nominal height for stratum 2
       OSTRST(13,J) = FLOAT(IHTLS2)     ! height of the tallest tree in stratum 2
-      OSTRST(14,J) = FLOAT(IHTSS2)     ! height of the shortest tree in stratum 2         
+      OSTRST(14,J) = FLOAT(IHTSS2)     ! height of the shortest tree in stratum 2
       OSTRST(15,J) = FLOAT(ICRBS2)     ! height to crown base for stratum 2
       OSTRST(16,J) = FLOAT(ICRCV2)     ! canopy cover for stratum 2
       OSTRST(17,J) = ISP12             ! major species 1 for stratum 2
@@ -677,7 +660,7 @@ C     SET THE IOSTR, WHICH IS USED BY STRSTAT, AN EVENT MONITOR FUNCTION.
       OSTRST(21,J) = DBHS3             ! nominal dbh for stratum 3
       OSTRST(22,J) = FLOAT(IHTS3)      ! nominal height for stratum 3
       OSTRST(23,J) = FLOAT(IHTLS3)     ! height of the tallest tree in stratum 3
-      OSTRST(24,J) = FLOAT(IHTSS3)     ! height of the shortest tree in stratum 3             
+      OSTRST(24,J) = FLOAT(IHTSS3)     ! height of the shortest tree in stratum 3
       OSTRST(25,J) = FLOAT(ICRBS3)     ! height to crown base for stratum 3
       OSTRST(26,J) = FLOAT(ICRCV3)     ! canopy cover for stratum 3
       OSTRST(27,J) = ISP13             ! major species 1 for stratum 3
@@ -726,18 +709,23 @@ C
      >           I3,1X,I3,1X,I3,1X,A3,1X,A3,1X,I1),1X,I1,1X,I3,2X,A4)
       ENDIF
 C
-    
+
       RETURN
       END
 C
       SUBROUTINE SSTGHP (I1,I2,INDEX,WK6,WK4,DBH,HT,TMPICR,ISP,TMPPRB,
      >          MAXTRE,MAXSP,DBHNOM,IHT,IHTS,IHTL,ICRB,MSP1,MSP2)
+      implicit none
 
 C     THIS IS A PRIVATE HELPER ROUTINE CALLED BY SSTAGE
 C     (AND, PLEASE, NO OTHER ROUTINES SHOULD CALL THIS ROUTINE).
 
-      REAL TMPPRB
-      INTEGER TMPICR
+      INTEGER I1,I2,INDEX
+      REAL TMPPRB,WK6,WK4,DBH,HT,DBHNOM
+      INTEGER TMPICR,ISP,TMP,MAXTRE,MAXSP,IHT,IHTS,IHTL,ICRB,MSP1,MSP2
+
+      INTEGER I,II,IS,ITOP,I3,I70,K1,K2
+      REAL ACB,SP,SUM,X1,X2,T,SD,SH,DIFF
 
       DIMENSION INDEX(MAXTRE),WK6(MAXTRE),WK4(MAXTRE),DBH(MAXTRE),
      >          HT(MAXTRE),TMPICR(MAXTRE),ISP(MAXTRE),TMPPRB(MAXTRE)
@@ -867,6 +855,7 @@ C     FIND THE 70 PERCENTILE TREE... (30 %TILE "DOWN FROM THE TOP").
       END
 
       SUBROUTINE SSTGHTPA (I1,I2,INDEX,TMPPRB,MAXTRE,STRTPA)
+      implicit none
 
 C     THIS IS A PRIVATE HELPER ROUTINE CALLED BY SSTAGE
 C     (AND, PLEASE, NO OTHER ROUTINES SHOULD CALL THIS ROUTINE).
@@ -876,7 +865,11 @@ C     IT IS DIFFERENT THAN THE OTHER HELPER ROUTINE (SSTGHP) BECAUSE
 C     I WANTED TO INCLUDE THE TREES IN THE "GAPS" BETWEEN THE STRATA
 C     (LIKE THE COVER CALCULATIONS DO).  SAR - AUG 2006
 
-      REAL TMPPRB
+      INTEGER I1,I2,INDEX,MAXTRE
+      REAL TMPPRB,STRTPA
+
+      INTEGER I,II
+      REAL SP
 
       DIMENSION INDEX(MAXTRE),TMPPRB(MAXTRE)
 

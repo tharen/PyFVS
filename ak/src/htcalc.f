@@ -1,5 +1,9 @@
       SUBROUTINE HTCALC(I,ISPC,XSITE,AG,HGUESS,POTHTG)
-      IMPLICIT NONE
+      use contrl_mod
+      use varcom_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **HTCALC--AK   DATE OF LAST REVISION:  02/14/08
 C----------
@@ -7,20 +11,6 @@ C   THIS SUBROUTINE COMPUTES THE HEIGHT INCREMENT GIVEN TREE-SPECIFIC
 C   INDEPENDENT VARIABLES SUCH AS DBH, DG AGE ...
 C   CALLED FROM **HTGF**
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
 COMMONS
 C------------
       LOGICAL DEBUG
@@ -60,7 +50,6 @@ C---------
         HGUESS = (XSITE - 4.5) / ( B0 + B1/(XSITE - 4.5)
      &         + B2 * AG**(-1.4) +(B3/(XSITE - 4.5))*AG**(-1.4))
         HGUESS = HGUESS + 4.5
-C
 C
       IF(DEBUG)    WRITE(JOSTND,901)ICR(I),PCT(I),DG(I),HT(I),
      & POTHTG,HTG(I),DBH(I),HGUESS,AG

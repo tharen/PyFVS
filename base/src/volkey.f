@@ -1,5 +1,12 @@
       SUBROUTINE VOLKEY(DEBUG)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use volstd_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -8,31 +15,6 @@ C  THIS SUBROUTINE PROCESSES THE KEYWORDS USED TO MODIFY VOLUME
 C  STANDARDS AND EQUATIONS.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
-COMMONS
-C
 C----------
       LOGICAL DEBUG
       INTEGER MYACTS(4)
@@ -69,13 +51,13 @@ C----------
 C----------
 C  CHANGE MERCHANTABILITY STANDARDS FOR THE BOARD FOOT VOLUME
 C  EQUATIONS.  EMPIRICAL ADJUSTMENT DEVELOPED BY J. E. BRICKELL,
-C  REGION ONE, TM. 
+C  REGION ONE, TM.
 C  BFVOLUME KEYWORD.
 C----------
  9905 CONTINUE
       CALL OPDONE(I,IY(ICYC))
       ISPC=IFIX(PRMS(1))
-      
+
       IF(ISPC .LT. 0)THEN
         IGRP = -ISPC
         IULIM = ISPGRP(IGRP,1)+1

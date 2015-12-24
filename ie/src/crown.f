@@ -1,5 +1,13 @@
       SUBROUTINE CROWN
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use pden_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C IE $Id:
 C----------
@@ -31,39 +39,10 @@ C  PI, JU USE COEFFICIENTS FROM UT (WHICH ARE FROM CR SO,
 C         USE CR LOGIC)
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
 C
       INCLUDE 'GGCOM.F77'
 C
-C
-COMMONS
 C----------
 C  DECLARATIONS AND DIMENSIONS FOR INTERNAL VARIABLES:
 C
@@ -179,7 +158,7 @@ C----------
       RMAILM = ADJMAI(101,SITEAR(13),10.0,IERR)
       IF(RMAILM .GT. 128.0)RMAI=128.0
       IF(DEBUG)WRITE(JOSTND,*)' SITEAS,RMAIAS,SITELM,RMAILM= ',
-     &SITEAR(18),RMAIAS,SITEAR(13),RMAILM 
+     &SITEAR(18),RMAIAS,SITEAR(13),RMAILM
 C----------
 C  WRITE DEBUG INFO (STAND DENSITY TERMS) IF DESIRED
 C----------
@@ -698,7 +677,6 @@ C
       IF(DEBUG)WRITE(JOSTND,90)ICYC
    90 FORMAT(' LEAVING SUBROUTINE CROWN  CYCLE =',I5)
       RETURN
-C
 C
 
       ENTRY CRCONS

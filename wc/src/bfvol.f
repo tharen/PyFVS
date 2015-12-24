@@ -1,35 +1,16 @@
       SUBROUTINE BFVOL(ISPC,D,H,D2H,BBFV,TKILL,LCONE,BARK,VMAX,ITHT,
      1                 BTKFLG)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use volstd_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BFVOL--WC     DATE OF LAST REVISION:   05/19/08
 C----------
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
-COMMONS
 C
 C  ************** BOARD FOOT MERCHANTABILITY SPECIFICATIONS ********
 C
@@ -122,8 +103,6 @@ C----------
       BTKFLG = .TRUE.
       RETURN
 C
-C
-C
 C----------
 C  METHB = 3 OR 4:  VOLUME COMPUTED USING ONE OF THE REGION 6 LOG
 C  RULES.  MINIMUM DBH FOR LOG RULE IS 4 INCHES.
@@ -186,8 +165,6 @@ C----------
   120 CONTINUE
       RETURN
 C
-C
-C
 C----------
 C  REGION 6 WESTSIDE VOLUME.  32 FOOT LOGS; PROCESS EVERY OTHER LOG.
 C----------
@@ -207,7 +184,7 @@ C----------
       ENDIF
       SMD=SMDIA(I)
 C----------
-C  SET FLAG AND ADJUST THE TOP DIAMETER AND LOG LENGTH IF THIS LOG 
+C  SET FLAG AND ADJUST THE TOP DIAMETER AND LOG LENGTH IF THIS LOG
 C  CONTAINS A DEAD TOP.
 C----------
       IF(TKILL .AND. (TLOG+XLOG).GT.HTRUNC) THEN
@@ -217,7 +194,7 @@ C----------
         D1SQ=SMDOLD*SMDOLD
         SMD=SQRT(D1SQ-PLEFT*(D1SQ-SMD*SMD))
         LOGOK=.FALSE.
-      ENDIF      
+      ENDIF
       CALL SCALEF(SMD,XLOG,FACTOR,JOSTND)
       TLOG=TLOG+XLOG
       BBFV=BBFV+XLOG*FACTOR

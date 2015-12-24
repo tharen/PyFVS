@@ -1,8 +1,11 @@
       SUBROUTINE RDBB1
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDBB1       LAST REVISION:  08/26/14
-C---------- 
+C----------
 C
 C  Purpose :
 C     Determines how many races of bark beetle type 1 are eligible to
@@ -50,20 +53,16 @@ C    10-DEC-07 Lance R. David (FHTET)
 C       Update to argument list in call to OPCOPY, added variable
 C       DONE for debug/tracking (from Don Robinson).
 C   08/26/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C....................................................................
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 
 C.... Common include files.
 
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'RDADD.F77'
 
 C.... Local variable declarations.
@@ -73,7 +72,7 @@ C.... Local variable declarations.
       INTEGER   KDT, KODE, MYACT(1), NCOPYS, NPS, NTODO
       REAL      DBHLIM, THRESH, MORT
       REAL      PRMS(5)
-      
+
 C.... Data statements.
 
       DATA MYACT /2415/
@@ -92,7 +91,7 @@ C.... this time period.
 
       CALL OPFIND (1,MYACT,NTODO)
       IF (NTODO .LE. 0) GOTO 1000
-      
+
 C.... For each race, first get the parameter values.  Check that the
 C.... beetle host species exists before proceeding.
 
@@ -107,7 +106,7 @@ C.... beetle host species exists before proceeding.
          THRESH = PRMS(3)
          MORT = PRMS(4)
          ONLY1X = INT(PRMS(5))
-              
+
          IF (ISCT(ISPI,1) .EQ. 0) GOTO 888
 
 C....    Second, call RDCSD to calculate the density of trees that
@@ -118,7 +117,7 @@ C....    this density exceeds the threshold for an active outbreak.
          CALL RDCSD(ISPI,DBHLIM,THRESH,CRIT)
          IF (DEBUG) WRITE (JOSTND,*) 'IN RDBB1: CRIT=',CRIT
          IF (.NOT. CRIT) GOTO 888
-        
+
 C....    If the beetle is active, call OPDONE to signal the outbreak,
 C....    increment NUMBB and store the specified mortality rates for
 C....    later use in killing trees.  Reschedule the beetle race by
@@ -139,7 +138,7 @@ C....    the user.
          IIRATE(NUMBB) = MORT
 
          IF (DEBUG) WRITE (JOSTND,*) 'IN RDBB1: NUMBB=',NUMBB
-                
+
 C....    Check whether the Type 1 beetle races are to remain
 C....    potentially active after the current growth cycle.
 
@@ -148,11 +147,11 @@ C....    potentially active after the current growth cycle.
          IF (ONLY1X .EQ. 1) NOCOPY = 1
 
   999 CONTINUE
-  
+
 C.... If the Type 1 beetle races are to remain active, then copy them
 C.... to the next growth cycle.
 
-      IF (NOCOPY .NE. 1) THEN 
+      IF (NOCOPY .NE. 1) THEN
          CALL OPCOPY (MYACT(1),IY(ICYC),IY(ICYC+1),NCOPYS,KODE)
          CALL OPINCR (IY,ICYC,NCYC)
       ENDIF

@@ -1,5 +1,7 @@
       SUBROUTINE BWERAWS
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C-----------
 C **BWERAWS                 DATE OF LAST REVISION:  09/05/13
 C-----------
@@ -11,7 +13,6 @@ C If a range of weather years has been specified, only those
 C years are processed.
 C
 C   PARAMETERS:
-C
 C
 C Weather data is available from Western Region Climate Center (WRCC)
 C and the format used in this subroutine is the FWX format.
@@ -36,7 +37,7 @@ C  13    State of Weather Code
 C  14-16 Dry Bulb Temp (F)
 C  17-19 Relative Humidity (%)
 C  28    Wind Direction (8 point)
-C  29-31 Wind Speed (MPH) 
+C  29-31 Wind Speed (MPH)
 C  39-41 Max Temperature (F)
 C  42-44 Min Temperature (F)
 C  45-47 Max RH (%)
@@ -86,7 +87,6 @@ C    ?? - Begin pupal stage (578 DD)
 C    ?? - Adult eclosion (emergence) (764 DD)
 C    ?? - (Date of 764 DD) + 4, begin accumulating warm DD at 75 F
 C
-C
 C  Lance R. David, USDA-FS, FMSC, Fort Collins, CO (METI, Inc)
 C
 C   CALLED FROM: BWELIT
@@ -112,7 +112,7 @@ C            9=MEAN PPT. FOR PUPAE
 C           10=MEAN PPT. DURING L2 EMERGENCE
 C
 C  WEATH - Holds one year of weather data (3,365) (TMAX, TMIN, PRECIP)
-C          
+C
 C  OBYRC - Outbreak year current, year of weather data to be processed.
 C DDAYSF - Degree days for foliage
 C DDAYSL - Degree days for larvae (budworm)
@@ -120,8 +120,6 @@ C   JDAY - Julian day used to cycle through 1 year of weather data.
 C  LYRNG - Logical. True if range of RAWS weather years is to be processed.
 C
 C Common files
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BWECM2.F77'
       INCLUDE 'BWEBOX.F77'
       INCLUDE 'BWECOM.F77'
@@ -138,7 +136,7 @@ C Define variables
      &     PPTL2E, PRDL24, PPTL24, PRDL46, PPTL46, PRDL7, PPTL7,
      &     DDFALL, PRDE2B
       LOGICAL LYRNG
-     
+
 C Load static variables
 
 C initialize variables
@@ -154,7 +152,7 @@ C      IYRNG(2) = 2001
 C      WRITE(*,*) 'WEATHER YEAR RANGE: ',IYRNG(1),' TO ',IYRNG(2)
       IF (IYRNG(1) .NE. 0 .AND. IYRNG(2) .NE. 0) LYRNG = .TRUE.
 C
-C Open weather file.  
+C Open weather file.
 C
       CALL MYOPEN (JOWE,WFNAME,3,133,1,1,1,0,KODE)
 
@@ -180,7 +178,7 @@ C  oeck0007128 80 34        7  2        80 57 49 303 0   0   2
 C
 C Then advance, if necessary, to January 1 to beging processing one
 C year of data.
-      
+
       READ (JOWE,10) CTMP
       READ (JOWE,10) CTMP
       READ (JOWE,10) CTMP
@@ -193,7 +191,7 @@ C year of data.
    25 READ (JOWE,30,END=400) STANUM,WYR,WMON,WDAY,MAXTF,MINTF,PRECIP
    30 FORMAT (2X,A4,3(I2),26X,2(F3.0),9X,F4.0)
 
-C     Translate station name to upper case   
+C     Translate station name to upper case
       DO 40 I=1,4
         CALL UPCASE(STANUM(I:I))
    40 CONTINUE
@@ -210,7 +208,7 @@ C       Need to set error flag
       IF (WMON .EQ. 1 .AND. WDAY .EQ. 1) THEN
 C
 C       At jan 1, start processing year.
-C       If a range of weather years is in play, check to see if this 
+C       If a range of weather years is in play, check to see if this
 C       year is in it. If not in range, move on to next Jan 1.
 C
         IF (LYRNG) THEN
@@ -355,16 +353,16 @@ C     Save budworm variables for year just processed.
 C     Translate weather year from 2-digit to 4-digit.
 C
   300 IYRCNT = IYRCNT + 1
-  
+
       IF (WYR .LE. 29) THEN
         WYR = 2000 + WYR
       ELSE
         WYR = 1900 + WYR
       ENDIF
 
-      WRITE (JOSTND, 310) WYR, DAYL2, DAYL4, DAYL7, DAYL8, 
+      WRITE (JOSTND, 310) WYR, DAYL2, DAYL4, DAYL7, DAYL8,
      &       DAYF, DDAYSF, DDAYSL
-  310 FORMAT (/,6X,'WYR=',I4,' DAYL2=',I3,' DAYL4=',I3, ' DAYL7=',I3, 
+  310 FORMAT (/,6X,'WYR=',I4,' DAYL2=',I3,' DAYL4=',I3, ' DAYL7=',I3,
      &     ' DAYL8=',I3, ' DAYF=',I3,' DDAYSF=',F6.1,' DDAYSL=',F6.1)
 
       BWPRMS(1,IYRCNT) = PRDL24
@@ -408,6 +406,6 @@ C     Close weather data file and set final variables.
 C
   450 CLOSE (JOWE)
       IWYR = 0
-      
+
       RETURN
       END

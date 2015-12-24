@@ -1,4 +1,7 @@
       SUBROUTINE BGCIN (KEYWRD,ARRAY,LNOTBK,LKECHO)
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BGCIN  BGC--DATE OF LAST REVISION: 05/21/13 AJM. ADDED 10TH ARG TO KEYRDR CALL
 C                10/15/99
@@ -12,20 +15,12 @@ C----------
 C
 C     OPTION PROCESSOR FOR THE BGC EXTENSION
 C
-C     CALLED FROM: INITRE 
-C
-COMMONS
-C
+C     CALLED FROM: INITRE
 C
       INCLUDE 'BGCCOM.F77'
       INCLUDE 'ENTITY.F77'
-      INCLUDE 'PRGPRM.F77'
 C      INCLUDE 'PPCNTL.F77'  ! removed 11/02 ajm
-      INCLUDE 'CONTRL.F77'
 C
-C
-COMMONS
-C     
       PARAMETER (KWCNT = 12)
       CHARACTER*8 TABLE, KEYWRD, PASKEY
       CHARACTER*10 KARD(7)
@@ -46,7 +41,7 @@ C----------
    10 CONTINUE
       CALL KEYRDR (IREAD,JOSTND,.FALSE.,KEYWRD,LNOTBK,
      >             ARRAY,IRECNT,KODE,KARD,.FALSE.,LKECHO)
-      PRINT *,'in bgcin, after Keyrdr, keywrd= ', keywrd 
+      PRINT *,'in bgcin, after Keyrdr, keywrd= ', keywrd
       PRINT *,'in bgcin, after Keyrdr, Kode= ', kode
 C
 C     RETURN KODES 0=NO ERROR,1=COLUMN 1 BLANK,2=EOF
@@ -57,12 +52,12 @@ C
       GOTO 10
    30 CONTINUE
       CALL FNDKEY (NUMBER,KEYWRD,TABLE,KWCNT,KODE,.FALSE.,JOSTND)
-      PRINT *,'in bgcin, after FNDKEY, Number= ', number 
-      PRINT *,'in bgcin, after FNDKEY, keywrd= ', keywrd 
+      PRINT *,'in bgcin, after FNDKEY, Number= ', number
+      PRINT *,'in bgcin, after FNDKEY, keywrd= ', keywrd
 C
 C     RETURN KODES 0=NO ERROR,1=KEYWORD NOT FOUND,2=MISSPELLING.
 C
-      IF (KODE .EQ. 0) GOTO 90     
+      IF (KODE .EQ. 0) GOTO 90
       IF (KODE .EQ. 1) THEN
          CALL ERRGRO (.TRUE.,1)
          GOTO 10
@@ -117,17 +112,17 @@ C========== OPTION NUMBER 2: UNDERVEG =====================
       END IF
       PRINT *,'in bgcin, option=2, end of veg data'
       PRINT *,'in bgcin, option=2, no. of veg entities= ', NVE
-      GOTO 10       
+      GOTO 10
   300 CONTINUE
       PRINT *,'in bgcin, option=3, keyword= ', keywrd
 C=================OPTION NUMBER 3: VEGOPT =============
       ISOURCE=IFIX(ARRAY(1))
-      PRINT *,'in bgcin, option=3, isource= ', ISOURCE 
+      PRINT *,'in bgcin, option=3, isource= ', ISOURCE
       IF(LKECHO)WRITE(JOSTND,305) KEYWRD,ISOURCE
   305 FORMAT (/A8,'   SOURCE OF VEG DATA= ', I1)
       GOTO 10
   400 CONTINUE
-C=================OPTION NUMBER 4: BGCGROW ============ 
+C=================OPTION NUMBER 4: BGCGROW ============
 C      IBGC(ISTND)=1  ! removed 11/02 ajm
       IBGC=1
       PRINT *,'in bgcin, option=4'
@@ -138,27 +133,27 @@ C      IBGC(ISTND)=1  ! removed 11/02 ajm
 C=================OPTION NUMBER 5: BGCIN ==============
       GOTO 10
   600 CONTINUE
-C                        OPTION NUMBER 6 -- 
+C                        OPTION NUMBER 6 --
       GOTO 10
   700 CONTINUE
-C                        OPTION NUMBER 7 --    
-      GOTO 10                             
+C                        OPTION NUMBER 7 --
+      GOTO 10
   800 CONTINUE
-C                        OPTION NUMBER 8 -- 
-      GOTO 10      
+C                        OPTION NUMBER 8 --
+      GOTO 10
   900 CONTINUE
-C                        OPTION NUMBER 9 -- 
+C                        OPTION NUMBER 9 --
       GOTO 10
  1000 CONTINUE
-C                        OPTION NUMBER 10 -- 
+C                        OPTION NUMBER 10 --
       GOTO 10
  1100 CONTINUE
-C                        OPTION NUMBER 11 -- 
+C                        OPTION NUMBER 11 --
       GOTO 10
  1200 CONTINUE
-C                        OPTION NUMBER 12 --  
+C                        OPTION NUMBER 12 --
       GOTO 10
-C	  
+C
 C     Special entry to retrieve keywords.
 C
       ENTRY BGCKEY (KEY,PASKEY)

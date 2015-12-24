@@ -1,5 +1,6 @@
       SUBROUTINE DMMTRX
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C--------------------------------------------------------------------
@@ -17,7 +18,7 @@ C--------------------------------------------------------------------
 C
 C Called by:
 C
-C     DMTREG 
+C     DMTREG
 C
 C Other routines called:
 C
@@ -27,25 +28,24 @@ C     DMSUM
 C
 C     Note that DMCW and DMSHAP have modified *file* names, since
 C     their actual contents vary according to the variant for which
-C     they have modified. For example, the Northern Idaho variant 
+C     they have modified. For example, the Northern Idaho variant
 C     has DMCWNI and DMSHAPNI.
 C
-C Argument list definitions:                        
+C Argument list definitions:
 C
 C     [none]
 C
 C Local variable definitions:
-C     
+C
 C     INTEGER   IDMSHP  Tree crown shape category
 C     REAL      DMTRCW   Estimated tree crown diameter (feet)
 C
 C Common block variables and parameters:
 C
-C     MAXTRE    PRGPRM 
+C     MAXTRE    PRGPRM
 C
 C**********************************************************************
 
-      INCLUDE 'PRGPRM.F77'
 
 C Local variables.
 

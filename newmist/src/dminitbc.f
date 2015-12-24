@@ -1,5 +1,6 @@
       SUBROUTINE DMINIT
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -10,16 +11,15 @@ C   This routine initializes all the common variables for the model.
 C Explanations and definitions of the variables can be found in
 C DMCOM.
 C
-C
 C Called by:
 C
-C     MISIN0 
+C     MISIN0
 C
 C Other routines called:
 C
 C     DMRNSD
 C
-C Argument list definitions:                        
+C Argument list definitions:
 C
 C     [none]
 C
@@ -35,8 +35,7 @@ C                        scaling factor 'SF()' terms using DMALPH
 C                        and DMBETA.
 C     REAL    TPOPAQ     Dummy array used to load DMOPAQ
 C     REAL    TSEED      Dummy variable used as a parameter to call DMRNSD.
-C                        Never used. 
-C
+C                        Never used.
 C
 C Common block variables and parameters:
 C
@@ -49,7 +48,7 @@ C     ZeroPDn DMCOM
 C     PIE     DMCOM
 C     SQM2AC  DMCOM
 C     MESH    DMCOM
-C     CrArea  DMCOM          
+C     CrArea  DMCOM
 C     Dstnce  DMCOM
 C     CLUMP   DMCOM
 C     DMALPH  DMCOM
@@ -71,10 +70,9 @@ C     DMDETH  DMCOM
 C     DMS0    DMCOM
 C     DMSS    DMCOM
 C
- 
+
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C.... Common include files.
 
@@ -85,7 +83,7 @@ C.... Local variable declarations.
       INTEGER i, j
       INTEGER TPDMR(0:6, CRTHRD)
       REAL    x, y, tmp(MXTHRX)
-      REAL    TSEED 
+      REAL    TSEED
       REAL    TPOPAQ(MAXSP)
 
 C.... Data statements
@@ -105,14 +103,14 @@ C.... the model then the array DMOPAQ will get re-initialized properly for each
 C.... stand.
 C....
 C.... The RELATIVE opacities of DMOPAQ() are taken from the April 1993
-C.... Model Review Workshop Report, Table 4.1 (p.29). 
+C.... Model Review Workshop Report, Table 4.1 (p.29).
 C.... These values can be changed by the keyword DMOPQ.
 C.... The 15 (MAXSP) spcecies codes for the IB variant are:
 C....
 C.... 'PW','LW','FD','BG','HW','CW','PL','SE','BL','PY',
 C.... 'EP','AT','AC','OC','OH'
 
-                    
+
       DATA TPOPAQ /
      &  1.2, !PW
      &  0.9, !LW
@@ -129,14 +127,14 @@ C.... 'EP','AT','AC','OC','OH'
      &  2.0, !AC
      &  1.5, !OC=FD
      &  2.0/ !OH=EP
-                               
+
 C.... Zero 0-6 DM rating. This probably redundant.
 
       DO 10 i = 1, MAXTRE
          DMRATE(i) = 0
-   10 CONTINUE    
-                                                                        
-C.... Initialize logical triggers to .FALSE. These are responsible for  
+   10 CONTINUE
+
+C.... Initialize logical triggers to .FALSE. These are responsible for
 C.... notifying whether the initial crown third assignments have been
 C.... made; whether the damage codes have been assigned to the model's
 C.... array of DM ratings; and whether the life history pools have been
@@ -144,16 +142,16 @@ C.... filled.
 
       NTDn = .FALSE.
       DCDn = .FALSE.
-      ZPDn = .FALSE. 
-      
+      ZPDn = .FALSE.
+
 C.... Compute areas in circles; a necessary step for subsequent sampling
 C.... calculations. Then assign the distance to the midpoint of each
-C.... sampling ring. 
+C.... sampling ring.
 
       x = PIE * SQM2AC
 
       DO 70 i = 1, MXTHRX
-         y = FLOAT(MESH * i) 
+         y = FLOAT(MESH * i)
          CrArea(i) = x * y**2
    70 CONTINUE
 
@@ -176,7 +174,7 @@ C.... function.
       DO 90 j = 1, MXTHRX
          tmp(j) = EXP(Dstnce(j) * DMBETA)
    90 CONTINUE
-    
+
       DO 100 i = 0, 6
          x = FLOAT(i) * DMALPH
 
@@ -194,11 +192,11 @@ C.... used.
          DO 200 j = 0, 6
             DMRDFF(i, j) = ABS(j-i)
   200    CONTINUE
-  210 CONTINUE    
+  210 CONTINUE
 
 C.... Initialize default values for crown thirds DMR.
 
-      DO 230 i = 0, 6 
+      DO 230 i = 0, 6
          DO 220 j = 1, CRTHRD
             DMDMR(i,j) = TPDMR(i,j)
   220    CONTINUE
@@ -210,10 +208,10 @@ C.... Initialize default values for the relative opacities.
          DMOPAQ(i) = TPOPAQ(i)
   250 CONTINUE
 
-C.... The value of DMOPQM is arbitrarily chosen to be consistent with 
+C.... The value of DMOPQM is arbitrarily chosen to be consistent with
 C.... the guess used for the Phase 1 model.  This value can be changed
 C.... by the keyword DMOPQM.
-                               
+
       DMOPQM = 0.20
 
       DO 300 i = 1, MAXSP
@@ -241,25 +239,25 @@ C....    by the DMLIGHT keyword.
          DMLtRx(i, 2, 2, 2) = 0.
 
 C....    Spread and fecundity tuning parameters.
-                                   
+
          DMKTUN(i) =  0
          DMETUN(i) =  1.00
-         DMSTUN(i) =  1.00 
-         DMITUN(i) =  1.00 
-      
-         DMFLWR(i) =  4 
+         DMSTUN(i) =  1.00
+         DMITUN(i) =  1.00
+
+         DMFLWR(i) =  4
          DMCAP(i)  =  3.00
 
          DMDETH(i) =  0.08
 
   300 CONTINUE
- 
+
 C.... Initial values for the random number generator.
 
       DMS0 = 55329.0D0
       DMSS = 55329.0
 
-C.... Reset the random number generator. Value of 'i' is a dummy. 
+C.... Reset the random number generator. Value of 'i' is a dummy.
 
       CALL DMRNSD (.FALSE., TSEED)
 

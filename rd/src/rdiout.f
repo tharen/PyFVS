@@ -1,5 +1,9 @@
       SUBROUTINE RDIOUT
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDIOUT                     LAST REVISION:  08/28/14
 C----------
@@ -21,48 +25,42 @@ C     ANUINF: ARRAY CONTAINING INDIVIDUAL SIMULATION RESULTS
 C     CORINF: ARRAY CONTAINING THE AVERAGE RESULT AND THE TOTAL UNINF. TREES BEFORE
 C             ANY INFECTION OCCURS
 C
-C  LOCAL VARIABLES : 
+C  LOCAL VARIABLES :
 C     ISDOUT:  NUMBER OF OUTPUT FILE
 C
 C  REVISION HISTORY:
 C  18-JUN-2001 Lancd R. David (FHTET)
 C    Added Stand ID and Management ID line to report header.
 C   08/28/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
 C.... PARAMETER INCLUDE FILES
 C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 C
 C.... COMMON INCLUDE FILES
 C
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'RDARRY.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDCRY.F77'
       INCLUDE 'RDADD.F77'
 C
-C
       CHARACTER*1 CHTYPE(ITOTRR)
       INTEGER  ISIM, J, JYR, MAXSIM, N
       REAL     AVG, SD, SUMX, UINUM
-      
+
       DATA CHTYPE /'P','S','A','W'/
-      
-      IF (IROOT .EQ. 0) RETURN 
+
+      IF (IROOT .EQ. 0) RETURN
 
 C     IF MONTE CARLO OUTPUT WAS NOT REQUESTED THEN RETURN
 
-      IF (ISDOUT .LE. 0) RETURN          
-      
+      IF (ISDOUT .LE. 0) RETURN
+
       MAXSIM = MIN(NINSIM,10)
-      
-      IF (ICYC .EQ. 1) THEN 
+
+      IF (ICYC .EQ. 1) THEN
 C
 C         WRITE THE TABLE HEADERS
 C
@@ -76,16 +74,16 @@ C
           WRITE (ISDOUT,1160)
 
       ENDIF
-      
+
       JYR = IY(ISTEP) - 1
-      
+
       DO 5000 IRRSP=MINRR,MAXRR
-         
+
          IF (PAREA(IRRSP) .LE. 0.0) GOTO 5000
-         
-         AVG = CORINF(IRRSP,1)                   
+
+         AVG = CORINF(IRRSP,1)
          UINUM = CORINF(IRRSP,2)
-         
+
          SUMX = 0.0
          SD = 0.0
          DO 100 ISIM=1,NINSIM
@@ -100,8 +98,8 @@ C         WRITE(ISDOUT,2200) (SPRQMD(IRRSP,J),J=1,MAXSIM)
 
  5000 CONTINUE
 
-      WRITE(ISDOUT,1121) 
- 
+      WRITE(ISDOUT,1121)
+
   200 CONTINUE
       RETURN
 

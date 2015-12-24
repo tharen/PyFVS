@@ -1,5 +1,12 @@
       SUBROUTINE FMSVFL (NOUT)
-      IMPLICIT NONE
+      use fmcom_mod
+      use fmparm_mod
+      use svdata_mod
+      use fmsvcm_mod
+      use fmfcom_mod
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -11,27 +18,18 @@ C
 C     INPUT:
 C     NOUT  =THE OUTPUT FILE REFERENCE NUMBER
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
 
-      INCLUDE 'FMPARM.F77'
 
-      INCLUDE 'SVDATA.F77'
 
-      INCLUDE 'FMSVCM.F77'
 
-      INCLUDE 'FMCOM.F77'
 
-      INCLUDE 'FMFCOM.F77'
 
-      INCLUDE 'METRIC.F77'
 
 COMMONS
 
       EXTERNAL SVRANN
       INTEGER  NOUT,NFLF,NFLAMES,NFLMS,IFLAMES,II,IFLR0T
+      INTEGER  I
       REAL     WIDTHMIN,TILTBASE,WMAX,WIDTH,FLMX,FLMY,BACHLO,TEMP,
      &         TEMP2,TMPDIST,TMPPCT,TMPVAR,TMPHEIGHT,FLMHT,FMWDTH,
      &         FLMWDTH,X,FLMTILT,XD,XR,XR2
@@ -217,6 +215,10 @@ C       GO AHEAD AND WRITE OUT THE FIRE INFORMATION TO THE SVS FILE.
       END
 
       SUBROUTINE FMGETFL(ASIZE, FLINE)
+      use fmsvcm_mod
+      use svdata_mod
+      use prgprm_mod
+      implicit none
 C----------
 C     **FMGETFL--FIRE   DATE OF LAST REVISION: 06/19/02
 C----------
@@ -228,19 +230,9 @@ C     INPUT:
 C     ASIZE  =THE SIZE OF THE ARRAY PASSED IN
 C     FLINE  =THE ARRAY TO BE FILLED WITH THE FIRE LINE INFO
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-      INCLUDE 'SVDATA.F77'
-C
-      INCLUDE 'FMSVCM.F77'
-C
-COMMONS
-C
       REAL FLINE
       INTEGER ASIZE
+      INTEGER I
 
       DIMENSION FLINE(ASIZE)
 

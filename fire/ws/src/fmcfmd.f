@@ -1,5 +1,12 @@
       SUBROUTINE FMCFMD (IYR, FMD)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C   **FMCFMD FIRE-WS-DATE OF LAST REVISION:  05/10/12
 C----------
@@ -23,21 +30,12 @@ C----------
 ***********************************************************************
 C----------
 COMMONS
-C
 C.... PARAMETER INCLUDE FILES.
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... COMMON INCLUDE FILES.
 
-      INCLUDE 'FMFCOM.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'ARRAYS.F77'
 C
-COMMONS
 C----------
 
 C     LOCAL VARIABLE DECLARATIONS
@@ -252,7 +250,7 @@ C     TABLE
       JSS = FINDJSS(SZDN)
 C----------
 C  TALLY UP THE BASAL AREA IN MIXED CONIFERS AND HARDWOODS
-C  SOFTWOODS CONSIDERED OUTSIDE MIXED CONIFERS ARE: 
+C  SOFTWOODS CONSIDERED OUTSIDE MIXED CONIFERS ARE:
 C    2=DF, 3=WF, 4=GS, 6=JP, 7=RF, 8=PP, 9=LP
 C    (NOT SURE IF 22=BD SHOULD BE IN WITH DF, OR 23=RW SHOULD BE IN WITH GS
 C     THESE ARE BOTH GOING TO MIXED CONIFERS RIGHT NOW)

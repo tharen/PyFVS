@@ -1,5 +1,17 @@
       SUBROUTINE FVSSTD (IWHO)
-      IMPLICIT NONE
+      use htcal_mod
+      use plot_mod
+      use arrays_mod
+      use workcm_mod
+      use estree_mod
+      use contrl_mod
+      use econ_mod
+      use outcom_mod
+      use fvsstdcm_mod
+      use varcom_mod
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -8,27 +20,10 @@ C     CREATE A FILE FOR FVSTAND POST-PROCESSOR INPUT.
 C
 C     IWHO=1 IF CALLED FROM MAIN, IWHO=2 IF CALLED FROM CUTS
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'HTCAL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'ESTREE.F77'
-      INCLUDE 'VARCOM.F77'
-      INCLUDE 'WORKCM.F77'
       INCLUDE 'STDSTK.F77'
       INCLUDE 'SUMTAB.F77'
-      INCLUDE 'OUTCOM.F77'
-      INCLUDE 'ECON.F77'
       INCLUDE 'OPCOM.F77'
-      INCLUDE 'FVSSTDCM.F77'
-      INCLUDE 'METRIC.F77'
 C
-C
-COMMONS
 C----------
       INTEGER IWHO,MYACT(1),KSDI,IOPEN,I,NTODO,ITODO,NPRMS,IACTK,IDT
       INTEGER KODE,ISTLNB,JYR,IP,ITPLAB,ITMFOR,IBA,IKNT,ISITE
@@ -94,7 +89,7 @@ C----------
 C     MAKE SURE KOLIST IS OPENED
       CALL openIfClosed (KOLIST,"fst",lok)
       if (.not.lok) goto 220
-      
+
 C----------
 C  LET IP BE THE RECORD OUTPUT COUNT
 C  SET THE OUTPUT REPORTING YEAR.
@@ -127,7 +122,7 @@ C----------
 C         CALL OPDONE(ITODO,JYR)
         ENDIF
       ENDIF
-     
+
 C----------
 C  WRITE A MARKER AND THE NUMBER OF RECORDS WHICH FOLLOW.
 C
@@ -231,7 +226,7 @@ C----------
       IF(LSTART) DGI = WORK1(I)
 C
       IF(IDG.EQ.0 .OR. IDG.EQ.2)THEN
-        IF(DGI .GT. 0. .AND. 
+        IF(DGI .GT. 0. .AND.
      &   ((DGI/BRATIO(ISP(I),DBH(I)-DG(I),HT(I)).LT.DBH(I))))THEN
           PDBHI=DBH(I)-(DG(I)/BRATIO(ISP(I),DBH(I)-DG(I),HT(I)))
         ELSE

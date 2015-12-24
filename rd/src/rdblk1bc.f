@@ -1,5 +1,7 @@
       BLOCK DATA RDBLK1
-      IMPLICIT NONE
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDBLK1-SEI    LAST REVISION:  08/27/14
 C----------
@@ -10,14 +12,10 @@ C     extension to FVS.
 C
 C  Previous revision date 07/07/08
 C
-COMMONS
-C
 
 C.... PARAMETER INCLUDE FILES
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
-      INCLUDE 'METRIC.F77'
 
 C.... COMMON INCLUDE FILES
 
@@ -29,7 +27,7 @@ C.... COMMON INCLUDE FILES
 C.... The array IRTSPC is used to index the species dependent arrays
 C.... HABFAC, PNINF, PKILLS, RRJSP, ISPS, DBIFAC, HTIFAC, PROOT,
 C.... RSLOP, ROWDOM, ROWIBP, RRPSWT, SSSFAC, IDITYP, PCOLO.
-C.... In the root disease model, the defaults for these variables 
+C.... In the root disease model, the defaults for these variables
 C.... are indexed as follows :
 C....
 C.... Species #|  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 |
@@ -61,5 +59,5 @@ C     Assume birch = non-host (NH)(40) for i=11,15
 
       DATA IOUNIT /22/
       DATA IRUNIT /18/
-      
+
       END

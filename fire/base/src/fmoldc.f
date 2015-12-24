@@ -1,5 +1,10 @@
       SUBROUTINE FMOLDC
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use arrays_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -16,38 +21,31 @@ C     bottom - old bottom] / old length).  The material to fall will be
 C     added to down debris at a constant rate throughout the next FVS
 C     cycle.  (In 'reality', some of this material would not fall until
 C     later cycles, and some of the slow-falling material from earlier
-C     cycles would fall during the current cycle.  The two effects 
-C     partially cancel each other out, so simply falling all of the 
+C     cycles would fall during the current cycle.  The two effects
+C     partially cancel each other out, so simply falling all of the
 C     dead material derived from the current crown lift in the current
 C     cycle is not grossly inaccurate).
-C
 C
 C  Local variable definitions:
 C
 C  Common block variables and parameters:
 C
-C
-      
+
 C.... Parameter statements.
 
-C.... Parameter include files.   
-      INCLUDE 'PRGPRM.F77'
+C.... Parameter include files.
 C      INCLUDE 'PPEPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... Common include files.
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'FMCOM.F77'
 
 C.... Variable declarations.
-      
-      INTEGER I, J    
 
-C.... Begin routine.  
+      INTEGER I, J
+
+C.... Begin routine.
 
 C     Loop through the tree list, recording the current height, crown
-C     length, and crown weights of each record.  
+C     length, and crown weights of each record.
 
       DO I=1,ITRN
          OLDHT(I) = HT(I)

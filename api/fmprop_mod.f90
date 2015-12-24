@@ -1,5 +1,7 @@
 module fmprop_mod
     use prgprm_mod, only : maxsp
+    implicit none
+    save
     !----------
     !  $Id: FMPROP.F77 767 2013-04-10 22:29:22Z rhavis@msn.com $
     !----------
@@ -23,5 +25,4 @@ module fmprop_mod
       REAL     FAPROP(2,101,3,2,2)
       INTEGER  BIOGRP(MAXSP)
 
-      COMMON /FMBLK2/ FAPROP, BIOGRP
 end module fmprop_mod

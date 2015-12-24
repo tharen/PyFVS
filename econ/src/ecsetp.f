@@ -1,4 +1,6 @@
       SUBROUTINE ECSETP(IY)
+      use prgprm_mod
+      implicit none
 C----------
 C **ECSETP--ECON  DATE OF LAST REVISION: 06/18/2009
 C----------
@@ -13,9 +15,7 @@ C  IY     - array of actual simulation years, 1=inventory year, 2=end 1st cycle,
 C  KODE   - return code, where: 0 implies no errors, 1 implies the referenced activity could not be found.
 C  MAXSP  - maximum number of species codes used by a specific variant, from PRGPRM.F77.
 
-      implicit none
 
-      include 'PRGPRM.F77'
       include 'ECNCOM.F77'
 
       integer             :: i, j, KODE

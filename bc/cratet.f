@@ -1,5 +1,14 @@
       SUBROUTINE CRATET
-      IMPLICIT NONE
+      use htcal_mod
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use metric_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -21,21 +30,7 @@ C    8)  PRINT A TABLE DESCRIBING CONTROL PARAMETERS AND INPUT
 C        VARIABLES.
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'BCPLOT.F77'
-      INCLUDE 'COEFFS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'OUTCOM.F77'
-      INCLUDE 'HTCAL.F77'
-      INCLUDE 'VARCOM.F77'
-      INCLUDE 'METRIC.F77'
-C
-COMMONS
 C
 C----------
 C  INTERNAL VARIABLES.
@@ -49,7 +44,7 @@ C----------
       LOGICAL DEBUG,MISSCR,TKILL
       CHARACTER*4 UNDER
       INTEGER KNT2(MAXSP),KNT(MAXSP)
-      INTEGER I,J,II,ISPC,IPTR,I1,I2,I3,K1,K2,K3,K4,JJ,IS,IM,NH      
+      INTEGER I,J,II,ISPC,IPTR,I1,I2,I3,K1,K2,K3,K4,JJ,IS,IM,NH
       REAL SPCNT(MAXSP,3)
       REAL D2,SITAGE,SITHT,AGMAX,HTMAX,HTMAX2
       REAL Q,SUMX,H,D,XX,YY,XN,HS
@@ -87,7 +82,7 @@ C----------
       J=IREF(I)
       IUSED(J)=NSP(I,1)
     5 CONTINUE
-      IF((ITRN.LE.0).AND.(IREC2.GE.MAXTP1))GO TO 245      
+      IF((ITRN.LE.0).AND.(IREC2.GE.MAXTP1))GO TO 245
 C----------
 C  PRINT SPECIES LABELS AND NUMBER OF OBSERVATIONS IN CONTROL
 C  TABLE.  THEN, RESET COUNTERS TO ZERO.

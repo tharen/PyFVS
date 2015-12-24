@@ -1,5 +1,11 @@
       SUBROUTINE FMINIT
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use fmfcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
+      save
 C----------
 C  $Id$
 C----------
@@ -16,14 +22,9 @@ C
 C----------
 C  PARAMETER INCLUDE FILES.
 C----------
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 C----------
 C  COMMON INCLUDE FILES.
 C----------
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
 C----------
 C  VARIABLE DECLARATIONS.
 C----------
@@ -33,6 +34,9 @@ C----------
 C----------
 C  VARIABLE INITIALIZATIONS.
 C----------
+
+      call fmcblk()
+
       HARVYR = 0
       NSNAG  = 0
       IFTYR = 0
@@ -69,7 +73,7 @@ C
         DBHSSALV(I)=0.
         HARDSALV(I)=.FALSE.
         HTDEADSALV(I)=0.
-C        
+C
       ENDDO
 C
 C     INITIALIZE ACTIVITY FUELS VARS
@@ -818,7 +822,7 @@ C----------
       MOISEX(I)      =    0.25
 
 C----------
-C  INITIALIZE VARIABLES FOR NEW FIRE CALCULATION OPTIONS 
+C  INITIALIZE VARIABLES FOR NEW FIRE CALCULATION OPTIONS
 C  (NEW FUEL MODEL LOGIC AND USING MODELLED LOADS)
 C----------
       IFLOGIC   = 0
@@ -830,8 +834,8 @@ C----------
       UBD(2)    = 0.75
       ULHV      = 8000
       DO I = 1,MXDFMD
-        IFUELMON(I) = -1       
-      ENDDO 
+        IFUELMON(I) = -1
+      ENDDO
 C----------
 C  SNAG POOL INITIALIZATION
 C----------
@@ -905,7 +909,7 @@ C
       DO I = 1,17
         CARBVAL(I) = 0.0
       ENDDO
-            
+
       ICMETH   = 0      ! CARBON METHOD 0 = FFE, 1 = JENKINS
       ICMETRC  = 0      ! UNITS TYPE 0 = IMPERIAL, 1 = METRIC
       ICHABT   = 1      ! DEFAULT C-REPORTING HABITAT GROUP
@@ -922,7 +926,7 @@ C
       BIOSHRB  =  0.0
       BIOROOT  =  0.0
       BIOCON(1)=  0.0
-      BIOCON(2)=  0.0        
+      BIOCON(2)=  0.0
       DO I = 1,2
         DO J = 1,2
           DO K = 1,MAXCYC
@@ -945,7 +949,7 @@ C
                IF (J .LE. 10) THEN
                  CWDVOL(I,J,K,L) = 0.0
                  CWDCOV(I,J,K,L) = 0.0
-               ENDIF               
+               ENDIF
              ENDDO
           ENDDO
         ENDDO
@@ -986,7 +990,7 @@ C----------
       !DO I = 1, 9
       !  Q10CWD(I) = 2.0  ! snag stems, branches
       !ENDDO
-      !Q10CWD(10)  = 2.65 ! litter - Kurz Table 4: AG very fast 
+      !Q10CWD(10)  = 2.65 ! litter - Kurz Table 4: AG very fast
       !Q10CWD(11)  = 1.0  ! duff
       !Q10CWD(12)  = 2.0  ! roots
       !
@@ -994,7 +998,7 @@ C----------
       !  REFMATCWD(I) = 10.0
       !ENDDO
 C----------
-C  INITIALIZE FLAG INDICATING REMOVAL OF STAND BIOMASS 
+C  INITIALIZE FLAG INDICATING REMOVAL OF STAND BIOMASS
 C  EVENT MONITOR FUNCTION TREEBIO IN **FMEVMON**
 C----------
       LREMT=.FALSE.

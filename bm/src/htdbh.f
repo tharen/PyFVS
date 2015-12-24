@@ -1,5 +1,6 @@
       SUBROUTINE HTDBH (IFOR,ISPC,D,H,MODE)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **HTDBH--BM    DATE OF LAST REVISION:  04/24/09
 C----------
@@ -20,12 +21,6 @@ C      MODE = MODE OF OPERATING THIS SUBROUTINE
 C             0 IF DIAMETER IS PROVIDED AND HEIGHT IS DESIRED
 C             1 IF HEIGHT IS PROVIDED AND DIAMETER IS DESIRED
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
 COMMONS
 C----------
 C

@@ -1,5 +1,11 @@
         SUBROUTINE VARVOL
-        IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use volstd_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **VARVOL--CA    DATE OF LAST REVISION:   03/20/13
 C----------
@@ -9,29 +15,6 @@ C  FROM THE NATIONAL CRUISE SYSTEM VOLUME LIBRARY FOR METHB OR METHC
 C  EQUAL TO 6.  IT ALSO CONTAINS ANY OTHER SPECIAL VOLUME CALCULATION
 C  METHOD SPECIFIC TO A VARIANT (METHB OR METHC = 8)
 C----------
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
-COMMONS
 C
 C----------
 C
@@ -142,7 +125,7 @@ C
           IF(IT.GT.0)HT2TD(IT,2)=X02
         ELSE
           IF(IT.GT.0)HT2TD(IT,2)=0.
-        ENDIF        
+        ENDIF
 C
         IF(DEBUG)WRITE(JOSTND,*)' AFTER PROFILE CF TVOL= ',TVOL
       ELSE
@@ -309,8 +292,6 @@ C----------
       BTKFLG = .TRUE.
       RETURN
 C
-C
-C
   100 CONTINUE
 C----------
 C  SET PARAMETERS & CALL PROFILE OR R5HARV TO COMPUTE R5 VOLUMES.
@@ -373,7 +354,7 @@ C
           IF(IT.GT.0)HT2TD(IT,2)=X02
         ELSE
           IF(IT.GT.0)HT2TD(IT,2)=0.
-        ENDIF        
+        ENDIF
 C
         IF(DEBUG)WRITE(JOSTND,*)' AFTER PROFILE CF TVOL= ',TVOL
       ELSE
@@ -484,7 +465,6 @@ C----------
 C
       RETURN
 C
-C
 C----------
 C  ENTER ANY OTHER CUBIC HERE
 C----------
@@ -497,7 +477,6 @@ C
       CTKFLG = .FALSE.
       RETURN
 C
-C
 C----------
 C  ENTER ANY OTHER BOARD HERE.
 C----------
@@ -506,7 +485,6 @@ C----------
       BBFV=0.
       BTKFLG = .FALSE.
       RETURN
-C
 C
 C----------
 C  ENTRY POINT FOR SENDING VOLUME EQN NUMBER TO THE FVS-TO-NATCRZ ROUTINE

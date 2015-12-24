@@ -1,5 +1,9 @@
       SUBROUTINE SMHGDG (IT,ISPC,H,D,HG5,DG5,ICYC,JOSTND,DEBUG,MODE)
-      IMPLICIT NONE
+      use varcom_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **SMHGDG--WC  DATE OF LAST REVISION:  08/07/13
 C----------
@@ -11,28 +15,16 @@ C  CALLED FROM **ESSUBH **REGENT
 C
 C  INPUT VARIABLES
 C  IT     - TREE NUMBER
-C  ISPC   - SPECIES 
+C  ISPC   - SPECIES
 C  H      - BEGINING HEIGHT
 C  D      - BEGINING DIAMETER
 C  MODE   - = 0 IF CALL IS FROM ESSUBH
-C           = 1 IF CALL IS FROM REGENT 
+C           = 1 IF CALL IS FROM REGENT
 C
 C  RETURN VARIABLES
 C  HG5    - 5 YEAR HEIGHT INCREMANT
 C  DG5    - 5 YEAR DIAMETER INCREMENT
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
-      INCLUDE 'ARRAYS.F77'
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-COMMONS
-C
       LOGICAL DEBUG
       INTEGER I,IT,J,ICYC,JOSTND,MODE,ISPC
       REAL    H,HG,DGS,DG1,HBH,DBHA,D,BAS,AVHT
@@ -188,8 +180,7 @@ C----------
      &  'AVH,FINT= ',IT,H,D,AVH,FINT
         IF(IT.GT.0)WRITE(JOSTND,*)' ICR(IT),PCT(IT),PTBAA(ITRE(IT))= ',
      &   ICR(IT),PCT(IT),PTBAA(ITRE(IT))
-        WRITE(JOSTND,*)' ITRE= ',ITRE
-        WRITE(JOSTND,*)' PTBAA= ',PTBAA     
+        WRITE(JOSTND,*)' IT,ITRE,PTBAA= ',IT,ITRE(IT),PTBAA(ITRE(IT))
       ENDIF
 C
       IF((MODE.EQ.0).OR.(IT.LE.0))THEN
@@ -203,8 +194,8 @@ C
         IF(RELHT .GT. 1.5)RELHT=1.5
       ELSE
         CR=ICR(IT)*0.01
-        PTBAL = PTBALT(IT) 
-        PTBA = PTBAA(ITRE(IT))	
+        PTBAL = PTBALT(IT)
+        PTBA = PTBAA(ITRE(IT))
         BAS = PTBA-PTBAL
         RELHT = 0.0
         AVHT=AVH

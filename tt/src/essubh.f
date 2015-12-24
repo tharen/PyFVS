@@ -1,6 +1,9 @@
       SUBROUTINE ESSUBH (I,HHT,EMSQR,DILATE,DELAY,ELEV,ISER,GENTIM,
      &                   TRAGE)
-      IMPLICIT NONE
+      use esparm_mod
+      use escomn_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **ESSUBH---TT   DATE OF LAST REVISION:  03/09/10
 C----------
@@ -8,24 +11,14 @@ C
 C     ASSIGNS HEIGHTS TO SUBSEQUENT AND PLANTED TREE RECORDS
 C     CREATED BY THE ESTABLISHMENT MODEL.
 C
-C
-C     COMING INTO ESSUBH, TRAGE IS THE AGE OF THE TREE AS SPECIFIED ON 
-C     THE PLANT OR NATURAL KEYWORD.  LEAVING ESSUBH, TRAGE IS THE NUMBER 
-C     BETWEEN PLANTING (OR NATURAL REGENERATION) AND THE END OF THE 
-C     CYCLE.  AGE IS TREE AGE UP TO THE TIME REGENT WILL BEGIN GROWING 
+C     COMING INTO ESSUBH, TRAGE IS THE AGE OF THE TREE AS SPECIFIED ON
+C     THE PLANT OR NATURAL KEYWORD.  LEAVING ESSUBH, TRAGE IS THE NUMBER
+C     BETWEEN PLANTING (OR NATURAL REGENERATION) AND THE END OF THE
+C     CYCLE.  AGE IS TREE AGE UP TO THE TIME REGENT WILL BEGIN GROWING
 C     THE TREE.
 C     CALLED FORM **ESTAB
 C----------
 C  COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
-      INCLUDE 'ESCOMN.F77'
 C
 C  COMMONS
 C----------
@@ -69,101 +62,101 @@ C----------
       BNORM=BNORML(IAGE)
       TRAGE=TIME-DELAY
 C
-      SELECT CASE (I)      
+      SELECT CASE (I)
 C----------
 C     HEIGHT OF TALLEST SUBSEQUENT SPECIES 1 (WB)
 C----------
-      CASE (1) 
+      CASE (1)
         HHT = 1.0
 C----------
 C     HEIGHT OF TALLEST SUBS. SPECIES 2 (LM)
 C----------
-      CASE (2) 
+      CASE (2)
         HHT = 0.5
 C----------
 C     HEIGHT OF TALLEST SUBS. SPECIES 3 (DF)
 C----------
-      CASE (3) 
+      CASE (3)
         HHT = 2.0
 C----------
 C     HEIGHT OF TALLEST SUBS. SPECIES 4 (PM)
 C----------
-      CASE (4) 
+      CASE (4)
         HHT = 0.5
 C----------
 C     HEIGHT OF TALLEST SUBS. SPECIES 6 (AS)
 C----------
-      CASE (6) 
+      CASE (6)
         HHT = 5.0
 C----------
 C     HEIGHT OF TALLEST SUBS. SPECIES 7 (LP)
 C----------
-      CASE (7) 
+      CASE (7)
         HHT = 3.0
 C----------
 C     HEIGHT OF TALLEST SUBS. SPECIES 5 & 8 (BS, ES)
 C----------
-      CASE (5,8) 
+      CASE (5,8)
         HHT = 1.5
 C----------
 C     HEIGHT OF TALLEST SUBS. SPECIES 9 (AF)
 C----------
-      CASE (9) 
+      CASE (9)
         HHT = 0.75
 C----------
 C     HEIGHT OF TALLEST SUBS. SPECIES 10 (PP)
 C     USE PSME/CARU, CAGE, AGSP, FEID, PHMA, ACGL, SYAL, SPBE, SYOR,
 C     ARUV, MISC HABITAT TYPE CONSTANT.
 C----------
-      CASE (10) 
+      CASE (10)
         PN= -1.99480 +1.53946*AGELN -0.00402*BAA -0.14710
      &    +UPRE(IPREP) -0.01155*ELEV
         HHT = EXP(PN +EMSQR*DILATE*BNORM*0.49076)
 C----------
 C     HEIGHT OF TALLEST SUBS. SPECIES 11 (UJ)
 C----------
-      CASE (11) 
+      CASE (11)
         HHT = 0.5
 C----------
 C     HEIGHT OF TALLEST SUBS. SPECIES 12 (RM)
 C----------
-      CASE (12) 
+      CASE (12)
         HHT = 0.5
 C----------
 C     HEIGHT OF TALLEST SUBS. SPECIES 13 (BI)
 C----------
-      CASE (13) 
+      CASE (13)
         HHT = 1.0
 C----------
 C     HEIGHT OF TALLEST SUBS. SPECIES 14 (MM)
 C----------
-      CASE (14) 
+      CASE (14)
         HHT = 5.0
 C----------
 C     HEIGHT OF TALLEST SUBS. SPECIES 15 (NC)
 C----------
-      CASE (15) 
+      CASE (15)
         HHT = 10.0
 C----------
 C     HEIGHT OF TALLEST SUBS. SPECIES 16 (MC)
 C----------
-      CASE (16) 
+      CASE (16)
         HHT = 1.0
 C----------
 C     HEIGHT OF TALLEST SUBS. SPECIES 17 (OS)
 C----------
-      CASE (17)          
+      CASE (17)
         HHT = 1.0
 C----------
 C     HEIGHT OF TALLEST SUBS. SPECIES 18 (OH)
 C----------
-      CASE (18) 
+      CASE (18)
         HHT = 10.0
-C                    
-      END SELECT  
+C
+      END SELECT
 C
       RETURN
-      END 
+      END
 C**END OF CODE SEGMENT
 
 

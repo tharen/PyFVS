@@ -1,11 +1,14 @@
       SUBROUTINE MPBDRV
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **MPBDRV        DATE OF LAST REVISION:  08/22/14
 C----------
 C
 C     INTERFACING PROGRAM TO CALL MPBMOD
-C
 C
 C Revision History
 C   05/31/00 GEB
@@ -14,7 +17,6 @@ C     Defined in mpblkd.f, which is variant dependent
 C   12/01/98 RNH
 C     Adapated to 24 species (CR variant)
 C   07/02/10 Lance R. David (FMSC)
-C     Added IMPLICIT NONE.
 C   03/29/13 Lance R. David (FMSC)
 C     Some variables defined locally were already defined in a common.
 C   08/22/14 Lance R. David (FMSC)
@@ -22,24 +24,8 @@ C     Function name was used as variable name.
 C     changed variable INT to INCRS
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'MPBCOM.F77'
 C
-C
-COMMONS
 
       CHARACTER*4 IF60
 
@@ -68,11 +54,9 @@ C     PRCENT= PERCENT MORTALITY CRITERIA FOR SWITCHING 'RGMORT'
 C     DEAD  = TOTAL PROB WHICH IS DEAD UPON RETURN FROM MPBMOD
 C     SURVIV= PERCENT SURVIVAL IN EACH CLASS
 C
-C
 C Revision History
 C    Last noted revision date.
 C   07/02/10 Lance R. David (FMSC)
-C     Added IMPLICIT NONE.
 C----------
 C********************        EXECUTION   STARTS        ***************
 C
@@ -80,7 +64,6 @@ C     IF WE ARE NOT IN THE MIDST OF AN OUTBREAK;
 C     COMPUTE PERIODIC GROWTH RATIO.
 C
       IF (MPBYR.EQ.0) CALL MPGR
-C
 C
 C     Changed pointer array ISCT subscript from 7 to IDXLP to correspond
 C     with new species mapping and new location for LP (RNH Dec98, GEB May2000)
@@ -207,7 +190,7 @@ C
       IF (PROB(I)-WK2(I) .LT. 1E-6) WK2(I)=PROB(I)-1E-6
   135 CONTINUE
   140 CONTINUE
-      
+
 C
 C     IF WE JUST RETURNED FORM MPBMOD FOR THE LAST TIME, FOR THIS
 C     STAND AND FOR THIS EPIDEMIC, WE PRINT THE OUTBREAK GRAPH

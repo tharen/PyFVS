@@ -1,5 +1,12 @@
       SUBROUTINE FMCFMD (IYR, FMD)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMCFMD FIRE-UT/CR/TT - DATE OF LAST REVISION: 06/30/10
 C----------
@@ -23,31 +30,8 @@ C----------
 ***********************************************************************
 C----------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'FMFCOM.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
       INCLUDE 'SSTGMC.F77'
 C
-COMMONS
 C----------
 C  LOCAL VARIABLE DECLARATIONS
 C
@@ -274,7 +258,7 @@ C
 C----------
 C  CENTRAL ROCKIES (CR) VARIANT
 C----------
-      ELSE                       
+      ELSE
         DO I = 1,ITRN
           X = FMPROB(I) * DBH(I) * DBH(I) * 0.0054542
           LUNDER = HT(I) .LE. USHT
@@ -382,7 +366,7 @@ C----------
 C----------
 C  CENTRAL ROCKIES VARIANT
 C----------
-      ELSE 
+      ELSE
         y1 = 200
         y2 = 5
         y3 = 30
@@ -868,7 +852,7 @@ C
 C----------
 C  UTAH AND TETONS VARIANTS
 C----------
-        ELSE 
+        ELSE
 C----------
 C  IS WHITE FIR PRESENT? ONLY PERTAINS TO UT VARIANT;
 C  WHITE FIR IS NOT A VALID SPECIES IN TT VARIANT

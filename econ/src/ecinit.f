@@ -1,4 +1,6 @@
       SUBROUTINE ECINIT
+      use prgprm_mod
+      implicit none
 C----------
 C **ECINIT--ECON  DATE OF LAST REVISION: 09/02/2010
 C----------
@@ -6,9 +8,7 @@ C Author Fred Martin, WA DNR,
 ! Initializes defaults for ECON extension variables at beginning of each simulation.
 ! Called from INITRE, once for each simulated stand.
 
-      implicit none
 
-      include 'PRGPRM.F77'                                               !required by ECNCOM
       include 'ECNCOM.F77'
 
 !    Initialize control variables

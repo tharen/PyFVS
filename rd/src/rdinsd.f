@@ -1,5 +1,9 @@
       SUBROUTINE RDINSD
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDINSD      LAST REVISION:  08/28/14
 C----------
@@ -17,10 +21,10 @@ C     RDCNTL  [ROOT DISEASE]
 C
 C  Calls :
 C     DBCHK   (SUBROUTINE)   [PROGNOSIS]
-C     RDRANN  (FUNCTION)     [ROOT DISEASE] 
+C     RDRANN  (FUNCTION)     [ROOT DISEASE]
 C     RDSUM   (SUBROUTINE)   [ROOT DISEASE]
 C
-C  Local Variables :           
+C  Local Variables :
 C     RRNINF - REAL
 C              New infections, by tree record, totalled over the number
 C              of simulations and averaged at the end.
@@ -46,22 +50,17 @@ C    03-AUG-2012 Lance David (FMSC)
 C                Array dimension of RRNINF and POLP changed from 500 to
 C                parameter IRRTRE.
 C   08/28/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 
 C.... Common include files.
 
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'RDADD.F77'
 
 C.... Local variable declarations.
@@ -71,7 +70,7 @@ C.... Local variable declarations.
      &         J, K, KSP, NSIMS, NUMOLP
 
       REAL     AVGINF, DENNEW, DISOLP, DIST, OAMOVE(3), OVERLP,
-     &         PNIOLP, PNSP,POLP(IRRTRE), PREVKL, PROPN, R, 
+     &         PNIOLP, PNSP,POLP(IRRTRE), PREVKL, PROPN, R,
      &         RDRANN, RRNINF(IRRTRE), SMBI, SMIU, TEMP, XTRY,
      &         YTRY
 
@@ -92,7 +91,7 @@ C.... Set up inoculum test plot.
       DO 443 I=1,ITRN
          IF (IRRSP .LT. 3) IDI = IDITYP(IRTSPC(ISP(I)))
          IF (IDI .NE. IRRSP) GOTO 443
-         
+
          POLP(I) = 0.0
          RRNINF(I) = 0.0
 
@@ -115,23 +114,23 @@ C.... Get linear dimensions in feet.
    50 CONTINUE
 
       IF (DENNEW .LE. 0.0) GOTO 2000          !RETURN
-      
+
       RRIARE = RRGEN(IRRSP,9) / (DENNEW + 1E-9)
       RRIDIM = SQRT(RRIARE) * 208.7
-      
+
       IF (DEBUG) WRITE(JOSTND,51) RRIARE,RRIDIM,RRGEN(IRRSP,9),DENNEW
    51 FORMAT(' RDINSD: RRIARE RRIDIM RRGEN(9) DENNEW=',4F12.3)
-      
+
 C.... Begin the simulation loop for the calculation of inside center
 C.... infection.
-      
-      DO 1010 NSIMS = 1,NINSIM            
-        
+
+      DO 1010 NSIMS = 1,NINSIM
+
          ANUINF(IRRSP,NSIMS) = 0.0
 
 C....    Select live infected trees for the area to be simulated.
 
-         IRINCS = 0    
+         IRINCS = 0
          IDI = MAXRR
 
          DO 100 KSP=1, MAXSP
@@ -146,13 +145,13 @@ C....    Select live infected trees for the area to be simulated.
 
                DO 90 IT=1, ISTEP
                   DO 85 IP=1,2
-             
+
 C....                Calculate number of trees of class in simulated
 C....                area. Ignore trees which are infected but are not
 C....                yet inoculum.
 
                      IF (PROPI(I,IT,IP) .LE. 0.0) GOTO 85
-               
+
                      RRIMEN = PROBI(I,IT,IP) * RRIARE / (PAREA(IRRSP) +
      &                        1E-6)
                      IF (RRIMEN .EQ. 0.0) GOTO 85
@@ -249,7 +248,7 @@ C....    ------------------------------------------------------------
 C....
 C....    Loop over tree classes in tree list.
 
-         RRGEN(IRRSP,4) = 0  
+         RRGEN(IRRSP,4) = 0
          IDI = MAXRR
 
          DO 1000 KSP=1, MAXSP
@@ -259,13 +258,12 @@ C     Modification (RNH, MAR98).  If MAXRR < 3 then annosus disease.
 C     If non-host species then IDI = 0, and loop should be skipped to
 C     prevent array out of bounds error
 C
-      IF (IDI .LE. 0) GO TO 1000            
+      IF (IDI .LE. 0) GO TO 1000
 C
-C            
-            PNSP = PNINF(IRTSPC(KSP),IDI)  
+            PNSP = PNINF(IRTSPC(KSP),IDI)
 
 C....       First, modify probability of infection to account for the
-C....       number of years in a cycle.         
+C....       number of years in a cycle.
 
             PNSP = 1 - ((1 - PNSP) ** (FINT/PINT))
 
@@ -284,15 +282,15 @@ C....       (SPPROP).
                I = IND1(J)
 
 C....          Loop over uninfected trees in simulation.
-C....          IRINIT (=13500) seems to be used to set a possible 
+C....          IRINIT (=13500) seems to be used to set a possible
 C....          maximum on the number of trees used in the simulation.
 
                NUMTRE = FLOAT(IRINIT) / (FLOAT(ITRN) + 1E-6)
                IF (NUMTRE .GT. PROBIU(I)) NUMTRE = PROBIU(I)
                IF (NUMTRE .LE. 0) GOTO 900
 
-               NUMOLP = 0 
-               DISOLP = 0.0 
+               NUMOLP = 0
+               DISOLP = 0.0
                PNIOLP = 0.0
 
                DO 800 IT=1, NUMTRE
@@ -313,14 +311,14 @@ C....                       overlap (will be averaged).
                      DIST = SQRT((XTRY - XRRI(IN))**2 +
      &                      (YTRY - YRRI(IN))**2)
                      IF (DIST .GT. (RRIRAD(IN) + ROOTL(I))) GOTO 750
- 
+
                      ITROLP = ITROLP + 1
                      OVERLP = RRIRAD(IN) + ROOTL(I) - DIST
                      IF (OVERLP .GT. ROOTL(I)) OVERLP = ROOTL(I)
                      DISOLP = DISOLP + OVERLP
   750             CONTINUE
 
-                  IF (ITROLP .GT. 0) THEN 
+                  IF (ITROLP .GT. 0) THEN
                      PNIOLP = PNIOLP + (1 - PNSP) ** ITROLP
                   ELSE
                      PNIOLP = PNIOLP + 1
@@ -342,19 +340,19 @@ C....          End of old way.
 
 C....          Calculate average probability of infection for tree
 C....          class.
-            
+
                AVGINF = 1 - (PNIOLP / (FLOAT(NUMTRE) + 1E-6))
-            
+
                RRNINF(I) = RRNINF(I) + PROBIU(I) * AVGINF
-               ANUINF(IRRSP,NSIMS) = ANUINF(IRRSP,NSIMS) + 
+               ANUINF(IRRSP,NSIMS) = ANUINF(IRRSP,NSIMS) +
      &                               PROBIU(I) * AVGINF
-            
+
                IF (NUMOLP .LE. 0) GOTO 900
 
 C...           DISOLP / NUMOLP is the average distance of overlap
 C....          so POLP is the average proportion of overlap
 C....          then take 1-POLP so POLP is measured from the center.
-            
+
                TEMP = 1 - (DISOLP / NUMOLP) / (ROOTL(I) + 1E-6)
                IF (TEMP .LE. 0.0) TEMP = -.001
                POLP(I) = POLP(I) + TEMP
@@ -377,7 +375,7 @@ C.... each record.
 
          DO 1030 J=I1, I2
             I = IND1(J)
-      
+
 C....       Note: When we use the integer variable NUMTRE, we could
 C....             end up with more trees infected then there were
 C....             uninfected. There is no reason why PROBI has to be
@@ -391,7 +389,7 @@ C....       IF (NUMTRE .LE. 0) GOTO 900
 C....       PROBIU(I) = PROBIU(I) - NUMTRE
 C....       IF (PROBIU(I) .LT. 0) PROBIU(I) = 0
 C....       PROBI(I,ISTEP) = PROBI(I,ISTEP) + NUMTRE
-            
+
 C....       For printing, add # of uninfected trees (before infection
 C....       occurs).
 
@@ -400,7 +398,7 @@ C....       occurs).
 C....       Find average of RRNINF and POLP
 
             IF (RRNINF(I) .LE. 1E-4) GOTO 1030
-            
+
             RRNINF(I) = RRNINF(I) / (FLOAT(NINSIM) + 1E-6)
             POLP(I) = POLP(I) / (FLOAT(NINSIM) + 1E-6)
 
@@ -413,18 +411,18 @@ C....       Add the new infection resulting inside the core of the
 C....       center.
 
             CORINF(IDI,1) = CORINF(IDI,1) + RRNINF(I)
-            
+
 C....       Determine the initial infection level, from a distribution
 C....       about the mean infection of 0.001.
 
-C....       IF (PROPI(I,ISTEP) .LE. 0.0) PROPI(I,ISTEP) = RDRANP(0.001)   
+C....       IF (PROPI(I,ISTEP) .LE. 0.0) PROPI(I,ISTEP) = RDRANP(0.001)
 
             PROPI(I,ISTEP,1) = -POLP(I)
-             
+
             RRGEN(IRRSP,4) = RRGEN(IRRSP,4) + RRNINF(I)
 
             IF (OAKL(DSIU,I) .GT. 0.0) THEN
-            
+
 C....          OAKL must be re-arranged because some of the inside
 C....          uninfected trees that have just been infected may have
 C....          been previously killed by other agents. eg. If 10% of
@@ -440,7 +438,7 @@ C....          killed.
                OAMOVE(DSIU) = -PREVKL
 
                CALL RDMREC (1,I,KSP,OAMOVE)
-              
+
             ENDIF
 
  1030    CONTINUE

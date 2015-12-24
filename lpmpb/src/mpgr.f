@@ -1,5 +1,8 @@
       SUBROUTINE MPGR
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **MPGR          DATE OF LAST REVISION:  06/14/13
 C----------
@@ -13,25 +16,10 @@ C
 C Revision History
 C   05/31/00 Last noted revision date.
 C   07/02/10 Lance R. David (FMSC)
-C     Added IMPLICIT NONE.
 C----------
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
 C
       INCLUDE 'MPBCOM.F77'
 C
-C
-COMMONS
 
       INTEGER I, I2, J
 
@@ -103,7 +91,6 @@ C
       IF(DEBUIN) WRITE(JOMPB,50) ICYC,PGR,SUMP
    50 FORMAT (/,'IN MPGR - ICYC=',I3,'; PGR=',F8.3,'; SUMP=',F8.3)
       RETURN
-C
 C
       ENTRY MPSVDG
       NPGR=0

@@ -1,5 +1,9 @@
       SUBROUTINE HABTYP (KARD2,ARRAY2)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C CR $Id$
 C----------
@@ -23,21 +27,6 @@ C     UPON EXITING THIS ROUTINE, KODTYP WILL CARRY THE FVS SEQUENCE
 C     NUMBER FOR THE HT; ITYPE WILL CARRY THE INDEX OF THAT HT IN
 C     THE R2 OR R3 HT ARRAY.
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
 COMMONS
 C----------
       INTEGER NR2,NR3,I,IR2,IR3,LIMIT,IHB
@@ -356,7 +345,7 @@ C----------
   200   CONTINUE
 C
 C  KODFOR IS ZERO AND NO MATCH WAS FOUND, TREAT IT AS A SEQUENCE NUMBER.
-C  
+C
         IF(DEBUG)WRITE(JOSTND,*)'EXAMINING FOR INDEX, ARRAY2= ',ARRAY2
         IHB = IFIX(ARRAY2)
         IF(IHB.LE.NR2 .AND. IR2.EQ.1)THEN
@@ -377,7 +366,7 @@ C
           KARD2=R2HABT(ITYPE)
         ELSEIF(KODFOR.GE.300)THEN
           KARD2=R3HABT(ITYPE)
-        ENDIF 
+        ENDIF
       ENDIF
       IF (KODTYP.EQ.0)THEN
         IF((LSTART).AND.(.NOT.LPVXXX).AND.(PCOMX.NE.'2NDPASS '))

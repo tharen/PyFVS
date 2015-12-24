@@ -1,5 +1,6 @@
       SUBROUTINE RDCLOC
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDCLOC      LAST REVISION:  08/27/14
 C----------
@@ -16,34 +17,21 @@ C
 C  Revision History :
 C   02/01/94 - Last revision date.
 C   08/27/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'RDPARM.F77'
-C
 C
       INCLUDE 'RDCOM.F77'
 C
-C
       INCLUDE 'RDARRY.F77'
 C
-C
       INCLUDE 'RDADD.F77'
-C
-C
-COMMONS
 C
       INTEGER  II, JJ, NTRY
       REAL     AX1(100), AX2(100), AY1(100), AY2(100)
       REAL     RDRANN
-      
+
       DATA AX1, AX2, AY1, AY2 /400*0.0/
 
       DIMEN = SQRT(SAREA) * 208.7
@@ -56,7 +44,7 @@ C     ATTAINABLE.
 C
 
 C     IF THE STAND IS TO BE RUN AS ONE CENTER THEN MAKE SURE THAT STAND
-C     AREA IS COMPLETELY COVERED BY THE CENTER. ASSUME THAT THE RADIUS 
+C     AREA IS COMPLETELY COVERED BY THE CENTER. ASSUME THAT THE RADIUS
 C     OF THE CENTER IS EQUAL TO HALF THE DIAGONAL OF THE STAND (USE
 C     PYTHAGORAS: R^2 = (.5 * DIMEN)^2 + (.5 * DIMEN)^2). ALSO ASSUME
 C     THAT THE CENTER OF THE CENTER IS IN THE CENTER OF THE STAND.
@@ -66,23 +54,23 @@ c         PCENTS(IRRSP,1,3) = 0.5 * DIMEN * SQRT(2.0)
 c         PCENTS(IRRSP,1,1) = 0.5 * DIMEN
 c         PCENTS(IRRSP,1,2) = 0.5 * DIMEN
 c         GOTO 200
-c      ENDIF   
+c      ENDIF
 
 c     SINCE USING THE DIAGONAL DOESN'T SEEM TO WORK, TRY SETTING THE RADIUS TO BE
-C     THE SAME AS ONE SIDE OF THE SQUARE STAND 
+C     THE SAME AS ONE SIDE OF THE SQUARE STAND
 
       IF (LONECT(IRRSP) .EQ. 1) THEN
          PCENTS(IRRSP,1,3) = DIMEN
          PCENTS(IRRSP,1,1) = 0.5 * DIMEN
          PCENTS(IRRSP,1,2) = 0.5 * DIMEN
          GOTO 200
-      ENDIF   
+      ENDIF
 
       DO 100 II=1,NCENTS(IRRSP)
          NTRY = 0
          PCENTS(IRRSP,II,3) = SQRT(PAREA(IRRSP) /
-     >                        (3.14159 * NCENTS(IRRSP))) * 208.7 
-         
+     >                        (3.14159 * NCENTS(IRRSP))) * 208.7
+
   101    CONTINUE
          NTRY = NTRY + 1
          IF (NTRY .GT. 20) GOTO 100
@@ -111,6 +99,6 @@ C
   110    CONTINUE
   100 CONTINUE
   200 CONTINUE
-  
+
       RETURN
       END

@@ -1,5 +1,7 @@
       SUBROUTINE BWEIN(LKECHO)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BWEIN                  DATE OF LAST REVISION:  10/21/13
 C----------
@@ -13,7 +15,7 @@ C     FORESTRY SCIENCES LAB, MOSCOW, IDAHO. APRIL 10, 1984.
 C
 C     MAJOR REVISION: SERIAL LINKAGE TO STAND PROGNOSIS MODEL.
 C     MAJOR REVISION: LINKAGE TO PARALLEL PROCESSING EXTENSION.
-c     major revision: delete links to BW pop.dyn. model 
+c     major revision: delete links to BW pop.dyn. model
 c       K.A.Sheehan USDA-FS,R6-FID  July 1996
 C     MAJOR REVISION: CONVERT TO MENU-DRIVEN INPUT. KAS 9/96
 C     Revised to remove menu system -- k.sheehan 12/21/98
@@ -92,11 +94,11 @@ C       paramters (field 4 = 1).
 C    01-DEC-00 Lance David (FHTET)
 C      .Variable IDEFPR associated with the generation of DFESUM.TAB
 C       was not set along with LP3. Kathy originally had two options
-C       on the generation of this table, but now only option 1 is 
-C       active. The section of code for this table was originally in 
+C       on the generation of this table, but now only option 1 is
+C       active. The section of code for this table was originally in
 C       the menu subroutine. I don't think it was properly placed when
-C       put in this subroutine. It still does not function properly, 
-C       only a table of zeros is generated. This is not a critical 
+C       put in this subroutine. It still does not function properly,
+C       only a table of zeros is generated. This is not a critical
 C       problem, so will have to be addressed at a later date.
 C    05-DEC-00 Lance David (FHTET)
 C      .Removed a couple do loops that data arrays STAGE and TREESP.
@@ -117,35 +119,28 @@ C       Removed carriage control column from format statements used
 C       to write to JOSTND do to change in file type to list/text.
 C    12-DEC-2005 Lance R. David (FHTET)
 C       Put carriage control column back into format statements. Seems
-C       this FVS update has been tabled or canceled. 
+C       this FVS update has been tabled or canceled.
 C    28-DEC-2005 Lance R. David (FHTET)
 C       Increased weather file name to 40 characters.
 C       Modified the WEATHER keyword reporting for clarity and set
 C       the file name when users select to use weather parameter files
 C       provided with the model to be located in 'c:/fvsbin/' directory.
 C    22-SEP-2006 Lance R. DAvid (FHTET)
-C       Change random number initialization and seed handling for 
+C       Change random number initialization and seed handling for
 C       damage model, weather model and outbreak scheduling.
 C    29-MAY-2009 Lance R. David (FMSC)
 C       Added character variable TMPNAM. Prepended keyword file name
 C       to output file names at BWOUTPUT keyword processing.
 C    14-JUL-2010 Lance R. David (FMSC)
-C       Added IMPLICIT NONE and declared variables as needed.
 C    04-SEP-2013 Lance R. David (FMSC)
-C       Added RAWS weather year range as supplemental record on 
+C       Added RAWS weather year range as supplemental record on
 C       WEATHER keyword.
 C----------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECOM.F77'
       INCLUDE 'BWECM2.F77'
       INCLUDE 'BWEBOX.F77'
-C
-COMMONS
 C
 C     INTERNAL STORAGE
 C
@@ -230,14 +225,14 @@ C----------
       IF (DEBUG) WRITE(JOSTND,*) 'IN BWEIN: NUMBR =', NUMBR
       IF (DEBUG) WRITE(JOSTND,*) 'IN BWEIN: KEYWRD =', KEYWRD
       IF (DEBUG) WRITE(JOSTND,*) 'IN BWEIN: TABLE  =', TABLE
-      IF (DEBUG) WRITE(JOSTND,*) 'IN BWEIN: TABSZ  =', TABSZ 
+      IF (DEBUG) WRITE(JOSTND,*) 'IN BWEIN: TABSZ  =', TABSZ
       IF (DEBUG) WRITE(JOSTND,*) 'IN BWEIN: KODE   =', KODE
       CALL BWEFDK (NUMBR,KEYWRD,TABLE,TABSZ,KODE,JOSTND)
       IF (DEBUG) WRITE(JOSTND,*) 'IN BWEIN: >>>>AFTER CALL BWEFDK'
       IF (DEBUG) WRITE(JOSTND,*) 'IN BWEIN: NUMBR =', NUMBR
       IF (DEBUG) WRITE(JOSTND,*) 'IN BWEIN: KEYWRD =', KEYWRD
       IF (DEBUG) WRITE(JOSTND,*) 'IN BWEIN: TABLE  =', TABLE
-      IF (DEBUG) WRITE(JOSTND,*) 'IN BWEIN: TABSZ  =', TABSZ 
+      IF (DEBUG) WRITE(JOSTND,*) 'IN BWEIN: TABSZ  =', TABSZ
       IF (DEBUG) WRITE(JOSTND,*) 'IN BWEIN: KODE   =', KODE
 C
 C     RETURN KODES 0=NO ERROR,1=KEYWORD NOT FOUND.
@@ -260,7 +255,6 @@ C
       CALL BWEERR (IREAD,IRECNT,JOSTND,ICCODE,.TRUE.,4)
       GOTO 10
    95 CONTINUE
-C
 C
 C     WRITE KEYWORD TABLE HEADING.
 C
@@ -292,7 +286,7 @@ C
 C
 C SKIP THE FOLLOWING SECTION IF MANUAL DEFOLIATION IS SUPPLIED
 C
-      IF (LDEFOL) GOTO 9000          ! exit subroutine  
+      IF (LDEFOL) GOTO 9000          ! exit subroutine
 C
 C  READ WEATHER DATA NOW IF BUDLITE HAS BEEN SELECTED
 C  IWSRC: 1 = Weather parameters provided with model
@@ -328,7 +322,7 @@ C the RAWS data has already been processed. BUT we are still missing
 C means and Std Dev values for hot Fall and precipitation during key
 C periods for small and large larvae, pupae and L2 emergence.
 C Lance David 07/20/2011
-C 
+C
 C         ELSE
 C            READ (JOWE,275) WHOTM,WHOTSD,(RAINM(I),RAINS(I),I=1,3),
 C     >          RAINDM,RAINDS
@@ -425,7 +419,7 @@ C
       GOTO 10
 
 C
-C--------------------- OPTION NUMBER 5 -- MGMTID 
+C--------------------- OPTION NUMBER 5 -- MGMTID
 C
   500 CONTINUE
       READ (IREAD,510,END=80) MGMIDB
@@ -456,7 +450,7 @@ C         DSEEDD = DBLE(DSEEDR)
          CALL BWERGT(DSEEDD)
          IF(LKECHO)WRITE(JOSTND,614) KEYWRD, DSEEDR
       ENDIF
-      
+
   610 FORMAT (/,A8,'   DAMAGE MODEL RANDOM NUMBER SEED IS:',
      > F10.0)
   612 FORMAT (/,A8,'   ********   ERROR ********',/,11X,
@@ -611,7 +605,7 @@ C
  1550 FORMAT (/,A8,'   CURRENT OUTBREAK (1=Y)=',I2,
      >   '; LAST OUTBREAK STARTED',
      >   ' IN ',I5, '.')
-      GOTO 10 
+      GOTO 10
 C
 C -----------------------OPTION NUMBER 16 -- OUTBRLOC
 C
@@ -710,7 +704,7 @@ C        **********************************************************
 C        Skip the 2 supplemental records for the weather data file name
 C        and year range because they are not utilized with this option.
 C
-         READ(IREAD,1830) 
+         READ(IREAD,1830)
  1830    FORMAT (1X,/,1X)
 
        ELSEIF (IWSRC .EQ. 2 .OR. IWSRC .EQ. 3) THEN
@@ -724,7 +718,7 @@ C
       IF (IWSRC .EQ. 3) THEN
          READ (IREAD,*) IYRNG(1), IYRNG(2)
       ENDIF
-      
+
       IF (IWOPT .EQ. 1) THEN
          CWTYP = 'INCLUDES RANDOM VARIATION'
       ELSE
@@ -740,13 +734,13 @@ C
      >     /,11X,'WEATHER DATA FILE IS ',A,
      >     /,11X,'RANDOM NUMBER SEED FOR WEATHER= ',F8.1)
 
-      ELSEIF (IWSRC .EQ. 2) THEN     
+      ELSEIF (IWSRC .EQ. 2) THEN
          IF (LKECHO) WRITE(JOSTND,1820) KEYWRD,CWTYP,JOWE,WFNAME,WSEEDR
  1820    FORMAT (/,A8,'   WEATHER ',A,';  WEATHER DATA',
      *   ' FILE (NO.) NAME= (',I3') ',A,/,11X,'RANDOM NUMBER',
      *   ' SEED FOR WEATHER= ',F8.1)
 
-      ELSEIF (IWSRC .EQ. 3) THEN     
+      ELSEIF (IWSRC .EQ. 3) THEN
          IF (LKECHO) WRITE(JOSTND,1822) KEYWRD,JOWE,WFNAME
  1822    FORMAT (/,A8,'   WEATHER IS ACTUAL RAWS DATA;  WEATHER DATA',
      *   ' FILE (NO.), NAME= (',I3') ',A)
@@ -813,13 +807,13 @@ C           8) EFFECTS.TAB, UNIT 48   -- not developed ?
         IF (LKECHO) WRITE(JOSTND,2011) TMPNAM
  2011   FORMAT (11X,'(1) ',A30,
      >    '-- WITHIN-YEAR POPULATION DYNAMICS SUMMARY')
-        CALL MYOPEN(JOBWP1,TMPNAM,5,133,1,1,1,0,KODE)        
+        CALL MYOPEN(JOBWP1,TMPNAM,5,133,1,1,1,0,KODE)
       ENDIF
-      IF (LP2) THEN 
+      IF (LP2) THEN
         TMPNAM = KWDFIL(1:ISTLNB(KWDFIL))//'_'//OUTNAM(2)
         IF (LKECHO) WRITE(JOSTND,2012) TMPNAM
  2012   FORMAT (11X,'(2) ',A30,'-- ANNUAL DEFOLIATION BY SPECIES TABLE')
-        CALL MYOPEN(JOBWP2,TMPNAM,5,133,1,1,1,0,KODE)        
+        CALL MYOPEN(JOBWP2,TMPNAM,5,133,1,1,1,0,KODE)
       ENDIF
       IF (LP3) THEN
         TMPNAM = KWDFIL(1:ISTLNB(KWDFIL))//'_'//OUTNAM(3)
@@ -847,18 +841,18 @@ C           8) EFFECTS.TAB, UNIT 48   -- not developed ?
  2040         FORMAT (I4,4X,I4,/,8X,5(A8,2X))
               IF (IDEFPR.EQ.2) THEN
                 DO 2050 J=1,100
-                 IF (NUMCOL.EQ.1) READ (JOBWP3,2045,END=2052) IDEF(J,1)        
-                 IF (NUMCOL.EQ.2) READ (JOBWP3,2045,END=2052) 
-     >             (IDEF(J,I),I=1,2)        
-                 IF (NUMCOL.EQ.3) READ (JOBWP3,2045,END=2052) 
-     >             (IDEF(J,I),I=1,3)        
-                 IF (NUMCOL.GE.4) READ (JOBWP3,2045,END=2052) 
-     >             (IDEF(J,I),I=1,4)        
- 2045            FORMAT(8X,4(I4,6X))        
+                 IF (NUMCOL.EQ.1) READ (JOBWP3,2045,END=2052) IDEF(J,1)
+                 IF (NUMCOL.EQ.2) READ (JOBWP3,2045,END=2052)
+     >             (IDEF(J,I),I=1,2)
+                 IF (NUMCOL.EQ.3) READ (JOBWP3,2045,END=2052)
+     >             (IDEF(J,I),I=1,3)
+                 IF (NUMCOL.GE.4) READ (JOBWP3,2045,END=2052)
+     >             (IDEF(J,I),I=1,4)
+ 2045            FORMAT(8X,4(I4,6X))
  2050           CONTINUE
  2052           NUMCOL=NUMCOL+1
                 IF (NUMCOL.GT.5) THEN
-                   WRITE (*,2055) 
+                   WRITE (*,2055)
  2055              FORMAT('********   ERROR - WSBW: TOO MANY COLUMNS ',
      >             'FOR DEFOLIATION TABLE -- WILL WRITE OVER ',
      >             'PREVIOUS COLUMN ')
@@ -897,28 +891,28 @@ c 2070      FORMAT ('********   ERROR - WSBW: IDEFPR = ',I6)
         TMPNAM = KWDFIL(1:ISTLNB(KWDFIL))//'_'//OUTNAM(4)
         IF(LKECHO)WRITE(JOSTND,2014) TMPNAM
  2014   FORMAT (11X,'(4) ',A30,'-- PARAMETERS AND KEY EVENTS SUMMARY')
-        CALL MYOPEN(JOBWP4,TMPNAM,5,133,1,1,1,0,KODE)        
+        CALL MYOPEN(JOBWP4,TMPNAM,5,133,1,1,1,0,KODE)
       ENDIF
       IF (LP5) THEN
         TMPNAM = KWDFIL(1:ISTLNB(KWDFIL))//'_'//OUTNAM(5)
         IF(LKECHO)WRITE(JOSTND,2015) TMPNAM
  2015   FORMAT (11X,'(5) ',A30,'-- BRIEF ANNUAL SUMMARY')
-        CALL MYOPEN(JOBWP5,TMPNAM,5,133,1,1,1,0,KODE)        
+        CALL MYOPEN(JOBWP5,TMPNAM,5,133,1,1,1,0,KODE)
       ENDIF
       IF (LP6) THEN
         TMPNAM = KWDFIL(1:ISTLNB(KWDFIL))//'_'//OUTNAM(6)
         IF (LKECHO) WRITE(JOSTND,2016) TMPNAM
  2016   FORMAT (11X,'(6) ',A30,'-- ANNUAL DEFOLIATION SUMMARY')
-        CALL MYOPEN(JOBWP6,TMPNAM,5,133,1,1,1,0,KODE)        
+        CALL MYOPEN(JOBWP6,TMPNAM,5,133,1,1,1,0,KODE)
       ENDIF
       IF (LP7) THEN
         TMPNAM = KWDFIL(1:ISTLNB(KWDFIL))//'_'//OUTNAM(7)
         IF (LKECHO) WRITE(JOSTND,2017) TMPNAM
  2017   FORMAT (11X,'(7) ',A30,'-- BUDWORM DYNAMICS SUMMARY')
-        CALL MYOPEN(JOBWP7,TMPNAM,5,133,1,1,1,0,KODE)        
+        CALL MYOPEN(JOBWP7,TMPNAM,5,133,1,1,1,0,KODE)
       ENDIF
 C     IF (LP8) THEN
-C       CALL MYOPEN(JOBWP8,OUTNAM(8),5,133,1,1,1,0,KODE)        
+C       CALL MYOPEN(JOBWP8,OUTNAM(8),5,133,1,1,1,0,KODE)
 C     ENDIF
 C
       GOTO 10

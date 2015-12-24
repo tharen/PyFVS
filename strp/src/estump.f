@@ -1,5 +1,9 @@
       SUBROUTINE ESTUMP (JSSP,DBH,PREM,JPLOT,ISHAG)
-      IMPLICIT NONE
+      use esparm_mod
+      use eshap_mod
+      use escomn_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **ESTUMP--STRP/ESTB   DATE OF LAST REVISION:  01/26/12
 C
@@ -9,25 +13,8 @@ C  STRP AND ESTB VERSIONS ARE IDENTICAL; IF YOU UPDATE ONE,
 C  UPDATE BOTH.
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
       INCLUDE 'ESHOOT.F77'
 C
-C
-      INCLUDE 'ESHAP.F77'
-C
-C
-      INCLUDE 'ESCOMN.F77'
-C
-C
-COMMONS
 C----------
       CHARACTER VVER*7
       INTEGER JPLOT,JSSP,ISSP,IDBH,ISHAG,INDXAS
@@ -96,7 +83,7 @@ C
 C
          IF (IBEST.GT.0) PRBREM(IBEST) = PRBREM(IBEST)+PREM
       ENDIF
-C      
+C
   900 CONTINUE
 C----------
 C  DETERMINE IF QUAKING ASPEN WAS CUT; IF SO, ACCUMULATE BA AND TPA

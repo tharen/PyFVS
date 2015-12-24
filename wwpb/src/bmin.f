@@ -1,24 +1,19 @@
       SUBROUTINE BMIN(LKECHO)
-C      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BMIN  WWPB--DATE OF LAST REVISION:  03/07/06
 C----------
 C
 C     OPTION PROCESSOR FOR STAND-LEVEL WWPB MODEL KEYWORDS
 C     CREATED 8/18/05 AJ McMAHAN, ITX, Inc. Ft. Collins, CO
-C     CALLED FROM: INITRE 
+C     CALLED FROM: INITRE
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'PPEPRM.F77'
       INCLUDE 'BMPRM.F77'
       INCLUDE 'BMCOM.F77'
       INCLUDE 'BMPCOM.F77'
-C
-COMMONS
 C
       INTEGER    KWCNT
       PARAMETER (KWCNT = 10)
@@ -255,5 +250,5 @@ C
       ENTRY BMKEY (KEY,PASKEY)
       PASKEY= TABLE(KEY)
       RETURN
- 
+
       END

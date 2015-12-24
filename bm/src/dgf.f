@@ -1,5 +1,12 @@
       SUBROUTINE DGF(DIAM)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use pden_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **DGF--BM    DATE OF LAST REVISION:  02/16/10
 C----------
@@ -33,33 +40,8 @@ C  PREDICTION.  ENTRY **DGCONS** IS CALLED BY **RCON** TO LOAD SITE
 C  DEPENDENT COEFFICIENTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
 C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-COMMONS
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES.
 C
@@ -501,8 +483,8 @@ C----------
         ELSE
           CR = ICR(I) * 0.01
           BAL = (1.0 - (PCT(I)/100.)) * BA/100.
-          DDS=CONSPP + DGLD(ISPC)*ALOG(D) + DGBAL(ISPC)*BAL + 
-     &       DGCR(ISPC)*CR + CR*CR*DGCRSQ(ISPC) + DGDSQ(ISPC)*D*D + 
+          DDS=CONSPP + DGLD(ISPC)*ALOG(D) + DGBAL(ISPC)*BAL +
+     &       DGCR(ISPC)*CR + CR*CR*DGCRSQ(ISPC) + DGDSQ(ISPC)*D*D +
      &       DGPCCF(ISPC)*PCCF(ITRE(I))
           WK2(I)=DDS
         ENDIF
@@ -557,7 +539,6 @@ C----------
   100 FORMAT(' LEAVING SUBROUTINE DGF  CYCLE =',I5)
       RETURN
 C
-C
       ENTRY DGCONS
 C----------
 C  ENTRY POINT FOR LOADING COEFFICIENTS OF THE DIAMETER INCREMENT
@@ -569,7 +550,7 @@ C  CHECK FOR DEBUG.
 C-----------
       CALL DBCHK (DEBUG,'DGF',3,ICYC)
 C----------
-C  NOTE: FOR UT SPECIES 6(WJ), 12(LM), 15(AS) AND TT 11(WB) 0.7854 IS 
+C  NOTE: FOR UT SPECIES 6(WJ), 12(LM), 15(AS) AND TT 11(WB) 0.7854 IS
 C        45 DEGREES IN RADIANS. THIS CORRECTION WAS
 C        PROBABLY DUE TO A PROBLEM IN THE WAY ASPECT WAS RECORDED
 C        IN THE DATA SET USED TO FIT THE MODEL.  GED 12-20-94.

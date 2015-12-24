@@ -1,5 +1,6 @@
       SUBROUTINE OPCSET (ICYC)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -9,16 +10,7 @@ C
 C     SETS UP IOPCYC AS AN WITHIN CYCLE SORT INTO ASSENDING ORDER
 C     OF ACTIVITY NUMBER.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'OPCOM.F77'
-C
-C
-COMMONS
 C
       INTEGER ICYC,I
 C

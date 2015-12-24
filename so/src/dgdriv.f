@@ -1,5 +1,12 @@
       SUBROUTINE DGDRIV
-      IMPLICIT NONE
+      use multcm_mod
+      use plot_mod
+      use arrays_mod
+      use workcm_mod
+      use contrl_mod
+      use coeffs_mod
+      use prgprm_mod
+      implicit none
 C----------
 C SO $Id$
 C----------
@@ -18,36 +25,10 @@ C  **DGF** IS ACCESSED TO LOAD LN(DDS) INTO THE ARRAY WK3.  DDS
 C  REPRESENTS CHANGE IN SQUARED DIAMETER.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'MULTCM.F77'
-C
 C
       INCLUDE 'ESTCOR.F77'
 C
-C
-      INCLUDE 'WORKCM.F77'
-C
-C
-COMMONS
 C----------
 C  DIMENSIONS AND DATA STATEMENTS FOR INTERNAL VARIABLES.
 C
@@ -604,9 +585,9 @@ C----------
       WCI(IREFI)= WC
       CORTEM(IREFI)= EXP(COR(ISPC))
 C----------
-C  TRAP CALIBRATION VALUES OUTSIDE 2.5 STANDARD DEVIATIONS FROM THE 
+C  TRAP CALIBRATION VALUES OUTSIDE 2.5 STANDARD DEVIATIONS FROM THE
 C  MEAN. IF C IS THE CALIBRATION TERM, WITH A DEFAULT OF 1.0, THEN
-C  LN(C) HAS A MEAN OF 0.  -2.5 < LN(C) < 2.5 IMPLIES 
+C  LN(C) HAS A MEAN OF 0.  -2.5 < LN(C) < 2.5 IMPLIES
 C  0.0821 < C < 12.1825
 C----------
       IF(CORTEM(IREFI).LT.0.0821 .OR. CORTEM(IREFI).GT.12.1825) THEN

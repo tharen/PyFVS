@@ -1,5 +1,9 @@
       SUBROUTINE HABTYP (KARD2,ARRAY2)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **HABTYP--WS   DATE OF LAST REVISION:  01/26/11
 C----------
@@ -8,21 +12,6 @@ C     TRANSLATES HABITAT TYPE  CODE INTO A SUBSCRIPT, ITYPE, AND IF
 C     KODTYP IS ZERO, THE ROUTINE RETURNS 0.
 C
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
 COMMONS
 C----------
       INTEGER NR5,I,I2,I1,IHB
@@ -143,7 +132,7 @@ C 375-400
       DATA (R5HABT(I),I=401,NR5)/
 C 401-NR5
      &'SOSSCL00', 'SR000000', 'SR0SA000', 'SSC00000', 'SSCSB000',
-     &'SSCSSB00'/                                                
+     &'SSCSSB00'/
 C
       LPVREF=.FALSE.
       LPVCOD=.FALSE.
@@ -216,7 +205,7 @@ C----------
 C----------
 C  IF NO MATCH WAS FOUND, TREAT IT AS A SEQUENCE NUMBER.
 C----------
-      IF(KODTYP .EQ. 0)THEN 
+      IF(KODTYP .EQ. 0)THEN
         IF(DEBUG)WRITE(JOSTND,*)'EXAMINING FOR INDEX, ARRAY2= ',ARRAY2
         IHB = IFIX(ARRAY2)
         IF(IHB.LE.NR5)THEN
@@ -228,7 +217,7 @@ C----------
 C  FINISH FINAL SETTINGS OR SET DEFAULT CONDITIONS
 C----------
       IF(KODTYP .NE. 0)THEN
-        ICL5=KODTYP 
+        ICL5=KODTYP
         KARD2=R5HABT(ITYPE)
         IF(LSTART)WRITE(JOSTND,311) KARD2
   311   FORMAT(/,T12,'HABITAT TYPE CODE USED IN THIS PROJECTION IS ',

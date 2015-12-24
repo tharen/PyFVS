@@ -1,5 +1,9 @@
       SUBROUTINE TWIGCF(ISPC,H,D,VN,VM,I)
-      IMPLICIT NONE
+      use volstd_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **TWIGCF---CS  DATE OF LAST REVISION: 05/19/08
 C----------
@@ -7,20 +11,6 @@ C THIS ROUTINE CALCULATES TOTAL CUBIC FOOT VOLUME AND MERCH
 C CUBIC FOOT VOLUME FOR A TREE.  CORRECTIONS FOR TOP KILL AND
 C DEFECT ARE STILL CALCULATED IN VOLS.
 C----------
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
 COMMONS
 C----------
 C  DIMENSION STATEMENT FOR INTERNAL ARRAYS.
@@ -133,5 +123,5 @@ C----------
      &        **B4(ISPC))))
   100  CONTINUE
        RETURN
-       END                                    
+       END
 

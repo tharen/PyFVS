@@ -1,13 +1,15 @@
       SUBROUTINE ESSUBH (I,HHT,EMSQR,DILATE,DELAY,ELEV,ISER,GENTIM,
      &  TRAGE)
-      IMPLICIT NONE
+      use esparm_mod
+      use escomn_mod
+      use prgprm_mod
+      implicit none
 C----------
 C CR $Id$
 C----------
 C
 C     ASSIGNS HEIGHTS TO SUBSEQUENT AND PLANTED TREE RECORDS
 C     CREATED BY THE ESTABLISHMENT MODEL.
-C
 C
 C     COMING INTO ESSUBH, TRAGE IS THE AGE OF THE TREE AS SPECIFIED ON
 C     THE PLANT OR NATURAL KEYWORD.  LEAVING ESSUBH, TRAGE IS THE NUMBER
@@ -16,14 +18,6 @@ C     CYCLE.  AGE IS TREE AGE UP TO THE TIME REGENT WILL BEGIN GROWING
 C     THE TREE.
 C----------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
-      INCLUDE 'ESCOMN.F77'
 C----------
 C  DECLARATIONS
 C----------
@@ -37,12 +31,12 @@ C  21=NC, 22=PW, 23=GO, 24=AW, 25=EM, 26=BK, 27=SO, 28=PB, 29=AJ, 30=RM,
 C  31=OJ, 32=ER, 33=PM, 34=PD, 35=AZ, 36=CI, 37=OS, 38=OH
 C
 C  SPECIES EXPANSION:
-C  UJ,AJ,RM,OJ,ER USE CR JU                              
+C  UJ,AJ,RM,OJ,ER USE CR JU
 C  NC,PW USE CR CO
-C  GO,AW,EM,BK,SO USE CR OA                             
-C  PB USES CR AS                              
+C  GO,AW,EM,BK,SO USE CR OA
+C  PB USES CR AS
 C  PM,PD,AZ USE CR PI
-C  CI USES CR PP                              
+C  CI USES CR PP
 C----------
 C
       N=DELAY+0.5

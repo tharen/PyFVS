@@ -1,60 +1,27 @@
       BLOCK DATA BLKDAT
-      IMPLICIT NONE
+      use htcal_mod
+      use fvsstdcm_mod
+      use pden_mod
+      use esparm_mod
+      use rancom_mod
+      use contrl_mod
+      use coeffs_mod
+      use econ_mod
+      use plot_mod
+      use screen_mod
+      use escomn_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C CR $Id$
 C----------
 C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
-      INCLUDE 'ESCOMN.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'ECON.F77'
-C
-C
       INCLUDE 'GGCOM.F77'
 C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'KEYCOM.F77'
-C
-C
-      INCLUDE 'RANCOM.F77'
-C
-C
-      INCLUDE 'SCREEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-      INCLUDE 'FVSSTDCM.F77'
-C
-C
-COMMONS
 C
 C----------
       INTEGER I,J
@@ -66,15 +33,15 @@ C  21=NC, 22=PW, 23=GO, 24=AW, 25=EM, 26=BK, 27=SO, 28=PB, 29=AJ, 30=RM,
 C  31=OJ, 32=ER, 33=PM, 34=PD, 35=AZ, 36=CI, 37=OS, 38=OH
 C
 C  SPECIES EXPANSION:
-C  UJ,AJ,RM,OJ,ER USE CR JU                              
+C  UJ,AJ,RM,OJ,ER USE CR JU
 C  NC,PW USE CR CO
-C  GO,AW,EM,BK,SO USE CR OA                             
-C  PB USES CR AS                              
+C  GO,AW,EM,BK,SO USE CR OA
+C  PB USES CR AS
 C  PM,PD,AZ USE CR PI
-C  CI USES CR PP                              
+C  CI USES CR PP
 C----------
-C    AL COMMON                  FIA SCIENTIFIC                         
-C  # CD NAME                    CD  NAME                               
+C    AL COMMON                  FIA SCIENTIFIC
+C  # CD NAME                    CD  NAME
 C -- -- ---------------------   --- -----------------------------------
 C  1 AF SUBALPINE FIR           019 ABIES LASIOCARPA var. LASIOCARPA
 C  2 CB CORKBARK FIR            018 ABIES LASIOCARPA var. ARIZONICA
@@ -152,7 +119,7 @@ C
       DATA IFORST/  23*1 /
 C
 C     OCURHT ZEROES OUT PROBABILITIES WHICH CANNOT OCCUR BY DEFINITION.
-C     (DIMENSIONED (16,MAXSP) WITH THE 16 BEING THE HABITAT TYPE GROUP 
+C     (DIMENSIONED (16,MAXSP) WITH THE 16 BEING THE HABITAT TYPE GROUP
 C      AS SHOWN IN TABLE 3, PG 6, GTR INT-279) WHICH DOES NOT PERTAIN
 C      TO THE CR VARIANT)
 C

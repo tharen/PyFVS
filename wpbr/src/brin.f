@@ -1,5 +1,9 @@
       SUBROUTINE BRIN(PASKEY,ARRAY,LNOTBK,LKECHO)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C**********************************************************************
 C  **BRIN         DATE OF LAST REVISION:  06/05/2014
 C----------------------------------------------------------------------
@@ -25,7 +29,7 @@ C     COMMENT's "END" keyword processing.
 C  14-DEC-00 Lance R. David (FHTET)
 C     Date (field 1) on prune keyword set to cycle 1 if blank or zero.
 C  09-JAN-01 Lance R. David (FHTET)
-C     RUSTINDX field 2 - Stand Deviation Factor will be calculated if 
+C     RUSTINDX field 2 - Stand Deviation Factor will be calculated if
 C     blank or 0.0, values > 0.0 will set static deviation factor.
 C  28-FEB-01 Lance R. David (FHTET)
 C     Deactivated automatic scheduling of prune activity with EXCISE
@@ -57,7 +61,7 @@ C     File names for canker data, BR canker list, and BR tree list
 C     default to same name as FVS main keyword file with extensions
 C     of .can, .brc and .brt respectively.
 C  06-NOV-2002 Lance R. David (FHTET)
-C     Added options to RUSTINDX keyword for use of new suboutine (BRICAL) 
+C     Added options to RUSTINDX keyword for use of new suboutine (BRICAL)
 C     and rust index equations. Added Rust index assignment methods 3&4
 C     supplemental record for the parameters of the equations.
 C  10-NOV-2003 - Lance R. David (FHTET)
@@ -69,11 +73,7 @@ C**********************************************************************
 
 C.... Common include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BRCOM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
 
 C.... Local variable declarations.
 
@@ -511,7 +511,7 @@ C.... with the option processor.
          IF(LNOTBK(2)) THEN
             RATINV(1)=ARRAY(2)
             PRMS(1)=ARRAY(2)
-         ENDIF 
+         ENDIF
          IF(LNOTBK(3)) THEN
             RATINV(2)=ARRAY(3)
             PRMS(2)=ARRAY(3)
@@ -875,7 +875,7 @@ C.... This keyword is a activity and may be scheduled by cycle/year or
 C.... condition evaluated by the FVS Event Monitor.
 C.... Field 1 -- Cycle/year (entry of 0 will apply new dev. factors now)
 C.... Field 2 -- Tree species code
-C.... Fields 3-6 -- Deviation Factors for stock types 1 thru 4. 
+C.... Fields 3-6 -- Deviation Factors for stock types 1 thru 4.
 
       IDT=0
       IF(LNOTBK(1)) IDT=IFIX(ARRAY(1))
@@ -1009,7 +1009,7 @@ C.... Keyword to change the default value of Rust Index, Stand
 C.... Deviation Factor, Rust Index Assignment Method, and Ribes
 C.... species proportions of population for RI calculation.
 C....
-C.... Stand Deviation Factor (F2) has been relocated to new 
+C.... Stand Deviation Factor (F2) has been relocated to new
 C.... keyword DEVFACT.
 C.... LRD 14-MAR-01
 
@@ -1064,7 +1064,7 @@ C....       Adjust proportions if total is not within 1 percent.
 C....    For Rust Index length of exposure equation, parameters
 C....    may be provided.
 C....    Read supplemental record for equation parameters. This
-C....    is a unformatted read, so four values must be present on 
+C....    is a unformatted read, so four values must be present on
 C....    the record. A zero will cause the default value for the
 C....    parameter to be retained.
 
@@ -1085,7 +1085,7 @@ C....    Default values for Gaussian equation
 C....    For Rust Index length of exposure equation, parameters
 C....    may be provided.
 C....    Read supplemental record for equation parameters. This
-C....    is a unformatted read, so four values must be present on 
+C....    is a unformatted read, so four values must be present on
 C....    the record. A zero will cause the default value for the
 C....    parameter to be retained.
 
@@ -1296,7 +1296,7 @@ C.... supplemental records.
 C.... ==========  Option Number 18: BROUT  =======================
 
 C.... Option 18 Controls the summary output written to the FVS output
-C.... file. 
+C.... file.
 C....
 C.... Field 1: controls "Stand Summary Statistics for Blister Rust Hosts"
 C....          Default is on

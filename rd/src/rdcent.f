@@ -1,6 +1,8 @@
       SUBROUTINE RDCENT(PROBIN,PCENTS,NCENTS,PROBD,SAREA,
      &                  IRFLAG,NNCENT,PISIZE,PAREA,IRRSP)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDCENT      LAST REVISION:  08/27/14
 C----------
@@ -29,19 +31,12 @@ C
 C  Revision History :
 C   12/15/87 - Last revision date.
 C   08/27/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
 
       INCLUDE 'RDPARM.F77'
       INCLUDE 'RDADD.F77'
-C
-COMMONS
 C
       INTEGER  I, INP, IRFLAG, IRRSP, IT, J, NCENTS(ITOTRR), NCELLS,
      &         NHASH, NNCENT, NPCELL, NSTUMP

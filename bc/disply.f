@@ -1,5 +1,14 @@
       SUBROUTINE DISPLY
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use econ_mod
+      use outcom_mod
+      use prgprm_mod
+      use varcom_mod
+      use metric_mod
+      use screen_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -8,19 +17,7 @@ C  OF THE PROJECTION, AND AT THE END OF EACH CYCLE.  ESTIMATES
 C  STAND AGE IF MISSING FROM THE STNDINFO KEYWORD
 C----------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'OUTCOM.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'ECON.F77'
-      INCLUDE 'SCREEN.F77'
       INCLUDE 'SUMTAB.F77'
-      INCLUDE 'VARCOM.F77'      
-      INCLUDE 'METRIC.F77'
-C
-COMMONS
 C
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES (USED AS OUTPUT LABELS):
@@ -61,7 +58,7 @@ C   IF USER HAS SPECIFIED KEYWORDS THAT ALTER VOLUME EQUATION PARAMETERS
 C   (IE VOLUMME BFVOLUME,ETC) THEN PRINT LABEL THAT INDICATES USER
 C   SPECIFIED STANDARDS. THESE LABELS ARE VARIANT SPECIFIC
 C----------
-      IF ((VVER(:2) .EQ. 'CS') .OR. (VVER(:2) .EQ. 'LS') .OR. 
+      IF ((VVER(:2) .EQ. 'CS') .OR. (VVER(:2) .EQ. 'LS') .OR.
      1    (VVER(:2) .EQ. 'NE') .OR. (VVER(:2) .EQ. 'OZ') .OR.
      2    (VVER(:2) .EQ. 'SE') .OR. (VVER(:2) .EQ. 'SN')) THEN
 C
@@ -72,7 +69,7 @@ C
             STD(1)='MERCH'
             STD(2)='SAWLG'
          ENDIF
-C     
+C
          IF (LBVOLS) THEN
             STD(3)='USER SAWLG'
          ELSE
@@ -111,7 +108,6 @@ C----------
      &                   (OSPTT(I),IOSPTT(I),I=1,4)
  9004 FORMAT(7X,A9,3X,5F7.1,F8.1,F9.0,' TREES   ',
      >       3(F5.0,'% ',A3,','),F5.0,'% ',A3)
-C
 C
       WRITE(JOSTND,9015) AT2,
      &                   STD(1),
@@ -202,7 +198,7 @@ C----------
      &              OLDBA*FT2pACRtoM2pHA,
      &              OLDAVH*FTtoM,
      &              RELDM1,
-     &              JSDI/ACRtoHA 
+     &              JSDI/ACRtoHA
       GO TO 36
    35 CONTINUE
       IRT=2
@@ -213,7 +209,7 @@ C----------
      &              OLDBA*FT2pACRtoM2pHA,
      &              OLDAVH*FTtoM,
      &              RELDM1,
-     &              JSDI/ACRtoHA 
+     &              JSDI/ACRtoHA
 
       IRT=3
       JSDI=SDIAC + 0.5
@@ -223,7 +219,7 @@ C----------
      &              ATBA*FT2pACRtoM2pHA,
      &              ATAVH*FTtoM,
      &              ATCCF,
-     &              JSDI/ACRtoHA 
+     &              JSDI/ACRtoHA
    36 CONTINUE
 C----------
 C  IF ICL6.LT.0 BRANCH TO STMT. 90 TO LOAD LAST LINE OF SUMMARY OUTPUT
@@ -269,7 +265,7 @@ C  AND STOCKING CLASS (ISTCL)
 C----------
       DUM1=0.
       IXF=2
-      ISNOFT=IFORTP      
+      ISNOFT=IFORTP
       CALL FORTYP(IXF,DUM1)
 C-------
 C  IF THIS IS THE SN VARIANT, AND THE FOREST TYPE JUST CHANGED, THEN
@@ -437,7 +433,7 @@ C----------
       DO 140 I=14,16
       IOSUM(I,IKNT)=0
   140 CONTINUE
-C---------- 
+C----------
 C  LOAD FINAL MAI VALUE
 C----------
       IF(MAIFLG .EQ. 0)THEN
@@ -482,15 +478,15 @@ C----------
 C
 C       PREVENT UGLY ERROR MSGS WHEN ENORMOUS VALUES APPEAR IN THE MAIN
 C       OUTPUT FILE AND SUMMARY OUTPUT FILE: SUBSTITUE -1 INSTEAD
-C     
-	  X3 = IOSUM(3,IKNT)/ACRtoHA 
+C
+	  X3 = IOSUM(3,IKNT)/ACRtoHA
 	  IF (X3 .GT. 9999)     X3 = -1.0  ! i4
 	  X4 = IOLDBA(IKNT)*FT2pACRtoM2pHA
 	  IF (X4 .GT. 99999)    X4 = -1.0  ! i5
 	  X5 = ISDI(IKNT)/ACRtoHA
 	  IF (X5 .GT. 9999)     X5 = -1.0  ! i4
         X9 = IOSUM(4,IKNT)*FT3pACRtoM3pHA
-	  IF (X9 .GT. 9999)     X9 = -1.0  ! i5 
+	  IF (X9 .GT. 9999)     X9 = -1.0  ! i5
         X14 = IOSUM(11,IKNT)*FT2pACRtoM2pHA
 	  IF (X14 .GT. 9999)   X14 = -1.0  ! i4
         X15 = ISDIAT(IKNT)/ACRtoHA
@@ -502,7 +498,7 @@ C
      >                    NINT(X5),   !i4
      >                    NINT(IBTAVH(IKNT)*FTtoM), !i4
      >                    QSDBT(IKNT)*INtoCM,       !f5.1
-     >                    NINT(X9),                 !i5 
+     >                    NINT(X9),                 !i5
      >                    NINT(IOSUM(7,IKNT)/ACRtoHA),  !i5
      >                    NINT(IOSUM(8,IKNT)*FT3pACRtoM3pHA ), !i5
      >                    NINT(IOSUM(9,IKNT)*FT3pACRtoM3pHA),  !i5

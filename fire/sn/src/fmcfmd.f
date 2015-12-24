@@ -1,5 +1,12 @@
       SUBROUTINE FMCFMD (IYR, FMD)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMCFMD FIRE-SN-DATE OF LAST REVISION:  08/26/05
 C----------
@@ -19,30 +26,6 @@ C  COMMON BLOCK VARIABLES AND PARAMETERS:
 C     SMALL:   SMALL FUELS FROM DYNAMIC FUEL MODEL
 C     LARGE:   LARGE FUELS FROM DYNAMIC FUEL MODEL
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C      
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'FMFCOM.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'PLOT.F77'    ! since using FIA algorithm info
-C
-C
 COMMONS
 C----------
 C     LOCAL VARIABLE DECLARATIONS
@@ -88,7 +71,7 @@ C----------
      &   5., 15.,   ! FMD   9
      &  10., 30.,   ! FMD  10 ! moved line based on workshop input
      &  15., 30.,   ! FMD  11
-     &  30., 60.,   ! FMD  12  
+     &  30., 60.,   ! FMD  12
      &  45.,100.,   ! FMD  13
      &  30., 60./   ! FMD  14
 C----------
@@ -119,9 +102,9 @@ C
      >       ' SMALL=',F7.2,' LARGE=',F7.2)
 C----------
 C  DETERMINE FFE FOREST TYPE (1 OF 8 CATEGORIES) FROM FIA FOR. TYPE
-C----------     
+C----------
       CALL FMSNFT(IFFEFT)
-C----------   
+C----------
 C  LOW FUEL MODEL SELECTION
 C  FIRST, WE NEED TO SEE WHICH FUEL MODELS SHOULD BE SELECTED
 C  BASED ON THE ABOVE IFFEFT.
@@ -129,29 +112,29 @@ C  THE AMOUNT OF SMALL AND LARGE FUEL PRESENT CAN MODIFY THE CHOICE
 C  OF MODEL.  (SEE CODE BELOW)
 C----------
       SELECT CASE (IFFEFT)
-      CASE (1, 2, 3) ! hardwood, hardwood/pine, or pine/hardwood 
+      CASE (1, 2, 3) ! hardwood, hardwood/pine, or pine/hardwood
         IF (SMALL .GT. 6) THEN
           EQWT(5) = 1.0
-        ELSE     
+        ELSE
           IF (MOIS(1,4) .LE. 0.15) THEN
             MOISWT(9) = 1.0
           ELSEIF (MOIS(1,4) .GT. 0.25) THEN
             MOISWT(8) = 1.0
           ELSE
             MOISWT(9) = 1.0 - (MOIS(1,4) - 0.15)/0.1
-            MOISWT(8) = 1.0 - (0.25 - MOIS(1,4))/0.1        
+            MOISWT(8) = 1.0 - (0.25 - MOIS(1,4))/0.1
           ENDIF
-C       
+C
           IF (SMALL .LE. 4) THEN
             EQWT(8) = MOISWT(8)
             EQWT(9) = MOISWT(9)
-          ELSE        
+          ELSE
             EQWT(8) = (1.0 - (SMALL - 4)/2)*MOISWT(8)
             EQWT(9) = (1.0 - (SMALL - 4)/2)*MOISWT(9)
             EQWT(5) = 1.0 - (6 - SMALL)/2
           ENDIF
         ENDIF
-C      
+C
       CASE (4, 8) ! pine or saint francis
         IF (MOIS(1,4) .LE. 0.15) THEN
           EQWT(9) = 1.0
@@ -159,12 +142,12 @@ C
           EQWT(8) = 1.0
         ELSE
           EQWT(9) = 1.0 - (MOIS(1,4) - 0.15)/0.1
-          EQWT(8) = 1.0 - (0.25 - MOIS(1,4))/0.1        
+          EQWT(8) = 1.0 - (0.25 - MOIS(1,4))/0.1
         ENDIF
-C      
+C
       CASE (5, 6) ! pine bluestem or oak savannah
         EQWT (2) = 1.0
-C      
+C
       CASE (7) ! eastern redcedar
         RCHT = 0
         RCTPA = 0
@@ -177,18 +160,18 @@ C
               RCTPA = RCTPA + Y
           END SELECT
         ENDDO
-C        
+C
         RCHT = RCHT/RCTPA
-C       
+C
         IF (RCHT .GT. 7.5) THEN
           EQWT(4) = 1.0
         ELSEIF (RCHT .LE. 4.5) THEN
           EQWT(6) = 1.0
-        ELSE  
+        ELSE
           EQWT(6) = 1.0 - (RCHT - 4.5)/3
           EQWT(4) = 1.0 - (7.5 - RCHT)/3
         ENDIF
-C        
+C
       CASE (9)
         EQWT(6) = 1.0
       END SELECT

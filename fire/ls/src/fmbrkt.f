@@ -1,5 +1,6 @@
       FUNCTION FMBRKT(DBH,ISP)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMBRKT  FIRE-LS-DATE OF LAST REVISION:  01/13/12
 C----------
@@ -7,13 +8,6 @@ C  COMPUTES THE BARK THICKNESS FOR USE IN THE FIRE-CAUSED MORTALITY
 C  ROUTINE (FMEFF).
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-COMMONS
-C
       INTEGER ISP
       REAL B1(39),DBH,FMBRKT
       INTEGER EQNUM(MAXSP)
@@ -90,7 +84,7 @@ C
      &     20,    !64  willow
      &     19,    !65  black willow
      &     19,    !66  diamond willow
-     &     14,    !67  sassafras               
+     &     14,    !67  sassafras
      &     19/    !68  American mountain ash
 C
       FMBRKT = DBH*B1(EQNUM(ISP))

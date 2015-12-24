@@ -1,5 +1,7 @@
       SUBROUTINE RDCMPR (NCLAS,PROB,IND,IND1)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDCMPR      LAST REVISION:  08/27/14
 C----------
@@ -24,21 +26,14 @@ C      Previous revision date noted was March 7, 1995.
 C      Removed unused array PROBO. It was also unused in the old
 C      annosus model.
 C   08/27/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 
       INCLUDE 'RDCOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'RDARRY.F77'  
+      INCLUDE 'RDARRY.F77'
       INCLUDE 'RDADD.F77'
-C
-COMMONS
 C
 
       INTEGER  I, I1, I2, ICL, IDI, IENDYR, IND(MAXTRE), IND1(MAXTRE),
@@ -48,12 +43,12 @@ C
      &         TXP14(2), TXP15(3), XP
       LOGICAL  LGO, LTEE
 
-      TXP7 = 0.0      
+      TXP7 = 0.0
 
 C     IENDYR IS THE LAST YEAR OF PROBI, PROPI THAT WILL HAVE INFO
 C     WE DONT NEED TO DO ANY COMPRESSION ON LATER YEARS
       IENDYR = ICYC + 1
-      
+
 C     DO 557 I=1,ITRN
 C     WRITE(JOSTND,777)  I,PROBI(I,1,1),PROBIU(I),PROBIT(I),
 C    >      FPROB(I)
@@ -70,7 +65,7 @@ C
       TPAREA = 0.0
       DO 99 IDI=MINRR,MAXRR
          TPAREA = TPAREA + PAREA(IDI)
-   99 CONTINUE     
+   99 CONTINUE
       IF (.NOT. LGO .OR. TPAREA .EQ. 0.0) RETURN
       IF (.NOT. LTEE .AND. LSTART) RETURN
 
@@ -110,7 +105,7 @@ C
 
          DO 799 J=1,4
             IF (J .LT. 4) TXP15(J) = OAKL(J,IREC1)
-            
+
             TXP12(J) = 0.0
             IF (XMTH(J,IREC1) .LT. 0.0) GOTO 799
             TXP12(J) = XMTH(J,IREC1)
@@ -121,7 +116,7 @@ C
            DO 890 IP=1,2
              JJ = JJ + 1
              TXP8(JJ) = PROBI(IREC1,J,IP)
-  890      CONTINUE   
+  890      CONTINUE
   899    CONTINUE
 
   900    CONTINUE
@@ -143,7 +138,7 @@ C           WRITE(JOSTND,334) IREC
 
             DO 699 J=1,4
                IF (J .LT. 4) TXP15(J) = TXP15(J) + OAKL(J,IREC)
-               
+
                IF (XMTH(J,IREC) .LT. 0.0) GOTO 699
                TXP12(J) = TXP12(J) + XMTH(J,IREC)
   699       CONTINUE
@@ -171,7 +166,7 @@ C
   499    CONTINUE
 
          JJ = 0
-         DO 905 J=1,IENDYR   
+         DO 905 J=1,IENDYR
            DO 901 IP=1,2
              JJ = JJ + 1
              PROP1(JJ) = PROPI(IREC1,J,IP) * PROBI(IREC1,J,IP)
@@ -199,7 +194,7 @@ C
             DO 902 J=1,IENDYR
               DO 907 IP=1,2
                 JJ = JJ + 1
-                PROP1(JJ) = PROP1(JJ) + PROPI(IREC,J,IP) * 
+                PROP1(JJ) = PROP1(JJ) + PROPI(IREC,J,IP) *
      &                      PROBI(IREC,J,IP)
   907         CONTINUE
   902       CONTINUE
@@ -220,12 +215,12 @@ C
          FPROB(IREC1) = TXP1
          PROBIT(IREC1) = TXP2
          WK22(IREC1) = TXP10
-         FFPROB(IREC1,1) = TXP14(1) 
-         FFPROB(IREC1,2) = TXP14(2) 
+         FFPROB(IREC1,1) = TXP14(1)
+         FFPROB(IREC1,2) = TXP14(2)
 
          DO 599 J=1,4
             IF (J .LT. 4) OAKL(J,IREC1) = TXP15(J)
-            
+
             IF (TXP12(J) .LE. 0.0) GOTO 599
             XMTH(J,IREC1) = TXP12(J)
             ROOTH(J,IREC1) = ROOT4(J) / TXP12(J)
@@ -248,7 +243,7 @@ C
              JJ = JJ + 1
              PROBI(IREC1,J,IP) = TXP8(JJ)
              PROPI(IREC1,J,IP) = PROP1(JJ) / (TXP8(JJ) + .00001)
-  885      CONTINUE           
+  885      CONTINUE
   889    CONTINUE
 
   910    CONTINUE

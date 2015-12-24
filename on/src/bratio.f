@@ -1,5 +1,8 @@
       FUNCTION BRATIO(IS,D,H)
-      IMPLICIT NONE
+      use metric_mod
+      use coeffs_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BRATIO--ONTARIO DATE OF LAST REVISION:  07/11/08
 C    ON - 06/01/04
@@ -7,17 +10,6 @@ C----------
 C
 C FUNCTION TO COMPUTE BARK RATIOS. THIS ROUTINE IS VARIANT SPECIFIC
 C AND EACH VARIANT USES ONE OR MORE OF THE ARGUMENTS PASSED TO IT.
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'METRIC.F77'
 C
       INTEGER IS
       REAL H,D,BRATIO
@@ -31,9 +23,9 @@ C
 
 C     CORRECT FOR ONTARIO INFORMATION.
 C        THE VALUES USED HERE ARE FROM Zakrzewski AS PART OF HIS
-C        VOLUME EQUATIONS. 
-C     
-C     NOTE THAT THE CONSTANT VALUES SHOULD JUST REPLACE THE VALUES 
+C        VOLUME EQUATIONS.
+C
+C     NOTE THAT THE CONSTANT VALUES SHOULD JUST REPLACE THE VALUES
 C     IN BKRAT, RATHER THAN BEING DONE HERE.
 
 C     REPLACE BRATIO VALUES WITH CONSTANT VALUES, IF APPLICABLE
@@ -66,7 +58,7 @@ C       (ASPEN, ALSO USED FOR ASH & COTTONWOOD (Ontario sp. 45, 70-74))
 
 	END IF
 
-C     IF, FOR SOME STRANGE REASON THE DIAMETER IS ZERO, JUST USE THE 
+C     IF, FOR SOME STRANGE REASON THE DIAMETER IS ZERO, JUST USE THE
 C     VALUES FROM BEFORE.
       IF (D .EQ. 0) RETURN
 
@@ -82,11 +74,11 @@ C     happens, recalculate based on a smaller ratio.
 	HDRAT = H_M / D_CM
 
       IF (IS .EQ. 5 .OR. IS .EQ. 70) THEN
-C       (WHITE PINE)      
+C       (WHITE PINE)
 	  BRATIO = 1.0 - 0.04513 * D_CM ** (1.168567 - 1.0)
 
       ELSE IF (IS .EQ. 9 .OR. IS .EQ. 72) THEN
-C       (BLACK SPRUCE)      
+C       (BLACK SPRUCE)
 C        Note: equation goes negative at HDRAT>14.8679)
         IF (HDRAT .LT. 14.8) THEN
 	    BRATIO = 1.0 - 0.067259 * HDRAT
@@ -94,7 +86,7 @@ C        Note: equation goes negative at HDRAT>14.8679)
           BRATIO = 1.0 - 0.067259 * 14.0
 	  END IF
       ELSE IF (IS .EQ. 11 .OR. IS .EQ. 14) THEN
-C       (WHITE CEDAR, ALSO USED FOR NORTHERN RED CEDAR)      
+C       (WHITE CEDAR, ALSO USED FOR NORTHERN RED CEDAR)
 C        Note: equation goes negative at HDRAT>7.31797)
         IF (HDRAT .LT. 7.3) THEN
 	    BRATIO = 1.0 - 0.13665 * HDRAT
@@ -102,13 +94,13 @@ C        Note: equation goes negative at HDRAT>7.31797)
 	    BRATIO = 1.0 - 0.13665 * 7.0
         END IF
 
-      ELSE IF (IS .EQ. 18 .OR. IS .EQ. 19 .OR. IS .EQ. 26 .OR. 
-     &         IS .EQ. 27 .OR. IS .EQ. 44 .OR. IS .EQ. 46 .OR. 
-     &         IS .EQ. 48 .OR. IS .EQ. 49 .OR. IS .EQ. 50 .OR. 
-     &         IS .EQ. 51 .OR. IS .EQ. 52 .OR. IS .EQ. 54 .OR. 
-     &         IS .EQ. 57 .OR. IS .EQ. 59 .OR. IS .EQ. 64 .OR. 
+      ELSE IF (IS .EQ. 18 .OR. IS .EQ. 19 .OR. IS .EQ. 26 .OR.
+     &         IS .EQ. 27 .OR. IS .EQ. 44 .OR. IS .EQ. 46 .OR.
+     &         IS .EQ. 48 .OR. IS .EQ. 49 .OR. IS .EQ. 50 .OR.
+     &         IS .EQ. 51 .OR. IS .EQ. 52 .OR. IS .EQ. 54 .OR.
+     &         IS .EQ. 57 .OR. IS .EQ. 59 .OR. IS .EQ. 64 .OR.
      &         IS .EQ. 65 .OR. IS .EQ. 66 .OR. IS .EQ. 67) THEN
-C       SUGAR/RED MAPLE (ONT SP: 30,32)      
+C       SUGAR/RED MAPLE (ONT SP: 30,32)
 C           Note: equation goes negative at HDRAT>8.954)
         IF (HDRAT .LT. 8.9) THEN
 	    BRATIO = 1.0 - 0.111681 * HDRAT

@@ -1,5 +1,10 @@
       SUBROUTINE SVCMP3
-      IMPLICIT NONE
+      use contrl_mod
+      use svdata_mod
+      use arrays_mod
+      use workcm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -7,37 +12,15 @@ C
 C     STAND VISUALIZATION GENERATION
 C     N.L.CROOKSTON -- RMRS MOSCOW -- NOVEMBER 1998
 C
-C     CALLED FROM COMPRS AND TREDEL. 
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'SVDATA.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'WORKCM.F77'
-C
-C
-COMMONS
+C     CALLED FROM COMPRS AND TREDEL.
 C
       INTEGER ISVOBJ,IPT
-      INTEGER IWKCM1(MAXTRE)
-      EQUIVALENCE (IWKCM1,WORK1)
 C
       IF (JSVOUT.EQ.0) RETURN
       IF (NSVOBJ.EQ.0) RETURN
 C
 C     IF THERE ARE NO LIVE TREES LEFT, THEN REMOVE REFERENCES
-C     TO LIVE TREES. 
+C     TO LIVE TREES.
 C
       IF (ITRN.EQ.0) THEN
          DO ISVOBJ=1,NSVOBJ

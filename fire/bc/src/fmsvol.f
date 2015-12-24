@@ -1,5 +1,9 @@
       SUBROUTINE FMSVOL (II, XHT, VOL2HT, DEBUG, IOUT)
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C
 C  $Id$
 C
@@ -15,7 +19,7 @@ C----------
 *     CALLS:       CFVOL
 *                  CFTOPK
 *
-*  PURPOSE:                                 
+*  PURPOSE:
 *     Calculates the volume up to height HT of each snag in record II.
 *----------------------------------------------------------------------
 *
@@ -25,10 +29,10 @@ C----------
 *     VOL2HT   VOLUME UP TO HEIGHT HT OF EACH SNAG IN RECORD II
 *     MVOL     MERCH VOLUME UP TO HEIGHT
 *
-*  LOCAL VARIABLE DEFINITIONS:   
+*  LOCAL VARIABLE DEFINITIONS:
 *     VM = MERCH. VOLUME
 *     JS = SNAG SPECIES
-*     IHT = AN INDEX OF HT 
+*     IHT = AN INDEX OF HT
 *
 *  COMMON BLOCK VARIABLES AND PARAMETERS:
 *
@@ -38,37 +42,33 @@ C.... PARAMETER STATEMENTS.
 
 C.... PARAMETER INCLUDE FILES.
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... COMMON INCLUDE FILES.
 
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'CONTRL.F77'
 
-C.... VARIABLE DECLARATIONS.  
+C.... VARIABLE DECLARATIONS.
 
       REAL     VM, VMAX, VN
       LOGICAL  LTKIL, LC, LCONE, CTKFLG, BTKFLG, DEBUG
 	LOGICAL  LMERCHIN, LMERCH
       INTEGER  JS, ISPC, IT
-      REAL     D, H, BARK, XHT, VOL2HT   
+      REAL     D, H, BARK, XHT, VOL2HT
       INTEGER  IOUT,II,JSP,IHT
       REAL     XH,XD,BRATIO,D2H,BBFV
 
 C     CALCULATE THE VOLUME
 
-      JS = SPS(II)                          
+      JS = SPS(II)
       D = DBHS(II)
       H = HTDEAD(II)
       LMERCH = .FALSE.
-               
+
       GOTO 1000
 
 C     ENTRY POINT FOR SNAGS CREATED BY **CUTS**.
-            
+
       ENTRY FMSVL2(JSP,XD,XH,XHT,VOL2HT,LMERCHIN,DEBUG,IOUT)
-      
+
       JS = JSP
       D  = XD
       H  = XH
@@ -81,14 +81,14 @@ C     ENTRY POINT FOR SNAGS CREATED BY **CUTS**.
          LTKIL = .TRUE.
       ELSE
          LTKIL = .FALSE.
-         XHT = H      
+         XHT = H
       ENDIF
-     
+
       BARK = BRATIO(JS,D,H)
       D2H = D * D * H
       IHT = INT(XHT * 100.0)
 
-c     Actually do the call to calculate the volumes. Note that this 
+c     Actually do the call to calculate the volumes. Note that this
 C     section of the code may have to change if there are any changes
 c     made within the base model routine VOLS or CFVOL
 C     Also note the following variable equivalencies:
@@ -107,13 +107,13 @@ C                 WE NEED IT, THEN WE WILL JUST SET IT TO VN
       CALL CFVOL (ISPC,D,H,D2H,VN,VM,VMAX,LTKIL,LCONE,BARK,IHT,
      1        CTKFLG)
       IF(CTKFLG .AND. LTKIL) THEN
-	   VMAX = VN      
+	   VMAX = VN
          CALL CFTOPK (ISPC,D,H,VN,VM,VMAX,LCONE,BARK,IHT)
 	ENDIF
 
       VOL2HT = VN
 	IF (LMERCH) VOL2HT = VM
- 
+
       IF (DEBUG) WRITE(IOUT,40)ISPC,D,H,LCONE,VN
    40 FORMAT(' FMSVOL ISPC=',I3,' D=',F7.3,' H=',F7.3,
      >     ' LCONE=',L2,' VN=',F7.3)

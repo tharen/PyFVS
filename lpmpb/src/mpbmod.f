@@ -1,5 +1,8 @@
       SUBROUTINE MPBMOD
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **MPBMOD        DATE OF LAST REVISION:  08/22/14
 C----------
@@ -13,28 +16,12 @@ C
 C Revision History
 C   02/18/88 Last noted revision date.
 C   07/02/10 Lance R. David (FMSC)
-C     Added IMPLICIT NONE.
 C   08/22/14 Lance R. David (FMSC)
 C     Function name was used as variable name.
 C     changed variable INT to INCRS
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'MPBCOM.F77'
-C
-C
-COMMONS
 C
       CHARACTER*1 IC1,IC2,IC22,IC3,IC4,IC5,IC6,IC7,ICBLK
       DOUBLE PRECISION BETIN, XX, PIODEN, DTA, DSMTA
@@ -58,7 +45,7 @@ C
      &       FML1(3), FML2(3), FML3(3), GENO(3),
      &       PX(10),TM(30),TKYR(30),
      &       SAK(3), TATRY(3), SEXDBH(30), AMP(15), PGRX(5), TAY(5)
- 
+
       LOGICAL LGO, PASS1
 
       EQUIVALENCE (CLASS(1,2),DIAM(1)), (CLASS(1,3),PHLOEM(1))
@@ -68,7 +55,6 @@ C
       DATA IB/1/,SEXRAT/.66/,SQFTPA/43560./,IC1/'*'/,IC2/'$'/,
      >     IC22/'B'/,IC3/'D'/,IC4/'A'/,IC5/'E'/,IC6/'X'/,IC7/'P'/,
      >     ICBLK/' '/
-C
 C
 C     SURF  = SURFACE AREA OF EACH TREE
 C     AMP   = AMPLITUDE MULTIPLIER FOR AGGREGATING TREES
@@ -213,7 +199,6 @@ C
       NINC = INCRS+1
       LASTYR = MPBYR - 1
       IF (LASTYR .LT. 0.) LASTYR = 0.
-C
 C
 C     ** DISTRIBUTE TREES INTO RESISTANCE CLASSES,
 C
@@ -696,7 +681,6 @@ C
 C     PASS VAULE OF TMMPB TO EVENT MONITOR
 C
       CALL EVSET4 (4,TMMPB)
-C
 C
 C     ** END RUN IF .LT. 1 BEETLE PER ACRE
 C     *****  END OF ANNUAL LOOP  *****

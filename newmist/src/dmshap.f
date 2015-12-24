@@ -1,5 +1,9 @@
       SUBROUTINE DMSHAP(DMTRCW, IDMSHP)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -35,7 +39,7 @@ C--------------------------------------------------------------------
 C
 C Called by:
 C
-C     DMMTRX 
+C     DMMTRX
 C
 C Other routines called:
 C
@@ -65,12 +69,8 @@ C Common block variables and parameters:
 C
 C     [none related to NISI; FVS commons are not documented]
 C
-C**********************************************************************      
+C**********************************************************************
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'DMCOM.F77'
 
 C Argument list variables.
@@ -93,7 +93,7 @@ C Local variables.
       INTEGER I,ISPI,J
       REAL    TPA,RAD,CR,CL,SCORM1
 
-C Data assigments for coefficients of discriminant function.      
+C Data assigments for coefficients of discriminant function.
 C      SHAPE      1       2       3       4      5
       DATA CONST/
      &      -13.943,-37.395,-99.000,-32.104,-32.042,
@@ -221,7 +221,7 @@ C     WJ=AF,BR=ES,GS=PP,PY=AF,OS=DF,LO=RC,CY=RC,BL=RC,EO=RC,WO=RC
      &    9,    8,   10,    9,    3,    6,    6,    6,    6,    6,
 C     BO=RC,VO=RC,IO=RC,BM=RC,BU=RC,RA=RC,MA=RC,GC=RC,DG=RC,FL=RC
      &    6,    6,    6,    6,    6,    6,    6,    6,    6,    6,
-C     WN=RC,TO=RC,SY=RC,AS=RC,CW=RC,WI=RC,CN=RC,CL=RC,OH=RC      
+C     WN=RC,TO=RC,SY=RC,AS=RC,CW=RC,WI=RC,CN=RC,CL=RC,OH=RC
      &    6,    6,    6,    6,    6,    6,    6,    6,    6/
 C
       DATA MAPCR /
@@ -234,13 +234,11 @@ C     NC=RC,PW=RC,GO=RC,AW=RC,EM=RC,BK=RC,SO=RC,PB=RC,AJ=AF,RM=AF
 C     OJ=AF,ER=AF,PM=LP,PD=LP,AZ=LP,CI=PP,OS=DF,OH=RC
      &    9,    9,    7,    7,    7,   10,    3,    6, 11*0/
 C
-C
       DATA MAPEM /
 C     WB=WL,WL=WL,DF=DF,LM=OT,LL=AF,RM=OT,LP=LP,ES=ES,AF=AF,PP=PP
      &    2,    2,    3,   11,    9,   11,    7,    8,    9,   10,
 C     GA=OT,AS=OT,CW=OT,BA=OT,PW=OT,NC=OT,PB=OT,OS=OT,OH=OT
      &   11,   11,   11,   11,   11,   11,   11,   11,   11, 30*0/
-C
 C
       DATA MAPIE /
 C     WP=WP,WL=WL,DF=DF,GF=GF,WH=WH,RC=RC,LP=LP,ES=ES,AF=AF,PP=PP
@@ -250,7 +248,6 @@ C     MH=OT,WB=WL,LM=OT,LL=OT,PI=OT,RM=OT,PY=OT,AS=OT,CO=OT,MM=OT
 C     PB=OT,OH=OT,OS=OT
      &   11,   11,   11, 26*0/
 C
-C 
        DATA MAPSO /
 C     WP=WP,SP=PP,DF=DF,WF=GF,MH=OT,IC=RC,LP=LP,ES=ES,SH=OT,PP=PP
      &    1,   10,    3,    4,   11,    6,    7,    8,   11,   10,
@@ -266,7 +263,6 @@ C     WB=WP,LM=WL,DF=DF,PM=LP,BS=ES,AS=RC,LP=LP,ES=ES,AF=AF,PP=PP
      &    1,    2,    3,    7,    8,    6,    7,    8,    9,   10,
 C     UJ=AF,RM=AF,BI=RC,MM=OT,NC=RC,MC=RC,OS=MH,OH=RC
      &    9,    9,    6,   11,    6,    6,   11,    6, 31*0/
-C
 C
       DATA MAPUT /
 C     WB=AF,LM=WP,DF=DF,WF=GF,BS=ES,AS=RC,LP=LP,ES=ES,AF=AF,PP=PP,
@@ -287,7 +283,7 @@ C     WB=AF,KP=PP,PY=AF,DG=RC,HT=RC,CH=RC,WI=RC,--=OT,OT=RC
      &    9,   10,    9,    6,    6,    6,    6,   11,    6, 10*0/
 
       CALL VARVER(VVER)
-C    
+C
       SELECT CASE (VVER(:2))
       CASE('BC')
         MAPISP=MAPBC
@@ -326,7 +322,7 @@ C----------
      &'    I  ISPI  DBH        HT        CR        CL       RAD',
      &'       TPA                          SCORE(J)              ',
      &'           IDMSHP')
-     
+
 C----------
 C  RETURN IF NOTREES OPTION IN EFFECT.
 C----------
@@ -336,7 +332,7 @@ C----------
  9001 FORMAT (' ITRN =', I5,' : NOTREES : RETURN TO **DMMTRX**')
       RETURN
     5 CONTINUE
-    
+
 C----------
 C  SET PRE-THIN TREES PER ACRE IF THINNING HAS JUST OCCURRED.
 C---------
@@ -352,7 +348,7 @@ C----------
         RAD = DMTRCW(I)*.5
         CR = ICR(I)/100.
         CL = CR*HT(I)
-        
+
 C----------
 C  COMPUTE DISCRIMINANT SCORE FOR EACH SHAPE, AND ASSIGN SHAPE TO
 C  HIGHEST SCORE.
@@ -373,6 +369,6 @@ C
  7000   FORMAT (I7,I3,F6.2,5F10.2,5F12.4,I5)
 C
   100 CONTINUE
-  
+
       RETURN
       END

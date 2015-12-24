@@ -1,37 +1,18 @@
       SUBROUTINE MAICAL
-      IMPLICIT NONE
+      use htcal_mod
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **MAICAL--BM   DATE OF LAST REVISION:  05/06/09
 C----------
 C  THIS SUBROUTINE CALCULATES THE MAI FOR THE STAND. IT IS CALLED
 C  FROM CRATET.
 C----------
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-COMMONS
 C
 C----------
       LOGICAL DEBUG

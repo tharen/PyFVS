@@ -1,6 +1,11 @@
       SUBROUTINE UPDATE
-      use arrays_mod, only: barkrat
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -11,28 +16,6 @@ C     COMPUTES VOLUME STATISTICS
 C     EXECUTES SOME OF THE SUMMARY LOGIC.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
-C
       LOGICAL DEBUG
       REAL SPCMO(MAXSP,3),WKI,BRATIO
       INTEGER I,IS,I1,I2,J,IM
@@ -110,20 +93,13 @@ C----------
 C  UPDATE DIAMETERS TO END OF CYCLE VALUES.
 C----------
       IF (ITRN.EQ.0) THEN
-        BARKRAT(:)=0.0
         RETURN
       ENDIF
 
       DO 110 I=1,ITRN
       IS=ISP(I)
-!      DBH(I)=DBH(I)+DG(I)/BRATIO(IS,DBH(I),HT(I))
-      DBH(I)=DBH(I)+DG(I)/BARKRAT(I)
+      DBH(I)=DBH(I)+DG(I)/BRATIO(IS,DBH(I),HT(I))
   110 CONTINUE
-
-      ! Update the bark ratio array
-      do i=1,itrn
-        barkrat(i) = bratio(isp(i),dbh(i),ht(i))
-      enddo
 
       RETURN
       END

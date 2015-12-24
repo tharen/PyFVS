@@ -1,5 +1,8 @@
       SUBROUTINE DFBDBH
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **DFBDBH  DATE OF LAST REVISION:  09/16/14
 C----------
@@ -28,22 +31,7 @@ C     ISCT   - (CONTRL)   INPUT
 C     PROB   - (ARRAYS)   INPUT
 C     START  - (DFBCOM)   OUTPUT
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'DFBCOM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-COMMONS
 C
       INTEGER I, I1, I2, J, I3
 

@@ -1,9 +1,13 @@
       SUBROUTINE DMSUM(DMTRCW, IDMSHP)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
-C **DMSUM --     DATE OF LAST REVISION:  02/23/96   
+C **DMSUM --     DATE OF LAST REVISION:  02/23/96
 C This code was adapted from the CVSUM subroutine of the COVER model.
 C----------
 C  Purpose:
@@ -13,7 +17,6 @@ C in: Moeur, Melinda. 1981. Crown width and foliage weight of
 C northern Rocky Mountain Confifers. USDA Forest Service Res. Pap.
 C INT-283.
 C
-C
 C Called by:
 C
 C     DMMTRX
@@ -22,7 +25,7 @@ C Other routines called:
 C
 C     DBCHK
 C
-C Argument list definitions:                        
+C Argument list definitions:
 C
 C     REAL    DMTRCW  (I) Predicted maximum crown width (feet).
 C     INTEGER IDMSHP  (I) Tree crown shape category.
@@ -55,29 +58,25 @@ C     INTEGER DMSHAP      DM shape category
 C
 C Common block variables and parameters:
 C
-C     DMRDMX  DMCOM                                 
+C     DMRDMX  DMCOM
 C     FPM     DMCOM
-C     MESH    DMCOM                       
+C     MESH    DMCOM
 C     MXHT    DMCOM
 C     PIE     DMCOM
 C
 C     [FVS commons are not documented]
 C
 C********************************************************************
-      
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'DMCOM.F77'                                       
+
+      INCLUDE 'DMCOM.F77'
 
 C Argument list variables.
 
-      REAL    DMTRCW      
+      REAL    DMTRCW
       INTEGER IDMSHP
 
       DIMENSION DMTRCW(MAXTRE)
-      DIMENSION IDMSHP(MAXTRE)      
+      DIMENSION IDMSHP(MAXTRE)
 
 C Local variables.
 
@@ -239,7 +238,7 @@ C
       PAREA = RAD/B1*(Y2*SQRT(Z2)+B1**2*ASIN(Y2/B1))-
      &        RAD/B1*(Y1*SQRT(Z1)+B1**2*ASIN(Y1/B1))
   280 CONTINUE
- 
+
 C  Fill the RADIUS and VOLUME parts of 'DMRDMX()'.
 C   J - is Height Class
 C   I - is a Tree Record
@@ -247,7 +246,7 @@ C  RADIUS and VOLUME measures are in MESH units.
 
       RAD1 = PAREA / (H2 * 2)
       RAD2 = SQRT(FRUST / (PIE * H2))
-      
+
 c     if (j .gt. 4) then
 c	  jjj=0
 c	endif

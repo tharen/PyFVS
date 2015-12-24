@@ -1,5 +1,13 @@
       SUBROUTINE CROWN
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use pden_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **CROWN--TT  DATE OF LAST REVISION:  03/31/11
 C----------
@@ -18,33 +26,6 @@ C  ONLY BE RESOLVED ONCE.  A CALL TO **DUBSCR** IS ISSUED TO DUB
 C  CROWN RATIO WHEN DBH IS LESS THAN 3 INCHES.  PROCESSING OF
 C  CROWN CHANGE FOR SMALL TREES IS CONTROLLED BY **REGENT**.
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
 COMMONS
 C----------
       LOGICAL DEBUG
@@ -176,7 +157,7 @@ C ESTIMATE MEAN CROWN RATIO FROM SDI, AND ESTIMATE WEIBULL PARAMETERS
 C----------
       SELECT CASE (ISPC)
 C
-      CASE(10) 
+      CASE(10)
         IF(BAMAX .GT. 0.)THEN
           RELSDI = BA / BAMAX
         ELSEIF(SDIDEF(10) .GT. 0.)THEN
@@ -428,11 +409,9 @@ C
    90 FORMAT(' LEAVING SUBROUTINE CROWN  CYCLE =',I5)
       RETURN
 C
-C
       ENTRY CRCONS
 C----------
 C  ENTRY POINT FOR LOADING CROWN RATIO MODEL COEFFICIENTS
-C
 C
 C SPECIES ORDER FOR TETONS VARIANT:
 C
@@ -456,7 +435,7 @@ C----------
       DATA WEIBA/
      &      1.0,      1.0,      1.0,      0.0,      1.0,
      &      0.0,      0.0,      1.0,      1.0,      0.0,
-     &      0.0,      0.0,      0.0,      0.0,      0.0, 
+     &      0.0,      0.0,      0.0,      0.0,      0.0,
      &      0.0,      1.0,      0.0/
 C----------
 C LOAD WEIBULL 'B' PARAMETER EQUATION CONSTANT COEFFICIENT
@@ -464,7 +443,7 @@ C----------
       DATA WEIBB0/
      & -0.82631, -0.82631, -0.24217,      0.0, -0.90648,
      & -0.08414,  0.17162, -0.90648, -0.89553,  0.24916,
-     &      0.0,      0.0, -0.23830, -0.08414,      0.0, 
+     &      0.0,      0.0, -0.23830, -0.08414,      0.0,
      & -0.23830, -0.26595,      0.0/
 C----------
 C LOAD WEIBULL 'B' PARAMETER EQUATION SLOPE COEFFICIENT
@@ -472,7 +451,7 @@ C----------
       DATA WEIBB1/
      &  1.06217,  1.06217,  0.96529,      0.0,  1.08122,
      &  1.14765,  1.07338,  1.08122,  1.07728,  1.04831,
-     &      0.0,      0.0,  1.18016,  1.14765,      0.0, 
+     &      0.0,      0.0,  1.18016,  1.14765,      0.0,
      &  1.18016,  0.98326,      0.0/
 C----------
 C LOAD WEIBULL 'C' PARAMETER EQUATION CONSTANT COEFFICIENT
@@ -480,7 +459,7 @@ C----------
       DATA WEIBC0/
      &  3.31429,  3.31429, -7.94832,      0.0,  3.48889,
      &  2.77500,  3.15000,  3.48889,  1.74621,     4.36,
-     &      0.0,      0.0,     3.04,  2.77500,      0.0,  
+     &      0.0,      0.0,     3.04,  2.77500,      0.0,
      &     3.04, -7.00555,      0.0/
 C----------
 C LOAD WEIBULL 'C' PARAMETER EQUATION SLOPE COEFFICIENT
@@ -488,7 +467,7 @@ C----------
       DATA WEIBC1/
      &      0.0,      0.0,  1.93832,      0.0,      0.0,
      &      0.0,      0.0,      0.0,  0.29052,      0.0,
-     &      0.0,      0.0,      0.0,      0.0,      0.0,  
+     &      0.0,      0.0,      0.0,      0.0,      0.0,
      &      0.0,  1.60411,      0.0/
 C----------
 C LOAD CR=F(SDI) EQUATION CONSTANT COEFFICIENT
@@ -496,7 +475,7 @@ C----------
       DATA C0/
      &  6.19911,  6.19911,  7.46296,      0.0,  6.81087,
      &  4.01678,  6.00567,  6.81087,  7.65751,  6.41166,
-     &      0.0,      0.0,  4.62512,  4.01678,      0.0,  
+     &      0.0,      0.0,  4.62512,  4.01678,      0.0,
      &  4.62512,  7.92810,      0.0/
 C----------
 C LOAD CR=F(SDI) EQUATION SLOPE COEFFICIENT
@@ -504,7 +483,7 @@ C----------
       DATA C1/
      &  -.02216, -0.02216, -0.02944,      0.0, -0.01037,
      & -0.01516, -0.03520, -0.01037, -0.03513, -0.02041,
-     &      0.0,      0.0, -0.01604, -0.01516,      0.0, 
+     &      0.0,      0.0, -0.01604, -0.01516,      0.0,
      & -0.01604, -0.06298,      0.0/
 C
       DATA CRNMLT/MAXSP*1.0/

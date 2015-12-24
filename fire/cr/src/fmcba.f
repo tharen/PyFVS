@@ -1,5 +1,11 @@
       SUBROUTINE FMCBA (IYR,ISWTCH)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMCBA   FIRE-CR-DATE OF LAST REVISION:  01/03/11
 C----------
@@ -36,16 +42,10 @@ C
 C.... Parameter statements.
 
 C.... Parameter include files.
-      INCLUDE 'PRGPRM.F77'
 Cppe      INCLUDE 'PPEPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... Common include files.
 Cppe      INCLUDE 'PPCNTL.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'FMCOM.F77'
 
 C.... Variable declarations.
 C
@@ -242,7 +242,7 @@ C                  <.25 to1  1-3  3-6  6-12  12-20 20-35 35-50 >50  Lit  Duf
      &            0.0, 0.1, 0.0,  0.0, 0.0, 0.0, 0.0,0.0,0.0,0.3, 0.0, ! 30 Rocky Mountain juniper - use Utah juniper
      &            0.0, 0.1, 0.0,  0.0, 0.0, 0.0, 0.0,0.0,0.0,0.3, 0.0, ! 31 oneseed juniper - use Utah juniper
      &            0.0, 0.1, 0.0,  0.0, 0.0, 0.0, 0.0,0.0,0.0,0.3, 0.0, ! 32 Eastern redcedar - use Utah juniper
-     &            0.0, 0.1, 0.0,  0.0, 0.0, 0.0, 0.0,0.0,0.0,0.3, 0.0, ! 33 singleleaf pinyon - use pinyon pine  
+     &            0.0, 0.1, 0.0,  0.0, 0.0, 0.0, 0.0,0.0,0.0,0.3, 0.0, ! 33 singleleaf pinyon - use pinyon pine
      &            0.0, 0.1, 0.0,  0.0, 0.0, 0.0, 0.0,0.0,0.0,0.3, 0.0, ! 34 border pinyon - use pinyon pine
      &            0.0, 0.1, 0.0,  0.0, 0.0, 0.0, 0.0,0.0,0.0,0.3, 0.0, ! 35 Arizona pinyon - use pinyon pine
      &            0.1, 0.1, 0.2,  0.5, 0.5, 0.0, 0.0,0.0,0.0,0.5, 0.8, ! 36 Chihuahua pine - use ponderosa pine
@@ -252,7 +252,7 @@ C                  <.25 to1  1-3  3-6  6-12  12-20 20-35 35-50 >50  Lit  Duf
 C
 C     REGION 2 - CHANGES IN R2HABT() **HABTYP** WILL
 C     AFFECT THIS
-C     
+C
       DATA (COVINI2(I), I=   1,  50) /
      &  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,
      &  5,  5,  5,  5,  5,  5,  5,  5,  5,  5,
@@ -302,7 +302,7 @@ C
 C
 C     REGION 3 - CHANGES IN R3HABT() **HABTYP** WILL
 C     AFFECT THIS
-C     
+C
       DATA (COVINI3(I), I=   1,  50) /
      &  5,  0,  0,  0,  5,  0, 16,  5,  5,  0,
      & 22,  5,  0,  0,  0,  0,  5,  5,  5,  0,
@@ -333,7 +333,7 @@ C
      &  9,  9,  9, 10,  0, 24, 17, 17, 24, 24,
      & 24, 24, 24, 24, 24, 24, 24, 16, 16, 12,
      & 24, 24/
-C      
+C
       DATA MYACT / 2521, 2548, 2553 /
 C-----------
 C  CHECK FOR DEBUG.
@@ -473,19 +473,19 @@ C
           STFUEL(ISZ,2) = ALGSLP(PERCOV,XCOV,YLOAD,2)
           STFUEL(ISZ,1) = 0
         ENDDO
-        
+
 C       CHANGE THE INITIAL FUEL LEVELS BASED ON PHOTO SERIES INFO INPUT
 
         CALL OPFIND(1,MYACT(2),J)
         IF (J .GT. 0) THEN
           CALL OPGET(J,2,JYR,IACTK,NPRM,PRMS)
           IF ((PRMS(1) .GE. 0) .AND. (PRMS(2) .GE. 0)) THEN
-            CALL FMPHOTOVAL(NINT(PRMS(1)), NINT(PRMS(2)), FOTOVAL, 
+            CALL FMPHOTOVAL(NINT(PRMS(1)), NINT(PRMS(2)), FOTOVAL,
      >                      FOTOVALS)
             DO I = 1, MXFLCL
               IF (FOTOVAL(I) .GE. 0) STFUEL(I,2) = FOTOVAL(I)
               IF (I .LE. 9) STFUEL(I,1) = FOTOVALS(I)
-            ENDDO                 
+            ENDDO
 
 C           IF FOTOVAL(1) IS NEGATIVE, THEN AN INVALID CODE WAS ENTERED.
 C           DON'T MARK EVENT DONE IF THIS IS A CALL FROM SVSTART--WILL
@@ -500,7 +500,7 @@ C           NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.
             CALL RCDSET (2,.TRUE.)
           ENDIF
         ENDIF
-        
+
 C       CHANGE THE INITIAL FUEL LEVELS BASED ON INPUT FROM THE USER
 C       FIRST DO FUELHARD (FUELINIT) THEN FUELSOFT
 
@@ -513,23 +513,23 @@ C       FIRST DO FUELHARD (FUELINIT) THEN FUELSOFT
           IF (PRMS(5) .GE. 0) STFUEL(6,2) = PRMS(5)
           IF (PRMS(6) .GE. 0) STFUEL(10,2) = PRMS(6)
           IF (PRMS(7) .GE. 0) STFUEL(11,2) = PRMS(7)
-          IF (PRMS(8) .GE. 0) STFUEL(1,2) = PRMS(8)          
-          IF (PRMS(9) .GE. 0) STFUEL(2,2) = PRMS(9)           
+          IF (PRMS(8) .GE. 0) STFUEL(1,2) = PRMS(8)
+          IF (PRMS(9) .GE. 0) STFUEL(2,2) = PRMS(9)
           IF (PRMS(1) .GE. 0) THEN
             IF ((PRMS(8) .LT. 0) .AND. (PRMS(9) .LT. 0)) THEN
               STFUEL(1,2) = PRMS(1) * 0.5
               STFUEL(2,2) = PRMS(1) * 0.5
-            ENDIF                 
+            ENDIF
             IF ((PRMS(8) .LT. 0) .AND. (PRMS(9) .GE. 0)) THEN
               STFUEL(1,2) = MAX(PRMS(1) - PRMS(9),0.)
-            ENDIF  
+            ENDIF
             IF ((PRMS(8) .GE. 0) .AND. (PRMS(9) .LT. 0)) THEN
               STFUEL(2,2) = MAX(PRMS(1) - PRMS(8),0.)
-            ENDIF  
-          ENDIF                
-          IF (PRMS(10) .GE. 0) STFUEL(7,2) = PRMS(10) 
-          IF (PRMS(11) .GE. 0) STFUEL(8,2) = PRMS(11) 
-          IF (PRMS(12) .GE. 0) STFUEL(9,2) = PRMS(12)  
+            ENDIF
+          ENDIF
+          IF (PRMS(10) .GE. 0) STFUEL(7,2) = PRMS(10)
+          IF (PRMS(11) .GE. 0) STFUEL(8,2) = PRMS(11)
+          IF (PRMS(12) .GE. 0) STFUEL(9,2) = PRMS(12)
 
 C         DON'T MARK EVENT DONE IF THIS IS A CALL FROM SVSTART--WILL
 C         NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.
@@ -547,9 +547,9 @@ C         NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.
           IF (PRMS(4) .GE. 0) STFUEL(4,1) = PRMS(4)
           IF (PRMS(5) .GE. 0) STFUEL(5,1) = PRMS(5)
           IF (PRMS(6) .GE. 0) STFUEL(6,1) = PRMS(6)
-          IF (PRMS(7) .GE. 0) STFUEL(7,1) = PRMS(7)          
-          IF (PRMS(8) .GE. 0) STFUEL(8,1) = PRMS(8)                           
-          IF (PRMS(9) .GE. 0) STFUEL(9,1) = PRMS(9)           
+          IF (PRMS(7) .GE. 0) STFUEL(7,1) = PRMS(7)
+          IF (PRMS(8) .GE. 0) STFUEL(8,1) = PRMS(8)
+          IF (PRMS(9) .GE. 0) STFUEL(9,1) = PRMS(9)
 
 C         DON'T MARK EVENT DONE IF THIS IS A CALL FROM SVSTART--WILL
 C         NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.

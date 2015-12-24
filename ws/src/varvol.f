@@ -1,5 +1,10 @@
         SUBROUTINE VARVOL
-        IMPLICIT NONE
+      use contrl_mod
+      use volstd_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **VARVOL--WS    DATE OF LAST REVISION:   03/20/13
 C----------
@@ -9,26 +14,6 @@ C  FROM THE NATIONAL CRUISE SYSTEM VOLUME LIBRARY FOR METHB OR METHC
 C  EQUAL TO 6.  IT ALSO CONTAINS ANY OTHER SPECIAL VOLUME CALCULATION
 C  METHOD SPECIFIC TO A VARIANT (METHB OR METHC = 8)
 C----------
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
 C
 C----------
       LOGICAL DEBUG,TKILL,CTKFLG,BTKFLG,LCONE
@@ -92,7 +77,7 @@ C
 C  SURROGATE EQUATION ASSIGNMENT:
 C
 C    FROM EXISTING WS EQUATIONS --
-C      USE 1(SP) FOR 11(WP) AND 24(MH) 
+C      USE 1(SP) FOR 11(WP) AND 24(MH)
 C      USE 2(DF) FOR 22(BD)
 C      USE 3(WF) FOR 13(SF)
 C      USE 4(GS) FOR 23(RW)
@@ -102,7 +87,7 @@ C      USE 31(BO) FOR 28(LO), 29(CY), 30(BL), 32(VO), 33(IO), 40(BM), AND
 C                     43(OH)
 C
 C    FROM CA VARIANT --
-C      USE CA11(KP) FOR 12(PM), 14(KP), 15(FP), 16(CP), 17(LM), 19(GP), 20(WE), 
+C      USE CA11(KP) FOR 12(PM), 14(KP), 15(FP), 16(CP), 17(LM), 19(GP), 20(WE),
 C                       25(WJ), 26(WJ), AND 27(CJ)
 C      USE CA12(LP) FOR 9(LP) AND 10(WB)
 C
@@ -192,7 +177,7 @@ C
           IF(IT.GT.0)HT2TD(IT,2)=X02
         ELSE
           IF(IT.GT.0)HT2TD(IT,2)=0.
-        ENDIF        
+        ENDIF
 C
         IF(DEBUG)WRITE(JOSTND,*)' AFTER PROFILE CF TVOL= ',TVOL
       ELSE
@@ -303,8 +288,6 @@ C----------
 C
       RETURN
 C
-C
-C
 C----------
 C  ENTER ANY OTHER CUBIC HERE
 C----------
@@ -315,7 +298,6 @@ C----------
       VM=0.
       CTKFLG = .FALSE.
       RETURN
-C
 C
 C----------
 C  ENTER ANY OTHER BOARD HERE
@@ -328,7 +310,6 @@ C----------
       BBFV=0.
       BTKFLG = .FALSE.
       RETURN
-C
 C
 C----------
 C  ENTRY POINT FOR SENDING VOLUME EQN NUMBER TO THE FVS-TO-NATCRZ ROUTINE

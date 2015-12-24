@@ -1,5 +1,11 @@
       SUBROUTINE FMTRET (IYR)
-      IMPLICIT NONE
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -31,15 +37,9 @@ C              FMSADD
 C.... Parameter statements.
 
 C.... Parameter include files.
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... Common include files.
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
 
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
 
 
 C.... Variable declarations.
@@ -51,7 +51,7 @@ C.... Variable declarations.
       DATA      MYACTS /2523/
       INTEGER   IYR,JTODO,JDO,NPRM,IACTK,JYR,K,ISPD,ISZ,I
       REAL      PSMOKE,TRKIL
-     
+
 C-----------
 C  CHECK FOR DEBUG.
 C-----------
@@ -169,10 +169,16 @@ C        Store the fire-caused mortality in the snag pools. R&C 07/11/96
 C
       RETURN
       END
-      
+
 ***********************************************************************
 ***********************************************************************
       SUBROUTINE FMFMOV(IYR)
+      use contrl_mod
+      use fmcom_mod
+      use fmfcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 
 C     CALLED FROM: FMMAIN
 C     This routine has been extracted from FMCWD.
@@ -182,11 +188,6 @@ C     Comments below will help in that process.
 *  Purpose:
 *     This subroutine implements the FUELMOVE keyword
 ***********************************************************************
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
-      INCLUDE 'CONTRL.F77'
 
 C.... Variable declarations.
 C         These are declared above
@@ -210,7 +211,7 @@ C-----------
       CALL DBCHK (DEBUG,'FMFMOV',5,ICYC)
       IF (DEBUG) WRITE(JOSTND,107) 'FMFMOV',ICYC
   107 FORMAT(' ENTERING ',A,' CYCLE = ',I2)
-      
+
 C     SEE IF FUELMOVE KEYWORD IS SCHEDULED; TRANSFER AMONG
 C     FUEL POOLS AS REQUIRED
 
@@ -399,5 +400,5 @@ C     ACTIVITY FUELS LOGIC IN **FMCFMD**
         SLCHNG = 0.0
       ENDIF
 
-      RETURN      
+      RETURN
       END

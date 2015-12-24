@@ -1,5 +1,13 @@
       SUBROUTINE VOLS
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use volstd_mod
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **VOLS--ON    DATE OF LAST REVISION:   05/11/11
 C----------
@@ -10,20 +18,6 @@ C
 C  NATCRS, OCFVOL, AND OBFVOL ARE ENTRY POINTS IN SUBROUTINE
 C  **VARVOL**, WHICH IS VARIANT SPECIFIC.
 C----------
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'COEFFS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'OUTCOM.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'VOLSTD.F77'
-      INCLUDE 'METRIC.F77'      
-C
-COMMONS
 C
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES.
@@ -249,7 +243,7 @@ C----------
 
 C     TO TRICK THE PRINTING OF BOARD FOOT IN OUTPUT ROUTINES
 C     THAT EXPECT THE UNITS TO BE "FT3toM3" SCALED BY HA, DIVIDE
-C     THAT CONSTANT OUT HERE. THIS ONLY HAPPENS WHEN THE 
+C     THAT CONSTANT OUT HERE. THIS ONLY HAPPENS WHEN THE
 C     USER GIVES A BFVOLUME .NE. 8 (THE FVS-ON DEFAULT)
 
       IF (METHB(ISPC).NE.8) THEN
@@ -257,7 +251,7 @@ C     USER GIVES A BFVOLUME .NE. 8 (THE FVS-ON DEFAULT)
       ELSE
         BFV(I)=BBFV
       ENDIF
-      
+
       IF(BFV(I).GT.0.0 .AND. LBVOLS) THEN
 C----------
 C     COMPUTE DEFECT CORRECTION FACTOR FOR BOARD FOOT VOLUME.

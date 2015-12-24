@@ -1,19 +1,15 @@
       SUBROUTINE CLIN (DEBUG,LKECHO)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C
 C     CLIMATE EXTENSION
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'CLIMATE.F77'
-C
-COMMONS
 C
       INTEGER    KWCNT
       PARAMETER (KWCNT = 8)
@@ -39,7 +35,6 @@ C
 C     SIGNAL THAT THE CLIMATE MODEL IS NOW ACTIVE.
 
    10 CONTINUE
-C
 C
       CALL KEYRDR (IREAD,JOSTND,DEBUG,KEYWRD,LNOTBK,
      >             ARRAY,IRECNT,KODE,KARD,LFLAG,LKECHO)
@@ -276,11 +271,11 @@ C                        OPTION NUMBER 2 -- CLIMDATA
         ENDIF
       ENDIF
 
-C     TURN ON CLIMATE ESTAB AND TURN OFF BASE ESTAB.      
+C     TURN ON CLIMATE ESTAB AND TURN OFF BASE ESTAB.
 
       LAESTB=.TRUE.
       CALL ESNOAU ('********',LKECHO)
-            
+
       GOTO 10
   296 CONTINUE
       WRITE (JOSTND,297)
@@ -316,7 +311,7 @@ C
           CALL fvsGetRtnCode(IRTNCD)
           IF (IRTNCD.NE.0) RETURN
         ENDIF
-      ELSE      
+      ELSE
         CALL SPDECD (2,I,NSP(1,1),JOSTND,IRECNT,KEYWRD,
      >               ARRAY,KARD)
         IF (.NOT.LNOTBK(1)) THEN  ! YEAR/CYCLE NOT SPECIFIED
@@ -338,7 +333,7 @@ C
         ELSE
           IF (I.GT.0 .AND. I.LE.MAXSP) THEN
             PRMS(1) = I
-          ELSE 
+          ELSE
             PRMS(1) = 0
           ENDIF
           PRMS(2) = ARRAY(3)
@@ -417,7 +412,7 @@ C
           CALL fvsGetRtnCode(IRTNCD)
           IF (IRTNCD.NE.0) RETURN
         ENDIF
-      ELSE      
+      ELSE
         CALL SPDECD (2,I,NSP(1,1),JOSTND,IRECNT,KEYWRD,
      >               ARRAY,KARD)
         IF (.NOT.LNOTBK(1)) THEN
@@ -435,7 +430,7 @@ C
         ELSE
           IF (I.GT.0 .AND. I.LE.MAXSP) THEN
             PRMS(1) = I
-          ELSE 
+          ELSE
             PRMS(1) = 0
           ENDIF
           PRMS(2) = ARRAY(3)
@@ -483,7 +478,7 @@ C
      >             ' CLIMATE-CAUSED MAXIMUM DENSITY ADJUSTMENT',
      >             ' MULTIPLIER IS ',F10.4)
         ENDIF
-      ENDIF 
+      ENDIF
       GOTO 10
   700 CONTINUE
 C                        OPTION NUMBER 6 -- CLIMREPT
@@ -495,7 +490,7 @@ C                        OPTION NUMBER 7 -- SETATTR
   800 CONTINUE
       IF (NATTRS .LE. 0) THEN
         CALL ERRGRO (.TRUE.,30)
-        WRITE (JOSTND,810) 
+        WRITE (JOSTND,810)
   810   FORMAT (T12,'SETATTR KEYWORD MUST FOLLOW CLIMDATA KEYWORD.')
         GOTO 10
       ENDIF
@@ -510,14 +505,14 @@ C                        OPTION NUMBER 7 -- SETATTR
           ATTRS(1:4,I) = ARRAY(2:5)
           GOTO 10
         ENDIF
-      ENDDO  
+      ENDDO
   825 CONTINUE
       CALL ERRGRO (.TRUE.,4)
-      WRITE (JOSTND,830) 
+      WRITE (JOSTND,830)
   830 FORMAT (T12,'SETATTR ATTRIBUTE STRING WAS NOT MATCHED.')
       GOTO 10
       RETURN
-      
+
       ENTRY CLKEY(IPAS,PASKEY)
       PASKEY = TABLE(IPAS)
       RETURN

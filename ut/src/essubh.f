@@ -1,6 +1,10 @@
       SUBROUTINE ESSUBH (I,HHT,EMSQR,DILATE,DELAY,ELEV2,ISER,GENTIM,
      &                   TRAGE)
-      IMPLICIT NONE
+      use esparm_mod
+      use escomn_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **ESSUBH---UT   DATE OF LAST REVISION:  02/02/10
 C----------
@@ -8,33 +12,21 @@ C
 C     ASSIGNS HEIGHTS TO SUBSEQUENT AND PLANTED TREE RECORDS
 C     CREATED BY THE ESTABLISHMENT MODEL.
 C
-C
-C     COMING INTO ESSUBH, TRAGE IS THE AGE OF THE TREE AS SPECIFIED ON 
-C     THE PLANT OR NATURAL KEYWORD.  LEAVING ESSUBH, TRAGE IS THE NUMBER 
-C     BETWEEN PLANTING (OR NATURAL REGENERATION) AND THE END OF THE 
-C     CYCLE.  AGE IS TREE AGE UP TO THE TIME REGENT WILL BEGIN GROWING 
+C     COMING INTO ESSUBH, TRAGE IS THE AGE OF THE TREE AS SPECIFIED ON
+C     THE PLANT OR NATURAL KEYWORD.  LEAVING ESSUBH, TRAGE IS THE NUMBER
+C     BETWEEN PLANTING (OR NATURAL REGENERATION) AND THE END OF THE
+C     CYCLE.  AGE IS TREE AGE UP TO THE TIME REGENT WILL BEGIN GROWING
 C     THE TREE.
 C     CALLED FORM **ESTAB
 C----------
 C  COMMONS
 C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
-      INCLUDE 'ESCOMN.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
 C----------
 C  DECLARATIONS
 C----------
       INTEGER I,ISER,N
       REAL    HHT,DELAY,DILATE,ELEV2,EMSQR,GENTIM,TRAGE,ITIME,AGE,SI
-C----------       
+C----------
 C SPECIES ORDER FOR UTAH VARIANT:
 C
 C  1=WB,  2=LM,  3=DF,  4=WF,  5=BS,  6=AS,  7=LP,  8=ES,  9=AF, 10=PP,
@@ -60,99 +52,99 @@ C----------
       IF(AGE.LT.1.0) AGE=1.0
       TRAGE=TIME-DELAY
 C
-      SELECT CASE (I)      
+      SELECT CASE (I)
 C----------
 C     HEIGHT OF TALLEST SUBSEQUENT SPECIES 1 (WB)
 C----------
-      CASE (1) 
+      CASE (1)
       HHT = 1.0
 C----------
 C     HEIGHT OF TALLEST SUBS. SPECIES 2 (LM)
 C----------
-      CASE (2) 
+      CASE (2)
       HHT = 0.5
 C----------
 C     HT OF TALLEST SUBS. SPECIES 3 (DF)
 C----------
-      CASE (3) 
+      CASE (3)
       HHT = 2.0
 C----------
 C     HT OF TALLEST SUBS. SPECIES 4 (WF)
 C----------
-      CASE (4) 
+      CASE (4)
       HHT = 2.0
 C----------
 C     HT OF TALLEST SUBS. SPECIES 5 (BS)
 C----------
-      CASE (5) 
+      CASE (5)
       HHT = 1.0
 C----------
 C     HT OF TALLEST SUBS. SPECIES 6 (AS)
 C----------
-      CASE (6) 
+      CASE (6)
       HHT = 5.0
 C----------
 C     HT OF TALLEST SUBS. SPECIES 7 (LP)
 C----------
-      CASE (7) 
+      CASE (7)
       HHT = 3.0
 C----------
 C     HT OF TALLEST SUBS. SPECIES 8 (ES)
 C----------
-      CASE (8) 
+      CASE (8)
       HHT = 1.5
 C----------
 C     HT OF TALLEST SUBS. SPECIES 9 (AF)
 C----------
-      CASE (9) 
+      CASE (9)
       HHT = 0.75
 C----------
 C     HEIGHT OF TALLEST SUBS. SPECIES 10 (PP)
-C----------      
-      CASE (10) 
+C----------
+      CASE (10)
       HHT = 3.0
-C----------      
+C----------
 C     HT OF TALLEST SUBS. SPECIES 11 (PI), 14 (PM), 17 (GB)
 C----------
-      CASE (11,14,17)          
+      CASE (11,14,17)
       HHT = 0.5
-C----------         
+C----------
 C     HT OF TALLEST SUBS. SPECIES 12 (WJ), 15 (RM), 16 (UJ)
 C----------
-      CASE (12,15,16)          
+      CASE (12,15,16)
       HHT = 0.5
-C----------         
+C----------
 C     HT OF TALLEST SUBS. SPECIES 13 (GO)
 C----------
-      CASE (13)          
+      CASE (13)
       HHT = 5.0
-C----------         
+C----------
 C     HT OF TALLEST SUBS. SPECIES 18 (NC), 19 (FC), 22 (BE)
 C----------
-      CASE (18,19,22)          
+      CASE (18,19,22)
       HHT = 10.0
 C----------
 C     HT OF TALLEST SUBS. SPECIES 20 (MC), 21 (BI)
 C----------
-      CASE (20,21)   
+      CASE (20,21)
 C      SI= SITEAR(I)
 C      HHT = ((1.47043 + 0.23317*SI)/(31.56252 - 0.05586*SI))*AGE
       HHT=1.0
-C----------         
+C----------
 C     HT OF TALLEST SUBS. SPECIES 23 (OS)
 C----------
-      CASE (23)          
-      HHT = 1.0   
-C----------         
+      CASE (23)
+      HHT = 1.0
+C----------
 C     HT OF TALLEST SUBS. SPECIES 24 (OH)
 C----------
-      CASE (24)          
+      CASE (24)
       HHT = 5.0
-C                    
-      END SELECT  
+C
+      END SELECT
 C
       RETURN
-      END 
-C**END OF CODE SEGMENT 
- 
- 
+      END
+C**END OF CODE SEGMENT
+
+

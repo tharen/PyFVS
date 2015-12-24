@@ -1,4 +1,7 @@
       SUBROUTINE MISINT
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 ***********************************************************************
 *  **MISINT--SO    Date of last revision:   07/08/11
 *----------------------------------------------------------------------
@@ -37,17 +40,14 @@
 *    Added arrays for height growth impacts.
 *    Impact values must be supplied by MistHMod keyword.
 ***********************************************************************
-      IMPLICIT NONE
 
 C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C.... Common include files.
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'MISCOM.F77'
 
 C.... Variable declarations.
@@ -124,7 +124,7 @@ C.... Marshall, Katy 2007. Permanent plots for measuring spread and
 C.... impact of Douglas-fir dwarf mistletoe in the Southern Oregon
 C.... Cascades, Pacific Northwest Region: Results of the ten year
 C.... remeasurement. USDA Forest Service, Pacific Northwest Region,
-C.... Southwest Oregon Forest Insect and Disease Service Center, 
+C.... Southwest Oregon Forest Insect and Disease Service Center,
 C.... Central Point, Oregon. SWOFIDSC-07-04. 34 pp.
 C....
 C.... Default values for DF in this table would be:
@@ -172,15 +172,15 @@ C.... set here.
 C.... Mortality coefficients
 
       DATA ((APMC(I,J),J=1,3),I=1,MAXSP)
-     &  /0.00112,  0.02170, -0.00171,  ! WP 1 
-     &   0.00112,  0.02170, -0.00171,  ! SP 2 
-     &   0.01319, -0.01627,  0.00822,  ! DF 3 
-     &   0.0,      0.00159,  0.00508,  ! WF 4 
-     &   0.00681, -0.00580,  0.00935,  ! MH 5 
-     &   0.0,0.0,0.0,                  ! IC 6 
-     &   0.00112,  0.02170, -0.00171,  ! LP 7 
-     &   0.0,0.0,0.0,                  ! ES 8 
-     &   0.0,      0.00159,  0.00508,  ! SH 9 
+     &  /0.00112,  0.02170, -0.00171,  ! WP 1
+     &   0.00112,  0.02170, -0.00171,  ! SP 2
+     &   0.01319, -0.01627,  0.00822,  ! DF 3
+     &   0.0,      0.00159,  0.00508,  ! WF 4
+     &   0.00681, -0.00580,  0.00935,  ! MH 5
+     &   0.0,0.0,0.0,                  ! IC 6
+     &   0.00112,  0.02170, -0.00171,  ! LP 7
+     &   0.0,0.0,0.0,                  ! ES 8
+     &   0.0,      0.00159,  0.00508,  ! SH 9
      &   0.00681, -0.00580,  0.00935,  ! PP 10
      &   0.0,0.0,0.0,                  ! JU 11
      &   0.0,      0.00159,  0.00508,  ! GF 12

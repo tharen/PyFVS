@@ -1,5 +1,9 @@
       SUBROUTINE CVIN (PASKEY,ARRAY,LNOTBK,LKECHO)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **CVIN   DATE OF LAST REVISION:  06/28/13
 C----------
@@ -70,24 +74,8 @@ C       -- NSHOW -- NUMBER OF SPECIES FOR DISPLAY
 C 1-6   -- ISHOW(6)-- SUBSCRIPTS OF SPECIES FOR DISPLAY
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'CVCOM.F77'
 C
-COMMONS
 C----------
 C  INTERNAL STORAGE
 C----------

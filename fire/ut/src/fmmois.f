@@ -1,5 +1,7 @@
       SUBROUTINE FMMOIS (FMOIS, MOIS)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMMOIS  FIRE--UT/CR/TT--DATE OF LAST REVISION:  06/22/05
 C----------
@@ -26,8 +28,6 @@ C.... PARAMETER STATEMENTS.
 C.... PARAMETER INCLUDE FILES.
 
 C.... COMMON INCLUDE FILES.
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
 
 
 C     LOCAL VARIABLE DECLARATIONS
@@ -57,7 +57,7 @@ C         "very low moisture" / wildfire
           MOIS(1,4) = 0.10
           MOIS(1,5) = 0.15
           MOIS(2,1) = 0.70 ! live woody
-          MOIS(2,2) = 0.70 ! live herb         
+          MOIS(2,2) = 0.70 ! live herb
 
       ELSEIF (FMOIS .EQ. 2) THEN
 
@@ -69,7 +69,7 @@ C         "low moisture"
           MOIS(1,4) = 0.15
           MOIS(1,5) = 0.50
           MOIS(2,1) = 0.90
-          MOIS(2,2) = 0.90          
+          MOIS(2,2) = 0.90
 
       ELSEIF (FMOIS .EQ. 3) THEN
 

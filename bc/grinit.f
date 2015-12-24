@@ -1,33 +1,29 @@
        SUBROUTINE GRINIT
-       IMPLICIT NONE
+      use htcal_mod
+      use multcm_mod
+      use plot_mod
+      use arrays_mod
+      use workcm_mod
+      use contrl_mod
+      use coeffs_mod
+      use econ_mod
+      use volstd_mod
+      use metric_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C
 C  INITIALIZE PROGNOSIS MODEL VARIABLES
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'COEFFS.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'OPCOM.F77'
-      INCLUDE 'WORKCM.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'HTCAL.F77'
-      INCLUDE 'ECON.F77'
-      INCLUDE 'MULTCM.F77'
       INCLUDE 'SUMTAB.F77'
-      INCLUDE 'VOLSTD.F77'
-      INCLUDE 'VARCOM.F77'
       INCLUDE 'CWDCOM.F77'
       INCLUDE 'CALCOM.F77'
       INCLUDE 'BCPLOT.F77'
-      INCLUDE 'METRIC.F77'
 C
-COMMONS
 C----------
       INTEGER I,J,K
       CHARACTER*26 DBLK
@@ -99,7 +95,7 @@ C     INITIAL VALUES FOR "Version 2" active and processed; respectively
       SIZCAP(I,4) = 999.
       JSPIN(I)=1
     5 CONTINUE
-      DBHMIN(7) = 12.5 * CMtoIN    ! PL uses 12.5 cm 
+      DBHMIN(7) = 12.5 * CMtoIN    ! PL uses 12.5 cm
       LFLAGV = .FALSE.
       LBAMAX = .FALSE.
       LZEIDE = .FALSE.
@@ -259,7 +255,7 @@ C----------
 C  INITIALIZE SUMTAB COMMON VARIABLES
 C----------
       MAIFLG = 0
-      NEWSTD = 0 
+      NEWSTD = 0
       TOTREM = 0.
       AGELST = 0.
       DO 60 I=1,MAXCY1

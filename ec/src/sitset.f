@@ -1,5 +1,10 @@
       SUBROUTINE SITSET
-      IMPLICIT NONE
+      use contrl_mod
+      use volstd_mod
+      use plot_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **SITSET--EC   DATE OF LAST REVISION:  05/09/12
 C----------
@@ -9,25 +14,6 @@ C ARRAY WITH SDI MAXIMUMS FOR SPECIES WHICH WERE NOT ASSIGNED A VALUE
 C USING THE SDIMAX KEYWORD.
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
-COMMONS
 C----------
       LOGICAL DEBUG
       CHARACTER*4 ASPEC

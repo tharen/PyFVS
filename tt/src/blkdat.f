@@ -1,55 +1,26 @@
       BLOCK DATA BLKDAT
-      IMPLICIT NONE
+      use htcal_mod
+      use fvsstdcm_mod
+      use pden_mod
+      use esparm_mod
+      use rancom_mod
+      use contrl_mod
+      use coeffs_mod
+      use econ_mod
+      use plot_mod
+      use screen_mod
+      use escomn_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BLKDAT--TT   DATE OF LAST REVISION:  06/15/10
 C----------
 C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
 C
-COMMONS
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
-      INCLUDE 'ESCOMN.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'ECON.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'RANCOM.F77'
-C
-C
-      INCLUDE 'SCREEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
       INCLUDE 'GGCOM.F77'
 C
-C
-      INCLUDE 'FVSSTDCM.F77'
-C
-C
-COMMONS
 C----------
       INTEGER I,J
 C----------
@@ -85,7 +56,7 @@ C 13 = BIGTOOTH MAPLE              BI   ACER GRANDIDENTATUM
 C 14 = ROCKY MOUNTAIN MAPLE        MM   ACER GLABRUM
 C 15 = NARROWLEAF COTTONWOOD       NC   POPULUS ANGUSTIFOLIA
 C 16 = CURLLEAF MOUNTAIN-MAHOGANY  MC   CERCOCARPUS LEDIFOLIUS
-C 17 = OTHER SOFTWOODS             OS 
+C 17 = OTHER SOFTWOODS             OS
 C 18 = OTHER HARDWOODS             OH
 C----------
       DATA  BKRAT/MAXSP*0./
@@ -121,7 +92,7 @@ C----------
      &          4,  9, 11, 12, 19, 20, 11,  9, 12,  4/
 C
 C     OCURHT ZEROES OUT PROBABILITIES WHICH CANNOT OCCUR BY DEFINITION.
-C     (DIMENSIONED (16,MAXSP) WITH THE 16 BEING THE HABITAT TYPE GROUP 
+C     (DIMENSIONED (16,MAXSP) WITH THE 16 BEING THE HABITAT TYPE GROUP
 C      AS SHOWN IN TABLE 3, PG 6, GTR INT-279) WHICH DOES NOT PERTAIN
 C      TO THE TT VARIANT)
 C
@@ -139,13 +110,13 @@ C
       DATA JSP /
      & 'WB ',   'LM ',   'DF ',   'PM ',   'BS ',
      & 'AS ',   'LP ',   'ES ',   'AF ',   'PP ',
-     & 'UJ ',   'RM ',   'BI ',   'MM ',   'NC ',   
+     & 'UJ ',   'RM ',   'BI ',   'MM ',   'NC ',
      & 'MC ',   'OS ',   'OH '/
 C
       DATA FIAJSP /
      & '101',   '113',   '202',   '133',   '096',
      & '746',   '108',   '093',   '019',   '122',
-     & '065',   '066',   '322',   '321',   '749',   
+     & '065',   '066',   '322',   '321',   '749',
      & '475',   '298',   '998'/
 C
       DATA PLNJSP /
@@ -171,7 +142,7 @@ C----------
       DATA HT1/
      &   4.1920,  4.1920,  4.5175,  3.2000,  4.5822,
      &   4.4625,  4.4625,  4.5822,  4.3603,   4.993,
-     &   3.2000,  3.2000,  4.7000,  4.4421,  4.4421,  
+     &   3.2000,  3.2000,  4.7000,  4.4421,  4.4421,
      &   5.1520,  4.1920,  4.4421/
       DATA HT2/
      &  -5.1651, -5.1651, -6.5129, -5.0000, -6.4818,
@@ -185,7 +156,7 @@ C
       DATA SIGMAR/
      &  0.46710, 0.46710, 0.48664,     0.2, 0.47645,
      &  0.48657, 0.48657, 0.47645, 0.44065,   0.230,
-     &      0.2,     0.2,  0.5107,  0.3750,     0.2,  
+     &      0.2,     0.2,  0.5107,  0.3750,     0.2,
      &   0.5357, 0.46710,      0.2/
 C
       DATA BREAK/
@@ -202,27 +173,27 @@ C----------
       DATA B1ACCF/
      & -0.42124, -0.42124,  0.67307,       0., -0.02858,
      &       0.,  0.16996, -0.02858,  0.67307,       0.,
-     &       0.,       0.,       0.,       0.,       0., 
+     &       0.,       0.,       0.,       0.,       0.,
      &       0., -0.42124,       0./
       DATA B0BCCF/
      & -2.56002, -2.56002, -2.49682,       0., -2.26007,
      &       0., -1.50963, -2.26007, -2.49682,       0.,
-     &       0.,       0.,       0.,       0.,       0., 
+     &       0.,       0.,       0.,       0.,       0.,
      &       0., -2.56002,       0./
       DATA B1BCCF/
      & -0.58642, -0.58642, -0.51938,       0., -0.67115,
      &       0., -0.61825, -0.67115, -0.51938,       0.,
-     &       0.,       0.,       0.,       0.,       0.,  
+     &       0.,       0.,       0.,       0.,       0.,
      &       0., -0.58642,       0./
       DATA B0ASTD/
      &  1.08720,  1.08720,  1.13785,       0.,  1.09730,
      &       0.,  1.00749,  1.09730,  1.13785,       0.,
-     &       0.,       0.,       0.,       0.,       0., 
+     &       0.,       0.,       0.,       0.,       0.,
      &       0.,  1.08720,       0./
       DATA B1BSTD/
      & -0.00230, -0.00230, -0.00185,       0., -0.00130,
      &       0., -0.00435, -0.00130, -0.00185,       0.,
-     &       0.,       0.,       0.,       0.,       0., 
+     &       0.,       0.,       0.,       0.,       0.,
      &       0., -0.00230,       0./
 C
       DATA REGNBK/2.999/

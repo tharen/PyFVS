@@ -1,5 +1,7 @@
       SUBROUTINE CVGO (LCVATV)
-      IMPLICIT NONE
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **CVGO   DATE OF LAST REVISION:  07/11/08
 C----------
@@ -7,19 +9,7 @@ C
 C     FIND OUT IF THE COVER/BROWSE MODELS WILL BE ROUTINELY
 C     CALLED DURING THE PROJECTION.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
       INCLUDE 'CVCOM.F77'
-C
-C
-COMMONS
 C
       LOGICAL LCVATV
       INTEGER NPRMS,KODE,ISTAT,IDT,NTIMES

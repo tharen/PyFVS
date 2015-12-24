@@ -1,5 +1,18 @@
       BLOCK DATA BLKDAT
-      IMPLICIT NONE
+      use htcal_mod
+      use fvsstdcm_mod
+      use pden_mod
+      use esparm_mod
+      use rancom_mod
+      use contrl_mod
+      use coeffs_mod
+      use econ_mod
+      use plot_mod
+      use screen_mod
+      use escomn_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BLKDAT--SO   DATE OF LAST REVISION:  05/09/12
 C----------
@@ -8,50 +21,6 @@ C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
 C
 C     COMMON STATEMENT FOR MODEL COEFFICIENTS WHICH ARE HABITAT
 C     AND SITE DEPENDENT.
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
-      INCLUDE 'ESCOMN.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'ECON.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'RANCOM.F77'
-C
-C
-      INCLUDE 'SCREEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-      INCLUDE 'FVSSTDCM.F77'
-C
-C
-COMMONS
 C
       INTEGER I,J
       DATA  BKRAT /MAXSP*0./
@@ -437,7 +406,6 @@ C
      &  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,
      &  0.0000,  0.0000,  0.0000,  0.0000,  0.0000,
      &  0.0000,-12.0763,  0.0000/
-C
 C
       DATA BB0/
      &0.37504453, 128.89522,   0.0,  -0.30935,     22.8741,

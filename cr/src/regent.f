@@ -1,5 +1,15 @@
       SUBROUTINE REGENT(LESTB,ITRNIN)
-      IMPLICIT NONE
+      use htcal_mod
+      use multcm_mod
+      use pden_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use plot_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C CR $Id$
 C----------
@@ -13,48 +23,12 @@ C  FROM **TREGRO** DURING CYCLING.  ENTRY **REGCON** IS CALLED FROM
 C  **RCON** TO LOAD MODEL PARAMETERS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'MULTCM.F77'
-C
 C
       INCLUDE 'ESTCOR.F77'
 C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
       INCLUDE 'GGCOM.F77'
 C
-C
-COMMONS
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES:
 C
@@ -96,12 +70,12 @@ C  21=NC, 22=PW, 23=GO, 24=AW, 25=EM, 26=BK, 27=SO, 28=PB, 29=AJ, 30=RM,
 C  31=OJ, 32=ER, 33=PM, 34=PD, 35=AZ, 36=CI, 37=OS, 38=OH
 C
 C  SPECIES EXPANSION:
-C  UJ,AJ,RM,OJ,ER USE CR JU                              
+C  UJ,AJ,RM,OJ,ER USE CR JU
 C  NC,PW USE CR CO
-C  GO,AW,EM,BK,SO USE CR OA                             
-C  PB USES CR AS                              
+C  GO,AW,EM,BK,SO USE CR OA
+C  PB USES CR AS
 C  PM,PD,AZ USE CR PI
-C  CI USES CR PP                              
+C  CI USES CR PP
 C----------
 C  DATA STATEMENTS.
 C----------
@@ -602,9 +576,9 @@ C----------
       IF(CORNEW.LE.0.0) CORNEW=1.0E-4
       HCOR(ISPC)=ALOG(CORNEW)
 C----------
-C  TRAP CALIBRATION VALUES OUTSIDE 2.5 STANDARD DEVIATIONS FROM THE 
+C  TRAP CALIBRATION VALUES OUTSIDE 2.5 STANDARD DEVIATIONS FROM THE
 C  MEAN. IF C IS THE CALIBRATION TERM, WITH A DEFAULT OF 1.0, THEN
-C  LN(C) HAS A MEAN OF 0.  -2.5 < LN(C) < 2.5 IMPLIES 
+C  LN(C) HAS A MEAN OF 0.  -2.5 < LN(C) < 2.5 IMPLIES
 C  0.0821 < C < 12.1825
 C----------
       IF(CORNEW.LT.0.0821 .OR. CORNEW.GT.12.1825) THEN

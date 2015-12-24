@@ -1,5 +1,14 @@
       SUBROUTINE MORTS
-      IMPLICIT NONE
+      use multcm_mod
+      use plot_mod
+      use arrays_mod
+      use workcm_mod
+      use estree_mod
+      use contrl_mod
+      use coeffs_mod
+      use pden_mod
+      use prgprm_mod
+      implicit none
 C----------
 C NI $Id$
 C----------
@@ -13,39 +22,8 @@ C  IS CALLED FROM **TREGRO** WHEN CYCLING FOR GROWTH PREDICTION.  ENTRY
 C  **MORCON** IS ACCESSED TO LOAD SITE DEPENDENT CONSTANTS.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
 C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'ESTREE.F77'
-C
-C
-      INCLUDE 'MULTCM.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'WORKCM.F77'
-C
-C
-COMMONS
 C----------
 C  DEFINITIONS:
 C
@@ -187,7 +165,7 @@ C FOR MODELING CLIMATE CHANGE.
 C----------
       CALL SDICAL(SDIMAX)
       IF(DEBUG)WRITE(JOSTND,*)'IN MORTS CYCLE= ',ICYC,'  BAMAX= ',
-     &BAMAX,'  SDIMAX= ',SDIMAX 
+     &BAMAX,'  SDIMAX= ',SDIMAX
 C----------
 C  ESTIMATE QUADRATIC MEAN DIAMETER 10 YEARS HENCE.
 C----------
@@ -352,7 +330,6 @@ C  COMPUTE THE CLIMATE-PREDICTED MORTALITY RATES BY SPECIES
 C---------
       CALL CLMORTS
 C
-C
 C----------
 C  COMPUTE THE FIXMORT OPTION.  LOOP OVER ALL SCHEDULED FIXMORT'S
 C  LINCL IS USED TO INDICATE WHETHER A TREE GETS AFFECTED OR NOT
@@ -375,7 +352,7 @@ C----------
             IF(PRM(5).LT.3.)THEN
                IF(PRM(2).GT. 1.0)PRM(2)=1.0
                IF(PRM(2).LT. 0.0)PRM(2)=0.0
-            ENDIF 
+            ENDIF
             IF (PRM(5).EQ.1.0) THEN
                IP=2
             ELSEIF (PRM(5).EQ.2.0) THEN

@@ -1,22 +1,13 @@
       SUBROUTINE FORMCL(ISPC,IFOR,D,FC)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FORMCL--KM     DATE OF LAST REVISION:  01/20/15
 C----------
 C
 C THIS PROGRAM CALCULATES FORM FACTORS FOR CALCULATING CUBIC AND
 C BOARD FOOT VOLUMES.
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-COMMONS
 C
 C----------
       REAL SISKFC(MAXSP,5),BLM712(MAXSP),FC,D
@@ -33,11 +24,11 @@ C----------
 C  SISKIYOU  FORM CLASS VALUES
 C----------
       DATA SISKFC/
-     & 74., 78., 76., 80., 72., 66., 72., 74., 75., 76., 70.,
-     & 74., 78., 76., 80., 72., 70., 72., 74., 75., 76., 70.,
-     & 74., 78., 74., 78., 72., 70., 72., 74., 75., 76., 70.,
-     & 72., 75., 74., 76., 72., 68., 72., 74., 74., 74., 70.,
-     & 72., 74., 72., 75., 72., 66., 72., 74., 74., 72., 70./
+     & 91., 96., 90., 98., 98., 89., 98., 91., 92., 93., 95.,
+     & 84., 91., 86., 90., 88., 89., 98., 91., 83., 89., 86.,
+     & 79., 85., 81., 86., 84., 77., 98., 82., 80., 83., 78.,
+     & 78., 83., 80., 85., 81., 73., 98., 80., 80., 81., 76.,
+     & 78., 82., 80., 85., 80., 72., 98., 79., 79., 80., 75./
       DATA BLM712/
      & 74., 76., 76., 78., 72., 66., 72., 74., 78., 80., 70./
 C----------

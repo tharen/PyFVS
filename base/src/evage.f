@@ -1,5 +1,6 @@
       SUBROUTINE EVAGE (IDTE)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -11,16 +12,7 @@ C     EVENT MONITOR ROUTINE - NL CROOKSTON - AUG 1982 - MOSCOW, ID
 C
 C     IDTE  = POSTING DATE
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'OPCOM.F77'
-C
-C
-COMMONS
 C
       INTEGER IDTE,ISTRT,NEVA,NE,IEN,I1,I
 C

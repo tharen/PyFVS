@@ -1,5 +1,12 @@
       SUBROUTINE INTREE (RECORD,IRDPLV,ISDSP,SDLO,SDHI,LKECHO)
-      IMPLICIT NONE
+      use htcal_mod
+      use plot_mod
+      use arrays_mod
+      use estree_mod
+      use contrl_mod
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -10,18 +17,7 @@ C
 C  THIS ROUTINE READS THE STAND TREE DATA AND SETS ALL VARIABLES
 C  WHICH ARE TREE RECORD SPECIFIC.
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'HTCAL.F77'
-      INCLUDE 'ESTREE.F77'
       INCLUDE 'STDSTK.F77'
-      INCLUDE 'METRIC.F77'
-C
-COMMONS
 C
       INTEGER IG,IULIM,IGRP,IPP,IAXE,ISPI,IUP,IHIT3,IHIT2,IHIT1,I,IK
       INTEGER J,ITREI,ITH,IMC1,ITRRR,ITP1RR,K,NPNVRS,ISCRN,IPTKNT,IMAX
@@ -39,14 +35,14 @@ C
       DATA IDCMP1/10000000/
 C---------
 C     SET INITIAL VALUES FOR SPECIES TRANSLATION.
-C---------      
+C---------
       INOSPC=0
       DO ICNTR1 = 1,1000
       ANOSPC(ICNTR1)='        '
       ENDDO
 C---------
 C     INITIALIZE DAMAGE/SEVERITY ARRAY.
-C---------      
+C---------
       DO II = 1,MAXTRE
         DO I = 1,6
           DAMSEV(I,II) = 0
@@ -263,11 +259,11 @@ C
       HT(I)  = HT(I)  * MtoFT
       THT    = THT    * MtoFT
       HTG(I) = HTG(I) * CMtoFT
-      
+
       IF(DEBUG)WRITE(JOSTND,*)'DBH(I),DG(I),HT(I),THT,HTG(I)= '
       IF(DEBUG)WRITE(JOSTND,*)DBH(I),DG(I),HT(I),THT,HTG(I)
-      
-      
+
+
 C----------
 C  COUNT UP THE NUMBER OF POINTS.  'IPVEC' IS A SUB-PLOT I.D. VECTOR
 C  USED TO KEEP TRACK OF SUB-PLOT IDENTIFICATION CODES THAT HAVE
@@ -302,7 +298,7 @@ C----------
       IESTAT(I)=0
 C----------
 C  INITIALIZE SERIAL CORRELATION.
-C----------      
+C----------
       ZRAND(I)=-999.
 C----------
 C  COUNT THE NUMBER ON NON-STOCKABLE SUB-PLOTS.
@@ -355,7 +351,7 @@ C----------
       ENDDO
       WRITE(JOSTND,75) CSPI,JSP(ISPI)
    75 FORMAT(T13,'NOTE: INPUT SPECIES CODE (',A8,') WAS SET TO ('
-     & ,A4,') FOR THIS PROJECTION.') 
+     & ,A4,') FOR THIS PROJECTION.')
       INOSPC = INOSPC+1
       IF(INOSPC.GT.1000)INOSPC=1000
       ANOSPC(INOSPC) = CSPI
@@ -393,7 +389,7 @@ C----------
       ENDIF
   710 CONTINUE
 C
-      LDELTR = (DBH(I) .LT. 0.0001) .OR. 
+      LDELTR = (DBH(I) .LT. 0.0001) .OR.
      >         (LINCL .AND. (DBH(I) .LT. SDLO .OR. DBH(I) .GE. SDHI))
 C----------
 C   CALL DAMCDS TO PROCESS DAMAGE CODES AND OTHER TREE ATTRIBUTES FOR
@@ -493,7 +489,7 @@ C----------
       NORMHT(I)=0
       PDBH(I)=0.
       PHT(I)=0.
-      ZRAND(I)=-999.          
+      ZRAND(I)=-999.
       ABIRTH(I)=0.
       KUTKOD(I)=0
       DO I3 = 1,6
@@ -538,7 +534,7 @@ C
      &        '; PLOTS COUNTED = ',I5,'; DBSKODE=',I4)
         IF(NSITET.GT.0)WRITE(JOSTND,950)((SITETR(I,J),J=1,6),I=1,NSITET)
   950   FORMAT(/' SITE INDEX TREES:',/,7X,'ISPC',7X,'DBH',8X,'HT',
-     &  7X,'AGE',4X,'T OR B',4X,'ON OFF',20(/,1X,F10.0,2F10.1,3F10.0))   
+     &  7X,'AGE',4X,'T OR B',4X,'ON OFF',20(/,1X,F10.0,2F10.1,3F10.0))
       ENDIF
 C
       RETURN

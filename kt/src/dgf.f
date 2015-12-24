@@ -1,5 +1,11 @@
       SUBROUTINE DGF(DIAM)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use pden_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **DGF--KT    DATE OF LAST REVISION:  04/03/08
 C----------
@@ -15,33 +21,9 @@ C  PREDICTION.  ENTRY **DGCONS** IS CALLED BY **RCON** TO LOAD SITE
 C  DEPENDENT COEFFICIENTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
 C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'KOTCOM.F77'
-C
-C
-COMMONS
 C
 C  DIMENSIONS FOR INTERNAL VARIABLES.
 C

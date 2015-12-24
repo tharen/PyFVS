@@ -1,5 +1,7 @@
       SUBROUTINE RDSPUP (I,ISL,IISP,TP,DIAM,RTD)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDSPUP      LAST REVISION:  09/03/14
 C----------
@@ -14,7 +16,7 @@ C
 C  Calls :
 C     DBCHK   (SUBROUTINE)  [PROGNOSIS]
 C
-C  Arguments : 
+C  Arguments :
 C     I      -
 C     ISL    -
 C     IISP   -
@@ -33,23 +35,20 @@ C               Modified the code that stores the information about
 C               when the stand entry occurred.
 C     14-JAN-00 Lance R. David (FHTET)
 C               Removed literals from option processor calls and replaced
-C               with references to MYACT array. Expanded MYACT array to 
+C               with references to MYACT array. Expanded MYACT array to
 C               include activity code 2431.
 C     08-AUG-01 Lance R. David (FHTET)
 C               Declaration and initialization of variable NTODO.
 C   09/03/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 
 C.... Common include files.
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
       INCLUDE 'RDADD.F77'
@@ -77,7 +76,7 @@ C.... Data statements.
 C.... Set flags to specify that a stand entry occurred and the year
 C.... in which it occured.
 
-      LSPFLG(1) = .TRUE. 
+      LSPFLG(1) = .TRUE.
       ISDATE(1) = IY(ICYC)
 
 C.... Proportion of stumps to receive borax.
@@ -91,10 +90,10 @@ C.... variables have been set for this cycle.
 C     (ACTIVITY CODE 2430)
 
       IF (.NOT. LBORAX(2)) THEN
-        
+
          IF (LBORAX(1)) CALL OPFIND (1,MYACT(1),NTODO)
          LBORAX(2) = .TRUE.
-        
+
          IF (NTODO .GT. 0) THEN
             IF (NTODO .GT. 1) THEN
 
@@ -102,21 +101,21 @@ C     (ACTIVITY CODE 2430)
                   CALL OPDEL1(ICASE)
    13          CONTINUE
             ENDIF
-          
+
             CALL OPGET (1,2,KDT,IACTK,NPS,PRMS)
 
             BOTRT = PRMS(1)
             BODBH = PRMS(2)
-          
+
             CALL OPDONE (1,IY(ICYC))
 
          ENDIF
 
-C....    Also call the option processor to see if there are any 
+C....    Also call the option processor to see if there are any
 C....    changes to the spore variables (We just need SPDBH at this
 C....    point, this call will be repeated elsewhere in case the user
 C....    wanted to change some parameter in a year that there was no
-C....    harvest)        
+C....    harvest)
 C        (ACTIVITY CODE 2431)
 
          CALL OPFIND (1,MYACT(2),NTODO)
@@ -127,13 +126,13 @@ C        (ACTIVITY CODE 2431)
                CALL OPGET (IJ,5,KDT,IACTK,NPS,PRMS)
                JRRTYP = PRMS(5)
                SPINF(JRRTYP) = PRMS(1)
-               SPDBH(JRRTYP) = PRMS(2) 
+               SPDBH(JRRTYP) = PRMS(2)
    23       CONTINUE
          ENDIF
       ENDIF
 
       IF (LBORAX(1) .AND. DIAM .GE. BODBH) ADJBOR = BOTRT
-      
+
 C.... Only spore infect those stumps that are big enough to
 C.... become centers.
 

@@ -1,5 +1,9 @@
       SUBROUTINE RDMN1(INUM)
-      IMPLICIT NONE
+      use outcom_mod
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDMN1       LAST REVISION:  08/29/14
 C----------
@@ -43,21 +47,16 @@ C       has not yet been predicted.
 C       Gary Dixon and Lance David discussed this problem and agreed
 C       on this solution to reset WK2 in this routine.
 C   08/29/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
 C.... PARAMETER INCLUDE FILES
 C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 C
 C.... COMMON INCLUDE FILES
 C
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'RDCOM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'OUTCOM.F77'
 C
       LOGICAL  LGO, LTEE, DEBUG
       INTEGER  I, ICCY, IDI, II, IM, INUM, IS, KDT, MYACT(1)
@@ -72,7 +71,7 @@ C.... SEE IF WE NEED TO DO SOME DEBUG.
 
 C     CHECK TO SEE IF GENERAL ROOT DISEASE MODEL IS ACTIVE
 
-      CALL RDATV (LGO,LTEE)   
+      CALL RDATV (LGO,LTEE)
 
 C     IF THIS IS FIRST CALL TO RDMN1 THEN PRINT SUMMARY ROOT DISEASE INFO.
 C     READ IN FROM TREE LIST
@@ -85,7 +84,7 @@ C
       TPAREA = 0.0
       DO 33 IDI=1,ITOTRR
          TPAREA = TPAREA + PAREA(IDI)
-   33 CONTINUE     
+   33 CONTINUE
       IF (.NOT. LGO .OR. TPAREA .EQ. 0.0) GOTO 225      !RETURN
 C
 C     IF THIS IS FIRST CALL TO RDMN1 THEN SEED RANDOM NUMBER GENERATOR.

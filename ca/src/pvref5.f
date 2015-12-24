@@ -1,5 +1,7 @@
       SUBROUTINE PVREF5 (KARD2,ARRAY2,LPVCOD,LPVREF)
-      IMPLICIT NONE
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **PVREF5--CA   DATE OF LAST REVISION:  03/29/13
 C----------
@@ -22,11 +24,6 @@ C                      FROM FSVEG DATA BASE
 C     HABPVR         - FVS HABITAT/ECOCLASS CODE CORRESPONDING TO
 C                      PV CODE/REFERENCE CODE COMBINATION
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
 C  DECLARATIONS
       REAL         ARRAY2
       INTEGER      I,NCODES
@@ -567,7 +564,7 @@ C----------
       KARD2T=KARD2
       KARD2='          '
       ARRAY2=0.
-C      
+C
       DO I=1,NCODES
       IF((ADJUSTL(PVCODE(I)).EQ.ADJUSTL(KARD2T)).AND.(ADJUSTL(PVREF(I))
      &  .EQ.ADJUSTL(CPVREF)))THEN

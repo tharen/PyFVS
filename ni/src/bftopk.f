@@ -1,24 +1,13 @@
       SUBROUTINE BFTOPK(ISPC,D,H,BBFV,LCONE,BARK,VMAX,ITHT)
-      IMPLICIT NONE
+      use volstd_mod
+      use coeffs_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BFTOPK--BASE   DATE OF LAST REVISION:   04/09/08
 C----------
 C    THIS SUBROUTINE CORRECTS BOARD FOOT VOLUMES FOR DEAD/DAMAGED
 C    TOPS.
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
-COMMONS
 C
       LOGICAL LCONE
       INTEGER ITHT,ISPC

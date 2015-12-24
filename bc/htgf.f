@@ -1,5 +1,13 @@
       SUBROUTINE HTGF
-      IMPLICIT NONE
+      use htcal_mod
+      use multcm_mod
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -11,20 +19,9 @@ C  CYCLING.  ENTRY **HTCONS** IS CALLED FROM **RCON** TO LOAD SITE
 C  DEPENDENT CONSTANTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'CALCOM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'COEFFS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'MULTCM.F77'
-      INCLUDE 'HTCAL.F77'
       INCLUDE 'BCPLOT.F77'
-      INCLUDE 'METRIC.F77'
 C
-COMMONS
 C----------
 C   MODEL COEFFICIENTS AND CONSTANTS:
 C
@@ -2060,11 +2057,11 @@ C     THIS PRIVATE FUNCTION LOCALIZES THE V3 CALCULATIONS FOR HEIGHT GROWTH;
 C     OTHERWISE THEY WOULD BE REPEATED SEVERAL TIMES
 
       REAL FUNCTION V3HTG(ISPC,HT,DBH,DG)
-      IMPLICIT NONE
+      use metric_mod
+      use prgprm_mod
+      implicit none
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BCPLOT.F77'
-      INCLUDE 'METRIC.F77'
 
       INTEGER ISPC
       REAL    HT,DBH,DG

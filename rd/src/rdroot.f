@@ -1,5 +1,7 @@
       SUBROUTINE RDROOT(I,A,ANS,F1,F2,HEI)
-      IMPLICIT NONE
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDROOT      LAST REVISION:  09/02/14
 C----------
@@ -28,36 +30,31 @@ C
 C  Revision History :
 C   01/20/94 - Last revision date.
 C   09/02/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77' 
       INCLUDE 'RDPARM.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'RDADD.F77'
-                                 
+
       INTEGER I
       REAL    A, ANS, EFFECT, F1, F2, HEI, SDINEW
 
 C     CALCULATE THE EFFECT OF SDI (IF KEYWORD WAS NOT USED,
-C     THERE MAY BE NO EFFECT) 
-      
+C     THERE MAY BE NO EFFECT)
+
       SDINEW = (OLDTPA / GROSPC) * (ORMSQD / 10.0) ** 1.605
-      
+
       IF (SDINEW .GT. 0.0) THEN
          EFFECT = SDISLP * SDINEW + YINCPT
       ELSE
          EFFECT = 1.0
       ENDIF
-      
+
       EFFECT = MIN(EFFECT,1.5)
       EFFECT = MAX(EFFECT,0.5)
-      
-C     NOW CALCULATE THE ROOT RADIUS 
-      
+
+C     NOW CALCULATE THE ROOT RADIUS
+
       IF (A .LT. 3.5) GOTO 1000
       ANS = EFFECT * F2 * F1 * A / 12.0
       GOTO 9999
@@ -71,7 +68,7 @@ C
       ANS = EXP(0.61157 * ALOG(HEI) + 0.04032 * ALOG(BA) - 0.80815)
 
       ANS = ANS * EFFECT
-      
+
  9999 CONTINUE
 
       RETURN

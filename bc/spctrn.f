@@ -1,5 +1,8 @@
       SUBROUTINE SPCTRN (SPCIN, ISPC1)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -9,13 +12,10 @@ C     AN INTEGER INDEX TO THE SPECIES. NORMAL VALUES ARE IN THE 1-15
 C     RANGE; NON-MATCHES ARE ASSIGNED 14. THIS MESSY FORM IS SIMPLEST
 C     GIVEN THE WIDE VARIETY OF INPUT SPECIES CODES.
 C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'CONTRL.F77'      
 
       CHARACTER*(*)SPCIN
       INTEGER   ISPC1
-      
+
       SELECT CASE (SPCIN(:2))
 	  CASE ("PW")
 	    ISPC1 = 1

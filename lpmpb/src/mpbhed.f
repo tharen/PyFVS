@@ -1,12 +1,14 @@
       SUBROUTINE MPBHED
-      IMPLICIT NONE
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **MPBHED        DATE OF LAST REVISION:  06/14/13
 C----------
 C
 C     WRITES HEADING FOR MPB MODEL OUTPUT
 C
-C     Writes a warning for the cix, ttx or bmx multi-pest model 
+C     Writes a warning for the cix, ttx or bmx multi-pest model
 C     (RNH June 98),  if the logical variable LXNOTE is set in
 C     mpbin.f
 C
@@ -17,19 +19,12 @@ C     from 8 to 26 characters.
 C   11/1100 Lance R. David (FHTET-FC)
 C     Removed use of Hollerith constants from FORMAT.
 C   07/02/10 Lance R. David (FMSC)
-C     Added IMPLICIT NONE.
 C
 C**********************************************************************
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
 
-      INCLUDE 'PLOT.F77'
 
       INCLUDE 'MPBCOM.F77'
-C
-COMMONS
 C
       WRITE (JOMPB,10)  NPLT,MGMID
 

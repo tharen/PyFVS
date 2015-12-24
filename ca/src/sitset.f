@@ -1,31 +1,17 @@
       SUBROUTINE SITSET
-      IMPLICIT NONE
+      use contrl_mod
+      use volstd_mod
+      use plot_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
-C  **SITSET--CA   DATE OF LAST REVISION:  05/11/11
+C CA $Id$
 C----------
 C THIS SUBROUTINE LOADS THE SITEAR ARRAY WITH A SITE INDEX FOR EACH
 C SPECIES WHICH WAS NOT ASSIGNED A SITE INDEX BY KEYWORD.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
-COMMONS
-C
       CHARACTER FORST*2,DIST*2,PROD*2,VAR*2,VOLEQ*10
       INTEGER IFIASP, ERRFLAG
       CHARACTER*4 ASPEC
@@ -222,7 +208,7 @@ C----------
 C  LOAD VOLUME DEFAULT MERCH. SPECS.
 C----------
       SELECT CASE(IFOR)
-      CASE(6,7)
+      CASE(6:10)
         DO I=1,MAXSP
         IF(TOPD(I) .LE. 0.) TOPD(I) = 4.5
         IF(BFTOPD(I) .LE. 0.) BFTOPD(I) = 4.5

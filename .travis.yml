@@ -1,21 +1,20 @@
 language: python
 
 python:
-    - 3.5
+  - "3.5"
     
-before_install:
-    - sudo apt-get update -qq
-    - sudo apt-get install -qq gfortran cmake unixodbc-dev unixodbc
+addons:
+  apt:
+    sources:
+    - george-edison55-precise-backports
+    - kubuntu-backports
 
-install: true
+    packages:
+    - cmake
+    - gfortran
+    - unixodbc
+    - unixodbc-dev
 
 script:
-    - ./build_pyfvs.sh
-
-deploy:
-    - make install
-
-branches:
-    only:
-        - module_refactor
-        
+  - bash ./build_pyfvs.sh
+  - cd bin/travis-ci && make -j2

@@ -1,22 +1,25 @@
       SUBROUTINE BMOUT (I,IYEAR)
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C   **BMOUT  REPLACES BMOUTM.  CREATED AUGUST-Sept 2005 ANDREW MCMAHAN
 C            DATE OF LAST REVISION:  09/28/05
 C
 C     Westwide Pine Beetle model stand state variables.
-C     Most output variables reflect conditions at the *beginning* of reported year 
-C     (or cycle) *after* WWPBM-specific management activities (sanitize, salvage, 
-C     pheromones), and *after* other WWPBM-specific phenomena /submodels 
+C     Most output variables reflect conditions at the *beginning* of reported year
+C     (or cycle) *after* WWPBM-specific management activities (sanitize, salvage,
+C     pheromones), and *after* other WWPBM-specific phenomena /submodels
 C     (other BB, defoliators, fire, windthrow, other mort [QMORT]).
-C     Reported removals (from WWPBM-specific management) and beetle-induced 
+C     Reported removals (from WWPBM-specific management) and beetle-induced
 C     mortalities represent during-the-year conditions, *after* beetles
-C     have dispersed and *after* beetle induced mortality has occurred but 
+C     have dispersed and *after* beetle induced mortality has occurred but
 C     *before* trees and BA have been removed from the tree lists.
-C     There are some exceptions to this, as noted.   
+C     There are some exceptions to this, as noted.
 C
 C     CALLED FROM -- BMDRV
 C
-C     This routine writes 6 different output files, 4 of which are now 
+C     This routine writes 6 different output files, 4 of which are now
 C     schedulable as stand level activities and are thus writable to DataBase.
 C
 C     Top two in list below are not DB-writable (flat text files only)
@@ -31,20 +34,20 @@ C   Detailed By Size-Class  (*.bmt)   ------   27   JBMTRE    2302   JBMDB(2
 C   Detailed BKP            (*.bmb)   ------   28   JBMBKP    2302   JBMDB(3
 C   Detailed Vol by SC      (*.bmv)   ------   30   JBMVOL    2304   JBMDB(4
 C
-C NOTE: THE METHODOLOGY USED TO DETEMINE IF WRITING IS TO OCCUR IS NEW. 
-C       WE ARE *NOT* USING THE GLOBAL PROCESSOR.  INSTEAD, WE QUERY THE STANDARD 
-C       STAND-LEVEL OPTION PROCESSOR IN BMSDIT AND FETCH THE ACTIVITY PARAMETERS 
+C NOTE: THE METHODOLOGY USED TO DETEMINE IF WRITING IS TO OCCUR IS NEW.
+C       WE ARE *NOT* USING THE GLOBAL PROCESSOR.  INSTEAD, WE QUERY THE STANDARD
+C       STAND-LEVEL OPTION PROCESSOR IN BMSDIT AND FETCH THE ACTIVITY PARAMETERS
 C       (DATES, INTERVALS) FOR WRITING, WHICH WE SAVE AS WWPBM VARIABLES ARRAYED
-C       BY STAND (IBEG(1-4,STAND) IEND(1-4,STAND),ISTP(1-4,STAND).  
+C       BY STAND (IBEG(1-4,STAND) IEND(1-4,STAND),ISTP(1-4,STAND).
 C       WE ALSO QUERY DB TO FETCH THE DBFLAG VARIABLES INDICATING IF USER IS
 C       REQUESTING WRITING TO DB-ONLY (FLAG=2) OR TO DB IN ADDITION TO THE STANDARD
 C       OUTPUT (FLAG=1).  THE DBFLAG IS SET IN DBSIN VIA NEW TABLE-REQUEST KEWYORDS :
 C       PPBMMAIN,PPBMTREE,PPBMBKP,PPBMVOL, SETTING THE DBFLAG VARIABLES:
-C       IBMMMAIN,IBMTREE,IBMBKP,AND IBMVOL, RESPECTIVELY.  THESE ARE TRANSLATED 
-C       IN BMSDIT TO WWPBM VARS (INDEXED BY STAND): JBMDB(1-4, STAND) 
+C       IBMMMAIN,IBMTREE,IBMBKP,AND IBMVOL, RESPECTIVELY.  THESE ARE TRANSLATED
+C       IN BMSDIT TO WWPBM VARS (INDEXED BY STAND): JBMDB(1-4, STAND)
 C==============================================================================
 C
-C     LANDSCAPE OUTPUT FILE CONTENTS: 
+C     LANDSCAPE OUTPUT FILE CONTENTS:
 C     "LS AVG" = LANDSCAPE AVERAGE
 C     ALL AVERAGES ARE (STOCKABLE) STAND AREA WEIGHTED
 C
@@ -72,11 +75,11 @@ C      TACRES:   STOCKABLE ACRES
 C
 C==============================================================================
 C
-C     CYCLE OUTPUT FILE 
-C     IF REQUESTED, THIS FILE IS WRITTEN FOR ALL STOCKABLE STANDS IN ALL 
-C        CYCLE-BOUNDARY YEARS.  
-C     VALUES REPORTED ARE EITHER CYCLE-BEGINNING VALUES (FOR VARIABLE NAMES 
-C        BEGINNING w/ "CB") OR ELSE CYCLE TOTAL VALUES (FOR VARIABLE NAMES 
+C     CYCLE OUTPUT FILE
+C     IF REQUESTED, THIS FILE IS WRITTEN FOR ALL STOCKABLE STANDS IN ALL
+C        CYCLE-BOUNDARY YEARS.
+C     VALUES REPORTED ARE EITHER CYCLE-BEGINNING VALUES (FOR VARIABLE NAMES
+C        BEGINNING w/ "CB") OR ELSE CYCLE TOTAL VALUES (FOR VARIABLE NAMES
 C        BEGINNING w/ "CT" OR "CY")
 C
 C     CB_BKP(I)   BKP (POST REPRODN, POST DISPERSAL)
@@ -101,11 +104,11 @@ C
 C     MAIN OUTPUT FILE--THIS REPORTING IS NOW A STAND-LEVEL ACTIVITY
 C
 C     KEYWORDS MUST BE ATTACHED TO EACH STAND FOR WHICH OUTPUT IS DESIRED.
-C     USER MAY REQUEST BEGINNING YEAR, ENDING YEAR, AND FREQUENCY INTERVAL TO 
-C        WRITE THIS OUTPUT, AS WELL AS THE STANDS.  
+C     USER MAY REQUEST BEGINNING YEAR, ENDING YEAR, AND FREQUENCY INTERVAL TO
+C        WRITE THIS OUTPUT, AS WELL AS THE STANDS.
 C     DIFFERNT INTERVALS WITH DIFFERENT FREQUENCIES MAY BE SPECIFIED
-C     (i.e. MULTIPLE INSTANCES OF THE KEYWORD IS ALLOWED. 
-C     VARIABLES ARE STATE VARIABLES REPRESENTING THE STAND CONDITIONS AT THE 
+C     (i.e. MULTIPLE INSTANCES OF THE KEYWORD IS ALLOWED.
+C     VARIABLES ARE STATE VARIABLES REPRESENTING THE STAND CONDITIONS AT THE
 C       BEGINNING OF THE REPORTED YEAR, OR (IN THE CASE OF MORTALITY & REMOVALS)
 C       * DURING * THE REPORTED YEAR
 C     THOSE VARIABLES INDEXED "(I)" ARE ALREADY AVAILABLE (IN COMMON)
@@ -117,15 +120,15 @@ C     BASTD(I),     TOTAL BASAL AREA (SQ FT PER ACRE)
 C     BAH(I,NSCL+1) BASAL AREA OF HOST (SQ FT / ACRE)
 C     BAK_YR,       BASAL AREA BEETLE-KILLED (SQ FT PER ACRE)
 C     TPA_YR,       TOTAL TPA IN THE STAND
-C     TREE(I,NSCL+1,1), TPA HOST 
+C     TREE(I,NSCL+1,1), TPA HOST
 C     TPAK_YR,     TPA BEETLE-KILLED THIS YEAR
 C     VOL_YR,      STAND VOLUME BEGINNING OF YEAR (CU FT / ACRE) WWPBM-ESTIMATED
 C     VOLH_YR,     VOLUME OF HOST CU FT/ACRE; WWPBM-ESTIMATED
 C     VOLK_YR,     VOLUME BEETLE-KILLED THIS YEAR
-C     BA_SP,       BASAL AREA OF "SPECIAL" TREES AT BEGINNING OF YEAR 
+C     BA_SP,       BASAL AREA OF "SPECIAL" TREES AT BEGINNING OF YEAR
 C                   =AFTER THIS YR's LIGHTNING, ATTRACT PHER, FIRE SCORCH ETC.
 C                   & INCLUDING LAST YR's (BUT NOT THIS YR's) PITCHOUTS/STRPKILS
-C     SPCL_TPA,    TPA SPECIAL TREES 
+C     SPCL_TPA,    TPA SPECIAL TREES
 C     IPS_SLSH,    IPS SLASH (RECENT DEAD FUEL OF QUALIFYING SIZE) TONS PER ACRE
 C     SANBAREM,    BASAL AREA SANITIZED THIS YEAR (LIVE-TREE SANITIATIONS ONLY)
 C     SANITREM,    TPA SANITIZED (LIVE-TREE SANITATIONS ONLY)
@@ -137,8 +140,8 @@ C==============================================================================
 C
 C     DETAILED OUTPUT FILE--"TREEOUT". ITS REPORTING IS NOW A STAND-LEVEL ACTIVITY
 C     CONTAINS OUTPUT VARIABLES BY TREE SIZE-CLASS (ISIZ).
-C     TOP 4 ARE LOCAL 1-D ARRAYS SIZE 10 (ISIZ = 1,NSCL).  
-C 
+C     TOP 4 ARE LOCAL 1-D ARRAYS SIZE 10 (ISIZ = 1,NSCL).
+C
 C     TPA_SC(ISIZ)  TOTAL TREES PER ACRE BY SC (BEGINNING OF YEAR)
 C     TPAH_SC(ISIZ) TPA HOST, BY SC  (BEGINNING OF YEAR)
 C     TPAKLL(ISIZ)  TPH BEETLE-KILLED BY SC (DURING THE YEAR)
@@ -171,31 +174,29 @@ C
 C==============================================================================
 C     COMMONS
 C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'PPEPRM.F77' 
+      INCLUDE 'PPEPRM.F77'
       INCLUDE 'PPCNTL.F77'
-      
+
       INCLUDE 'BMPRM.F77'
       INCLUDE 'BMCOM.F77'
       INCLUDE 'BMPCOM.F77'
 
-	INCLUDE 'METRIC.F77'
 C
-C     DECLARATIONS 
+C     DECLARATIONS
 C
       REAL TO_LS,FRM_LS
 C
 C==============================================================================
 C     FYI:
-C     MIY(MICYC)     = first year of next cycle 
+C     MIY(MICYC)     = first year of next cycle
 C     MIY(MICYC) - 1 = last year of current cycle.
 C     MIY(MICYC - 1) = first year of current cycle
 C
 C     INITIALIZE VARIABLES
 
 C     ZERO OUT ANNUAL ACCUMULATORS
-C 
-      DO 10 ISIZ= 1,NSCL 
+C
+      DO 10 ISIZ= 1,NSCL
          BAK_SC(ISIZ)   = 0.0
          TPA_SC(ISIZ)   = 0.0
          TPAH_SC(ISIZ)  = 0.0
@@ -204,7 +205,7 @@ C
          HVOL_SC(ISIZ)  = 0.0
          VOLK_SC(ISIZ)  = 0.0
          SPCL_TRE(ISIZ) = 0.0
-   10 CONTINUE 
+   10 CONTINUE
       BAK_YR  = 0.0
       TPA_YR  = 0.0
       TPAK_YR = 0.0
@@ -219,7 +220,7 @@ C
       IPS_SLSH = 0.0
 C
 C IF LANDSCAPE OR CYCLE OUTPUT IS REQUESTED, PROCEED, (PROCESS ALL STANDS)
-C REGARDLESS OF THE STATUS OF STAND-LEVEL (MAIN,TREE,BKP,VOL) REQUESTS FOR THIS STAND       
+C REGARDLESS OF THE STATUS OF STAND-LEVEL (MAIN,TREE,BKP,VOL) REQUESTS FOR THIS STAND
 C
       IF(LBMLPY .OR. LBMCYC)GO TO 15
 C
@@ -228,17 +229,17 @@ C IF ANY OF THE THREE--MAIN, TREE, OR VOL--IS DUE THIS YEAR, PROCEED
 C
       IF (IYEAR .LT. IEND(1,I)) THEN          !IF TRUE, THEN PARAMETERS HAVE BEEN SET
          IF((IYEAR .EQ. IBEG(1,I)).OR.
-     >   (MOD(IYEAR-IBEG(1,I),ISTP(1,I)).EQ.0))GO TO 15                      
+     >   (MOD(IYEAR-IBEG(1,I),ISTP(1,I)).EQ.0))GO TO 15
       ENDIF
 C
       IF (IYEAR .LT. IEND(2,I)) THEN          !IF TRUE, THEN PARAMETERS HAVE BEEN SET
          IF((IYEAR .EQ. IBEG(2,I)).OR.
-     >   (MOD(IYEAR-IBEG(2,I),ISTP(2,I)).EQ.0))GO TO 15                      
+     >   (MOD(IYEAR-IBEG(2,I),ISTP(2,I)).EQ.0))GO TO 15
       ENDIF
 C
       IF (IYEAR .LT. IEND(4,I)) THEN          !IF TRUE, THEN PARAMETERS HAVE BEEN SET
          IF((IYEAR .EQ. IBEG(4,I)).OR.
-     >   (MOD(IYEAR-IBEG(4,I),ISTP(4,I)).EQ.0))GO TO 15                      
+     >   (MOD(IYEAR-IBEG(4,I),ISTP(4,I)).EQ.0))GO TO 15
       ENDIF
 C
 C OTHERWISE, GO TO DETAILED BKP SECTION
@@ -252,20 +253,20 @@ C     FETCH ALL OF THESE REGARDLESS OF WHICH OUTPUTS ARE REQUESTED
 C     (we might derive some we don't need, but it's simpler this way)
 C
       DO 20 ISIZ= 1,NSCL
-        TPAKLL(ISIZ) = PBKILL(I,ISIZ) + ALLKLL(I,ISIZ) ! 6) TPA BTL KLD FOR SC 
+        TPAKLL(ISIZ) = PBKILL(I,ISIZ) + ALLKLL(I,ISIZ) ! 6) TPA BTL KLD FOR SC
         IF (TREE(I,ISIZ,1) .GT. 1E-6) THEN
            PROPHKLD = TPAKLL(ISIZ) / TREE(I,ISIZ,1)    ! PROPORTION OF HOST TREES BTL KLD [we need this for BAK by SC,
         ELSE                                           ! which we need to get *total* BA Kld
            PROPHKLD = 0.0
         ENDIF
         BAK_SC(ISIZ) = BAH(I,ISIZ) * PROPHKLD          ! 3) BAK by SC
-        TPA_SC(ISIZ) = TREE(I,ISIZ,1) + TREE(I,ISIZ,2) ! 4) TOTAL TPA by SC 
+        TPA_SC(ISIZ) = TREE(I,ISIZ,1) + TREE(I,ISIZ,2) ! 4) TOTAL TPA by SC
         TPAH_SC(ISIZ)= TREE(I,ISIZ,1)                  ! 5) TPAH by SC. Assigned to new 1-D array for passing to DB
         TVOL_SC(ISIZ) = (TVOL(I,ISIZ,1)*TREE(I,ISIZ,1)
      >       + TVOL(I,ISIZ,2)*TREE(I,ISIZ,2))          ! 7) TOT VOL by SC (index 1 = host, index 2 = non-host)
         HVOL_SC(ISIZ) = TVOL(I,ISIZ,1)*TREE(I,ISIZ,1)  ! 8) VOL HOST by SC
         VOLK_SC(ISIZ) = TPAKLL(ISIZ) * TVOL(I,ISIZ,1)  ! 9) VOL KLD BY SC (TVOL in common holds vol/tree by sc)
-        SPCL_TRE(ISIZ)= SPCLT(I,ISIZ,1)*TREE(I,ISIZ,1) ! 22 TPA special by size class 
+        SPCL_TRE(ISIZ)= SPCLT(I,ISIZ,1)*TREE(I,ISIZ,1) ! 22 TPA special by size class
                                                        !(Note:3rd argument on SPCLT is "ipass": 1= MAIN BTL, 2 = IPS (if secondary)
 C
 C                             STAND LEVEL VARS
@@ -276,11 +277,11 @@ C
         BAK_YR  = BAK_YR  + BAK_SC(ISIZ)    ! 12) BA beetle killed
         TPA_YR  = TPA_YR  + TPA_SC(ISIZ)    ! 13) TPA for stand ALTERNATIVELY: [TREE(I,NSCL+1,1) + TREE(I,NSCL+1,2)]
                                             ! 14) TPAH we have in TREE(I,NSCL+1,1)
-        TPAK_YR = TPAK_YR + TPAKLL(ISIZ)    ! 15) TPA killed 
+        TPAK_YR = TPAK_YR + TPAKLL(ISIZ)    ! 15) TPA killed
         VOL_YR  = VOL_YR  + TVOL_SC(ISIZ)   ! 16) Stand Volume
         VOLH_YR = VOLH_YR + HVOL_SC(ISIZ)   ! 17) Volume Host
         VOLK_YR = VOLK_YR + VOLK_SC(ISIZ)   ! 18) Volume host beetle-killed
-C                                           ! 19) BKP: Use var. OLDBKP() to get PREDISPERSAL (Note: this is POST REPRODN!!) 
+C                                           ! 19) BKP: Use var. OLDBKP() to get PREDISPERSAL (Note: this is POST REPRODN!!)
         ! Note that we don't yet have a var to hole TRUE beginning of year BKP (LAST YEAR'S MINUS PITCHOUTS)
         ! AND NOTE: var BKPA() [from BMATCT] holds POST DISPERSAL (and POST-INFLIGHT MORTALITY) BKP / Acre
         ! THE ACTUAL BKP() ARRAY HAS BEEN DECREMENTED DOWN TO 0 BY TREE CONSUMPTION OF BKP IN BMISTD
@@ -292,10 +293,10 @@ C
 C
         BA_SP=BA_SP+TREE(I,ISIZ,1)*MSBA(ISIZ)*SPCLT(I,ISIZ,1) ! 21) BA special
         SPCL_TPA = SPCL_TPA + SPCL_TRE(ISIZ)                  ! 22b) TPA special. )
-        SANBAREM=SANBAREM+AAREMS(I,ISIZ)*MSBA(ISIZ)           ! 23) BA Sanit removal (LIVE only!). AAREMS IS NEW.  
+        SANBAREM=SANBAREM+AAREMS(I,ISIZ)*MSBA(ISIZ)           ! 23) BA Sanit removal (LIVE only!). AAREMS IS NEW.
 C                                                  ! KEEPING ORIGINAL AREMS ARRAY (ZEROED CYCLICALLY) AS-IS, FOR USE IN BMKILL
         SANITREM=SANITREM+AAREMS(I,ISIZ)     ! 24) TPA Sanit removal (LOW RV LIVE TREE REMOVAL ONLY)
-                                            ! 24b) TPA Sanit removal ALL stems (recent dead plus live low-RV removals) 
+                                            ! 24b) TPA Sanit removal ALL stems (recent dead plus live low-RV removals)
                                             !      available in common SREMOV(I)
                                             ! 25) VOL SAN in common VOLREM(I,1) (RECENT KILLS PLUS LOW RV LIVE TREES)
                                             ! 26) VOL SALV in common VOLREM(I,2)
@@ -312,7 +313,7 @@ C FETCHES IPS SLASH (ONLY) --(BEGINNING OF YR)
 C
 C     IF CYCLE OUTPUT NOT REQUESTED, BYPASS
 C
-      IF (.NOT. LBMCYC) GO TO 400  
+      IF (.NOT. LBMCYC) GO TO 400
 C
 C     HOLD SOME CYCLE-BEGINNING VALUES IF WE'RE IN FIRST YEAR OF A CYCLE
 C     AND INITIALIZE THE CYCLE-ACCUMULATOR VARIABLES TO ZERO
@@ -350,11 +351,11 @@ C
 C
 C     IF LANDSCAPE AVERAGE OUTPUT NOT REQUESTED, BYPASS
 C
-      IF (.NOT. LBMLPY) GOTO 500  
+      IF (.NOT. LBMLPY) GOTO 500
 C
 C     -------------------LANDSCAPE OUTPUT FILE PROCESSING (*.bml)---------------
 C
-C     LANDSCAPE OUTPUT FILE CONTENTS: 
+C     LANDSCAPE OUTPUT FILE CONTENTS:
 C     "LS AVG" = LANDSCAPE AVERAGE
 C     ALL AVERAGES ARE (STOCKABLE) STAND AREA WEIGHTED
 C
@@ -383,16 +384,16 @@ C
 C WEIGHT SOME FOR LANDSCAPE AVERAGES
 C USE OF COUNTER "ICNT" ALONG W/ "BMEND METHOD" ADAPTED FROM ORIG CODE.
 C BMEND = # STOCKED STANDS.  THIS ROUTINE IS ENTERED ONLY IF STAND IS STOCKED
-C WHEN COUNTER HITS BMEND, WE'VE PROCESSED ALL STOCKED STANDS, 
+C WHEN COUNTER HITS BMEND, WE'VE PROCESSED ALL STOCKED STANDS,
 C AND THUS CAN CALCULATE A LANDSCAPE MEAN.
 C
 C     IF IT IS NOT THE VERY FIRST TIME THROUGH, RE-SET ICNT TO 0 WHEN WE'VE
-C     FINISH A LOOP THROUGH ALL STOCKED STANDS (WHEN ICNT = BMEND, WE'RE AT 
+C     FINISH A LOOP THROUGH ALL STOCKED STANDS (WHEN ICNT = BMEND, WE'RE AT
 C     THE BEGINNING OF THE NEXT YEAR.
 C
       IF (JCNT .GE. BMEND) JCNT = 0
 C
-C     IF ICNT IS ZERO, WE'RE AT FIRST STAND THROUGH FOR THIS YEAR, SO 
+C     IF ICNT IS ZERO, WE'RE AT FIRST STAND THROUGH FOR THIS YEAR, SO
 C     INITIALIZE VARIABLES
 C
       IF(JCNT .EQ.0) THEN
@@ -462,8 +463,8 @@ C
 C     ACCUMULATE SANITATION INFO
 C
 ! SREMOV IS IN BMCOM.F77, FROM BMSANI; ITS THE TPA (live plus recent dead) REMOVED VIA SANIT
-      IF (SREMOV(I) .GT. 0) THEN 
-         SANACRES = SANACRES + ACRES 
+      IF (SREMOV(I) .GT. 0) THEN
+         SANACRES = SANACRES + ACRES
          w_BASAN  = w_BASAN  + SANBAREM    * ACRES
          w_TPASAN = w_TPASAN + SREMOV(I)   * ACRES
          w_VOLSAN = w_VOLSAN + VOLREM(I,1) * ACRES
@@ -477,7 +478,7 @@ C
       ENDIF
 C
 C WHEN LAST STAND PROCESSED FOR YEAR, CALCULATE LANDSCAPE AVERAGES
-C NOTE: "TACRES" IS IN COMMON, SET IN BMSETP.  
+C NOTE: "TACRES" IS IN COMMON, SET IN BMSETP.
 C IT IS THE TOTAL AREA OF THE STOCKABLE PORTION OF LS, IN ACRES.
 C NOTE: SANITATIONS AND SALVAGES ARE NOW REPORTED ON THEIR OWN AREA BASES!
 C
@@ -495,7 +496,7 @@ C
          LS_VOLH = WTD_VOLH/ TACRES
          LS_VOLK = WTD_VOLK/ TACRES
          LS_BASP = WTD_BASP/ TACRES
-         LS_SPCLT = w_SPCLT / TACRES 
+         LS_SPCLT = w_SPCLT / TACRES
          LS_IPSLS = w_IPSLSH / TACRES
 C
          IF (SANACRES .GT. 0) THEN
@@ -560,10 +561,10 @@ C
 C
 C     ------------   -CYCLE BOUNDARY OUTPUT-----------------------------
 C
-C     IF REQUESTED, THIS FILE IS WRITTEN FOR ALL STOCKABLE STANDS IN 
+C     IF REQUESTED, THIS FILE IS WRITTEN FOR ALL STOCKABLE STANDS IN
 C        ALL CYCLE-BOUNDARY YEARS.(* see footnote *)
-C     VALUES REPORTED ARE EITHER CYCLE-BEGINNING ("CB_") VALUES 
-C        OR CYCLE TOTAL ("CT_") VALUES 
+C     VALUES REPORTED ARE EITHER CYCLE-BEGINNING ("CB_") VALUES
+C        OR CYCLE TOTAL ("CT_") VALUES
 C
 C     CB_BKP(I)   BKP (POST REPRODN, POST DISPERSAL
 C     CB_RV(I)    RV
@@ -583,7 +584,7 @@ C     CYVOLSAN(I) VOLUME SANITIZED DURING THE CYCLE (CUMULATIVE)
 C     CYVOLSAL(I) VOLUME SALVAGED DURING HE CYCLE (CUMULATIVE)
 C
 C (*) FOOTNOTE: We could ammend this.  Via the global option processor,
-C      we could allow users to (1) specify a range of years to output, 
+C      we could allow users to (1) specify a range of years to output,
 C      AND (2) optionally provide supplemental list of stands to output.
 C=======================================================================
 C
@@ -647,15 +648,15 @@ C     BASTD(I),     TOTAL BASAL AREA (SQ FT PER ACRE)
 C     BAH(I,NSCL+1) BASAL AREA OF HOST (SQ FT / ACRE)
 C     BAK_YR,       BASAL AREA BEETLE-KILLED (SQ FT PER ACRE)
 C     TPA_YR,       TOTAL TPA IN THE STAND
-C     TREE(I,NSCL+1,1), TPA HOST 
+C     TREE(I,NSCL+1,1), TPA HOST
 C     TPAK_YR,     TPA BEETLE-KILLED THIS YEAR
 C     VOL_YR,      STAND VOLUME BEGINNING OF YEAR (CU FT / ACRE) WWPBM-ESTIMATED
 C     VOLH_YR,     VOLUME OF HOST CU FT/ACRE; WWPBM-ESTIMATED
 C     VOLK_YR,     VOLUME BEETLE-KILLED THIS YEAR
-C     BA_SP,       BASAL AREA OF "SPECIAL" TREES AT BEGINNING OF YEAR 
+C     BA_SP,       BASAL AREA OF "SPECIAL" TREES AT BEGINNING OF YEAR
 C                   =AFTER THIS YR's LIGHTNING, ATTRACT PHER, FIRE SCORCH ETC.
 C                   & INCLUDING LAST YR's (BUT NOT THIS YR's) PITCHOUTS/STRPKILS
-C     SPCL_TPA,    TPA SPECIAL TREES 
+C     SPCL_TPA,    TPA SPECIAL TREES
 C     IPS_SLSH,    IPS SLASH (RECENT DEAD FUEL OF QUALIFYING SIZE) TONS PER ACRE
 C     SANBAREM,    BASAL AREA SANITIZED THIS YEAR (LIVE-TREE SANITIATIONS ONLY)
 C     SANITREM,    TPA SANITIZED (LIVE-TREE SANITATIONS ONLY)
@@ -674,7 +675,7 @@ C IF OUTPUT IS NOT REQUESTED FOR THIS STAND, THIS YEAR, THEN BYPASS
 C
       IF ((IYEAR .GT.IEND(1,I)).OR.
      >(IYEAR .NE. IBEG(1,I) .AND. MOD(IYEAR-IBEG(1,I),ISTP(1,I)).NE. 0))
-     > GOTO 600 
+     > GOTO 600
 C
 C     IS DB OUTPUT IS REQUESTED? IF SO, SEND IT
 C
@@ -778,8 +779,8 @@ C
 C IF OUTPUT IS NOT REQUESTED FOR THIS STAND, THIS YEAR, THEN BYPASS
 C
       IF ((IYEAR .GT.IEND(2,I)).OR.
-     >(IYEAR .NE. IBEG(2,I) .AND. MOD(IYEAR-IBEG(2,I),ISTP(2,I)).NE. 0)) 
-     > GOTO 700 
+     >(IYEAR .NE. IBEG(2,I) .AND. MOD(IYEAR-IBEG(2,I),ISTP(2,I)).NE. 0))
+     > GOTO 700
 C
 C     IF DB OUTPUT IS REQUESTED, SEND IT
 C
@@ -844,7 +845,7 @@ C=======================================================================
 C
 C                          VOLOUT ==> MYACT(4)
 C
-C     OUTPUT VARs BY ARRAYED SIZE CLASS (SC).  
+C     OUTPUT VARs BY ARRAYED SIZE CLASS (SC).
 C
 C     TVOL_SC: TOTAL STAND VOLUME PER ACRE BY SC (BEGINNING OF YEAR)
 C     HVOL_SC: VOLUME HOST PER ACRE, BY SC  (BEGINNING OF YEAR)
@@ -857,9 +858,9 @@ C
 C
 C IF OUTPUT IS NOT REQUESTED FOR THIS STAND, THIS YEAR, THEN BYPASS
 C
-      IF ((IYEAR .GT. IEND(4,I)) .OR. 
+      IF ((IYEAR .GT. IEND(4,I)) .OR.
      >(IYEAR .NE. IBEG(4,I) .AND. MOD(IYEAR-IBEG(4,I),ISTP(4,I)).NE. 0))
-     > GOTO 800 
+     > GOTO 800
 C
 C     IS DB OUTPUT IS REQUESTED? IF SO, SEND IT
 C
@@ -924,7 +925,7 @@ C     FASTK(I,1),   TPA KILLED BY FAST DVs (FIRE, WIND, QMORT)
 C     FASTK(I,3),   BA KILLED BY FAST DVs
 C     FASTK(I,2)    VOL KILLED BY FAST DVs
 C
-C     ******************************************************************     
+C     ******************************************************************
 C
       IF (LBMDEB)WRITE(JBMBPR,840)IBEG(3,I),IEND(3,I),ISTP(3,I),JBMBKP,I
   840 FORMAT(' IN BMOUT--BKPOUT: IBEG=',I5,' IEND=',I5,' ISTP=',I5,
@@ -934,10 +935,10 @@ C IF OUTPUT IS NOT REQUESTED FOR THIS STAND, THIS YEAR, THEN BYPASS
 C
       IF ((IYEAR .GT.IEND(3,I)).OR.
      >(IYEAR .NE. IBEG(3,I) .AND. MOD(IYEAR-IBEG(3,I),ISTP(3,1)).NE. 0))
-     > GOTO 900 
+     > GOTO 900
 C
 C     CURRENTLY, FOR BKP BOOKKEEPING, WE HAVE PREDISPERSAL AND POST DISPERSAL
-C     BKP VLAUES, AND THE FLUXES TO & FROM OW, AND SELF.  
+C     BKP VLAUES, AND THE FLUXES TO & FROM OW, AND SELF.
 C     BY DIFFERENCE, WE CAN GET FLUX TO & FROM REST OF LS.   E.G. GIVEN:
 C
 C     PRE-DISPERSAL BKP = To_OW + To_SELF + {To_RESTofLS}
@@ -951,7 +952,7 @@ C     IN-FLIGHT BKP MORTALITY. THUS, FOR ONE CALCULATI0N BELOW, WE NEED TO EMPLO
 C     THE VARIABLE REPRESENTING PERCENT SURVIVAL OF BKP--BKPS().
 C     ALL REPORTED VALUES WILL REFLECT PRE- IN-FLIGHT MORTALITY AMOUNTS, EXCEPT
 C     FOR THE "BKPA" VARIABLE, WHICH REPRESENTS THE POST-DIPERSAL (AND POST-
-C     MORTALITY) BKP LEVELS AND IS DERIVED AS: THE PRE-DISPERSAL AMOUNT, 
+C     MORTALITY) BKP LEVELS AND IS DERIVED AS: THE PRE-DISPERSAL AMOUNT,
 C     MINUS ALL EXPORTS, PLUS ALL IMPORTS, TIMES THE SURVIVAL RATE.
 C
       TO_LS =OLDBKP(I)-BKPOUT(1,I)-SELFBKP(1,I)
@@ -1047,7 +1048,7 @@ C     -------- END OF "BKPOUT" OUTPUT PROCESSING------------------------
 C
   900 CONTINUE
 C
- 1000 CONTINUE 
+ 1000 CONTINUE
 C
       RETURN
 C

@@ -1,7 +1,9 @@
       SUBROUTINE PTGDECD(POINTNO,KARD,IFLAG)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
-C  $Id$
+C  $Id: ptgdecd.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
 C----------
 C
 C     DECODE THE POINT GROUP NAME CODE
@@ -10,15 +12,6 @@ C                THEN ASSIGN A SEQUENTIAL, NEGATIVE, GROUP NUMBER
 C     IFLAG = 0 IF POINT GROUP IS NOT FOUND; 1 IF IT IS.
 C     KARD  = CHARACTER REPRESENTATION OF POINT FIELD
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-COMMONS
 C----------
       INTEGER IFLAG,POINTNO,J,I
       CHARACTER*10 TEMP

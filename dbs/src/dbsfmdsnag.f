@@ -1,6 +1,8 @@
       SUBROUTINE DBSFMDSNAG(IYEAR,SDBH,SHTH,SHTS,SVLH,SVLS,
      -  SDH,SDS,YRLAST,KODE)
-      IMPLICIT NONE
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C
 C $Id$
 C
@@ -19,18 +21,8 @@ C              7: DENSITY OF SOFT SNAGS
 C              8: YRLAST
 C              9: KODE FOR WHETHER THE REPORT ALSO DUMPS TO FILE
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'DBSCOM.F77'
 C
-C
-      INCLUDE 'PLOT.F77'
-C
-COMMONS
 
       INTEGER IYEAR,IRCODE,KODE,YRDEAD,SVLH,SVLS,SVLT,YRLAST,JYR,IDC,JCL
       INTEGER(SQLSMALLINT_KIND)::ColNumber
@@ -137,7 +129,7 @@ C---------
      -              'Density_Total real null)'
 
         ENDIF
- 
+
         !Close Cursor
         iRet = fvsSQLCloseCursor(StmtHndlOut)
         iRet = fvsSQLExecDirect(StmtHndlOut,trim(SQLStmtStr),

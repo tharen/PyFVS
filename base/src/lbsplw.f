@@ -1,5 +1,6 @@
       SUBROUTINE LBSPLW (JOSTND)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -11,16 +12,7 @@ C     N.L. CROOKSTON -- INTERMOUNTAIN RESEARCH STATION -- JAN 1987
 C
 C     JOSTND= PRINT MESSAGE FILE.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'OPCOM.F77'
-C
-C
-COMMONS
 C
       INTEGER JOSTND,I1,I2
 C

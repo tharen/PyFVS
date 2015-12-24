@@ -1,5 +1,9 @@
       SUBROUTINE CVSUM (LTHIN)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **CVSUM  DATE OF LAST REVISION:  06/28/13
 C----------
@@ -95,24 +99,7 @@ C             COVER, HEIGHT, PROB, AND SPECIES CODE OF UP TO 6
 C             USER-SELECTED SPECIES FOR DISPLAY
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'CVCOM.F77'
-C
-C
-COMMONS
 C
       REAL LOWLIM
       LOGICAL LTHIN,DEBUG
@@ -126,7 +113,7 @@ C
       REAL H2,UPLIM,TREAR,TREVOL,RAD,BASE,BOT,HC
       INTEGER ITHN,IP1,I,ISPI,IH,J,JP1,IG
       REAL HEIGHT,SUMPB,TSHT,TSUMPB,HM1,OTHCOV,OTHHT,OTHPB
-      
+
       DATA NUM /7,12,12/
       DATA INC /0,7,19/
       DATA IGSP /0,4,8/

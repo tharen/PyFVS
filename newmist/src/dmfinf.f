@@ -1,29 +1,31 @@
       SUBROUTINE DMFINF (Ptr, Index)
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
-C **DMFINF --  DATE OF LAST REVISION: 02/16/96 
+C **DMFINF --  DATE OF LAST REVISION: 02/16/96
 C----------
 C Purpose:
 C  The model frequently needs to access the treelist according to
 C species and DM rating. This routine generates two objects: a triply
-C indexed array, 'Ptr()', that holds references to the positions in 
+C indexed array, 'Ptr()', that holds references to the positions in
 C a second array, 'Index()', containing the relevant treelist
 C records. A call to OPLIST generates the 'Index()' array.
 C Subsequently, the key positions of 'Index()' are determined and
 C stored in 'Ptr()'.
 C
-C
 C Called by:
 C
-C     DMTREG 
+C     DMTREG
 C
 C Other routines called:
 C
 C     OPSORT
 C
-C Argument list definitions:                        
+C Argument list definitions:
 C
 C     INTEGER Ptr     (O) Matrix of **pointers to treelist, sorted
 C                          by species and DM class:
@@ -42,7 +44,7 @@ C                          the base model.
 C
 C Local variable definitions:
 C
-C     INTEGER i           Loop counter for species and for walk 
+C     INTEGER i           Loop counter for species and for walk
 C                          along 'Index()' array.
 C     INTEGER j           Loop counter for DM rating.
 C     INTEGER k           Loop counter for third index of 'Ptr()'
@@ -51,7 +53,6 @@ C     INTEGER Sp          Current species code.
 C     INTEGER DMR         Current DM rating.
 C     INTEGER PrSp        Previous species code.
 C     INTEGER PrDMR       Previous DM rating.
-C
 C
 C Common block variables and parameters:
 C
@@ -65,9 +66,6 @@ C     DMRATE  DMCOM
 C
 C**********************************************************************
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'DMCOM.F77'
 
 C Subroutine arguments.
@@ -99,7 +97,7 @@ C Zero pointer matrix
   100 CONTINUE
 
 C Load the two variables into the sorting array. The 'Index()' array
-C returned by OPSORT is sorted first by species 'ISP()' then by DM 
+C returned by OPSORT is sorted first by species 'ISP()' then by DM
 C rating 'DMRATE()'.
 
       CALL OPSORT(ITRN, ISP, DMRATE, Index, .TRUE.)

@@ -1,39 +1,21 @@
       SUBROUTINE ESPXCS
-      IMPLICIT NONE
+      use plot_mod
+      use esparm_mod
+      use eshap_mod
+      use pden_mod
+      use escomn_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **ESPXCS--EM   DATE OF LAST REVISION:   03/26/09
 C
 C     PREDICT THE PROBABILITY OF EXCESS SPECIES
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
-      INCLUDE 'ESCOMN.F77'
-C
-C
       INCLUDE 'ESCOM2.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'ESHAP.F77'
-C
 C
       INCLUDE 'ESHAP2.F77'
 C
-C
-COMMONS
 C----------
 C
       REAL PN

@@ -1,5 +1,11 @@
       SUBROUTINE SVSNAGE(IYEAR,IDEAD,SNCRDI,SNCRTO,SNHT,SNDI)
-      IMPLICIT NONE
+      use plot_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use svdata_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -12,11 +18,9 @@ C     S.N.SCHAROSCH -- ABACUS -- MARCH 2008
 C
 C     USED FOR PROCESSING SNAG AGING INFORMATION
 C
-C
 C     Called from:
 C        SVSNAD to age newly-added snags.
 C        SVOUT  to age snags prior to writing visualization data.
-C
 C
 C     IYEAR = CURRENT YEAR
 C     IDEAD = CURRENT SNAG BEING AGED
@@ -27,29 +31,8 @@ C     SNDI  = CURRENT SNAG DIAMETER
 C
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
       INCLUDE 'SVDEAD.F77'
 C
-C
-      INCLUDE 'SVDATA.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-COMMONS
 
       CHARACTER VVER*7
       INTEGER IDEAD, ISTMLT, ITIDIF, ITSTYR, ICURYR,

@@ -1,12 +1,19 @@
       SUBROUTINE FMSDIT
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C
 C     PART OF THE FIRE MODEL EXTENSION. THIS ROUTINE IS ENTERED
 C     AT THE START OF EACH CYCLE. VALUES FOR SCCF, AND FIRKIL
-C     ARE ZEROED HERE, 
+C     ARE ZEROED HERE,
 C
 C     Called from GRINCR
 C
@@ -15,17 +22,7 @@ C     CYCLEN: length in years of the current FVS cycle
 C     NEWBOT: the height of the bottom of the crown in the current cycle
 C     OLDBOT: the height of the bottom of the crown in the previous cycle
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
 
       INTEGER I, J
       REAL    CYCLEN, NEWBOT, OLDBOT
@@ -129,7 +126,7 @@ C     Only make this call when the PPE is not being used.
 
       CALL PPEATV (LPPE)
       IF (.NOT.LPPE .AND. LFMON2) CALL FMSADD (IY(1)-IFIX(FINTM),3)
- 
+
       RETURN
       END
 

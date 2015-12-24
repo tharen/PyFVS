@@ -1,8 +1,8 @@
       SUBROUTINE FMPHOTOVAL (FotoRef, Fotocode, FotoVal, FotoValS)
-      IMPLICIT NONE
-C----------
-C  $Id$
-C----------
+      use contrl_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C
 C     CONTAINS THE SURFACE FUEL VALUES (TONS/ACRE) CORRESPONDING TO
 C     TO THE PHOTO (FOTOCODE) FROM THE ASSOCIATED PHOTO SERIES
@@ -24,74 +24,74 @@ C     PHOTO SERIES REFERENCES:
 C     NOTE: Some reference numbers (4,10) are not used and one is a replicate
 C     of another (14, 15).  This was not changed to maintain consistency with the photo reference numbers used in FSVEG.
 C
-C     1 – Fischer, W.C. 1981. Photo guide for appraising downed woody fuels in Montana forests: grand fir-larch-Douglas-fir,
+C     1 â€“ Fischer, W.C. 1981. Photo guide for appraising downed woody fuels in Montana forests: grand fir-larch-Douglas-fir,
 C     western hemlock, western redcedar-western hemlock, and western redcedar cover types. Gen. Tech. Rep. INT-96. Ogden, UT:
 C     U.S. Department of Agriculture, Forest Service, Intermountain Forest and Range Experiment Station. 53 p.
 C
-C     2 – Fischer, W.C. 1981. Photo guide for appraising downed woody fuels in Montana forests: interior ponderosa pine,
+C     2 â€“ Fischer, W.C. 1981. Photo guide for appraising downed woody fuels in Montana forests: interior ponderosa pine,
 C     ponderosa pine-larch-Douglas-fir, larch-Douglas-fir, and interior Douglas-fir cover types. Gen. Tech. Rep. INT-97.
 C     Ogden, UT: U.S. Department of Agriculture, Forest Service, Intermountain Forest and Range Experiment Station. 133 p.
 C
 C     Also published by the National Wildfire Coordinating Group as PMS 820 / NFES 2293
 C
-C     3 – Fischer, W.C. 1981. Photo guide for appraising downed woody fuels in Montana forests: lodgdpole pine and Engelmann
+C     3 â€“ Fischer, W.C. 1981. Photo guide for appraising downed woody fuels in Montana forests: lodgdpole pine and Engelmann
 C     spruce-subalpine fir cover types. Gen. Tech. Rep. INT-98. Ogden, UT: U.S. Department of Agriculture, Forest Service,
 C     Intermountain Forest and Range Experiment Station. 143 p.
 C
 C     Also published by the National Wildfire Coordinating Group as PMS 821 / NFES 2294
 C
-C     4 – not used
+C     4 â€“ not used
 C
-C     5 – Koski, W.H. and W.C. Fischer. 1979. Photo series for appraising thinning slash in north Idaho: western hemlock,
+C     5 â€“ Koski, W.H. and W.C. Fischer. 1979. Photo series for appraising thinning slash in north Idaho: western hemlock,
 C     grand fir, and western redcedar timber types. Gen. Tech. Rep. INT-46. Ogden, UT: U.S. Department of Agriculture,
 C     Forest Service, Intermountain Forest and Range Experiment Station. 50 p.
 C
-C     6 – Maxwell, W.G. and F.R. Ward. 1976. Photo series for quantifying forest residues in the ponderosa pine type,
+C     6 â€“ Maxwell, W.G. and F.R. Ward. 1976. Photo series for quantifying forest residues in the ponderosa pine type,
 C     ponderosa pine and associated species type, lodgepole pine type.  Gen. Tech. Rep. PNW-52. Portland, OR: U.S.
 C     Department of Agriculture, Forest Service, Pacific Northwest Forest and Range Experiment Station. 73 p.
 C
-C     7 – Blonski, K.S. and J.L. Schramel. 1981. Photo series for quantifying natural forest residues: southern Cascades,
+C     7 â€“ Blonski, K.S. and J.L. Schramel. 1981. Photo series for quantifying natural forest residues: southern Cascades,
 C     northern Sierra Nevada. Gen. Tech. Rep. PSW-56. Berkeley, CA: U.S. Department of Agriculture, Forest Service, Pacific
 C     Southwest Forest and Range Experiment Station. 145 p.
 C
 C     Also published by the National Wildfire Coordinating Group as PMS 818 / NFES 1872
 C
-C     8 – Maxwell, W.G. and F.R. Ward. 1980. Photo series for quantifying natural forest residues in common vegetation types
+C     8 â€“ Maxwell, W.G. and F.R. Ward. 1980. Photo series for quantifying natural forest residues in common vegetation types
 C     of the Pacific Northwest. Gen. Tech. Rep. PNW-105. Portland, OR: U.S. Department of Agriculture, Forest Service,
 C     Pacific Northwest Forest and Range Experiment Station. 230 p.
 C
-C     9 – Ottmar, R.D. and C.C. Hardy. 1989. Stereo photo series for quantifying forest residues in coastal Oregon forests:
+C     9 â€“ Ottmar, R.D. and C.C. Hardy. 1989. Stereo photo series for quantifying forest residues in coastal Oregon forests:
 C     second-growth Douglas-fir-western hemlock type, western hemlock-Stika spruce type, and red alder type. Gen. Tech. Rep.
 C     PNW-GTR-231. Portland, OR: U.S. Department of Agriculture, Forest Service, Pacific Northwest Research Station. 67 p.
 C
-C     10 – not used
+C     10 â€“ not used
 C
-C     11 – Maxwell, W.G. 1982. Photo series for quantifying forest residues in the black hills, ponderosa pine type, spruce
+C     11 â€“ Maxwell, W.G. 1982. Photo series for quantifying forest residues in the black hills, ponderosa pine type, spruce
 C     type. A-89-6-82. U.S. Department of Agriculture, Forest Service, Rocky Mountain Region. 80 p.
 C
-C     12 – 1997?. Photo series for quantifying forest residues in the southwestern region: data compiled from Black Hills
+C     12 â€“ 1997?. Photo series for quantifying forest residues in the southwestern region: data compiled from Black Hills
 C     Ponderosa Pine and Spruce Type, 1990; GTR-PNW-105, 1980; GTR-PNW-52, 1976; GTR-PSW-56, 1981. Albuquerque, NM:
 C     U.S. Department of Agriculture, Forest Service, Southwestern Region. 227 p.
 C
 C     Also published by the National Wildfire Coordinating Group as PMS 822 / NFES 1395
 C
-C     13 – Maxwell, W.G. and F.R. Ward. 1976. Photo series for quantifying forest residues in the coastal Douglas-fir-hemlock
+C     13 â€“ Maxwell, W.G. and F.R. Ward. 1976. Photo series for quantifying forest residues in the coastal Douglas-fir-hemlock
 C     type, coastal Douglas-fir-hardwood type. Gen. Tech. Rep. PNW-51. Portland, OR: U.S. Department of Agriculture, Forest
 C     Service, Pacific Northwest Forest and Range Experiment Station. 73 p.
 C
 C     Also published by the National Wildfire Coordinating Group as PMS 819 / NFES 1870
 C
-C     14 – Ottmar, R.D., R.E. Vihnanek, and C.S. Wright. 1998. Stereo photo series for quantifying natural fuels.
+C     14 â€“ Ottmar, R.D., R.E. Vihnanek, and C.S. Wright. 1998. Stereo photo series for quantifying natural fuels.
 C     Volume I: mixed-conifer with mortality, western juniper, sagebrush, and grassland types in the interior Pacific
 C     Northwest. PMS 830. Boise, ID: National Wildfire Coordinating Group, National Interagency Fire Center. 73 pp.
 C
 C     (same as 15)
 C
-C     15 – Ottmar, R.D., R.E. Vihnanek, and C.S. Wright. 1998. Stereo photo series for quantifying natural fuels.
+C     15 â€“ Ottmar, R.D., R.E. Vihnanek, and C.S. Wright. 1998. Stereo photo series for quantifying natural fuels.
 C     Volume I: mixed-conifer with mortality, western juniper, sagebrush, and grassland types in the interior Pacific
 C     Northwest. PMS 830. Boise, ID: National Wildfire Coordinating Group, National Interagency Fire Center. 73 pp.
 C
-C     16 – Ottmar, R.D. and R.E. Vihnanek. 1998. Stereo photo series for quantifying natural fuels. Volume II: black spruce
+C     16 â€“ Ottmar, R.D. and R.E. Vihnanek. 1998. Stereo photo series for quantifying natural fuels. Volume II: black spruce
 C     and white spruce types in Alaska. PMS 831. Boise, ID: National Wildfire Coordinating Group, National Interagency Fire
 C     Center. 65 pp.
 C
@@ -100,11 +100,11 @@ C
 C     Ottmar, R.D. and R.E. Vihnanek. 2002. Stereo photo series for quantifying natural fuels. Volume IIa: hardwoods
 C     with spruce in Alaska. PMS 836. Boise, ID: National Wildfire Coordinating Group, National Interagency Fire Center. 41 pp.
 C
-C     17 – Ottmar, R.D., R.E. Vihnanek, and C.S. Wright. 2000. Stereo photo series for quantifying natural fuels.
+C     17 â€“ Ottmar, R.D., R.E. Vihnanek, and C.S. Wright. 2000. Stereo photo series for quantifying natural fuels.
 C     Volume III: Lodgepole pine, quaking aspen, and gambel oak types in the Rocky Mountains. PMS 832. Boise, ID:
 C     National Wildfire Coordinating Group, National Interagency Fire Center. 85 pp.
 C
-C     18 – Ottmar, R.D. and R.E. Vihnanek. 1999. Stero photo series for quantifying natural fuels.  Volume V: midwest
+C     18 â€“ Ottmar, R.D. and R.E. Vihnanek. 1999. Stero photo series for quantifying natural fuels.  Volume V: midwest
 C     red and white pine, northern tallgrass prairie, and mixed oak types in the Central and Lake States. PMS 834.
 C     Boise, ID: National Wildfire Coordinating Group, National Interagency Fire Center.  99 p.
 C
@@ -113,7 +113,7 @@ C
 C     Ottmar, R.D., R.E. Vihnanek, and C.S. Wright. 2002. Stero photo series for quantifying natural fuels.  Volume Va: jack pine
 C     in the Lake States.  PMS 837.  Boise, ID: National Wildfire Coordinating Group, National Interagency Fire Center.  49 p.
 C
-C     19 – Ottmar, R.D. and R.E. Vihnanek. 2000. Stereo photo series for quantifying natural fuels. Volume VI: longleaf pine,
+C     19 â€“ Ottmar, R.D. and R.E. Vihnanek. 2000. Stereo photo series for quantifying natural fuels. Volume VI: longleaf pine,
 C     pocosin, and marshgrass types in the Southeast United States. PMS 835. Boise, ID: National Wildfire Coordinating Group,
 C     National Interagency Fire Center. 56 p.
 C
@@ -123,68 +123,56 @@ C     Ottmar, R.D., R.E. Vihnanek, and J.W. Mathey. 2003. Stereo photo series fo
 C     sandhill, sand pine scrub, and hardwoods with white pine types in the Southeast United States. PMS 838. Boise, ID:
 C     National Wildfire Coordinating Group, National Interagency Fire Center. 78 p.
 C
-C     20 – Maxwell, W.G. 1990. Photo series for quantifying forest residues in the black hills, ponderosa pine type,
+C     20 â€“ Maxwell, W.G. 1990. Photo series for quantifying forest residues in the black hills, ponderosa pine type,
 C     spruce type. A-89-1-90. U.S. Department of Agriculture, Forest Service, Rocky Mountain Region. 80 p.
 C
-C     21 – Ottmar, R.D., R.E. Vihnanek, and J.C. Regelbrugge. 2000. Stereo photo series for quantifying natural fuels.
+C     21 â€“ Ottmar, R.D., R.E. Vihnanek, and J.C. Regelbrugge. 2000. Stereo photo series for quantifying natural fuels.
 C     Volume IV: pinyon-juniper, sagebrush, and chaparral types in the Southwestern United States. PMS 833. Boise, ID:
 C     National Wildfire Coordinating Group, National Interagency Fire Center. 97 pp.
 C
-C     22 – Wright, Clinton S., R.D. Ottmar, R.E. Vihnanek, and D.R. Weise. 2002. Stereo photo series for quantifying natural
+C     22 â€“ Wright, Clinton S., R.D. Ottmar, R.E. Vihnanek, and D.R. Weise. 2002. Stereo photo series for quantifying natural
 C     fuels: grassland, shrubland, woodland, and forest types in Hawaii. Gen. Tech. Rep. PNW-GTR-545. Portland, OR: U.S.
 C     Department of Agriculture, Forest Service, Pacific Northwest Research Station. 91 p.
 C
-C     23 – Ottmar, R.D., C.C. Hardy, and R.E. Vihnanek. 1990. Stereo photo series for quantifying forest residues in the
+C     23 â€“ Ottmar, R.D., C.C. Hardy, and R.E. Vihnanek. 1990. Stereo photo series for quantifying forest residues in the
 C     Douglas-fir-hemlock type of the Willamette National Forest. Gen. Tech. Rep. PNW-GTR-258. Portland, OR: U.S. Department
 C     of Agriculture, Forest Service, Pacific Northwest Research Station. 63 p.
 C
-C     24 – Lynch, C.M. and L.J. Horton. 1983. Photo series for quantifying forest residues in loblolly pine, Eastern white
+C     24 â€“ Lynch, C.M. and L.J. Horton. 1983. Photo series for quantifying forest residues in loblolly pine, Eastern white
 C     pine, pitch pine, Virginia pine. NA-FR-25. Radnor, PA: U.S. Department of Agriculture, Forest Service, Northeastern
 C     Area, State and Private Forestry. 69 p.
 C
-C     25 – Wilcox, F., J. McCarty, and B. Bungard. 1982. Photo series for quantifying forest residues in the northern hardwood
+C     25 â€“ Wilcox, F., J. McCarty, and B. Bungard. 1982. Photo series for quantifying forest residues in the northern hardwood
 C     type, oak-hickory type. NA-FR-22. Broomall, PA: U.S. Department of Agriculture, Forest Service, Northeastern Area, State
 C     and Private Forestry, and Pennsylvania Department of Environmental Resources, Bureau of Forestry. 43 p.
 C
-C     26 – Scholl, E.R. and T.A. Waldrop. 1999. Photos for estimating fuel loadings before and after prescribed burning in the
+C     26 â€“ Scholl, E.R. and T.A. Waldrop. 1999. Photos for estimating fuel loadings before and after prescribed burning in the
 C     upper coastal plain of the southeast. Gen. Tech. Rep. SRS-26. Asheville, NC: U.S. Department of Agriculture, Forest
 C     Service, Southern Research Station. 25 p.
 C
-C     27 – Ottmar, R.D., R.E. Vihnanek, C.S. Wright, and D.L. Olsen. 2004. Stero photo series for quantifying natural fuels.
+C     27 â€“ Ottmar, R.D., R.E. Vihnanek, C.S. Wright, and D.L. Olsen. 2004. Stero photo series for quantifying natural fuels.
 C     Volume VII: Oregon white oak, California deciduous oak, and mixed-conifer with shrub types in the Western United
 C     States.  PMS 839.  Boise, ID: National Wildfire Coordinating Group, National Interagency Fire Center.  75 p.
 C
-C     28 – Maxwell, W.G. and F.R. Ward.  1979. Photo series for quantifying forest residues in the sierra mixed conifer type,
+C     28 â€“ Maxwell, W.G. and F.R. Ward.  1979. Photo series for quantifying forest residues in the sierra mixed conifer type,
 C     sierra true fir type. Gen. Tech. Rep. PNW-95.  Portland, OR: U.S. Department of Agriculture, Forest Service, Pacific
 C     Northwest Forest and Range Experiment Station. 79 p.
 C
-C     29 – Sanders, B.M. and D.H. Van Lear.  1988. Photos for estimating residue loadings before and after burning in Southern
+C     29 â€“ Sanders, B.M. and D.H. Van Lear.  1988. Photos for estimating residue loadings before and after burning in Southern
 C     Appalachian mixed pine-hardwood clearcuts. Gen. Tech. Rep. SE-49.  Asheville, NC: U.S. Department of Agriculture, Forest
 C     Service, Southeastern Forest Experiment Station. 21 p.
 C
-C     30 – Wade, D.D., J.K. Forbus, and J.M. Saveland.  1993. Photo series for estimating post-hurricane residues and fire
+C     30 â€“ Wade, D.D., J.K. Forbus, and J.M. Saveland.  1993. Photo series for estimating post-hurricane residues and fire
 C     behavior in southern pine. Gen. Tech. Rep. SE-82.  Asheville, NC: U.S. Department of Agriculture, Forest Service,
 C     Southeastern Forest Experiment Station. 19 p.
 C
-C     31 – Blank, R.W.  1982. Stereo photos for evaluating jack pine slash fuels.  Gen. Tech. Rep. NC-77.  St. Paul, MN:
+C     31 â€“ Blank, R.W.  1982. Stereo photos for evaluating jack pine slash fuels.  Gen. Tech. Rep. NC-77.  St. Paul, MN:
 C     U.S. Department of Agriculture, Forest Service, North Central Forest Experiment Station. 23 p.
 C
-C     32 – Popp, J.B. and J.E. Lundquist.  2006. Photos series for quantifying forest residues in managed lands of the
+C     32 â€“ Popp, J.B. and J.E. Lundquist.  2006. Photos series for quantifying forest residues in managed lands of the
 C     Medicine Bow National Forest.  Gen. Tech. Rep. RMRS-GTR-172.  Fort Collins, CO: U.S. Department of Agriculture,
 C     Forest Service, Rocky Mountain Research Station. 105 p.
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
 COMMONS
 C----------
       INTEGER FOTOCODE, FOTOREF, I, J
@@ -2007,22 +1995,22 @@ C                 <.25 to1  1-3  3-6 6-12  12-20 20-35 35-50 >50  Lit  Duf
      &                0.1, 1.9, 3.8, 8.2,  0.0, 0.0, 0,0,0,0.0,  2.2 / ! 1Dpost
 
 C                 <.25  to1  1-3  3-6 6-12  12-20 20-35 35-50 >50
-      DATA REF30VLS /  0.0, 0.0, 0.0, 0.9, 0.0, 0.0, 0,0,0, ! 3D             
-     &                 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0,0,0, ! 3Dpost         
-     &                 0.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0,0,0, ! 2A             
-     &                 0.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0,0,0, ! 2Apost         
-     &                 0.0, 0.0, 0.0, 3.6, 0.0, 0.0, 0,0,0, ! 3B             
-     &                 0.0, 0.0, 0.0, 3.0, 0.0, 0.0, 0,0,0, ! 3Bpost         
-     &                 0.0, 0.0, 0.0, 1.8, 0.0, 0.0, 0,0,0, ! 2C             
-     &                 0.0, 0.0, 0.0, 0.8, 0.0, 0.0, 0,0,0, ! 2Cpost         
-     &                 0.0, 0.0, 0.0, 0.4, 0.0, 0.0, 0,0,0, ! 2D             
-     &                 0.0, 0.0, 0.0, 0.9, 0.0, 0.0, 0,0,0, ! 2Dpost         
-     &                 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0,0,0, ! 1A             
-     &                 0.0, 0.0, 0.0, 1.1, 0.0, 0.0, 0,0,0, ! 1Apost         
-     &                 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0,0,0, ! 1C             
-     &                 0.0, 0.0, 0.0, 0.9, 0.0, 0.0, 0,0,0, ! 1Cpost         
-     &                 0.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0,0,0, ! 1D             
-     &                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0,0,0 /! 1Dpost         
+      DATA REF30VLS /  0.0, 0.0, 0.0, 0.9, 0.0, 0.0, 0,0,0, ! 3D
+     &                 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0,0,0, ! 3Dpost
+     &                 0.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0,0,0, ! 2A
+     &                 0.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0,0,0, ! 2Apost
+     &                 0.0, 0.0, 0.0, 3.6, 0.0, 0.0, 0,0,0, ! 3B
+     &                 0.0, 0.0, 0.0, 3.0, 0.0, 0.0, 0,0,0, ! 3Bpost
+     &                 0.0, 0.0, 0.0, 1.8, 0.0, 0.0, 0,0,0, ! 2C
+     &                 0.0, 0.0, 0.0, 0.8, 0.0, 0.0, 0,0,0, ! 2Cpost
+     &                 0.0, 0.0, 0.0, 0.4, 0.0, 0.0, 0,0,0, ! 2D
+     &                 0.0, 0.0, 0.0, 0.9, 0.0, 0.0, 0,0,0, ! 2Dpost
+     &                 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0,0,0, ! 1A
+     &                 0.0, 0.0, 0.0, 1.1, 0.0, 0.0, 0,0,0, ! 1Apost
+     &                 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0,0,0, ! 1C
+     &                 0.0, 0.0, 0.0, 0.9, 0.0, 0.0, 0,0,0, ! 1Cpost
+     &                 0.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0,0,0, ! 1D
+     &                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0,0,0 /! 1Dpost
 
 C                 <.25 to1  1-3  3-6 6-12  12-20 20-35 35-50 >50  Lit  Duf
       DATA REF31VLH / 0.5, 1.0, 0.2, 0.0, 0.0, 0.0, 0,0,0,3.1, 6.8  , ! 1

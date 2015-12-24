@@ -1,5 +1,12 @@
       SUBROUTINE DBSCUTS(IWHO,KODE)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use workcm_mod
+      use estree_mod
+      use contrl_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C
 C $Id$
 C
@@ -13,33 +20,7 @@ C                     ADDITION TO
 C
 C---
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ESTREE.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-      INCLUDE 'WORKCM.F77'
-C
-C
       INCLUDE 'DBSCOM.F77'
-C
-C
-COMMONS
 C
       CHARACTER*8 TID,CSPECIES
       CHARACTER*2000 SQLStmtStr

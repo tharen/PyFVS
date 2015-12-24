@@ -1,5 +1,13 @@
       SUBROUTINE ESADDT(ICALL)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use eshap_mod
+      use outcom_mod
+      use metric_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -8,17 +16,9 @@ C     ADD NEW TREES FROM A FILE OR EXTERNAL DATA BASE.
 
 C     COMMONS
 
-      INCLUDE 'PRGPRM.F77'
 	INCLUDE 'FMPARM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'OUTCOM.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'ESHAP.F77'
       INCLUDE 'ESHAP2.F77'
-      INCLUDE 'VARCOM.F77'
 	INCLUDE 'FMCOM.F77'
-      INCLUDE 'METRIC.F77'
 	INCLUDE 'BCPLOT.F77'
 
       INTEGER       ICALL
@@ -84,12 +84,12 @@ C         GET THE METHOD SWITCH
           ENDIF
           IF (DEBUG) WRITE (JOSTND,6) IMETH
     6     FORMAT (' IN ESADDT, IMETH=',I2)
-          
+
           CALL OPGETC (ITODO,CMDLN)
           IF (CMDLN .EQ. ' ') GOTO 201
 
           CALL OPDONE(ITODO,IDT)
-          
+
 c         Construct input filename: Keyfile_StandID_Year_BC.ES1
           j = 0
           DO I = 1,250
@@ -141,7 +141,7 @@ c         concatenate the name of the exe and input fn
                   J = J+1
                   CMDLN(J:J) = FNAM(I:I)
               ENDIF
-          ENDDO          
+          ENDDO
 
           SELECT CASE (IMETH)
 
@@ -316,7 +316,7 @@ C             ASSEMBLE AND WRITE DATA
 
               ! CCF (8)
               WRITE(FNO,'(F30.1)',ERR=201) ATCCF
-             
+
               DO I = 1,6
                 SUMSP(I) = 0.0
               ENDDO
@@ -391,18 +391,18 @@ C             ASSEMBLE AND WRITE DATA
 !                IF(HARD(I) .AND. DENIH(I) .GT. 0.01) THEN
 !                  WRITE(FNO,'(A30, 3(F10.2))',ERR=301)
 !     &              JSP(SPS(I)),
-!     &              DBHS(I)  * INtoCM, 
+!     &              DBHS(I)  * INtoCM,
 !     &              HTIH(I)  * FTtoM,
 !     &              DENIH(I) / ACRtoHA
 !                ELSEIF (DENIS(I) .GT. 0.01) THEN
-!                  WRITE(FNO,'(A30, 3(F10.2))',ERR=301)                
+!                  WRITE(FNO,'(A30, 3(F10.2))',ERR=301)
 !     &              JSP(SPS(I)),
-!     &              DBHS(I)  * INtoCM, 
+!     &              DBHS(I)  * INtoCM,
 !     &              HTIS(I)  * FTtoM,
 !     &              DENIS(I) / ACRtoHA
 !                ENDIF
 !              ENDDO
-           
+
             END SELECT
 
             CLOSE(FNO)

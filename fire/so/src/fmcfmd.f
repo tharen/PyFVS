@@ -1,5 +1,12 @@
       SUBROUTINE FMCFMD (IYR, FMD)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C   **FMCFMD FIRE-SO-DATE OF LAST REVISION: 02/28/08
 C----------
@@ -29,16 +36,9 @@ C----------
 
 C.... PARAMETER INCLUDE FILES.
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... COMMON INCLUDE FILES.
 
-      INCLUDE 'FMFCOM.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'SSTGMC.F77'
 
 C     LOCAL VARIABLE DECLARATIONS
@@ -387,12 +387,12 @@ C
      >              EQWT(10) = EQWT(10) + WD(I) * WT1(1) * WT2(2)
 
                 ENDIF
-               
+
               CASE DEFAULT
              ! fm 8 is the default for R5 when none of the above
              ! species is dominant
                 EQWT(8) = EQWT(8) + WD(I)
-                
+
             END SELECT
           ENDIF
         ENDDO
@@ -417,7 +417,7 @@ C
 C     DETERMINE STRUCTURE CLASS IF IN LODGEPOLE PINE OR JUNIPER TYPES
         IF ((IPAG .EQ. 6) .OR. (IPAG .EQ. 7) .OR. (IPAG .EQ. 8)) THEN
           CALL FMSSTAGE(TPAMIN,CCMIN,PCTSMX,SAWDBH,SSDBH,GAPPCT,
-     &                  IFMST,X3,FMPROB,FMICR)  
+     &                  IFMST,X3,FMPROB,FMICR)
         ENDIF
 
         SELECT CASE (IPAG)
@@ -668,9 +668,9 @@ C     N  = INTEGER LENGTH OF D(), P() AND SP VECTORS
 C     WDOM = WEIGHTED DOMINANT CATEGORY [ RETURNED ]
 C
       SUBROUTINE SOSPDM(D,P,SP,N,WDOM)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 
-      INCLUDE 'PRGPRM.F77'
 
       REAL    D,P,WDOM
       INTEGER SP,N
@@ -693,8 +693,8 @@ C     POPULATE BASIC SIZE CATEGORIES USING UNIFORM RANDOM JITTER.
 C     THE IDEA HERE IS TO SAMPLE DIAMETERS JITTERED
 C     BY 20%, THEN RECOMPUTE A WEIGHTED DOMINANT CATEGORY.
 C
-      CALL RANNGET(SAVESO) 
-C 
+      CALL RANNGET(SAVESO)
+C
       DO J = 1,PASS
 C
 C     ZERO BINS TO HOLD BA-BASED WEIGHTS FOR THE SPECIES CATEGORIES

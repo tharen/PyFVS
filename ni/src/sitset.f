@@ -1,5 +1,9 @@
       SUBROUTINE SITSET
-      IMPLICIT NONE
+      use contrl_mod
+      use volstd_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **SITSET--NI   DATE OF LAST REVISION:  02/25/09
 C----------
@@ -7,22 +11,6 @@ C  THIS SUBROUTINE IS USED TO SET SIMULATION CONTROLLING VALUES
 C  THAT HAVE NOT BEEN SET USING THE KEYWORDS --- SDIMAX, BAMAX.
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
-COMMONS
 C---------
       INTEGER IFIASP, ERRFLAG
       CHARACTER FORST*2,DIST*2,PROD*2,VAR*2,VOLEQ*10,VVER*7
@@ -107,6 +95,6 @@ C----------
       CALL VOLEQHEAD(JOSTND)
       WRITE(JOSTND,230)(NSP(J,1)(1:2),VEQNNC(J),VEQNNB(J),J=1,MAXSP)
  230  FORMAT(4(2X,A2,4X,A10,1X,A10,1X))
-C     
+C
       RETURN
       END

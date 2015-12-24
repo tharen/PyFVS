@@ -1,5 +1,10 @@
         SUBROUTINE VARVOL
-        IMPLICIT NONE
+      use contrl_mod
+      use volstd_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **VARVOL--UT    DATE OF LAST REVISION:   08/05/11
 C----------
@@ -9,26 +14,6 @@ C  FROM THE NATIONAL CRUISE SYSTEM VOLUME LIBRARY FOR METHB OR METHC
 C  EQUAL TO 6.  IT ALSO CONTAINS ANY OTHER SPECIAL VOLUME CALCULATION
 C  METHOD SPECIFIC TO A VARIANT (METHB OR METHC = 8)
 C----------
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
 C
 C----------
       INTEGER UNT
@@ -138,7 +123,7 @@ C
           IF(IT.GT.0)HT2TD(IT,2)=X02
         ELSE
           IF(IT.GT.0)HT2TD(IT,2)=0.
-        ENDIF        
+        ENDIF
 C
         IF(DEBUG)WRITE(JOSTND,*)' AFTER PROFILE CF TVOL= ',TVOL
 C
@@ -164,14 +149,14 @@ C----------
         IFC=IFIX(FC)
         IF(DEBUG)WRITE(JOSTND,*)' CALLING DVEST BF ISPC,ARGS = ',
      &  ISPC,VEQNNC(ISPC),D,H,TOPDIB,IFC,FORST,BARK,HTTYPE
-C       
+C
         CALL DVEST(VEQNNC(ISPC),D,DRC,H,TOPDIB,IFC,I01,X01,X02,
      &  FORST,BARK*100.,TVOL,I1,I1,I1,I02,I03,
      &  PROD,HTTYPE,I04,X09,LIVE,NINT(BA),NINT(SITEAR(ISPC)),
      &  CTYPE,IERR)
-C       
+C
         IF(DEBUG)WRITE(JOSTND,*)' AFTER DVEST BF TVOL= ',TVOL
-      ENDIF       
+      ENDIF
 C----------
 C  IF TOP DIAMETER IS DIFFERENT FOR BF CALCULATIONS, STORE APPROPRIATE
 C  VOLUMES AND CALL PROFILE AGAIN.
@@ -261,15 +246,15 @@ C----------
           IFC=IFIX(FC)
           IF(DEBUG)WRITE(JOSTND,*)' CALLING DVEST BF ISPC,ARGS = ',
      &    ISPC,VEQNNB(ISPC),D,H,TOPDIB,IFC,FORST,BARK,HTTYPE
-C         
+C
           CALL DVEST(VEQNNB(ISPC),D,DRC,H,TOPDIB,IFC,I01,X01,X02,
      &    FORST,BARK*100.,TVOL,I1,I1,I1,I02,I03,
      &    PROD,HTTYPE,I04,X09,LIVE,NINT(BA),NINT(SITEAR(ISPC)),
      &    CTYPE,IERR)
-C       
+C
           IF(DEBUG)WRITE(JOSTND,*)' AFTER DVEST BF TVOL= ',TVOL
           IF(DEBUG)WRITE(JOSTND,*)' AFTER PROFILE BF TVOL= ',TVOL
-        ENDIF       
+        ENDIF
         TVOL(1)=TVOL1
         TVOL(4)=TVOL4
       ENDIF
@@ -300,7 +285,6 @@ C----------
 C
         RETURN
 C
-C
 C----------
 C  ENTER ANY OTHER CUBIC HERE
 C----------
@@ -312,7 +296,6 @@ C----------
       CTKFLG = .FALSE.
       RETURN
 C
-C
 C----------
 C  ENTER ANY OTHER BOARD HERE.
 C----------
@@ -321,7 +304,6 @@ C----------
       BBFV=0.
       BTKFLG = .FALSE.
       RETURN
-C
 C
 C----------
 C  ENTRY POINT FOR SENDING VOLUME EQN NUMBER TO THE FVS-TO-NATCRZ ROUTINE

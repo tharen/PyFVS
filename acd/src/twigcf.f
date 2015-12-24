@@ -1,5 +1,10 @@
       SUBROUTINE TWIGCF(ISPC,H,D,VN,VM,I)
-      IMPLICIT NONE
+      use contrl_mod
+      use volstd_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **TWIGCF---NE  DATE OF LAST REVISION:  07/11/08
 C----------
@@ -8,22 +13,6 @@ C CUBIC FOOT VOLUME FOR A TREE.  CORRECTIONS FOR TOP KILL AND
 C DEFECT ARE STILL CALCULATED IN VOLS.
 C----------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
 C---------
 C  BHB1 --  INTERCEPT COEFFICIENT IN THE MODEL PREDICTING BOLE HEIGHT
 C           TO A 4-INCH TOP (ONE COEFFICIENT PER SPECIES).
@@ -51,7 +40,6 @@ C  NECF6--  B6 COEFFICIENT IN THE NORTHEASTERN FOREST SURVEY CUBIC-
 C           FOOT VOLUME EQUATION.
 C---------
 C
-COMMONS
 C----------
 C  DIMENSION STATEMENT FOR INTERNAL ARRAYS.
 C----------

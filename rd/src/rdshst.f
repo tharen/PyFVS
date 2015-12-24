@@ -1,5 +1,8 @@
       SUBROUTINE RDSHST
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDSHST      LAST REVISION:  09/03/14
 C----------
@@ -15,23 +18,15 @@ C
 C  Revision History :
 C   08/14/12 - Last revision date.
 C   09/03/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
 
       INCLUDE 'RDPARM.F77'
 
       INCLUDE 'RDCOM.F77'
 
-      INCLUDE 'ARRAYS.F77'
 
-      INCLUDE 'CONTRL.F77'
-C
-COMMONS
 C
       INTEGER I, J, K, KK
 

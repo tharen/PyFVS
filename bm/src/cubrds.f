@@ -1,22 +1,15 @@
       BLOCK DATA CUBRDS
-      IMPLICIT NONE
+      use volstd_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **CUBRDS--BM   DATE OF LAST REVISION:  04/28/09
 C----------
 C  DEFAULT PARAMETERS FOR THE CUBIC AND BOARD FOOT VOLUME EQUATIONS.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
-COMMONS
 C----------
-C  COEFFICIENTS FOR CUBIC FOOT VOLUME FOR TREES THAT ARE SMALLER THAN 
+C  COEFFICIENTS FOR CUBIC FOOT VOLUME FOR TREES THAT ARE SMALLER THAN
 C  THE TRANSITION SIZE
 C----------
       DATA CFVEQS/
@@ -39,7 +32,7 @@ C----------
      & 0.030288,      0.0,     0.0,0.002213,     0.0,     0.0,    0.0,
      &      0.0,      0.0,     0.0,     0.0,     0.0,     0.0,    0.0/
 C----------
-C  COEFFICIENTS FOR CUBIC FOOT VOLUME FOR TREES THAT ARE LARGER THAN 
+C  COEFFICIENTS FOR CUBIC FOOT VOLUME FOR TREES THAT ARE LARGER THAN
 C  THE TRANSITION SIZE
 C----------
       DATA CFVEQL/
@@ -67,15 +60,15 @@ C----------
       DATA ICTRAN/0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
      &            0, 0, 0, 0, 0, 0, 1, 0/
 C----------
-C  TRANSITION SIZE.  TREES OF LARGER SIZE (D OR D2H) WILL COEFFICIENTS 
+C  TRANSITION SIZE.  TREES OF LARGER SIZE (D OR D2H) WILL COEFFICIENTS
 C  FOR LARGER SIZE TREES.
-C---------- 
+C----------
       DATA CTRAN/
      &      0.0,      0.0,     0.0,     0.0,     0.0,     0.0,
      &      0.0,      0.0,     0.0,  6000.0,     0.0,     0.0,
      &      0.0,      0.0,     0.0,     0.0,  6000.0,     0.0/
 C----------
-C  COEFFICIENTS FOR BOARD FOOT VOLUME FOR TREES THAT ARE SMALLER THAN 
+C  COEFFICIENTS FOR BOARD FOOT VOLUME FOR TREES THAT ARE SMALLER THAN
 C  THE TRANSITION SIZE
 C----------
       DATA BFVEQS/
@@ -98,7 +91,7 @@ C----------
      &  -50.340,      0.0,     0.0, 0.01201,     0.0,     0.0,    0.0,
      &  -37.314,      0.0,     0.0, 0.01203,     0.0,     0.0,    0.0/
 C----------
-C  COEFFICIENTS FOR BOARD FOOT VOLUME FOR TREES THAT ARE LARGER THAN 
+C  COEFFICIENTS FOR BOARD FOOT VOLUME FOR TREES THAT ARE LARGER THAN
 C  THE TRANSITION SIZE
 C----------
       DATA BFVEQL/
@@ -126,9 +119,9 @@ C----------
       DATA IBTRAN/0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
      &            1, 1, 0, 0, 0, 0, 0, 0/
 C----------
-C  TRANSITION SIZE.  TREES OF LARGER SIZE (D OR D2H) WILL USE COEFFICIENTS 
+C  TRANSITION SIZE.  TREES OF LARGER SIZE (D OR D2H) WILL USE COEFFICIENTS
 C  FOR LARGER SIZE TREES.
-C---------- 
+C----------
       DATA BTRAN/
      &     20.5,     20.5,    20.5,    20.5,    20.5,    20.5,
      &     20.5,     20.5,    20.5,    20.5,  21100.,  21100.,

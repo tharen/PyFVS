@@ -1,5 +1,12 @@
       SUBROUTINE FMEVMON
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -14,17 +21,10 @@ C
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... Common include files.
 
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'PLOT.F77'
-      
+
 
 C.... Variable declarations.
 
@@ -180,12 +180,12 @@ C********************************************************************
       XS = 0.
       RVAL = 0.
       IF (NSNAG.LT.1) RETURN
-        
+
       DO 500 I = 1, NSNAG
-        
+
         ISPS = SPS(I)
         D = DBHS(I)
-        
+
         LINCL = .FALSE.
         IF(JX.EQ.0 .OR. JX.EQ.ISPS)THEN
           LINCL = .TRUE.
@@ -200,12 +200,12 @@ C********************************************************************
    90     CONTINUE
         ENDIF
    91   CONTINUE
-        
+
         IF (LINCL .AND.
      >    (D.GE.XLDBH .AND. D.LT.XHDBH)) THEN
-        
+
 C  PASS OVER THE INITIALLY-HARD SNAGS
-        
+
           HS = HTIH(I)
           TPA = DENIH(I)
           IF (TPA .GT. 0. .AND. HS.GE.XLHT .AND. HS.LT.XHHT) THEN
@@ -221,16 +221,16 @@ C  PASS OVER THE INITIALLY-HARD SNAGS
             X = TPA * X1
             GOTO 120
   120       CONTINUE
-        
+
             IF (HARD(I)) THEN
               XH = XH + X
             ELSE
               XS = XS + X
             ENDIF
           ENDIF
-        
+
 C     PASS OVER THE INITIALLY-SOFT SNAGS
-        
+
           HS = HTIS(I)
           TPA = DENIS(I)
           IF (TPA .GT. 0. .AND. HS.GE.XLHT .AND. HS.LT.XHHT) THEN
@@ -246,15 +246,15 @@ C     PASS OVER THE INITIALLY-SOFT SNAGS
             X = TPA * X1
             GOTO 220
   220       CONTINUE
-        
+
             XS = XS + X
           ENDIF
         ENDIF
-        
+
   500 CONTINUE
-        
+
 C TAKE HARD-COMPONENT, SOFT-COMPONENT, OR BOTH
-        
+
       IF (KX .EQ. 1) THEN
         RVAL = XH
       ELSEIF (KX .EQ. 2) THEN
@@ -329,7 +329,7 @@ C     PASS OVER THE INITIALLY-SOFT SNAGS
             XS = XS + X
           ENDIF
         ENDIF
-C        
+C
   600 CONTINUE
 C
       RVAL = XH + XS
@@ -477,11 +477,11 @@ C----------
 C
         IF(NSNAG.LT.1)GOTO 100
         DO I = 1, NSNAG
-C       
+C
         ISPS = SPS(I)
         D = DBHS(I)
         LINCL = .FALSE.
-C       
+C
         IF(JX.EQ.0 .OR. JX.EQ.ISPS)THEN
           LINCL = .TRUE.
         ELSEIF(JX.LT.0)THEN
@@ -518,7 +518,7 @@ C
                   SNVIH = SNVIH*DENIH(I)
                 ENDIF
               ENDIF
-C      
+C
               IF((HTIS(I).GE.XLHT).AND.(HTIS(I).LT.XHHT))THEN
                 IF (DENIS(I) .GT. 0.0) THEN
                   SNBAIS= SNBAIS+0.005454154*D*D*DENIS(I)
@@ -526,10 +526,10 @@ C
                   SNVIS = SNVIS*DENIS(I)
                 ENDIF
               ENDIF
-C 
+C
              SNGVOL1= SNGVOL1+SNVIS+SNVIH
 C
-C  SUM SNAG STEM VOLUME AND CONVERT TO TONS 
+C  SUM SNAG STEM VOLUME AND CONVERT TO TONS
 C
               SNGSTM = SNGSTM + (SNVIS+SNVIH) * V2T(ISPS)
 C
@@ -561,7 +561,7 @@ C
         IF(DEBUG)WRITE(JOSTND,*)' ICYC,TOTDEAD,SNGCRN, TOTSBA,TOTBA=  ',
      &  ICYC,TOTDEAD,SNGCRN, TOTSBA,TOTBA
 C
-C  CALCUALTE THE SALVAGE VOLUME, SNAG LIST FOR SALVBAGE CALCULATIONS 
+C  CALCUALTE THE SALVAGE VOLUME, SNAG LIST FOR SALVBAGE CALCULATIONS
 C  IS PASSED FROM FMSALV
 C
 C  PASS OVER THE INITIALLY-HARD SNAGS
@@ -579,7 +579,7 @@ C
      &    I,XD,HTDEADSALV(I),HTDEAD(I),HTIHSALV(I)
 C
           LINCL = .FALSE.
-C       
+C
           IF(JX.EQ.0 .OR. JX.EQ.ISPS)THEN
             LINCL = .TRUE.
           ELSEIF(JX.LT.0)THEN
@@ -649,7 +649,7 @@ C
         LIVFOL = 0.        !USER SELECED FOLIAGE WEIGHT (TONS)
         TOTFOL = 0.        !TOTAL FOLIAGE WEIGHT (TONS)
         LVCRNRMFOL=0.
-C  
+C
 C  LIVE REMOVALS
 C
         IF((ICYCRM.EQ.ICYC).AND.(ISTAND.GE.0).AND.(ITYP.GE.0)) THEN
@@ -658,7 +658,7 @@ C
           ISPC = ISPCC(I)
           D = DBHC(I)
           H = HTC(I)
-C     
+C
           LINCL = .FALSE.
           IF(JX.EQ.0 .OR. JX.EQ.ISPC)THEN
             LINCL = .TRUE.
@@ -688,7 +688,7 @@ C
               IF((H.GE.XLHT).AND.(H.LT.XHHT))THEN
                 LMERCH = .FALSE.
                 CALL FMSVL2(ISPC,D,H,XM1,VT,LMERCH,.FALSE.,JOSTND)
-           
+
                 IF (DEBUG) WRITE(JOSTND,60) I,FMPROB(I),PROB(I),
      >                                      ISP(I),D,H,VT
  60             FORMAT(' FMEVMON(LIVE): I=',I5,' FMPROB=',F10.3,
@@ -724,12 +724,12 @@ C
         IF((ISTAND.NE.0).AND.(ITYP.GE.0))THEN
 
           DO I = 1,ITRN
-C    
+C
           ISPC = ISP(I)
           D = DBH(I)
           H = HT(I)
           XM1=-1.
-C    
+C
           LINCL = .FALSE.
           IF(JX.EQ.0 .OR. JX.EQ.ISPC)THEN
             LINCL = .TRUE.
@@ -756,14 +756,14 @@ C  CONSTRAIN TO HEIGHT RANGE
 C
               IF((H.GE.XLHT).AND.(H.LT.XHHT))THEN
                 LMERCH = .FALSE.
-           
+
                 CALL FMSVL2(ISPC,D,H,XM1,VT,LMERCH,.FALSE.,JOSTND)
-           
+
                 IF (DEBUG) WRITE(JOSTND,61) I,FMPROB(I),PROB(I),
      >                                      ISP(I),D,H,VT
  61             FORMAT(' FMEVMON(LIVE): I=',I5,' FMPROB=',F10.3,
      >                 ' PROB=',F10.3,' ISP=',I3,' D,H,VT=',3F10.3)
-C          
+C
 C  LIVE STEM
 C
                 LIVSLV = LIVSLV+FMPROB(I) * VT * V2T(ISPC)
@@ -929,10 +929,10 @@ C********************************************************************
       IF (IFMYR1.EQ.-1) THEN
          IRC=1
       ELSE
-         RVAL = 0 
+         RVAL = 0
          IRC=0
 
-C     ADJUST THE VALUES BECAUSE THE INDEX IS 1 - 7, BUT THE ARRAY SPOTS 
+C     ADJUST THE VALUES BECAUSE THE INDEX IS 1 - 7, BUT THE ARRAY SPOTS
 C     ARE 1 - 9, WITH 0-3" COVERING 3 CATEGORIES.
 
          IF (ILO .GT. 1) ILO = ILO + 2
@@ -940,28 +940,28 @@ C     ARE 1 - 9, WITH 0-3" COVERING 3 CATEGORIES.
 
          SELECT CASE (IX)
          CASE (1)  ! volume
-           DO I = ILO, IHI         
+           DO I = ILO, IHI
              SELECT CASE (JX)
              CASE(0) ! both
                RVAL = RVAL + CWDVOL(3,I,1,5) + CWDVOL(3,I,2,5)
              CASE(1) ! hard
                RVAL = RVAL + CWDVOL(3,I,2,5)
              CASE(2) ! soft
-               RVAL = RVAL + CWDVOL(3,I,1,5) 
+               RVAL = RVAL + CWDVOL(3,I,1,5)
              END SELECT
-           ENDDO 
+           ENDDO
 
          CASE (2)  ! cover
-           DO I = ILO, IHI         
+           DO I = ILO, IHI
              SELECT CASE (JX)
              CASE(0) ! both
                RVAL = RVAL + CWDCOV(3,I,1,5) + CWDCOV(3,I,2,5)
              CASE(1) ! hard
                RVAL = RVAL + CWDCOV(3,I,2,5)
              CASE(2) ! soft
-               RVAL = RVAL + CWDCOV(3,I,1,5) 
+               RVAL = RVAL + CWDCOV(3,I,1,5)
              END SELECT
-           ENDDO 
+           ENDDO
          END SELECT
       ENDIF
       RETURN
@@ -1005,7 +1005,7 @@ C********************************************************************
          END SELECT
       ENDIF
       RETURN
-      
+
       END
 
 

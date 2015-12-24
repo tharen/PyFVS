@@ -1,5 +1,13 @@
       SUBROUTINE PRTRLS (IWHO)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use workcm_mod
+      use estree_mod
+      use contrl_mod
+      use metric_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -7,35 +15,6 @@ C
 C     PRINT THE TREE LIST.
 C
 C     IWHO = 1 IF CALLED NORMALLY, AND 2 OR 3 IF CALLED FROM CUTS.
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ESTREE.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-      INCLUDE 'WORKCM.F77'
-C
-C
-      INCLUDE 'METRIC.F77'
-C
-C
-COMMONS
 C
       INTEGER I,J,NUMREQ,NTODO,ITODO,NPRMS,IACTK,IDT,JYR,IP,ITPLAB
       INTEGER IWHO,KOLIST,KNTREC,ISPC,I1,I2,I3,IICR,IDMR,ICDF,IBDF
@@ -57,7 +36,7 @@ C----------
       TEM(I)= 0.
   500 CONTINUE
 C----------
-C  ARRAY DUPCHK STORES UP TO 5 REQUESTS PER CYCLE AND ELIMINATES 
+C  ARRAY DUPCHK STORES UP TO 5 REQUESTS PER CYCLE AND ELIMINATES
 C  DUPLICATES OF THESE 5 REQUESTS.
 C----------
       DO 502 I=1,5

@@ -1,4 +1,6 @@
       subroutine ECCALC(IY, ICYC, JSP, MGMID, NPLT, ITITLE)
+      use prgprm_mod
+      implicit none
 C----------
 C **ECCALC--ECON  DATE OF LAST REVISION: 10/12/2012
 C----------
@@ -29,9 +31,7 @@ C  NPLT   - stand label
 C  NTIMES - the number of times the activity exists within the the range of dates.
 C  ITITLE - STDIDENT title
 
-      implicit none
 
-      include 'PRGPRM.F77'
       include 'ECNCOM.F77'
       include 'ECNCOMSAVES.F77'
 
@@ -89,7 +89,7 @@ C  ITITLE - STDIDENT title
             beginAnalYear = econStartYear
             endAnalYear   = IY(ICYC+1) - 1                               !IY(ICYC+1) = beginning year of next cycle
             rate          = discountRate / 100.0                         !Convert % to decimal
-            if (doSEV) call calcAnnCostRevSEV()                          !Annual costs & revenues can be done once for an infinite time horizon 
+            if (doSEV) call calcAnnCostRevSEV()                          !Annual costs & revenues can be done once for an infinite time horizon
             call processEconStart
          else                                                            !ECON has been previously called, hence now active from beginning of cycle
             beginAnalYear = IY(ICYC)
@@ -126,6 +126,7 @@ C  ITITLE - STDIDENT title
 
 !    Check for re-initialization of investment period and calculate years within current cycle prior to re-initialization if needed
       subroutine processEconStart()
+      implicit none
          integer               :: evntYear = 0
          integer, dimension(1) :: econStart = (/ECON_START_YEAR/)
          real, dimension(3)    :: strtParms(3)
@@ -157,13 +158,14 @@ C  ITITLE - STDIDENT title
          startYear     = evntYear
          beginAnalYear = evntYear
          endAnalYear   = IY(ICYC+1) - 1                                  !IY(ICYC+1)= beginning year of next cycle
-         if (doSEV) call calcAnnCostRevSEV()                             !Annual costs & revenues can be done once for an infinite time horizon 
+         if (doSEV) call calcAnnCostRevSEV()                             !Annual costs & revenues can be done once for an infinite time horizon
          return
       end subroutine processEconStart
 
 
 !    Set/Reset accumulation values for ECON initiation/re-initiation that are saved across cycles
       subroutine initializeSavedVariables()
+      implicit none
          costDisc    = 0.0; costUndisc = 0.0
          hrvCstCnt   = 0; hrvRvnCnt = 0; burnCnt    = 0; mechCnt   =   0
          hrvCstkeywd = 0; hrvCstTyp = 0; hrvCstTime = 0; hrvCstAmt = 0.0 !Arrays by hrvCstCnt
@@ -177,6 +179,7 @@ C  ITITLE - STDIDENT title
 
 !    Reset harvest & control variable values used within a single cycle but needed externally for next cycle, used 1st in echarv.f, initially set in ecinit.f
       subroutine resetSavedCycleVariables()
+      implicit none
 !       Duplicate code from ecinit.f to initialize variables used in echarv.f & eccalc.f
          dbhSq     = 0.0
          harvest   = 0.0                                                 !Harvest volume array (TPA : FT3_100)
@@ -189,6 +192,7 @@ C  ITITLE - STDIDENT title
 
 !    Reset local harvest and control variable values used within a single cycle
       subroutine resetLocalCycleVariables()
+      implicit none
          isHarvestPct = .FALSE.
          harvCst   = 0.0; harvRvn    = 0.0; pctCst    = 0.0
          sevSum    = 0.0
@@ -198,7 +202,7 @@ C  ITITLE - STDIDENT title
 
 !    Value the harvests by accumulating harvest/thinning costs and revenues, must run before calcEcon
       subroutine valueHarvest()
-         implicit none
+      implicit none
          integer :: cstCnt, evntTime, i, j, k, rvncnt, time
          logical :: done
          real    :: amt, cost, price, units
@@ -340,7 +344,7 @@ C  ITITLE - STDIDENT title
 
 !    Accumulate costs and revenues, compute ECON measures, and output results
       subroutine calcEcon()
-         implicit none
+      implicit none
 
          character (len=6), parameter :: BLANK6 = '      '
          character (len=7), parameter :: BLANK7 = '       '
@@ -413,7 +417,7 @@ C  ITITLE - STDIDENT title
      &                     ISQNUM, NTIMES, IDT, parmsCnt, ISTAT, KODE)  !Returns NTIMES=#events, IDT=yr scheduled, ISTAT=yr done, 0=not yet done, -1=deleted
                if (KODE  > 0) exit                                      !Exit do loop - no more special costs
                if (ISTAT > 0) then                                      !Activity accomplished
-                  call OPGET3(SPEC_COST_ACTIVITY, IDT, startYear, 
+                  call OPGET3(SPEC_COST_ACTIVITY, IDT, startYear,
      &                    endAnalYear, ISQNUM, 1, parmsCnt, parms, KODE)!1=parms dimension, returns IDT, parmsCnt, parms, and KODE
                   if (KODE > 0) cycle                                   !Activity not found, Check for another special revenue
                   evntTime = ISTAT - startYear + 1
@@ -769,7 +773,7 @@ C  ITITLE - STDIDENT title
                         if (revVolume(i,j,kk) <= 0.0) then
                            cycle                                        !No volume so no values, try next
                         end if
-                        if (k == 1) then                                
+                        if (k == 1) then
                            diaMax = 999.9                               !Set last diameter class maximum
                         else                                            !Set max diameter for this class to min dia of next larger class
                           diaMax = hrvRevDia(i,j,hrvRevDiaIndx(i,j,k-1))
@@ -881,7 +885,7 @@ C  ITITLE - STDIDENT title
       end subroutine calcEcon
 
       subroutine accumulate(accumulator, increment)
-        implicit none
+      implicit none
         real, intent(inout) :: accumulator
         real, intent(in)    :: increment
 
@@ -893,7 +897,6 @@ C  ITITLE - STDIDENT title
       end subroutine
 
       pure character(len=5) function rtoc(n)
-        implicit none
         real, intent(in) :: n
         rtoc = '     '
         if(n /= -1.0) write(rtoc, '(f5.1)') n
@@ -901,7 +904,6 @@ C  ITITLE - STDIDENT title
       end function rtoc
 
       pure character(len=7) function itoc(n)
-        implicit none
         integer, intent(in) :: n
         itoc = '       '
         if (n /= -1) write(itoc, '(i7)') n
@@ -911,7 +913,7 @@ C  ITITLE - STDIDENT title
 
 !    Computes internal rate of return defined as interest rate at which pnv=0, rates are in decimal.
       real function computeIRR(rate, irrCalculated, pnv)
-         implicit none
+      implicit none
          logical, intent(out) :: irrCalculated
          real, intent(in)     :: rate, pnv
          real                 :: netA, netC, rorA, rorB, rorC
@@ -1001,7 +1003,6 @@ C  ITITLE - STDIDENT title
 
 !    Computes net present value for a given rate, for all costs & revenues since ECON start
       pure real function computePNV(rate)
-        implicit none
         integer          :: i
         real, intent(in) :: rate
         real             :: discCst, discRev
@@ -1025,7 +1026,7 @@ C  ITITLE - STDIDENT title
 !      "valueRates" are cummulative, all rates up to the end of the current analysis time are included.
       real function calcAppreAmt(amt, valueRate, valueDuration,
      &                                                 apprecTime, done)
-         implicit none
+      implicit none
          integer, intent(in)  :: apprecTime, valueDuration(*)
          integer              :: durationTime, i
          logical, intent(out) :: done                                   !Only used in calculating SEV w/ appreciated rate changes
@@ -1067,7 +1068,7 @@ C  ITITLE - STDIDENT title
 !        rotations, assuming it occurs at the same time within all future rotations.
       real function calcAppreSev(amt, priceOrCost, valueRate,
      &                                          valueDuration, evntTime)
-         implicit none
+      implicit none
          integer, intent(in) :: evntTime, valueDuration(*)
          integer             :: apprecTime, discTime
          logical             :: done
@@ -1105,7 +1106,7 @@ C  ITITLE - STDIDENT title
 
 !    Compute SEV for all previous harvest costs
       real function sevHrvCosts()
-         implicit none
+      implicit none
          integer :: evntTime, i, kw, units
          real    :: amt, cost
 
@@ -1156,7 +1157,7 @@ C  ITITLE - STDIDENT title
 
 !    Compute SEV for all previous harvest revenues
       real function sevHrvRevenues()
-         implicit none
+      implicit none
          integer :: i, j, k, l
 
          sevHrvRevenues = 0.0
@@ -1172,8 +1173,9 @@ C  ITITLE - STDIDENT title
       end function sevHrvRevenues
 
 
-!    !Computes appreciation of annual costs and revenues for computing sev over an infinite time horizon 
+!    !Computes appreciation of annual costs and revenues for computing sev over an infinite time horizon
       subroutine calcAnnCostRevSEV()
+      implicit none
          endTime = 1; sevAnnCst = 0.0; sevAnnRvn = 0.0                   !endTime required by calcAppreSev
          do i = 1, annCostCnt
             sevAnnCst = sevAnnCst + calcAppreSev(1.0, annCostAmt(i),     !1.0=amt, 1=event time
@@ -1187,7 +1189,7 @@ C  ITITLE - STDIDENT title
 
 
       subroutine writeTableHeaders()
-         implicit none
+      implicit none
          integer :: headTableId
 
          call GETID (headTableId)                                        !Returns the index number for header information stored in genrpt.f

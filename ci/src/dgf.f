@@ -1,5 +1,13 @@
       SUBROUTINE DGF(DIAM)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use pden_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **DGF--CI    DATE OF LAST REVISION:  09/06/11
 C----------
@@ -15,39 +23,10 @@ C  PREDICTION.  ENTRY **DGCONS** IS CALLED BY **RCON** TO LOAD SITE
 C  DEPENDENT COEFFICIENTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
 C
       INCLUDE 'CICOM.F77'
 C
-C
-COMMONS
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES.
 C
@@ -267,7 +246,7 @@ C ROW 3 USED FOR: 14=WJ, 17=CW AND 19=OH
 C----------
 C  SPECIES 1
       DATA (DGHAB(I,1),I=1,12)/
-     &       0.0,  0.006074,  0.181590, -0.196098, -0.055780, 
+     &       0.0,  0.006074,  0.181590, -0.196098, -0.055780,
      &  0.133907,  0.045857,     5*0.0/
 C  SPECIES 2
       DATA (DGHAB(I,2),I=1,12)/
@@ -484,10 +463,10 @@ C
         DDS = DDS+COR(ISPC)+DGCON(ISPC)
 C
 C  SPECIES USING ORIGINAL CI EQNS, PLUS THOSE FROM IE THAT HAVE THE
-C  SAME FUNCTIONAL FORM: 11=WB, 12=PY, AND 16=LM, 
+C  SAME FUNCTIONAL FORM: 11=WB, 12=PY, AND 16=LM,
 C
       CASE DEFAULT
-        DDS=CONSPP +DGLDS*ALOG(D) + DGLBAS*ALOG(BA) 
+        DDS=CONSPP +DGLDS*ALOG(D) + DGLBAS*ALOG(BA)
      &      + DGDSQS*D*D + DGDBLS*PBAL/(ALOG(D+1.0))
      &      + DGBAS*BAL/(ALOG(D+1.0)) + DGPCFS*PCCF(IPCCF)
      &      + CR*(DGCRS+CR*DGCRS2)+ DGBALS*BAL
@@ -525,7 +504,6 @@ C  END OF SPECIES LOOP.
 C----------
    20 CONTINUE
       RETURN
-C
 C
       ENTRY DGCONS
 C----------

@@ -1,5 +1,6 @@
       SUBROUTINE LOGS(DBH,HT,IBCD,BDMIN,ISP,STMP,BV)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **LOGS--UT   DATE OF LAST REVISION:  11/20/09
 C----------
@@ -8,13 +9,6 @@ C  TAPER EQUATIONS BY G.S.BIGING
 C  BY K.STUMPF, ADAPTED BY B.KRUMLAND, P.J.DAUGHERTY
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-COMMONS
 C----------
       REAL XPS(6),TPCF1(6),TPCF2(6)
       INTEGER IMAP(MAXSP)
@@ -46,13 +40,13 @@ C----------
      & 0.33567, 0.41563, 0.47216, 0.33401, 0.36530, 0.35378/
       DATA XPS/
      & 0.95204, 0.92368, 0.89659, 0.95411, 0.94976, 0.95222/
-      DATA IMAP  / 
+      DATA IMAP  /
      & 1, 2, 4, 5, 1, 3, 1, 1, 6, 1,
      & 1, 1, 1, 1, 1, 1, 1, 1, 1, 3,
      & 3, 1, 3, 1/
 C----------
 C  DEFINE NOMINAL SCALING STANDARDS: SLN=STANDARD LOG LENGTH;
-C  TRIM=KERF.  
+C  TRIM=KERF.
 C----------
       DATA SLN,TRIM/16.3,0.3/
 C----------
@@ -86,16 +80,16 @@ C----------
 C       BV = .00124 * DBH**2.68 * HT**0.424
 C       BV = BV * 5.0
 C       RETURN
-C     ENDIF 
+C     ENDIF
 C----------
-C  VOLUME FOR OTHER SPECIES IS COMPUTED FROM LOG RULE.  JSP MAPS 
+C  VOLUME FOR OTHER SPECIES IS COMPUTED FROM LOG RULE.  JSP MAPS
 C  SPECIES ONTO A TAPER MODEL.
 C----------
       JSP=IMAP(ISP)
       DTOP=IBCD
 C----------
 C  CHECK FOR MERCHANTABILITY LIMITS.
-C---------- 
+C----------
       IF(DBH.LE.DTOP .OR. DBH.LT.BDMIN) GO TO 100
       Z1= EXP((DTOP/DBH - TPCF1(JSP))/TPCF2(JSP)) - 1.
 C----------
@@ -105,7 +99,7 @@ C----------
       HTM = (Z1/(-XPS(JSP)))**3*HT - STMP
       IF(HTM.LE.(.5*SLN)) GO TO 100
 C----------
-C  NLOGS IS THE TOTAL NUMBER OF LOGS EXCLUDING THE TOP FULL LOG AND ANY 
+C  NLOGS IS THE TOTAL NUMBER OF LOGS EXCLUDING THE TOP FULL LOG AND ANY
 C  PARTIAL LOG ABOVE IT.
 C----------
       NLOGS=HTM/SLN -1
@@ -116,7 +110,7 @@ C----------
       N=0
       IDU=0
       ITEM=1
-   60 CONTINUE  
+   60 CONTINUE
       DO 70 J=1,NLOGS
         HI = FLOAT(J)*S1+AH
         DU = DIBAHI(HI,HT,TPCF1(JSP),TPCF2(JSP),DBH,XPS(JSP))

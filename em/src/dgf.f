@@ -1,5 +1,12 @@
       SUBROUTINE DGF(DIAM)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use pden_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **DGF--EM    DATE OF LAST REVISION:  05/04/11
 C----------
@@ -15,36 +22,10 @@ C  PREDICTION.  ENTRY **DGCONS** IS CALLED BY **RCON** TO LOAD SITE
 C  DEPENDENT COEFFICIENTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
 C
       INCLUDE 'GGCOM.F77'
 C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-COMMONS
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES.
 C
@@ -78,7 +59,7 @@ C----------
      &   DGDS(4,MAXSP),DGEL(MAXSP),DGEL2(MAXSP),DGSASP(MAXSP),
      &   DGCASP(MAXSP),DGSLOP(MAXSP),DGSLSQ(MAXSP)
       INTEGER MAPHAB(117,MAXSP),MAPDSQ(7,MAXSP),MAPLOC(7,MAXSP),
-     &   MAPCCF(30) 
+     &   MAPCCF(30)
       REAL OBSERV(6,MAXSP),DGLCCF(MAXSP),DGPCC1(MAXSP),DGPCCF(MAXSP),
      &   DGPCC2(MAXSP),DGCCFA(3)
       INTEGER ICLS,LSI,ISIC
@@ -114,7 +95,7 @@ C----------
      &       0./
       DATA DGBAL/
      &  0.00064,  0.00064,  0.00216, -0.358634,        0.,        0.,
-     &  0.00556,  0.00443,  0.00350,   0.00710,        0.,        0., 
+     &  0.00556,  0.00443,  0.00350,   0.00710,        0.,        0.,
      &       0.,       0.,       0.,        0.,        0.,   0.00064,
      &       0./
       DATA DGDBAL/
@@ -189,7 +170,7 @@ C SPECIES 5=LL
      &  12*6, 1,2,3,3,4,3,1, 7*6, 1,5,5,6,87*0,
 C SPECIES 6=RM
      &30*1,87*0/
-C     
+C
       DATA ((MAPHAB(L,K),L=1,117),K=7,9)/
 C SPECIES 7=LP
      &1,7,6,1,2,2*6,8,7,2*1,8,3,8,2,1,8,1,3,3*1,2*8,2*3,2,7,3,7,
@@ -203,7 +184,7 @@ C SPECIES 8=ES
 C SPECIES 9=AF
      &3,27*2,3*5,8*2,13*5,2,3*5,10*4,5*3,1,3,5*2,4,2,2*4,
      &2*3,5*2,2*3,4,2,3,2,3,4,5*3,5,3,7*2,6*5/
-C     
+C
       DATA ((MAPHAB(L,K),L=1,117),K=10,12)/
 C SPECIES 10=PP
      &12*1,3*2,3,3,2,3,4,5,4,1,3*2,6,3,3,10*4,9*5,6*7,
@@ -212,7 +193,7 @@ C SPECIES 11=GA
      &30*1,87*0,
 C SPECIES 12=AS
      &30*1,87*0/
-C     
+C
       DATA ((MAPHAB(L,K),L=1,117),K=13,15)/
 C SPECIES 13=CW
      &30*1,87*0,
@@ -220,7 +201,7 @@ C SPECIES 14=BA
      &30*1,87*0,
 C SPECIES 15=PW
      &30*1,87*0/
-C     
+C
       DATA ((MAPHAB(L,K),L=1,117),K=16,MAXSP)/
 C SPECIES 16=NC
      &30*1,87*0,
@@ -314,7 +295,7 @@ C
 C---------
 C WB,WL AND OT WERE SHOWING TOO SLOW DIAMETER GROWTH.
 C CHANGED LOCATION CONSTANT FOR WB,WL,OT FROM -0.15675
-C TO 1.5675. 07-11-01      
+C TO 1.5675. 07-11-01
 C---------
 C
       DATA ((DGFOR(L,K),L=1,6),K=1,10)/
@@ -618,8 +599,6 @@ C----------
  7000 FORMAT(' LEAVING SUBROUTING DGF  CYCLE =',I5)
       RETURN
 C
-C
-C
       ENTRY DGCONS(IDTYPE)
 C----------
 C  ENTRY POINT FOR LOADING COEFFICIENTS OF THE DIAMETER INCREMENT
@@ -647,7 +626,7 @@ C----------
       IF(LSI.GE.2 .AND. LSI.LT.3)ISIC=2
 C
       IF(ISPC.LE.3 .OR. (ISPC.GE.7 .AND. ISPC.LE.10) .OR.
-     &ISPC.EQ.18)THEN 
+     &ISPC.EQ.18)THEN
         ISPHAB=MAPHAB(JDTYPE,ISPC)
       ELSE
         ISPHAB=MAPHAB(ITYPE,ISPC)

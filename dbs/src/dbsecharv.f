@@ -1,8 +1,8 @@
       subroutine DBSECHARV_open()
+      implicit none
 
 C $Id$
 
-        implicit none
 
         include 'DBSCOM.F77'
 
@@ -13,7 +13,7 @@ C $Id$
         logical success
         integer(SQLPOINTER_KIND) :: maybeNullNeg
         integer IRCODE
-        
+
         if(IDBSECON < 2) return
 
         ! Make sure we have an up-to-date case ID.
@@ -129,11 +129,11 @@ C $Id$
       subroutine DBSECHARV_insert(beginAnalYear, speciesId, minDia,
      &      maxDia, minDbh, maxDbh, tpaCut, tpaValue, tonsPerAcre,
      &      ft3Volume, ft3Value, bfVolume, bfValue, totalValue)
+      use plot_mod
+      use prgprm_mod
+      implicit none
 
-         implicit none
 
-         include 'PRGPRM.F77' !Contains MAXSP
-         include 'PLOT.F77'   !Contains JSPIN(speciesId,speciesSymboltype), JSP, FIAJSP, & PLNJSP
          include 'DBSCOM.F77'
 
 
@@ -334,6 +334,7 @@ C $Id$
       end subroutine DBSECHARV_insert
 
       subroutine DBSECHARV_close()
+      implicit none
 
          include 'DBSCOM.F77'
 

@@ -1,5 +1,9 @@
       SUBROUTINE SVCMP1
-      IMPLICIT NONE
+      use contrl_mod
+      use svdata_mod
+      use workcm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -8,29 +12,10 @@ C     STAND VISUALIZATION GENERATION
 C     N.L.CROOKSTON -- RMRS MOSCOW -- NOVEMBER 1998
 C
 C     INITIALIZE THE TREE STATUS CODES SO THEY CAN HOLD RE-
-C     REFERENCING DATA.  
+C     REFERENCING DATA.
 C
-C     CALLED FROM COMPRS AND TREDEL. 
+C     CALLED FROM COMPRS AND TREDEL.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'SVDATA.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'WORKCM.F77'
-C
-C
-COMMONS
-C
-      INTEGER IWKCM1(MAXTRE)
-      EQUIVALENCE (IWKCM1,WORK1)
       INTEGER I
 C
       IF (JSVOUT.EQ.0) RETURN

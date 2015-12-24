@@ -1,5 +1,11 @@
       SUBROUTINE FMCONS(FMOIS,BTYPE,PLAREA,IYR,ICALL,PSMOKE,PSBURN)
-      IMPLICIT NONE
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use eshap_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMCONS   FIRE--SO--DATE OF LAST REVISION:  12/09/10
 C----------
@@ -17,7 +23,7 @@ C----------
 *             WHEN BTYPE IS 1.  R&C 07/09/96
 *     ICALL:  0=ACTUALLY CONSUME THE FUELS, 1=POTENTIAL CONSUMPTION
 *     PSMOKE: POTENTIAL SMOKE EMISSIONS <2.5
-*     PSBURN:  PERCENTAGE OF STAND THAT IS BURNED 
+*     PSBURN:  PERCENTAGE OF STAND THAT IS BURNED
 *
 *  LOCAL VARIABLE DEFINITIONS:
 *
@@ -29,16 +35,10 @@ C.... PARAMETER STATEMENTS.
 
 C.... PARAMETER INCLUDE FILES.
 
-      INCLUDE 'PRGPRM.F77'
 C      INCLUDE 'PPEPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... COMMON INCLUDE FILES.
 
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ESHAP.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
 
 C.... VARIABLE DECLARATIONS.
 
@@ -60,7 +60,7 @@ C
 
       DATA EMMFAC /3*7.9,3*7.9,3*11.9,
      &             22.5,18.3,16.2,22.5,18.3,16.2,22.5,18.3,16.2,
-     &             22.5,18.3,16.2,22.5,18.3,16.2,22.5,18.3,16.2,     
+     &             22.5,18.3,16.2,22.5,18.3,16.2,22.5,18.3,16.2,
      &             3*7.9,23.9,25.8,25.8,
      &             33*17.0,
      &             3*9.3,3*9.3,3*14.0,
@@ -249,10 +249,10 @@ C       100% OF LITTER AND DUFF UNDER THE PILES IS BURNED
 
         PRBURN(2,11) = 1.0
         PRBURN(2,10) = 1.0
-        
-C       NO LIVE FUELS BURN 
+
+C       NO LIVE FUELS BURN
         PLVBRN(1) = 0
-        PLVBRN(2) = 0        
+        PLVBRN(2) = 0
 C
 C       Set the exposure amount to be equal to the area covered with piles.
 C       R&C 7/9/96.
@@ -305,7 +305,7 @@ C
               TCWD(4)=TCWD(4)+CWD(P,4,H,D)
               TCWD(5)=TCWD(5)+CWD(P,5,H,D)
               TCWD(6)=TCWD(6)+CWD(P,6,H,D)+CWD(P,7,H,D)+CWD(P,8,H,D)
-     &                       +CWD(P,9,H,D)   
+     &                       +CWD(P,9,H,D)
             ENDDO
           ENDDO
         ENDDO

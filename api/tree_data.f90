@@ -61,7 +61,7 @@ module tree_data
         integer :: i,x
 
         ! Increment the array position so that period zero is in the first slot
-        i = icyc+1
+        i = icyc
 
 !        write(*,*) 'Save tree list for cycle ',i,' TPA: ', sum(prob(:itrn)/grospc)
 

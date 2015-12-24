@@ -1,11 +1,11 @@
       FUNCTION TAFIT (X, Y)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **TAFIT         DATE OF LAST REVISION:  06/14/13
 C----------
 C
 C     PART OF THE MOUNTAIN PINE BEETLE EXTENSION OF PROGNOSIS SYSTEM.
-C
 C
 C        TAFIT FITS A CURVE OF THE FORM Y = AX**2 + BX + C TO ANY
 C        THREE POINTS.
@@ -16,22 +16,12 @@ C
 C        Y'S CORRESPOND TO CUMULATIVE SURFACE KILLED IN THE THREE
 C        TRIAL RUNS.
 C
-C
 C Revision History
 C   02/08/88 Last noted revision date.
 C   07/02/10 Lance R. David (FMSC)
-C     Added IMPLICIT NONE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'MPBCOM.F77'
-C
-C
-COMMONS
 C
       INTEGER I
       REAL  A, B, C, DISCRM, TAFIT, X(3), X0, X01, X02,

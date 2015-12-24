@@ -1,10 +1,9 @@
       SUBROUTINE FFIN (JOSTND,IRECNT,KEYWRD,ARRAY,LNOTBK,KARD,LKECHO)
-      IMPLICIT NONE
+      use metric_mod
+      implicit none
 C----------
 C  $Id$
 C----------
-C
-      INCLUDE  'METRIC.F77'
 C
 C     PART OF THE FERTILIZER OPTION.  CALLED BY INITRE TO ENTER
 C     FERTILIZER KEYWORD.

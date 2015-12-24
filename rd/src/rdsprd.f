@@ -1,5 +1,9 @@
       SUBROUTINE RDSPRD
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDSPRD      LAST REVISION:  09/12/14
 C----------
@@ -104,23 +108,18 @@ C    19-AUG-14 Lance R. David (FMSC)
 C       Variable NTREES declared locally is in RDCOM.F77. Local
 C       declaration removed.
 C   09/12/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables. The implicit type for
 C     variable NEWDEN was not consistent with its use, declared REAL.
 C
 C----------------------------------------------------------------------
 
 C.... PARAMETER INCLUDE FILES
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 
 C.... COMMON INCLUDE FILES
 
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'RDADD.F77'
 
       LOGICAL DEBUG
@@ -533,7 +532,7 @@ C....    TIME PERIOD).
 
          YDMAX = 0.0
          YFORWD = 0.0
-         
+
          DO 330 IN = 1, NTREES
             IF (SICK(IN) .GT. 0) THEN
 
@@ -572,9 +571,9 @@ C....    TIME PERIOD).
  1010 CONTINUE
 
       SDRATE(IRRSP) = SQRT(SDRATE(IRRSP) / FLOAT(NMONT - 1))
-      
+
  1020 CONTINUE
-                                                         
+
       IF (IRSPTY .EQ. 1) THEN
 
 C....    DETERMINE WHAT SPREAD RATE TO ASSIGN TO EACH CENTER.

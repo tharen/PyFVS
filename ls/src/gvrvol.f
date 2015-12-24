@@ -1,28 +1,17 @@
 
       SUBROUTINE GVRVOL (VN,VM,BBFV,ISPC,D,H,TKILL,BARK,ITRNC,VMAX,
      1              CTKFLG,BTKFLG,IT)
-      IMPLICIT NONE
+      use contrl_mod
+      use volstd_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **VARVOL--LS AND REGION 9    DATE OF LAST REVISION:   09/29/09
 C----------
 C  GEVORKIANTZ VOLUME CALCULATION METHOD (METHC AND/OR METHB=5)
 C  THIS METHOD WAS SUPERCEEDED BY THE CLARK METHOD FALL 2009
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-COMMONS
 C
 C----------
       REAL VOL(15)
@@ -147,7 +136,7 @@ C
          SAWBF=VOL(2)
          DONE=.TRUE.
          IF(DEBUG)WRITE(JOSTND,*)' AFTER CASE 3 (CALL 2)TCVOL VOL= ',VOL
-        ENDIF       
+        ENDIF
         IF(DEBUG)WRITE(JOSTND,*)' AFTER CASE 3 TCVOL VOL= ',VOL
       ENDIF
       IF (DONE)GOTO 51

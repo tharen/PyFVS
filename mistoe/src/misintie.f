@@ -1,4 +1,7 @@
       SUBROUTINE MISINT
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 ***********************************************************************
 *  **MISINT--IE  Date of last revision:  07/12/11
 *----------------------------------------------------------------------
@@ -34,22 +37,19 @@
 *  06-OCT-2005 - Lance R. David (FHTET)
 *     LM species host flag (AFIT(13)) set to 1.
 *  04-APR-2009 - Lance R. David (FMSC)
-*     Changed species code JU to RM (Rocky Mountain Juniper)   
+*     Changed species code JU to RM (Rocky Mountain Juniper)
 *  12-JUL-2011 Lance R. David (FMSC)
 *    Added arrays for height growth impacts.
 *    Impact values must be supplied by MistHMod keyword.
 ***********************************************************************
-      IMPLICIT NONE
 
 C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C.... Common include files.
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'MISCOM.F77'
 
 C.... Variable declarations.
@@ -110,7 +110,7 @@ C.... Marshall, Katy 2007. Permanent plots for measuring spread and
 C.... impact of Douglas-fir dwarf mistletoe in the Southern Oregon
 C.... Cascades, Pacific Northwest Region: Results of the ten year
 C.... remeasurement. USDA Forest Service, Pacific Northwest Region,
-C.... Southwest Oregon Forest Insect and Disease Service Center, 
+C.... Southwest Oregon Forest Insect and Disease Service Center,
 C.... Central Point, Oregon. SWOFIDSC-07-04. 34 pp.
 C....
 C.... Default values for DF in this table would be:

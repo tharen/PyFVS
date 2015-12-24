@@ -1,5 +1,18 @@
       SUBROUTINE INITRE
-      IMPLICIT NONE
+      use htcal_mod
+      use multcm_mod
+      use plot_mod
+      use arrays_mod
+      use workcm_mod
+      use contrl_mod
+      use coeffs_mod
+      use econ_mod
+      use outcom_mod
+      use volstd_mod
+      use prgprm_mod
+      use varcom_mod
+      use screen_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -7,61 +20,13 @@ C
 C  THIS ROUTINE PROCESSES OPTIONS AND INITIATES THE
 C  PROGNOSIS RUN.  CALLED FROM **MAIN**.
 C
-COMMONS
-C
-C
-      INCLUDE  'PRGPRM.F77'
-C
-C
-      INCLUDE  'ARRAYS.F77'
-C
-C
-      INCLUDE  'COEFFS.F77'
-C
-C
-      INCLUDE  'CONTRL.F77'
-C
-C
-      INCLUDE  'PLOT.F77'
-C
-C
-      INCLUDE  'OUTCOM.F77'
-C
-C
-      INCLUDE  'HTCAL.F77'
-C
-C
-      INCLUDE  'ECON.F77'
-C
-C
       INCLUDE  'KEYCOM.F77'
-C
-C
-      INCLUDE  'MULTCM.F77'
-C
-C
-      INCLUDE  'VOLSTD.F77'
-C
-C
-      INCLUDE  'SCREEN.F77'
-C
 C
       INCLUDE  'SNCOM.F77'
 C
-C
-      INCLUDE  'VARCOM.F77'
-C
-C
       INCLUDE  'CWDCOM.F77'
 C
-C
       INCLUDE  'CALCOM.F77'
-C
-C
-      INCLUDE  'WORKCM.F77'
-C
-C
-COMMONS
 C
       INTEGER IDUM1,IDUM2,IDUM3,IHAB,NEWYR,ISPEC,IFOREST,INTDIST,IFORST
       INTEGER IREGN,IRDUM,INUM,IDFLG,IDTYPE,IXF,IXTMP,ITB,ITC,JJTAB
@@ -239,7 +204,7 @@ C----------
      >      11100,11200,11300,11400,11500,11600,11700,11800,11900,12000,
      >      12100,12200,12300,12400,12500,12600,12700,12800,12900,13000,
      >      13100,13200,13300,13400,13500,13600,13700,13800,13900,14000,
-     >      14100,14200)
+     >      14100,14200,14300)
      >   , NUMBER
 C
 C  ==========  OPTION NUMBER 1: PROCESS  ============================PROCESS
@@ -480,6 +445,12 @@ C----------
      &  ' INPUT DATA):')
         WRITE(JOSTND,216) (I,IPVEC(I),I=1,IPTINV)
  216    FORMAT ((8(I3,'=',I8,:,'; '),I3,'=',I8))
+C
+C  WRITE THE ORGANON SETTINGS TABLE FOR FVS-ORGANON VARIANTS
+C
+      IF((VVER(:2).EQ.'OC') .OR. (VVER(:2).EQ.'OP')) THEN
+        CALL ORGTAB(JOSTND,IMODTY)
+      ENDIF
 C
 C     PRINT THE DEFAULT STAND LABEL SET
 C
@@ -2163,7 +2134,6 @@ C
 C
 C  ==========  OPTION NUMBER 49: SPECPREF  ==========================SPECPREF
 C
-C
  5100 CONTINUE
       IDT=1
       IF(LNOTBK(1)) IDT=IFIX(ARRAY(1))
@@ -2861,7 +2831,7 @@ C
          IF(.NOT.LNOTBK(4))ARRAY(4)=0.
          IF(.NOT.LNOTBK(5))ARRAY(5)=999.
          IF ((ARRAY(3) .GT. 1) .AND. (ARRAY(6) .LT. 3)) ARRAY(3) = 1.0
-         IF ((ARRAY(3) .LT. 0) .AND. (ARRAY(6) .LT. 3)) ARRAY(3) = 0.0              
+         IF ((ARRAY(3) .LT. 0) .AND. (ARRAY(6) .LT. 3)) ARRAY(3) = 0.0
          ILEN=3
          IF(IS.LT.0)ILEN=ISPGRP(-IS,52)
          IF(LKECHO)WRITE(JOSTND,9030) KEYWRD,IDT,KARD(2)(1:ILEN),
@@ -3191,7 +3161,7 @@ C     CALL DUNN TO PROCESS ANY DUNNING SITE CODE INFORMATION.
 C
       IF(LNOTBK(2) .AND. ARRAY(2) .LE. 7)THEN
         SELECT CASE (VVER(:2))
-        CASE('CA','NC','SO','WS')
+        CASE('CA','NC','SO','WS','OC')
           IF(LKECHO)WRITE(JOSTND,9620)
  9620     FORMAT(8X,'   FIELD 2 OF THE SITECODE KEWORD IS LESS',
      &    ' THAN 8 AND WILL BE INTERPRETED AS A DUNNING CODE.')
@@ -3536,7 +3506,8 @@ C----------
 C
       IF (VVER(:2).EQ.'SM' .OR. VVER(:2).EQ.'SP' .OR.
      &        VVER(:2).EQ.'BP' .OR. VVER(:2).EQ.'SF' .OR.
-     &        VVER(:2).EQ.'LP') THEN
+     &        VVER(:2).EQ.'LP' .OR.
+     &        VVER(:2).EQ.'OC' .OR. VVER(:2).EQ.'OP') THEN
         IF(LNOTBK(1)) IMODTY=IFIX(ARRAY(1))
         IF(LKECHO)WRITE(JOSTND,10430) KEYWRD,IMODTY
 10430   FORMAT(/A8,'   MODEL TYPE =',I5)
@@ -4851,6 +4822,8 @@ C
           IRDUM=5
         CASE('BM','PN','WC','EC')
           IRDUM=6
+        CASE('OC','OP')
+          IRDUM=7
         CASE('SN')
           IRDUM=8
         CASE('CS','LS','NE')
@@ -4885,7 +4858,7 @@ C  PN-QUINAULT IR (FC=800 USES OLYMIC 609)
 C  NC SIMPSOM TIMBER (FC=800 USES R5 SAY 510)
 C  SO INDUSTRY LANDS (FC=701 USES R5 SAY 505)
 C
-        IF(VVER(:2).EQ.'PN')THEN
+        IF(VVER(:2).EQ.'PN' .OR. VVER(:2).EQ.'OP')THEN
           IF(IREGN.EQ.8)THEN
             IRDUM=6
             FORDUM='09'
@@ -4957,10 +4930,21 @@ C
               ENDIF
             CASE(5)
               IF((VVER(:2).EQ.'CA').OR.(VVER(:2).EQ.'NC').OR.
-     &           (VVER(:2).EQ.'SO'))THEN
+     &           (VVER(:2).EQ.'SO').OR.(VVER(:2).EQ.'OC'))THEN
                 IRDUM=6
                 CALL VOLEQDEF(VVER(:2),IRDUM,FORDUM,DIST,ISPEC,PROD,
      &                VEQNNC(IGSP),ERRFLAG)
+              ENDIF
+            CASE(7)
+              IF((VVER(:2).EQ.'OC'))THEN
+                IRDUM=6
+                CALL VOLEQDEF(VVER(:2),IRDUM,FORDUM,DIST,ISPEC,PROD,
+     &                VEQNNC(IGSP),ERRFLAG)
+                IF(ISPEC.NE.8888)THEN
+                  IRDUM=5
+                  CALL VOLEQDEF(VVER(:2),IRDUM,FORDUM,DIST,ISPEC,PROD,
+     &                VEQNNC(IGSP),ERRFLAG)
+                ENDIF
               ENDIF
             END SELECT
           ENDIF
@@ -5008,10 +4992,21 @@ C
               ENDIF
             CASE(5)
               IF((VVER(:2).EQ.'CA').OR.(VVER(:2).EQ.'NC').OR.
-     &           (VVER(:2).EQ.'SO'))THEN
+     &           (VVER(:2).EQ.'SO').OR.(VVER(:2).EQ.'OC'))THEN
                 IRDUM=6
                 CALL VOLEQDEF(VVER(:2),IRDUM,FORDUM,DIST,ISPEC,PROD,
      &                VEQNNB(IGSP),ERRFLAG)
+              ENDIF
+            CASE(7)
+              IF((VVER(:2).EQ.'OC'))THEN
+                IRDUM=6
+                CALL VOLEQDEF(VVER(:2),IRDUM,FORDUM,DIST,ISPEC,PROD,
+     &                VEQNNB(IGSP),ERRFLAG)
+                IF(ISPEC.NE.8888)THEN
+                  IRDUM=5
+                  CALL VOLEQDEF(VVER(:2),IRDUM,FORDUM,DIST,ISPEC,PROD,
+     &                VEQNNB(IGSP),ERRFLAG)
+                ENDIF
               ENDIF
             END SELECT
           ENDIF
@@ -5075,10 +5070,21 @@ C
               ENDIF
             CASE(5)
               IF((VVER(:2).EQ.'CA').OR.(VVER(:2).EQ.'NC').OR.
-     &           (VVER(:2).EQ.'SO'))THEN
+     &           (VVER(:2).EQ.'SO').OR.(VVER(:2).EQ.'OC'))THEN
                 IRDUM=6
                 CALL VOLEQDEF(VVER(:2),IRDUM,FORDUM,DIST,ISPEC,PROD,
      &                VEQNNC(1),ERRFLAG)
+              ENDIF
+            CASE(7)
+              IF((VVER(:2).EQ.'OC'))THEN
+                IRDUM=6
+                CALL VOLEQDEF(VVER(:2),IRDUM,FORDUM,DIST,ISPEC,PROD,
+     &                VEQNNC(1),ERRFLAG)
+                IF(ISPEC.NE.8888)THEN
+                  IRDUM=5
+                  CALL VOLEQDEF(VVER(:2),IRDUM,FORDUM,DIST,ISPEC,PROD,
+     &                VEQNNC(1),ERRFLAG)
+                ENDIF
               ENDIF
             END SELECT
           ENDIF
@@ -5122,10 +5128,21 @@ C
               ENDIF
             CASE(5)
               IF((VVER(:2).EQ.'CA').OR.(VVER(:2).EQ.'NC').OR.
-     &           (VVER(:2).EQ.'SO'))THEN
+     &           (VVER(:2).EQ.'SO').OR.(VVER(:2).EQ.'OC'))THEN
                 IRDUM=6
                 CALL VOLEQDEF(VVER(:2),IRDUM,FORDUM,DIST,ISPEC,PROD,
      &                VEQNNB(1),ERRFLAG)
+              ENDIF
+            CASE(7)
+              IF((VVER(:2).EQ.'OC'))THEN
+                IRDUM=6
+                CALL VOLEQDEF(VVER(:2),IRDUM,FORDUM,DIST,ISPEC,PROD,
+     &                VEQNNB(1),ERRFLAG)
+                IF(ISPEC.NE.8888)THEN
+                  IRDUM=5
+                  CALL VOLEQDEF(VVER(:2),IRDUM,FORDUM,DIST,ISPEC,PROD,
+     &                VEQNNB(1),ERRFLAG)
+                ENDIF
               ENDIF
             END SELECT
           ENDIF
@@ -5186,10 +5203,21 @@ C
               ENDIF
             CASE(5)
               IF((VVER(:2).EQ.'CA').OR.(VVER(:2).EQ.'NC').OR.
-     &           (VVER(:2).EQ.'SO'))THEN
+     &           (VVER(:2).EQ.'SO').OR.(VVER(:2).EQ.'OC'))THEN
                 IRDUM=6
                 CALL VOLEQDEF(VVER(:2),IRDUM,FORDUM,DIST,ISPEC,PROD,
      &                VEQNNC(IS),ERRFLAG)
+              ENDIF
+            CASE(7)
+              IF((VVER(:2).EQ.'OC'))THEN
+                IRDUM=6
+                CALL VOLEQDEF(VVER(:2),IRDUM,FORDUM,DIST,ISPEC,PROD,
+     &                VEQNNC(IS),ERRFLAG)
+                IF(ISPEC.NE.8888)THEN
+                  IRDUM=5
+                  CALL VOLEQDEF(VVER(:2),IRDUM,FORDUM,DIST,ISPEC,PROD,
+     &                VEQNNC(IS),ERRFLAG)
+                ENDIF
               ENDIF
             END SELECT
           ENDIF
@@ -5230,10 +5258,21 @@ C
               ENDIF
             CASE(5)
               IF((VVER(:2).EQ.'CA').OR.(VVER(:2).EQ.'NC').OR.
-     &           (VVER(:2).EQ.'SO'))THEN
+     &           (VVER(:2).EQ.'SO').OR.(VVER(:2).EQ.'OC'))THEN
                 IRDUM=6
                 CALL VOLEQDEF(VVER(:2),IRDUM,FORDUM,DIST,ISPEC,PROD,
      &                VEQNNB(IS),ERRFLAG)
+              ENDIF
+            CASE(7)
+              IF((VVER(:2).EQ.'OC'))THEN
+                IRDUM=6
+                CALL VOLEQDEF(VVER(:2),IRDUM,FORDUM,DIST,ISPEC,PROD,
+     &                VEQNNB(IS),ERRFLAG)
+                IF(ISPEC.NE.8888)THEN
+                  IRDUM=5
+                  CALL VOLEQDEF(VVER(:2),IRDUM,FORDUM,DIST,ISPEC,PROD,
+     &                VEQNNB(IS),ERRFLAG)
+                ENDIF
               ENDIF
             END SELECT
           ENDIF
@@ -5699,12 +5738,12 @@ C
 C
       IF (LNOTBK(2))PRMS(1)=ARRAY(2)       ! LOWER DBH
       IF (LNOTBK(3))PRMS(2)=ARRAY(3)       ! UPPER DBH
-      IF (LNOTBK(5))PRMS(4)=ARRAY(5)  ! Q FACTOR        
+      IF (LNOTBK(5))PRMS(4)=ARRAY(5)  ! Q FACTOR
       IF (LNOTBK(6))PRMS(5)=ARRAY(6)  ! DIA. CLASS WIDTH
-      IF (LNOTBK(7))PRMS(6)=ARRAY(7)  ! TARGET TPA, BA, or SDI 
+      IF (LNOTBK(7))PRMS(6)=ARRAY(7)  ! TARGET TPA, BA, or SDI
 C
 C  THE SWITCH TO SET THE UNITS FOR THE TARGET ARE ON A SECOND RECORD
-C  OF THE THINQFA KEYWORD 
+C  OF THE THINQFA KEYWORD
 C  <= 0 - TPA TARGET
 C  <= 1 - BA TARGET
 C  >  1 - SDI TARGET
@@ -5841,5 +5880,23 @@ C
 14535 FORMAT(/A8,'   GROUP NUMBER:',I4,'  GROUP NAME: ',A10,
      &'  NUMBER OF POINTS IN THIS GROUP:',I3,'  POINTS:'/5(T12,10I10/))
       GO TO 10
+C
+C  ==========  OPTION NUMBER 143: ORGANON  ===========================ORGANON
+C
+14300 CONTINUE
+C----------
+C  CALL THE SUBROUTINE THAT READS ORGANON CONTROL PARAMETERS FROM THE
+C  KEYWORD FILE
+C----------
+      IF((VVER(:2).EQ.'OC').OR.(VVER(:2).EQ.'OP'))THEN
+        IF(LKECHO)WRITE(JOSTND,14310) KEYWRD
+14310   FORMAT (/,A8,'   START OF ORGANON KEYWORDS:')
+        CALL ORIN (DEBUG,LKECHO,LNOTRE)
+      ELSE
+        IF(LKECHO)WRITE(JOSTND,14315) KEYWRD
+14315   FORMAT (/,A8,'   ORGANON KEYWORDS NOT RECOGNIZED IN THIS',
+     &  ' VARIANT')
+      ENDIF
+      GOTO 10
 C
       END

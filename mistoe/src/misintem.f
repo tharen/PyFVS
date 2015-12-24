@@ -1,4 +1,7 @@
       SUBROUTINE MISINT
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 ***********************************************************************
 *  **MISINT--EM  Date of last revision:  07/12/11
 *----------------------------------------------------------------------
@@ -33,7 +36,7 @@
 *        Modeling System Users Guide and Reference Manual.
 *     11-OCT-2005 Lance R. David (FHTET)
 *        Changed species list and abbreviations to match
-*        current FVS EM variant. 
+*        current FVS EM variant.
 *     17-FEB-2009 Gary Dixon (FMSC)
 *        Upgraded to work with the 19 species version of the EM variant.
 *        Incorporated MAXSP variable replacing the hardcoded 11.
@@ -42,17 +45,14 @@
 *    Impact values must be supplied by MistHMod keyword.
 *
 ***********************************************************************
-      IMPLICIT NONE
 
 C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C.... Common include files.
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'MISCOM.F77'
 
 C.... Variable declarations.
@@ -78,7 +78,7 @@ C.... Species affected by mistletoe: WB, DF, LM, LP
 
 C.... Diameter growth rates
 C.... 03/01/95 - Lance R. David (MAG)
-C....    Exception values replaced by values described in 
+C....    Exception values replaced by values described in
 C....    Interim Dwarf Mistletoe Impact Modeling System
 C....    Users Guide and Reference Manual, February, 1993
 C....    Pages 20 and 24 for species DF, and LP.
@@ -115,7 +115,7 @@ C.... Marshall, Katy 2007. Permanent plots for measuring spread and
 C.... impact of Douglas-fir dwarf mistletoe in the Southern Oregon
 C.... Cascades, Pacific Northwest Region: Results of the ten year
 C.... remeasurement. USDA Forest Service, Pacific Northwest Region,
-C.... Southwest Oregon Forest Insect and Disease Service Center, 
+C.... Southwest Oregon Forest Insect and Disease Service Center,
 C.... Central Point, Oregon. SWOFIDSC-07-04. 34 pp.
 C....
 C.... Default values for DF in this table would be:

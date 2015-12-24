@@ -1,23 +1,17 @@
       SUBROUTINE FNDAG(TAGE,SITE,RHT,BAUTBA,DEBUG)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FNDAG--UT  DATE OF LAST REVISION:  11/20/09
 C----------
 C
 C THIS ROUTINE USES THE LOGIC FROM GENGYM THAT CALCULATES A HEIGHT
 C GIVEN A SITE TO FIND AN EFFECTIVE AGE.
-C EVEN-AGED LOGIC FROM GEMHT                      
+C EVEN-AGED LOGIC FROM GEMHT
 C----------
 C  COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
 C
 C  COMMONS
 C----------

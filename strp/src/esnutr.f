@@ -1,33 +1,16 @@
       SUBROUTINE ESNUTR
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use eshap_mod
+      use outcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **ESNUTR DATE OF LAST REVISION:  10/02/12
 C----------
 C
 C     INTERFACE ROUTINE TO COUPLE THE REGEN MODEL AND PROGNOSIS.
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ESHAP.F77'
-C
-C
-COMMONS
 C
       INTEGER NCLAS,MYACT2(5),IESTB(3),NTODO,KDT,I,NP,IACTK,IDT,J,IGRP
       INTEGER IULIM,IG,IGSP,ITRGT,ISQ,KD,IST,NP1,NT,ITODO,NPNATS
@@ -167,7 +150,7 @@ C
       NTALLY=IACTK-427
       IDSDAT=IFIX(PRMS(1))
       LONE=.TRUE.
-C      
+C
 C     CONVERT IDSDAT TO YEAR IF REQUIRED
 C
       IF((IDSDAT.LT.1000).AND.(IDSDAT.GE.1))IDSDAT=IY(IDSDAT)
@@ -222,7 +205,7 @@ C
             ISQ=ITODO
          ENDIF
   110    CONTINUE
-C      
+C
 C     CONVERT IDSDAT TO YEAR IF REQUIRED
 C
          IF((IDSDAT.LT.1000).AND.(IDSDAT.GE.1))IDSDAT=IY(IDSDAT)

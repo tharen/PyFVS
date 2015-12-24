@@ -1,5 +1,12 @@
       SUBROUTINE FMPPPUT (WK3, IPNT, ILIMIT)
-      IMPLICIT NONE
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use svdata_mod
+      use fmsvcm_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -27,16 +34,9 @@ C     Parameter statements.
 
 C     Parameter and other include files that are not stored here
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'SVDATA.F77'
 
 C     Include files that are stored here
 
-      INCLUDE 'FMPARM.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
-      INCLUDE 'FMSVCM.F77'
 
       LOGICAL LOGICS(MXL)
       INTEGER INTS(MXI), I, ILIMIT, IPNT, NSNAGZ
@@ -119,11 +119,11 @@ C------- Carbon reporting INTEGER variables --------
       INTS( 73) = IDCHRV
       INTS( 74) = IDCRPT
 C------- new FFE INTEGER variables --------
-      INTS( 75) = IFLOGIC     
+      INTS( 75) = IFLOGIC
       INTS( 76) = IFMSET
       INTS( 77) = ICYCRM
       INTS( 78) = ITRNL
-C------- new FFE INTEGER variables for down wood reports --------      
+C------- new FFE INTEGER variables for down wood reports --------
       INTS( 79) = IDWPAS
       INTS( 80) = IDWRPB
       INTS( 81) = IDWRPE
@@ -131,8 +131,8 @@ C------- new FFE INTEGER variables for down wood reports --------
       INTS( 83) = IDWCVB
       INTS( 84) = IDWCVE
       INTS( 85) = IDDWRP
-      INTS( 86) = IDDWCV      
-         
+      INTS( 86) = IDDWCV
+
       CALL IFWRIT (WK3, IPNT, ILIMIT, INTS, MXI, 2)
 
 
@@ -149,7 +149,7 @@ C------- new FFE INTEGER variables for down wood reports --------
       CALL IFWRIT (WK3, IPNT, ILIMIT, MPS,    8           , 2)
       CALL IFWRIT (WK3, IPNT, ILIMIT, PLSIZ,  2           , 2)
       CALL IFWRIT (WK3, IPNT, ILIMIT, POTSEAS, 2          , 2)
-      CALL IFWRIT (WK3, IPNT, ILIMIT, POTTYP, 2           , 2)      
+      CALL IFWRIT (WK3, IPNT, ILIMIT, POTTYP, 2           , 2)
       CALL IFWRIT (WK3, IPNT, ILIMIT, SPS,    NSNAGZ      , 2)
       CALL IFWRIT (WK3, IPNT, ILIMIT, SPSSALV, NSNAGZ     , 2)
       CALL IFWRIT (WK3, IPNT, ILIMIT, SURFVL, MXDFMD*2*4  , 2)
@@ -157,7 +157,7 @@ C------- new FFE INTEGER variables for down wood reports --------
       CALL IFWRIT (WK3, IPNT, ILIMIT, FMICR, MAXTRE       , 2)
       CALL IFWRIT (WK3, IPNT, ILIMIT, IFUELMON, MXDFMD    , 2)
       CALL IFWRIT (WK3, IPNT, ILIMIT, ISPCC, MAXTRE       , 2)
-      
+
       LOGICS ( 1) = LANHED
       LOGICS ( 2) = LATFUEL
       LOGICS ( 3) = LDHEAD
@@ -179,7 +179,7 @@ C------- new FFE INTEGER variables for down wood reports --------
       CALL LFWRIT (WK3, IPNT, ILIMIT, HARDSALV, NSNAGZ, 2)
       CALL LFWRIT (WK3, IPNT, ILIMIT, LFROUT, 3,        2)
       CALL LFWRIT (WK3, IPNT, ILIMIT, LSW, MAXSP,       2)
-      
+
       REALS (  1) = BURNCR
       REALS (  2) = CBD
       REALS (  3) = CRBURN

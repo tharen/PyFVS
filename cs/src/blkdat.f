@@ -1,7 +1,20 @@
       BLOCK DATA BLKDAT
-      IMPLICIT NONE
+      use htcal_mod
+      use fvsstdcm_mod
+      use pden_mod
+      use esparm_mod
+      use rancom_mod
+      use contrl_mod
+      use coeffs_mod
+      use econ_mod
+      use plot_mod
+      use screen_mod
+      use escomn_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
-C  **BLKDAT--CS  DATE OF LAST REVISION: 02/15/12
+C  **BLKDAT--CS  DATE OF LAST REVISION: 02/13/2015
 C----------
 C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
@@ -9,49 +22,6 @@ C
 C     COMMON STATEMENT FOR MODEL COEFFICIENTS WHICH ARE HABITAT
 C     AND SITE DEPENDENT.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
-      INCLUDE 'ESCOMN.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'ECON.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'RANCOM.F77'
-C
-C
-      INCLUDE 'SCREEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-      INCLUDE 'FVSSTDCM.F77'
-C
-C
-COMMONS
 C----------
       INTEGER I,J
 C----------
@@ -103,7 +73,7 @@ C
      &  1.278,1.325,1.371,1.418,1.464,1.510,1.557,1.603,1.649,1.696,
      &  1.742,1.789/,IFORST/20*1/,
      &  IFORCD/905,908,911,17*0/,
-     &  ISPSPE/8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,
+     &  ISPSPE/3,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,
      &    27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,
      &    46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,
      &    65,66,67,69,70,71,72,73,74,75,76,77,79,80,81,82,83,84,86,
@@ -347,7 +317,6 @@ C
      & -5.2776,  -6.2684,  -4.0872,  -5.1719,  -5.7928,  -5.7928,
      & -5.1435,  -3.0833,  -2.5539,  -2.7758,  -5.1435,  -4.7206,
      & -3.0833,  -5.2030,  -4.1423,  -3.1993,  -3.0833,  -3.7450/
-C
 C
       DATA BB0/96*0.0/
       DATA BB1/96*0.0/

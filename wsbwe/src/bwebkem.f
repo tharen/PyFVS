@@ -1,5 +1,6 @@
       BLOCK DATA BWEBK
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **BWEBK--EM          DATE OF LAST REVISION:  07/14/10
 C----------
@@ -38,7 +39,7 @@ C       the process of moving initialization of nonstatic variables
 C       to the BWEINT routine.
 C    04-OCT-00 Lance David (FHTET)
 C       Added data statemenst to load weather station names into
-C       WSLOOK that had previously been loaded at runtime from 
+C       WSLOOK that had previously been loaded at runtime from
 C       stations.dat file.
 C    10-NOV-00 Lance David (FHTET)
 C       Put Western Larch back into host species list (IBWSPM). It
@@ -48,18 +49,12 @@ C       Moved non-static variables FOLDVY, FOLWTY and IOUT6A to bweint.f.
 C    23-APR-09 Lance R. David (FMSC)
 C       New expanded species list for EM variant.
 C    14-JUL-2010 Lance R. David (FMSC)
-C       Added IMPLICIT NONE and declared variables as needed.
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BWECOM.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECM2.F77'
       INCLUDE 'BWEBOX.F77'
-C
-COMMONS
 C
       INTEGER I
 
@@ -74,28 +69,28 @@ C       6 = WL - Western Larch
 C       7 = Not a host
 C
 C     FVS EM VARIANT SPECIES INDICES:
-C    AL COMMON                FIA SCIENTIFIC                         
-C  # CD NAME                  CD  NAME                               
+C    AL COMMON                FIA SCIENTIFIC
+C  # CD NAME                  CD  NAME
 C -- -- --------------------- --- -----------------------------------
-C  1 WB WHITEBARK PINE        101 PINUS ALBICALA                     
-C  2 WL WESTERN LARCH         073 LARIX OCCIDENTALIS                 
-C  3 DF DOUGLAS-FIR           202 PSEUDOTSUGA MENZIESII             
-C  4 LM LIMBER PINE           113 PINUS FLEXILIS                      
-C  5 LL SUBALPINE LARCH       072 LARIX LYALLII                      
-C  6 RM ROCKY MTN JUNIPER     064 JUNIPERUS OCCIDENTALIS             
-C  7 LP LODGEPOLE PINE        108 PINUS CONTORTA                     
-C  8 ES ENGELMANN SPRUCE      093 PICEA ENGELMANNII                  
-C  9 AF SUBALPINE FIR         019 ABIES LASIOCARPA                   
-C 10 PP PONDEROSA PINE        122 PINUS PONDEROSA                    
-C 11 GA GREEN ASH             544 FRAXINUS PENNSYLVANICA             
-C 12 AS QUAKING ASPEN         746 POPULUS TREMULOIDES                
+C  1 WB WHITEBARK PINE        101 PINUS ALBICALA
+C  2 WL WESTERN LARCH         073 LARIX OCCIDENTALIS
+C  3 DF DOUGLAS-FIR           202 PSEUDOTSUGA MENZIESII
+C  4 LM LIMBER PINE           113 PINUS FLEXILIS
+C  5 LL SUBALPINE LARCH       072 LARIX LYALLII
+C  6 RM ROCKY MTN JUNIPER     064 JUNIPERUS OCCIDENTALIS
+C  7 LP LODGEPOLE PINE        108 PINUS CONTORTA
+C  8 ES ENGELMANN SPRUCE      093 PICEA ENGELMANNII
+C  9 AF SUBALPINE FIR         019 ABIES LASIOCARPA
+C 10 PP PONDEROSA PINE        122 PINUS PONDEROSA
+C 11 GA GREEN ASH             544 FRAXINUS PENNSYLVANICA
+C 12 AS QUAKING ASPEN         746 POPULUS TREMULOIDES
 C 13 CW BLACK COTTONWOOD      747 POPULUS BALSAMIFERA VAR TRICHOCARPA
-C 14 BA BALSAM POPLAR         741 POPULUS BALSAMIFERA                
-C 15 PW PLAINS COTTONWOOD     745 POPULUS DELTOIDES VAR MONOLIFERA   
-C 16 NC NARROWLEAF COTTONWOOD 749 POPULUS ANGUSTIFOLIA               
-C 17 PB PAPER BIRCH           375 BETULA PAPYRIFERA                  
-C 18 OS OTHER SOFTWOODS       298                                    
-C 19 OH OTHER HARDWOODS       998                                    
+C 14 BA BALSAM POPLAR         741 POPULUS BALSAMIFERA
+C 15 PW PLAINS COTTONWOOD     745 POPULUS DELTOIDES VAR MONOLIFERA
+C 16 NC NARROWLEAF COTTONWOOD 749 POPULUS ANGUSTIFOLIA
+C 17 PB PAPER BIRCH           375 BETULA PAPYRIFERA
+C 18 OS OTHER SOFTWOODS       298
+C 19 OH OTHER HARDWOODS       998
 
 C       WB WL DF LM LL RM LP ES AF PP GA AS CW BA PW NC PB OS OH
       DATA IBWSPM

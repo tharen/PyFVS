@@ -1,25 +1,14 @@
       SUBROUTINE ESDLAY (ISPE,IAS,DRAW,DELAY)
-      IMPLICIT NONE
+      use esparm_mod
+      use escomn_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **ESDLAY--CI   DATE OF LAST REVISION:  06/20/11
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
-      INCLUDE 'ESCOMN.F77'
-C
-C
       INCLUDE 'ESCOM2.F77'
 C
-C
-COMMONS
 C----------
 C     CONTAINS WEIBULL MAXIMUM LIKLIHOOD FUNCTIONS FOR DETERMINING
 C     THE NUMBER OF YEARS BETWEEN LAST PLOT DISTURBANCE AND

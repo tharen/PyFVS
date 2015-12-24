@@ -1,5 +1,8 @@
       SUBROUTINE HTDBH (IFOR,ISPC,D,H,MODE)
-      IMPLICIT NONE
+      use contrl_mod
+      use coeffs_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **HTDBH--LS  DATE OF LAST REVISION:  07/11/08
 C----------
@@ -27,18 +30,6 @@ C      MODE = MODE OF OPERATING THIS SUBROUTINE
 C             0 IF DIAMETER IS PROVIDED AND HEIGHT IS DESIRED
 C             1 IF HEIGHT IS PROVIDED AND DIAMETER IS DESIRED
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-COMMONS
-C
       REAL SNALL(3,68), SNDBAL(68)
       INTEGER IWYKCA(68)
       INTEGER MODE,ISPC,IFOR,I,J
@@ -283,7 +274,7 @@ C----------
      &   0.1, 0.1, 0.2, 0.1, 0.1, 0.1, 0.1, 0.2, 0.2, 0.1,
      &   0.1, 0.1, 0.2, 0.1, 0.1, 0.1, 0.1, 0.1/
 C----------
-C  FLAGS WHETHER TO USE WYKOFF EQUATIONS (0), OR CURTIS-ARNEY 
+C  FLAGS WHETHER TO USE WYKOFF EQUATIONS (0), OR CURTIS-ARNEY
 C  EQUATIONS (1).
 C----------
       DATA IWYKCA/

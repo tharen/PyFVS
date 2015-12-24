@@ -1,31 +1,25 @@
       BLOCK DATA BLKDAT
-      IMPLICIT NONE
+      use htcal_mod
+      use pden_mod
+      use esparm_mod
+      use rancom_mod
+      use contrl_mod
+      use coeffs_mod
+      use econ_mod
+      use screen_mod
+      use plot_mod
+      use fvsstdcm_mod
+      use escomn_mod
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'COEFFS.F77'
-      INCLUDE 'ESPARM.F77'
-      INCLUDE 'ESCOMN.F77'
-      INCLUDE 'PDEN.F77'
-      INCLUDE 'ECON.F77'
-      INCLUDE 'HTCAL.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'RANCOM.F77'
-      INCLUDE 'SCREEN.F77'
-      INCLUDE 'FVSSTDCM.F77'      
       INCLUDE 'BCPLOT.F77'
-      INCLUDE 'METRIC.F77'
-C
-COMMONS
-C
 C
 C     birch,aspen,cottonwood - from B. Snowdon: LS uses 0.94, 0.92, 0.93
 C
@@ -97,7 +91,7 @@ C
      > 'OH2','PW3','LW3','FD3','BG3','HW3','CW3','PL3','SE3','BL3',
      > 'PY3','EP3','AT3','AC3','OC3','OH3' /
 C
-C     SPECIES LIST FOR IBC VARIANT. 
+C     SPECIES LIST FOR IBC VARIANT.
 C
 C     1 = WESTERN WHITE PINE (WP)     [PW]
 C     2 = WESTERN LARCH (WL)          [LW]
@@ -116,7 +110,6 @@ C    14 = OTHER CONIFER (OC)          [  ] ! FD
 C    15 = OTHER HARDWOOD (OH)         [  ] ! EP
 C
 C   COMMON STATEMENT FOR COEFFS VARIABLES
-C
 C
 C     HT FOR EP,AT,AC TAKEN FROM WC-VARIANT
 C
@@ -152,5 +145,5 @@ C
       DATA JOSUME/13/
 C
       DATA KOLIST,FSTOPEN /27,.FALSE./
-C      
+C
       END

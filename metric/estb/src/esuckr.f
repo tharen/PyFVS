@@ -1,28 +1,24 @@
        SUBROUTINE ESUCKR
-       IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use esparm_mod
+      use estree_mod
+      use contrl_mod
+      use coeffs_mod
+      use eshap_mod
+      use metric_mod
+      use escomn_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **ESUCKR--ESTB/M  DATE OF LAST REVISION:   02/08/13
 C----------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'COEFFS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'ESPARM.F77'
       INCLUDE 'ESHOOT.F77'
-      INCLUDE 'ESCOMN.F77'
       INCLUDE 'ESCOM2.F77'
-      INCLUDE 'ESHAP.F77'
       INCLUDE 'ESHAP2.F77'
-      INCLUDE 'ESTREE.F77'  
       INCLUDE 'STDSTK.F77'
-      INCLUDE 'VARCOM.F77'
-      INCLUDE 'METRIC.F77'      
-C
-C
-COMMONS
 C
 C     CREATE STUMP & ROOT SPROUTS FROM TREES CUT AT BEGINNING OF CYCLE.
 C     ASSUMPTION: THE TREE LIST HAS BEEN COMPRESSED TO ABOUT 1/2 THE
@@ -53,7 +49,7 @@ C
       HTAVE(I)=0.0
    10 CONTINUE
       TPATOT=0.0
-C 
+C
 C  PROCESS SPROUT KEYWORD OPTIONS.
 C  INITIALIZE VARIABLES
 C
@@ -109,7 +105,7 @@ C
 C  SINGLE SPECIES
 C
       ELSE
-        DO JJ=1,NSPSPE 	
+        DO JJ=1,NSPSPE
         IF(J.EQ.ISPSPE(JJ))THEN
           SPRMLT(JJ,IT)=PRMS(2)
           HTMSPR(JJ,IT)=PRMS(3)
@@ -177,7 +173,7 @@ C----------
 C  IF SPROUT MULTIPLIER (SMULT) IS ZERO DO NOT ADD RECORDS TO TREE LIST
 C----------
       IF(SMULT.LE.0.)GOTO 500
-C      
+C
       DO 499 J=1,NUMSPR
       IF(ITRN.LT.MXRR) GO TO 100
       ITRGT=ITRNRM-I
@@ -269,14 +265,14 @@ C
      &          /,T6,'-------  -----  -------')
         DO 700 I=1,NSPSPE
           CLABEL=NSP(ISPSPE(I),1)
-          HTAVE(I)=HTAVE(I)/(COUNTR(I)+.00001) 
-        IF (TPASUM(I) .GT. 0.0) 
+          HTAVE(I)=HTAVE(I)/(COUNTR(I)+.00001)
+        IF (TPASUM(I) .GT. 0.0)
      &  WRITE(JOREGT,1200) CLABEL,TPASUM(I)/ACRtoHA,HTAVE(I)*FTtoM
  1200     FORMAT(T9,A2,T14,F6.0,T22,F6.1)
   700   CONTINUE
         WRITE(JOREGT,1300) TPATOT / ACRtoHA
  1300   FORMAT(T15,'-----',/,T14,F6.0,/,54('-') )
-      ENDIF  
+      ENDIF
   900 CONTINUE
       ITRNRM=0
       RETURN

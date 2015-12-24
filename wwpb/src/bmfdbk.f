@@ -1,4 +1,6 @@
       SUBROUTINE BMFDBK (IYR)
+      use prgprm_mod
+      implicit none
 
 C CALLED BY: BMDRV
 C CALLS: nothing
@@ -13,7 +15,7 @@ C CALLS: nothing
 *
 * Purpose:
 *     If the landscape BKP from (LAG) year(s) ago is high enough
-*     to trigger a predator/parasite/pathogen outbreak, then a 
+*     to trigger a predator/parasite/pathogen outbreak, then a
 *     negative feedback multiplier is calculated and applied to
 *     each stand's BKP.
 *
@@ -25,7 +27,7 @@ C CALLS: nothing
 *
 *     ISTD:   Loops counter over stands within the landscape.
 *     SUMBKP: The sum of the BKP of all stands within the landscape.
-*             An intermiediate variable used in the calculation of the 
+*             An intermiediate variable used in the calculation of the
 *             current year's approximate mean landscape BKP (LSBKP0).
 *     LSBKP0: Approximate mean landscape BKP this year.
 *     LSBKPN: Approximate mean landscape BKP from (LAG) year(s) ago.
@@ -35,16 +37,16 @@ C CALLS: nothing
 * Common block variables and parameters:
 *
 *     BMSTND: From BMCOM; number of stands in this landscape.
-*     BKP(ISTD): From BMCOM; array containing the BKP (pre-flight, 
+*     BKP(ISTD): From BMCOM; array containing the BKP (pre-flight,
 *                annual)in each stand of the landscape.
 *     TFDBK:  From BMCOM; Level of LSBKPN that triggers negative feedback.
 *             Field 1 in the BMFDBK keyword.
 *     SFDBK:  From BMCOM; Modifies the severity of the negative
 *             feedback. Field 2 of the BMFDBK keyword.
 *     LSBKPA: From BMCOM; Used to initialize model with historical beetle
-*             population levels. It is the mean landscape BKP from last 
+*             population levels. It is the mean landscape BKP from last
 *             year, and is field 3 in BMFDBK keyword.
-*     LSBKPB: From BMCOM; Similar to LSBKPA, but for 2 years before the 
+*     LSBKPB: From BMCOM; Similar to LSBKPA, but for 2 years before the
 *             start of the simulation.  It is field 4 in the BMFDBK
 *             keyword.
 *     LAG:    From BMCOM; Time lag (0,1,or 2 years) after reaching the
@@ -57,7 +59,6 @@ C CALLS: nothing
 C...Common include files:
 
       INCLUDE 'BMPRM.F77'
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'PPEPRM.F77'
       INCLUDE 'BMCOM.F77'
 
@@ -80,7 +81,7 @@ C   needs to be done here as well.
           IF (BKP(ISTD) .LT. 0) THEN
               BKP(ISTD) = 0
           ENDIF
-  100 CONTINUE 
+  100 CONTINUE
 
 C...Find this year's approximate mean landscape BKP (doesn't adjust for
 C   stand size ... assumes stands within the landscape are all the same
@@ -102,7 +103,7 @@ C   appropriate year.
       IF (LAG .EQ. 2) LSBKPN = LSBKPB
       IF ((LAG .NE. 0) .AND. (LAG .NE. 1) .AND. (LAG .NE. 2)) THEN
           WRITE (*,*) 'ERROR: FEEDBACK LAG VALUE IS INCORRECT'
-      ENDIF 
+      ENDIF
 
 C...If the landscape BKP from (LAG) year(s) ago is high enough to
 C   trigger a predator/parasite/pathogen outbreak, then initiate
@@ -123,14 +124,14 @@ C
   810  FORMAT(I4, 2X, I9, 2X, F6.3, 2X, F6.3)
 C
 	  BKP(ISTD) = BKP(ISTD) * NEGFED
-  
+
   800 CONTINUE
-      ENDIF 
+      ENDIF
 
 C..."Age" landscape BKP by one year
 
       LSBKPB = LSBKPA
-      LSBKPA = LSBKP0 
+      LSBKPA = LSBKP0
 
       RETURN
       END

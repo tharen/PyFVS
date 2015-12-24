@@ -1,5 +1,12 @@
       SUBROUTINE CROWN
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -21,18 +28,9 @@ C  PROCESSING OF CROWN CHANGE FOR SMALL TREES IS CONTROLLED BY
 C  **REGENT**.
 C----------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'CALCOM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'COEFFS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'OUTCOM.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'BCPLOT.F77'
-      INCLUDE 'METRIC.F77'
 C
-COMMONS
 C----------
 C  DECLARATIONS AND DIMENSIONS FOR INTERNAL VARIABLES:
 C
@@ -48,7 +46,7 @@ C----------
 	PARAMETER (P_ZN = 2)
 
       TYPE CR_STR
-	  CHARACTER (LEN=4)  :: ZONE          ! BEC zone  
+	  CHARACTER (LEN=4)  :: ZONE          ! BEC zone
         INTEGER            :: SEQ(MAXSP)    ! species list
         INTEGER            :: OBSERV(MAXSP) ! observations
         REAL               :: CON(MAXSP)    ! INTERCEPT
@@ -68,7 +66,7 @@ C----------
 
       EXTERNAL RANN
       LOGICAL  DEBUG
-      
+
       REAL     CRNMLT(MAXSP),DLOW(MAXSP),DHI(MAXSP),PRM(5),CHG,PDIFPY
       INTEGER  MYACTS(1),ICFLG(MAXSP),NTODO,IDATE,IACTK,NP,IDT
 	INTEGER  ISPCC,IGRP,IULIM,IG,IGSP
@@ -80,7 +78,7 @@ C----------
       TYPE     (CR_STR) CRKONST(P_ZN)
 
 C     V2 (NI) VARIABLES
-      
+
       REAL     PARM(MAXSP,14),CRHAB(14,MAXSP)
       REAL     B7,B8,B9,B10,B11,B12,B13,B14
       INTEGER  MAPHAB(30,MAXSP)
@@ -97,7 +95,7 @@ C     THESE USE NI-OTHER (11) FOR 12,13,15, AND NI-FD (3) FOR 14
      >    4*0.0,
      & 5*0.0,-0.00183,5*0.0,
      >    4*0.0,
-     & 10*0.0,0.000005116,                      
+     & 10*0.0,0.000005116,
      >    2*0.000005116,0.0,0.000005116,
      & 2*0.0,-0.15334,3*0.0,-0.18555,4*0.0,
      >    2*0.0,-0.15334,0.0,
@@ -120,7 +118,7 @@ C     THESE USE NI-OTHER (11) FOR 12,13,15, AND NI-FD (3) FOR 14
      & 0.0,0.19558,0.16488,0.07260,0.06887,0.1105,0.0,0.09918,0.0,
      & 0.16072,0.05140,
      >    2*0.05140,0.16488,1*0.05140/
-     
+
       DATA ((MAPHAB(I,J),I=1,30), J=1,5)/
      & 12*2,3,3*4,3*5,6,6,1,6,1,7,1,4*6,
      & 7*2,3,2,4,4,5,6,3*7,8,8,4,1,10,9,10,1,11,4*1,2,
@@ -135,8 +133,8 @@ C     THESE USE NI-OTHER (11) FOR 12,13,15, AND NI-FD (3) FOR 14
      & 2,2,4,3*1,5,6,3*1,8,7,3*9,3*3,11*1/
       DATA ((MAPHAB(I,J),I=1,30), J=11,15)/
      & 12*1,4*2,3,3,4,3*1,5,1,6,5*1,  !EP - NI Other
-     & 12*1,4*2,3,3,4,3*1,5,1,6,5*1,  !AT 
-     & 12*1,4*2,3,3,4,3*1,5,1,6,5*1,  !AC 
+     & 12*1,4*2,3,3,4,3*1,5,1,6,5*1,  !AT
+     & 12*1,4*2,3,3,4,3*1,5,1,6,5*1,  !AC
      & 7*2,3,2,4,4,5,6,3*7,8,8,4,1,10,9,10,1,11,4*1,2, !OC=FD
      & 12*1,4*2,3,3,4,3*1,5,1,6,5*1/  !OH
 
@@ -148,7 +146,7 @@ C     THESE USE NI-OTHER (11) FOR 12,13,15, AND NI-FD (3) FOR 14
      & 0.8038, 0.8742, 0.8232, 0.8415, 0.9759, 0.0,
      &-0.2304,-0.5421,-0.4343,-0.3759,-0.4129,-0.4879,-0.2674,
      &-0.1941,6*0.0,
-     & -0.2413,13*0.0,           !5 
+     & -0.2413,13*0.0,           !5
      & -1.6053, -1.7128, 12*0.0, !6
      & -0.3785, -0.4142, -0.3985, -0.2987, -0.3810, -0.4087, -0.3577,
      & -0.2994, -0.2486,-0.2863,-0.1968,-0.4931,-0.2676,-0.5625,
@@ -186,7 +184,7 @@ C
      >    (/ 0.51146,  0.0,      0.93059,  1.66517,  0.56474, ! ht/dbh
      >       0.70786,  1.13328,  1.15971,  1.05587,  1.22750,
      >       0.0,      2.75133,  0.70786,  0.56474,  0.0 /),
-     >    (/ 0.0,      0.02921,  0.01364, -0.00873,  0.01872, ! ht 
+     >    (/ 0.0,      0.02921,  0.01364, -0.00873,  0.01872, ! ht
      >       0.04186, -0.01291,  0.00550,  0.03164,  0.01112,
      >       0.0,      0.0,      0.04186,  0.01872,  0.0 /),
      >    (/ 0.0,     -0.00043,  0.00031,  0.00017,  0.0,     ! dbh**2
@@ -235,7 +233,7 @@ C
      >    (/-0.60066,  0.0,      0.96161,  0.45446,  1.76502, ! ht/dbh
      >       0.63874,  0.72156,  1.50771,  1.08889,  0.51146,
      >       1.22750,  1.76502,  0.45446,  0.0, 0.0 /),
-     >    (/ 0.09484, -0.00938, -0.02965,  0.04155,  0.02994, ! ht 
+     >    (/ 0.09484, -0.00938, -0.02965,  0.04155,  0.02994, ! ht
      >       0.02136,  0.06559,  0.01341,  0.04229,  0.0,
      >       0.01112,  0.02994,  0.04155,  0.0, 0.0 /),
      >    (/-0.00168,  0.0,      0.00082, -0.00068, -0.00010, ! dbh**2
@@ -363,7 +361,7 @@ C----------
           XCRCON = CRCON(ISPC) + PARM(ISPC,1)*BA + PARM(ISPC,2)*BA*BA +
      &      PARM(ISPC,3)*ALOG(BA) + PARM(ISPC,4)*RELDEN + PARM(ISPC,5)
      &      *RELDEN*RELDEN + PARM(ISPC,6)*ALOG(RELDEN)
-        ELSE        
+        ELSE
 	    XCRCON = CRCON(ISPC) + CRLNCCF(ISPC) * LOG(MAX(0.01,RELDEN))
 	  ENDIF
 C----------
@@ -372,11 +370,11 @@ C----------
         DCRCON=0.0
         IF(LSTART) GO TO 30
         IF (LV2ATV) THEN
-          DCRCON = CRCON(ISPC) + PARM(ISPC,1)*OBA + 
-     &      PARM(ISPC,2)*OBA*OBA +          
+          DCRCON = CRCON(ISPC) + PARM(ISPC,1)*OBA +
+     &      PARM(ISPC,2)*OBA*OBA +
      &      PARM(ISPC,3)*X1 + PARM(ISPC,4)*RDM1 + PARM(ISPC,5)*RDM1
      &      *RDM1 + PARM(ISPC,6)*X2
-        ELSE        
+        ELSE
           DCRCON = CRCON(ISPC) + CRLNCCF(ISPC) * LOG(MAX(0.01,RDM1))
 	  ENDIF
 C----------
@@ -426,11 +424,11 @@ C----------
           H=HT(I)
           BARK=BRATIO(ISPC,D,H)
 C----------
-C  BRANCH TO STATEMENT 58 TO HANDLE TREES WITH DBH LESS THAN 
+C  BRANCH TO STATEMENT 58 TO HANDLE TREES WITH DBH LESS THAN
 C  3IN (V2) OR 2CM (V3)
 C----------
           IF (LV2ATV) THEN
-            IF(D.LT.3.0) GO TO 58   
+            IF(D.LT.3.0) GO TO 58
           ELSE
             IF((D*INtoCM) .LT. 2.0) GO TO 58
           ENDIF
@@ -450,7 +448,7 @@ C
 C          IF (ICYC .EQ. 1) XRAN = CRSD(ISPC)
 C
           IF (LV2ATV) THEN
-            PCR = XCRCON + B7*D + B8*D*D + B9*ALOG(D) + B10*H + 
+            PCR = XCRCON + B7*D + B8*D*D + B9*ALOG(D) + B10*H +
      &        B11*H*H +B12*ALOG(H) + B13*P + B14*ALOG(P)
             EXPPCR= EXP(PCR)
           ELSE
@@ -492,7 +490,7 @@ C----------
  9002     FORMAT(' ICR(',I4,')=',I3,'  EXPPCR=',F10.3,' EXPDCR=',F10.3,
      &      ' D=',F7.3,' H=',F7.3,' P=',F7.3,' OLDP=',F7.3)
 C----------
-C  COMPUTE THE PREDICTED CROWN RATIO AND 
+C  COMPUTE THE PREDICTED CROWN RATIO AND
 C  BOUND CROWN CHANGE TO 1% PER YEAR
 C----------
           CHG=EXPPCR-EXPDCR
@@ -587,7 +585,7 @@ C
       ENTRY CRCONS
 
 C  ENTRY POINT FOR LOADING CROWN RATIO MODEL COEFFICIENTS THAT ARE
-C  SITE DEPENDENT AND REQUIRE ONE TIME RESOLUTION. 
+C  SITE DEPENDENT AND REQUIRE ONE TIME RESOLUTION.
 C
 C  V2: ITYPE INDEXES HABITAT TYPE (CARRIED IN /PLOT/ COMMON AREA), CRHAB
 C  CONTAINS HABITAT INTERCEPTS BY HABITAT TYPE BY SPECIES, AND MAPCR MAPS
@@ -609,7 +607,7 @@ C  V3: LOCATE ZONE; DEFAULTS TO ICH (IZN=1) IF NO MATCH
         IZN = 0
 C           MAP THE SBPS ZONE AND ONE SBS SUBZONE ONTO IDF
 C               AND THE REST OF THE SBS ONTO ICH
-        IF (INDEX(BEC%PrettyName,'SBSdw2') .GT. 0 .OR. 
+        IF (INDEX(BEC%PrettyName,'SBSdw2') .GT. 0 .OR.
      >      INDEX(BEC%Zone,'SBPS') .GT. 0) THEN
             IZN = MRT_IDF
         ELSEIF (INDEX(BEC%Zone,'SBS') .GT. 0) THEN
@@ -649,7 +647,7 @@ C           FOR THE PARAMETERS TO BE USED.
           OLDZN = IZN
           IF (INDEX(BEC%PrettyName,'SBSdw1') .GT. 0 .AND.
      >         (J .EQ. 9 .OR. J .EQ. 11 .OR. J .EQ. 12)) THEN
-              IZN = MRT_IDF 
+              IZN = MRT_IDF
           ENDIF
 
           CRCON(J) = CRKONST(IZN)%CON(I)
@@ -680,16 +678,16 @@ C
 C     PRIVATE SUBROUTINE TO CALCULATE CROWN PROPORTION
 
       SUBROUTINE CRNMD(IISP, YCON, YD, YH, YBAL, YCR, YSD)
-	IMPLICIT NONE
+      use metric_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 
-      INCLUDE 'PRGPRM.F77'
-	INCLUDE 'VARCOM.F77'
       INCLUDE 'BCPLOT.F77'
-      INCLUDE 'METRIC.F77'
 
       EXTERNAL RANN
 
-      INTEGER IISP 
+      INTEGER IISP
       REAL    YCON, YH, YD, YBAL, YCR, YSD
       REAL    YDM, YHM, YBALM, YD2, YH2
 	REAL    BACHLO
@@ -718,7 +716,7 @@ C     ADJUST HT, DBH TO APPROXIMATE A 2 CM TREE WHEN DBH<2
      >  CRHTDBH(IISP) * (YH2/YD2) +
      >  CRHT(IISP) * YH2 +
      >  CRDBH2(IISP) * (YD2*YD2) +
-     >  CRBAL(IISP) * YBALM 
+     >  CRBAL(IISP) * YBALM
 
       IF (YSD .GT. 0.0) THEN
 	  YCR = YCR + BACHLO(0.0,YSD,RANN)

@@ -1,5 +1,11 @@
       SUBROUTINE FMVINIT
-      IMPLICIT NONE
+      use plot_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMVINIT  FIRE-BM-DATE OF LAST REVISION: 04/25/13
 C----------
@@ -15,18 +21,8 @@ C----------
 *
 ***********************************************************************
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
-C
-COMMONS
-C
       INTEGER I,J
-      
+
       LVWEST    = .TRUE.  ! WESTERN VARIANT
 
       CANCLS(1) =  5.0
@@ -84,7 +80,7 @@ C     BASED ON HABITAT TYPE (TEMPERATURE AND MOISTURE CATEGORY)
       DKR(7,2) = 0.025  ! 20 - 35"
       DKR(8,2) = 0.025  ! 35 - 50"
       DKR(9,2) = 0.025  !  > 50"
-      
+
       DKR(1,3) = 0.090 ! < 0.25"
       DKR(2,3) = 0.090 ! 0.25 - 1"
       DKR(3,3) = 0.090 ! 1 - 3"
@@ -93,7 +89,7 @@ C     BASED ON HABITAT TYPE (TEMPERATURE AND MOISTURE CATEGORY)
       DKR(6,3) = 0.033  ! 12 - 20"
       DKR(7,3) = 0.033  ! 20 - 35"
       DKR(8,3) = 0.033  ! 35 - 50"
-      DKR(9,3) = 0.033  !  > 50"      
+      DKR(9,3) = 0.033  !  > 50"
 
       DKR(1,4) = 0.113 ! < 0.25"
       DKR(2,4) = 0.113 ! 0.25 - 1"
@@ -261,14 +257,14 @@ C
 C  WESTERN JUNIPER (6 = WJ) -- USE SO WJ
 C
           CASE (6)
-            V2T(I)     =  34.9 
-            LEAFLF(I)  =   4.0 
-            TFALL(I,3) =  15.0 
-            ALLDWN(I)  = 100.0 
-            DECAYX(I)  =   1.0 
-            FALLX(I)   =   1.0 
+            V2T(I)     =  34.9
+            LEAFLF(I)  =   4.0
+            TFALL(I,3) =  15.0
+            ALLDWN(I)  = 100.0
+            DECAYX(I)  =   1.0
+            FALLX(I)   =   1.0
             DO J= 1,4
-              HTX(I,J) =   1.0 
+              HTX(I,J) =   1.0
             ENDDO
             LSW(I)     = .TRUE.
 C
@@ -332,13 +328,13 @@ C  WHITEBARK PINE (11 = WB) USE SO WB VALUES
 C
           CASE (11)
             V2T(I)     =  22.5  ! from white pine
-            LEAFLF(I)  =   3.0 
-            TFALL(I,3) =  15.0 
-            ALLDWN(I)  = 110.0 
-            DECAYX(I)  =   1.0 
-            FALLX(I)   =   1.0 
+            LEAFLF(I)  =   3.0
+            TFALL(I,3) =  15.0
+            ALLDWN(I)  = 110.0
+            DECAYX(I)  =   1.0
+            FALLX(I)   =   1.0
             DO J= 1,4
-              HTX(I,J) =   1.0 
+              HTX(I,J) =   1.0
             ENDDO
             LSW(I)     = .TRUE.
 C
@@ -346,13 +342,13 @@ C  LIMBER PINE (12 = LM) USE SO WB VALUES
 C
           CASE (12)
             V2T(I)     =  22.5  ! from white pine
-            LEAFLF(I)  =   3.0 
-            TFALL(I,3) =  15.0 
-            ALLDWN(I)  = 110.0 
-            DECAYX(I)  =   1.0 
-            FALLX(I)   =   1.0 
+            LEAFLF(I)  =   3.0
+            TFALL(I,3) =  15.0
+            ALLDWN(I)  = 110.0
+            DECAYX(I)  =   1.0
+            FALLX(I)   =   1.0
             DO J= 1,4
-              HTX(I,J) =   1.0 
+              HTX(I,J) =   1.0
             ENDDO
             LSW(I)     = .TRUE.
 C
@@ -360,14 +356,14 @@ C  PACIFIC YEW (13 = PY) USE SO PY VALUES
 C
           CASE (13)
             V2T(I)     =  26.2 ! baldcypress
-            LEAFLF(I)  =   7.0 
-            TFALL(I,3) =  20.0 
-            ALLDWN(I)  =  90.0 
-            DECAYX(I)  =   1.0 
-            FALLX(I)   =   1.0 
+            LEAFLF(I)  =   7.0
+            TFALL(I,3) =  20.0
+            ALLDWN(I)  =  90.0
+            DECAYX(I)  =   1.0
+            FALLX(I)   =   1.0
             DO J= 1,4
               HTX(I,J) =   1.0
-            ENDDO 
+            ENDDO
             LSW(I)     = .TRUE.
 C
 C  ALASKA CEDAR (14 = YC) USE WC YC VALUES
@@ -387,28 +383,28 @@ C
 C  QUAKING ASPEN (15 = AS) USE SO AS VALUES
 C
           CASE (15)
-            V2T(I)     =  21.8 
-            LEAFLF(I)  =   1.0 
-            TFALL(I,3) =  15.0 
-            ALLDWN(I)  =  90.0 
-            DECAYX(I)  =   1.0 
-            FALLX(I)   =   1.0 
+            V2T(I)     =  21.8
+            LEAFLF(I)  =   1.0
+            TFALL(I,3) =  15.0
+            ALLDWN(I)  =  90.0
+            DECAYX(I)  =   1.0
+            FALLX(I)   =   1.0
             DO J= 1,4
-              HTX(I,J) =   1.0 
+              HTX(I,J) =   1.0
             ENDDO
             LSW(I)     = .FALSE.
 C
 C  BLACK COTTONWOOD (16 = CW) USE SO CW VALUES
 C
           CASE (16)
-            V2T(I)     =  19.3 
-            LEAFLF(I)  =   1.0 
-            TFALL(I,3) =  15.0 
-            ALLDWN(I)  =  90.0 
-            DECAYX(I)  =   1.0 
-            FALLX(I)   =   1.0 
+            V2T(I)     =  19.3
+            LEAFLF(I)  =   1.0
+            TFALL(I,3) =  15.0
+            ALLDWN(I)  =  90.0
+            DECAYX(I)  =   1.0
+            FALLX(I)   =   1.0
             DO J= 1,4
-              HTX(I,J) =   1.0 
+              HTX(I,J) =   1.0
             ENDDO
             LSW(I)     = .FALSE.
 C
@@ -429,19 +425,18 @@ C
 C  OTHER HARDWOODS (18 = OH) USE SO OH VALUES
 C
           CASE (18)
-            V2T(I)     =  21.8 
-            LEAFLF(I)  =   1.0 
+            V2T(I)     =  21.8
+            LEAFLF(I)  =   1.0
             TFALL(I,3) =  15.0
-            ALLDWN(I)  =  90.0 
-            DECAYX(I)  =   1.0 
-            FALLX(I)   =   1.0 
+            ALLDWN(I)  =  90.0
+            DECAYX(I)  =   1.0
+            FALLX(I)   =   1.0
             DO J= 1,4
-              HTX(I,J) =   1.0 
+              HTX(I,J) =   1.0
             ENDDO
             LSW(I)     = .FALSE.
 C
         END SELECT
-C
 C
 C       TIME-TO-FALL FOR OTHER CROWN CATEGORIES
 C
@@ -478,7 +473,7 @@ C       SET THE DECAY RATE CLASS (DKRCLS)
 C
         SELECT CASE (I)
 
-C         some pines, doug-fir, cedars 
+C         some pines, doug-fir, cedars
           CASE (1:3,6,11:14)
             DKRCLS(I)  =   1
 
@@ -493,7 +488,7 @@ C         firs, some pines, oak
 C         aspen, cottonwood, other hardwoods
           CASE (15,16,18)
             DKRCLS(I)  =   4
-            
+
         END SELECT
 
       ENDDO

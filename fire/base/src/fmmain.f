@@ -1,5 +1,11 @@
       SUBROUTINE FMMAIN
-      IMPLICIT NONE
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -22,27 +28,20 @@ C            FMSOUT
 C            FMSSUM
 C            FMTRET
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
-C
-COMMONS
-C
       LOGICAL DEBUG
       CHARACTER VVER*7
       INTEGER I,IYR,IL,ISZ,IDC,ITM,IRTNCD
       INTEGER FMD
+C     Variables that support the use of FMORTMLT       
+      INTEGER  MYACTS(1),NTODO,ITODO,NPRM,IACT,IDSP
+      REAL     PRMS(4)
+      DATA     MYACTS/2554/
 
 C     CHECK FOR DEBUG.
 
       CALL DBCHK (DEBUG,'FMMAIN',6,ICYC)
-      IF (DEBUG) WRITE(JOSTND,7) ICYC,LFMON
-    7 FORMAT(' ENTERING FMMAIN CYCLE = ',I2,' LFMON=',L2)
+      IF (DEBUG) WRITE(JOSTND,6) ICYC,LFMON
+    6 FORMAT(' ENTERING FMMAIN CYCLE = ',I2,' LFMON=',L2)
 
 C     RETURN IF THE FIRE MODEL IS NOT ACTIVE
 
@@ -55,18 +54,38 @@ C     420 FIRE 0 IF STAND HAS NO FIRE, 1 IF FIRE OCCURS (FM)
       LFIRE=.FALSE.
 
 C     Calculate the number of years in this cycle so that the decomposition
-C     rates can be adjusted correctly for variable cycle lengths. 
+C     rates can be adjusted correctly for variable cycle lengths.
 C     This is necessary as we move from the FFE working on annual timesteps
 C     to cycle timesteps. (note: this value is the same as IFINT)
 
-      NYRS = IY(ICYC+1) - IY(ICYC)     
+      NYRS = IY(ICYC+1) - IY(ICYC)
 C
 C     Loop over the years within the cycle
 C
       IFMYR1 = IY(ICYC)
       IFMYR2 = IY(ICYC+1) - 1
-      IF (DEBUG) WRITE(JOSTND,8) IFMYR1,IFMYR2, BURNYR, ITRN
-    8 FORMAT(' IN FMMAIN IFMYR1 IFMYR2 BURNYR ITRN= ',5I5)
+      IF (DEBUG) WRITE(JOSTND,7) IFMYR1,IFMYR2, BURNYR, ITRN
+    7 FORMAT(' IN FMMAIN IFMYR1 IFMYR2 BURNYR ITRN= ',5I5)
+    
+C     Process FMORTMLT
+
+      FMORTMLT = 1.
+      CALL OPFIND(1,MYACTS,NTODO)
+      IF (NTODO.GT.0) THEN
+        DO ITODO=1,NTODO
+          CALL OPGET(ITODO,4,IDSP,IACT,NPRM,PRMS)
+          CALL OPDONE(ITODO,IY(ICYC))
+          IDSP = IFIX(PRMS(2))
+          DO I=1,ITRN
+            IF (IDSP .NE. 0 .AND. ISP(I) .NE. IDSP) CYCLE
+            IF (DBH(I).GE.PRMS(3) .AND. DBH(I).LT.PRMS(4)) 
+     >         FMORTMLT(I) = PRMS(1)
+          ENDDO
+          IF (DEBUG) WRITE(JOSTND,8) PRMS(1),IDSP,PRMS(3),PRMS(4)
+    8     FORMAT(' FMORTMLT SET TO',F10.4,' FOR SPECIES I=',I3,
+     >      ' MIND=',F6.2,' MAXD=',F7.1)
+        ENDDO
+      ENDIF
 
 C REMOVE THE LOOP FOR RUNNING THIS JUST ON CYCLE BOUNDARIES...
 C     and set IYR to be the cycle year.
@@ -123,7 +142,7 @@ C         IF (IYR .EQ. IFMYR1 .OR. BURNYR .EQ. IYR-1 .OR.
 C     &   PBURNYR .EQ. IYR-1 .OR. (VVER(1:2) .EQ. 'SN')) THEN
            CALL FMCBA (IYR,0)
 C         ENDIF
-         
+
 C        This resets the value of cwdcut, which is based on salvage
 C        removal, back to zero in all but the first year of a cycle.
 C        This is necessary since the call to fmsalv was moved to fmsdit,
@@ -134,7 +153,7 @@ C         NOTE: cycle-bouncary version no longer needs this, since
 C                 IYR=IFMYR1 always
 
 C         IF (IYR .NE. IFMYR1) CWDCUT = 0.
-C         
+C
 C     END OF INITIALIZATION PART OF ROUTINE
 C
 C     DO VARIOUS ACTIVITIES AND TREATMENTS
@@ -146,16 +165,16 @@ C        Do fuel treatment (jackpot burns and pile burns).
 C        Do FuelMove keyword (formerly in FMCWD)
 
          CALL FMFMOV(IYR)
-         
+
 C        Check on user-specified fm definitions and
 C        process any fueltret keywords.
 
          CALL FMUSRFM (IYR, FMD)
-         
+
 C        Simulate actual fires
          CALL FMBURN (IYR, FMD, .TRUE.)
 
-C         
+C
 C     PRINT ALL OUTPUT FILES
 C
 C        Print out the current snag list (if requested)
@@ -164,16 +183,16 @@ C        Print out the current snag list (if requested)
          CALL FMSSUM (IYR)
 
 C        Potential fire report
-         
+
 C----------
-C  CALL FMPOCR SO THE CANOPY FUELS PROFILE TABLE IS PRINTED 
+C  CALL FMPOCR SO THE CANOPY FUELS PROFILE TABLE IS PRINTED
 C  AT THE CORRECT TIME.
-C  CALL NEW ROUTINE TO LOAD INFORMATION FOR CALCULATING THE 
+C  CALL NEW ROUTINE TO LOAD INFORMATION FOR CALCULATING THE
 C  FUEL MODEL VARIABLES, BUT ONLY CALL THIS TIME IF A FIRE OCCURRED.
 C----------
          CALL FMPOCR(IYR,2)
          IF (BURNYR .EQ. IYR) THEN
-            CALL FMCFMD3(IYR, FMD)   
+            CALL FMCFMD3(IYR, FMD)
          ENDIF
 
 C----------
@@ -205,14 +224,14 @@ C        side effects of this code!
 
          CALL EVTSTV (iyr)
 
-C         
+C
 C        UPDATE SNAG AND CWD POOLS
 C
 C        temporarlily reset teh value of NYRS to 1 so that we don't need to change the code again
-         NYRS = 1 
-         
+         NYRS = 1
+
          DO IYR = IFMYR1,IFMYR2
-      
+
 C          Update conditon of existing snags for the current year.
 
            CALL FMSNAG (IYR, IY(1))
@@ -241,10 +260,10 @@ C          before any cuts that may occur next cycle.)
                  ENDDO
               ENDDO
            ENDDO
-                
+
          ENDDO
 
-C        change NYRS back to its original value        
+C        change NYRS back to its original value
          NYRS = IY(ICYC+1) - IY(ICYC)
 
 C        In the last year of each cycle, record some information about

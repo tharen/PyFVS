@@ -1,5 +1,8 @@
       SUBROUTINE ESDLAY (ISPE,IAS,DRAW,DELAY)
-      IMPLICIT NONE
+      use esparm_mod
+      use escomn_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **ESDLAY--EM   DATE OF LAST REVISION:  03/26/09
 C
@@ -8,22 +11,8 @@ C     THE NUMBER OF YEARS BETWEEN LAST PLOT DISTURBANCE AND
 C     GERMINATION OF BEST TREES.
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
-      INCLUDE 'ESCOMN.F77'
-C
-C
       INCLUDE 'ESCOM2.F77'
 C
-C
-COMMONS
 C----------
 C
       REAL BSUB(3,MAXSP),CSUB(3,MAXSP),BBW(3,4),CBW(3,4),

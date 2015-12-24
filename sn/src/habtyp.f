@@ -1,5 +1,9 @@
       SUBROUTINE HABTYP (KARD2,ARRAY2)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **HABTYP--SN   DATE OF LAST REVISION:  02/23/2010
 C----------
@@ -7,21 +11,6 @@ C
 C     TRANSLATES HABITAT TYPE  CODE INTO A SUBSCRIPT, ITYPE, AND IF
 C     KODTYP IS ZERO, THE ROUTINE RETURNS THE DEFAULT CODE.
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
 COMMONS
 C----------
       INTEGER IHB,NPA,I
@@ -47,7 +36,7 @@ C----------
      & '223BC','223BD','223DA','223DB','223DC',
      & '223DD','223DE','223DG','223DI','223DJ',
      & '223EA','223EB','223EC','223ED','223EE'/
-      DATA (SNECU(I),I= 76,150)/     
+      DATA (SNECU(I),I= 76,150)/
      & '223EF','223EG','223EH','223FA','223FB',
      & '223FC','223FD','223FF','231AA','231AB',
      & '231AC','231AD','231AE','231AF','231AG',
@@ -79,7 +68,7 @@ C----------
      & '232GA','232GB','232GC','232GD','232HA',
      & '232HB','232HC','232IA','232IB','232JA',
      & '232JB','232JC','232JD','232JE','232JF'/
-      DATA (SNECU(I),I= 226,300)/     
+      DATA (SNECU(I),I= 226,300)/
      & '232JG','232KA','232KB','232LA','232LB',
      & '232LC','234AA','234AB','234AC','234AD',
      & '234AE','234AF','234AG','234AH','234AI',

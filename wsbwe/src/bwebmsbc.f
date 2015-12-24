@@ -1,4 +1,9 @@
       SUBROUTINE BWEBMS (TRFBMS,ICVOPT)
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BWEBMS--IB   DATE OF LAST REVISION:  08/10/99
 C            SEI 14-July-2008
@@ -32,16 +37,6 @@ C       TRFBMS - ARRAY OF TREE FOLIAGE BIOMASSES.
 C       ICVOPT - BIOMASS CALCULATION OPTION (SEE BELOW).
 C       JOUT   - LOGICAL UNIT NUMBER FOR OUTPUT REPORTS.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
 C----------
 C  DECLARATIONS AND DIMENSIONS FOR INTERNAL VARIABLES
 C----------
@@ -104,7 +99,7 @@ C     CI Was:       WP  WL  DF  GF  WH  RC  LP  ES  AF  PP  OT
 C     EM Was:       WB  WL  DF  GF  WH  RC  LP  ES  AF  PP  OT
 C     TT Was:       WB  LM  DF  --  --  RC  LP  ES  AF  --  OT
 
-C     IB            PW  LW  FD  BG  HW  CW  PL  SE  BL  PY 
+C     IB            PW  LW  FD  BG  HW  CW  PL  SE  BL  PY
       DATA IBIOMP /  1,  2,  3,  4,  5,  6,  7,  8,  9, 10,
 C     IB            EP  AT  AC  OC  OH
      &              11, 11, 11,  3, 11 /

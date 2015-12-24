@@ -1,9 +1,10 @@
       SUBROUTINE BINITIAL
+      implicit none
 
       INCLUDE 'ENTITY.F77'
       INCLUDE 'SITE.F77'
 
-      
+
 C      CALL BETAS    ! NOW INITIALIZED IN BGCINIT.F
 C      CALL SOILH2O  ! now initialized in bgcinit.f
       print *,'in binitial'
@@ -16,8 +17,9 @@ C      used in BHTGROWTH, which is no longer used!
 
 
       SUBROUTINE BIOMASS
+      implicit none
 C----------------------------------------------------------------------
-C THIS SUBROUTINE CONVERTS TREE DIMENSIONS TO STEM VOLUME, THEN TO 
+C THIS SUBROUTINE CONVERTS TREE DIMENSIONS TO STEM VOLUME, THEN TO
 C DRY BIOMASS USING CONVERSION OF 1 M3 WOOD=500 KG BIOMASS (1 CUFT=14.16
 C KG BIOMASS). BIOMASS IN LEAVES, BRANCHES, AND ROOTS ARE ESTIMATED
 C BY APPLYING RATIOS OF LEAF/STEM, BRANCHES/STEM, AND ROOT/STEM DERIVED
@@ -25,12 +27,12 @@ C FROM PUBLISHED BIOMASS EQUATIONS.
 C
 C GRASSES AND SHRUBS USE PUBLISHED BIOMASS EQUATIONS
 C
-C BIOMASS IS CONVERTED TO CARBON USING A CONVERSION =.5 KG C/1 KG BIOMASS 
+C BIOMASS IS CONVERTED TO CARBON USING A CONVERSION =.5 KG C/1 KG BIOMASS
 C
 C VOLUME EQUATIONS
 C SOURCES: UNPUBLISHED CHAMPION INTERNATIONAL WESTERN OPERATION
 C
-C BIOMASS EQUATIONS  
+C BIOMASS EQUATIONS
 C SOURCES: DF-GOWER,VOGT,GRIER. 1992. metric units
 C          WL-GOWER,GRIER,VOGT,VOGT. 1987. metric units
 C          PP-GHOLZ,GRIER,CAMPBELL,BROWN. 1979. metric
@@ -58,7 +60,6 @@ C      INCLUDE 'PRGPRM.F77'                             ! DITTO.
 C
       HTLIMIT=1.3       !*!  1.3m = 4.5 ft (the pt at which sm trees become lg trees)
 
-C
 C
 C IF STAND-BGC HAS ALREADY BEEN INITIALIZED, SKIP THIS SUBROUTINE UNLESS NEW
 C ENTITIES HAVE BEEN ADDED BY FVS - FROM THE REGEN MODEL FOR EXAMPLE.
@@ -91,7 +92,6 @@ C NOW, USE ROOT BIOMASS INSTEAD OF LEAF AREA
       ELSE
          GOTO 20
       END IF
-C
 C
       DO 10 I=I1,I2
        IF (ID(I).EQ.'T') THEN
@@ -281,9 +281,10 @@ C  added line for shrubs below.  ajm 10/00
    20 RETURN
       END
 
-      
-      
+
+
       SUBROUTINE SP2INT
+      implicit none
 C------------------------------------------------------------
 C THIS SUBROUTINE CONVERTS THE CHARACTER VARIABLE, "SPP", TO
 C AN INTEGER VARIABLE, "ISP". ALSO, IT CONVERTS THE CHARACTER
@@ -291,7 +292,7 @@ C VARIABLE "ID" TO AN INTEGER VARIABLE "IB".
 C------------------------------------------------------------
 
       INCLUDE 'ENTITY.F77'
-      print *, 'in sp2int'      
+      print *, 'in sp2int'
       DO 10 I=1,NB
         IF (SPP(I).EQ.'PP') THEN
           BGCISP(I)=1
@@ -387,7 +388,7 @@ C    AA and BB are texture coefficients
 C----------------------------
 C      REAL PSAND, PCLAY
 C      INCLUDE 'SITE.F77'
-C      
+C
 C      PSAND=S(12)
 C      PCLAY=S(14)
 C      VOLMAX=S(3)
@@ -403,7 +404,7 @@ C      RETURN
 C      END
 
 
-C     SUBROUTINE BETAS 
+C     SUBROUTINE BETAS
 C------------------------------------------------
 C This subroutine reads the B() & S() variables
 C    The B1() variables are lifeform specific.
@@ -418,16 +419,17 @@ C      READ(61,10) ((B1(I,J),J=1,3),I=1,13)
 C   10 FORMAT(3(F8.4,1X))
 C      READ(61,'(F8.0)') (B2(K),K=1,22)
 C      READ(62,'(F8.0)') (S(L),L=1,15)
-C 
+C
 C     DO 20 K=1,22
 C        WRITE(*,100) (B2(K),K=1,22)
-C  100   FORMAT (F8.4)   
+C  100   FORMAT (F8.4)
 C  20 CONTINUE
 C      RETURN
 C     END
 
-      
+
       SUBROUTINE HABTYPE
+      implicit none
 C-------------------------------------------------------------------
 C   THIS SUBROUTINE SETS HABITAT TYPE AND NATIONAL FOREST LOCATION
 C   FLAGS FOR THE PROGNOSIS-BASED HEIGHT GROWTH SUBROUTINE.
@@ -437,24 +439,24 @@ C-------------------------------------------------------------------
       INCLUDE 'SITE.F77'
       print *, 'in habtype'
       IF(HTYPE.EQ.250 .OR. HTYPE.EQ.260 .OR. HTYPE.EQ.280 .OR.
-     +   HTYPE.EQ.290 .OR. HTYPE.EQ.310 .OR. HTYPE.EQ.320 .OR. 
-     +   HTYPE.EQ.330) THEN 
+     +   HTYPE.EQ.290 .OR. HTYPE.EQ.310 .OR. HTYPE.EQ.320 .OR.
+     +   HTYPE.EQ.330) THEN
         IHAB1=1
         IHAB2=3
-      ELSE IF(HTYPE.EQ.690 .OR. HTYPE.EQ.710 .OR. 
-     +        HTYPE.EQ.720) THEN 
+      ELSE IF(HTYPE.EQ.690 .OR. HTYPE.EQ.710 .OR.
+     +        HTYPE.EQ.720) THEN
         IHAB1=2
         IHAB2=3
       ELSE IF(HTYPE.EQ.130 .OR. HTYPE.EQ.170 .OR. HTYPE.EQ.660 .OR.
-     +        HTYPE.EQ.730 .OR. HTYPE.EQ.830 .OR. HTYPE.EQ.850 .OR. 
-     +        HTYPE.EQ.999) THEN 
+     +        HTYPE.EQ.730 .OR. HTYPE.EQ.830 .OR. HTYPE.EQ.850 .OR.
+     +        HTYPE.EQ.999) THEN
         IHAB1=3
         IHAB2=3
       ELSE IF(HTYPE.EQ.420 .OR. HTYPE.EQ.470) THEN
         IHAB1=4
         IHAB2=3
-      ELSE IF(HTYPE.EQ.510 .OR. HTYPE.EQ.620 .OR. HTYPE.EQ.640 .OR. 
-     +        HTYPE.EQ.670 .OR. HTYPE.EQ.680) THEN 
+      ELSE IF(HTYPE.EQ.510 .OR. HTYPE.EQ.620 .OR. HTYPE.EQ.640 .OR.
+     +        HTYPE.EQ.670 .OR. HTYPE.EQ.680) THEN
         IHAB1=5
         IHAB2=3
       ELSE IF(HTYPE.EQ.520) THEN
@@ -471,14 +473,14 @@ C-------------------------------------------------------------------
         IHAB2=3
       ENDIF
 
-      IF(NFLOC.EQ.5 .OR. NFLOC.EQ.17) THEN 
-        ILOC=1 
-      ELSE IF(NFLOC.EQ.6 .OR. NFLOC.EQ.18) THEN 
-        ILOC=2  
+      IF(NFLOC.EQ.5 .OR. NFLOC.EQ.17) THEN
+        ILOC=1
+      ELSE IF(NFLOC.EQ.6 .OR. NFLOC.EQ.18) THEN
+        ILOC=2
       ELSE
-        ILOC=3  
-      ENDIF 
-      
+        ILOC=3
+      ENDIF
+
       RETURN
       END
-      
+

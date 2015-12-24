@@ -1,5 +1,10 @@
       SUBROUTINE FMFOUT(IYR, FLAME, FMD, IFIRE, CFTMP)
-      IMPLICIT NONE
+      use contrl_mod
+      use metric_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMFOUT FIRE-BASE-METRIC-DATE OF LAST REVISION:  04/08/14
 C----------
@@ -35,17 +40,12 @@ C.... PARAMETER STATEMENTS.
 
 C.... PARAMETER INCLUDE FILES.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'FMPARM.F77'
 
 C.... COMMON INCLUDE FILES.
 C
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'FMCOM.F77'
       INCLUDE 'FMFCOM.F77'
-      INCLUDE 'METRIC.F77'
 
 C.... VARIABLE DECLARATIONS.
 C        note: if change MAXCL,must also change the formats 335,345!
@@ -79,8 +79,8 @@ C
 
 C     ROUTINE BEGINS
 
-C     BURN CONDITIONS REPORT: IFMBRB, IFMBRE ARE THE BEGINNING AND 
-C     ENDING YEARS FOR THE REPORT.  
+C     BURN CONDITIONS REPORT: IFMBRB, IFMBRE ARE THE BEGINNING AND
+C     ENDING YEARS FOR THE REPORT.
 C     RETREIVE THE UNIT NUMBER FOR ANY REPORTS WHICH MAY BE WRITTEN.
 C
       CALL GETLUN (JROUT)
@@ -137,7 +137,7 @@ C
      &           (MOIS(1,1)*100),(MOIS(1,2)*100),
      &           (MOIS(1,3)*100),(MOIS(1,4)*100),
      &           (MOIS(1,5)*100),(MOIS(2,1)*100),(MOIS(2,2)*100),
-     &           FWIND*MItoKM, INT(FMSLOP*100), FLAME*FTtoM, 
+     &           FWIND*MItoKM, INT(FMSLOP*100), FLAME*FTtoM,
      &           SCH*FTtoM, CFTMP, 0,100
           ELSE
             WRITE (JROUT,100) IDBRN,IYR,
@@ -153,8 +153,8 @@ C
       ENDIF
   105 CONTINUE
 C*************************************
-C     FUEL CONSUMPTION REPORT: IFMFLB, IFMFLE ARE THE BEGINNING AND 
-C     ENDING YEARS FOR THE REPORT.  
+C     FUEL CONSUMPTION REPORT: IFMFLB, IFMFLE ARE THE BEGINNING AND
+C     ENDING YEARS FOR THE REPORT.
 C
       IF (DEBUG) WRITE(JOSTND,778) IFMFLB,IFMFLE,IDFUL,JROUT
   778 FORMAT(' IFMFLB IFMFLE IDFUL JROUT: ',4I5)
@@ -197,7 +197,7 @@ C       Calculate summation in Pile categories
           IK = II + 6
           SUML3 = SUML3 + BURNED(3,II)
           SUMG3 = SUMG3 + BURNED(3,IJ) + BURNED(3,IK)
-          TOTG3 = TOTG3 + CWD(3,IJ,1,5) + CWD(3,IJ,2,5) + 
+          TOTG3 = TOTG3 + CWD(3,IJ,1,5) + CWD(3,IJ,2,5) +
      &                    CWD(3,IK,1,5) + CWD(3,IK,2,5)
         ENDDO
         BurnG12 = BURNED(3,6)+ BURNED(3,7)+ BURNED(3,8)+ BURNED(3,9)
@@ -214,13 +214,13 @@ C       Calculate summation in Pile categories
 
         BDTOT = SUML3 + SUMG3 + BURNED(3,11) + BURNED(3,10)
      &          + BLIVE + BURNCR
-          
+
         ICRB=INT(CRBURN*100.0+.5)
         IF (IFIRE.EQ.0) ICRB=0
-        IF (ICRB.LT.0) ICRB=-1        	
+        IF (ICRB.LT.0) ICRB=-1
 C
 C     CALL THE DBS MODULE TO OUTPUT FUEL CONSUMPTION INFO TO A DATABASE
-C 
+C
         DBSKODEF = 1
 	  CONV=TItoTM/ACRtoHA
         CALL DBSFMFUEL(IYR,NPLT,EXPOSR,
@@ -230,7 +230,7 @@ C
      &    BDTOT*CONV,PDUFF,PGR3,ICRB,SMOKE(1)*CONV,SMOKE(2)*CONV,
      &    DBSKODEF)
         IF(DBSKODEF.EQ.0) GOTO 252
-        
+
         IFLPAS = IFLPAS + 1
 C
 C       WRITE THE HEADER IF REQUESTED.
@@ -271,7 +271,7 @@ C
         IF (ICRB.LT.0) ICRB=-1
         WRITE (JROUT,250) IDFUL,IYR,INT(EXPOSR),
      &    BURNED(3,10)*CONV, BURNED(3,11)*CONV, SUML3*CONV, SUMG3*CONV,
-     &    BURNED(3,4)*CONV, BURNED(3,5)*CONV, BurnG12*CONV, 
+     &    BURNED(3,4)*CONV, BURNED(3,5)*CONV, BurnG12*CONV,
      &    BLIVE*CONV, BURNCR*CONV, BDTOT*CONV,
      &    INT(PDUFF), INT(PGR3), ICRB,
      &    SMOKE(1)*CONV, SMOKE(2)*CONV
@@ -282,8 +282,8 @@ C
   252 CONTINUE
 
 C*************************************
-C     MORTALITY REPORT: IFMMRB, IFMMRE ARE THE BEGINNING AND 
-C     ENDING YEARS FOR THE REPORT. 
+C     MORTALITY REPORT: IFMMRB, IFMMRE ARE THE BEGINNING AND
+C     ENDING YEARS FOR THE REPORT.
 C
       IF (DEBUG) WRITE(JOSTND,779) IFMMRB,IFMMRE,IDMRT,JROUT
   779   FORMAT(' IFMMRB IFMMRE IDMRT JROUT: ',4I5)
@@ -346,7 +346,7 @@ C           this tree will not be included in the output.
         ENDDO
 C
 C     CALL THE DBS MODULE TO OUTPUT THE MORTALITY REPORT TO A DATABASE
-C 
+C
         DBSKODEM = 1
         CALL DBSFMMORT(IYR,CLSKIL/ACRtoHA,TOTCLS/ACRtoHA,
      &    TOTBAK*FT2pACRtoM2pHA,TOTVOLK*FT3pACRtoM3pHA,DBSKODEM)
@@ -368,7 +368,7 @@ C
      &        (VVER(1:2) .EQ. 'NE') .OR. (VVER(1:2) .EQ. 'CS')) THEN
             WRITE (JROUT,420) IDMRT
           ELSE
-            WRITE (JROUT,320) IDMRT          
+            WRITE (JROUT,320) IDMRT
           ENDIF
           WRITE (JROUT,321) IDMRT,
      &      (LOWDBH(I)*INtoCM,LOWDBH(I+1)*INtoCM,I=1,MAXCL-1),
@@ -385,7 +385,7 @@ C
      &      '(BY DIAMETER CLASS IN CMS) ',T111,'BASAL    TOTAL')
   420     FORMAT (1X,I5,21X,
      &      'NUMBER KILLED / NUMBER BEFORE ',
-     &      '(BY DIAMETER CLASS IN CMS)',T111,'BASAL    MERCH')     
+     &      '(BY DIAMETER CLASS IN CMS)',T111,'BASAL    MERCH')
   321     FORMAT (1X,I5,1X,'YEAR  SP  ',
      &      6(1X,F5.1,'-',F5.1,1X),4X,'>=',F5.1,T111,'AREA      CU M')
         ENDIF

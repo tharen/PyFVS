@@ -1,14 +1,12 @@
       BLOCK DATA DFBLKD
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **DFBLKD--UT   DATE OF LAST REVISION:  06/30/10
 C----------
 C
 C     DOUGLAS-FIR BEETLE MODEL BLOCK DATA
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'DFBCOM.F77'
 
 C....
@@ -16,20 +14,20 @@ C.... WINSUC IS THE SPECIES DEPENDENT VALUES FOR WINDTHROW
 C.... SUSCEPTIBILITY.
 C....
 C....    DFB              DFB              DFB
-C....  IDX SP  WINSUC   IDX SP  WINSUC   IDX SP  WINSUC 
-C....   01 WP   0.028    14 IC   0.111    27 OC   0.028 
-C....   02 WL   0.083    15 RF   0.056    28 GS   0.056 
-C....   03 DF   0.056    16 SF   0.098    29 BO   0.0   
-C....   04 GF   0.139    17 OS   0.028    30 OTH  0.042 
-C....   05 WH   0.111    18 OH   0.056    31 JP   0.056 
-C....   06 RC   0.111    19 AS   0.056    32 TO   0.0   
-C....   07 LP   0.028    20 BS   0.139    33 PI   0.0   
-C....   08 ES   0.139    21 CB   0.139    34 YC   0.111 
-C....   09 AF   0.139    22 WB   0.0      35 RW   0.056 
-C....   10 PP   0.056    23 LM   0.0      36 LL   0.056 
-C....   11 MH   0.111    24 CW   0.056    37 KP   0.0   
-C....   12 SP   0.042    25 WS   0.139    38 PY   0.0   
-C....   13 WF   0.139    26 JU   0.0      39 NF   0.139 
+C....  IDX SP  WINSUC   IDX SP  WINSUC   IDX SP  WINSUC
+C....   01 WP   0.028    14 IC   0.111    27 OC   0.028
+C....   02 WL   0.083    15 RF   0.056    28 GS   0.056
+C....   03 DF   0.056    16 SF   0.098    29 BO   0.0
+C....   04 GF   0.139    17 OS   0.028    30 OTH  0.042
+C....   05 WH   0.111    18 OH   0.056    31 JP   0.056
+C....   06 RC   0.111    19 AS   0.056    32 TO   0.0
+C....   07 LP   0.028    20 BS   0.139    33 PI   0.0
+C....   08 ES   0.139    21 CB   0.139    34 YC   0.111
+C....   09 AF   0.139    22 WB   0.0      35 RW   0.056
+C....   10 PP   0.056    23 LM   0.0      36 LL   0.056
+C....   11 MH   0.111    24 CW   0.056    37 KP   0.0
+C....   12 SP   0.042    25 WS   0.139    38 PY   0.0
+C....   13 WF   0.139    26 JU   0.0      39 NF   0.139
 C....
 
       DATA WINSUC / 0.028, 0.083, 0.056, 0.139, 0.111,
@@ -66,6 +64,6 @@ C.... THIS VALUE MAY BE DIFFERENT FOR DIFFERENT VARIANTS OF FVS.
 
 C.... Set the variables for random number generator
 
-      DATA S0 / 55329D0 /, SS / 55329.0 / 
+      DATA S0 / 55329D0 /, SS / 55329.0 /
 
       END

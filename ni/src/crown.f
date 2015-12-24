@@ -1,5 +1,11 @@
       SUBROUTINE CROWN
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C NI $Id:
 C----------
@@ -21,30 +27,8 @@ C  PROCESSING OF CROWN CHANGE FOR SMALL TREES IS CONTROLLED BY
 C  **REGENT**.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
 C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
 C----------
 C  DECLARATIONS AND DIMENSIONS FOR INTERNAL VARIABLES:
 C
@@ -322,7 +306,7 @@ C----------
  9002 FORMAT(' ICR(',I4,')=',I3,'  EXPPCR=',F10.3,' EXPDCR=',F10.3,
      &  ' D=',F7.3,' H=',F7.3,' P=',F7.3,' OLDP=',F7.3)
 C----------
-C  COMPUTE THE PREDICTED CROWN RATIO AND 
+C  COMPUTE THE PREDICTED CROWN RATIO AND
 C  BOUND CROWN CHANGE TO 1% PER YEAR
 C----------
       CHG=EXPPCR-EXPDCR

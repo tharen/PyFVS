@@ -1,5 +1,18 @@
       BLOCK DATA BLKDAT
-      IMPLICIT NONE
+      use htcal_mod
+      use fvsstdcm_mod
+      use pden_mod
+      use esparm_mod
+      use rancom_mod
+      use contrl_mod
+      use coeffs_mod
+      use econ_mod
+      use plot_mod
+      use screen_mod
+      use escomn_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BLKDAT--ON  DATE OF LAST REVISION:  02/15/12
 C----------
@@ -9,26 +22,8 @@ C
 C     COMMON STATEMENT FOR MODEL COEFFICIENTS WHICH ARE HABITAT
 C     AND SITE DEPENDENT.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'COEFFS.F77'
-      INCLUDE 'ESPARM.F77'
-      INCLUDE 'ESCOMN.F77'
-      INCLUDE 'PDEN.F77'
-      INCLUDE 'ECON.F77'
-      INCLUDE 'HTCAL.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'RANCOM.F77'
-      INCLUDE 'SCREEN.F77'
-      INCLUDE 'VARCOM.F77'
-      INCLUDE 'FVSSTDCM.F77'      
-C
       INTEGER I,J
 C
-COMMONS
 C----------
 C  SPECIES SPECIFIC BARK RATIOS.  FROM RAILE, G.K. 1982. ESTIMATING
 C  STUMP VOLUME. RES. PAP. NC-224, 4 P.
@@ -99,7 +94,7 @@ c    &  'SH ','BT ','QA ','BP ','PB ','CH ','BN ','WN ','HH ','BK ',
 c    &  'NC ','BE ','ST ','MM ','AH ','AC ','HB ','DW ','HT ','AP ',
 c    &  'BG ','SY ','PR ','CC ','PL ','WI ','BL ','DM ','SS ','MA '/
 c
-C     ONTARIO SPECIES CODES. 
+C     ONTARIO SPECIES CODES.
 C        ADD IN THE FOUR NEW PLANTATION SPECIES
       DATA JSP     /'PJ ','PS ','RN ','RP ','PW ','SW ','SN ','BF ', ! 8
      &  'SB ','TA ','CE ','HE ','SO ','CR ','AB ','AR ','CW ','MV ', !18
@@ -167,7 +162,7 @@ c
      &  'HU1','PG1','PT1','PB1','BW1','CH1','BT1','WB1','IW1','LB1',
      &  'NC1','MM1','MS1','MT1','BB1','CA1','BH1','DF1','HT1','ML1',
      &  'GB1','SY1','CP1','CC1','PL1','WI1','WI1','WI1','SS1','AM1',
-     &  'JP1','WP1','SP1','BP1',  
+     &  'JP1','WP1','SP1','BP1',
      &  'PJ2','PS2','RN2','RP2','PW2','SW2','SN2','BF2','SB2',
      &  'TA2','CE2','HE2','SO2','CR2','AB2','AR2','CW2','MV2',
      &  'MR2','CB2','EW2','ES2','ER2','BY2','BD2','MH2','MB2','BE2',
@@ -175,7 +170,7 @@ c
      &  'HU2','PG2','PT2','PB2','BW2','CH2','BT2','WB2','IW2','LB2',
      &  'NC2','MM2','MS2','MT2','BB2','CA2','BH2','DF2','HT2','ML2',
      &  'GB2','SY2','CP2','CC2','PL2','WI2','WI2','WI2','SS2','AM2',
-     &  'JP2','WP2','SP2','BP2',  
+     &  'JP2','WP2','SP2','BP2',
      &  'PJ3','PS3','RN3','RP3','PW3','SW3','SN3','BF3','SB3',
      &  'TA3','CE3','HE3','SO3','CR3','AB3','AR3','CW3','MV3',
      &  'MR3','CB3','EW3','ES3','ER3','BY3','BD3','MH3','MB3','BE3',
@@ -186,7 +181,7 @@ c
      &  'JP3','WP3','SP3','BP3'/
 C
 C=================================
-C     SPECIES LIST FOR ONTARIO - 
+C     SPECIES LIST FOR ONTARIO -
 C=================================
 C     1 = JACK PINE NATURAL (PJ)
 C     2 = SCOTCH PINE (PS)
@@ -323,7 +318,7 @@ C
       DATA LSCRN,JOSCRN/.FALSE.,6/
 
       DATA JOSUME/13/
-      
-      DATA KOLIST,FSTOPEN /27,.FALSE./      
+
+      DATA KOLIST,FSTOPEN /27,.FALSE./
 
       END

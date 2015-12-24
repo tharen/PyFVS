@@ -1,30 +1,16 @@
       BLOCK DATA ESBLKD
-      IMPLICIT NONE
+      use esparm_mod
+      use prgprm_mod
+      use esrncm_mod
+      use eshap_mod
+      implicit none
 C----------
 C   **ESBLKD--ESTB   DATE OF LAST REVISION:   05/12/11
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
       INCLUDE 'ESCOM2.F77'
 C
-C
-      INCLUDE 'ESRNCM.F77'
-C
-C
-      INCLUDE 'ESHAP.F77'
-C
-C
       INCLUDE 'ESHAP2.F77'
-C
-C
-COMMONS
 C
         INTEGER I,J
         DATA JOREGT/17/,ESS0/55329D0/,ESSS/55329.0/

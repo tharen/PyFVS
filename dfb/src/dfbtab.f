@@ -1,5 +1,8 @@
       SUBROUTINE DFBTAB(CFTVOL)
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **DFBTAB  DATE OF LAST REVISION  05/30/13
 C----------
@@ -45,20 +48,7 @@ C     LIVEDF - (DFBCOM)  INPUT
 C     PREKLL - (DFBCOM)  INPUT
 C     PROB   - (ARRAYS)  INPUT
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
       INCLUDE 'DFBCOM.F77'
-C
-COMMONS
 C
 
       INTEGER I, DCNDX

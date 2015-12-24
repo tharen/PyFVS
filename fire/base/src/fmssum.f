@@ -1,5 +1,9 @@
       SUBROUTINE FMSSUM (IYR)
-      IMPLICIT NONE
+      use fmcom_mod
+      use plot_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -7,17 +11,6 @@ C
 C  Purpose:
 C     Reports a summary of snag statistics for all years that
 C     coinside with a FVS cycle boundary.
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
 C
       INTEGER I, II, JOUT, K
       REAL    THD(7),TSF(7),THDSF
@@ -67,7 +60,9 @@ C
          CALL GETID (ISNGSM)
          WRITE (JOUT,10) ISNGSM,NPLT,MGMID,
      >                   ((INT(SNPRCL(I)),I=1,6),K=1,2)
- 10      FORMAT (/I6,' $#*%'//46('-'),' SNAG SUMMARY REPORT '
+ 10      FORMAT (/I6,' $#*%'//,114('-')/
+     >        42X,'******  FIRE MODEL VERSION 1.0 ******',/
+     >        46('-'),' SNAG SUMMARY REPORT ',
      >        '(BASED ON STOCKABLE AREA) ',21('-')/,
      >        ' STAND ID: ',A26,4X,'MGMT ID: ',A4/
      >        7X,15('-'),' HARD SNAGS/ACRE ',16('-'),

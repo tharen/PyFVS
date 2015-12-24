@@ -1,5 +1,8 @@
       SUBROUTINE RDBB3
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDBB3       LAST REVISION:  08/26/14
 C----------
@@ -11,12 +14,12 @@ C     The mortality rates etc. specified for each beetle race that is
 C     active are reported back to RDOAGM.  By default, each race that
 C     was scheduled for this time period is rescheduled for the next
 C     time period (whether it was active this time or not, unless the
-C     user specifies otherwise).           
+C     user specifies otherwise).
 C
 C     Keyword:  BBTYPE3
 C     Inputs:  1 = first outbreak year    2 = host tree species
 C              3 = DBH limit              4 = threshold density of lg.
-C                                             enough sick-enough host 
+C                                             enough sick-enough host
 C              5 = mortality rate         6 = proportion of roots
 C                                             infected limit
 C              7 = 0 for reschedule, 1 for don't
@@ -41,22 +44,18 @@ C    10-DEC-07 Lance R. David (FHTET)
 C       Update to argument list in call to OPCOPY, added variable
 C       DONE for debug/tracking (from Don Robinson).
 C   08/26/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C....................................................................
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 
 C.... Common include files.
 
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'RDADD.F77'
- 
+
 C.... Local variable declarations.
 
       INTEGER  I, J, IK , I1, I2, ISPI, ONLY1X, NOCOPY, RRTYPE, RACE,
@@ -66,7 +65,7 @@ C.... Local variable declarations.
       REAL     DBHLIM, THRESH, MORT, RROTEX, STEMS
 
       REAL     PRMS(6)
-      
+
       IF (ITRN .LE. 0) RETURN
       NOCOPY = 0
       DONE = 0
@@ -77,7 +76,7 @@ C.... this time period.
       DATA MYACT /2417/
       CALL OPFIND (1,MYACT,NTODO)
       IF (NTODO .LE. 0) RETURN
-      
+
 C.... For each race, first get the parameter values, determine which
 C.... root rot type affects the beetle's host species, and determine
 C.... the first (I1) and last (I2) records of the host species.  Before
@@ -92,31 +91,31 @@ C.... proceeding, check that vulnerable host exists.
          MORT = PRMS(4)
          RROTEX = PRMS(5)
          ONLY1X = INT(PRMS(6))
-        
+
          RRTYPE = MAXRR
          IF (MAXRR .LT. 3) RRTYPE = IDITYP(IRTSPC(ISPI))
          I1 = ISCT(ISPI,1)
          I2 = ISCT(ISPI,2)
-        
+
          IF (ISCT(ISPI,1) .EQ. 0) GOTO 888
          IF (PAREA(RRTYPE) .LE. 0.0) GOTO 888
-      
+
 C....    Second, go through the host tree records and count the number
 C....    of live stems that meet the user's criteria for size and % of
 C....    roots infected with annosus.  Determine whether the density of
 C....    these stems exceeds the user's threshold for an active beetle
-C....    outbreak.       
+C....    outbreak.
 
          STEMS = 0.0
          DO 6 J = I1,I2
             I = IND1(J)
             IF (DBH(I) .LT. DBHLIM) GOTO 6
 
-            DO 5 IK = 1,ISTEP                       
+            DO 5 IK = 1,ISTEP
                DO 4 IP = 1,2
                   IF (PROPI(I,IK,IP) .LT. RROTEX) GOTO 4
                   STEMS = STEMS + PROBI(I,IK,IP)
-    4          CONTINUE   
+    4          CONTINUE
     5       CONTINUE
     6    CONTINUE
 
@@ -130,7 +129,7 @@ C....    the user.
 
          CALL OPDONE (RACE,IY(ICYC))
          DONE = 1
-        
+
          NUMBB = NUMBB + 1
          IF (NUMBB .GT. 3*MAXSP) NUMBB = 3*MAXSP
          HOST(NUMBB) = ISPI
@@ -149,15 +148,15 @@ C....    potentially active after the current growth cycle.
          IF (ONLY1X .EQ. 1) NOCOPY = 1
 
   999 CONTINUE
-  
+
 C.... If the Type 3 beetle races are to remain active, then copy them
 C.... to the next growth cycle.
 
       IF (NOCOPY .EQ. 1) GOTO 1000
-      CALL OPCOPY (MYACT(1),IY(ICYC),IY(ICYC+1),NCOPYS,KODE)      
+      CALL OPCOPY (MYACT(1),IY(ICYC),IY(ICYC+1),NCOPYS,KODE)
       CALL OPINCR (IY,ICYC,NCYC)
-      
- 1000 CONTINUE       
+
+ 1000 CONTINUE
 
       RETURN
       END

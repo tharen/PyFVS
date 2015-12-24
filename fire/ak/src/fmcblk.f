@@ -1,12 +1,11 @@
       BLOCK DATA FMCBLK
-      IMPLICIT NONE
+      use fmprop_mod
+      use prgprm_mod
+      implicit none
 C----------
 C   **FMCBLK--FIRE-AK  DATE OF LAST REVISION:   02/22/08
 C----------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPROP.F77'
 
       INTEGER J
 
@@ -26,7 +25,7 @@ C      10=WOODLAND JUNIPER/OAK/MESQUITE
 
       DATA BIOGRP/
      & 5, 1, 3, 3, 3,
-     & 1, 4, 5, 3, 6, 
+     & 1, 4, 5, 3, 6,
      & 6, 6, 3 /
 
 C DATA Statement Debug Information

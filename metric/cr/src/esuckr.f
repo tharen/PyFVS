@@ -1,5 +1,16 @@
       SUBROUTINE ESUCKR
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use esparm_mod
+      use estree_mod
+      use contrl_mod
+      use coeffs_mod
+      use eshap_mod
+      use metric_mod
+      use escomn_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **ESUCKR--CR   DATE OF LAST REVISION:  02/08/13
 C
@@ -9,46 +20,10 @@ C    ASSUMPTION: THE TREE LIST HAS BEEN COMPRESSED TO ABOUT 1/2 THE
 C    VALUE OF MAXTRE. COMPRS IS CALLED IN ESNUTR.
 C----------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
       INCLUDE 'ESHOOT.F77'
-C
-C
-      INCLUDE 'ESCOMN.F77'
-C
-C
-      INCLUDE 'ESHAP.F77'
-C
-C
-      INCLUDE 'ESTREE.F77'
-C
 C
       INCLUDE 'STDSTK.F77'
 C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-      INCLUDE 'METRIC.F77'
-C
-COMMONS
 C----------
       EXTERNAL ESRANN
       LOGICAL DEBUG
@@ -71,12 +46,12 @@ C  21=NC, 22=PW, 23=GO, 24=AW, 25=EM, 26=BK, 27=SO, 28=PB, 29=AJ, 30=RM,
 C  31=OJ, 32=ER, 33=PM, 34=PD, 35=AZ, 36=CI, 37=OS, 38=OH
 C
 C  SPECIES EXPANSION:
-C  UJ,AJ,RM,OJ,ER USE CR JU                              
+C  UJ,AJ,RM,OJ,ER USE CR JU
 C  NC,PW USE CR CO
-C  GO,AW,EM,BK,SO USE CR OA                             
-C  PB USES CR AS                              
+C  GO,AW,EM,BK,SO USE CR OA
+C  PB USES CR AS
 C  PM,PD,AZ USE CR PI
-C  CI USES CR PP                              
+C  CI USES CR PP
 C----------
 C
       DATA MDBH/10000000/,MSP/10000/,NUMSPR/2/
@@ -147,7 +122,7 @@ C
 C  SINGLE SPECIES
 C
       ELSE
-        DO JJ=1,NSPSPE 	
+        DO JJ=1,NSPSPE
         IF(J.EQ.ISPSPE(JJ))THEN
           SPRMLT(JJ,IT)=PRMS(2)
           HTMSPR(JJ,IT)=PRMS(3)
@@ -195,7 +170,7 @@ C     MAKE SURE THAT THERE IS ROOM IN THE TREE LIST FOR SPROUTS.
 C     THE CALL TO RDESCP INSURES THAT THE SPACE REQUIRED IS BELOW THAT
 C     NEEDED BY THE ROOT DISEASE MODEL.  RDESCP RETURNS THE MAXIMUM
 C     NUMBER OF TREES THAT ROOT DISEASE CAN HANDLE.  IF RROT IS NOT
-C     BEING RUN, MXRR IS RETURNED AS MAXTRE.  
+C     BEING RUN, MXRR IS RETURNED AS MAXTRE.
 C----------
       CALL RDESCP (MAXTRE, MXRR)
 C----------

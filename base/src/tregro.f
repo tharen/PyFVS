@@ -1,21 +1,13 @@
       SUBROUTINE TREGRO
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C    CALLED FROM **MAIN** AND PPMAIN EACH CYCLE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-COMMONS
-C
 C----------
 C  DECLARATIONS:
 C----------

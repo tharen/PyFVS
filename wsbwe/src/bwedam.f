@@ -1,5 +1,8 @@
       SUBROUTINE BWEDAM (TOTP,TOTR,AVPRBO)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BWEDAM             DATE OF LAST REVISION:  06/17/13
 C----------
@@ -23,27 +26,19 @@ C
 C Revision History:
 C   18-MAY-2000 Lance R. David (FHTET)
 C      .Previous noted dates of change 06/10/91 and 7/29/96 KA Sheehan.
-C      .Added debug handling. Debug is the only reason PRGPRM.F77 
+C      .Added debug handling. Debug is the only reason PRGPRM.F77
 C       and CONTROL.F77 FVS common files are included.
 C   16-OCT-2006 Lance R. David (FHTET)
 C      .Added stand ID to Damage report header.
 C   14-JUL-2010 Lance R. David (FMSC)
-C       Added IMPLICIT NONE and declared variables as needed.
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECOM.F77'
 C
-COMMONS
-C
       CHARACTER*4 ISZC(3),ISPC(6)
       LOGICAL DEBUG
-      INTEGER I, ICROWN, IFIFTH, IHOST, INRUN, ISZI 
+      INTEGER I, ICROWN, IFIFTH, IHOST, INRUN, ISZI
       REAL AVPRBO(6,3,2), CU, DIV, RDDS, RHTG, STHTGR(6), STREES,
      &     TOTP(6,3), TOTR(6,3), XFIFTH, XMULT
 

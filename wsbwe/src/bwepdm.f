@@ -1,5 +1,10 @@
       SUBROUTINE BWEPDM
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      use plot_mod
+      use coeffs_mod
+      use arrays_mod
+      implicit none
 C----------
 C **BWEPDM                  DATE OF LAST REVISION:  06/18/13
 C----------
@@ -50,8 +55,8 @@ C     16-AUG-2001 Lance R. David (FHTET)
 C       Added calls to BWERPT and BWERGT to place and retrieve the damage
 C       model random number seed into the generator so that random
 C       numbers used in function BWERNP and subroutine BWEBET are from
-C       the damage model random number series and not from one of the 
-C       other two random number series used in the GenDefol model, 
+C       the damage model random number series and not from one of the
+C       other two random number series used in the GenDefol model,
 C       weather and outbreak scheduling.
 C     15-APR-2003 Lance R. David (FHTET)
 C       Replaced old mortality process with new equations based on
@@ -60,7 +65,7 @@ C       Sheehan interpreted Mike's memos and created the equation
 C       put into the code. Several new category variables used in the
 C       new mortality equation were also added. Those variables are
 C       for topkill, missing foliage top, and missing foliage middle.
-C       Values for basal area of all trees and basal area of host trees 
+C       Values for basal area of all trees and basal area of host trees
 C       are also computed from begining of cycle FVS values for each
 C       sample point (or plot) in the data set. Note that the mortality
 C       rate applied is limited to 0.98 and this limit was already in
@@ -73,7 +78,7 @@ C       There is a deviation from the analysis regarding the topkill
 C       variable in the function. The analysis specifies topkill year
 C       prior, but this routine does not cycle on a annual time step.
 C       If this model is active and defoliation has occured, a tree's
-C       existing topkill is assumed to have been the result of 
+C       existing topkill is assumed to have been the result of
 C       defoliation. What can not be determined is the length of time
 C       that has past since topkill or if the current truncated height
 C       is the result of multiple topkill events.
@@ -82,30 +87,20 @@ C       because dwarf mistletoe rating is utilized in the topkill
 C       proportion function.
 C
 C    21-DEC-2005 Lance R. David (FHTET)
-C       Set surrogate species coefficients from existing DF and GF 
+C       Set surrogate species coefficients from existing DF and GF
 C       coefficients.
 C    14-JUL-2010 Lance R. David (FMSC)
-C       Added IMPLICIT NONE and declared variables as needed.
 C
 C    03/27/2012 Lance R. David
-C       Added requirement that missing foliage categories for top and 
-C       middle crown must be GT 0.0 for topkill and mortality values to 
+C       Added requirement that missing foliage categories for top and
+C       middle crown must be GT 0.0 for topkill and mortality values to
 C       be calculated.
 C       Extremely high mortality is calculated when MFT and/or MFM is 0.0
 C----------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'COEFFS.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECOM.F77'
       INCLUDE 'MISCOM.F77'
-C
-COMMONS
 C
       INTEGER I, IBWYR, IC, ICRC1, ICRC2, IFIR(6), IHOST, II, IOD,
      &        ISPI, ISZI, ITRC1, ITRC2, ITREE, NEW, NOBWYR
@@ -117,7 +112,7 @@ C
      &        TK0(6), TK1(6), TK2(6), TK3(6), TK4(6), TK5(6),
      &        TK6(6), TK7(6), TK8(6),
      &        KTK, MFM, MFT, PR, XPR, PCTK
-     
+
       LOGICAL DEBUG
 
 C     fir/non-fir tree species index
@@ -200,7 +195,6 @@ C
 
       IF (DEBUG) WRITE (JOSTND,*) 'ENTER BWEPDM: ICYC = ',ICYC
 C
-C
 C     ********************** EXECUTION BEGINS **************************
 C
 C     COMPUTE FA TO BE THE FRACTION OF THE PERIOD WHERE THE BWMODEL
@@ -258,7 +252,7 @@ C
      >        T79,'KILL',T86,'(FT)'/
      >        '----  --- ',2(' ------'),3(' -------'),6(' ------'))
 C
-C     Run through tree list to sum basal area for all trees and 
+C     Run through tree list to sum basal area for all trees and
 C     and basal area for host trees 3+ inch DBH on each sample point.
 C     FVS array ITRE() holds point (or plot) number.
 C
@@ -315,7 +309,7 @@ C           Calculate variables use in the proportion of topkill and
 C           probability of mortality equations.
 C
 C           Compute missing foliage categories (1-9) for top and middle
-C           crown as average of all age classes from proportion of 
+C           crown as average of all age classes from proportion of
 C           retained biomass.
 C
             MFT = 10.0 - IFIX((((PRBIO(IHOST,ICRC1,1) * 0.25)
@@ -345,7 +339,7 @@ C           process on a annual basis, but once per cycle. So the
 C           existing topkill is being vaguely assumed to have
 C           occurred in the cycle prior if the model is active and
 C           defoliation has taken place.
-C           
+C
             IF (ITRUNC(I) .GT. 0) THEN
                PCTK = ITRUNC(I)/NORMHT(I)
             ELSE
@@ -369,7 +363,7 @@ C              ON IDEAS ONLY...NOT DATA.  N.CROOKSTON, TOMMY GREG, AND BRUCE
 C              HOSTETLER CAME UP WITH THEM.  FOR SMALL TREES, SEE FERGUSON
 C              1988 RESEARCH PAPER INT-393.
 C
-  
+
                AVDEF=BWERNP(AVYRMX(IHOST,ISZI),.06)
                IF (ISZI.EQ.1) THEN
                   X=H
@@ -439,7 +433,7 @@ C           Added requirement that missing foliage categories for top
 C           and middle must be GT 0.0 for topkill value to be calculated.
 C
                   IF (MFT .GT. 0.0 .AND. MFM .GT. 0.0) THEN
- 
+
                      PART = 1.0/(1.0 + EXP(TK0(IHOST)
      &                  +(TK1(IHOST)*ELEV)+(TK2(IHOST)*ELEV*ELEV)
      &                  +(TK3(IHOST)*IMIST(I))+(TK4(IHOST)*PCTK)
@@ -508,7 +502,7 @@ C
      &            'IN BWEPDM: -TOPKILL- I=',I,' ISP=',ISPI,' H=',H,
      &            ' HT=',HT(I),' NORMHT=',NORMHT(I),
      &            ' ITRUNC=',ITRUNC(I),' DBH=',DBH(I),' BARK=',BARK,
-     &            ' PART=',PART,' FTKILL=',FTKILL 
+     &            ' PART=',PART,' FTKILL=',FTKILL
 
                ENDIF
             ENDIF
@@ -624,13 +618,13 @@ C
             IF (ITRUNC(I) .EQ. 0.0 .OR. NORMHT(I) .EQ. 0.0) THEN
                KTK = 0.0
             ELSE
-               KTK = 10.0 - IFIX( 
+               KTK = 10.0 - IFIX(
      &              (REAL(ITRUNC(I))/REAL(NORMHT(I)) * 10.0) + 0.5)
             ENDIF
 
 C
 C           Compute probability of mortality.
-C 
+C
 C           03/27/2012 Lance David
 C           Added requirement that missing foliage categories for top
 C           and middle must be GT 0.0 for mortality value to be calculated.
@@ -662,12 +656,12 @@ C ?         that was actually a survival rate. Since this is where accounting
 C ?         for bw outbreak years within a FVS cycle takes place, it is a
 C ?         necessary detail to keep. Question is, is this a correct way to
 C ?         do it even if we convert the new mortality rate back to survival
-C ?         rate for this little piece of code? 
+C ?         rate for this little piece of code?
 C ?         LRD 21-APR-03
 C
             BASE = WK2(I) / PROB(I)
 
-C           translate the mortailty rate to a survival rate for 
+C           translate the mortailty rate to a survival rate for
 C           following equations. 10/31/03
             PR = 1.0 - PR
 
@@ -696,7 +690,7 @@ C           THIS TREE RECORD, USE THE BACK GROUND RATE.
 C
 C***        FA=WK2(I)        *** disabled 03/27/12 LRD
 C***                         *** FA is fraction of period, why set to mort prob???
- 
+
             IF (BASE.GT.PR) THEN
                PR=BASE
             ELSE

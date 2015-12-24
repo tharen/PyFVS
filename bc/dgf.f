@@ -1,5 +1,11 @@
       SUBROUTINE DGF(DIAM)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use prgprm_mod
+      use metric_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -16,18 +22,8 @@ C  DEPENDENT COEFFICIENTS THAT NEED ONLY BE RESOLVED ONCE.
 C
 
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'CALCOM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'COEFFS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'METRIC.F77'
       INCLUDE 'BCPLOT.F77'
-C
-COMMONS
 C
 C  DIMENSIONS FOR INTERNAL VARIABLES.
 C

@@ -1,19 +1,10 @@
       SUBROUTINE MULTS (KIND,IDT,XMULT)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-COMMONS
 C
 C     GETS THE MULTIPLIERS - NL CROOKSTON - JAN 1981 - MOSCOW.
 C
@@ -85,6 +76,6 @@ C
       ELSE
         XMULT(ISP)=PRM(2)
       ENDIF
-   50 CONTINUE      
+   50 CONTINUE
       RETURN
       END

@@ -71,7 +71,7 @@ class FVS(object):
         """
         libname = self.config['fvs_lib']['variants'][variant.lower()]
         fvs_root = os.path.abspath(self.config['fvs_lib']['fvs_root'])
-        
+
         log.debug('FVS root: {}'.format(fvs_root))
         if not os.path.exists(fvs_root):
             raise IOError('FVS root does not exist: {}'.format(fvs_root))
@@ -98,6 +98,10 @@ class FVS(object):
 
         log.debug('FVS{} library path: {}'.format(
                 self.variant, self.fvslib.__file__))
+
+        # Initialize the FVS parameters and arrays
+        # FIXME: This api function is subject to change
+        self.fvslib.fvs_step.init_blkdata()
 
         # Reset the Python path
         sys.path = oldpath

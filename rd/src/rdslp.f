@@ -1,5 +1,7 @@
       REAL FUNCTION RDSLP(X,XX,YY,N)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDSLP       LAST REVISION:  09/03/14
 C----------
@@ -31,17 +33,12 @@ C       Modified Debug code.
 C    06-AUG-01 Lance R. David (FHTET)
 C       Changed dimensions on XX and YY arrays from 5 to *.
 C   09/03/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
 C.... PARAMETER INCLUDE FILES
 C
-      INCLUDE 'PRGPRM.F77'
-C
 C.... COMMON INCLUDE FILES
-C
-      INCLUDE 'CONTRL.F77'
 C
 C.... Local variables
 C

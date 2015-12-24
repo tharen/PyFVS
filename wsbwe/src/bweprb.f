@@ -1,5 +1,8 @@
       SUBROUTINE BWEPRB
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BWEPRB                 DATE OF LAST REVISION:  07/14/10
 C----------
@@ -22,18 +25,10 @@ C
 C  Revision History:
 C    14-JUL-2010 Lance R. David (FMSC)
 C       Previouse noted revision 06/19/84
-C       Added IMPLICIT NONE and declared variables as needed.
 C----------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECOM.F77'
-C
-COMMONS
 C
       LOGICAL LTOLG,LTOMD
       INTEGER I, IC1NX, IC2NX, ICRC1, ICRC2, ICROWN, IFAGE,

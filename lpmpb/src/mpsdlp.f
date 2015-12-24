@@ -1,5 +1,9 @@
       SUBROUTINE MPSDLP
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **MPSDLP        DATE OF LAST REVISION:  06/14/13
 C----------
@@ -17,24 +21,15 @@ C     on dead trees to address MPB mortality TPA being 2x the values
 C     of input TPA and that reported in the cycle 0 treelist. An
 C     explanation of the TPA expansion is in base\src\notre.f.
 C   07/02/10 Lance R. David (FMSC)
-C     Added IMPLICIT NONE.
 C----------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
 
-      INCLUDE 'ARRAYS.F77'
 
-      INCLUDE 'CONTRL.F77'
 
-      INCLUDE 'PLOT.F77'
 
       INCLUDE 'MPBCOM.F77'
 
       INCLUDE 'COLCOM.F77'
-C
-COMMONS
 C
       LOGICAL LPRT
       INTEGER I, II, ISIZ
@@ -43,7 +38,7 @@ C
 
       DATA DBHCLS / ' 1-3 ',' 3-5 ',' 5-7 ',' 7-9 ',' 9-11',
      &              '11-13','13-15','15-17','17-19',' 19+ ' /
-     
+
       LPRT = .FALSE.
 C
 C     IF LSADLP IS TRUE THE USER SPECIFIED THE SURFACE AREA...
@@ -101,7 +96,7 @@ C
 C              IF THE POINTER I, IS GE IREC2, THEN THE TREE IS DEAD,
 C              OTHERWISE, THE TREE IS LIVE.
 C              Dead trees need the TPA adjusted in order for the MPB tables
-C              to match the input data set and FVS output treelist. See 
+C              to match the input data set and FVS output treelist. See
 C              notre.f for complete explanation.
 C
                IF (I .GE. IREC2) THEN

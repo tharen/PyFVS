@@ -21,7 +21,28 @@ module fvs_step
 
     !TODO: Strip out the restart and cmdline logic from the step API routines
 
+    use prgprm_mod, only: maxcyc,maxcy1,maxtp1
+    use contrl_mod, only: &
+            icl1,icl6,icyc,irec2,itable,itrn,iy,jostnd,lflag,lstart,ncyc
+    use arrays_mod, only: bfv,cfv,ind,prob,wk1,wk3
+    use plot_mod, only: mgmid,nplt,sdiac,sdiac2
+    use workcm_mod, only: iwork1
+    use outcom_mod, only: ititle,ocvcur,obfcur,omccur
+    use tree_data, only: init_tree_data
+    use blkdat_mod, only: blkdat
+    use esblkd_mod, only: esblkd
+    use cubrds_mod, only: cubrds
+
     contains
+
+    subroutine init_blkdata()
+        ! Initialize the variant parameters and arrays
+        ! TODO: This should probably be elevated to a toplevel routine.
+        ! TODO: Perhaps this should initialize whatever setcmdline is doing.
+        call blkdat()
+        call esblkd()
+        call cubrds()
+    end subroutine init_blkdata
 
     subroutine fvs_init(keywords, irtncd)
         ! Initialize an FVS run.  Extracted from fvs.f to break the execution
@@ -35,14 +56,6 @@ module fvs_step
 !#define xFVSSTARTSTOP
 !#define xFVSDEBUG
 
-        use prgprm_mod, only: maxcyc,maxcy1,maxtp1
-        use contrl_mod, only: &
-                icl1,icl6,icyc,irec2,itable,itrn,iy,jostnd,lflag,lstart,ncyc
-        use arrays_mod, only: bfv,cfv,ind,prob,wk1,wk3
-        use plot_mod, only: mgmid,nplt,sdiac,sdiac2
-        use workcm_mod, only: iwork1
-        use outcom_mod, only: ititle,ocvcur,obfcur,omccur
-        use tree_data, only: init_tree_data
 
         implicit none
 
@@ -64,6 +77,10 @@ module fvs_step
         INTEGER IRSTRTCD,ISTOPDONE,lenCl
 
         character(len=100) :: fmt
+
+        ! Initialize parameters and arrays
+        ! TODO: This should probably be elevated to a toplevel call
+        call init_blkdata()
 
         ! Zero the API report arrays
         call init_tree_data()
@@ -318,10 +335,6 @@ module fvs_step
     subroutine fvs_grow(irtncd)
         !Execute a FVS grow cycle.  Adapted from fvs.f
 
-        use contrl_mod
-        use arrays_mod
-        use workcm_mod
-        use tree_data
 
         implicit none
 
@@ -429,7 +442,9 @@ module fvs_step
 
     subroutine fvs_end(irtncd)
         !Finalize an FVS run.  Extracted from fvs.f
-
+        use tree_data, only: &
+                save_tree_data,copy_tree_data &
+                ,copy_cuts_data,copy_mort_data
         use contrl_mod
         use arrays_mod
         use plot_mod
@@ -474,6 +489,13 @@ module fvs_step
         SDIAC=SDIBC
         SDIAC2=SDIBC2
 
+        ! Copy tree attributes for the final of the period
+        if (save_tree_data) then
+            call copy_tree_data()
+            call copy_cuts_data()
+            call copy_mort_data()
+        endif
+
         CALL DISPLY
         CALL fvsGetRtnCode(IRTNCD)
         IF (IRTNCD.NE.0) RETURN
@@ -490,7 +512,7 @@ module fvs_step
         CALL DFBOUT
         CALL TMOUT
         CALL BWEOUT
-        CALL RDROUT
+!        CALL RDROUT
         CALL BRROUT
 
         CALL GENPRT

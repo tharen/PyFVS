@@ -1,5 +1,12 @@
       SUBROUTINE FMCBA (IYR,ISWTCH)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C
 C  $Id$
 C
@@ -39,15 +46,8 @@ C
 C.... Parameter statements.
 
 C.... Parameter include files.
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... Common include files.
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
 
 C.... Variable declarations.
 
@@ -111,9 +111,9 @@ C                  herbs, shrubs
      &             0.15,  0.2,
      &             0.15,  0.2,
      &             0.2,   0.25,
-     &             0.2,   0.2,  
-     &             0.2,   0.2,   
-     &             0.2,   0.2,  
+     &             0.2,   0.2,
+     &             0.2,   0.2,
+     &             0.2,   0.2,
      &             0.2,   0.2,
      &             0.2,   0.2/
 
@@ -127,10 +127,10 @@ C                  herbs, shrubs
      &             0.30, 2.0,
      &             0.30, 2.0,
      &             0.25, 0.10,
-     &             0.4,  2.0,     
-     &             0.4,  2.0,     
-     &             0.4,  2.0,     
-     &             0.4,  2.0,     
+     &             0.4,  2.0,
+     &             0.4,  2.0,
+     &             0.4,  2.0,
+     &             0.4,  2.0,
      &             0.4,  2.0/
 C                  =====================================================
 C                  Size Categories: inches
@@ -306,18 +306,18 @@ C       **                                         **
           CALL OPGET(J,2,JYR,IACTK,NPRM,PRMS)
           IF ((PRMS(1) .GE. 0) .AND. (PRMS(2) .GE. 0)) THEN
             CALL FMPHOTOVAL(NINT(PRMS(1)), NINT(PRMS(2)), FOTOVAL,
-     >                      FOTOVALS) 
+     >                      FOTOVALS)
             DO I = 1, MXFLCL
               IF (FOTOVAL(I) .GE. 0) STFUEL(I,2) = FOTOVAL(I)
               IF (I .LE. 9) STFUEL(I,1) = FOTOVALS(I)
-            ENDDO                 
+            ENDDO
 C           IF FOTOVAL(1) IS NEGATIVE, THEN AN INVALID CODE WAS ENTERED.
 C           DON'T MARK EVENT DONE IF THIS IS A CALL FROM SVSTART--WILL
 C           NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.
 
             IF (FOTOVAL(1).GE.0 .AND. ISWTCH.NE.1) CALL OPDONE(J,IYR)
 
-          ELSE                       
+          ELSE
             WRITE (JOSTND,"(/1X,'*** FFE MODEL WARNING: INCORRECT ',
      &      'PHOTO REFERENCE OR PHOTO CODE ENTERED.  BOTH FIELDS ARE ',
      &      'REQUIRED.',/1X)")

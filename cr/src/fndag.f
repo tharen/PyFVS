@@ -1,23 +1,17 @@
       SUBROUTINE FNDAG(I,TAGE,SITE,RHT,BAUTBA,ISPC,DEBUG)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C CR $Id$
 C----------
 C
 C THIS ROUTINE USES THE LOGIC FROM GENGYM THAT CALCULATES A HEIGHT
 C GIVEN A SITE TO FIND AN EFFECTIVE AGE.
-C EVEN-AGED LOGIC FROM GEMHT                      
+C EVEN-AGED LOGIC FROM GEMHT
 C----------
 C  COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
 C
 C  COMMONS
 C----------
@@ -33,12 +27,12 @@ C  21=NC, 22=PW, 23=GO, 24=AW, 25=EM, 26=BK, 27=SO, 28=PB, 29=AJ, 30=RM,
 C  31=OJ, 32=ER, 33=PM, 34=PD, 35=AZ, 36=CI, 37=OS, 38=OH
 C
 C  SPECIES EXPANSION:
-C  UJ,AJ,RM,OJ,ER USE CR JU                              
+C  UJ,AJ,RM,OJ,ER USE CR JU
 C  NC,PW USE CR CO
-C  GO,AW,EM,BK,SO USE CR OA                             
-C  PB USES CR AS                              
+C  GO,AW,EM,BK,SO USE CR OA
+C  PB USES CR AS
 C  PM,PD,AZ USE CR PI
-C  CI USES CR PP                              
+C  CI USES CR PP
 C----------
 C  USE SHEPPARDS EQN FOR ASPEN AND SURROGATE SPECIES.
 C  ALL MODEL TYPES: WB, AS, PB, OH
@@ -48,7 +42,7 @@ C----------
      &   ISPC.EQ.14) GO TO 50
       IF(IMODTY.EQ.3 .AND. (ISPC.EQ.21 .OR. ISPC.EQ.22 .OR.
      &   ISPC.EQ.16 .OR. (ISPC.GE.29 .AND. ISPC.LE.32) .OR.
-     &   ISPC.EQ.37)) GO TO 50 
+     &   ISPC.EQ.37)) GO TO 50
 C
       GO TO 90
 C

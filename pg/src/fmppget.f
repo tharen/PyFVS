@@ -1,5 +1,12 @@
       SUBROUTINE FMPPGET (WK3, IPNT, ILIMIT)
-      IMPLICIT NONE
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use svdata_mod
+      use fmsvcm_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -27,14 +34,7 @@ C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'SVDATA.F77'
 
-      INCLUDE 'FMPARM.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
-      INCLUDE 'FMSVCM.F77'
 
       LOGICAL LOGICS(MXL)
       INTEGER INTS(MXI), I, ILIMIT, IPNT, NSNAGZ
@@ -99,9 +99,9 @@ C.... Parameter include files.
       IDSHEAT  = INTS( 56)
       ISHEATB  = INTS( 57)
       ISHEATE  = INTS( 58)
-      SOILTP   = INTS( 59) 
+      SOILTP   = INTS( 59)
       ICFPB    = INTS( 60)
-      ICFPE    = INTS( 61) 
+      ICFPE    = INTS( 61)
       NSNAGSALV= INTS( 62)
       NYRS     = INTS( 63)
 C------- Carbon reporting INTEGER variables --------
@@ -116,12 +116,12 @@ C------- Carbon reporting INTEGER variables --------
       ICRPTE   = INTS( 72)
       IDCHRV   = INTS( 73)
       IDCRPT   = INTS( 74)
-C------- new FFE INTEGER variables --------    
+C------- new FFE INTEGER variables --------
       IFLOGIC  = INTS( 75)
-      IFMSET   = INTS( 76)     
+      IFMSET   = INTS( 76)
       ICYCRM   = INTS( 77)
-      ITRNL    = INTS( 78)       
-C------- new FFE INTEGER variables for down wood reports --------      
+      ITRNL    = INTS( 78)
+C------- new FFE INTEGER variables for down wood reports --------
       IDWPAS   = INTS( 79)
       IDWRPB   = INTS( 80)
       IDWRPE   = INTS( 81)
@@ -129,7 +129,7 @@ C------- new FFE INTEGER variables for down wood reports --------
       IDWCVB   = INTS( 83)
       IDWCVE   = INTS( 84)
       IDDWRP   = INTS( 85)
-      IDDWCV   = INTS( 86)  
+      IDDWCV   = INTS( 86)
 
       NSNAGZ = MAX(NSNAG,1)
       CALL IFREAD (WK3, IPNT, ILIMIT, DKRCLS, MAXSP       , 2)
@@ -152,7 +152,7 @@ C------- new FFE INTEGER variables for down wood reports --------
       CALL IFREAD (WK3, IPNT, ILIMIT, FMICR, MAXTRE       , 2)
       CALL IFREAD (WK3, IPNT, ILIMIT, IFUELMON, MXDFMD    , 2)
       CALL IFREAD (WK3, IPNT, ILIMIT, ISPCC, MAXTRE       , 2)
-      
+
       CALL LFREAD (WK3, IPNT, ILIMIT, LOGICS,   MXL, 2)
       LANHED = LOGICS ( 1)
       LATFUEL= LOGICS ( 2)
@@ -174,7 +174,7 @@ C------- new FFE INTEGER variables for down wood reports --------
       CALL LFREAD (WK3, IPNT, ILIMIT, HARDSALV, NSNAGZ, 2)
       CALL LFREAD (WK3, IPNT, ILIMIT, LFROUT, 3,        2)
       CALL LFREAD (WK3, IPNT, ILIMIT, LSW, MAXSP,       2)
-      
+
       CALL BFREAD (WK3, IPNT, ILIMIT, REALS, MXR, 2)
       BURNCR = REALS (  1)
       CBD    = REALS (  2)
@@ -235,7 +235,7 @@ C-------new FFE REAL variables --------
 C-------new CFIM variables --------
       CFIM_BD= REALS ( 55)
       CFIM_DC= REALS ( 56)
-      
+
       CALL BFREAD (WK3, IPNT, ILIMIT, ALLDWN,       MAXSP  , 2)
       CALL BFREAD (WK3, IPNT, ILIMIT, CANCLS,        4     , 2)
       CALL BFREAD (WK3, IPNT, ILIMIT, CATCHUP,      NFLPTS , 2)
@@ -340,10 +340,10 @@ C------- new FFE REAL variables --------
       CALL BFREAD (WK3, IPNT, ILIMIT, DBHC,  MAXTRE        , 2)
       CALL BFREAD (WK3, IPNT, ILIMIT, HTC,  MAXTRE         , 2)
       CALL BFREAD (WK3, IPNT, ILIMIT, CROWNWC, MAXTRE*6    , 2)
-      CALL BFREAD (WK3, IPNT, ILIMIT, SETDECAY, MXFLCL*4   , 2)      
+      CALL BFREAD (WK3, IPNT, ILIMIT, SETDECAY, MXFLCL*4   , 2)
 C------- new CFIM variables --------
       CALL BFREAD (WK3, IPNT, ILIMIT, CFIM_INPUT, 26       , 2)
       CALL BFREAD (WK3, IPNT, ILIMIT, POTCONS, 3*3         , 2)
-      
+
       RETURN
       END

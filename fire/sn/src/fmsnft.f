@@ -1,5 +1,11 @@
       SUBROUTINE FMSNFT(IFFEFT)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMSNFT FIRE-SN-DATE OF LAST REVISION: 06/02/09
 C----------
@@ -11,27 +17,6 @@ C     WORKSHOP INPUT.  THIS FOREST TYPE IS USED IN SETTING DEFAULT
 C     SURFACE FUEL LEVELS AND IN THE FUEL MODEL LOGIC
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'  
-C
-C
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'PLOT.F77'    ! since using FIA algorithm info
-C
-C
-COMMONS
 C----------
 C     LOCAL VARIABLE DECLARATIONS
 C----------
@@ -40,11 +25,11 @@ C----------
 C----------
 C  ROUTINE BEGINS.
 C  DETERMINE FFE FOREST TYPE (1 OF 8 CATEGORIES) FROM FIA FOR. TYPE
-C----------     
+C----------
       IFFEFT = 0
       SELECT CASE (IFORTP)
       CASE (997, 504, 505, 510, 512, 515, 519, 520)
-        IFFEFT = 1 ! hardwood            
+        IFFEFT = 1 ! hardwood
       CASE (103, 104, 141, 142, 161:168, 996,401, 403:407, 409)
         PINEBA = 0
         NPINEBA = 0
@@ -56,16 +41,16 @@ C----------
             CASE DEFAULT        ! non-pine
               NPINEBA = NPINEBA + X
           END SELECT
-        ENDDO      
+        ENDDO
         IF ((PINEBA+NPINEBA) .GT. 0) THEN
           IF ((PINEBA/(PINEBA+NPINEBA)) .LE. 0.50) THEN
-            IFFEFT = 2 ! hardwood/pine 
+            IFFEFT = 2 ! hardwood/pine
           ELSEIF ((PINEBA/(PINEBA+NPINEBA)) .LE. 0.70) THEN
             IFFEFT = 3 ! pine/hardwood
           ELSE
             IFFEFT = 4 ! pine
           ENDIF
-        ENDIF  
+        ENDIF
         IF (IFORTP .EQ. 162) THEN
           IF ((ATAVH .GT. 50) .AND. (ISTCL .GE. 3)) THEN
             IFFEFT = 5 ! pine bluestem
@@ -76,16 +61,16 @@ C----------
           IFFEFT = 6 ! oak savannah
         ELSE
           IFFEFT = 1 ! hardwood
-        ENDIF          
+        ENDIF
       CASE (181, 402)
-        IFFEFT = 7 ! eastern redcedar       
+        IFFEFT = 7 ! eastern redcedar
       CASE (602, 605, 701, 706, 708, 807)
-        IFFEFT = 8 ! saint francis types       
+        IFFEFT = 8 ! saint francis types
       CASE (999)
-        IFFEFT = 9 ! nonstocked        
+        IFFEFT = 9 ! nonstocked
       CASE DEFAULT
         IFFEFT = 1 ! hardwood
       END SELECT
-C      
+C
       RETURN
       END

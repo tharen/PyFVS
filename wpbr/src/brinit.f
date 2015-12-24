@@ -1,5 +1,8 @@
       SUBROUTINE BRINIT
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C**********************************************************************
 C  **BRINIT       DATE OF LAST REVISION:  06/05/2014
 C----------------------------------------------------------------------
@@ -37,7 +40,7 @@ C     Added accumulator for total historical mortality (TBRHMR).
 C  16-MAY-2001 Lance R. David (FHTET)
 C     Canker growth rate arrays (BOGRTH,BRGRTH) initialization.
 C  06-NOV-2002 Lance R. David (FHTET)
-C     Initial values for RI based on exposure time Gaussian function 
+C     Initial values for RI based on exposure time Gaussian function
 C     (variables: MINRI, MAXRI, PKAGE, RISHP).
 C  11-NOV-2006 Lance R. David (FHTET)
 C     Added call to reset random number generator.
@@ -49,10 +52,7 @@ C**********************************************************************
 
 C.... Common include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BRCOM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
 
       INTEGER I4, I, J, K, L
 

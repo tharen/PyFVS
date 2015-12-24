@@ -1,5 +1,7 @@
       SUBROUTINE BWEOUT
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BWEOUT                  DATE OF LAST REVISION:  07/14/10
 C----------
@@ -17,25 +19,18 @@ C       MAIN   - MAIN PROGRAM FOR THE SINGLE STAND PROGNOSIS MODEL.
 C
 C  Revision History:
 C    07-JUN-00 Lance R. David (FHTET)
-C      .Changed final REWIND of JOWSBW to CLOSE so that output from 
+C      .Changed final REWIND of JOWSBW to CLOSE so that output from
 C       from a previous stand is not mistaken as output for the current
 C       FVS stand in a multiple stand serial run. This routine interprets
 C       an open JOWSBW as the defoliation model being active.
 C    16-OCT-2006 Lance R. David (FHTET)
 C       Changed local variable name from RECORD to RECRD.
 C    14-JUL-2010 Lance R. David (FMSC)
-C       Added IMPLICIT NONE and declared variables as needed.
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECOM.F77'
       INCLUDE 'BWEBOX.F77'
-C
-COMMONS
 C
       LOGICAL LOPEN
       CHARACTER*133 RECRD

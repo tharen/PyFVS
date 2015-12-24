@@ -1,10 +1,12 @@
       SUBROUTINE DMADLV(SrcInd, Cnt, SFld, IFld,  MshHt, Dist,
      &                      Level, Shd, Shd0, II, EB)
-      IMPLICIT NONE
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
-C  **DMADLV --  DATE OF LAST REVISION: 02/26/96        
+C  **DMADLV --  DATE OF LAST REVISION: 02/26/96
 C----------
 C  Purpose:
 C    Computes part (one of many "levels", hence the name) of the DM
@@ -18,17 +20,16 @@ C  for canopy size and distance between the two. As calculated here,
 C  the units are not "complete" until the final geometrical
 C  adjustments and summations take place in the calling routine.
 C
-C
 C Called by:
 C
-C     DMTREG 
+C     DMTREG
 C
 C Other routines called:
 C
 C     DMBSHD
 C     DMRANN
 C
-C Argument list definitions:                        
+C Argument list definitions:
 C
 C     INTEGER SrcInd  (I) Treelist index for the source tree.
 C     INTEGER Cnt     (I) Number of these trees. This will only be
@@ -36,7 +37,7 @@ C                          greater than 1 in dense small treelists.
 C     REAL    SFld    (0) Array into which the computed amount of
 C                          spread (amount/MESH**3) is placed.
 C     REAL    IFld    (0) Array into which the computed amount of
-C                          intensification (amount/MESH**3) is 
+C                          intensification (amount/MESH**3) is
 C                          placed.
 C     INTEGER MshHt   (I) Height (MESH) from which the source
 C                          infection is acting.
@@ -51,7 +52,7 @@ C                         otherwise 1
 C     INTEGER EB      (I) Edge-band in which Target is found
 C
 C Local variable definitions:
-C     
+C
 C     INTEGER h       Height of source (MESH), source reference
 C                      frame.
 C     INTEGER i       Loop counter, fixed ref frame (z-axis).
@@ -59,7 +60,7 @@ C     INTEGER j       Loop counter, fixed ref frame (x-axis).
 C     INTEGER k       Loop counter,  list of trajectories into
 C                      (u,v) coordinate space.
 C     INTEGER m       Loop counter, members of 'k' list.
-C     INTEGER n       Number of unique trajectories into (u,v).   
+C     INTEGER n       Number of unique trajectories into (u,v).
 C     INTEGER u       Loop counter, tree ref frame (z-axis).
 C     INTEGER v       Loop counter, tree ref frame (x-axis).
 C     INTEGER HSZInd  Upper bound, tree ref frame (z-axis).
@@ -89,21 +90,18 @@ C Common block variables and parameters:
 C
 C     DMOPQ2  DMCOM
 C     DMRDMX  DMCOM
-C     MXHT    DMCOM    
-C     MAXOFF  DMCOM     
-C     MXTRAJ  DMCOM    
-C     MXTHRX  DMCOM    
+C     MXHT    DMCOM
+C     MAXOFF  DMCOM
+C     MXTRAJ  DMCOM
+C     MXTHRX  DMCOM
 C     MXTHRZ  DMCOM
 C     ORIGIN  DMCOM
-C     RADIUS  DMCOM            
+C     RADIUS  DMCOM
 C     XX      DMCOM
-C     ZZ      DMCOM 
-C     ISP     ARRAYS  
-C
+C     ZZ      DMCOM
+C     ISP     ARRAYS
 C
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'DMCOM.F77'
 
 C Subroutine arguments.
@@ -124,7 +122,7 @@ C Subroutine arguments.
       DIMENSION IFld(MXHT)
 
 C Local variables.
-     
+
       INTEGER   h, i, j, k, m, n, u, v, w
 
 C The precomputed matrix, represented as row and column-specific
@@ -133,9 +131,9 @@ C MXTHRX by MXTHRZ for the "archetype" infection field. Since
 C the actual location of an infection depends on its position in the
 C source tree, the two coordinate systems must be reconciled by
 C horizontal and vertical translations. These boundaries of the two
-C coordinate systems are referenced by 'HSZInd. etc.' and 
+C coordinate systems are referenced by 'HSZInd. etc.' and
 C 'HFZInd, etc.' for the "fixed" coordinate system and the
-C "tree" coordinate systems, respectively. 
+C "tree" coordinate systems, respectively.
 
       INTEGER HSZInd, LSZInd
       INTEGER HSXInd, LSXInd
@@ -167,7 +165,7 @@ C matrix.
       REAL    VecWt, Loss
 
 C Find the opacity of the tree's foliage, in units of P(shading)
-C per MESH**3. 
+C per MESH**3.
 
       Op = DMOPQ2(ISP(SrcInd))
 
@@ -280,11 +278,11 @@ C same offset relative to the target.
                   x = FLOAT(CShd(k, m, XX))
                   y = x - Rad
                   IF (x .LE. Rad) THEN
-                    Loss = VecWt * Op 
+                    Loss = VecWt * Op
                     VecWt = VecWt - Loss
                     IFld(h) = IFld(h) + Loss
                   ELSE IF ((y .GT. 0.0) .AND. (y .LT. 1.0)) THEN
-                    Loss = VecWt * Op * y 
+                    Loss = VecWt * Op * y
                     VecWt = VecWt - Loss
                     IFld(h) = IFld(h) + Loss
                   ELSE
@@ -305,8 +303,8 @@ C same offset relative to the target.
 
 C If the trajectory walk does not end at or before the ground (h=1),
 C then "rain down" the remainder based on the last XX position 'x'.
-C The value of 'x' is carried over from the last available position.        
-         
+C The value of 'x' is carried over from the last available position.
+
                 IF ((m .EQ. VecLen(k)) .AND. (i .EQ. LFZInd)
      >              .AND. (LFZInd .GT. 1)) THEN
                   DO w = i, 1, -1
@@ -342,7 +340,7 @@ C The value of 'x' is carried over from the last available position.
           v = v + 1
           ENDDO
 
-!       END IF    
+!       END IF
         u = u + 1
 
       ENDDO

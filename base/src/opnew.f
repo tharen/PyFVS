@@ -1,5 +1,7 @@
       SUBROUTINE OPNEW (KODE,IDT,IACTK,NPRMS,PRMS)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -22,19 +24,7 @@ C     IACTK= THE ACTIVITY CODE.
 C     NPRMS= THE NUMBER OF PARAMETERS ASSOCIATED WITH THE ACTIVITY.
 C     PRMS = THE PARAMETER LIST.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'OPCOM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-COMMONS
 C
       INTEGER NPRMS,IACTK,IDT,KODE,IPEND,I,J
       REAL PRMS(*)

@@ -1,5 +1,8 @@
       SUBROUTINE FORKOD
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FORKOD--CI   DATE OF LAST REVISION:  06/20/11
 C----------
@@ -8,25 +11,12 @@ C     TRANSLATES FOREST CODE INTO A SUBSCRIPT, IFOR, AND IF
 C     KODFOR IS ZERO, THE ROUTINE RETURNS THE DEFAULT CODE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-COMMONS
-C
 C----------
 C  NATIONAL FORESTS:
 C  117 = NEZ PERCE
-C  402 = BOISE 
-C  406 = CHALLIS 
-C  412 = PAYETTE         
+C  402 = BOISE
+C  406 = CHALLIS
+C  412 = PAYETTE
 C  413 = SALMON
 C  414 = SAWTOOTH
 C----------

@@ -1,7 +1,15 @@
       SUBROUTINE DGF(DIAM)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use pden_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
-C  **DGF--CA    DATE OF LAST REVISION:  09/30/10
+C CA $Id$
 C----------
 C  THIS SUBROUTINE COMPUTES THE VALUE OF DDS (CHANGE IN SQUARED
 C  DIAMETER) FOR EACH TREE RECORD, AND LOADS IT INTO THE ARRAY
@@ -15,36 +23,7 @@ C  PREDICTION.  ENTRY **DGCONS** IS CALLED BY **RCON** TO LOAD SITE
 C  DEPENDENT COEFFICIENTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-COMMONS
 C
 C  DEFINITIONS OF INTERNAL VARIABLES.
 C
@@ -107,7 +86,7 @@ C
       REAL DIAM(MAXTRE),DGLD(13),DGLBA(13),DGCR(13),DGCRSQ(13)
       REAL DGDBAL(13),DGBAL(13),DGFOR(5,13),DGDS(13),DGEL(13)
       REAL DGSASP(13),DGCASP(13),DGSLOP(13),DGSLSQ(13),DGELSQ(13)
-      INTEGER MAPLOC(7,13),MAPSPC(MAXSP),OBSERV(13)
+      INTEGER MAPLOC(10,13),MAPSPC(MAXSP),OBSERV(13)
       REAL DGSITE(13),DGPCCF(13),DGHAH(13)
 C
       DATA MAPSPC/
@@ -176,19 +155,19 @@ C  DGFOR CONTAINS LOCATION CLASS CONSTANTS FOR EACH SPECIES.
 C  MAPLOC IS AN ARRAY WHICH MAPS FOREST ONTO A LOCATION CLASS.
 C----------
       DATA MAPLOC/
-     & 1,1,1,1,2,1,1,
-     & 1,1,1,1,1,1,1,
-     & 1,1,1,2,1,1,1,
-     & 1,2,2,1,3,4,5,
-     & 1,1,1,1,1,1,1,
-     & 1,1,1,2,1,1,1,
-     & 1,1,1,1,1,1,1,
-     & 1,1,1,1,1,1,1,
-     & 1,1,1,1,1,1,1,
-     & 1,1,1,1,1,1,1,
-     & 1,1,1,1,1,1,1,
-     & 1,1,1,1,1,1,1,
-     & 1,1,1,1,1,1,1/
+     & 1,1,1,1,2,1,1,1,1,1,
+     & 1,1,1,1,1,1,1,1,1,1,
+     & 1,1,1,2,1,1,1,1,1,1,
+     & 1,2,2,1,3,4,5,4,4,5,
+     & 1,1,1,1,1,1,1,1,1,1,
+     & 1,1,1,2,1,1,1,1,1,1,
+     & 1,1,1,1,1,1,1,1,1,1,
+     & 1,1,1,1,1,1,1,1,1,1,
+     & 1,1,1,1,1,1,1,1,1,1,
+     & 1,1,1,1,1,1,1,1,1,1,
+     & 1,1,1,1,1,1,1,1,1,1,
+     & 1,1,1,1,1,1,1,1,1,1,
+     & 1,1,1,1,1,1,1,1,1,1/
 C
       DATA DGFOR/
      & -3.428338, -3.966547,  0.0     ,  0.0     ,  0.0     ,

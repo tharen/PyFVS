@@ -1,5 +1,15 @@
       SUBROUTINE HTGF
-      IMPLICIT NONE
+      use htcal_mod
+      use multcm_mod
+      use pden_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use plot_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **HTGF--AK   DATE OF LAST REVISION:  07/08/11
 C----------
@@ -9,38 +19,6 @@ C   CALLED FROM **TREGRO** DURING REGULAR CYCLING.
 C   ENTRY **HTCONS** IS CALLED FROM **RCON** TO LOAD SITE
 C   DEPENDENT CONSTANTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'MULTCM.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
 COMMONS
 C------------
       LOGICAL DEBUG

@@ -1,5 +1,6 @@
       SUBROUTINE BWEKEY(KEY,PASKEY)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **BWEKEY                 DATE OF LAST REVISION:  07/14/10
 C----------
@@ -23,15 +24,9 @@ C  Revision History:
 C    17-MAY-2005 Lance R. David (FHTET)
 C       Added FVS parameter file PRGPRM.F77.
 C    14-JUL-2010 Lance R. David (FMSC)
-C       Added IMPLICIT NONE and declared variables as needed.
 C-----------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BWECOM.F77'
-C
-COMMONS
 C
       CHARACTER*8 PASKEY
       INTEGER KEY

@@ -1,5 +1,9 @@
       SUBROUTINE RCON
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use coeffs_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RCON-NI   DATE OF LAST REVISION:  04/09/08
 C----------
@@ -12,22 +16,6 @@ C  EFFECTS FOR THE SPECIFIED CONDITIONS.  THESE EFFECTS ARE THEN
 C  LOADED INTO VECTORS THAT ARE SUBSCRIPTED BY SPECIES.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
-C
       LOGICAL DEBUG
 C-----------
 C  CHECK FOR DEBUG.

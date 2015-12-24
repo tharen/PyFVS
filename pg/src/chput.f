@@ -1,5 +1,11 @@
       SUBROUTINE CHPUT
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use outcom_mod
+      use volstd_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -8,46 +14,18 @@ C     WRITE THE ALL-DATA CHARACTER DATA TO THE DA FILE.
 C
 C     PART OF THE PARALLEL PROCESSING EXTENSION OF PROGNOSIS SYSTEM.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
       INCLUDE 'CALDEN.F77'
-C
 C
       INCLUDE 'OPCOM.F77'
 C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'DBSTK.F77'
-C
 C
       INCLUDE 'GGCOM.F77'
 C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
-COMMONS
-C
-C
       INTEGER LNCBUF,IRECLN
-      PARAMETER (IRECLN=1024)      
+      PARAMETER (IRECLN=1024)
       PARAMETER (LNCBUF=IRECLN*4)
-      CHARACTER CBUFF(LNCBUF)
+      CHARACTER CBUFF(LNCBUF),CDMB*1
       INTEGER K,J,I,IPNT
 C
 C     PUT THE CHARACTERS.
@@ -104,6 +82,10 @@ C
    70 CONTINUE
    80 CONTINUE
 C
+      DO 85 I=1,6
+         CALL CHWRIT (CBUFF,IPNT,LNCBUF,ALLSUB(I:I),2)
+   85 CONTINUE
+C
       IF (ITOP.GT.0) THEN
          DO 90 I=1,ITOP
          CALL CHWRIT (CBUFF,IPNT,LNCBUF,SUBNAM(I:I),2)
@@ -144,19 +126,24 @@ C
       CALL CHWRIT(CBUFF,IPNT,LNCBUF,CPVREF(I:I),2)
   108 CONTINUE
 C
-      CALL DBSCHPUT(CBUFF,IPNT,LNCBUF)
-      CALL VARCHPUT(CBUFF,IPNT,LNCBUF)
-
-      DO 110 I=1,71
+      DO 110 I=1,72
       CALL CHWRIT(CBUFF,IPNT,LNCBUF,ITITLE(I:I),2)
   110 CONTINUE
-      CALL CHWRIT(CBUFF,IPNT,LNCBUF,ITITLE(72:72),3)
 C
       DO 112 J=1,30
       DO 111 I=1,10
       CALL CHWRIT(CBUFF,IPNT,LNCBUF,PTGNAME(J)(I:I),2)
   111 CONTINUE
   112 CONTINUE
+
+      CALL DBSCHPUT(CBUFF,IPNT,LNCBUF)
+      CALL VARCHPUT(CBUFF,IPNT,LNCBUF)
+      CALL MSCHPUT(CBUFF,IPNT,LNCBUF)
+
+C     Store dummy character as last write and finalize character 
+C     variable storage, last parameter is 3 to specify.
+      CDMB='X'
+      CALL CHWRIT(CBUFF,IPNT,LNCBUF,CDMB,3)
 
       RETURN
       END

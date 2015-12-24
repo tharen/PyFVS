@@ -1,21 +1,12 @@
       SUBROUTINE BEHPRM (VMAX,D,H,BARK,LCONE)
-      IMPLICIT NONE
+      use coeffs_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C  SUBROUTINE TO COMPUTE THE TREE SPECIFIC PARAMETERS FOR THE
 C  BEHRE HYPERBOLA   (I.E. AHAT, BHAT, LCONE)
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-COMMONS
 C
       LOGICAL LCONE
       REAL BARK,H,D,VMAX

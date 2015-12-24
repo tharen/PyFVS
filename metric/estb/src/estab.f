@@ -1,57 +1,27 @@
       SUBROUTINE ESTAB (KDT)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use esparm_mod
+      use estree_mod
+      use contrl_mod
+      use eshap_mod
+      use pden_mod
+      use metric_mod
+      use escomn_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C ESTB/M $ID$
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
-      INCLUDE 'ESTREE.F77'
-C
-C
-      INCLUDE 'ESHAP.F77'
-C
-C
       INCLUDE 'ESHAP2.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
 C
       INCLUDE 'CALDEN.F77'
 C
-C
-      INCLUDE 'ESCOMN.F77'
-C
-C
       INCLUDE 'ESCOM2.F77'
 C
-C
-      INCLUDE 'VARCOM.F77' 
-C
-C
       INCLUDE 'STDSTK.F77'
-C
-C
-      INCLUDE 'METRIC.F77'      
-C
-C
-COMMONS
 C
 C     REGENERATION ESTABLISHMENT MODEL   --   VERSION 2.0
 C     USDA FOREST SERVICE, INTERMOUNTAIN RESEARCH STATION
@@ -386,7 +356,7 @@ C----------
       ENDIF
   244 CONTINUE
       IF(MYDO .EQ. 0) MODE=0
-C 
+C
 C     ACCUMULATE SUMS FOR CALCULATION OF SHADE ADJUSTMENTS
 C
       SUM1=0.
@@ -554,7 +524,7 @@ C
       IF(INGRO.EQ.1.OR.MATCH.EQ.1) THEN
         ITPP=(PLPROB(NNID)*DUPNPT)/(FTEMP*300.0) +0.5
         NSTORE(NCOUNT)=ITPP
-      ENDIF      
+      ENDIF
       IF(NTIMES.GT.1) THEN
         DO 30 I=1,NTIMES-1
         PROB1(NCOUNT+I)=FTEMP
@@ -951,7 +921,7 @@ C
       IPNSPE=IFIX(PRMS(1))
       PTREE=(PRMS(2)*(PRMS(3)/100.0)) /DUPNPT
       TRAGE=PRMS(4)
-      IF(TRAGE.LT.0.5) TRAGE=2.0                          
+      IF(TRAGE.LT.0.5) TRAGE=2.0
       IF(TRAGE.GT.10.0) TRAGE=10.0
       AGEPL(ITODO)=TRAGE
       DELAY=FLOAT(IPYEAR) -(KDT+1-FINT)
@@ -1156,7 +1126,7 @@ C
         CALL ESCPRS (ITEMP,DEBUG)
         ITRNIN=ITRN+1
 C
-C       OPFIND IS CALLED TO RESET THE PARAMETERS FOR THE 
+C       OPFIND IS CALLED TO RESET THE PARAMETERS FOR THE
 C       PLANT & NATURAL KEYWORDS.
 C
         CALL OPFIND (2,MYACTS,NTODO)
@@ -1419,7 +1389,7 @@ C     'GROW' TREES TO THE END OF THE CYCLE
 C
       IF(ITRN.GE.ITRNIN)CALL ESGENT (ITRNIN)
       IF(DEBUG)WRITE(JOSTND,*)' AFTER CALL TO ESGENT-ITRN,ITRNIN= ',
-     &ITRN,ITRNIN 
+     &ITRN,ITRNIN
       DO 230 I= ITRNIN,ITRN
 C----------
 C  CALCULATE A CROWN WIDTH FOR SEEDLINGS/SPROUTS
@@ -1506,7 +1476,7 @@ C
      &  'SPECIES /HA   TOTAL     /HA   TOTAL HEIGHT      /HA   TOTAL ',
      &  'SPECIES',/,6X,7('-'),1X,5('-'),1X,5('-'),5X,5('-'),1X,5('-'),
      &  1X,7('-'),5X,5('-'),1X,5('-'),1X,7('-') )
-      DO 222 I=1,NOFSPE 
+      DO 222 I=1,NOFSPE
 	  IF(TOTTPA(I).LE.0. .AND. BESTPA(I).LE.0. .AND. PASTPA(I).LE.0.)
      &  GO TO 222
         WRITE(JOREGT,6014) NSP(I,1),

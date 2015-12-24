@@ -1,25 +1,14 @@
       SUBROUTINE EXESTB
-      IMPLICIT NONE
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C
 C     EXTRA REFERENCES FOR REGENERATION ESTABLISHMENT
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'CALDEN.F77'
-C
-C
-COMMONS
-C
 C
       CHARACTER*8 KEYWRD,NOESTB,PASKEY
       REAL ARRAY(1)

@@ -1,9 +1,12 @@
       SUBROUTINE DMFSHD
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
-C **DMFSHD --  DATE OF LAST REVISION: 02/16/96     
+C **DMFSHD --  DATE OF LAST REVISION: 02/16/96
 C----------
 C Purpose:
 C   This routine is responsible for estimating the amount of shading
@@ -15,7 +18,7 @@ C makes to full simulation grid 121 x 121 meters. The (x,y) locations
 C are random, with an implied Poisson distribution. The z-position
 C and canopy information are provided by the base model and by the
 C COVER extension. This information is widely used by the model, to
-C estimate interception of seed and light-mediated effects. One of 
+C estimate interception of seed and light-mediated effects. One of
 C its drawbacks may be that it makes its estimates independent of the
 C spatial pattern specified by the model/user, which may vary from
 C highly clumped to highly regular. Because canopy overlapping rules
@@ -24,21 +27,20 @@ C in ways that are not obvious. I suspect, though, that the
 C *distribution* of opacities (which is not even addressed here) is
 C well correlated with the local density of trees; this might be used
 C to give better information than only the mean opacity (which is
-C what *is* computed). 
-C
+C what *is* computed).
 C
 C Called by:
 C
-C     DMTREG 
+C     DMTREG
 C
 C Other routines called:
 C
 C     DMRANN
 C
-C Argument list definitions:                        
+C Argument list definitions:
 C
 C     INTEGER Light (O)  Cumulative light remaining at each vertical
-C                         level within the stand. 
+C                         level within the stand.
 C
 C Local parameter and variable definitions:
 C
@@ -88,10 +90,7 @@ C     ISP     ARRAYS
 C     Shade   DMCOM
 C
 C**********************************************************************
- 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
+
       INCLUDE 'DMCOM.F77'
 
 C Local variables and Parameters.
@@ -108,7 +107,7 @@ C Local variables and Parameters.
 
       INTEGER i, j, s, t, u, v
       INTEGER n, SLstLn
-      INTEGER ShdLst(MXHT)          
+      INTEGER ShdLst(MXHT)
       REAL    Tnumbr, Frac
       REAL    d, x, y, sum, xp, yp, Rad
       REAL    Opq
@@ -134,8 +133,8 @@ C actually have something in them.
 
       SLstLn = MIN0(i, MXHT)
 
-C This code remains at the 1 meter grid cell (horizontal plane) 
-C resolution. Walk through heights having some shading. Note that 
+C This code remains at the 1 meter grid cell (horizontal plane)
+C resolution. Walk through heights having some shading. Note that
 C 'Rad' is converted from MESH to meters.
 
       DO 500 u = 1, SLstLn
@@ -156,13 +155,13 @@ C 'Rad' is converted from MESH to meters.
 
 C Determine number of trees to place on grid; then choose for the
 C fractional remainder.
-      
+
             TNumbr = PROB(i) * SQM2AC * FLOAT(Grid) ** 2
             n = INT(TNumbr)
             Frac = TNumbr - n
-      
+
             CALL DMRANN(RND)
-            IF (RND .LE. Frac) n = n + 1                       
+            IF (RND .LE. Frac) n = n + 1
 
 C Locate each simulated radius on the grid and fill up cells within
 C the radius of each disc. ('xp' and 'yp' are actually not exactly at
@@ -175,7 +174,7 @@ C really acts in this way.
             Opq = DMOPAQ(ISP(i))
 
             DO 1000 j = 1, n
-      
+
               CALL DMRANN(RND)
               x = FLOAT(INT(RND * FLOAT(Grid)) + 1)
               CALL DMRANN(RND)
@@ -188,7 +187,7 @@ C really acts in this way.
                     xp = FLOAT(s)
                     yp = FLOAT(t)
                     d = SQRT((xp - x) ** 2 + (yp - y) ** 2)
-                    IF ( (d .LE. Rad) .AND. (G(s,t) .LT. Opq) ) 
+                    IF ( (d .LE. Rad) .AND. (G(s,t) .LT. Opq) )
      &                   G(s, t) = Opq
                   END IF
  1200           CONTINUE

@@ -1,5 +1,13 @@
       SUBROUTINE CROWN
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use pden_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **CROWN--NE  DATE OF LAST REVISION:  01/11/11
 C----------
@@ -16,34 +24,6 @@ C  DEPENDENT AND NEED ONLYBE RESOLVED ONCE.  PROCESSING OF
 C  CROWN CHANGE FOR SMALL TREES IS CONTROLLED BY **REGENT**.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-COMMONS
-C
       LOGICAL DEBUG
       REAL CRNEW(MAXTRE),BCR1(MAXSP),BCR2(MAXSP),
      &  BCR3(MAXSP),BCR4(MAXSP),PRM(5),

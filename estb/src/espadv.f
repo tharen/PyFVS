@@ -1,37 +1,21 @@
       SUBROUTINE ESPADV
-      IMPLICIT NONE
+      use plot_mod
+      use esparm_mod
+      use eshap_mod
+      use pden_mod
+      use escomn_mod
+      use prgprm_mod
+      implicit none
 C----------
 C   **ESPADV--ESTB   DATE OF LAST REVISION:   07/25/08
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
-      INCLUDE 'ESCOMN.F77'
-C
-C
       INCLUDE 'ESCOM2.F77'
 C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'ESHAP.F77'
-C
-C 
       INCLUDE 'ESHAP2.F77'
 C
       REAL PN
 C
-COMMONS
 C     PREDICT PROBS OF ADVANCE SPECIES. P(ADVANCE WHITE PINE)
 C
       IF(IPREP.GT.3) GO TO 20
@@ -44,7 +28,7 @@ C
      &  *OCURNF(IFO,1)
    20 CONTINUE
 C
-C     P(ADVANCE WESTERN LARCH). 
+C     P(ADVANCE WESTERN LARCH).
 C
       IF(IPREP.GT.2) GO TO 21
       PN= -5.0092864 +0.2560369*XCOS +1.5965058*XSIN +CHAB(IHAB,2)
@@ -74,7 +58,7 @@ C
 C     P(ADVANCE WESTERN HEMLOCK)
 C
       PN= -1.8378316 +3.8978596*XCOS -0.4192431*XSIN -0.0317794*SLO
-     &  +CPRE(IPREP,5) 
+     &  +CPRE(IPREP,5)
       IF(OVER(5,NNID).GT.9.95) PN=PN +1.1918564
       PADV(5)=(1.0/(1.0+EXP(-PN))) * OCURHT(IHAB,5)   *XESMLT(5)
      &  *OCURNF(IFO,5)

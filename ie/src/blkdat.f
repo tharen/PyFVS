@@ -1,51 +1,23 @@
       BLOCK DATA BLKDAT
-      IMPLICIT NONE
+      use htcal_mod
+      use fvsstdcm_mod
+      use pden_mod
+      use esparm_mod
+      use rancom_mod
+      use contrl_mod
+      use coeffs_mod
+      use econ_mod
+      use plot_mod
+      use prgprm_mod
+      use escomn_mod
+      use screen_mod
+      implicit none
 C----------
 C  **BLKDAT--IE    DATE OF LAST REVISION:  04/19/10
 C----------
 C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
-      INCLUDE 'ESCOMN.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'ECON.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'RANCOM.F77'
-C
-C
-      INCLUDE 'SCREEN.F77'
-C
-C
-      INCLUDE 'FVSSTDCM.F77'
-C
-C
-COMMONS
 C----------
       INTEGER I,J
 C----------
@@ -143,7 +115,6 @@ C
      & 20*0.0/
 C----------
 C     COMMON STATEMENT FOR PLOT VARIABLES.
-C
 C
 C     SPECIES LIST FOR INLAND EMPIRE VARIANT.
 C

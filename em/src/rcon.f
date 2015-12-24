@@ -1,5 +1,12 @@
       SUBROUTINE RCON
-      IMPLICIT NONE
+      use htcal_mod
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RCON--EM   DATE OF LAST REVISION:  02/22/11
 C----------
@@ -12,32 +19,6 @@ C  EFFECTS FOR THE SPECIFIED CONDITIONS.  THESE EFFECTS ARE THEN
 C  LOADED INTO VECTORS THAT ARE SUBSCRIPTED BY SPECIES.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-COMMONS
-C
-C
       LOGICAL DEBUG
       INTEGER IHCODE(122),IDTYPE,I
 C----------

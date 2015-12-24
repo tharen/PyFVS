@@ -1,5 +1,13 @@
       SUBROUTINE CROWN
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use pden_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **CROWN--CI   DATE OF LAST REVISION:  08/14/12
 C----------
@@ -21,33 +29,6 @@ C  BE RESOLVED ONCE.  A CALL TO **DUBSCR** IS ISSUED TO DUB
 C  CROWN RATIO WHEN DBH IS LESS THAN 3 INCHES.  PROCESSING OF
 C  CROWN CHANGE FOR SMALL TREES IS CONTROLLED BY **REGENT**.
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
 COMMONS
 C----------
       LOGICAL DEBUG
@@ -115,7 +96,7 @@ C----------
       RMAILM = ADJMAI(101,SITEAR(11),10.0,IERR)
       IF(RMAILM .GT. 128.0)RMAI=128.0
       IF(DEBUG)WRITE(JOSTND,*)' SITEAS,RMAIAS,SITELM,RMAILM= ',
-     &SITEAR(13),RMAIAS,SITEAR(11),RMAILM 
+     &SITEAR(13),RMAIAS,SITEAR(11),RMAILM
 C----------
 C INITIALIZE CROWN VARIABLES TO BEGINNING OF CYCLE VALUES.
 C----------
@@ -469,7 +450,6 @@ C
       IF(DEBUG)WRITE(JOSTND,90)ICYC
    90 FORMAT(' LEAVING SUBROUTINE CROWN  CYCLE =',I5)
       RETURN
-C
 C
       ENTRY CRCONS
 C----------

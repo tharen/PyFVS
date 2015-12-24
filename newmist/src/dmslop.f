@@ -1,9 +1,11 @@
       SUBROUTINE DMSLOP(Dstnce, Offset)
-      IMPLICIT NONE
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
-C **DMSLOP -- NISI  Date of last revision: April 14 1994 
+C **DMSLOP -- NISI  Date of last revision: April 14 1994
 C----------------------------------------------------------------------
 C Purpose:
 C   Trees that are uphill or downhill from the target may have a
@@ -19,13 +21,13 @@ C----------------------------------------------------------------------
 C
 C Called by:
 C
-C     DMTREG 
+C     DMTREG
 C
 C Other routines called:
 C
 C     DMRANN
 C
-C Argument list definitions:                        
+C Argument list definitions:
 C
 C     INTEGER Dstnce   (I) The sampling ring in which the target tree
 C                           is located.
@@ -44,26 +46,24 @@ C     SLOPE   PLOT
 C
 C*********************************************************************
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'PLOT.F77'
 
 C Argument list variables.
 
       INTEGER Dstnce
-      INTEGER Offset     
+      INTEGER Offset
 
 C Local variables.
-      
+
       REAL    Rnd
       REAL    D
-      
+
       D = FLOAT(Dstnce) - 0.5
 
 C Choose a random position around the ring quadrat, then determine the
 C integer amount of the difference.
 
-      CALL DMRANN(Rnd)     
+      CALL DMRANN(Rnd)
       Offset = INT(D * COS(6.283185 * Rnd) * SLOPE)
-      
+
       RETURN
       END

@@ -1,5 +1,17 @@
       BLOCK DATA BLKDAT
-      IMPLICIT NONE
+      use htcal_mod
+      use fvsstdcm_mod
+      use pden_mod
+      use esparm_mod
+      use rancom_mod
+      use contrl_mod
+      use coeffs_mod
+      use econ_mod
+      use plot_mod
+      use prgprm_mod
+      use escomn_mod
+      use screen_mod
+      implicit none
 C----------
 C  **BLKDAT--CI   DATE OF LAST REVISION:  06/06/11
 C----------
@@ -7,48 +19,8 @@ C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
-      INCLUDE 'ESCOMN.F77'
-C
-C
-      INCLUDE 'ECON.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'RANCOM.F77'
-C
-C
-      INCLUDE 'SCREEN.F77'
-C
-C
       INCLUDE 'CICOM.F77'
 C
-C
-      INCLUDE 'FVSSTDCM.F77'
-C
-C
-COMMONS
 C----------
       INTEGER I,J
 C----------
@@ -91,7 +63,7 @@ C----------
 C     TYPE DECLARATIONS AND COMMON STATEMENT FOR CONTROL VARIABLES.
 C----------
       DATA  BKRAT/
-     &   0.0,   0.0,   0.0,   0.0,   0.0, 
+     &   0.0,   0.0,   0.0,   0.0,   0.0,
      &   0.0,   0.0,   0.0,   0.0,   0.0,
      &   0.0,   0.0,   0.0,   0.0,   0.0,
      &   0.0,   0.0,   0.0,   0.0/
@@ -114,7 +86,7 @@ C----------
 C
       DATA DBHMID/1.0,3.0,5.0,7.0,9.0,12.0,16.0,20.0,24.0,28.0/
 C
-      DATA ISPSPE/13,17/
+      DATA ISPSPE/12,13,17/
 C
       DATA BNORML/3*1.0,1.046,1.093,1.139,1.186,1.232,1.278,1.325,
      &  1.371,1.418,1.464,1.510,1.557,1.603,1.649,1.696,1.742,1.789/

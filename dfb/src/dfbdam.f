@@ -1,5 +1,7 @@
       SUBROUTINE DFBDAM (II,ICODES)
-      IMPLICIT NONE
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **DFBDAM        DATE OF LAST REVISION:  06/30/10
 C----------
@@ -26,9 +28,9 @@ C
 C  Revision History :
 C  11/06/89 -
 C  07/10/07 - Lance R. David (FHTET)
-C    Time at which damage codes are processed is now at the end of 
+C    Time at which damage codes are processed is now at the end of
 C    keyword processing instead of during the reading of tree data.
-C    So, tree data items that were passed as arguments are now 
+C    So, tree data items that were passed as arguments are now
 C    available from the FVS common area. Original arguments were:
 C    (II,ICODES,IITH,IREC2,LDELTR)
 C    FVS array IMC(II) is used as replacement for input tree history
@@ -38,13 +40,7 @@ C    dead trees are already at the end of the arrays. Argument II is
 C    correct index value for both live and dead.
 C----------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'DFBCOM.F77'
-C
-COMMONS
 C
       LOGICAL LDELTR
 

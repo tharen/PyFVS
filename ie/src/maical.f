@@ -1,5 +1,8 @@
       SUBROUTINE MAICAL
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **MAICAL--NI23  DATE OF LAST REVISION:  06/21/10
 C----------
@@ -7,19 +10,6 @@ C  THIS SUBROUTINE CALCULATES THE MAI FOR THE STAND. IT IS CALLED
 C  FROM CRATET.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE  'CONTRL.F77'
-C
-C
-      INCLUDE  'PLOT.F77'
-C
-C
-COMMONS
-C
 C----------
 C
       LOGICAL DEBUG
@@ -31,7 +21,6 @@ C----------
       DATA ISPNUM/119,073,202,017,263,242,108,093,019,122,264,
      &            101,101,101,101,101,101,746,740,746,375,998,
      &            101/
-C
 C
 C-----------
 C  SEE IF WE NEED TO DO SOME DEBUG.

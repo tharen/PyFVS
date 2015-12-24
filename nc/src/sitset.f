@@ -1,5 +1,10 @@
       SUBROUTINE SITSET
-      IMPLICIT NONE
+      use contrl_mod
+      use volstd_mod
+      use plot_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **SITSET--NC   DATE OF LAST REVISION:  05/11/11
 C----------
@@ -11,24 +16,6 @@ C BY KEYWORD.
 C
 C THIS SUBROUTINE ALSO SETS VARIABLES WHICH ARE FOREST SPECIFIC.
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
 COMMONS
 C----------
       LOGICAL DEBUG

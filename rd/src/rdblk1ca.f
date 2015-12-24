@@ -1,5 +1,7 @@
       BLOCK DATA RDBLK1
-      IMPLICIT NONE
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDBLK1-CA     LAST REVISION:  08/27/14
 C----------
@@ -12,13 +14,9 @@ C     This version of RDBLK1 is specific to the Inland CA, Southern
 C     CAscades (ICASCA)(CA) FVS Variant representing 49 tree species.
 C     Created by Lance R. David 25-JUN-2001
 C
-COMMONS
-C
 C.... PARAMETER INCLUDE FILES
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
-      INCLUDE 'METRIC.F77'
 
 C.... COMMON INCLUDE FILES
 
@@ -31,7 +29,7 @@ C.... COMMON INCLUDE FILES
 C.... The array IRTSPC is used to index the species dependent arrays
 C.... HABFAC, PNINF, PKILLS, RRJSP, ISPS, DBIFAC, HTIFAC, PROOT,
 C.... RSLOP, ROWDOM, ROWIBP, RRPSWT, SSSFAC, IDITYP, PCOLO.
-C.... In the root disease model, the defaults for these variables 
+C.... In the root disease model, the defaults for these variables
 C.... are indexed as follows:
 C....
 C.... Species #|  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 |
@@ -56,7 +54,7 @@ C
 C     SPECIES LIST FOR (ICASCA) CA VARIANT
 C Index and (specie code)
 C    RD       FVS
-C -------   ------- 
+C -------   -------
 C _______    1 (PC) PORT ORFORD CEDAR     CHAMAECYPARIS LAWSONIANA
 C 14 (IC)    2 (IC) INCENSE CEDAR         LIBOCEDRUS DECURRENS
 C  6 (C )    3 (RC) WESTERN REDCEDAR      THUJA PLICATA
@@ -81,7 +79,7 @@ C 26 (J )   21 (JU) WESTERN JUNIPER       JUNIPERUS OCCIDENTALIS
 C _______   22 (BR) BREWER SPRUCE         PICEA BREWERIANA
 C 28 (GS)   23 (GS) GIANT SEQUOIA         SEQUOIADENDRON GIGANTEUM
 C 38 (PY)   24 (PY) PACIFIC YEW           TAXUS BREVIFOLIA
-C 17 (OS)   25 (OS) OTHER SOFTWOODS 
+C 17 (OS)   25 (OS) OTHER SOFTWOODS
 C _______   26 (LO) COAST LIVE OAK        QUERCUS AGRIFOLIA
 C _______   27 (CY) CANYON LIVE OAK       QUERCUS CHRYSOLEPSIS
 C _______   28 (BL) BLUE OAK              QUERCUS DOUGLASII
@@ -105,11 +103,11 @@ C 24 (CW)   45 (CW) BLACK COTTONWOOD      POPULUS TRICHOCARPA
 C _______   46 (WI) WILLOW                SALIX sp.
 C _______   47 (CN) CALIFORNIA NUTMEG     TORREYA CALIFORNICA
 C _______   48 (CL) CALIFORNIA LAUREL     UMBELLULARIA CALIFORNICA
-C 18 (OH)   49 (OH) OTHER HARDWOODS 
+C 18 (OH)   49 (OH) OTHER HARDWOODS
 C
 C.... The following IRTSPC is used with CA variant and corresponds with
 C.... column 1 of the preceding table.
-C         
+C
       DATA IRTSPC /    41,     14,      6,     13,     15,
      &                 42,      3,      5,     11,     22,
      &                 37,      7,     43,     23,     31,
@@ -127,5 +125,5 @@ C
 
       DATA IOUNIT /22/
       DATA IRUNIT /18/
-      
+
       END

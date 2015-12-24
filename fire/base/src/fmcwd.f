@@ -1,5 +1,10 @@
       SUBROUTINE FMCWD(IYR)
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use fmfcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -25,15 +30,10 @@ C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 C      INCLUDE 'PPEPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... Common include files.
 
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
-      INCLUDE 'CONTRL.F77'
 
 C.... Variable declarations.
 
@@ -65,7 +65,7 @@ C-----------
       CALL DBCHK (DEBUG,'FMCWD',5,ICYC)
       IF (DEBUG) WRITE(JOSTND,7) 'FMCWD',ICYC
     7 FORMAT(' ENTERING ',A,' CYCLE = ',I2)
-      
+
 C     Apply respiration decay losses and duff-conversion transfer
 C     to the CWD array. These losses are not tracked anywhere yet;
 C     they simply disappear. SOFT material is assumed to disappear
@@ -89,17 +89,17 @@ C           which combines PRDUFF and DKR together). (April 2013)
 
 C           Determine amount by the pools are reduced, and take a proportion
 C           to turn material into duff
-            AMT = CWD(I,J,1,L) - 
+            AMT = CWD(I,J,1,L) -
      &                 CWD(I,J,1,L) * (1.0-(DKR(J,L)*1.1))**NYRS
             IF (AMT .LT. 1.0E-9) AMT = 0.0
             CWD(I,11,2,L) = CWD(I,11,2,L) + AMT * PRDUFF(J,L)
             AMT = CWD(I,J,2,L) - CWD(I,J,2,L) * (1.0-(DKR(J,L)))**NYRS
             IF (AMT .LT. 1.0E-9) AMT = 0.0
             CWD(I,11,2,L) = CWD(I,11,2,L) + AMT * PRDUFF(J,L)
-            
-c            CWD(I,11,2,L) = CWD(I,11,2,L) +                             
+
+c            CWD(I,11,2,L) = CWD(I,11,2,L) +
 c     &                      CWD(I,J,1,L) * (1.1 * TODUFF(J,L))
-c            CWD(I,11,2,L) = CWD(I,11,2,L) + 
+c            CWD(I,11,2,L) = CWD(I,11,2,L) +
 c     &                             CWD(I,J,2,L) * TODUFF(J,L)
 
 C           Now actually decrease the pools
@@ -107,24 +107,24 @@ C           Now actually decrease the pools
             CWD(I,J,2,L) = CWD(I,J,2,L) * (1.0 -  DKR(J,L))**NYRS
             IF (CWD(I,J,1,L) .LT. 1.0E-9) CWD(I,J,1,L) = 0.0
             IF (CWD(I,J,2,L) .LT. 1.0E-9) CWD(I,J,2,L) = 0.0
-            
+
 C           Now move material from hard to soft
 C           This is new as of Nov 2010.  Assuming a log is soft when it is at
-C           64% of its original density (Kim Mellen-McLean), we estimate the 
-C           years until soft and then take the inverse to determine what 
+C           64% of its original density (Kim Mellen-McLean), we estimate the
+C           years until soft and then take the inverse to determine what
 C           proportion of the hard pool moves to the soft pool.
 
             IF (J .LT. 10) THEN
               TOSOFT = NYRS*(LOG(1-DKR(J,L)))/(LOG(0.64))
               IF (TOSOFT .LT. 0) TOSOFT = 0
-              IF (TOSOFT .GT. 1) TOSOFT = 1              
+              IF (TOSOFT .GT. 1) TOSOFT = 1
               TOSOFT = TOSOFT * CWD(I,J,2,L)
               CWD(I,J,1,L) = CWD(I,J,1,L) + TOSOFT
               CWD(I,J,2,L) = CWD(I,J,2,L) - TOSOFT
               IF (CWD(I,J,1,L) .LT. 1.0E-9) CWD(I,J,1,L) = 0.0
               IF (CWD(I,J,2,L) .LT. 1.0E-9) CWD(I,J,2,L) = 0.0
             ENDIF
-                      
+
     6     CONTINUE
     8   CONTINUE
     5 CONTINUE
@@ -148,7 +148,7 @@ C     DIS   = DENSITY (#/AC) OF INITIALLY-SOFT SNAGS FALLEN
       ENTRY CWD1(ISNG, DIH, DISIN)
 
       CALL DBCHK (DEBUG,'FMCWD',5,ICYC)
-      
+
       IF (DEBUG) WRITE(JOSTND,7) 'FM-CWD1',ICYC
 
       IF (DEBUG) WRITE (JOSTND,*) 'ISNG=',ISNG,' DIH=',DIH,
@@ -171,7 +171,7 @@ C     1=soft and 2=hard
       LOHT(1) = 1.0
 cc1      LOHT(2) = 1.0
       LOHT(2) = 0.10
-      
+
       DIAM = DBHS(I)
       HTD  = HTDEAD(I)
       SP   = SPS(I)
@@ -200,7 +200,7 @@ C     OLDHTH  = HEIGHT (FT) BEFORE BREAKAGE OF INITIALLY-HARD SNAGS
       ENTRY CWD2(ISNG, DIH, DISIN, OLDHTH, OLDHTS)
 
       CALL DBCHK (DEBUG,'FMCWD',5,ICYC)
-      
+
       IF (DEBUG) WRITE(JOSTND,7) 'FM-CWD2',ICYC
 
       IF (DEBUG) WRITE (JOSTND,*) 'ISNG=',ISNG,' DIH=',DIH,
@@ -268,10 +268,10 @@ cc1      LOHT(2) = 1.
       DIAM = D
       HTD  = HTH
       SP   = KSP
-      
+
 C     GET A TOTAL VOLUME FOR THIS TREE (created by cuts)
 
-      TVOLI=-1      
+      TVOLI=-1
       CALL FMSVL2(SP,DIAM,HTD,TVOLI,TVOLI,.false.,.false.,JOSTND)
 
 
@@ -293,7 +293,7 @@ C     RADIUS/HEIGHT RATIO FOR TRIANGLE (CONE MODEL OF TREE)
 ccccccc sdiff and s2 are only for debugging new code
       SDIFF = 0.
       S2 = 0.
-           
+
       RHRAT =   ((HTD * 12.) - 54.) / (0.5 * DIAM)
 
       IDCL = DKRCLS(SP)
@@ -356,10 +356,10 @@ C         category, whichever is greater
           LOCUT = LOHT(K)
           IF (LOHT(K) .LE. BPH(J)) LOCUT = BPH(J)
 
-C         if the low and high points are the same, then we have reached the end and 
-C         do not need to calculate volumes          
+C         if the low and high points are the same, then we have reached the end and
+C         do not need to calculate volumes
           IF (LOCUT .EQ. HICUT) GOTO 21
-         
+
 C         get the TOTAL volume-per-snag up to HICUT and up to LOCUT.  Set DIF to the
 C         volume between them - i.e., the vol. in the current size category -
 C         and convert it to volume-per-acre.
@@ -387,7 +387,7 @@ ccccccccccc above .........
           IF (DEBUG) WRITE (JOSTND,*) 'R2=',R2SQ**.5,'P1=',
      >        P1,'P2=',P2,' DIF=',DIF,
      >      ' OLDDIF=',VHI(K) - VLO(K),' SDIFF=',SDIFF,' S2=',S2
-                     
+
 c***uncomment to use old DIF:          DIF = VHI(K) - VLO(K)
 
           IF (K .EQ.1) THEN

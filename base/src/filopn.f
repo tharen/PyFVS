@@ -1,5 +1,10 @@
       SUBROUTINE FILOPN
-      IMPLICIT NONE
+      use contrl_mod
+      use fvsstdcm_mod
+      use svdata_mod
+      use econ_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -8,16 +13,8 @@ C  THIS ROUTINE OPENS THE FILES FOR THE PROGNOSIS MODEL.
 C  TO PROMPT FOR FILE NAMES, SET LPT TRUE,
 C  IF PROMPTS ARE NOT WANTED, SET LPT FALSE.
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ECON.F77'
-      INCLUDE 'SVDATA.F77'
-      INCLUDE 'FVSSTDCM.F77'
 
 COMMONS
-C
       INTEGER LENKEY,KODE,I,LENNAM,ISTLNB,IRTNCD
       CHARACTER*250 KEYFIL
       CHARACTER*250 CNAME
@@ -55,11 +52,11 @@ C----------
         endif
 
         ! Clear pre-existing TRL/FST files if NOT a restart, These
-        ! files will be opened as required in PRTRLS/FVSSTD/FMSOUT 
+        ! files will be opened as required in PRTRLS/FVSSTD/FMSOUT
         ! via OpenIfClosed().TRL uses default JOLIST; FST uses default KOLIST;
         ! SNG uses JOLIST (but only for a moment).
         ! These outputs will NOT be identical to output files created
-        ! with nonstop runs: they are blocked into multi-stand sets 
+        ! with nonstop runs: they are blocked into multi-stand sets
         ! based on the stop point(s).
 
         if (i.eq.0) then
@@ -82,12 +79,12 @@ C----------
             close(unit=JOLIST, STATUS = 'delete')
           endif
         endif
-        
+
         CALL KEYFN(KWDFIL)
         CALL DBSVKFN(KWDFIL)
 
 c       open the scratch file (should be removed sometime)
-        open(unit=JOTREE,status="scratch",form="unformatted")
+        open(unit=JOTREE,status="unknown",form="unformatted")
 
         return
   101   continue
@@ -266,7 +263,7 @@ C
       end
 
       SUBROUTINE openIfClosed (ifileref,sufx,lok)
-      IMPLICIT NONE
+      implicit none
       integer ifileref,I
       character (len=*) sufx
       logical lok

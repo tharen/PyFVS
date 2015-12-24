@@ -1,26 +1,15 @@
       SUBROUTINE CUTSTK
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C CR $Id$
 C----------
 C  THIS SUBROUTINE CONTAINS ENTRY POINTS FOR CALCULATING STOCKING
 C  LEVELS FOR VARIOUS THINNING OPTIONS.
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
 COMMONS
 C----------
       INTEGER I,IC,IGRP,IULIM,IG,JPNUM,JSPCUT,JTYP

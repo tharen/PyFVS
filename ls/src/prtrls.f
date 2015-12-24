@@ -1,5 +1,12 @@
       SUBROUTINE PRTRLS (IWHO)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use workcm_mod
+      use estree_mod
+      use contrl_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **PRTRLS--LS     DATE OF LAST REVISION: 01/22/2012
 C----------
@@ -7,32 +14,6 @@ C
 C     PRINT THE TREE LIST.
 C
 C     IWHO = 1 IF CALLED NORMALLY, AND 2 OR 3 IF CALLED FROM CUTS.
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ESTREE.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-      INCLUDE 'WORKCM.F77'
-C
-C
-COMMONS
 C
       INTEGER MYACT(3)
       REAL TEM(6),DUPCHK(5,5)
@@ -55,7 +36,7 @@ C----------
       TEM(I)= 0.
   500 CONTINUE
 C----------
-C  ARRAY DUPCHK STORES UP TO 5 REQUESTS PER CYCLE AND ELIMINATES 
+C  ARRAY DUPCHK STORES UP TO 5 REQUESTS PER CYCLE AND ELIMINATES
 C  DUPLICATES OF THESE 5 REQUESTS.
 C----------
       DO 502 I=1,5
@@ -110,7 +91,6 @@ C     SET THE TREELIST TYPE FLAG (LET IP BE THE RECORD OUTPUT COUNT).
 C     AND THE OUTPUT REPORTING YEAR.
 C     ITPLAB: 1=STANDARD COMPLETE LIVE TREE LIST, 2=DEAD TREELIST
 C             3=CUT TREE LIST, 4=AFTER TREATMENT TREE LIST.
-C 
 C
   510 CONTINUE
       IF (IWHO.EQ.1) THEN

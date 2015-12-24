@@ -1,5 +1,9 @@
       SUBROUTINE COMCUP
-      IMPLICIT NONE
+      use outcom_mod
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -11,23 +15,6 @@ C     ADDED THE CAPABILITY TO DELETE TREES THAT HAVE ZERO (AND/OR
 C     NEAR-ZERO) PROBS...TOTAL REWRITE.  NL CROOKSTON, JUNE 1991.
 C
 C     N.L. CROOKSTON       INT-MOSCOW     DEC. 1981 & JUNE 1982
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-COMMONS
 C
       LOGICAL LDEBU,LCMPRS
       INTEGER NDEL,I,NTODO,NPRMS,IACT,IDT,ITARG,IS,IM,MYACT(1),ISPC

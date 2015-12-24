@@ -1,5 +1,9 @@
       SUBROUTINE STKVAL(S)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -12,7 +16,6 @@ C     THE USE OF EXCLAMATION MARKS (!) TO PLACE COMMENTS AT THE
 C     END OF VALID FORTRAN STATEMENTS.
 C
 C     CALLED FROM FORTYP
-C
 C
 C     S      - THIS ARRAY IS LOADED IN THIS ROUTINE WITH STOCKING VALUES
 C              ACCORDING TO INITIAL FOREST TYPE.
@@ -42,13 +45,6 @@ C              TAB3(FIA,2)= STOCKING EQUATION NUMBER
 C
 COMMON BLOCKS
 C
-      INCLUDE 'PRGPRM.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
-      INCLUDE 'ARRAYS.F77'
-C
-      INCLUDE 'PLOT.F77'
 C----------
 C  DECLARATIONS
 C----------

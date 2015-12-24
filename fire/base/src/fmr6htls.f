@@ -1,5 +1,7 @@
       SUBROUTINE FMR6HTLS (KSP,X)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -8,7 +10,7 @@ C
 *----------------------------------------------------------------------
 *  Purpose:
 *     This subroutine calculates height loss for a snag record in terms
-*     of the proportion of its current height that is lost. 
+*     of the proportion of its current height that is lost.
 *     This is based on the species group.
 *
 *     The calculations are based on work done by Kim Mellen, regional
@@ -36,18 +38,11 @@ C
 *          14 = noble fir
 *          15 = alders
 *
-*     SNHTLS- ARRAY WITH HEIGHT LOSS ESTIMATES FOR EACH SPECIES GROUP 
+*     SNHTLS- ARRAY WITH HEIGHT LOSS ESTIMATES FOR EACH SPECIES GROUP
 *     PRHTLS- ARRAY WITH THE PROPORTIONS OF SNAGS THAT ACTUALLY LOSE HEIGHT
 *
 ***********************************************************************
 C----------
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
 COMMONS
 C----------
 C  Variable declarations.
@@ -55,7 +50,7 @@ C----------
       LOGICAL DEBUG
       CHARACTER VVER*7
       INTEGER KSP, SPG, I
-      INTEGER WSSPEC(39),BMSPEC(18),ECSPEC(32), SOSPEC(33) 
+      INTEGER WSSPEC(39),BMSPEC(18),ECSPEC(32), SOSPEC(33)
       REAL    X, Y, SNHTLS(15), PRHTLS(15)
 C----------
 C  DETERMINE WHICH VARIANT IS BEING USED.
@@ -74,7 +69,7 @@ C----------
      & 11, 12, 12, 13, 12,  8, 14,  1,  1,  8,
      &  7,  5,  2,  2,  5,  4,  1,  1,  9, 10,
      & 15, 15, 15,  6,  6,  6,  6,  6,  1,  3,
-     &  2,  7,  1,  6,  6,  6,  6,  6,  6/ 
+     &  2,  7,  1,  6,  6,  6,  6,  6,  6/
 C----------
 C  THESE ARE THE BM SPECIES GROUPS (1 - 15) TO USE FOR SNAG HEIGHT LOSS
 C----------
@@ -92,7 +87,7 @@ C----------
 C----------
 C  THESE ARE THE SO SPECIES GROUPS (1 - 15) TO USE FOR SNAG HEIGHT LOSS
 C----------
-      DATA (SOSPEC(I), I= 1, 33) /     
+      DATA (SOSPEC(I), I= 1, 33) /
      & 2 ,2 ,4 ,12,10,1 ,7 ,8 ,12,5 ,
      & 1 ,12,13,11,14,2 ,3 ,1 ,9 ,1 ,
      & 15,15,15,6 ,6 ,6 ,6 ,6 ,6 ,6 ,
@@ -104,35 +99,35 @@ C----------
      & 0.141,0.202,0.092,0.219,0.172,0.232,0.139,0.199,0.225,0.262,
      & 0.199,0.277,0.119,0.193,0.287/
 C----------
-C  PROPORTION OF SNAGS THAT ACTUALLY LOSE HEIGHT 
+C  PROPORTION OF SNAGS THAT ACTUALLY LOSE HEIGHT
 C----------
       DATA (PRHTLS(I), I=1,15) /
      & 0.059,0.122,0.063,0.075,0.053,0.083,0.057,0.054,0.122,0.106,
      & 0.133,0.072,0.042,0.055,0.150/
 C----------
-C  DETERMINE THE SPECIES GROUP. 
+C  DETERMINE THE SPECIES GROUP.
 C----------
       SELECT CASE (VVER(1:2))
         CASE('EC')
-          SPG = ECSPEC(KSP)      
+          SPG = ECSPEC(KSP)
         CASE('BM')
-          SPG = BMSPEC(KSP)       
+          SPG = BMSPEC(KSP)
         CASE('SO')
-          SPG = SOSPEC(KSP)         
+          SPG = SOSPEC(KSP)
         CASE DEFAULT
           SPG = WSSPEC(KSP)
       END SELECT
 C----------
-C  DETERMINE THE AMOUNT OF HEIGHT LOSS.  
+C  DETERMINE THE AMOUNT OF HEIGHT LOSS.
 C----------
       X = 0.0
       CALL RANN(Y)
       IF (Y .LE. PRHTLS(SPG)) THEN
         X = SNHTLS(SPG)
       ENDIF
-C      
+C
       IF (DEBUG) WRITE(JOSTND,8) X, Y, SPG
-    8 FORMAT(' FMR6HTLS X=',F6.2,' Y=',F6.2,' SPG=',I3)      
+    8 FORMAT(' FMR6HTLS X=',F6.2,' Y=',F6.2,' SPG=',I3)
 C
       RETURN
       END

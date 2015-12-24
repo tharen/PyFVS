@@ -1,19 +1,12 @@
       BLOCK DATA CUBRDS
-      IMPLICIT NONE
+      use volstd_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **CUBRDS--CI DATE OF LAST REVISION:  06/08/11
 C----------
 C  DEFAULT PARAMETERS FOR THE CUBIC AND BOARD FOOT VOLUME EQUATIONS.
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
 COMMONS
 C----------
 C     SPECIES LIST FOR CENTRAL IDAHO VARIANT.
@@ -51,7 +44,7 @@ C      USE 12(WJ) FOR 14(WJ)
 C      USE 20(MC) FOR 15(MC)             (UT20 = SO30=MC, WHICH IS
 C                                                  REALLY WC39=OT)
 C----------
-C  COEFFICIENTS FOR CUBIC FOOT VOLUME FOR TREES THAT ARE SMALLER THAN 
+C  COEFFICIENTS FOR CUBIC FOOT VOLUME FOR TREES THAT ARE SMALLER THAN
 C  THE TRANSITION SIZE
 C----------
       DATA CFVEQS/
@@ -75,7 +68,7 @@ C----------
      &      0.0,      0.0,     0.0,     0.0,     0.0,     0.0,    0.0,
      &      0.0,      0.0,     0.0,     0.0,     0.0,     0.0,    0.0/
 C----------
-C  COEFFICIENTS FOR CUBIC FOOT VOLUME FOR TREES THAT ARE LARGER THAN 
+C  COEFFICIENTS FOR CUBIC FOOT VOLUME FOR TREES THAT ARE LARGER THAN
 C  THE TRANSITION SIZE
 C----------
       DATA CFVEQL/
@@ -105,16 +98,16 @@ C----------
      & 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
      & 0, 0, 0, 0, 0, 0, 0, 0, 0/
 C----------
-C  TRANSITION SIZE.  TREES OF LARGER SIZE (D OR D2H) WILL COEFFICIENTS 
+C  TRANSITION SIZE.  TREES OF LARGER SIZE (D OR D2H) WILL COEFFICIENTS
 C  FOR LARGER SIZE TREES.
-C---------- 
+C----------
       DATA CTRAN/
      &      0.0,      0.0,     0.0,     0.0,     0.0,
      &      0.0,      0.0,     0.0,     0.0,  6000.0,
      &      0.0,      0.0,     0.0,     0.0,     0.0,
      &      0.0,      0.0,     0.0,     0.0/
 C----------
-C  COEFFICIENTS FOR BOARD FOOT VOLUME FOR TREES THAT ARE SMALLER THAN 
+C  COEFFICIENTS FOR BOARD FOOT VOLUME FOR TREES THAT ARE SMALLER THAN
 C  THE TRANSITION SIZE
 C----------
       DATA BFVEQS/
@@ -138,7 +131,7 @@ C----------
      &  -37.314,      0.0,     0.0, 0.01203,     0.0,     0.0,    0.0,
      &  -37.314,      0.0,     0.0, 0.01203,     0.0,     0.0,    0.0/
 C----------
-C  COEFFICIENTS FOR BOARD FOOT VOLUME FOR TREES THAT ARE LARGER THAN 
+C  COEFFICIENTS FOR BOARD FOOT VOLUME FOR TREES THAT ARE LARGER THAN
 C  THE TRANSITION SIZE
 C----------
       DATA BFVEQL/
@@ -168,9 +161,9 @@ C----------
      & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
      & 0, 0, 0, 1, 0, 0, 0, 0, 0/
 C----------
-C  TRANSITION SIZE.  TREES OF LARGER SIZE (D OR D2H) WILL USE COEFFICIENTS 
+C  TRANSITION SIZE.  TREES OF LARGER SIZE (D OR D2H) WILL USE COEFFICIENTS
 C  FOR LARGER SIZE TREES.
-C---------- 
+C----------
       DATA BTRAN/
      &     20.5,     20.5,    20.5,    20.5,    20.5,
      &     20.5,     20.5,    20.5,    20.5,    20.5,

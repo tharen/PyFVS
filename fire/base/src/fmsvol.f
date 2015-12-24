@@ -1,5 +1,9 @@
       SUBROUTINE FMSVOL (II, XHT, VOL2HT, DEBUG, IOUT)
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -37,13 +41,9 @@ C.... PARAMETER STATEMENTS.
 
 C.... PARAMETER INCLUDE FILES.
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... COMMON INCLUDE FILES.
 
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'CONTRL.F77'
 
 C.... VARIABLE DECLARATIONS.
 
@@ -119,7 +119,7 @@ C     Give some small volume to very tiny trees.
 C     based on cone with D = 1"
       X = 0.005454154 * H
       VOL2HT = MAX(X,VN)
-      
+
       IF (LMERCH) VOL2HT = VM
 
       IF (DEBUG) WRITE(IOUT,40)ISPC,D,H,LCONE,VN

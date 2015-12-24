@@ -1,12 +1,14 @@
       SUBROUTINE DMTLST (Sp, tDMR, Ptr, Index, P, TLst)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C  **DMTLST -- NISI  Date of last revision April 16 1994
 C--------------------------------------------------------------------
 C Purpose:
-C   To simulate spread the model places target trees at the center 
+C   To simulate spread the model places target trees at the center
 C of sampling rings. This routine chooses those source trees,
 C and is called once for each DM category. When it was first
 C developed, it made its choices based on trees/acre density of each
@@ -16,20 +18,20 @@ C used to penalize the likelihood of choosing a record. This made it
 C less likely that records with a lot of influence would skew the
 C simulation. However, no *other* FVS extension behaves this way, and
 C it has since been removed. Because of this change, this routine is
-C now much simpler, and now only takes all the trees from the 
+C now much simpler, and now only takes all the trees from the
 C specified DM category and puts those tree's indices in the proper
-C place to be accessed by the calling routine. 
+C place to be accessed by the calling routine.
 C--------------------------------------------------------------------
 C
 C Called by:
 C
-C     DMTREG 
+C     DMTREG
 C
 C Other routines called:
 C
 C     [none]
 C
-C Argument list definitions:                        
+C Argument list definitions:
 C
 C     INTEGER Sp      (I) The species code being processed.
 C     INTEGER tDMR    (I) The DM category being processed.
@@ -37,7 +39,7 @@ C     INTEGER Ptr     (I) Matrix of **pointers to treelist, sorted
 C                          by species and DM class:
 C                          Index 1: Species code.
 C                          Index 2: DM rating.
-C                          Index 3: FST is first position in 
+C                          Index 3: FST is first position in
 C                                   'Index()'.
 C     INTEGER Index   (I) Array containing pointers to the treelist.
 C                          It is sorted by species and DM rating and
@@ -50,7 +52,7 @@ C                          zero'th entry contains the number of trees
 C                          in the list.
 C
 C Local variable definitions:
-C     
+C
 C     INTEGER i           Loop counter for treelist records.
 C     INTEGER j           Index to treelist records from 'i'.
 C     INTEGER k           Number of trees to place as targets.
@@ -64,8 +66,6 @@ C     MAXTRE  PRGPRM
 C
 C**********************************************************************
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'DMCOM.F77'
 
 C Subroutine arguments.

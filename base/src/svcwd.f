@@ -1,5 +1,12 @@
       SUBROUTINE SVCWD(IYEAR)
-      IMPLICIT NONE
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use svdata_mod
+      use fmsvcm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -42,32 +49,7 @@ C   Common variable definitions:
 C     V2T:     Volume (cuft) to Tons conversion factor (in /FMCOM/)
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
-      INCLUDE 'SVDATA.F77'
-C
-C
       INCLUDE 'SVDEAD.F77'
-C
-C
-      INCLUDE 'FMSVCM.F77'
-C
-C  
-COMMONS
 C
       INTEGER CWDDL1, CWDDL2, I, IBP, ICWD, ID, IH, IP, IPC, IPCNT,
      &        IPS, IPUT, IOBJ, ISVOBJ, ISZCLS, IYEAR, J, JBP, KSP,
@@ -84,7 +66,6 @@ C
 C
 C     Upper breakpoints for TCWD3 fuel size categories:
       DATA BP   / 0.000, 3.000, 6.000, 12.000, 999.000 /
-C
 C
 C----------
 C  Check for debug:
@@ -499,7 +480,7 @@ C----------
 
           NSVCWD(IPS,ISZCLS) = 0
           DO ISVOBJ=1,MXSVOB
-            IF (IOBJTP(ISVOBJ).NE.4) CYCLE 
+            IF (IOBJTP(ISVOBJ).NE.4) CYCLE
             IF ( CWDPIL(IS2F(ISVOBJ)) .EQ. (IPS-1) .AND.
      &           CWDDIA(IS2F(ISVOBJ)) .LE. BP(ISZCLS) .AND.
      &           CWDDIA(IS2F(ISVOBJ)) .GT. BP(ISZCLS-1) ) THEN
@@ -730,7 +711,7 @@ C----------
       DO ISZCLS=1,4
         NSVNEW(IPS,ISZCLS) = 0
         DO ISVOBJ=1,MXSVOB
-          IF (IOBJTP(ISVOBJ).NE.4) CYCLE  
+          IF (IOBJTP(ISVOBJ).NE.4) CYCLE
           IF ( CWDPIL(IS2F(ISVOBJ)) .EQ. (IPS-1) .AND.
      &         CWDDIA(IS2F(ISVOBJ)) .LE. BP(ISZCLS) .AND.
      &         CWDDIA(IS2F(ISVOBJ)) .GT. BP(ISZCLS-1) ) THEN

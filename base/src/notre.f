@@ -1,5 +1,9 @@
       SUBROUTINE NOTRE
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -10,21 +14,6 @@ C  DEPENDING ON WHETHER RECORDS ARE PROJECTABLE OR NOT. THE
 C  FIRST IREC1 RECORDS IN THE LIST ARE PROJECTABLE. THE RECORDS
 C  FROM (MAXTP1-IREC2) TO MAXTRE ARE NON-PROJECTABLE.
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
 COMMONS
 C----------
 C       VP -- VARIABLE PLOT EXPANSION FACTOR.  IF BAF IS NEGATIVE,

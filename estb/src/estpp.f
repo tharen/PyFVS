@@ -1,26 +1,13 @@
       SUBROUTINE ESTPP (VAL,TPP)
-      IMPLICIT NONE
+      use esparm_mod
+      use escomn_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **ESTPP  DATE OF LAST REVISION:   07/25/08
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
-      INCLUDE 'ESCOMN.F77'
-C
-C
       INCLUDE 'ESCOM2.F77'
-C
-C
-COMMONS
-C
 C
       REAL TPP,VAL,BB,CC
 C

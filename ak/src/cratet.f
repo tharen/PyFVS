@@ -1,5 +1,13 @@
       SUBROUTINE CRATET
-      IMPLICIT NONE
+      use htcal_mod
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **CRATET--AK   DATE OF LAST REVISION:  04/06/11
 C----------
@@ -20,34 +28,6 @@ C        AND ISCT.
 C    8)  PRINT A TABLE DESCRIBING CONTROL PARAMETERS AND INPUT
 C        VARIABLES.
 C----------
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-COMMONS
 C
 C----------
 C  INTERNAL VARIABLES.
@@ -406,7 +386,7 @@ C  OFF, OR IF WYKOFF CALIBRATION DID NOT OCCUR.
 C  NOTE: THIS SIMPLIFIES TO IF(IABFLB(ISPC).EQ.1) BUT IS SHOWN IN IT'S
 C        ENTIRITY FOR CLARITY.
 C----------
-        IF(.NOT.LHTDRG(ISPC) .OR. 
+        IF(.NOT.LHTDRG(ISPC) .OR.
      &     (LHTDRG(ISPC) .AND. IABFLG(ISPC).EQ.1))THEN
           IF(ISPC .EQ. 10) CALL HTDBH (1,22,D,H,0)
           IF(ISPC .EQ. 11) CALL HTDBH (1,27,D,H,0)
@@ -509,7 +489,7 @@ C  OFF, OR IF WYKOFF CALIBRATION DID NOT OCCUR.
 C  NOTE: THIS SIMPLIFIES TO IF(IABFLB(ISPC).EQ.1) BUT IS SHOWN IN IT'S
 C        ENTIRITY FOR CLARITY.
 C----------
-        IF(.NOT.LHTDRG(ISPC) .OR. 
+        IF(.NOT.LHTDRG(ISPC) .OR.
      &     (LHTDRG(ISPC) .AND. IABFLG(ISPC).EQ.1))THEN
           IF(ISPC.EQ.10) CALL HTDBH (1,22,D,H,0)
           IF(ISPC.EQ.11) CALL HTDBH (1,27,D,H,0)

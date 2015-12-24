@@ -1,5 +1,8 @@
       SUBROUTINE RDOWIN
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDOWIN      LAST REVISION:  08/29/14
 C----------
@@ -41,21 +44,17 @@ C       Changed dimension on PROBUN from 1350 to FVS parameter MAXTRE.
 C    14-DEC-2007 Lance R. David (FHTET)
 C       Changed MYACT to MYACT(1) in call to OPREDT (from Don Robinson).
 C   08/29/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 
 C.... Common include files.
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'RDADD.F77'
 
 C.... Local variable declarations.
@@ -111,16 +110,16 @@ C....    NB: IF PCT N/A THEN HEIGHT SORT HERE
             IF (PCT(I) .LT. ROWDOM(IRTSPC(ISPI))) GOTO 29
 
 C....       LIVE UNINFECTED STEMS (AS A NUMBER OF STEMS)
-           
+
             IF (MAXRR .LT. 3) RRTYPE = IDITYP(IRTSPC(ISPI))
 C
 C     Exit loop for non-host trees (RNH June98)
 C
-      IF (RRTYPE .LE. 0) GO TO 29            
-C            
+      IF (RRTYPE .LE. 0) GO TO 29
+C
             ZAREA = SAREA - PAREA(RRTYPE)
             PROBUN(I) = PROBIU(I) + FPROB(I) * ZAREA
-            
+
             IF (PROBUN(I) .EQ. 0.0) GOTO 25
             ILEND = ILEND + 1
             ISTEML(ILEND) = I
@@ -136,7 +135,7 @@ C....       proportion of root system infected: 1+PROPI(I,IK)
             IFL = 0
             RRTEMS = 0
 
-            DO 27 IK = 1,ISTEP  
+            DO 27 IK = 1,ISTEP
                DO 26 IP=1,2
                   IF (PROBI(I,IK,IP) .EQ. 0) GOTO 26
                   IFL = 1
@@ -225,22 +224,22 @@ C
 C     If non-host trees exit loop
 C
       IF (RRTYPE .LE. 0) GO TO 50
-C         
+C
          ZAREA = SAREA - PAREA(RRTYPE)
 C
 C     When SAREA = PAREA, ZAREA > 0.0 and causes devide by zero error
 C     in statement below.  Therefore, assign ZAREA a small number
 C     when SAREA = PAREA (RNH, MAR98)
 C
-      IF (ZAREA .LE. 0.0) ZAREA = 1.0E-6         
-C         
+      IF (ZAREA .LE. 0.0) ZAREA = 1.0E-6
+C
          TTO = (TT - TTIU) / ZAREA
          IF (TTO .GT. FPROB(I) * 0.95) TTO = FPROB(I) * 0.95
          OAKL(DSO,I) = OAKL(DSO,I) + TTO * ZAREA
 
-C....    UPDATE FFPROB FOR THE EFFECTS OF WINDTHROW         
+C....    UPDATE FFPROB FOR THE EFFECTS OF WINDTHROW
 
-         IF (ZAREA .GT. 1E-6) 
+         IF (ZAREA .GT. 1E-6)
      &       FFPROB(I,2) = FFPROB(I,2) - (OAKL(DSO,I) / ZAREA)
 
    50 CONTINUE
@@ -259,9 +258,9 @@ C.... TO ASSUME THAT THESE TREES ARE STILL ALIVE)
                IF (PROBI(I,IK,IP) .EQ. 0) GOTO 60
                RN = PROBI(I,IK,IP)
 
-C....          REMNO - NUMBER OF STEMS TO REMOVE         
+C....          REMNO - NUMBER OF STEMS TO REMOVE
 C....          SNAP  - NUMBER OF STEMS WHICH WERE BROKEN OFF?
- 
+
                REMNO = WINDSP(ISPI,2) * WINDWI(I) / ROCRI(ISPI)
                IF (REMNO .GT. RN * .95) REMNO = RN * 0.95
                SNAP = SNAP + (REMNO * (1 - PROPI(I,IK,IP)))
@@ -274,7 +273,7 @@ C....          SNAP  - NUMBER OF STEMS WHICH WERE BROKEN OFF?
    70 CONTINUE
 
       ROWIND = 0
-      
+
       GOTO 888
 
 C.... If no windthrow then reschedule event for next cycle.

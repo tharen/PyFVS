@@ -1,5 +1,13 @@
       SUBROUTINE FMSCUT (MXVOL,NR,NC,SSNG,DSNG,CTCRWN,TKCRWN)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmprop_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C  $Id$
@@ -18,21 +26,7 @@ C           CWD3
 C           FMSADD
 C           FMCBIO
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
-      INCLUDE 'FMPROP.F77'
-C
-C
-COMMONS
 C
 C  Local Variable Definitions:
 C
@@ -57,7 +51,7 @@ C     ADD DOWNED SNAGS TO DEBRIS POOLS VIA CWD3
 C
       LVSNBM = 0.0
       TKCRBM = 0.0
-      LVCRWN = 0.0     
+      LVCRWN = 0.0
       LMERCH = .FALSE.
       IF (LVWEST) LMERCH = .TRUE.
 

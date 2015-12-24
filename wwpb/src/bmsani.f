@@ -1,4 +1,6 @@
       SUBROUTINE BMSANI (IYR)
+      use prgprm_mod
+      implicit none
 *      SUBROUTINE BMSANI (ISTD,IYR)
 C
 c     CALLED FROM BMDRV
@@ -6,10 +8,10 @@ c     CALLS:  BMSLSH
 ***********************************************************************
 * **BMSANI    Date of last revision:  09/28/05
 ***********************************************************************
-*             revised 7/28/05: added new var: REMBKP(ISTD)to bookkeep the BKP removed 
+*             revised 7/28/05: added new var: REMBKP(ISTD)to bookkeep the BKP removed
 *             via sanitation cutting, by stand. In common.  For output.  AJM
 *             REVISED 6/30/05.  TREE, BAH, and AREMS arrays should only be adjusted
-*             when removing unattacked, low-RV trees.  COmmented out the adjustments 
+*             when removing unattacked, low-RV trees.  COmmented out the adjustments
 *             happening to these arrays in the block where recently attacked trees
 *             are being sanitized. AJM
 *             Date of last revision 8/99(AJM).  Commented out block
@@ -59,7 +61,6 @@ C.... Parameter include files.
 
 C.... Common include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'PPEPRM.F77'
       INCLUDE 'PPCNTL.F77'
       INCLUDE 'BMPRM.F77'
@@ -86,7 +87,6 @@ C
 
       SAVE
 C
-C
       IF(LBMDEB) WRITE(JBMBPR,10) IYR, ISTD
    10 FORMAT(' Begin BMSANI: Year= ',I5, 'Stand= ', I6)
 
@@ -105,7 +105,6 @@ C      ICNT = ICNT + 1
 C
 C      IF (ICNT .EQ. 1) THEN
 C
-C
 C     Zero out MYLST array from last year (RNH 10Aug98)
 C
       DO 11 IJK= 1, MXSTND
@@ -113,7 +112,7 @@ C
       VOLREM(IJK,1)=0.0 !NEW AJM 9/05
          DO 12 ISIZ= 1, NSCL
             AAREMS(IJK,ISIZ)= 0.0  !NEW AJM 9/05  THIS WILL BE JUST LIKE AREMS ONLY ZEROED ANNUALLY FOR USE IN BMOUT
-   12    CONTINUE   
+   12    CONTINUE
    11 CONTINUE
 C
       IYR1= IYR
@@ -199,7 +198,6 @@ C
      &                         * TVOL(ISTD,ISIZ,1)*0.90
          IF (GRF(ISTD,ISIZ) .LE. RVMAX)
      &       SUM = SUM + TREE(ISTD,ISIZ,1) * TVOL(ISTD,ISIZ,1)*EFFC
-C
 C
    20 CONTINUE
 C
@@ -390,7 +388,7 @@ C                                                                               
 C+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++                     !
 C                                                                                    !
 C     Branch from TARBA test (ie method of sanitization)                             !
-CC     Target stand removal volume method of Sanitization                             
+CC     Target stand removal volume method of Sanitization
    35 CONTINUE
 C
 C     Insert section of code from above defining EFFCLN (8/10/99, AJM).
@@ -415,7 +413,7 @@ C         REMIPS = ALLKLL(ISTD,ISIZ) * EFFC
          ALLKLL(ISTD,ISIZ) = ALLKLL(ISTD,ISIZ) - REMIPS                   !DITTO
 C
 C     New var for bookkeeping bkp removal (FOR OUTPUT). ajm 7/05
-C     Note: this assumes that each dead beetle-killed tree removed via sanitation 
+C     Note: this assumes that each dead beetle-killed tree removed via sanitation
 C     (i.e. the decrements from the PBKILL array) is fully occupied with BKP.  \
 
          REMBKP(ISTD) = REMBKP(ISTD) + REMPB * MSBA(ISIZ)                !WHERE IS THIS ZEROED?AJM
@@ -426,7 +424,7 @@ C     RV trees.  calculated reduction in basal area properly (RNH19Aug)
 C
 C COMMENTING OUT THE NEXT THREE LINES AJM 6/30/05
 C TREE AND BAH ARRAYS WERE ALREADY DECREMENTED IN BMISTD IF THE TREES WERE BEETLE-KILLED,
-C WHICH THIS SECTION IS REMOVING.  LIKEWISE, AREMS IS BEING BOOKEPT *ONLY* FOR 
+C WHICH THIS SECTION IS REMOVING.  LIKEWISE, AREMS IS BEING BOOKEPT *ONLY* FOR
 C POSTING TO BASE-FVS WK2 ARRAY IN BMKILL.  SINCE THESE TREES REMOVED VIA SANIT
 C ARE ALREADY DEAD, THEY'VE ALREADY BEEN ADDED TO THE TPBK ARRAY, SO ARE ALREADY
 C ACCOUNTED FOR.  REMOVALS POSTED TO WK2 ARRAY FROM SANI SHOULD ONLY REFLECT THOSE
@@ -435,7 +433,6 @@ C
 C      TREE(ISTD,ISIZ,1) = TREE(ISTD,ISIZ,1) - REMPB - REMIPS
 C      BAH(ISTD,ISIZ)= BAH(ISTD,ISIZ) - MSBA(ISIZ)*(REMPB + REMIPS)
 C      AREMS(ISTD,ISIZ)= AREMS(ISTD,ISIZ) + REMPB + REMIPS
-C
 C
          IF (GRF(ISTD,ISIZ) .LE. RVMAX) THEN                               !NOW REMOVE LOW RV TREES
 C	    REMLRV = TREE(ISTD,ISIZ,1) * EFFCLN
@@ -491,7 +488,7 @@ C     Calculate amount of slash produced from sanitation
 
       CALL BMSLSH (IPC,1.0,VREMOV,ISTD)
 
-C     Re-calculate GRF in case any low RV trees were removed.  
+C     Re-calculate GRF in case any low RV trees were removed.
 c                                        !note 7/28/05 ajm
                                          ! this step may not be necessary, because
       TOTAL = 0.0                        ! GRFs are recalculated after this sanitation (call to BMCGRF from BMDRV)

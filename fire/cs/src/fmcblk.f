@@ -1,12 +1,11 @@
       BLOCK DATA FMCBLK
-      IMPLICIT NONE
+      use fmprop_mod
+      use prgprm_mod
+      implicit none
 C----------
 C   **FMCBLK--FIRE-CS  DATE OF LAST REVISION:   11/26/07
 C----------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPROP.F77'
 
       INTEGER J
 
@@ -42,7 +41,7 @@ C      10=WOODLAND JUNIPER/OAK/MESQUITE
      & 8, 8, 8, 6, 6,
      & 6, 8, 8, 8, 1, ! 80
      & 7, 8, 6, 6, 8,
-     & 8, 8, 8, 8, 8, ! 90               
+     & 8, 8, 8, 8, 8, ! 90
      & 8, 8, 8, 8, 8,
      & 8/
 

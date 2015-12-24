@@ -1,5 +1,6 @@
       BLOCK DATA BWEBK
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **BWEBK--CI          DATE OF LAST REVISION:  10/06/11
 C----------
@@ -38,7 +39,7 @@ C       the process of moving initialization of nonstatic variables
 C       to the BWEINT routine.
 C    04-OCT-00 Lance David (FHTET)
 C       Added data statemenst to load weather station names into
-C       WSLOOK that had previously been loaded at runtime from 
+C       WSLOOK that had previously been loaded at runtime from
 C       stations.dat file.
 C    10-NOV-00 Lance David (FHTET)
 C       Put Western Larch back into host species list (IBWSPM). It
@@ -51,21 +52,15 @@ C       Moved non-static variables FOLDVY, FOLWTY and IOUT6A to bweint.f.
 C    09-JUN-06 Lance David (FMSC)
 C       Modified for Blue Mountains 18 species expanded variant.
 C    14-JUL-2010 Lance R. David (FMSC)
-C       Added IMPLICIT NONE and declared variables as needed.
 C    10/06/11 Lance R. David (FMSC)
 C       This routine created from the Blue Mountains variant for the
 C       CI variant expansion to 19 species.
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BWECOM.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECM2.F77'
       INCLUDE 'BWEBOX.F77'
-C
-COMMONS
 C
       INTEGER I
 

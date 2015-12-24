@@ -1,5 +1,10 @@
       SUBROUTINE SITSET
-      IMPLICIT NONE
+      use contrl_mod
+      use volstd_mod
+      use plot_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **SITSET--SO   DATE OF LAST REVISION:  05/11/11
 C----------
@@ -9,25 +14,6 @@ C LOADS THE SDIDEF ARRAY WITH AN SDI MAX FOR EACH SPECIES WHICH WAS
 C NOT ASSIGNED AN SDI VALUE BY KEYWORD.
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
-COMMONS
 C----------
 C  SPECIES ORDER:
 C  1=WP,  2=SP,  3=DF,  4=WF,  5=MH,  6=IC,  7=LP,  8=ES,  9=SH,  10=PP,

@@ -1,48 +1,23 @@
       SUBROUTINE ESTAB (KDT)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use esparm_mod
+      use estree_mod
+      use contrl_mod
+      use eshap_mod
+      use pden_mod
+      use metric_mod
+      use escomn_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C LS/M $ID$
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
-      INCLUDE 'ESTREE.F77'
-C
-C
-      INCLUDE 'ESHAP.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
       INCLUDE 'CALDEN.F77'
 C
-C
-      INCLUDE 'ESCOMN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
       INCLUDE 'STDSTK.F77'
-C
-      INCLUDE 'METRIC.F77'
-COMMONS
 C
 C     REGENERATION ESTABLISHMENT MODEL   --   VERSION 2.0
 C     USDA FOREST SERVICE, INTERMOUNTAIN RESEARCH STATION
@@ -289,7 +264,7 @@ C----------
       ENDIF
   244 CONTINUE
       IF(MYDO .EQ. 0) MODE=0
-C 
+C
 C     ACCUMULATE SUMS FOR CALCULATION OF SHADE ADJUSTMENTS
 C
       SUM1=0.
@@ -680,7 +655,7 @@ C     'GROW' TREES TO THE END OF THE CYCLE
 C
       IF(ITRN.GE.ITRNIN)CALL ESGENT (ITRNIN)
       IF(DEBUG)WRITE(JOSTND,*)' AFTER CALL TO ESGENT-ITRN,ITRNIN= ',
-     &ITRN,ITRNIN 
+     &ITRN,ITRNIN
       DO 230 I= ITRNIN,ITRN
 C----------
 C  CALCULATE A CROWN WIDTH FOR SEEDLINGS/SPROUTS

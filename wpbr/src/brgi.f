@@ -1,5 +1,7 @@
       SUBROUTINE BRGI(IIAG,HHT,GIBR,TBSUM)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C**********************************************************************
 C  **BRGI         DATE OF LAST REVISION:  06/05/2014
 C----------------------------------------------------------------------
@@ -30,7 +32,7 @@ C  28-FEB-2001 Lance R. David (FHTET)
 C     Minimum tree age used in GI calculation set at 2 years.
 C     Explicitly defined variables.
 C  22-MAR-2001 Lance R. David (FHTET)
-C     Added debug statment. Removed "0.0" preceding negative values in 
+C     Added debug statment. Removed "0.0" preceding negative values in
 C     GI functions. Don't know why they were there in the first place,
 C     but may have been needed for some earlier version compiler.
 C  03-MAY-2001 Lance R. David (FHTET)
@@ -42,9 +44,7 @@ C**********************************************************************
 
 C.... Common include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BRCOM.F77'
-      INCLUDE 'CONTRL.F77'
 
 C.... Local variable declarations.
 
@@ -76,7 +76,7 @@ C.... Per Geral's recommendation, minimum age is set at 2 years.
      &     ((1-(1.024494*EXP((-0.024202)*GIAGE)))**(-2.071822))
 
 C.... Min (15.24m = 50ft*.3048) and max 38.10m = 125ft limits imposed
-C.... on growth index. feet to meter conversion is m=ft*0.3048. 
+C.... on growth index. feet to meter conversion is m=ft*0.3048.
 
       IF(GIBR .LT. 15.24) GIBR = 15.24
       IF(GIBR .GT. 38.10) GIBR = 38.10

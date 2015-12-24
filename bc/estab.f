@@ -1,22 +1,22 @@
       SUBROUTINE ESTAB (KDT)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use esparm_mod
+      use estree_mod
+      use contrl_mod
+      use eshap_mod
+      use pden_mod
+      use metric_mod
+      use escomn_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 COMMONS
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'ESPARM.F77'
-      INCLUDE 'ESTREE.F77'
-      INCLUDE 'ESHAP.F77'
-      INCLUDE 'PDEN.F77'
       INCLUDE 'CALDEN.F77'
-      INCLUDE 'ESCOMN.F77'
-      INCLUDE 'VARCOM.F77'
       INCLUDE 'STDSTK.F77'
-      INCLUDE 'METRIC.F77'
 COMMONS
 
 C     REGENERATION ESTABLISHMENT MODEL   --   VERSION 2.0
@@ -494,7 +494,7 @@ C
       IF(FTEMP.GT.GENTIM) FTEMP=GENTIM
       HTIMLT(ITPP+ITODO)= FTEMP/(GENTIM+0.0001)
       AGEPL(ITPP+ITODO) = FINT-DELAY-GENTIM+AGEPL(ITODO)
-      ABIRTH(ITPP+ITODO)= AGEPL(ITPP+ITODO)      
+      ABIRTH(ITPP+ITODO)= AGEPL(ITPP+ITODO)
   322 CONTINUE
       IF (ITOOMP.GT.0) THEN
          CALL RCDSET(1,.TRUE.)
@@ -546,7 +546,7 @@ C
         CALL ESCPRS (ITEMP,DEBUG)
         ITRNIN=ITRN+1
 C
-C       OPFIND IS CALLED TO RESET THE PARAMETERS FOR THE 
+C       OPFIND IS CALLED TO RESET THE PARAMETERS FOR THE
 C       PLANT & NATURAL KEYWORDS.
 C
         CALL OPFIND (2,MYACTS,NTODO)

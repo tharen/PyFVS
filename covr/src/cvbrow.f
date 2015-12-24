@@ -1,5 +1,10 @@
       SUBROUTINE CVBROW (LTHIN)
-      IMPLICIT NONE
+      use outcom_mod
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **CVBROW DATE OF LAST REVISION:  06/28/13
 C----------
@@ -121,7 +126,6 @@ C         3         9          16     LOLO
 C         2        10          17     NEZPERCE
 C         3        11          18     ST. JOE
 C
-C
 C  OVERSTORY  UNDERSTORY  UNDERSTORY
 C  SERIES     UNION FOR   UNION FOR
 C             PB          TCOV,SH,CV
@@ -225,26 +229,7 @@ C  31) SORB:SORBUS SPP.
 C
 C-----------------------------------------------------------------------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
       INCLUDE 'CVCOM.F77'
-C
-COMMONS
 C
       LOGICAL LTHIN,DEBUG
       CHARACTER*4 SNAME(31)
@@ -485,7 +470,7 @@ C  DURATION OF THE PROJECTION.  **CVSCON** RETURNS PIECES OF
 C  EQUATIONS OF THE FORM X'B FOR SPECIES PROBABILITY (PCON), TOTAL SHRUB
 C  COVER (TCON), SPECIES HEIGHT (HCON), AND SPECIES COVER (CCON).
 C----------
-      CALL CVSCON 
+      CALL CVSCON
    30 CONTINUE
 C======================================================================
 C  *** START PROJECTION CYCLE CALCULATIONS ***

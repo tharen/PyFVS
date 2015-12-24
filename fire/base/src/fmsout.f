@@ -1,5 +1,11 @@
       SUBROUTINE FMSOUT (IYR)
-      IMPLICIT NONE
+      use plot_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C  $Id$
@@ -34,17 +40,11 @@ C.... PARAMETER STATEMENTS.
 
 C.... PARAMETER INCLUDE FILES.
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... COMMON INCLUDE FILES.
 
 Csng  INCLUDE 'CONTRL.F77'
 Csng  INCLUDE 'PLOT.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
 C
 C.... VARIABLE DECLARATIONS.
       INTEGER  YRLAST, JYR, II
@@ -247,7 +247,7 @@ C     the total heights and dbhs to get the class-averages.
             DO 410 JCL= 1,6
                TOTN = TOTDH(IDC,JYR,JCL) + TOTDS(IDC,JYR,JCL)
                IF (TOTN .EQ. 0.0) GOTO 410
-      
+
                WRITE(JSNOUT,300) IYR,JSP(IDC),JCL,
      &             TOTDBH(IDC,JYR,JCL),
      &             TOTHTH(IDC,JYR,JCL), TOTHTS(IDC,JYR,JCL),

@@ -1,6 +1,10 @@
       Subroutine FMSFALL(IYR,KSP,D,ORIGDEN,DENTTL,ISWTCH,
      &                   RSOFT,RSMAL,DFALLN)
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMSFALL--FIRE-SN  DATE OF LAST REVISION: 11/30/09
 C----------
@@ -59,25 +63,9 @@ C              Internal FALLX values can be overridden by the user, via
 C              the SNAGFALL keyword.
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
-COMMONS
-C
       INTEGER ISWTCH, IYR, KSP
       REAL    BASE, D, DENTTL, DFALLN, DZERO, FALLM2, MODRATE, ORIGDEN,
      &        RSOFT, RSMAL, X
-C
 C
 C----------
 C  In the first year after a fire, some work is required to determine

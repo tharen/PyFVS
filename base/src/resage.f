@@ -1,5 +1,8 @@
       SUBROUTINE RESAGE
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -7,20 +10,6 @@ C
 C     RESAGE RESETS THE AGE OF THE STAND TO THE VALUE SPECIFIED
 C     BY KEYWORD. THIS ROUTINE IS CALLED FROM MAIN AFTER THE CALL
 C     TO DISPLY AND THE REGENERATION/ESTABLISHMENT SYSTEM.
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-COMMONS
 C
       INTEGER MYACT2(1)
       REAL PRMS(1)

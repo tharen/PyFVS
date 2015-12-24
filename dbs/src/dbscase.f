@@ -1,8 +1,10 @@
       SUBROUTINE DBSCASE(IFORSURE)
-      IMPLICIT NONE
+      use outcom_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C
 C $Id$
-C
 C
 C     PURPOSE: TO POPULATE A DATABASE WITH THE PROGNOSIS MODEL
 C              OUTPUT.
@@ -12,27 +14,12 @@ C                       NEEDED.
 C
 C---
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'DBSCOM.F77'
-C
 C
       INCLUDE 'OPCOM.F77'
 C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
       INCLUDE 'KEYCOM.F77'
 C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
 C---
 
       INTEGER(SQLINTEGER_KIND),parameter:: MaxStringLen=255
@@ -94,9 +81,16 @@ C---------
       IF (CASEID.NE."") RETURN
 C---
 C     Initialize variables
-C     CREATE DATETIME AND KEYFNAME
+C     CREATE DATETIME
       CALL GRDTIM(DATO,TIM)
       TIMESTAMP = DATO(7:10)//'-'//DATO(1:5)//'-'//TIM
+C     STRIP 3-CHARACTER EXTENSION (IF PRESENT) FROM KEYFNAME
+      I = LEN_TRIM(KEYFNAME)
+
+      IF (KEYFNAME(I-3:I-3) .EQ. '.') THEN
+        KEYFNAME = KEYFNAME(1:I-4)
+      ENDIF
+
 C---------
 C     MAKE SURE WE HAVE AN OPEN CONNECTION
 C---------

@@ -1,5 +1,8 @@
       SUBROUTINE BRICAL
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C**********************************************************************
 C  **BRICAL       DATE OF LAST REVISION:  06/05/2014
 C----------------------------------------------------------------------
@@ -32,10 +35,7 @@ C**********************************************************************
 
 C.... Common include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BRCOM.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'CONTRL.F77'
 
 C.... Local variable declarations.
 
@@ -64,9 +64,9 @@ C....    Calculate Rust Index with log function.
 C....    This equation provides a skewed curve around the peak age
 C....    so that a greater number of cankers can be attained early.
          BRI = MINRI + MAXRI * EXP(-0.5*(LOG(NAGE - PKAGE)/PKSHP)**2)
-      
+
       ENDIF
-      
+
       RIDEF=BRI
 
       IF(DEBUG) WRITE(JOSTND,60) RIDEF,RIMETH,NAGE,ICYC

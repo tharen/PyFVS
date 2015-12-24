@@ -1,5 +1,8 @@
       SUBROUTINE DBSCMPU
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C
 C $Id$
 C
@@ -7,28 +10,11 @@ C     AUTH: D. GAMMEL -- SEM -- JUNE 2002
 C     PURPOSE: TO POPULATE A DATABASE WITH THE COMPUTE TABLE
 C              INFORMATION
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'OPCOM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
 C
       INCLUDE 'KEYCOM.F77'
 C
-C
       INCLUDE 'DBSCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
 C
 
       CHARACTER*4000 SQLStmtStr, TABLESTR
@@ -212,7 +198,7 @@ C
                 ENDIF
               ENDDO
             ENDIF
-             
+
             !IF KW NOT IN LIST THEN DETERMINE IF WE WANT TO ALTER TABLE
             IF((.NOT.KWINLIST).AND.TRIM(DBMSOUT).NE.'EXCEL'
      -          .AND.IADDCMPU.LT.1) THEN
@@ -260,7 +246,7 @@ C
 
 
       SUBROUTINE INSERTCMPU(KWINSRT,KWVALS,THISYR,STANDID,NUMCMPU)
-      IMPLICIT NONE
+      implicit none
 C
 C     BUILDCMPUSQL
 C     AUTH: D. GAMMEL -- SEM -- JUNE 2002
@@ -273,13 +259,7 @@ C            NUMCMPU - THE NUMBER OF COMPUTE VARS TO INSERT
 C
 C     RETURN:SQLStmtStr - THE QUERY STRING TO USE FOR THE INSERT
 C
-COMMONS
-C
-C
       INCLUDE 'DBSCOM.F77'
-C
-C
-COMMONS
 C
       INTEGER NUMCMPU,X,THISYR,ID
       INTEGER(SQLSMALLINT_KIND)::ColNumber

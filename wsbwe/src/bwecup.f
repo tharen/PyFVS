@@ -1,5 +1,8 @@
       SUBROUTINE BWECUP
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BWECUP             DATE OF LAST REVISION:  08/28/13
 C----------
@@ -40,29 +43,21 @@ C         OF FORTIETH CYCLE.  KEYWORD CONTROLLED.
 C
 C Revision History:
 C   11-JUN-01 Lance David (FHTET)
-C      .Added debug handling. 
+C      .Added debug handling.
 C   30-AUG-2006 Lance R. David (FHTET)
 C      Changed array orientation of IEVENT from (4,250) to (250,4) for
 C      efficiency purposes of the PPE processes in bwepppt and bweppgt.
 C   14-JUL-2010 Lance R. David (FMSC)
-C      Added IMPLICIT NONE and declared variables as needed.
 C   28-FEB-2012 Lance R. David (FMSC)
 C      Added check for presence of host species and exit if none present.
 C   28-AUG-2013 Lance R. David (FMSC)
 C      Added loading of weather year into IEVENT array.
 C-----------------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECOM.F77'
       INCLUDE 'BWECM2.F77'
       INCLUDE 'BWEBOX.F77'
-C
-COMMONS
 C
       INTEGER IYEAR, NSPYR, LASTYR, I, K
       LOGICAL DEBUG, LBWHOST
@@ -90,7 +85,7 @@ C
 C     PROCESS STAND OPTIONS, AND CREATE FOLIAGE PROFILE.
 C
       IF (DEBUG) WRITE (JOSTND,*) 'IN BWECUP: CALL BWESIT'
-      CALL BWESIT 
+      CALL BWESIT
       IF (DEBUG) WRITE (JOSTND,*) 'IN BWECUP: RETURN FROM BWESIT'
 C
 C     IF PROGNOSIS TELLS US THAT BUDWORM OR MANUAL DEFOLIATION IS

@@ -1,7 +1,9 @@
       SUBROUTINE RDSPOR
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
-C  **RDSPOR      LAST REVISION:   09/03/14         
+C  **RDSPOR      LAST REVISION:   09/03/14
 C----------
 C
 C  Purpose :
@@ -28,21 +30,18 @@ C     03/21/97 - Matt Thompson (FHTET)
 C                Deleted commented out code and cleaned up code.
 C     04/03/97 - Matt Thompson (FHTET)
 C                Modified the code to better handle moving spore
-C                infected stumps to the stump lists and the 
+C                infected stumps to the stump lists and the
 C                new centers lists.
 C   09/03/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 
 C.... Common include files.
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDADD.F77'
 
@@ -51,10 +50,10 @@ C.... Common include files.
       REAL    DEN, DIAM, RCEN, RTD, SPCEN, STNEW, TOTCEN, TST
 
       CALL DBCHK(DEBUG,'RDSPOR',6,ICYC)
-      
+
       IST = AMAX0(1,ISTEP)
 
-C.... Calculate averages of infected root characteristics for each     
+C.... Calculate averages of infected root characteristics for each
 C.... root disease type.
 
       DO 50 IRRSP = MINRR, MAXRR
@@ -83,24 +82,24 @@ C....                are of a large enough diameter.)
 
                      DEN = STUIN(IDI,I,J,ISPINT)
                      DIAM = DBHUIN(IDI,I,J,ISPINT)
-                  
+
                      IF (DIAM .LT. SPDBH(IDI)) GOTO 650
                      IF (DEN .LE. 1E-4) GOTO 650
 
-                     IF (DEBUG) THEN     
+                     IF (DEBUG) THEN
                         WRITE (JOSTND,*) 'RDSPOR : SAME TYPE, ',
      &                                   'INS STUMPS'
                         WRITE (JOSTND,*) 'IDI I J DEN', IDI,I,J,DEN
-                     ENDIF   
+                     ENDIF
 
                      TST = PROBDA(IDI,I,J,IST) + DEN
                      DBHDA(IDI,I,J,IST) = (DBHDA(IDI,I,J,IST) *
-     &                   PROBDA(IDI,I,J,IST) + DIAM * DEN) / TST             
+     &                   PROBDA(IDI,I,J,IST) + DIAM * DEN) / TST
 
 C....                Assume only 50% of root radius is infected and add
 C....                only that much to the root list (to be consistent
 C....                with the way infected tree roots are added to the
-C....                list)     
+C....                list)
 
                      ROOTDA(IDI,I,J,IST) = (ROOTDA(IDI,I,J,IST) *
      &                   PROBDA(IDI,I,J,IST) + 0.5 *
@@ -111,25 +110,25 @@ C....                list)
 
   650                CONTINUE
 
-C....                Stumps that are infected outside of centers 
+C....                Stumps that are infected outside of centers
 C....                create new centers if they are large enough.
 
                      RCEN = STOUT(IDI,I,J,ISPINT)
                      IF (RCEN .LE. 1E-4) GOTO 770
 
                      DIAM = DBHOUT(IDI,I,J,ISPINT)
-                     RTD = RTOUT(IDI,I,J,ISPINT) 
+                     RTD = RTOUT(IDI,I,J,ISPINT)
 
-                     IF (DEBUG) THEN       
+                     IF (DEBUG) THEN
                         WRITE (JOSTND,*) 'RDSPOR :  BEFORE RRSPL2'
                         WRITE (JOSTND,*) 'IDI I J', IDI,I,J
                         WRITE (JOSTND,*) 'DIAM RTD RCEN NCENTS(IDI)',
      &                                    DIAM,RTD,RCEN,NCENTS(IDI)
-                     ENDIF 
+                     ENDIF
 
                      CALL RDSPL2(RCEN,IDI,DIAM,RTD)
 
-                     IF (DEBUG) THEN  
+                     IF (DEBUG) THEN
                         WRITE (JOSTND,*) 'RDSPOR :  AFTER RRSPL2'
                         WRITE (JOSTND,*) 'NCENTS(IDI)', NCENTS(IDI)
                         WRITE (JOSTND,*) 'PCENTS 1,2,3 ICENSP'
@@ -141,17 +140,17 @@ C....                create new centers if they are large enough.
      &                                     ICENSP(IDI,JJ)
   756                   CONTINUE
                      ENDIF
-                  
+
 C....                Add all stumps that are large enough to create
-C....                centers to stump list.                                      
+C....                centers to stump list.
 
                      IF (DIAM .GE. SPDBH(IDI)) STNEW = RCEN
                      IF (STNEW .LT. 1) GOTO 770
-                  
+
                      TST = PROBDA(IDI,I,J,IST) + STNEW
                      DBHDA(IDI,I,J,IST) = (DBHDA(IDI,I,J,IST) *
      &                    PROBDA(IDI,I,J,IST) + DBHOUT(IDI,I,J,ISPINT) *
-     &                    STNEW) / TST                
+     &                    STNEW) / TST
 
 C....                Assume 50% of root radius is infected so set
 C....                infection level to that amount.
@@ -161,7 +160,7 @@ C....                infection level to that amount.
      &                 RTOUT(IDI,I,J,ISPINT) *
      &                 STNEW) / TST
                      PROBDA(IDI,I,J,IST) = PROBDA(IDI,I,J,IST) + STNEW
-                          
+
   770                CONTINUE
 
 C....                Zero arrays
@@ -191,7 +190,7 @@ C....                Zero arrays
 
                SPPROP(IRRSP) = 0.0
 
-               IF (SPCEN .GT. 1E-4 .AND. TOTCEN .GT. 1E-4) THEN       
+               IF (SPCEN .GT. 1E-4 .AND. TOTCEN .GT. 1E-4) THEN
                   SPPROP(IRRSP) = SPCEN / TOTCEN
                ENDIF
 
@@ -200,15 +199,15 @@ C....                Zero arrays
                IF (DEBUG) WRITE(JOSTND,*)
      &                 'RDSPOR :  BEF PAREA', IRRSP, PAREA(IRRSP)
 
-               CALL RDAREA                                           
+               CALL RDAREA
 
                IF (DEBUG) WRITE(JOSTND,*)
      &                    'RDSPOR :  AFT PAREA', IRRSP, PAREA(IRRSP)
-     
+
 C....          If new infection type in stand, and user did not specify
 C....          to model as one center then model stand as multiple centers.
 
-               IF (LONECT(IRRSP) .EQ. 0 .AND. PAREA(IRRSP) .GT. 0) 
+               IF (LONECT(IRRSP) .EQ. 0 .AND. PAREA(IRRSP) .GT. 0)
      &                    LONECT(IRRSP) = 2
 
   950       CONTINUE
@@ -219,10 +218,10 @@ C....          to model as one center then model stand as multiple centers.
 
       DO 1400 ISPINT = 2, 1, -1
 
-         IF (LSPFLG(ISPINT)) THEN     
+         IF (LSPFLG(ISPINT)) THEN
 
 C....       A stand entry occurred in a previous timestep (if the cycle
-C....       length was less than 5) and/or this time, so shift spore    
+C....       length was less than 5) and/or this time, so shift spore
 C....       infected stumps within their arrays.
 
             DO 1300 IDI=1,2
@@ -252,7 +251,7 @@ C....       infected stumps within their arrays.
                      LSPFLG(ISPINT+1)         = LSPFLG(ISPINT)
  1100             CONTINUE
  1200          CONTINUE
- 1300       CONTINUE      
+ 1300       CONTINUE
 
             LSPFLG(ISPINT) = .FALSE.
          ENDIF

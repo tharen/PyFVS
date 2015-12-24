@@ -1,4 +1,7 @@
       SUBROUTINE BMOUTM (I,IYEAR)
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BMOUTM  DATE OF LAST REVISION:  JUNE 28, 2005, AJM
 C                                    AUG 13, 1994
@@ -37,22 +40,18 @@ C     The BA killed this year will be added back in next year.  AJM
 C
 C     CORRECTED THE SETTING OF LSBAK1, (JUST BELOW  310 CONTINUE) AJM 6/05
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'PPEPRM.F77' 
+      INCLUDE 'PPEPRM.F77'
       INCLUDE 'PPCNTL.F77'
-      
+
       INCLUDE 'BMPRM.F77'
       INCLUDE 'BMCOM.F77'
       INCLUDE 'BMPCOM.F77'
 
-	INCLUDE 'METRIC.F77'
 C
 C     Added real array LBAKL1, LBAH1, LVREM1 to store annual landscape
 C     summaries (RNH July98)
 C
-      REAL LBAKL1(NSCL+1), LBAH1(NSCL+1), LVREM1(2), 
+      REAL LBAKL1(NSCL+1), LBAH1(NSCL+1), LVREM1(2),
      1     RBAKT(MXSTND,NSCL+1), VTEMP(MXSTND,2,2)
 C
       REAL LBKP1, LRVSTD1, LBAT1
@@ -62,17 +61,17 @@ C
       REAL LBKPO1, LBKPI1, LBKPS1
 C
       INTEGER RYEAR, RYEAR2, RYEARP
-      
+
 C      IF (.NOT. LBMDET .AND. .NOT. LBMVOL) RETURN
 C
 C     Test for print flags for annual stand or annual landscape output
 C     (RNH July98)
 C
-      IF (.NOT. LBMDET .AND. .NOT. LBMVOL 
+      IF (.NOT. LBMDET .AND. .NOT. LBMVOL
      1    .AND. .NOT. LBMSPY .AND. .NOT. LBMLPY) RETURN
-      
+
 c     RYEAR triggers the reporting. It is the last year of a cycle.
-C     The average values are reported for the first year of the 
+C     The average values are reported for the first year of the
 C     cycle just finished. e.g: for and outbreak from 1993-1994
 C     during the 1990-1994 period, the reporting would be for 1990
 C     and would be the average of 1993 and 1994.
@@ -86,8 +85,8 @@ C
       RYEARP= MIY(MICYC)
 C
 C     +++++++++
-C      
-C     Set the Volume removed print flags to false(0) 
+C
+C     Set the Volume removed print flags to false(0)
 C     for the first year of cycle, and inititalize VTEMP
 C     If first year of cycle and inititialization of VTEMP
 C     has not been carried out then dothe following
@@ -122,15 +121,15 @@ C
     6    CONTINUE
          IYEARV= IYEAR
       ENDIF
-    
+
 C     +++++++++++
 C
 c     Accumulate sums for each variable
 
-      SRVSTD(I) = SRVSTD(I) + GRFSTD(I) 
+      SRVSTD(I) = SRVSTD(I) + GRFSTD(I)
       SBAT(I) = SBAT(I) + (BANH(I,NSCL+1)+BAH(I,NSCL+1)) *FT2pACRtoM2pHA
       SBAH(I,NSCL+1) = SBAH(I,NSCL+1) + BAH(I,NSCL+1) * FT2pACRtoM2pHA
-      
+
       SBKP(I) = SBKP(I) + BKPA(I) / ACRtoHA
       SBKPO(I)= SBKPO(I) + BKPOUT(1,I) / ACRtoHA
       SBKPI(I)= SBKPI(I) + BKPIN(1,I) / ACRtoHA
@@ -138,7 +137,7 @@ c     Accumulate sums for each variable
       SBKPIS(I)= SBKPIS(I) + BKPIS(I) / ACRtoHA
 
 
-      DO 10 ISIZ= 1,NSCL 
+      DO 10 ISIZ= 1,NSCL
         TOTKLL = PBKILL(I,ISIZ) + ALLKLL(I,ISIZ)
         STKILL(I)= STKILL(I) + TOTKLL / ACRtoHA
         SVKILL(I)= SVKILL(I) + TOTKLL * TVOL(I,ISIZ,1) * FT3pACRtoM3pHA
@@ -157,12 +156,12 @@ C
         SBAKL(I,NSCL+1)= SBAKL(I,NSCL+1) + BAHHA * PBAREM
         SBAH(I,ISIZ) = SBAH(I,ISIZ) + BAHHA
    10 CONTINUE
-   
+
       DO 300 J=1,(MXDWHZ+1)
          DO 320 K=1,MXDWAG
             DO 322 IPC=1,MXDWPC
                SSDWP(I) = SSDWP(I) + SDWP(I,IPC,J,K) * FT3pACRtoM3pHA
-  322       CONTINUE      
+  322       CONTINUE
             IF (J .LE. MXDWSZ) THEN
               SDDWP(I) = SDDWP(I) + DDWP(I,J,K) * FT3pACRtoM3pHA
             ENDIF
@@ -178,9 +177,9 @@ C               SBATKT= Fraction of total stand basal area killed
 C               SSBAT = sum of total stand basal area
 C               SSBATK(I)= sum of basal area killed, by stand
 C
-C Note that PBKILL was convertied to number of trees at end 
+C Note that PBKILL was convertied to number of trees at end
 C     of BMISTD.F
-C               
+C
 C     (RNH July98, Aug98)
 C
       SSBAT= 0.0
@@ -198,9 +197,8 @@ C     Currently, RBATK(I,JSCL1) gets reported as previous year's value
 C     if the size class BA gets reduced to zero.
 C
          RBAKT(I,JSCL1) = 0.0
-C      
-         IF ((BAH(I, JSCL1) + BANH(I, JSCL1)) .LE. 0.0) GO TO 310
 C
+         IF ((BAH(I, JSCL1) + BANH(I, JSCL1)) .LE. 0.0) GO TO 310
 C
 C     Use the PBAREM parameter that ESSA uses.  Because PBKILL was
 C     transformed to number of trees per acre in BMISTD
@@ -212,7 +210,7 @@ C
         ELSE
            PBAREM = 0.0
         ENDIF
-C      
+C
 C     Calculate percent (RNH 18 Nov98) basal area killed by size class
 C
       RBAKT(I,JSCL1)= BAH(I,JSCL1)*PBAREM/SSBAT*100.
@@ -238,7 +236,6 @@ C
          ELSE
             TOTKT= 0.0
          ENDIF
-C     
 C
   310 CONTINUE
 C
@@ -251,7 +248,7 @@ C      LSBAK1= SBATKT
 C
 C     Change  SBATKT to percentfor SPY output (RNH 18Nov98)
 C
-C     Added loop to account for the rare occasion when no BA remains in 
+C     Added loop to account for the rare occasion when no BA remains in
 C     stand.
       IF (SSBAT .GT. 0) THEN
          SBATKT= SSBATK(I)/SSBAT*100.
@@ -274,7 +271,7 @@ C     BASAL AREA OF HOST BEETLE-KILLED AND BAH REMAINING ADDED (BELOW)
 C     TO THE *.SPY (ANNUAL) OUTPUT.  ajm 10/6/99
 C
   313 FORMAT(T25,'INDIVIDUAL STAND ANNUAL OUTPUT VARIABLES')
-  314 FORMAT(T63,'% BASAL AREA OF SIZE CLASS KILLED / TOTAL STAND BASAL 
+  314 FORMAT(T63,'% BASAL AREA OF SIZE CLASS KILLED / TOTAL STAND BASAL
      1AREA')
 C     , 23X, 'BASAL AREA OF BEETLE-KILLED HOST TREES BY SIZE CLASS',
 C     2 20X, 'BASAL AREA OF HOST TREES BY SIZE CLASS')
@@ -308,7 +305,7 @@ C
       ELSE
       VTEMP2= 0.0
       ENDIF
-C        
+C
 C     CHANGE ALL VARIABLES INTO METRIC
 C
       SSBAT = SSBAT * FT2pACRtoM2pHA
@@ -327,12 +324,10 @@ c     4           (SBAKL(I,JNSCL), JNSCL=1, NSCL),
 c     5           (BAH(I,JSCL1), JSCL1=1,NSCL)
       ENDIF
 C
-C
   316 FORMAT (1X, I4, 1X, A8, 1X, F7.2, 1X, F7.4, 1X, F7.2,
      1       1X, F7.2,1X,F7.2,1X,F7.2,1X,F7.2,1X,11F7.2)
 c     , 1X,
 c     2       10F7.2, 1X, 10F7.2)
-C
 C
 C     Write annual landscape means to unit number JBMLPY
 C
@@ -357,7 +352,7 @@ C
         LRVSTD1 = LRVSTD1 + GRFSTD(I) * ACRES1
         LBAT1 = LBAT1 + SSBAT*ACRES1
         LPROPH1 = LPROPH1 + PROPH(I) * ACRES1
-C                
+C
         LVKILL1= LVKILL1 + SVKILL1 * ACRES1
 C
 C     Reinitialize SVKILL1
@@ -377,31 +372,31 @@ C
         LBKPO1= LBKPO1 + BKPOUT(1,I) * ACRES1
         LBKPI1= LBKPI1 + BKPIN(1,I) * ACRES1
         LBKPS1= LBKPS1 + BKPS(I) * ACRES1
-C      
+C
 C     Generate output when all stands have been counted for year
 C
         IF (ICNT1 .GE. BMEND) THEN
-                       
+
           Y1 = 1.0 / SACRES1
-           
+
           LTBAK1= LTBAK1*Y1
           LBKP1 = LBKP1 * Y1
           LRVSTD1 = LRVSTD1 * Y1
           LBAT1 = LBAT1 * Y1
           LPROPH1 = LPROPH1 * Y1
-C          
+C
           LDDWP1 = LDDWP1 * Y1
           LSDWP1 = LSDWP1 * Y1
-C          
+C
           LVKILL1= LVKILL1 * Y1
-C          
+C
           LSREM1 = LSREM1 * Y1
           LVREM1(1) = LVREM1(1) * Y1
           LVREM1(2) = LVREM1(2) * Y1
 C
           LBKPO1= LBKPO1 * Y1
           LBKPI1= LBKPI1 * Y1
-          LBKPS1= LBKPS1 * Y1                  
+          LBKPS1= LBKPS1 * Y1
 C
           DO 73 ISIZ= 1,(NSCL+1)
             LBAKL1(ISIZ)= LBAKL1(ISIZ) * Y1
@@ -421,7 +416,7 @@ C
   301 FORMAT(T15,'LANDSCAPE ANNUAL STAND-AREA-WEIGHTED OUTPUT VARIABLES'
      1/)
   302 FORMAT(' YEAR','      L-BKP ','    L-RV  ','  TOT-BA  ',
-     1 'T-VOL-KILL',    
+     1 'T-VOL-KILL',
      1       ' T-BA-KILL','  VOL-SANI ',' VOL-SALV ')
 C
       IPRHEDL= 1
@@ -463,51 +458,48 @@ C
 C     ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 C
   303 FORMAT (1X, I4, 1X, 8F10.3)
-     
-C     2           SRVSTD(I), SBAT(I), 
+
+C     2           SRVSTD(I), SBAT(I),
 C     3           (SBAKL(I,JNSCL), JNSCL= 1, NSCL+1)
 C
-C   
-C            WRITE (JBMVOL,90) RYEARP,'LANDSCAPE',LBKP,LRVSTD,LBAT, 
+C            WRITE (JBMVOL,90) RYEARP,'LANDSCAPE',LBKP,LRVSTD,LBAT,
 C     >       LVKILL,LBAKL(NSCL+1),
 C     >       LVREM(1), LVREM(2), TVOL
 C   90       FORMAT (1X, I4, 1X, A9, F8.2, F6.2, F8.2, I4, 1X, 11F10.2)
-C   
 C
-C     End of annual landscape calculations 
+C     End of annual landscape calculations
 C     +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 C
-C
 c       Print state information averaged within the master cycle.
-       
+
       IF (IYEAR .EQ. RYEAR) THEN
         IF (IBMMRT .LE. 0) GOTO 85
-      
+
         SSREM(I) = SREMOV(I)
         SVREM(I,1) = VOLREM(I,1)
         SVREM(I,2) = VOLREM(I,2)
 
-        X = 1.0 / FLOAT(IBMMRT)     
+        X = 1.0 / FLOAT(IBMMRT)
         SBKP(I) =  SBKP(I) * X
         SRVSTD(I) = SRVSTD(I) * X
         SBAT(I) = SBAT(I) * X
-        IF (SBAT(I) .GT. 1E-6) THEN 
+        IF (SBAT(I) .GT. 1E-6) THEN
            PROPH(I) = (SBAH(I,NSCL+1) / SBAT(I)) * X
         ELSE
            PROPH(I) = 0.0
         ENDIF
-                
+
         SDDWP(I) = SDDWP(I) * X
         SSDWP(I) = SSDWP(I) * X
-                
+
         STKILL(I)= STKILL(I) * X
         SVKILL(I)= SVKILL(I) * X
         SBAKL(I,NSCL+1)= SBAKL(I,NSCL+1) * X
-                
+
         SSREM(I) = SSREM(I) * X
         SVREM(I,1) = SVREM(I,1) * X
         SVREM(I,2) = SVREM(I,2) * X
-            
+
         DO 31 ISIZ= 1,NSCL
           SBAKL(I,ISIZ)= SBAKL(I,ISIZ) * X
           SBAH(I,ISIZ)= SBAH(I,ISIZ) * X
@@ -517,62 +509,62 @@ c       Print state information averaged within the master cycle.
         SBKPI(I)= SBKPI(I) * X
         SBKPS(I)= SBKPS(I) * X
         SBKPIS(I)= SBKPIS(I) * X
-	
+
 
 c       Write the stand averages to the main beetle output file
 C
 C     Changed RYEAR2 to RYEARP to specify end rather than beginning
-C     of cycle in output table (RNH June98), 
+C     of cycle in output table (RNH June98),
 C
         IF (LBMVOL) THEN
 C          WRITE(JBMVOL,60) RYEAR2, BMSTDS(I), SBKP(I),SRVSTD(I),SBAT(I),
           WRITE(JBMVOL,60) RYEARP, BMSTDS(I), SBKP(I),SRVSTD(I),SBAT(I),
-     >      INT(PROPH(I)*100),SDDWP(I),SSDWP(I),STKILL(I),SVKILL(I), 
+     >      INT(PROPH(I)*100),SDDWP(I),SSDWP(I),STKILL(I),SVKILL(I),
      >      SBAKL(I,NSCL+1), SSREM(I), SVREM(I,1), SVREM(I,2)
-   60     FORMAT (1X, I4, 1X, A8, 1X, F8.2, F6.2, F8.2, I4, 8(F9.2)) 
+   60     FORMAT (1X, I4, 1X, A8, 1X, F8.2, F6.2, F8.2, I4, 8(F9.2))
         ENDIF
-        
+
 c       Write the stand averages to the detailed beetle output file (if requested)
-   
+
         IF (LBMDET) THEN
 C         WRITE(JBMDBH,65) RYEAR2, BMSTDS(I),INT(SBKPS(I)*100),SBKP(I),
          WRITE(JBMDBH,65) RYEARP, BMSTDS(I),INT(SBKPS(I)*100),SBKP(I),
      >       SBKPI(I),SBKPO(I), (SBAKL(I,IZ),IZ=1,NSCL),
      >       (SBAH(I,IZ),IZ=1,NSCL), SBKPIS(I)
-   65    FORMAT (1X,I4,1X,A8,1X,I5,3(F7.2),10(F7.2),10(F7.1),F7.2) 
+   65    FORMAT (1X,I4,1X,A8,1X,I5,3(F7.2),10(F7.2),10(F7.1),F7.2)
         ENDIF
-       
 
 
-C     KLUDGE TO GET AROUND COUNTING OF NONSTOCKABLE STANDS.   
-   
-        IF (ICNT .GE. BMEND) ICNT = 0      
+
+C     KLUDGE TO GET AROUND COUNTING OF NONSTOCKABLE STANDS.
+
+        IF (ICNT .GE. BMEND) ICNT = 0
         ICNT = ICNT + 1
-      
+
 c       Print landscape averages.
 
         IF (ICNT .EQ. 1) SACRES = 0.0
-        
+
         CALL SPLAAR (I, ACRES, IRC)
         IF (ACRES .LE. 0.0) ACRES = 1.0
 
-C        CHANGE ACRES TO BE IN HA INSTEAD 
+C        CHANGE ACRES TO BE IN HA INSTEAD
          ACRES = ACRES * ACRtoHA
-                
+
         SACRES = SACRES + ACRES
-                          
+
         LBKP = LBKP + SBKP(I) * ACRES
         LRVSTD = LRVSTD + SRVSTD(I) * ACRES
         LBAT = LBAT + SBAT(I) * ACRES
         LPROPH = LPROPH + PROPH(I) * ACRES
-                
+
         LDDWP = LDDWP + SDDWP(I) * ACRES
         LSDWP = LSDWP + SSDWP(I) * ACRES
-                
+
         LTKILL= LTKILL + STKILL(I) * ACRES
         LVKILL= LVKILL + SVKILL(I) * ACRES
         LBAKL(NSCL+1)= LBAKL(NSCL+1) + SBAKL(I,NSCL+1) * ACRES
-                
+
         LSREM = LSREM + SSREM(I) * ACRES
         LVREM(1) = LVREM(1) + SVREM(I,1) * ACRES
         LVREM(2) = LVREM(2) + SVREM(I,2) * ACRES
@@ -581,51 +573,51 @@ C        CHANGE ACRES TO BE IN HA INSTEAD
         LBKPI= LBKPI + SBKPI(I) * ACRES
         LBKPS= LBKPS + SBKPS(I) * ACRES
         LBKPIS= LBKPIS + SBKPIS(I) * ACRES
-                            
+
         DO 81 ISIZ= 1,NSCL
           LBAKL(ISIZ)= LBAKL(ISIZ) + SBAKL(I,ISIZ) * ACRES
           LBAH(ISIZ)= LBAH(ISIZ) + SBAH(I,ISIZ) * ACRES
    81   CONTINUE
-      
+
 
         IF (ICNT .GE. BMEND) THEN
-                       
+
           y = 1.0 / SACRES
-           
+
           LBKP = LBKP * Y
           LRVSTD = LRVSTD * Y
           LBAT = LBAT * Y
           LPROPH = LPROPH * Y
-          
+
           LDDWP = LDDWP * Y
           LSDWP = LSDWP * Y
-          
+
           LTKILL= LTKILL * Y
           LVKILL= LVKILL * Y
           LBAKL(NSCL+1)= LBAKL(NSCL+1) * Y
-          
+
           LSREM = LSREM * Y
           LVREM(1) = LVREM(1) * Y
           LVREM(2) = LVREM(2) * Y
-          
+
           LBKPO= LBKPO * Y
           LBKPI= LBKPI * Y
-          LBKPS= LBKPS * Y                  
-          LBKPIS= LBKPIS * Y                  
-                            
+          LBKPS= LBKPS * Y
+          LBKPIS= LBKPIS * Y
+
           DO 82 ISIZ= 1,NSCL
             LBAKL(ISIZ)= LBAKL(ISIZ) * Y
             LBAH(ISIZ)= LBAH(ISIZ) * y
    82     CONTINUE
-   
+
           IF (LBMVOL) THEN
 C
 C     Changed RYEAR2 to RYEARP to specify end rather than beginning
 C     of cycle in output table (RNH June98), next 2 write statements
 C
-C            WRITE (JBMVOL,90) RYEAR2,'LANDSCAPE',LBKP,LRVSTD,LBAT, 
+C            WRITE (JBMVOL,90) RYEAR2,'LANDSCAPE',LBKP,LRVSTD,LBAT,
 C
-             WRITE (JBMVOL,90) RYEARP,'LANDSCAPE',LBKP,LRVSTD,LBAT, 
+             WRITE (JBMVOL,90) RYEARP,'LANDSCAPE',LBKP,LRVSTD,LBAT,
      >       INT(LPROPH*100),LDDWP,LSDWP,LTKILL,LVKILL,LBAKL(NSCL+1),
      >       LSREM, LVREM(1), LVREM(2)
    90       FORMAT (1X, I4, 1X, A9, F8.2, F6.2, F8.2, I4, 8(F9.2))
@@ -636,17 +628,17 @@ C            WRITE(JBMDBH,95) RYEAR2,'LANDSCAPE',INT(LBKPS*100),LBKP,
             WRITE(JBMDBH,95) RYEARP,'LANDSCAPE',INT(LBKPS*100),LBKP,
      >         LBKPI,LBKPO,(LBAKL(ISIZ),ISIZ=1,NSCL),
      >         (LBAH(ISIZ),ISIZ=1,NSCL), LBKPIS
-   95       FORMAT (1X,I4,1X,A9,I5,3(F7.2),10(F7.2),10(F7.1),F7.2) 
+   95       FORMAT (1X,I4,1X,A9,I5,3(F7.2),10(F7.2),10(F7.1),F7.2)
           ENDIF
 
-c     Zero out all summary variables after printing. 
+c     Zero out all summary variables after printing.
 
           LBKP = 0.0
           LBKPS = 0.0
           LBKPO = 0.0
           LBKPI = 0.0
 	    LBKPIS = 0.0
-          LBAT = 0.0 
+          LBAT = 0.0
           LPROPH = 0.0
           LDDWP = 0.0
           LSDWP = 0.0
@@ -660,7 +652,7 @@ c     Zero out all summary variables after printing.
           DO 71 ISIZ= 1,NSCL+1
             LBAKL(ISIZ) = 0.0
             LBAH(ISIZ)= 0.0
-   71     CONTINUE         
+   71     CONTINUE
         ENDIF
 
         SBKP(I) = 0.0
@@ -675,7 +667,7 @@ c     Zero out all summary variables after printing.
         STKILL(I) = 0.0
         SVKILL(I) = 0.0
         SSREM(I) = 0.0
-        SVREM(I,1) = 0.0 
+        SVREM(I,1) = 0.0
         SVREM(I,2) = 0.0
         IF (.NOT. LBMDVO) SRVSTD(I) = 0.0
 
@@ -684,7 +676,7 @@ c     Zero out all summary variables after printing.
           SBAKL(I,ISIZ) = 0.0
    75   CONTINUE
       END IF
-      
+
    85 CONTINUE
 
       RETURN

@@ -1,5 +1,8 @@
       SUBROUTINE COLDRV
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **COLDRV        DATE OF LAST REVISION:  07/02/10
 C----------
@@ -12,28 +15,11 @@ C
 C Revision History
 C   02/08/88 Last noted revision date.
 C   07/02/10 Lance R. David (FMSC)
-C     Added IMPLICIT NONE.
 C----------
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
 C
       INCLUDE 'COLCOM.F77'
 C
-C
       INCLUDE 'MPBCOM.F77'
-C
-C
-COMMONS
 C
       CALL COLDBH
       CALL COLMOD (IFINT,ICYC,IY(ICYC),NPLT)

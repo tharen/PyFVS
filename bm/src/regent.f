@@ -1,5 +1,15 @@
       SUBROUTINE REGENT(LESTB,ITRNIN)
-      IMPLICIT NONE
+      use htcal_mod
+      use multcm_mod
+      use pden_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use plot_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **REGENT--BM   DATE OF LAST REVISION:  08/03/12
 C----------
@@ -20,45 +30,10 @@ C  FROM **TREGRO** DURING CYCLING.  ENTRY **REGCON** IS CALLED FROM
 C  **RCON** TO LOAD MODEL PARAMETERS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'MULTCM.F77'
-C
 C
       INCLUDE 'ESTCOR.F77'
 C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-COMMONS
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES:
 C
@@ -517,7 +492,7 @@ C  OFF, OR IF WYKOFF CALIBRATION DID NOT OCCUR.
 C  NOTE: THIS SIMPLIFIES TO IF(IABFLB(ISPC).EQ.1) BUT IS SHOWN IN IT'S
 C        ENTIRITY FOR CLARITY.
 C----------
-        IF(.NOT.LHTDRG(ISPC) .OR. 
+        IF(.NOT.LHTDRG(ISPC) .OR.
      &     (LHTDRG(ISPC) .AND. IABFLG(ISPC).EQ.1))THEN
           CALL HTDBH (IFOR,ISPC,DK,HK,1)
           IF(H .LE. 4.5) THEN
@@ -536,7 +511,7 @@ C  IF CALLED FROM **ESTAB** ASSIGN DIAMETER
 C----------
         IF(LESTB) THEN
           IF(ISPC.EQ.13 .OR. ISPC.EQ.14 .OR. ISPC.EQ.16 .OR. ISPC.EQ.18)
-     &    THEN     
+     &    THEN
             IF(DAT45.GT.0.0 .AND. HK.GE.4.5 .AND. LHTDRG(ISPC) .AND.
      &         IABFLG(ISPC).EQ.0) THEN
               DBH(K)=DK - DAT45 + DIAM(ISPC)
@@ -579,7 +554,7 @@ C----------
             ENDIF
             IF(DEBUG)WRITE(JOSTND,*)'K,DK,DKK,DG,BARK,XRDGRO= ',
      &       K,DK,DKK,DG(K),BARK,XRDGRO
-            IF(LHTDRG(ISPC) .AND. IABFLG(ISPC).EQ.0) 
+            IF(LHTDRG(ISPC) .AND. IABFLG(ISPC).EQ.0)
      &         DG(K)=0.1*HTG(K)*XRDGRO
             IF(DG(K) .LT. 0.0) DG(K)=0.1
             IF (DG(K) .GT. DGMX) DG(K)=DGMX
@@ -641,7 +616,6 @@ C----------
    25 CONTINUE
    30 CONTINUE
       GO TO 91
-C
 C
 C----------
 C  SMALL TREE HEIGHT CALIBRATION SECTION.
@@ -795,9 +769,9 @@ C----------
       IF(CORNEW.LE.0.0) CORNEW=1.0E-4
       HCOR(ISPC)=ALOG(CORNEW)
 C----------
-C  TRAP CALIBRATION VALUES OUTSIDE 2.5 STANDARD DEVIATIONS FROM THE 
+C  TRAP CALIBRATION VALUES OUTSIDE 2.5 STANDARD DEVIATIONS FROM THE
 C  MEAN. IF C IS THE CALIBRATION TERM, WITH A DEFAULT OF 1.0, THEN
-C  LN(C) HAS A MEAN OF 0.  -2.5 < LN(C) < 2.5 IMPLIES 
+C  LN(C) HAS A MEAN OF 0.  -2.5 < LN(C) < 2.5 IMPLIES
 C  0.0821 < C < 12.1825
 C----------
       IF(CORNEW.LT.0.0821 .OR. CORNEW.GT.12.1825) THEN
@@ -852,8 +826,6 @@ C----------
    91 IF(DEBUG)WRITE(JOSTND,9995)ICYC
  9995 FORMAT('LEAVING SUBROUTINE REGENT  CYCLE =',I5)
       RETURN
-C
-C
 C
       ENTRY REGCON
 C----------

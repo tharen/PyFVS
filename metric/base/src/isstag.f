@@ -1,5 +1,7 @@
       SUBROUTINE ISSTAG
-      IMPLICIT NONE
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -10,13 +12,7 @@ C
 C   N.L.CROOKSTON - INT MOSCOW - JUNE 1996 AND WITH
 C   A.R.STAGE - INT MOSCOW - JUNE 1997
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'SSTGMC.F77'
-      INCLUDE 'METRIC.F77'
-C
-COMMONS
 C
       LOGICAL LON,LPRT
       INTEGER I,J

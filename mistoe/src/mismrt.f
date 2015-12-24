@@ -1,4 +1,9 @@
       SUBROUTINE MISMRT(MFLAG)
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 ***********************************************************************
 *  **MISMRT--MS  Date of last revision:  12/20/03
 *----------------------------------------------------------------------
@@ -57,19 +62,14 @@
 *        This change was provided by Bob Havis (FMSC) to eliminate
 *        LF95 FORTRAN compiler warnings.
 ***********************************************************************
-      IMPLICIT NONE
 
 C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C.... Common include files.
 
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'MISCOM.F77'
 
 C.... Variable declarations.

@@ -1,5 +1,10 @@
       SUBROUTINE DUBSCR(ISPC,D,H,CR,TPCT,TPCCF)
-      IMPLICIT NONE
+      use plot_mod
+      use contrl_mod
+      use pden_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **DUBSCR--UT   DATE OF LAST REVISION:  08/24/09
 C----------
@@ -10,24 +15,6 @@ C  MEASUREMENTS AND ARE LESS THAN 5.0 INCHES DBH.  FINALLY, IT IS
 C  USED TO REPLACE CROWN RATIO ESTIMATES FOR ALL TREES THAT
 C  CROSS THE THRESHOLD BETWEEN THE SMALL AND LARGE TREE MODELS.
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
 COMMONS
 C----------
       EXTERNAL RANN

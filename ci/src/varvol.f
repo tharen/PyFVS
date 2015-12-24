@@ -1,5 +1,10 @@
         SUBROUTINE VARVOL
-        IMPLICIT NONE
+      use contrl_mod
+      use volstd_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **VARVOL--CI    DATE OF LAST REVISION:   08/05/11
 C----------
@@ -9,26 +14,6 @@ C  FROM THE NATIONAL CRUISE SYSTEM VOLUME LIBRARY FOR METHB OR METHC
 C  EQUAL TO 6.  IT ALSO CONTAINS ANY OTHER SPECIAL VOLUME CALCULATION
 C  METHOD SPECIFIC TO A VARIANT (METHB OR METHC = 8)
 C----------
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
 C
 C----------
       LOGICAL DEBUG,TKILL,CTKFLG,BTKFLG,LCONE
@@ -167,7 +152,7 @@ C
           IF(IT.GT.0)HT2TD(IT,2)=X02
         ELSE
           IF(IT.GT.0)HT2TD(IT,2)=0.
-        ENDIF        
+        ENDIF
 C
         IF(DEBUG)WRITE(JOSTND,*)' AFTER PROFILE CF TVOL= ',TVOL
       ELSE
@@ -236,12 +221,12 @@ C
           IF(DEBUG)WRITE(JOSTND,*)' CALLING PROFILE BF ISPC,ARGS = ',
      &     ISPC,IREGN,FORST,VEQNNB(ISPC),BFTOPD(ISPC),BFSTMP(ISPC),D,H,
      &     DBT,BARK
-         
+
           CALL PROFILE (IREGN,FORST,VEQNNB(ISPC),TOPDIB,X01,BFSTMP(ISPC)
      &    ,D,HTTYPE,H,I01,X02,X03,X04,X05,X06,X07,X08,X09,I02,DBT,
      &    BARK*100.,LOGDIA,BOLHT,LOGLEN,LOGVOL,TVOL,I03,X010,X011,I1,I1,
      &    I1,I04,I05,X012,CTYPE,I01,PROD,IERR)
-C 
+C
           IF(D.GE.BFMIND(ISPC))THEN
             IF(IT.GT.0)HT2TD(IT,1)=X02
           ELSE
@@ -255,12 +240,12 @@ C
           IFC=IFIX(FC)
           IF(DEBUG)WRITE(JOSTND,*)' CALLING DVEST CF ISPC,ARGS = ',
      &    ISPC,VEQNNB(ISPC),D,H,TOPDIB,IFC,FORST,BARK,HTTYPE
-C        
+C
           CALL DVEST(VEQNNB(ISPC),D,DRC,H,TOPDIB,IFC,I01,X01,X02,
      &    FORST,BARK*100.,TVOL,I1,I1,I1,I02,I03,
      &    PROD,HTTYPE,I04,X09,LIVE,NINT(BA),NINT(SITEAR(ISPC)),
      &    CTYPE,IERR)
-C        
+C
           IF(DEBUG)WRITE(JOSTND,*)' AFTER DVEST CF TVOL= ',TVOL
         ENDIF
         TVOL(1)=TVOL1
@@ -291,7 +276,6 @@ C----------
       CTKFLG = .TRUE.
       BTKFLG = .TRUE.
       RETURN
-C
 C
 C----------
 C  REGION 4 VOLUME SECTION
@@ -360,7 +344,7 @@ C
           IF(IT.GT.0)HT2TD(IT,2)=X02
         ELSE
           IF(IT.GT.0)HT2TD(IT,2)=0.
-        ENDIF        
+        ENDIF
 C
       ELSEIF(VEQNNC(ISPC)(4:6).EQ.'DVE')THEN
         DRC=0.
@@ -463,12 +447,12 @@ C
           IFC=IFIX(FC)
           IF(DEBUG)WRITE(JOSTND,*)' CALLING DVEST BF ISPC,ARGS = ',
      &    ISPC,VEQNNB(ISPC),D,H,TOPDIB,IFC,FORST,BARK,HTTYPE
-C        
+C
           CALL DVEST(VEQNNB(ISPC),D,DRC,H,TOPDIB,IFC,I01,X01,X02,
      &    FORST,BARK*100.,TVOL,I1,I1,I1,I02,I03,
      &    PROD,HTTYPE,I04,X09,LIVE,NINT(BA),NINT(SITEAR(ISPC)),
      &    CTYPE,IERR)
-C        
+C
           IF(DEBUG)WRITE(JOSTND,*)' AFTER DVEST BF TVOL= ',TVOL
           TVOL(1)=TVOL1
           TVOL(4)=TVOL4
@@ -511,7 +495,6 @@ C----------
 C
       RETURN
 C
-C
 C----------
 C  ENTER ANY OTHER CUBIC HERE
 C----------
@@ -523,7 +506,6 @@ C----------
       CTKFLG = .FALSE.
       RETURN
 C
-C
 C----------
 C  ENTER ANY OTHER BOARD HERE.
 C----------
@@ -532,7 +514,6 @@ C----------
       BBFV=0.
       BTKFLG = .FALSE.
       RETURN
-C
 C
 C----------
 C  ENTRY POINT FOR SENDING VOLUME EQN NUMBER TO THE FVS-TO-NATCRZ ROUTINE

@@ -1,5 +1,8 @@
       SUBROUTINE CCFCAL(ISPC,D,H,JCR,P,LTHIN,CCFT,CRWDTH,MODE)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -13,18 +16,6 @@ C  FROM THE COLVILLE NF.
 C
 C  THIS IS A BLEND OF NI- AND PN- DERIVED RELATIONSHIPS
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
 COMMONS
 C----------
 C  ARGUMENT DEFINITIONS:
@@ -66,7 +57,7 @@ C  SPECIES ORDER 1=SF,  2=WF,  3=GF,  4=AF,  5=RF,  6=SS,  7=NF,  8=YC,
 C                9=IC, 10=ES, 11=LP, 12=JP, 13=SP, 14=WP, 15=PP, 16=DF,
 C               17=RW, 18=RC, 19=WH, 20=MH, 21=BM, 22=RA, 23=WA, 24=PB,
 C               25=GC, 26=AS, 27=CW, 28=WO, 29=J , 30=LL, 31=WB, 32=KP,
-C               33=PY, 34=DG, 35=HT, 36=CH, 37=WI, 38=  , 39=OT 
+C               33=PY, 34=DG, 35=HT, 36=CH, 37=WI, 38=  , 39=OT
 C
 C  SOURCES OF COEFFICIENTS:
 C      PAINE AND HANN, 1982. MAXIMUM CROWN WIDTH EQUATIONS FOR
@@ -122,7 +113,7 @@ C
      &   -0.07182,-0.02341,-0.01509, 0.00000, 0.03539, 0.00000,
      &    0.00000, 0.00000, 0.00000, 0.00000, 0.00000/
 C
-C     VARIABLES FROM THE PN 
+C     VARIABLES FROM THE PN
 C
       REAL    pnRD1(19),pnRD2(19),pnRD3(19)
       INTEGER INDCCF(39)

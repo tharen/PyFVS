@@ -1,19 +1,13 @@
       SUBROUTINE BADIST(DEBUG)
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C   **BADIST--NE   DATE OF LAST REVISION:  07/11/08
 C----------
 C
 C COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
 C
       INCLUDE 'TWIGCOM.F77'
 C

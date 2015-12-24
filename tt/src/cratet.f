@@ -1,5 +1,13 @@
       SUBROUTINE CRATET
-      IMPLICIT NONE
+      use htcal_mod
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **CRATET--TT   DATE OF LAST REVISION:  09/23/11
 C----------
@@ -21,37 +29,7 @@ C    8)  PRINT A TABLE DESCRIBING CONTROL PARAMETERS AND INPUT
 C        VARIABLES.
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
       INCLUDE 'GGCOM.F77'
-C
-C
-COMMONS
 C
 C----------
 C  INTERNAL VARIABLES.
@@ -70,7 +48,7 @@ C----------
       REAL D1,D2,SITAGE,SITHT,AGMAX,HTMAX,HTMAX2
       REAL AX,Q,SUMX,H,D,BX,XX,YY,XN,HS,P2,P3,P4,YOUNG,OLD
       REAL TEMCCF,P,DM1,CW,CCFT,SI
-      
+
 C----------
 C SPECIES ORDER FOR TETONS VARIANT:
 C
@@ -135,7 +113,7 @@ C SPECIES USING ALEXANDER 1967, RES NOTE RM-32
 C
       CASE(5,8,9)
         H = 4.5 + (2.75780*(SI**0.83312)) * (1.0 - EXP(-0.015701*50.))**
-     &      (22.71944*(SI**(-0.63557))) 
+     &      (22.71944*(SI**(-0.63557)))
         SITEAR(ISPC)=H
       END SELECT
       IF(DEBUG)WRITE(16,*)'ISPC,SI,TEMCCF,H= ',ISPC,SI,TEMCCF,H
@@ -425,7 +403,7 @@ C  OFF, OR IF WYKOFF CALIBRATION DID NOT OCCUR.
 C  NOTE: THIS SIMPLIFIES TO IF(IABFLB(ISPC).EQ.1) BUT IS SHOWN IN IT'S
 C        ENTIRITY FOR CLARITY.
 C----------
-        IF(.NOT.LHTDRG(ISPC) .OR. 
+        IF(.NOT.LHTDRG(ISPC) .OR.
      &     (LHTDRG(ISPC) .AND. IABFLG(ISPC).EQ.1))THEN
           IF(ISPC .EQ. 16)THEN
             P2 = 1709.7229
@@ -522,7 +500,7 @@ C  OFF, OR IF WYKOFF CALIBRATION DID NOT OCCUR.
 C  NOTE: THIS SIMPLIFIES TO IF(IABFLB(ISPC).EQ.1) BUT IS SHOWN IN IT'S
 C        ENTIRITY FOR CLARITY.
 C----------
-        IF(.NOT.LHTDRG(ISPC) .OR. 
+        IF(.NOT.LHTDRG(ISPC) .OR.
      &     (LHTDRG(ISPC) .AND. IABFLG(ISPC).EQ.1))THEN
           IF(ISPC .EQ. 16)THEN
             P2 = 1709.7229

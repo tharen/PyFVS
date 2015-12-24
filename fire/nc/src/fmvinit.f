@@ -1,5 +1,11 @@
       SUBROUTINE FMVINIT
-      IMPLICIT NONE
+      use plot_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMVINIT  FIRE-NC-DATE OF LAST REVISION: 04/23/13
 C----------
@@ -15,16 +21,6 @@ C----------
 *
 ***********************************************************************
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
-C
-COMMONS
-C
       INTEGER I,J
 
       LVWEST    = .TRUE.  ! WESTERN VARIANT

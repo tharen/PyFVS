@@ -1,5 +1,7 @@
 c      SUBROUTINE BMCBKP (ISTD,IYR)
       SUBROUTINE BMCBKP (ISTD,IYR,OLDGRF)
+      use prgprm_mod
+      implicit none
 
 C CALLED BY:  BMDRV
 C CALLS:      GPGET2
@@ -18,29 +20,29 @@ C             GPADD
 *     IDTYP:  Loop counter over dead woody pool types (Ips)
 *     INC:    Array containing "increase" amounts for each pine beetle
 *             species and dbh size class
-*     ISIZ:   Loop counter over dbh size classes 
+*     ISIZ:   Loop counter over dbh size classes
 *     LBAD:   Logical flag for is this a bad year for reproduction
-*     REPRD:  Generation multiplier for non-Ips REPRDuction this year 
-*     REPRDI: Generation multiplier for Ips REPRDuctions this year 
+*     REPRD:  Generation multiplier for non-Ips REPRDuction this year
+*     REPRDI: Generation multiplier for Ips REPRDuctions this year
 *     SLINC:  Increase factor for REPRD for Ips in slash
 *
 *  Common block variables and parameters:
 *     ALLKLL: From BMCOM; Array containing the number of stems killed
-*             by Ips in each size class 
+*             by Ips in each size class
 *     BADREP: The reproductive value in the bad year, for all trees
 *     IBADYR: The year in which reproduction is "bad"
-*     IBADBB: The species for which reproduction is "bad" 
+*     IBADBB: The species for which reproduction is "bad"
 *     MSBA:   From BMCOM; BA in each size class
 *     MXDWHC: From BMPRM; Max number of Dead Woody pool types (IPS)
 *     MXDWSZ: From BMPRM; Max number of Dead Woody Pool Size categories
 *     NBGEN:  From BMCOM; the number of MPB/WPB generations/year
 *     NIBGEN: From BMCOM; the number of IPS generations/year
-*     NSCL:   From BMPRM; the number of dbh size classes 
+*     NSCL:   From BMPRM; the number of dbh size classes
 *     OLDBKP: From BMCOM; array containing the BKP in a stand before dispersal
-*     PSLASH: From BMCOM; the proportion slash inhabited by Ips 
+*     PSLASH: From BMCOM; the proportion slash inhabited by Ips
 *     TOPKLL: From BMCOM; Array containing the proportion of tops attacked
-*             by Ips in each size class   
-*     WPBA:   From BMCOM; Array containing the BA in each 
+*             by Ips in each size class
+*     WPBA:   From BMCOM; Array containing the BA in each
 *              Dead Woody Pool size class
 *
 ***********************************************************************
@@ -49,7 +51,6 @@ C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77' 
       INCLUDE 'PPEPRM.F77'
       INCLUDE 'BMPRM.F77'
 
@@ -58,13 +59,13 @@ C.... Common include files.
       INCLUDE 'PPCNTL.F77'
       INCLUDE 'BMCOM.F77'
 
-C.... Variable declarations.                             
+C.... Variable declarations.
 
       INTEGER IDSIZ, IDTYP
       INTEGER DUM(1)
       LOGICAL LOK
-      REAL    REPRD, REPRDI, SLINC 
-      REAL    PRMS(7)                   
+      REAL    REPRD, REPRDI, SLINC
+      REAL    PRMS(7)
       REAL    OLDGRF(NSCL)
 
       SAVE
@@ -74,14 +75,14 @@ C.... Variable declarations.
 
 C     Increase factor for ips in slash
       SLINC = 5.0
-    
+
 C...    REPRD is to account for multiple generations
 
       IF (NBGEN .EQ. 1) REPRD= 1.0
       IF (NBGEN .EQ. 2) REPRD= 1.5
       IF (NBGEN .EQ. 3) REPRD= 2.0
       IF (NBGEN .GT. 3) REPRD= 2.5
-      
+
 C....    turns off Ips as a DV completely
 
       IF (PBSPEC .NE. 3 .AND. .NOT. IPSON) REPRDI= 0.

@@ -1,4 +1,7 @@
       SUBROUTINE MSPPGT (WK3, IPNT, ILIMIT)
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 ***********************************************************************
 *  **MSPPGT--MS  DATE OF LAST REVISION:  06/25/13
 *----------------------------------------------------------------------
@@ -52,7 +55,7 @@
 *
 *  Revision History :
 *  01-MAR-95  Lance R. David (MAG)
-*     Retrieval of DMGMLT (from MISCOM; user-adjustable diameter 
+*     Retrieval of DMGMLT (from MISCOM; user-adjustable diameter
 *     growth multiplier) removed due to change of MISTGMOD keyword.
 *     This variable is no longer used.
 *  10-MAR-08  Lance R. David (FHTET)
@@ -62,23 +65,20 @@
 *     Added varaibles IMOUT_ to integer scalars section.
 *  07-JUL-11  Lance R. David (FMSC)
 *     Added HGPDMR to arrays section.
-*  06-JUN-13  Lance R. David (FMSC)
+*  06-JUN-15  Lance R. David (FMSC)
 *     Corrected read of MISCYC array, only 1 dimension being processed.
 *
 ***********************************************************************
-      IMPLICIT NONE
 
-C.... Parameter statements.
+C.... Parameter statements for numeric variable processing.
       INTEGER MXI,MXL,MXR
       PARAMETER (MXL=8,MXR=1,MXI=5)
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C.... Common include files.
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'MISCOM.F77'
 
 C.... Variable declarations.
@@ -137,6 +137,41 @@ C.... Note that MISCYC, PRFMST, PMCSP, and DGPDMR are 2-d arrays.
 
       CALL BFREAD (WK3, IPNT, ILIMIT, DGPDMR, MAXSP*7, 2)
       CALL BFREAD (WK3, IPNT, ILIMIT, HGPDMR, MAXSP*7, 2)
+
+      RETURN
+      END
+
+      SUBROUTINE MSCHGET (CBUFF, IPNT, LNCBUF)
+      use prgprm_mod
+      IMPLICIT NONE
+C----------
+C  **MSCHGET--MS  DATE OF LAST REVISION:  07/10/15
+C----------
+C  Purpose:
+C     Get (retrieve) the mistletoe model character data for a stand.
+C  This is part of the Stop/Restart utility.
+C
+C
+COMMONS
+C
+C.... Common include files.
+
+      INCLUDE 'MISCOM.F77'
+
+C.... Parameter statements for character variable processing.
+      INTEGER LNCBUF
+      CHARACTER CBUFF(LNCBUF)
+      INTEGER I,IPNT,J
+
+c      write(*,*) 'in MSCHGET:', IPNT
+      
+      DO 102 J=1,MAXSP
+      DO 101 I=1,2
+      CALL CHREAD(CBUFF,IPNT,LNCBUF,CSPARR(J)(I:I),2)
+  101 CONTINUE
+  102 CONTINUE
+c      write(*,*) 'CSPARR=',CSPARR
+c      write(*,*) 'in MSCHGET:', IPNT
 
       RETURN
       END

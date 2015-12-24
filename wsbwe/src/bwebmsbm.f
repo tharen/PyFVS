@@ -1,5 +1,9 @@
       SUBROUTINE BWEBMS (TRFBMS,ICVOPT)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BWEBMS--BM             DATE OF LAST REVISION:  07/14/10
 C----------
@@ -35,19 +39,8 @@ C  Revision History:
 C    10-JUN-09 Lance R. David (FMSC)
 C       New expanded species list for BM variant.
 C    14-JUL-2010 Lance R. David (FMSC)
-C       Added IMPLICIT NONE and declared variables as needed.
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
 C----------
 C  DECLARATIONS AND DIMENSIONS FOR INTERNAL VARIABLES
 C----------

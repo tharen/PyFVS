@@ -1,5 +1,7 @@
       SUBROUTINE HTGR5(ISP,SSITE,BAA,YHTG,RELHT,CR,H)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **HTGR5--NC   DATE OF LAST REVISION:  04/03/08
 C----------
@@ -8,16 +10,6 @@ C SUBROUTINE TO CALCULATE 5-YEAR HEIGHT GROWTH
 C SPECIES INDEX 1-OC, 2-WP, 3-DF, 4-WF, 5-M , 6-IC, 7-BO,
 C               8-TO, 9-RF, 10-PP, 11-OTHER
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-COMMONS
 C----------
       REAL HRELHT(11),HCRSQ(11),HHT(11),HBA(11),HSITE(11),HCON(11)
       REAL H,CR,RELHT,YHTG,BAA,SSITE,HTGR

@@ -1,6 +1,8 @@
       SUBROUTINE SUMOUT(IOSUM,I20,ICFLAG,JOPRT,JOSTND,JOSUM,
      >                  LENG,MGMID,NPLT,SAMWT,ITITLE,LCVOLS,IPTINV)
-      IMPLICIT NONE
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -13,10 +15,10 @@ C              2: AGE
 C              3: TREES/ACRE                     START OF PERIOD
 C              4: TOTAL CU FT                    START OF PERIOD
 C     *        4: MERCH CU FT (PULP AND SAWLOG)  START OF PERIOD
-C              5: MERCH CU FT                    START OF PERIOD 
-C     *        5: MERCH CU FT (SAWLOG)           START OF PERIOD    
-C              6: MERCH BD FT                    START OF PERIOD  
-C     *        6: MERCH BD FT (SAWLOG)           START OF PERIOD 
+C              5: MERCH CU FT                    START OF PERIOD
+C     *        5: MERCH CU FT (SAWLOG)           START OF PERIOD
+C              6: MERCH BD FT                    START OF PERIOD
+C     *        6: MERCH BD FT (SAWLOG)           START OF PERIOD
 C              7: REMOVED TREES/ACRE
 C              8: REMOVED TOTAL CU FT
 C     *        8: REMOVED MERCH CU FT (PULP AND SAWLOG)
@@ -48,16 +50,7 @@ C     MGMID = MANAGEMENT IDENTIFICATION FIELD. ASSUMED ALPHANUMERIC.
 C     NPLT  = PLOT IDENTIFICATION FIELD. ASSUMED ALPHANUMERIC.
 C NOTE: * Indicates R8 and R9 specific (CS, LS, NE, OZ, SE, SN)
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'SUMTAB.F77'
-      INCLUDE 'METRIC.F77'
-C
-COMMONS
 C
       CHARACTER CISN*11,NPLT*26,TIM*8,DAT*10,MGMID*4,VVER*7,REV*10
       CHARACTER ITITLE*72,RECORD*250
@@ -79,7 +72,7 @@ C
       CALL VARVER (VVER)
       CALL REVISE (VVER,REV)
       CALL GRDTIM (DAT,TIM)
-      
+
       IF(LDSK) THEN
         INQUIRE(UNIT=JOSUM,opened=LCONN)
         IF (.NOT.LCONN) THEN
@@ -213,8 +206,8 @@ C
 C
 C       PREVENT UGLY ERROR MSGS WHEN ENORMOUS VALUES APPEAR IN THE MAIN
 C       OUTPUT FILE AND SUMMARY OUTPUT FILE: SUBSTITUE -1 INSTEAD
-C     
-	  X3 = IOSUM(3,I)/ACRtoHA 
+C
+	  X3 = IOSUM(3,I)/ACRtoHA
 	  IF (X3 .GT. 99999)   X3 = -1.0   ! i5
 	  X4 = IOLDBA(I)*FT2pACRtoM2pHA
 	  IF (X4 .GT. 9999)    X4 = -1.0   ! i4
@@ -268,7 +261,7 @@ C
      &                   X10,
      &                   NINT(IOSUM(7,I)/ACRtoHA),
      &                   IOSUM(8,I)*FT3pACRtoM3pHA,
-     &                   IOSUM(9,I)*FT3pACRtoM3pHA, 
+     &                   IOSUM(9,I)*FT3pACRtoM3pHA,
      &                   NINT(X14),
      &                   NINT(X15),
      &                   NINT(X16),
@@ -332,11 +325,11 @@ C
    56 FORMAT(/' NOTE: TOTAL VOLUME DEFINED AS ALL LIVE STEMS,',
      >        ' FROM GROUND TO TIP.')
    57 FORMAT( T8,'DEFAULT MERCHANTABLE VOLUME ASSUMPTIONS WERE USED:',
-     >       /T8,'  MINIMUM DBH:  PL 12.5 CM, ALL OTHERS 17.5 CM ' 
+     >       /T8,'  MINIMUM DBH:  PL 12.5 CM, ALL OTHERS 17.5 CM '
      >       /T8,'  STUMP HEIGHT: 30 CM ',
      >       /T8,'  TOP DIAMETER: 10 CM ')
    58 FORMAT( T8,'DEFAULT VOLUME ASSUMPTIONS: ',
-     >       /T8,'  MINIMUM DBH:  PL 12.5 CM, ALL OTHERS 17.5 CM ' 
+     >       /T8,'  MINIMUM DBH:  PL 12.5 CM, ALL OTHERS 17.5 CM '
      >       /T8,'  STUMP HEIGHT: 30 CM',
      >       /T8,'  TOP DIAMETER: 10 CM',
      >       /T8,'** VOLUME KEYWORDS WERE USED; DEFAULTS MAY HAVE',

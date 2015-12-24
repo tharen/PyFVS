@@ -1,22 +1,12 @@
       SUBROUTINE LNKINT
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
       INTEGER I
-C
-COMMONS
-C
 C
       NUMSP=0
       DO 20 I=1,MAXSP

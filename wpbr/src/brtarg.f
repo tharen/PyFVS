@@ -1,5 +1,9 @@
       SUBROUTINE BRTARG
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C**********************************************************************
 C  **BRTARG       DATE OF LAST REVISION:  06/05/2014
 C----------------------------------------------------------------------
@@ -14,7 +18,7 @@ C  calculated, only species is isolated and the new DFACT value is
 C  calculated using all stock types for the species and assigned to
 C  stock type 1 (wild stock) of that species, stock types 2-4 remain
 C  unchanged.
-C  
+C
 C----------------------------------------------------------------------
 C
 C  Revision History:
@@ -35,13 +39,13 @@ C     Modified to allow blister rust on other species using ISPBR array.
 C     Species loop (label 90) and species temp index variable (I3)
 C     are new.
 C  14-DEC-2000 Lance David (FHTET)
-C     Added code to skip calculation of RIAF when RIMETH = 0 and 
+C     Added code to skip calculation of RIAF when RIMETH = 0 and
 C     initial cankers are present at initialization.
 C  15-MAR-2001 Lance R. David (FHTET)
 C     Stand Deviation Factor variable (DFACT) updated to array by
-C     species and stock type. Given the method that a new deviation 
+C     species and stock type. Given the method that a new deviation
 C     factor is calculated at this time, only species is isolated and
-C     the new DFACT value is assigned to stock type 1 (wild stock), 
+C     the new DFACT value is assigned to stock type 1 (wild stock),
 C     stock types 2-4 remain unchanged.
 C  01-MAY-2001 Lance R. David (FHTET)
 C     Change stand level/averages variables to arrays for handling of
@@ -54,11 +58,7 @@ C**********************************************************************
 
 C.... Common include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BRCOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'PLOT.F77'
 
 C.... Local variable declarations.
 

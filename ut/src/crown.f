@@ -1,5 +1,13 @@
       SUBROUTINE CROWN
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use pden_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **CROWN--UT  DATE OF LAST REVISION:  03/31/11
 C----------
@@ -18,33 +26,6 @@ C  ONLY BE RESOLVED ONCE.  A CALL TO **DUBSCR** IS ISSUED TO DUB
 C  CROWN RATIO WHEN DBH IS LESS THAN 3 INCHES.  PROCESSING OF
 C  CROWN CHANGE FOR SMALL TREES IS CONTROLLED BY **REGENT**.
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
 COMMONS
 C----------
       LOGICAL DEBUG
@@ -416,11 +397,9 @@ C
    90 FORMAT(' LEAVING SUBROUTINE CROWN  CYCLE =',I5)
       RETURN
 C
-C
       ENTRY CRCONS
 C----------
 C  ENTRY POINT FOR LOADING CROWN RATIO MODEL COEFFICIENTS
-C
 C
 C SPECIES ORDER
 C  1=WB,  2=LM,  3=DF,  4=WF,  5=BS,  6=AS,  7=LP,  8=ES,  9=AF, 10=PP,

@@ -1,4 +1,5 @@
        SUBROUTINE BGCGO(LBGCGO)
+      implicit none
 C----------
 C  **BGCGO  BGC--DATE OF LAST REVISION: 05/29/01
 C                Revised 11/12/02.  Removing index ISTND, and removing PPE
@@ -15,9 +16,6 @@ C     WHETHER OR NOT BGC's INCREMENTS WILL BE PASSED TO FVS WILL BE DEALT WITH
 C     INTERNALLY WITHIN BGC IN SUBROUTINE FVSBGC (VIA FLAG IBGC).
 C
 C     CALLED FROM: GRINCR
-C
-COMMONS
-C
 C
       INCLUDE 'BGCCOM.F77'
 C      INCLUDE 'PPCNTL.F77'                       ! removed ajm 11/02

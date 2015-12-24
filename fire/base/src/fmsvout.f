@@ -1,5 +1,14 @@
       SUBROUTINE FMSVOUT(IYEAR,FLMHTIN,IFTYP)
-      IMPLICIT NONE
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use svdata_mod
+      use fmsvcm_mod
+      use fmfcom_mod
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -17,27 +26,17 @@ C
 C     CALLS SVOUT MULTIPLE TIMES TO DISPLAY MULTIPLE, PROGRESSIVE PICTURES
 C     OF THE FIRE BURNING THROUGH THE STAND.
 C
-COMMONS
 
-      INCLUDE 'PRGPRM.F77'
 
-      INCLUDE 'FMPARM.F77'
 
-      INCLUDE 'CONTRL.F77'
 
-      INCLUDE 'ARRAYS.F77'
 
-      INCLUDE 'FMCOM.F77'
 
-      INCLUDE 'FMFCOM.F77'
 
-      INCLUDE 'SVDATA.F77'
 
       INCLUDE 'SVDEAD.F77'
 
-      INCLUDE 'FMSVCM.F77'
 
-      INCLUDE 'METRIC.F77'
 
 COMMONS
 

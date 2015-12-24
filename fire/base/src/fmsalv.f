@@ -1,5 +1,11 @@
       SUBROUTINE FMSALV (IYR,SALVTPA)
-      IMPLICIT NONE
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmprop_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -45,14 +51,8 @@ C                  SVSALV
 C.... Parameter statements.
 
 C.... Parameter include files.
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... Common include files.
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
-      INCLUDE 'FMPROP.F77'
-      INCLUDE 'CONTRL.F77'
 
 C.... Variable declarations.
 
@@ -97,8 +97,8 @@ C
       CALL OPFIND(2,MYACT,KEY)
       IF (KEY .LE. 0) RETURN
 
-C     COMPUTE TOTAL VOLUME OF SNAGS PRIOR TO ANY SALVAGE. 
-C     THIS IS USED FOR CALCULATING THE PROPORTION VOL CUT, USED 
+C     COMPUTE TOTAL VOLUME OF SNAGS PRIOR TO ANY SALVAGE.
+C     THIS IS USED FOR CALCULATING THE PROPORTION VOL CUT, USED
 C     FOR CWD CALCS LATER. THUS, EAST/WEST VARIANT IS NOT IMPORTANT.
 
       TOTVOL = 0.0
@@ -307,37 +307,37 @@ C     new section for snag crowns left as slash during salvage.  separated
 C     from fmcadd (sar april 2014).
 
 C     Here we are accounting for crowns from salvaged trees left as slash.
-C     To approximate this, remove a proportion of material from every 
+C     To approximate this, remove a proportion of material from every
 C     year pool - 1 to TFMAX.  NOTE:  this is a slight mis-usage of CWDCUT,
 C     because CWD2B also contains dead crown material from live-but-
 C     burned trees (not much per tree, or the tree would have died).
-          
+
         DO KYR=1,TFMAX
-             
+
           PDOWN = CWDCUT
-            
-C         Repeat for each decay class:        
-          
-          DO DKCL=1,4 
-          
+
+C         Repeat for each decay class:
+
+          DO DKCL=1,4
+
 C          First add the litterfall to down debris.
-            
+
             DOWN = PDOWN * CWD2B(DKCL,0,KYR)
-            CWD(1,10,2,DKCL) = CWD(1,10,2,DKCL) + DOWN / 2000.0 
+            CWD(1,10,2,DKCL) = CWD(1,10,2,DKCL) + DOWN / 2000.0
             CWDNEW(1,10) = CWDNEW(1,10) + DOWN / 2000.0
             CWD2B(DKCL,0,KYR) = CWD2B(DKCL,0,KYR) - DOWN
-               
+
 C          Then all the sizes of woody material.
-            
+
             DO SIZE=1,5
                 DOWN = PDOWN * CWD2B(DKCL,SIZE,KYR)
                 CWD(1,SIZE,2,DKCL) = CWD(1,SIZE,2,DKCL) + DOWN / 2000.0
                 CWDNEW(1,SIZE) = CWDNEW(1,SIZE) + DOWN / 2000.0
                 CWD2B(DKCL,SIZE,KYR) = CWD2B(DKCL,SIZE,KYR) - DOWN
-                  
+
             ENDDO
           ENDDO
-        ENDDO  
+        ENDDO
 
 
       RETURN

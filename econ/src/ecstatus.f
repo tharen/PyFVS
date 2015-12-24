@@ -1,4 +1,6 @@
       subroutine ECSTATUS(ICYC, NCYC, IY, beforeCuts)
+      use prgprm_mod
+      implicit none
 C----------
 C **ECSTATUS--ECON  DATE OF LAST REVISION: 06/18/2009
 C----------
@@ -17,9 +19,7 @@ C   NCYC       - number of cycles in simulation.
 C   IDT        - eventYear, year an Event Monitor activity is scheduled to take place.
 C   IY         - array of actual simulation years, 1=inventory year, 2=end 1st cycle, 3=end 2nd cycle, etc.
 
-      implicit none
 
-      include 'PRGPRM.F77'
       include 'ECNCOM.F77'
       include 'ECNCOMSAVES.F77'
 

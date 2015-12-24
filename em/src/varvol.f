@@ -1,5 +1,10 @@
         SUBROUTINE VARVOL
-        IMPLICIT NONE
+      use contrl_mod
+      use volstd_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **VARVOL--EM    DATE OF LAST REVISION:   03/20/13
 C----------
@@ -9,26 +14,6 @@ C  FROM THE NATIONAL CRUISE SYSTEM VOLUME LIBRARY FOR METHB OR METHC
 C  EQUAL TO 6.  IT ALSO CONTAINS ANY OTHER SPECIAL VOLUME CALCULATION
 C  METHOD SPECIFIC TO A VARIANT (METHB OR METHC = 8)
 C----------
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
 C
 C----------
       INTEGER IT,INTFOR,IERR,IZERO,I01,I02,I03,I04,I05,I1,IREGN
@@ -55,13 +40,13 @@ C  AS,PB USE IE AS (ORIGINALLY FROM UT VARIANT)
 C  GA,CW,BA,PW,NC,OH USE IE CO (ORIGINALLY FROM CR VARIANT)
 C----------
 C
-C THESE VALUES CAME FROM IE SUBROUTINE **FORMCL** 
+C THESE VALUES CAME FROM IE SUBROUTINE **FORMCL**
 C
       DATA FORMC/
      &  0.,  0.,  0., 75., 78., 56.,  0.,  0.,  0.,  0., 76.,
      & 77., 76., 76., 76., 76., 70.,  0., 76.,
      &  0.,  0.,  0., 75., 76., 56.,  0.,  0.,  0.,  0., 78.,
-     & 77., 78., 78., 78., 78., 70.,  0., 78., 
+     & 77., 78., 78., 78., 78., 70.,  0., 78.,
      &  0.,  0.,  0., 75., 74., 56.,  0.,  0.,  0.,  0., 78.,
      & 77., 78., 78., 78., 78., 70.,  0., 78.,
      &  0.,  0.,  0., 74., 74., 56.,  0.,  0.,  0.,  0., 78.,
@@ -89,8 +74,6 @@ C----------
       HTTYPE='F'
       IERR=0
       DBT = D*(1-BARK)
-C
-C
 C
 C----------
 C  REGION 1 NATCRS SEQUENCE
@@ -154,7 +137,7 @@ C
           IF(IT.GT.0)HT2TD(IT,2)=X02
         ELSE
           IF(IT.GT.0)HT2TD(IT,2)=0.
-        ENDIF        
+        ENDIF
 C
         IF(DEBUG)WRITE(JOSTND,*)' AFTER PROFILE CF TVOL= ',TVOL
       ELSE
@@ -286,8 +269,6 @@ C----------
       BTKFLG = .TRUE.
       RETURN
 C
-C
-C
 C----------
 C  ENTER ANY OTHER CUBIC HERE
 C----------
@@ -298,7 +279,6 @@ C----------
       VM=0.
       CTKFLG = .FALSE.
       RETURN
-C
 C
 C----------
 C  ENTER ANY OTHER BOARD HERE
@@ -311,7 +291,6 @@ C----------
       BBFV=0.
       BTKFLG = .FALSE.
       RETURN
-C
 C
 C----------
 C  ENTRY POINT FOR SENDING VOLUME EQN NUMBER TO THE FVS-TO-NATCRZ ROUTINE

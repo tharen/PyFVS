@@ -1,22 +1,22 @@
       SUBROUTINE ESTAB (KDT)
-	IMPLICIT NONE 
+      use plot_mod
+      use arrays_mod
+      use esparm_mod
+      use estree_mod
+      use contrl_mod
+      use eshap_mod
+      use pden_mod
+      use metric_mod
+      use escomn_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C STRP/M $ID$
 C----------
 COMMONS
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'ESPARM.F77'
-      INCLUDE 'ESTREE.F77'
-      INCLUDE 'ESHAP.F77'
-      INCLUDE 'PDEN.F77'
       INCLUDE 'CALDEN.F77'
-      INCLUDE 'ESCOMN.F77'
-      INCLUDE 'VARCOM.F77'
       INCLUDE 'STDSTK.F77'
-      INCLUDE 'METRIC.F77'
 COMMONS
 
 C     REGENERATION ESTABLISHMENT MODEL   --   VERSION 2.0
@@ -263,7 +263,7 @@ C----------
       ENDIF
   244 CONTINUE
       IF(MYDO .EQ. 0) MODE=0
-C 
+C
 C     ACCUMULATE SUMS FOR CALCULATION OF SHADE ADJUSTMENTS
 C
       SUM1=0.
@@ -423,7 +423,7 @@ C
       IF(ISHADE.EQ.2) SHADE=-1.0
       FTEMP=BAA
 C      IF(FTEMP.LT.1.5) FTEMP=0.0
-      IF(FTEMP.LT.1.0) FTEMP=1.0      
+      IF(FTEMP.LT.1.0) FTEMP=1.0
       IF(DEBUG) WRITE(JOSTND,7048) PTREE,SHADE,FTEMP,DUPNPT,BA
  7048 FORMAT(' PTREE=',F6.1,'  SHADE=',F4.1,'  FTEMP=',F6.1,
      &  '  DUPNPT=',F4.1,'  BA=',F6.1)
@@ -543,7 +543,7 @@ C
         CALL ESCPRS (ITEMP,DEBUG)
         ITRNIN=ITRN+1
 C
-C       OPFIND IS CALLED TO RESET THE PARAMETERS FOR THE 
+C       OPFIND IS CALLED TO RESET THE PARAMETERS FOR THE
 C       PLANT & NATURAL KEYWORDS.
 C
         CALL OPFIND (2,MYACTS,NTODO)
@@ -653,7 +653,7 @@ C     'GROW' TREES TO THE END OF THE CYCLE
 C
       IF(ITRN.GE.ITRNIN)CALL ESGENT (ITRNIN)
       IF(DEBUG)WRITE(JOSTND,*)' AFTER CALL TO ESGENT-ITRN,ITRNIN= ',
-     &ITRN,ITRNIN 
+     &ITRN,ITRNIN
       DO 230 I= ITRNIN,ITRN
 C----------
 C  CALCULATE A CROWN WIDTH FOR SEEDLINGS/SPROUTS

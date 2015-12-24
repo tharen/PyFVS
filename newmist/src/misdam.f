@@ -1,5 +1,7 @@
       SUBROUTINE MISDAM(ITREE,ICODES)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -38,14 +40,12 @@ C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C.... Common include files.
- 
-      INCLUDE 'CONTRL.F77'
+
       INCLUDE 'MISCOM.F77'
       INCLUDE 'DMCOM.F77'
- 
+
 C.... Variable declarations.
 
       LOGICAL DEBUG

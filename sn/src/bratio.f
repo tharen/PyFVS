@@ -1,5 +1,7 @@
       FUNCTION BRATIO(IS,D,H)
-      IMPLICIT NONE
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BRATIO--SN    DATE OF LAST REVISION:  09/09/13
 C----------
@@ -25,20 +27,8 @@ C                   ONE RECORD (J) FOR EACH SPECIES (IS)
 C      D          - DBH
 C      DIB        - DIAM. INSIDE BARK
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
 C----------
 C
-C
-COMMONS
       INTEGER IS,J,I
       REAL H,D,BRATIO,DIB,BARKC(2,90)
 C
@@ -141,7 +131,7 @@ C
 C----------
 C MODEL TYPE FROM CLARK
 C----------
-      IF (D .GT. 0) THEN 
+      IF (D .GT. 0) THEN
         IF(IFOR .EQ. 20)THEN
           IF(IS .EQ. 5)THEN
             DIB= 0.1713 + 0.87459*D

@@ -1,5 +1,10 @@
       SUBROUTINE ESPSUB (RTOP40)
-      IMPLICIT NONE
+      use esparm_mod
+      use prgprm_mod
+      use escomn_mod
+      use eshap_mod
+      use plot_mod
+      implicit none
 C----------
 C  **ESPSUB--AK     DATE OF LAST REVISION:   05/08/12
 C
@@ -7,28 +12,8 @@ C     PREDICT THE PROBABILITY OF SUBSEQUENT SPECIES.
 C     PLANTING COEFFICIENTS NOT INCLUDED IN THIS SUBROUTINE.
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
-      INCLUDE 'ESCOMN.F77'
-C
-C
       INCLUDE 'ESCOM2.F77'
 C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ESHAP.F77'
-C
-C
-COMMONS
 C----------
 C     P(SUBSEQUENT WHITE SPRUCE).
 C----------

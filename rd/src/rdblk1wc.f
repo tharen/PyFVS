@@ -1,5 +1,7 @@
       BLOCK DATA RDBLK1
-      IMPLICIT NONE
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDBLK1-WC     LAST REVISION:  08/27/14
 C----------
@@ -10,14 +12,10 @@ C     extension to FVS.
 C
 C  Previous revision date 04/30/09
 C
-COMMONS
-C
 
 C.... PARAMETER INCLUDE FILES
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
-      INCLUDE 'METRIC.F77'
 
 C.... COMMON INCLUDE FILES
 
@@ -30,7 +28,7 @@ C.... COMMON INCLUDE FILES
 C.... The array IRTSPC is used to index the species dependent arrays
 C.... HABFAC, PNINF, PKILLS, RRJSP, ISPS, DBIFAC, HTIFAC, PROOT,
 C.... RSLOP, ROWDOM, ROWIBP, RRPSWT, SSSFAC, IDITYP, PCOLO.
-C.... In the root disease model, the defaults for these variables 
+C.... In the root disease model, the defaults for these variables
 C.... are indexed as follows :
 C....
 C.... Species #|  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |  9 | 10 |
@@ -51,9 +49,9 @@ C.... model.
 
 C.... The following IRTSPC is used with variant WC :
 C.... WC has 39 species.
-C RD     
+C RD
 C INDX SP   SPECIES LIST FOR WEST CASCADES VARIANT
-C        
+C
 C  16  SF     1 = PACIFIC SILVER FIR (SF)      ABIES AMABILIS
 C  13  WF     2 = WHITE FIR (WF)               ABIES CONCOLOR
 C   4  GF     3 = GRAND FIR (GF)               ABIES GRANDIS
@@ -116,5 +114,5 @@ C
 
       DATA IOUNIT /22/
       DATA IRUNIT /18/
-      
+
       END

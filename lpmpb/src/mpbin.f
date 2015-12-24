@@ -1,5 +1,8 @@
       SUBROUTINE MPBIN (PASKEY,ARRAY,LNOTBK,LKECHO)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **MPBIN         DATE OF LAST REVISION:  08/22/14
 C----------
@@ -13,7 +16,6 @@ C    Added LFLAG to KEYRDR call statement argument list.
 C  07/27/07 - Lance R. David (FHTET)
 C    Improved text written for the INVMORT keyword.
 C   07/02/10 Lance R. David (FMSC)
-C     Added IMPLICIT NONE.
 C   08/22/14 Lance R. David (FMSC)
 C     Function name was used as variable name.
 C     changed variable INT to INCRS
@@ -21,14 +23,9 @@ C----------
 C
 C------------------------------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'MPBCOM.F77'
       INCLUDE 'COLCOM.F77'
 C
-COMMONS
 
 C.... INTERNAL STORAGE
 
@@ -39,9 +36,9 @@ C.... INTERNAL STORAGE
       LOGICAL LRANSD,LNOTBK(7),LACSRF,LKECHO
 
       INTEGER ISIZE, KODE, NUMBER, I, I1, I2, IG, J, K, KEY
-      
+
       REAL ARRAY(7)
-      
+
       DATA ISIZE/ 40 /
 
       DATA TABLE /

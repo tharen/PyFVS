@@ -1,48 +1,27 @@
       SUBROUTINE HTGF
-      IMPLICIT NONE
+      use htcal_mod
+      use multcm_mod
+      use pden_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **HTGF--EM   DATE OF LAST REVISION:  07/08/11
 C-----------
 C  THIS SUBROUTINE COMPUTES THE PREDICTED PERIODIC HEIGHT INCREMENT FOR
-C  EACH CYCLE AND LOADS IT INTO THE ARRAY HTG. HEIGHT INCREMENT IS 
+C  EACH CYCLE AND LOADS IT INTO THE ARRAY HTG. HEIGHT INCREMENT IS
 C  PREDICTED FROM SPECIES, HABITAT TYPE, HEIGHT, DBH, AND PREDICTED DBH
 C  INCREMENT.  THIS ROUTINE IS CALLED FROM **TREGRO** DURING REGULAR
 C  CYCLING.  ENTRY **HTCONS** IS CALLED FROM **RCON** TO LOAD SITE
 C  DEPENDENT CONSTANTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
 C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'MULTCM.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-COMMONS
 C----------
 C   MODEL COEFFICIENTS AND CONSTANTS:
 C
@@ -170,10 +149,10 @@ C-----------
       H=HT(I)
       HTG(I)=0.
       D=DBH(I)
-C 
+C
 C  NOTE: ORIGINAL EM WOULD LOAD 0.1 FOR HTG IF PROB WAS ZERO.
 C
-      IF (PROB(I).LE.0.0)THEN 
+      IF (PROB(I).LE.0.0)THEN
         IF(LTRIP)THEN
           ITFN=ITRN+2*I-1
           HTG(ITFN)=0.
@@ -188,7 +167,7 @@ C
 C  FIRST IS THE ORIGINAL EM SECTION
 C----------
       IF(ISPC.LE.3 .OR. (ISPC.GE.7 .AND. ISPC.LE.10) .OR. ISPC.EQ.18)
-     &THEN 
+     &THEN
         IF(H .LE. 4.5)GO TO 60
         BAL=((100.0-PCT(I))/100.0)*BA
         IF(BAL .LE. 0.0)BAL=.001
@@ -257,7 +236,7 @@ C----------
           COF6=COFLM(6,K)
           COF7=COFLM(7,K)
           COF8=COFLM(8,K)
-          COF9=COFLM(9,K)       
+          COF9=COFLM(9,K)
         ELSE
           COF1=COFAS(1,K)
           COF2=COFAS(2,K)
@@ -267,7 +246,7 @@ C----------
           COF6=COFAS(6,K)
           COF7=COFAS(7,K)
           COF8=COFAS(8,K)
-          COF9=COFAS(9,K)         
+          COF9=COFAS(9,K)
         ENDIF
 C-----------
 C  CHECK IF HEIGHT OR DBH EXCEED PARAMETERS
@@ -349,7 +328,7 @@ C-----------
      +     * (EXP(Z*((1.0 - COF7**2  ))**0.5/COF6))
 C
         H= ((PSI/(1.0 + PSI))* COF2) + 4.5
-C 
+C
         IF(.NOT. DEBUG)GO TO 191
         WRITE(JOSTND,9631)D,DIA,H,DG(I),Z ,H
  9631   FORMAT(1X,'IN HTGF DIA=',F7.3,'DIA+10=',F7.3,'H=',F7.1,
@@ -377,7 +356,7 @@ C
  9000   FORMAT(' 9000 HTGF, HTG=',F8.4,' CON=',F8.4,' HTCON=',F8.4,
      &  ' H2COF=',F12.8,' D =',F8.4/' WK1=',F8.4,
      &  ' HTNEW=',F8.4,' HDGCOF=',F8.4,' I=',I4,' ISPC=',I2)
-      ENDIF     
+      ENDIF
 C----------
 C    APPLY DWARF MISTLETOE HEIGHT GROWTH IMPACT HERE,
 C    INSTEAD OF AT EACH FUNCTION IF SPECIAL CASES EXIST.

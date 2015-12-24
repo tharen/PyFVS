@@ -1,5 +1,9 @@
       SUBROUTINE RDTREG
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDTREG      LAST REVISION:  09/04/14
 C----------
@@ -35,30 +39,25 @@ C              so that if the disease area is 0 but there is a chance
 C              of spore infection, Annosus can occur.
 C    14-JAN-00 Lance David (FHTET)
 C              Replaced the literals in option processor calls with
-C              references to array MYACT. 
+C              references to array MYACT.
 C    06-AUG-01 Lance R. David (FHTET)
 C              Added initialization of array DIFF.
 C    29-JUL-02 Lance R. David (FHTET)
 C              Modified and added debug statements. Changed two return
 C              statements to "GOTO 300" so routine has single point of exit.
 C   09/04/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C-----------------------------------------------------------------------------
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 
 C.... Common include files.
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDADD.F77'
       INCLUDE 'RDARRY.F77'
       INCLUDE 'RDCRY.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'PLOT.F77'
 
 C.... Local variable declarations.
 
@@ -71,81 +70,81 @@ C.... Local variable declarations.
 C.... See if we need to do some debug.
 
       CALL DBCHK (DEBUG,'RDTREG',6,ICYC)
-      
+
       IF (DEBUG) WRITE (JOSTND,*) 'ENTER RDTREG'
 
       DO 10 IDI=1,ITOTRR
          DIFF(IDI) = 0.0
    10 CONTINUE
-   
+
       TPAREA = 0.0
       DO 850 IDI=MINRR,MAXRR
          TPAREA = TPAREA + PAREA(IDI)
-  850 CONTINUE       
-      
+  850 CONTINUE
+
 C.... Changed the following two lines so that the annosus model will be run if
 C.... there is no area but a cut did occur (LSPFLG(1..3) = .TRUE.).
 C.... mt 04-03-97
 
       IF (IROOT .EQ. 0)GOTO 300
-      IF ((TPAREA .EQ. 0) .AND. 
+      IF ((TPAREA .EQ. 0) .AND.
      &   (.NOT. LSPFLG(1) .AND.
      &    .NOT. LSPFLG(2) .AND.
      &    .NOT. LSPFLG(3))) GOTO 300
-      
+
 C.... Check for time to death and infection probability.
 
       IF (IY(ICYC) .GE. IRGEN(8)) IRHAB = 2
       IF (IY(ICYC) .NE. IRGEN(9)) GOTO 1000
 
       IDI = MAXRR
-      DO 900 I = 1,MAXSP                             
+      DO 900 I = 1,MAXSP
          IF (MAXRR .LT. 3) IDI = IDITYP(IRTSPC(I))
          PNINF(IRTSPC(I),IDI) = SSSFAC(IRTSPC(I),IDI) *
      &                            PNINF(IRTSPC(I),IDI)
   900 CONTINUE
 
- 1000 CONTINUE   
- 
+ 1000 CONTINUE
+
 C.... Copy the borax option processing information into the next
 C.... cycle so it will be there if there is a cut.
 C     (Activity Code 2430)
 
       IF (LBORAX(1)) THEN
          IF (.NOT. LBORAX(2)) THEN
-        
+
             IF (LBORAX(1)) CALL OPFIND (1,MYACT(1),NTODO)
-        
+
             IF (NTODO .GT. 0) THEN
-          
+
                CALL OPGET (1,2,KDT,IACTK,NPS,PRMS)
 
                BOTRT = PRMS(1)
                BODBH = PRMS(2)
-          
+
                CALL OPDONE (1,IY(ICYC))
             ENDIF
-      
+
          ELSE
             LBORAX(2) = .FALSE.
          ENDIF
 
       ENDIF
- 
+
       IF (ITRN .LE. 0) GOTO 9999
 
-C.... Calculate outside density. 
-      
+C.... Calculate outside density.
+
       DO 839 IDI=MINRR,MAXRR
          DIFF(IDI) = SAREA - PAREA(IDI)
          IF (DIFF(IDI) .GT. 0.0) GOTO 841
-  839 CONTINUE    
+  839 CONTINUE
       GOTO 844
-      
-  841 CONTINUE    
+
+  841 CONTINUE
       IDI = MAXRR
 
-      DO 843 I=1,ITRN                  
+      DO 843 I=1,ITRN
 C
       IF (MAXRR .LT. 3) IDI = IDITYP(IRTSPC(ISP(I)))
 C
@@ -153,7 +152,7 @@ C     Exit loop if not a host species (RNH 28May98)
 C
       IF (IDI .LE. 0) GO TO 843
 C
-         IF (DIFF(IDI) .GE. 1E-6) THEN 
+         IF (DIFF(IDI) .GE. 1E-6) THEN
             FPROB(I) = (PROB(I) * SAREA - PROBIU(I) - PROBIT(I)) /
      &                 DIFF(IDI)
             IF (FPROB(I) .LE. 1E-6) FPROB(I) = 0.0
@@ -209,10 +208,10 @@ C.... New code added.  Call RDRDEL to delete tree records which
 C.... have all prob values equal to zero, IE PROBI, PROBIU, PROBIT
 C.... and FPROB.  RDRDEL called only if model initialized from treelist.
 
-      IF (RRTINV) CALL RDRDEL  
+      IF (RRTINV) CALL RDRDEL
 
 C.... Call routine which reduces the growth factor due to root disease.
-      
+
       CALL RDGROW
 
 C.... Update growing space factor based on root disease patches.
@@ -232,7 +231,7 @@ C.... Update growing space factor based on root disease patches.
   212 CONTINUE
 
   260 CONTINUE
-  
+
 C.... Call subroutine to decay the stump root radius
 C.... (decrease inoculum).
 

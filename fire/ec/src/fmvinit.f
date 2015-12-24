@@ -1,5 +1,11 @@
       SUBROUTINE FMVINIT
-      IMPLICIT NONE
+      use plot_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMVINIT  FIRE-EC-DATE OF LAST REVISION: 04/25/13
 C----------
@@ -15,25 +21,6 @@ C----------
 *
 ***********************************************************************
 C----------
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
-      INCLUDE 'FMFCOM.F77'
-C
 COMMONS
 C----------
       INTEGER I,J
@@ -95,7 +82,7 @@ C     BASED ON HABITAT TYPE (TEMPERATURE AND MOISTURE CATEGORY)
       DKR(7,2) = 0.025  ! 20 - 35"
       DKR(8,2) = 0.025  ! 35 - 50"
       DKR(9,2) = 0.025  !  > 50"
-      
+
       DKR(1,3) = 0.090 ! < 0.25"
       DKR(2,3) = 0.090 ! 0.25 - 1"
       DKR(3,3) = 0.090 ! 1 - 3"
@@ -104,7 +91,7 @@ C     BASED ON HABITAT TYPE (TEMPERATURE AND MOISTURE CATEGORY)
       DKR(6,3) = 0.033  ! 12 - 20"
       DKR(7,3) = 0.033  ! 20 - 35"
       DKR(8,3) = 0.033  ! 35 - 50"
-      DKR(9,3) = 0.033  !  > 50"      
+      DKR(9,3) = 0.033  !  > 50"
 
       DKR(1,4) = 0.113 ! < 0.25"
       DKR(2,4) = 0.113 ! 0.25 - 1"
@@ -761,7 +748,7 @@ C       SET THE DECAY RATE CLASS (DKRCLS)
 C
         SELECT CASE (I)
 
-C         some pines, doug-fir, cedars 
+C         some pines, doug-fir, cedars
           CASE (1:3,5,13,14,17:19)
             DKRCLS(I)  =   1
 
@@ -776,7 +763,7 @@ C         firs, some pines, oak
 C         aspen, cottonwood, other hardwoods
           CASE (20:23,25:27,29,30,32)
             DKRCLS(I)  =   4
-            
+
         END SELECT
 
       ENDDO

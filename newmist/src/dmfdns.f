@@ -1,5 +1,6 @@
       SUBROUTINE DMFDNS (Sp, Ptr, Index, P, D)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -8,25 +9,25 @@ C--------------------------------------------------------------------
 C Purpose:
 C   Find the density (trees/acre) of each DM class. This information
 C is required for the calculation of probability distributions used
-C to simulate the likelihood of neighbor-neighbor combinations. 
+C to simulate the likelihood of neighbor-neighbor combinations.
 C--------------------------------------------------------------------
 C
 C Called by:
 C
-C     DMTREG 
+C     DMTREG
 C
 C Other routines called:
 C
 C     [none]
 C
-C Argument list definitions:                        
+C Argument list definitions:
 C
 C     INTEGER Sp      (I) Species code, meaning is variant-dependent.
 C     INTEGER Ptr     (I) Matrix of **pointers to treelist, sorted
 C                          by species and DM class:
 C                          Index 1: Species code.
 C                          Index 2: DM rating.
-C                          Index 3: FST is first position in 
+C                          Index 3: FST is first position in
 C                                   'Index()'.
 C                          array; LST is last position in array. This
 C                          mapping is analagous to the 'IND1()' array
@@ -42,7 +43,7 @@ C     REAL    D       (O) The density of each DM category of species
 C                          'Sp'.
 C
 C Local variable definitions:
-C     
+C
 C     INTEGER i           Loop counter for DM categories.
 C     INTEGER j           Loop counter for treelist elements.
 C
@@ -51,11 +52,10 @@ C
 C     MAXSP   PRGPRM
 C     MAXTRE  PRGPRM
 C     FST     DMCOM
-C     LST     DMCOM 
+C     LST     DMCOM
 C
 C**********************************************************************
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'DMCOM.F77'
 
 C Subroutine arguments.
@@ -76,7 +76,7 @@ C Local variables.
       INTEGER i, j
 
 C Begin by setting the density to zero, then accumulate density for
-C by adding the density 'P()' from each appropriate entry of the 
+C by adding the density 'P()' from each appropriate entry of the
 C treelist. The appropriate trees are stored by the references
 C stored in the 'Ptr()' array.
 

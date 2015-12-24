@@ -1,5 +1,8 @@
       SUBROUTINE REASS
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -8,21 +11,8 @@ C  THE ARRAY ISCT FOLLOWING RECORD TRIPLING.  THE VECTOR IND2
 C  IS USED FOR WORK SPACE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
       INTEGER J,ISPC,I1,I2,I,K,ITFN,LAST,IKNT
 C
-C
-COMMONS
 C----------
 C  COPY IND1 INTO IND2 IN SPECIES ORDER.
 C----------

@@ -1,5 +1,7 @@
-      SUBROUTINE BWEINT 
-      IMPLICIT NONE
+      SUBROUTINE BWEINT
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C---------
 C **BWEINT                 DATE OF LAST REVISION:  08/28/13
 C---------
@@ -12,7 +14,7 @@ C K.A.SHEEHAN, USFS, R6-FID, PORTLAND, OR
 C
 C CALLED FROM: INITRE
 C
-C SUBROUTINES CALLED: MYOPEN 
+C SUBROUTINES CALLED: MYOPEN
 C
 C PARAMETERS:    (ALL IN BWEBOX.F77)
 C   STNAME - NAME OF FILE CONTAINING LIST OF WEATHER STATIONS
@@ -28,7 +30,7 @@ C      .Added debug handling.
 C      .Added weather and outbreak random number seeds WSEEDR and OBSEER.
 C   15-MAY-00 Lance David (FHTET)
 C       Move initialization for non-static variables from BWEBK??.F
-C       block data routine to this BWEINT.F so variables will get 
+C       block data routine to this BWEINT.F so variables will get
 C       reinitialized between stands for a multiple stand serial run.
 C   22-MAY-00 Lance David (FHTET)
 C       Added initialization of more variables from common blocks.
@@ -52,22 +54,18 @@ C    06-SEP-2006 Lance R. David (FHTET)
 C       Moved init of variables variable from block data because they
 C       are not static (FOLDVY, FOLWTY, IOUT6A)
 C    14-JUL-2010 Lance R. David (FMSC)
-C       Added IMPLICIT NONE and declared variables as needed.
 C    23-JUN-2011 Lance R. David (FMSC)
 C       Added BWPRMS array for RAWS daily weather processing to BLCOM3.
 C   28-AUG-2013 Lance R. David (FMSC)
 C      Modified initialization of IEVENT array.
 C------------------------------------------------------------------------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BWESTD.F77'
       INCLUDE 'BWECOM.F77'
       INCLUDE 'BWECM2.F77'
-      INCLUDE 'BWEBOX.F77'      
+      INCLUDE 'BWEBOX.F77'
 
-      INTEGER I, I1, I2, I3, I4, IHOST, ITREE, J 
+      INTEGER I, I1, I2, I3, I4, IHOST, ITREE, J
       LOGICAL DEBUG, LTRU
 
 C
@@ -95,7 +93,7 @@ C     DSEEDD = DBLE(DSEEDR)
       IF (DEBUG) WRITE(JOSTND,*) 'IN BWEINT: DSEEDR=',DSEEDR,
      &   ' DSEEDD=',DSEEDD,' WSEEDR=',WSEEDR,' WSEED=',WSEED,
      &   ' OBSEER=',OBSEER,' OBSEED=',OBSEED
-     
+
 C
 C     INITIALIZE ANNUAL DAMAGE VARIABLES RELATING TO RELATIVE GROWTH,
 C     PROPORTIONAL GROWTH, AND TREE MORTALITY.
@@ -372,7 +370,7 @@ C
           BWPRMS(I,J) = 0.0
         END DO
       END DO
-	
+
 
 C     Some temp variables used in keyword, reporting and weather processing (?)
 C

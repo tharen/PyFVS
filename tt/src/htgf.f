@@ -1,5 +1,15 @@
       SUBROUTINE HTGF
-      IMPLICIT NONE
+      use htcal_mod
+      use multcm_mod
+      use pden_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use plot_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **HTGF--TT   DATE OF LAST REVISION:  07/08/11
 C----------
@@ -12,40 +22,8 @@ C  **HTCONS** IS CALLED FROM **RCON** TO LOAD SITE DEPENDENT
 C  CONSTANTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'MULTCM.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
       INCLUDE 'GGCOM.F77'
 C
-C
-COMMONS
 C----------
 C   MODEL COEFFICIENTS AND CONSTANTS:
 C
@@ -55,7 +33,6 @@ C   HTCON -- AN ARRAY CONTAINING HABITAT TYPE CONSTANTS FOR
 C            HEIGHT GROWTH MODEL (SUBSCRIPTED BY SPECIES)
 C
 C  HDGCOF -- COEFFICIENT FOR DIAMETER GROWTH TERMS.
-C
 C
 C   H2COF -- COEFFICIENT FOR HEIGHT SQUARED TERMS.
 C    IND2 -- ARRAY OF POINTERS TO SMALL TREES.
@@ -107,7 +84,7 @@ C NC AND OH USE NC (NARROWLEAF COTTONWOOD) EQUATIONS FROM CR
 C MC USES MC (CURL-LEAF MTN-MAHOGANY) EQUATIONS FROM SO
 C OS USES OT (OTHER SP.) EQUATIONS FROM TT
 C----------
-C    NINE COEFFICIENTS FOR JOHNSON'S SBB DISTRIBUTION FOR 
+C    NINE COEFFICIENTS FOR JOHNSON'S SBB DISTRIBUTION FOR
 C    11 SPECIES, AND 3 CROWN RATIO GROUPS.
 C----------
 C  DOUGLAS-FIR
@@ -223,12 +200,12 @@ C
       DATA AZBIAS/
      &      0.0,     0.0, -.86001,     0.0, -.84735,
      &      0.0,  .40153, -.84735,  .89035,     0.0,
-     &      0.0,     0.0,     0.0,     0.0,     0.0, 
+     &      0.0,     0.0,     0.0,     0.0,     0.0,
      &      0.0,     0.0,     0.0/
       DATA BZBIAS/
      &      0.0,     0.0,  .01051,     0.0,  .01102,
      &      0.0,  -.0078,  .01102, -.01331,     0.0,
-     &      0.0,     0.0,     0.0,      0.,     0.0, 
+     &      0.0,     0.0,     0.0,      0.,     0.0,
      &      0.0,     0.0,     0.0/
 C----------
 C  COEFFICIENTS--CROWN RATIO (CR) BASED HT. GRTH. MODIFIER
@@ -314,18 +291,17 @@ C----------
         HTG(I)=EXP(CON + 0.62144*ALOG(DG(I))) + 0.4809
         IF(HTG(I).LT.0.1)HTG(I)=0.1
 C----------
-C  PM, UJ, AND RM 
+C  PM, UJ, AND RM
 C  WILL GET HEIGHT ESTIMATE IN **REGENT**
 C----------
       CASE(4,11,12)
         HTG(I)=0.
 C
-C
 C----------
 C  SPECIES WITH SURROGATE EQUATIONS FROM THE CR VARIANT, VIA UT
 C  USES SPRUCE-FIR MODEL TYPE RELATIONSHIPS
 C  ADJUST FOR NC WAS 1.05 IN CR VARIANT, BUT IS A FUNCTION
-C  OF SITE INDEX IN THIS VARIANT SO OPEN GROWN TREES HIT THE SITE 
+C  OF SITE INDEX IN THIS VARIANT SO OPEN GROWN TREES HIT THE SITE
 C  HEIGHT
 C  NC, OH
 C----------
@@ -437,7 +413,6 @@ C----------
      &  WRITE(JOSTND,*)' HTGF I,ISPC,XWT,HHE1,HHE2,HHU1,HHU2,HT,HTG = ',
      &                I,ISPC,XWT,HHE1,HHE2,HHU1,HHU2,HT(I),HTG(I)
 C
-C
 C----------
 C  SPECIES WITH SURROGATE EQUATIONS FROM THE SO VARIANT
 C  MC, BI
@@ -487,7 +462,7 @@ C----------
 C  HEIGHT GROWTH MODIFIERS
 C----------
         IF(DEBUG)WRITE(JOSTND,*) ' AT 1320 CONTINUE FOR TREE',I,' HT= ',
-     &  HT(I),' AVH= ',AVH 
+     &  HT(I),' AVH= ',AVH
         RELHT = 0.0
         IF(AVH .GT. 0.0) RELHT=HT(I)/AVH
         IF(RELHT .GT. 1.5)RELHT=1.5
@@ -582,7 +557,6 @@ C
   161   CONTINUE
         IF(DEBUG)WRITE(JOSTND,*)
      &  ' I,SCALE,HTG,HTMAX, H= ',I,SCALE,HTG(I),HTMAX, H
-C
 C
 C----------
 C  ORIGINAL TETONS SPECIES (1-3,6-9,17)
@@ -762,7 +736,7 @@ C----------
         HTG(ITFN+1)=SIZCAP(ISPC,4)-HT(ITFN+1)
         IF(HTG(ITFN+1) .LT. 0.1) HTG(ITFN+1)=0.1
       ENDIF
-C                 
+C
       IF(DEBUG)WRITE(JOSTND,9001)HTG(ITFN),HTG(ITFN+1)
  9001 FORMAT('  LOWER HTG = ',F8.4,'  UPPER HTG = ',F8.4)
 C--------------

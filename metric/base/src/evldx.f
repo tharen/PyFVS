@@ -1,5 +1,12 @@
       SUBROUTINE EVLDX (XLDREG,NXLDX,INSTR,IRC)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use workcm_mod
+      use contrl_mod
+      use outcom_mod
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -16,19 +23,9 @@ C     INSTR = THE CODE THAT SAYS WHICH VALUE IS REQUESTED.
 C     IRC   = RETURN CODE, 0=OK, 1=VARIABLE IS CURRENTLY UNDEFINED,
 C             2=INSTRUCTION CODE COULD NOT BE DECIPHERED.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'OPCOM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'OUTCOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'STDSTK.F77'
-      INCLUDE 'WORKCM.F77'
       INCLUDE 'SSTGMC.F77'
-      INCLUDE 'METRIC.F77'
 
 COMMONS
 

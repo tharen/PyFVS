@@ -1,5 +1,9 @@
       SUBROUTINE SITSET
-      IMPLICIT NONE
+      use contrl_mod
+      use volstd_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **SITSET-- CS  DATE OF LAST REVISION:  10/13/11
 C----------
@@ -7,23 +11,6 @@ C THIS SUBROUTINE LOADS THE SITELG ARRAY WITH A SITE INDEX FOR EACH
 C SPECIES WHICH WAS NOT ASSIGNED A SITE INDEX BY KEYWORD.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
-COMMONS
-C
-C
       LOGICAL DEBUG
       REAL BAMAXA(MAXSP)
       INTEGER I,J,JJ,K
@@ -156,7 +143,7 @@ C
           VOLEQ(1:7)='900DVEE'
         ELSE
           VOLEQ(1:7)='900CLKE'
-        ENDIF        
+        ENDIF
         PROD='02'
         CALL VOLEQDEF(VAR,IREGN,FORST,DIST,IFIASP,PROD,VOLEQ,ERRFLAG)
         VEQNNC(ISPC)=VOLEQ
@@ -169,7 +156,7 @@ C     &VEQNNC(ISPC)
           VOLEQ(1:7)='900DVEE'
         ELSE
           VOLEQ(1:7)='900CLKE'
-        ENDIF        
+        ENDIF
         PROD='01'
         CALL VOLEQDEF(VAR,IREGN,FORST,DIST,IFIASP,PROD,VOLEQ,ERRFLAG)
         VEQNNB(ISPC)=VOLEQ

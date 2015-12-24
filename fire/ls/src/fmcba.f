@@ -1,49 +1,32 @@
       SUBROUTINE FMCBA (IYR,ISWTCH)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMCBA   FIRE-LS-DATE OF LAST REVISION:  01/03/11
 C----------
 C  SINGLE-STAND VERSION
 C  CALLED FROM: FMMAIN
 C
-C  PURPOSE:  
+C  PURPOSE:
 C     FIND THE FOREST TYPE. SET THE INITIAL LIVE AND DEAD FUEL VALUES
-C     THE DEAD FUELS ARE ONLY INITIALIZED IN THE FIRST YEAR, BUT THE 
+C     THE DEAD FUELS ARE ONLY INITIALIZED IN THE FIRST YEAR, BUT THE
 C     LIVE FUELS MUST BE DONE EACH YEAR.  THE ROUTINE ALSO CALCULATES
 C     PERCOV, WHICH IS NEEDED FOR THE FIRE BEHAVIOR CALCS.
 C----------
 C  LOCAL VARIABLE DEFINITIONS:
 C     BAMOST:  THE HIGHEST BASAL AREA IN A SINGLE SPECIES
-C     FUINI:   THE INITIAL DEAD FUEL LOADINGS 
-C     FULIV:   THE HERB/SHRUB LOADINGS 
+C     FUINI:   THE INITIAL DEAD FUEL LOADINGS
+C     FULIV:   THE HERB/SHRUB LOADINGS
 C     ISWTCH:  =1 if called by SVSTART
 C              =0 if called by any other subroutine (FMMAIN, FMPPHV)
 C     TOTBA:   THE TOTAL BASAL AREA IN THE STAND
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C      
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
-      INCLUDE 'FMFCOM.F77'      
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'PLOT.F77'   
-C
-C
 COMMONS
 C----------
 C  LOCAL VARIABLE DECLARATIONS
@@ -53,26 +36,26 @@ C----------
       REAL  CAREA, TOTCRA, CWIDTH, FOTOVAL(MXFLCL), FOTOVALS(9)
       INTEGER IFFEFT,MYACT(3),IYR,KSP,I,J,ISZ,NPRM,IACTK,ISWTCH,IDC,JYR
       INTEGER FTLIVEFU,FTDEADFU
-      LOGICAL DEBUG      
+      LOGICAL DEBUG
 C----------
 C  CURRENTLY THE HERB AND SHRUB VALUES ARE ESTIMATED FROM FIA FOREST
 C  TYPE AND SIZE CLASS.  ONLY THREE FOREST TYPES ARE CONSIDERED:
 C  JACK PINE, RED/WHITE PINE, AND HARDWOODS.
 C  THE HERB AND SHRUB VALUES COME FROM THE FOLLOWING DOCUMENTS:
-C  
-C  Ottmar, Roger D.; Vihnanek, Robert E. 1999. Stero photo series for 
+C
+C  Ottmar, Roger D.; Vihnanek, Robert E. 1999. Stero photo series for
 C  quantifying natural fuels.  Volume V: midwest red and white pine, northern
 C  tallgrass prairie, and mixed oak types in the Central and Lake States.
 C  PMS 834.  Boise, ID: National Wildfire Coordinating Group, National
 C  Interagency Fire Center.  99 p.
 C
 C  Ottmar, Roger D.; Vihnanek, Robert E.; Wright, Clinton S. 2002. Stero
-C  photo series for quantifying natural fuels.  Volume Va: jack pine in 
+C  photo series for quantifying natural fuels.  Volume Va: jack pine in
 C  the Lake States.  PMS 837.  Boise, ID: National Wildfire Coordinating
-C  Group, National Interagency Fire Center.  49 p.  
+C  Group, National Interagency Fire Center.  49 p.
 C
 C----------
-C                  herbs, shrubs  
+C                  herbs, shrubs
       DATA FULIV /0.12, 0.17,  ! white / red pine, sz cl 1 - use MP06
      &            0.08, 0.02,  ! white / red pine, sz cl 2 - use MP10
      &            0.06, 0.00,  ! white / red pine, sz cl 3 - use MP09
@@ -80,9 +63,9 @@ C                  herbs, shrubs
      &            0.10, 0.04,  ! jack pine, sz cl 2 - use JP15
      &            0.14, 0.35,  ! jack pine, sz cl 3 - use JP11
      &            0.00, 0.00,  ! hardwoods, sz cl 1 - use MO03
-     &            0.00, 0.00,  ! hardwoods, sz cl 2 - MO11 
-     &            0.00, 0.01/  ! hardwoods, sz cl 3 - use MO09     
-     
+     &            0.00, 0.00,  ! hardwoods, sz cl 2 - MO11
+     &            0.00, 0.01/  ! hardwoods, sz cl 3 - use MO09
+
 C----------
 C  CURRENTLY, THE INITIAL DEAD SURFACE FUEL LOADINGS ARE ESTIMATED
 C  FROM FIA FOREST TYPE AND SIZE CLASS.
@@ -121,8 +104,8 @@ C  CHECK FOR DEBUG.
 C-----------
       CALL DBCHK (DEBUG,'FMCBA',5,ICYC)
       IF (DEBUG) WRITE(JOSTND,7) ICYC
- 7    FORMAT(' ENTERING FMCBA CYCLE = ',I2)	
-C-----------      
+ 7    FORMAT(' ENTERING FMCBA CYCLE = ',I2)
+C-----------
 C  ZERO OUT THE CUMMULATIVE VARIABLES
 C-----------
       COVTYP = 0
@@ -130,7 +113,7 @@ C-----------
       TOTBA = 0.0
 C----------
 C  DETERMINE FFE FOREST TYPE (1 OF 10 CATEGORIES) FROM FIA FOR. TYPE
-C----------     
+C----------
       CALL FMLSFT(IFFEFT)
 C----------
 C  LOAD LIVE FUELS AS A FUNCTION OF FOREST TYPE
@@ -140,28 +123,28 @@ C----------
         IF (ISZCL .EQ. 1) THEN
         	 FTLIVEFU = 1
         ELSEIF (ISZCL .EQ. 2) THEN
-         	 FTLIVEFU = 2       	
-        ELSE		
-           FTLIVEFU = 3     
+         	 FTLIVEFU = 2
+        ELSE
+           FTLIVEFU = 3
         ENDIF
 
       CASE(2) ! jack pine
         IF (ISZCL .EQ. 1) THEN
         	 FTLIVEFU = 4
         ELSEIF (ISZCL .EQ. 2) THEN
-         	 FTLIVEFU = 5       	
-        ELSE		
-           FTLIVEFU = 6     
+         	 FTLIVEFU = 5
+        ELSE
+           FTLIVEFU = 6
         ENDIF
 
       CASE DEFAULT
         IF (ISZCL .EQ. 1) THEN
         	 FTLIVEFU = 7
         ELSEIF (ISZCL .EQ. 2) THEN
-         	 FTLIVEFU = 8       	
-        ELSE		
-           FTLIVEFU = 9     
-        ENDIF        
+         	 FTLIVEFU = 8
+        ELSE
+           FTLIVEFU = 9
+        ENDIF
       END SELECT
 C
       DO I=1,2
@@ -172,7 +155,7 @@ C
 C----------
 C  ZERO OUT THE CUMMULATIVE VARIABLES
 C----------
-         BAMOST = 0.0 
+         BAMOST = 0.0
          TOTCRA = 0.0
          DO KSP=1,MAXSP
             FMTBA(KSP) = 0.0
@@ -182,10 +165,10 @@ C  LOOP THROUGH THE TREE LIST
 C----------
          DO I=1,ITRN
             IF (FMPROB(I) .GT. 0.0) THEN
-               KSP = ISP(I)                
+               KSP = ISP(I)
                FMTBA(KSP) = FMTBA(KSP) +
      &                   FMPROB(I) * DBH(I) * DBH(I) * 0.0054542
-            
+
 C----------
 C  CALCULATE THE CROWN WIDTH OF THE TREE AND TOTAL THE AREA
 C  ENCOMPASSED BY ALL TREES
@@ -193,22 +176,22 @@ C----------
                CWIDTH=CRWDTH(I)
 
                CAREA = 3.1415927*CWIDTH*CWIDTH/4.0
-               TOTCRA = TOTCRA + CAREA*FMPROB(I)               
-            ENDIF  
-C----------            
+               TOTCRA = TOTCRA + CAREA*FMPROB(I)
+            ENDIF
+C----------
 C  USE THIS LOOP TO ZERO THIS VARIABLE, FOR LACK OF A BETTER PLACE.
 C----------
             CURKIL(I) = 0.0
          ENDDO
 C----------
-C  DETERMINE WHICH SPECIES HAS THE MOST BASAL AREA 
+C  DETERMINE WHICH SPECIES HAS THE MOST BASAL AREA
 C  -> THAT WILL BE THE COVER TYPE
-C----------      
+C----------
          DO KSP=1,MAXSP
             IF (FMTBA(KSP) .GT. BAMOST) THEN
-               BAMOST = FMTBA(KSP)      
+               BAMOST = FMTBA(KSP)
                COVTYP = KSP
-            ENDIF 
+            ENDIF
             TOTBA = TOTBA + FMTBA(KSP)
          ENDDO
 C----------
@@ -219,8 +202,8 @@ C
 C  PERCOV = 100*(1-EXP(-TOTAL CROWN AREAS PER ACRE / SQFT IN AN ACRE))
 C----------
         PERCOV = 1.0 - EXP(-TOTCRA/43560.)
-        PERCOV = PERCOV * 100.0     
-      ENDIF 
+        PERCOV = PERCOV * 100.0
+      ENDIF
       IF (DEBUG) WRITE(JOSTND,*) 'PERCOV = ',PERCOV
 C----------
 C   IF THERE ARE NO TREES (COVTYP=0) IN CYCLE 1,
@@ -240,7 +223,7 @@ C----------
         ENDIF
       ENDIF
 C
-      OLDCOVTYP = COVTYP          
+      OLDCOVTYP = COVTYP
 C----------
 C  INITIALIZE THE DEAD FUELS ONLY FOR THE FIRST YEAR OF THE SIMULATION
 C----------
@@ -255,89 +238,89 @@ C----------
           IF (ISZCL .EQ. 1) THEN
         	  FTDEADFU = 1
           ELSEIF (ISZCL .EQ. 2) THEN
-         	  FTDEADFU = 2       	
-          ELSE		
-            FTDEADFU = 3   
-          ENDIF          
+         	  FTDEADFU = 2
+          ELSE
+            FTDEADFU = 3
+          ENDIF
         CASE(2) ! jack pine
           IF (ISZCL .EQ. 1) THEN
         	  FTDEADFU = 4
           ELSEIF (ISZCL .EQ. 2) THEN
-         	  FTDEADFU = 5       	
-          ELSE		
-            FTDEADFU = 6   
-          ENDIF         
+         	  FTDEADFU = 5
+          ELSE
+            FTDEADFU = 6
+          ENDIF
         CASE(3) ! spruce - fir
           IF (ISZCL .EQ. 1) THEN
         	  FTDEADFU = 7
           ELSEIF (ISZCL .EQ. 2) THEN
-         	  FTDEADFU = 8       	
-          ELSE		
-            FTDEADFU = 9   
-          ENDIF          
+         	  FTDEADFU = 8
+          ELSE
+            FTDEADFU = 9
+          ENDIF
         CASE(4) ! eastern redcedar
-          FTDEADFU = 10          
+          FTDEADFU = 10
         CASE(5) ! oak - pine
           IF (ISZCL .EQ. 1) THEN
         	  FTDEADFU = 11
           ELSEIF (ISZCL .EQ. 2) THEN
-         	  FTDEADFU = 12       	
-          ELSE		
-            FTDEADFU = 13   
-          ENDIF  
+         	  FTDEADFU = 12
+          ELSE
+            FTDEADFU = 13
+          ENDIF
         CASE(6) ! oak - hickory
           IF (ISZCL .EQ. 1) THEN
         	  FTDEADFU = 14
           ELSEIF (ISZCL .EQ. 2) THEN
-         	  FTDEADFU = 15       	
-          ELSE		
-            FTDEADFU = 16   
-          ENDIF          
+         	  FTDEADFU = 15
+          ELSE
+            FTDEADFU = 16
+          ENDIF
         CASE(7) ! elm - ash - cottonwood
           IF (ISZCL .EQ. 1) THEN
         	  FTDEADFU = 17
           ELSEIF (ISZCL .EQ. 2) THEN
-         	  FTDEADFU = 18       	
-          ELSE		
-            FTDEADFU = 19   
-          ENDIF          
+         	  FTDEADFU = 18
+          ELSE
+            FTDEADFU = 19
+          ENDIF
         CASE(8) ! maple - beech - birch
           IF (ISZCL .EQ. 1) THEN
         	  FTDEADFU = 20
           ELSEIF (ISZCL .EQ. 2) THEN
-         	  FTDEADFU = 21       	
-          ELSE		
-            FTDEADFU = 22   
-          ENDIF            
+         	  FTDEADFU = 21
+          ELSE
+            FTDEADFU = 22
+          ENDIF
         CASE(9) ! aspen - birch
           IF (ISZCL .EQ. 1) THEN
         	  FTDEADFU = 23
           ELSEIF (ISZCL .EQ. 2) THEN
-         	  FTDEADFU = 24       	
-          ELSE		
-            FTDEADFU = 25   
-          ENDIF          
+         	  FTDEADFU = 24
+          ELSE
+            FTDEADFU = 25
+          ENDIF
         CASE(10) ! nonstocked
-          FTDEADFU = 26           
+          FTDEADFU = 26
         END SELECT
-C         
+C
         DO ISZ = 1,MXFLCL
            STFUEL(ISZ,2) = FUINI(ISZ,FTDEADFU)
            STFUEL(ISZ,1) = 0
         ENDDO
-C----------        
+C----------
 C       CHANGE THE INITIAL FUEL LEVELS BASED ON PHOTO SERIES INFO INPUT
 C----------
         CALL OPFIND(1,MYACT(2),J)
         IF (J .GT. 0) THEN
           CALL OPGET(J,2,JYR,IACTK,NPRM,PRMS)
           IF ((PRMS(1) .GE. 0) .AND. (PRMS(2) .GE. 0)) THEN
-            CALL FMPHOTOVAL(NINT(PRMS(1)), NINT(PRMS(2)), FOTOVAL, 
+            CALL FMPHOTOVAL(NINT(PRMS(1)), NINT(PRMS(2)), FOTOVAL,
      >                      FOTOVALS)
             DO I = 1, MXFLCL
               IF (FOTOVAL(I) .GE. 0) STFUEL(I,2) = FOTOVAL(I)
               IF (I .LE. 9) STFUEL(I,1) = FOTOVALS(I)
-            ENDDO                 
+            ENDDO
 C----------
 C  IF FOTOVAL(1) IS NEGATIVE, THEN AN INVALID CODE WAS ENTERED.
 C  DON'T MARK EVENT DONE IF THIS IS A CALL FROM SVSTART--WILL
@@ -351,11 +334,11 @@ C----------
             CALL RCDSET (2,.TRUE.)
           ENDIF
         ENDIF
-        
-C-----------         
+
+C-----------
 C  CHANGE THE INITIAL FUEL LEVELS BASED ON INPUT FROM THE USER
 C  FIRST DO FUELHARD (FUELINIT) THEN FUELSOFT
-C-----------         
+C-----------
         CALL OPFIND(1,MYACT(1),J)
         IF (J .GT. 0) THEN
           CALL OPGET(J,12,JYR,IACTK,NPRM,PRMS)
@@ -365,23 +348,23 @@ C-----------
           IF (PRMS(5) .GE. 0) STFUEL(6,2) = PRMS(5)
           IF (PRMS(6) .GE. 0) STFUEL(10,2) = PRMS(6)
           IF (PRMS(7) .GE. 0) STFUEL(11,2) = PRMS(7)
-          IF (PRMS(8) .GE. 0) STFUEL(1,2) = PRMS(8)          
-          IF (PRMS(9) .GE. 0) STFUEL(2,2) = PRMS(9)           
+          IF (PRMS(8) .GE. 0) STFUEL(1,2) = PRMS(8)
+          IF (PRMS(9) .GE. 0) STFUEL(2,2) = PRMS(9)
           IF (PRMS(1) .GE. 0) THEN
             IF ((PRMS(8) .LT. 0) .AND. (PRMS(9) .LT. 0)) THEN
               STFUEL(1,2) = PRMS(1) * 0.5
               STFUEL(2,2) = PRMS(1) * 0.5
-            ENDIF                 
+            ENDIF
             IF ((PRMS(8) .LT. 0) .AND. (PRMS(9) .GE. 0)) THEN
               STFUEL(1,2) = MAX(PRMS(1) - PRMS(9),0.)
-            ENDIF  
+            ENDIF
             IF ((PRMS(8) .GE. 0) .AND. (PRMS(9) .LT. 0)) THEN
               STFUEL(2,2) = MAX(PRMS(1) - PRMS(8),0.)
-            ENDIF  
-          ENDIF                
-          IF (PRMS(10) .GE. 0) STFUEL(7,2) = PRMS(10) 
-          IF (PRMS(11) .GE. 0) STFUEL(8,2) = PRMS(11) 
-          IF (PRMS(12) .GE. 0) STFUEL(9,2) = PRMS(12)  
+            ENDIF
+          ENDIF
+          IF (PRMS(10) .GE. 0) STFUEL(7,2) = PRMS(10)
+          IF (PRMS(11) .GE. 0) STFUEL(8,2) = PRMS(11)
+          IF (PRMS(12) .GE. 0) STFUEL(9,2) = PRMS(12)
 C----------
 C  DON'T MARK EVENT DONE IF THIS IS A CALL FROM SVSTART--WILL
 C  NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.
@@ -398,9 +381,9 @@ C----------
           IF (PRMS(4) .GE. 0) STFUEL(4,1) = PRMS(4)
           IF (PRMS(5) .GE. 0) STFUEL(5,1) = PRMS(5)
           IF (PRMS(6) .GE. 0) STFUEL(6,1) = PRMS(6)
-          IF (PRMS(7) .GE. 0) STFUEL(7,1) = PRMS(7)          
-          IF (PRMS(8) .GE. 0) STFUEL(8,1) = PRMS(8)                           
-          IF (PRMS(9) .GE. 0) STFUEL(9,1) = PRMS(9)           
+          IF (PRMS(7) .GE. 0) STFUEL(7,1) = PRMS(7)
+          IF (PRMS(8) .GE. 0) STFUEL(8,1) = PRMS(8)
+          IF (PRMS(9) .GE. 0) STFUEL(9,1) = PRMS(9)
 
 C         DON'T MARK EVENT DONE IF THIS IS A CALL FROM SVSTART--WILL
 C         NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.
@@ -409,9 +392,9 @@ C         NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.
 
         ENDIF
 
-C----------         
-C  DIVIDE THE FUELS INTO DECAY CLASSES ACCORDING TO THE RELATIVE AMOUNTS 
-C  OF BASAL AREA IN THE STAND.  
+C----------
+C  DIVIDE THE FUELS INTO DECAY CLASSES ACCORDING TO THE RELATIVE AMOUNTS
+C  OF BASAL AREA IN THE STAND.
 C----------
         DO ISZ = 1,MXFLCL
           IF (TOTBA .GT. 0.0) THEN

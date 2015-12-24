@@ -1,5 +1,9 @@
       SUBROUTINE RDCNTL
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDCNTL      LAST REVISION:  08/27/14
 C----------
@@ -37,30 +41,25 @@ C      Modified the variables that are tested to check
 C      for a stand entry before the spore model is called.
 C    14-JAN-00 - Lance David (FHTET)
 C      Removed literals from option processor calls and replaced
-C      them with references to MYACT. Expanded array MYACT to 
+C      them with references to MYACT. Expanded array MYACT to
 C      include activity codes 2401 and 2431.
 C    06-AUG-01 Lance R. David (FHTET)
 C      Added declaration and initialization of TOTCEN.
 C    01-JUL-02 Lance R. David (FHTET)
 C      Corrected what looked like a typo with reset of PAREA near line 257.
 C   08/27/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
 C.... PARAMETER INCLUDE FILES
 C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 C
 C.... COMMON INCLUDE FILES
 C
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
       INCLUDE 'RDCRY.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'RDADD.F77'
 C
 C********************************************************************
@@ -98,18 +97,18 @@ C     CALLED EVERY YEAR SO MAIN CALL IS HERE)
 C     (ACTIVITY CODE 2431)
 
       CALL OPFIND (1,MYACT(3),NTODO)
-      
+
       IF (NTODO .GT. 0) THEN
-        
+
         DO 23 IJ = 1,NTODO
           CALL OPGET (IJ,5,KDT,IACTK,NPS,PRMS)
-          
+
           IRRSP = PRMS(5)
           SPINF(IRRSP) = PRMS(1)
-          SPDBH(IRRSP) = PRMS(2) 
+          SPDBH(IRRSP) = PRMS(2)
           SPYTK(IRRSP) = PRMS(3)
           SPTRAN(IRRSP) = PRMS(4)
-          
+
           CALL OPDONE (IJ,IY(ICYC))
    23   CONTINUE
       ENDIF
@@ -123,12 +122,12 @@ C
 
 C        BEFORE DOING ANYTHING ELSE, CHANGE SPORE-CREATED CENTERS THAT WERE
 C        MADE MORE THAN 10 YEARS AGO INTO ORDINARY CENTERS.
-         
+
          SPCEN = 0.0
          DO 27 ICEN= 1,NCENTS(IRRSP)
-           IF ((ICENSP(IRRSP,ICEN) .GT. 0) .AND. 
+           IF ((ICENSP(IRRSP,ICEN) .GT. 0) .AND.
      &                       (JCENSP(IRRSP,ICEN) .LT. IYEAR)) THEN
-             IDIFF = IYEAR - JCENSP(IRRSP,ICEN) 
+             IDIFF = IYEAR - JCENSP(IRRSP,ICEN)
              IF (IDIFF .GE. 10) ICENSP(IRRSP,ICEN) = 0
            ENDIF
            IF (ICENSP(IRRSP,ICEN) .NE. 0) SPCEN = SPCEN +
@@ -153,25 +152,25 @@ C.... stumps to the regular stump arrays if necessary.
          CALL RDSPOR
       ENDIF
 
-C     FIND OUT IF THE SPREAD RATE PARAMETERS ARE GOING TO 
-C     CHANGE IN THIS TIMESTEP (ANY SPREAD KEYWORD DESIGNATED 
+C     FIND OUT IF THE SPREAD RATE PARAMETERS ARE GOING TO
+C     CHANGE IN THIS TIMESTEP (ANY SPREAD KEYWORD DESIGNATED
 C     PARAMETER COULD CHANGE, INCLUDING TYPE OF SPREAD CALC.)
 C     (ACTIVITY CODE 2401)
 
       CALL OPFIND (1,MYACT(1),NTODO)
-      IF (NTODO .GT. 0) THEN  
-          
+      IF (NTODO .GT. 0) THEN
+
          CALL OPGET (NTODO,4,KDT,IACTK,NPS,PRMS)
          IRSPTY = INT(PRMS(1))
          RRRSET(MINRR) = PRMS(2)
          RRRSET(MAXRR) = PRMS(3)
          NMONT = INT(PRMS(4))
-          
+
          CALL OPDONE (NTODO,IY(ICYC))
       ENDIF
 
-      DO 75 IRRSP=MINRR,MAXRR 
-      
+      DO 75 IRRSP=MINRR,MAXRR
+
          CALL RDINUP
          CALL RDJUMP
 C
@@ -179,7 +178,7 @@ C        SPREADING OF INFECTION CENTERS
 C        ------------------------------
 C
 C        ESTIMATE SPREADING (AND SHRINKING) RATE OF INFECTION ZONES
-C                                                                   
+C
          IF (LONECT(IRRSP) .EQ. 1) THEN
             RRRATE(IRRSP) = 0.0
             GOTO 75
@@ -189,14 +188,14 @@ C
          RRRATE(IRRSP) = RRRSET(IRRSP)
          GOTO 75
 
-   50    CONTINUE      
-   
+   50    CONTINUE
+
          CALL RDSHRK
          CALL RDSPRD
 
-   75 CONTINUE 
+   75 CONTINUE
 
-C     PRINT THE CALCULATED SPREAD RATES 
+C     PRINT THE CALCULATED SPREAD RATES
 
       IF (IRSPTY .GE. 1) CALL RDSOUT
 
@@ -227,15 +226,15 @@ C
 
          DO 200  I=1, NCENTS(IRRSP)
             IF (PCENTS(IRRSP,I,3) .LE. 0) GOTO 200
-            
+
             IF (IRSPTY .EQ. 1) THEN
-               PCENTS(IRRSP,I,3) = PCENTS(IRRSP,I,3) + 
+               PCENTS(IRRSP,I,3) = PCENTS(IRRSP,I,3) +
      &                                   RRATES(IRRSP,I) * FINT
             ELSE
-               PCENTS(IRRSP,I,3) = PCENTS(IRRSP,I,3) + 
+               PCENTS(IRRSP,I,3) = PCENTS(IRRSP,I,3) +
      &                                   RRRATE(IRRSP) * FINT
             ENDIF
-            
+
             IF (ICENSP(IRRSP,I) .NE. 0) SPCEN = SPCEN +
      &                                  PCENTS(IRRSP,I,3) ** 2
             TOTCEN = TOTCEN + PCENTS(IRRSP,I,3) ** 2
@@ -383,7 +382,7 @@ C
          IF (DEBUG) WRITE(JOSTND,69) IRRSP, RRADEC
    69    FORMAT(' RDCNTL : IRRSP  CARRYOVER AREA REDUCTION ',I2, E16.8)
 
-         IDI = IRRSP 
+         IDI = IRRSP
          DO 420 I=1, ITRN
             IF (IRRSP .LT. 3) IDI = IDITYP(IRTSPC(ISP(I)))
             IF (IDI .NE. IRRSP) GOTO 420
@@ -421,11 +420,11 @@ C
  6688    CONTINUE
          OOAREA(IRRSP) = PAREA(IRRSP)
 
-  482 CONTINUE                 
-  
+  482 CONTINUE
+
 C         **END CARRYOVER MODEL
 C -----------------------------------------------------------------------
-  
+
   500 CONTINUE
 
 C
@@ -437,7 +436,6 @@ C         IF (DEBUG) WRITE(JOSTND,315) IRRSP, PAREA(IRRSP)
 C  315    FORMAT(' RDCNTL BEFORE CALL TO RDINSD: IRRSP PAREA=',I2,E15.7)
 C         IF (IRIPTY .NE. 0) CALL RDINSD
 C  525 CONTINUE
-C
 C
 C     INFECTION AND DEATH OF LIVE TREES
 C     ---------------------------------
@@ -497,7 +495,7 @@ C     Modification (RNH, MAR98).  If MAXRR < 3 then annosus disease.
 C     If non-host species then IDI = 0, and loop should be skipped to
 C     prevent array out of bounds error
 C
-      IF (IDI .LE. 0) GO TO 800 
+      IF (IDI .LE. 0) GO TO 800
 C
       IF (ISCT(KSP,1) .EQ. 0) GOTO 800
          I1 = ISCT(KSP,1)
@@ -506,12 +504,12 @@ C
          DO 750 J=I1, I2
            I = IND1(J)
 
-           DO 745  IT=1, ISTEP 
-             DO 742 IP=1,2 
+           DO 745  IT=1, ISTEP
+             DO 742 IP=1,2
                IF (PROPI(I,IT,IP) .GT. 0.0) THEN
-                  PRINF(KSP+ITOTRR) = PRINF(KSP+ITOTRR) + PROBI(I,IT,IP) 
+                  PRINF(KSP+ITOTRR) = PRINF(KSP+ITOTRR) + PROBI(I,IT,IP)
      &                                        * PROPI(I,IT,IP)
-                  PRINF(IDI) = PRINF(IDI) + PROBI(I,IT,IP) * 
+                  PRINF(IDI) = PRINF(IDI) + PROBI(I,IT,IP) *
      &                                        PROPI(I,IT,IP)
                ENDIF
                PRPTOT(KSP+ITOTRR) = PRPTOT(KSP+ITOTRR) + PROBI(I,IT,IP)
@@ -520,14 +518,14 @@ C
   745      CONTINUE
   750    CONTINUE
 
-         PRINF(KSP+ITOTRR) = PRINF(KSP+ITOTRR) / 
+         PRINF(KSP+ITOTRR) = PRINF(KSP+ITOTRR) /
      &                            (PRPTOT(KSP+ITOTRR) + 1E-6)
   800 CONTINUE
 
       DO 805 IDI=MINRR,MAXRR
          PRINF(IDI) = PRINF(IDI) / (PRPTOT(IDI) + 1E-6)
   805 CONTINUE
-  
+
  1000 CONTINUE
       IF (DEBUG) WRITE (JOSTND,70) INFLAG, TESTAG, AGECUR
    70 FORMAT (' LEAVING RDCNTL : INFLAG, TESTAG, AGECUR = ',I5,2X,2F7.0)

@@ -1,5 +1,9 @@
       SUBROUTINE CWIDTH
-      IMPLICIT NONE
+      use contrl_mod
+      use metric_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -10,14 +14,8 @@ C  THIS ROUTINE IS CALLED FROM **MAIN** TO LOAD THE INITIAL CROWN
 C  WIDTHS, AND FROM **UPDATE** TO LOAD THE END-OF-CYCLE VALUES.
 C----------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'CWDCOM.F77'
-      INCLUDE 'METRIC.F77'
 C
-COMMONS
 C----------
 C  DEFINITIONS:
 C
@@ -75,7 +73,7 @@ C----------
 	  CRWDTH(I) = CW
       ENDIF
       IF(DEBUG)WRITE(JOSTND,*)' LIVE: I,ISPC,D,H,CW= ',
-     &I,ISPC,D,CR,CW 
+     &I,ISPC,D,CR,CW
    50 CONTINUE
 C
   100 CONTINUE
@@ -110,7 +108,7 @@ C----------
       ENDIF
 
       IF(DEBUG)WRITE(JOSTND,*)' DEAD: I,ISPC,D,H,CW= ',
-     &I,ISPC,D,H,CW 
+     &I,ISPC,D,H,CW
   150 CONTINUE
   200 CONTINUE
 C----------

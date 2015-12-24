@@ -1,5 +1,10 @@
       SUBROUTINE FMCROW
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use arrays_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMCROW  FIRE-BM DATE OF LAST REVISION:  05/03/12
 C----------
@@ -34,13 +39,8 @@ C                  PCTILE
 ***********************************************************************
 
 C.... Parameter include files.
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... Common include files.
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
 
 C.... Parameter statements.
 
@@ -110,7 +110,7 @@ C       IF GROW IS STILL LESS THAN 1 AFTER THE INCREMENT.
 
         IF (GROW(I) .LT. 1) GROW(I) = GROW(I) + 1
         IF (GROW(I) .LT. 1) GOTO 999
-        
+
 C        ARGUMENTS TO PASS
 
         SPIW = ISP(I)

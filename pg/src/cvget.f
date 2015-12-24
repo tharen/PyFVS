@@ -1,5 +1,6 @@
       SUBROUTINE CVGET (WK3, IPNT, ILIMIT)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -8,16 +9,7 @@ C     GET THE COVER DATA FOR A GIVEN STAND.
 C
 C     PART OF THE PARALLEL PROCESSING EXTENSION TO PROGNOSIS.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CVCOM.F77'
-C
-C
-COMMONS
 C
       INTEGER MXL,MXI,MXR
       PARAMETER (MXL=12,MXI=17,MXR=7)

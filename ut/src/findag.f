@@ -1,6 +1,9 @@
       SUBROUTINE FINDAG(I,ISPC,D1,D2,H,SITAGE,SITHT,AGMAX1,HTMAX1,
      &                  HTMAX2,DEBUG)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FINDAG--UT  DATE OF LAST REVISION:  01/19/11
 C----------
@@ -13,18 +16,7 @@ C  CALLED FROM **HTGF**
 C----------
 C  COMMONS
 C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'GGCOM.F77'
-C
 C
 C  COMMONS
 C----------
@@ -74,8 +66,7 @@ C----------
       AGMAX1 = AGMAX(ISPC)
       HTMAX1 = HTMAX(ISPC)
 C
-      SELECT CASE (ISPC)       
-C
+      SELECT CASE (ISPC)
 C
 C---------
 C  COMPUTE AGE FOR ASPEN.  THIS EQUATION IS ALSO USED FOR OAK.
@@ -85,7 +76,6 @@ C----------
       CASE(6,13,24)
         SITAGE = (H*2.54*12.0/26.9825)**(1.0/1.1752)
         SITHT = H
-C
 C
 C----------
 C  SPECIES USING SURROGATE EQUATIONS FROM CR VARIANT
@@ -102,7 +92,6 @@ C----------
      &  'BAUTBA= ',EFFAGE,SITE,H,BAUTBA
         SITAGE = EFFAGE
         IF(SITAGE .LE. 0.0) SITAGE=1.0
-C
 C
 C----------
 C  MC AND BI USE LOGIC FROM THE SO VARIANT
@@ -162,7 +151,7 @@ C----------
       CASE DEFAULT
         SITAGE = 0.
         SITHT = H
-C        
+C
       END SELECT
 C----------
 C   END OF TREE LOOP.  PRINT DEBUG INFO IF DESIRED.

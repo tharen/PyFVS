@@ -1,5 +1,12 @@
       SUBROUTINE FMCFIM (IYR, FMD, UWIND, IBYRAM, FLAMEHT, CANBURN, ROS)
-      IMPLICIT NONE
+      use plot_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use metric_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C
 C  $Id$
 C
@@ -21,18 +28,6 @@ C     FMD:  FUEL MODEL THAT IS USED IN THE STATIC CASE
 C
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'METRIC.F77'
-C
-COMMONS
-C
       integer iyr, RC
       integer FMD
       character VVER*7
@@ -50,8 +45,8 @@ C
       !DEC$ ATTRIBUTES DLLIMPORT :: CFIM_DRIVER
 
       !DEC$ ATTRIBUTES ALIAS : '_CFIM_DRIVER' :: CFIM_DRIVER
-      
-      integer CFIM_DRIVER   
+
+      integer CFIM_DRIVER
 
 C     check for debug
 
@@ -70,11 +65,11 @@ C     heat_content(J/kg)---hc						18600.0
       CFIM_INPUT(18) = 18600.0
 
 C     DEPENDS ON STAND CONDITION OR USER-DEFINED FIRE VARIABLES
-C     10m_wind(m/s)---10   (test=7)   
+C     10m_wind(m/s)---10   (test=7)
       MWIND = UWIND * MItoKM * 1000. / (60. * 60.)
       CFIM_INPUT(1) = MWIND
-      
-C     slope - percent (test=0)      
+
+C     slope - percent (test=0)
       CFIM_INPUT(2) = FMSLOP
 
 C     ambient_temperature(K)---Ta (test = 300)
@@ -116,14 +111,14 @@ C       NOTE THAT FOLMC IS ON SCALE 0-100, AND WE NEED 0-1
 C     canopy_fuel_density(kg/m^3)---rho_can				398.0
 C     DO NOT USE CROWN BULK DENSITY (already in kg/m3)
 C       CBD IS NOT THE SAME AS CANOPY FUEL DENSITY
-C       FOR NOW, KEEP CANOPY FUEL DENSITY AS A CONSTANT 
+C       FOR NOW, KEEP CANOPY FUEL DENSITY AS A CONSTANT
       CFIM_INPUT(24) = 398.0
 
 
 c       PREDICTED CONSUMPTION OF DUFF, LITTER
 C       THIS IS NOW DONE IN FMCONS, INCLUDING LOADING THE CFIM_INPUT ARRAY
 C      CFIM_INPUT(25) = FFC + WFC
-      
+
       FLAMEHT = 0.0
       IBYRAM = 0.0
       ROS = 0.0
@@ -134,7 +129,7 @@ C     to it.
       DO 800 INB = 1,MXFMOD
           IF (FMOD(INB).EQ.0 .OR. FWT(INB) .LE. 0.0) GOTO 800
 
-C       LOAD UP THE FUEL MODEL VARIABLES 
+C       LOAD UP THE FUEL MODEL VARIABLES
 C        FOR NOW, JUST USE THE MAIN FUEL MODEL - WE WILL NEED TO CHANGE THIS LATER
 C        CALL FMGFMV(IYR, FMD)
           CALL FMGFMV(IYR, FMOD(INB))
@@ -191,13 +186,13 @@ C         MODEL INGITES THE CANOPY, THEN SET THAT.
           FLAMEHT = FLAMEHT + CFIM_OUTPUT(7) * FWT(INB)
           IBYRAM = IBYRAM + CFIM_OUTPUT(3) * FWT(INB)
           ROS = ROS + CFIM_OUTPUT(5) * FWT(INB)
- 
+
  800   CONTINUE
 C       CHECK UNITS. IS THIS BTU\M\MIN?
           IBYRAM = IBYRAM / MtoFT
           FLAMEHT = FLAMEHT * MtoFT
 C       CHECK UNITS. ROS IS IN M/S FROM CFIM. CHANGE TO FT/MIN (MtoFT / (1/60) = .00508)
-          ROS = ROS / 0.00508       
+          ROS = ROS / 0.00508
 
       return
       end

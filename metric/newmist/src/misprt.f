@@ -1,5 +1,10 @@
       SUBROUTINE MISPRT
-		  IMPLICIT NONE
+      use contrl_mod
+      use metric_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -167,34 +172,29 @@ C----------
 *     13-JAN-04; Lance R. David (FHTET)
 *        Modifications provided by Don Robinson of ESSA to place Mistletoe
 *        summary tables into the standard FVS output file instead of
-*        directing them to external files. Capability to use the FVS 
+*        directing them to external files. Capability to use the FVS
 *        Database extension the DM summaries was also added.
 *     14-MAR-05; Lance R. David (FHTET)
 *        Added calls to GETID for assignment of report ID Numbers at
 *        time of header writing. Assignments were originally made in
 *        subroutine MISIN0.
 *     07-MAR-08; Lance R. David (FHTET)
-*        Moved local variables to common, necessary for output table 
+*        Moved local variables to common, necessary for output table
 *        control that need to be maintained for each stand in PPE mode.
 *        Variables moved are: DMFLAG, PRTTBL, LSORT4, MISTBL and ISVSP4
 *  21-APR-09; Lance R. David (FMSC)
 *        Variables IMOUT_ moved to MISCOM.(thanks to Don Robinson)
 ***********************************************************************
-      
+
 C     Parameter statements.
 
 C     Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C     Common include files.
 
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'MISCOM.F77'
       INCLUDE 'DMCOM.F77'
-      INCLUDE 'METRIC.F77'
 
 C     Variable declarations.
 

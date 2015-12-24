@@ -1,5 +1,15 @@
       SUBROUTINE NATCRZ (IWHO)
-      IMPLICIT NONE
+      use htcal_mod
+      use plot_mod
+      use arrays_mod
+      use workcm_mod
+      use estree_mod
+      use contrl_mod
+      use econ_mod
+      use outcom_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -9,49 +19,11 @@ C     VOLUME ROUTINE
 C
 C     IWHO=1 IF CALLED FROM MAIN, IWHO=2 IF CALLED FROM CUTS
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ESTREE.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-      INCLUDE 'WORKCM.F77'
-C
-C
       INCLUDE 'STDSTK.F77'
-C
 C
       INCLUDE 'SUMTAB.F77'
 C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'ECON.F77'
-C
-C
       INCLUDE 'OPCOM.F77'
-C
-C
-COMMONS
 C
       INTEGER IFC,IBDF,ICDF,I3,I2,I1,ISPC,ISITE,IA,KFOR,KREG,ITMFOR
       INTEGER I,ITPLAB,IP,JYR,ISTLNB,KODE,KOLIST,IBA,IDT,IACTK
@@ -240,7 +212,7 @@ C
      >    1X,F5.1,',',1X,F5.1,',',1X,I2,',',1X,I2,',',1X,I2,',',1X,I2,
      >    ',',1X,F5.1,',',1X,A10,',',1X,A10,',',1X,F5.2,',',1X,F5.2,
      >    ',',1X,F6.4)
-        ENDIF  
+        ENDIF
       ELSE
         IF(P.LT.9999.9995 .AND. DP.LT.9999.9995)THEN
           WRITE(KOLIST,31) KREG,KFOR,KDST,ICYC,TID,I,NSP(ISP(I),1)(1:2),
@@ -262,7 +234,7 @@ C
      >    ',',1X,F6.4)
         ENDIF
       ENDIF
-C    
+C
    50 CONTINUE
    60 CONTINUE
 C

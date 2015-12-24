@@ -1,5 +1,9 @@
       SUBROUTINE RDMREC (ITYP,I,KSP,OAMOVE)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDMREC      LAST REVISION:  08/29/14
 C----------
@@ -22,12 +26,11 @@ C     06/12/96 - Matthew K. Thompson
 C                Moved the declaration of DSO, DSII, and DSIU to the
 C                parameter include file RDPARM.
 C     10/07/97 - Matthew K. Thompson
-C                Commented out the line of code that sets 
+C                Commented out the line of code that sets
 C                PROBI = PROBI - OAMOVE(DSII)
 C                The other agent mortality has already been deleted
 C                from PROBI.
 C   08/29/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
@@ -35,16 +38,12 @@ C
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 
 C.... Coomon include fules.
 
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'RDADD.F77'
 
 C.... Local variable declaraions.
@@ -58,7 +57,7 @@ C.... were outside killed are now inside killed (either infected or
 C.... uninfected) (eg. If 10% of the outside trees were killed from
 C.... bark beetles or windthrow then 10% of those trees just becoming
 C.... inside trees were killed from bark beetles or windthrow).
-     
+
       OAKL(DSO,I) = OAKL(DSO,I) - OAMOVE(DSO)
       OAKL(DSII,I) = OAKL(DSII,I) + OAMOVE(DSII)
       OAKL(DSIU,I) = OAKL(DSIU,I) + OAMOVE(DSIU)
@@ -71,7 +70,7 @@ C....    New OAKL goes from DSIU to DSII.
      &                                 (BBKILL(DSIU,I) / OAKL(DSIU,I))
          BBKILL(DSIU,I) = BBKILL(DSIU,I) + OAMOVE(DSIU) *
      &                                 (BBKILL(DSIU,I) / OAKL(DSIU,I))
-     
+
       ELSEIF (OAMOVE(DSIU) .GE. 0.0 .AND. OAKL(DSO,I) .GT. 0.0) THEN
 
 C....    New OAKL goes from DSO to DSII and DSIU.

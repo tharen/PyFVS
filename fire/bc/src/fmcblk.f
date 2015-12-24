@@ -1,5 +1,7 @@
       BLOCK DATA FMCBLK
-      IMPLICIT NONE
+      use fmprop_mod
+      use prgprm_mod
+      implicit none
 C
 C  $Id$
 C
@@ -7,9 +9,6 @@ C----------
 C   **FMCBLK--FIRE-BC
 C----------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPROP.F77'
 
       INTEGER J
 

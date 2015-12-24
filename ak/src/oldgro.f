@@ -1,5 +1,7 @@
       SUBROUTINE OLDGRO(ISPC,VN,D,H,BBFV)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **OLDGRO--AK    DATE OF LAST REVISION:  02/14/08
 C----------
@@ -8,15 +10,6 @@ C   (D GT 35  OR H GT 190).   32-foot log rule.
 C
 C   FROM DON DEMARS --- PNW, JUNEAU AK
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
 COMMONS
 C----------
       LOGICAL DEBUG

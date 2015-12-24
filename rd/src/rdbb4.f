@@ -1,5 +1,9 @@
       SUBROUTINE RDBB4
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDBB4       LAST REVISION:  08/26/14
 C----------
@@ -14,14 +18,14 @@ C     time period (whether it was active this time or not, unless the
 C     user specifies otherwise).
 C
 C     Keyword :  BBTYPE4
-C     Inputs : 1 = first outbreak year          
-C              2 = host tree species       
-C              3 = DBH limit                          
+C     Inputs : 1 = first outbreak year
+C              2 = host tree species
+C              3 = DBH limit
 C              4 = threshold density of lg.enough sick-enough host
-C                  (live or newly dead) 
-C              5 = infected mortality rate     
+C                  (live or newly dead)
+C              5 = infected mortality rate
 C              6 = proportion-of-roots-infected limit
-C              7 = inside uninf. mort. rate  
+C              7 = inside uninf. mort. rate
 C              8 = fringe mortality rate
 C              9 = outside center+fringe mortality rate
 C             10 = 0 for reschedule, 1 for don't
@@ -45,7 +49,7 @@ C                include file RDPARM.
 C
 C     03/04/98 - Robert N. Havis
 C                Increased size of arrays PREVA and PREVB from 2 to 4
-C                to accomodate 4 types of root diseases. Increase 
+C                to accomodate 4 types of root diseases. Increase
 C                corresponding number of loops in statement 500 and 501
 C    06-AUG-01 Lance R. David (FHTET)
 C       Change MYACT to IACTK in call to OPCOPY because of array to scalar
@@ -54,26 +58,21 @@ C    10-DEC-07 Lance R. David (FHTET)
 C       Update to argument list in call to OPCOPY, added variable
 C       DONE for debug/tracking (from Don Robinson).
 C   08/26/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C....................................................................
 
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 
 C.... Common include files.
 
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'RDADD.F77'
-      INCLUDE 'PLOT.F77'
 
 C.... Local variable declarations.
-      
+
       INTEGER  I, J, IK, I1, I2, ISPI, ONLY1X, NOCOPY, DONE,
      &         RRTYPE, RACE, IACTK, MYACT(1)
 
@@ -82,7 +81,7 @@ C.... Local variable declarations.
       REAL     DBHLIM, THRESH, MORTII, MORTIU, MORTF, MORTO, STEMS
 
       REAL     PRMS(9), PREVA(4), PREVB(4), RROTEX, XXXX
-      
+
       NOCOPY = 0
       DONE = 0
       IF (ITRN .LE. 0) RETURN
@@ -111,12 +110,12 @@ C.... that vulnerable host exists before proceeding.
          MORTF  = PRMS(7)
          MORTO  = PRMS(8)
          ONLY1X = INT(PRMS(9))
-        
+
          RRTYPE = MAXRR
          IF (MAXRR .LT. 3) RRTYPE = IDITYP(IRTSPC(ISPI))
          I1 = ISCT(ISPI,1)
          I2 = ISCT(ISPI,2)
-        
+
          IF (ISCT(ISPI,1) .EQ. 0) GOTO 888
          IF (PAREA(RRTYPE) .LE. 0.0) GOTO 888
          IF (PCOLO(IRTSPC(ISPI),RRTYPE) .LT. RROTEX) GOTO 888
@@ -124,7 +123,7 @@ C.... that vulnerable host exists before proceeding.
 C....    Second, go through the host tree records and count the number
 C....    of living stems PLUS stems that died in the last two years
 C....    that meet the user's criteria for size and % of roots infected
-C....    with annosus.  Determine whether the density of these stems 
+C....    with annosus.  Determine whether the density of these stems
 C....    exceeds the user's threshold for an active beetle outbreak.
 
          STEMS = 0.0
@@ -137,28 +136,28 @@ C....    exceeds the user's threshold for an active beetle outbreak.
                DO 4 IP = 1,2
                   IF (PROPI(I,IK,IP) .LT. RROTEX) GOTO 4
                   STEMS = STEMS + ((2/FINT) * PROBI(I,IK,IP))
-    4          CONTINUE   
+    4          CONTINUE
     5       CONTINUE
 
             STEMS = STEMS + ((2/FINT) * (PROAKL(DSII,I) + PRANKL(I)))
     6    CONTINUE
 
          IF ((STEMS / PAREA(RRTYPE)) .LT. THRESH) GOTO 888
-      
+
 C....    If the beetle is active, call OPDONE to signal the outbreak,
 C....    increment NUMBB and store the specified mortality rates for
-C....    later use in killing trees.  
+C....    later use in killing trees.
 
          CALL OPDONE (RACE,IY(ICYC))
          DONE = 1
-        
+
          NUMBB = NUMBB + 1
          IF (NUMBB .GT. 3*MAXSP) NUMBB = 3*MAXSP
          HOST(NUMBB) = ISPI
          MINDBH(NUMBB) = DBHLIM
          MININF(NUMBB) = RROTEX
          ORATE(NUMBB) = MORTO
-         OFRATE(NUMBB) = MORTF 
+         OFRATE(NUMBB) = MORTF
          IURATE(NUMBB) = MORTIU
          IIRATE(NUMBB) = MORTII
 
@@ -169,7 +168,7 @@ C....    know how many trees to kill at the higher rate that applies in
 C....    this area.
 
          IF (FRINGE(RRTYPE) .GT. 0.0) GOTO 888
-        
+
 C....    This procedure is pasted from RRJUMP, to compute the areas in
 C....    SAREA and PAREA() at the next timestep.  Then a bunch of
 C....    values have to be set back, so that the "true" call to RRJUMP
@@ -197,7 +196,7 @@ C
            IF (PCENTS(RRTYPE,I,3) .LE. 0) GOTO 700
            PCENTS(RRTYPE,I,3) = PCENTS(RRTYPE,I,3) + XXXX
   700   CONTINUE
-        
+
         IRRSP = RRTYPE
         CALL RDAREA
 
@@ -229,15 +228,15 @@ C....   active after the current growth cycle.
         IF (ONLY1X .EQ. 1) NOCOPY = 1
 
   999 CONTINUE
-  
+
 C.... If the Type 4 beetle races are to remain active, then copy them
-C.... to the next growth cycle.  
+C.... to the next growth cycle.
 
       IF (NOCOPY .EQ. 1) GOTO 1000
-      CALL OPCOPY (MYACT(1),IY(ICYC),IY(ICYC+1),NCOPYS,KODE)     
+      CALL OPCOPY (MYACT(1),IY(ICYC),IY(ICYC+1),NCOPYS,KODE)
       CALL OPINCR (IY,ICYC,NCYC)
-      
- 1000 CONTINUE       
+
+ 1000 CONTINUE
 
       RETURN
       END

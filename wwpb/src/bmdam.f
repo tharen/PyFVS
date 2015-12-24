@@ -1,5 +1,9 @@
       SUBROUTINE BMDAM (II,ICODES)
-      
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
+
 C----------
 C  **BMDAM         DATE OF LAST REVISION:  07/11/07
 C----------
@@ -7,7 +11,7 @@ C
 C  THIS ROUTINE PROCESSES THE MOUNTAIN PINE BEETLE DAMAGE CODES.
 C  FOR THE WESTWIDE PINE BEETLE MODEL. THE ASSUMPTION IS THAT
 C  ATTACKS ARE ON LODGEPOLE PINE ONLY (THIS IS NOT CHECKED) THAT
-C  TREES MUST BE ALIVE, AND THAT THE ATTACK MUST HAVE HAPPENED 
+C  TREES MUST BE ALIVE, AND THAT THE ATTACK MUST HAVE HAPPENED
 C  WITHIN THE LAST (DEFAULT MODIFIABLE BY KEYWORD BMDAMAGE) TWO
 C  YEARS PRIOR TO THE FIRST PPE MASTER CYCLE.
 C
@@ -23,17 +27,16 @@ C     ICODES - DISEASE AND DAMAGE CODES ARRAY.
 C
 C  LOCAL VARIABLES :
 C
-C
 C  COMMON BLOCK VARIABLES USED :
 C
 C  Revision History :
 C  07/28/00 AJM:
-C    Reading of damage codes changed so that damage codes 1, 2, 5 
+C    Reading of damage codes changed so that damage codes 1, 2, 5
 C    are used and recognized instead of 3.
 C  07/10/07 - Lance R. David (FHTET)
-C    Time at which damage codes are processed is now at the end of 
+C    Time at which damage codes are processed is now at the end of
 C    keyword processing instead of during the reading of tree data.
-C    So, tree data items that were passed as arguments are now 
+C    So, tree data items that were passed as arguments are now
 C    available from the FVS common area. Original arguments were:
 C    (II,IITH,ICODES)
 C    FVS array IMC(II) is used as replacement for input tree history
@@ -43,14 +46,7 @@ C    dead trees are already at the end of the arrays. Argument II is
 C    correct index value for both live and dead.
 C----------
 C
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'PPEPRM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'PPCNTL.F77'
 
       INCLUDE 'BMPRM.F77'

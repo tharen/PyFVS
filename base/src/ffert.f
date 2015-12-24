@@ -1,6 +1,9 @@
       SUBROUTINE FFERT
-      use arrays_mod, only: barkrat
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C---------
@@ -12,25 +15,7 @@ C  HEIGHT GROWTH IS APPLIED USING THE RATIO OF AVERAGE HEIGHT
 C  INCREMENTS OF FERTILIZER TREATMENT TO A CONTROL. THIS SUBROUTINE
 C  IS CALLED BY ** TREGRO **.
 C
-COMMONS
-C
-C
       COMMON /FFCOM/ IFFDAT, FFPRMS(4)
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
 C
       LOGICAL DEBUG
       INTEGER MYACTS(1),IFFDAT
@@ -148,8 +133,7 @@ C
 C
       I = IND1(I3)
       D=DBH(I)
-!      BARKS=BRATIO(ISPC,D,HT(I))
-      BARKS=BARKRAT(I)
+      BARKS=BRATIO(ISPC,D,HT(I))
       IF (D .LE. 0.0) GOTO 35
 C
       BAL = (1.-(PCT(I)/100.))*BA

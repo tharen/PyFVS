@@ -1,5 +1,8 @@
       SUBROUTINE CVBCAL(HTINDX)
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **CVBCAL DATE OF LAST REVISION:  06/28/13
 C----------
@@ -53,21 +56,7 @@ C             (CALIBRATION BY SPECIES: SHRUBHT & SHRUBPC CARDS)
 C
 C-----------------------------------------------------------------------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
       INCLUDE 'CVCOM.F77'
-C
-COMMONS
 C
       LOGICAL DEBUG
       INTEGER HTINDX(31)

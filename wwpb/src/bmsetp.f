@@ -1,4 +1,7 @@
       SUBROUTINE BMSETP
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BMSETP  DATE OF LAST REVISION:  12/20/05
 C----------
@@ -22,18 +25,15 @@ C             GPGET
 C             RCDSET
 C             SPLAAR
 C             SPLAEX
-C             SPNBEX                 
+C             SPNBEX
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'PPEPRM.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'PPCNTL.F77'
 
       INCLUDE 'BMPRM.F77'
       INCLUDE 'BMCOM.F77'
       INCLUDE 'BMPCOM.F77'
-C     
+C
       REAL    PRMS(7)
       INTEGER MYLIST(MXSTND)
       INTEGER BMSTD0,jstk2ns,bmstkd
@@ -46,11 +46,11 @@ C     NOTE: BMCNT IS THE NUMBER OF RECORDS READ-IN VIA KEYWORD BMHIST
 C     IT CAN BE GREATER THAN THE NUMBER OF STANDS IN THE RUN--e.g.  A STAND
 C     MAY BE INTIALIZED WITH BKP VIA MORE THAN 1 SUPPLEMENTAL RECORD.
 C
-C     ALSO NOTE THAT BMSTDS() ARRAY WAS INITIALIZED IN BMPPIN WITH THE 
+C     ALSO NOTE THAT BMSTDS() ARRAY WAS INITIALIZED IN BMPPIN WITH THE
 C     BMHIST SUPPLEMENTAL RECORD STAND IDS, WHICH MAY HAVE BEEN DUPLICATED.
 C     i.e.  A STAND MAY BE INITIALIZED WITH BKP INTO TREES OF A FEW SIZE CLASSES
 C     NECESSITATING MORE THAN ONE RECORD IN THE BMHIST SUPPLEMETAL RECORD LIST.
-C     BMSTDS ARRAY IS "CORRECTED" BELOW SO THAT IT CONTAINS (WITHOUT DUPLICATION) 
+C     BMSTDS ARRAY IS "CORRECTED" BELOW SO THAT IT CONTAINS (WITHOUT DUPLICATION)
 C     THE PPE STAND IDS
 C
       IF (MICYC.EQ.2) THEN
@@ -61,11 +61,11 @@ C
 C         CALL CH8SRT (NOSTND,STDIDS,MYLIST,.TRUE.)
           CALL C26SRT (NOSTND,STDIDS,MYLIST,.TRUE.)
           DO 10 I=1,BMCNT
-            J= IFIX(BMINI(I,PBSPEC,1)) 
+            J= IFIX(BMINI(I,PBSPEC,1))
             IF ((J .GT. 0) .AND. (J .LE. NSCL)) THEN
 C              CALL CH8BSR (NOSTND,STDIDS,MYLIST,BMSTDS(I),IP)
             CALL C26BSR (NOSTND,STDIDS,MYLIST,BMSTDS(I),IP)
-              IF(IP .GT. 0) THEN     
+              IF(IP .GT. 0) THEN
                 IF (PBSPEC .LT. 3) PBKILL(IP,J)= BMINI(I,PBSPEC,2)
 C                 DEBUG
                  IF (LBMDEB) THEN
@@ -74,26 +74,26 @@ C                 DEBUG
    5               FORMAT(' IN BMSETP, CYCLE1 BMHIST DATA: ',
      >                1x,I6,1X,a26,i5,I3,F4.0,2(1X,F5.2))
                  ENDIF
-                
+
                 IF (PBSPEC .EQ. 3) ALLKLL(IP,J)= BMINI(I,PBSPEC,2)
-              ENDIF                
-            ENDIF  
+              ENDIF
+            ENDIF
             IF (IPSON .AND. (IP .GT. 0)) THEN
-              J= IFIX(BMINI(I,3,1)) 
-              IF ((J .GT. 0) .AND. (J .LE. NSCL)) 
+              J= IFIX(BMINI(I,3,1))
+              IF ((J .GT. 0) .AND. (J .LE. NSCL))
      &             ALLKLL(IP,J)= BMINI(I,3,2)
             ENDIF
 C
    10     CONTINUE
         ELSE
           BMCNT=0
-        ENDIF              
-        
+        ENDIF
+
       ENDIF
 C
 C     Set up year boundaries for dispersal
 C
-c      BMSTND=0 !I don't think we need this.  we use ibmyr1 now as the flag to bail if 
+c      BMSTND=0 !I don't think we need this.  we use ibmyr1 now as the flag to bail if
 c               ! "disperse" is ended
       IBMYR1=0
       CALL GPGET (301,IBMYR1,7,NPRMS,PRMS,MXSTND,BMSTD0,BMSDIX)
@@ -125,7 +125,7 @@ C
 C     APPEND NONSTOCKABLE STANDS TO BM STANDS.
 C     MORE THAN MXSTND IN TOTAL WILL RESUL  IN LOST DATA.
 C
-C  ** THIS LOGIC IS MOVED TO BELOW (SEE DO 44), AFTER WE CHECK TO SEE IF 
+C  ** THIS LOGIC IS MOVED TO BELOW (SEE DO 44), AFTER WE CHECK TO SEE IF
 C     THE NON-STOCKED ID HAS ALREADY BEEN ENTERED! **
 
 C      DO 41 I = 1, NSSTND
@@ -158,11 +158,11 @@ C      WHICH FOR NOW IS SET = TO BMSTD0, BUT IT MAY BE DECREMENTED IF USER
 C      DEFINES A HERETOFORE STOCKED STAND AS NONSTOCKED.
 C      AT THIS POINT BMSTKD IS BEING USED FOR INFORMATIONAL PURPOSES ONLY
 C
-       BMSTND=BMSTD0      
+       BMSTND=BMSTD0
        BMSTKD=BMSTND
-C       bmend=bmstnd-nsstnd  ! DONE BELOW.  
+C       bmend=bmstnd-nsstnd  ! DONE BELOW.
 c      (this could be done here, but it would be incorrectly calculated if the NSSTNDs
-c      were truly supplemental e.g. 100 stocked stands plus 100 additional nsstnds 
+c      were truly supplemental e.g. 100 stocked stands plus 100 additional nsstnds
 c      would yield ZERO BMEND stands.  wrong!)
 
 C     CALL CH8SRT (BMSTND, BMSTDS, MYLIST, .TRUE.)
@@ -184,7 +184,7 @@ C
                ISTP(IOUT,I)=-1
    45       CONTINUE
 C
-C     INITIIALIZE WWPBM-DB TABLE FLAGS. THESE ARE LATER SET (TO 1 OR 2) 
+C     INITIIALIZE WWPBM-DB TABLE FLAGS. THESE ARE LATER SET (TO 1 OR 2)
 C     VIA DB KEYWORDS (in DBSIN)IF DB TABLE IS REQUESTED
 C     J=TABLE # (1=MAIN,2=TREE; 3=BKP; 4=VOL); I=STAND INDEX
 C     FETCHED INTO WWPBM IN BMSDIT
@@ -203,7 +203,7 @@ C
 C
 C     NOW THAT WE'VE LOOPED THROUGH ALL STANDS AND INITIALIZED DB FLAGS
 C     MARK DBINIT FLAG TO TRUE.
-C     
+C
       LDBINIT = .TRUE.
 C
 C     THIS IS TOO COMPLICATED, SINCE NONSTOCKABLES ARE KNOWN
@@ -230,8 +230,8 @@ C        CALL CH8BSR (BMSTND, BMSTDS, MYLIST, NSSTDS(I), IP)
            STOCK(J)  = .FALSE.
         ENDIF
    44 CONTINUE
-c     adjust downward the count of stocked stands 
-c     for stands that were previously stocked stands but that were 
+c     adjust downward the count of stocked stands
+c     for stands that were previously stocked stands but that were
 c     just now marked non-stocked because they were listed as such
 c     (i.e. as a supplemental record under keyword NONSTOCK)
       bmstkd=bmstkd-jstk2ns
@@ -264,14 +264,14 @@ C        BECAUSE BMSTND NOW INCLUDES NONSTOCKS AS WELL!
         STKACR=0.0
         DO 50 I=1,BMSTND
           CALL SPLAAR (I,AREA,IRC)
-          LBMSPR= IRC .EQ. 0 
+          LBMSPR= IRC .EQ. 0
 C          IF (.NOT.LBMSPR) GOTO 60
           IF (.NOT.LBMSPR) GOTO 100
           TACRES= TACRES+AREA
           IF(STOCK(I))STKACR=STKACR+AREA
    50   CONTINUE
 C   60 CONTINUE
-      ELSE 
+      ELSE
         GOTO 100
       ENDIF
 C
@@ -287,7 +287,7 @@ C      IF (LBMSPR) THEN
         IF (LBMDEB) WRITE(JBMBPR,'(/'' IN BMSETP: LNEAR='',L2)') LNEAR
 C
 C     BMSTAND IDS, NONSTOCK STATUS, AND AREA INFO DONE.  WE DON'T NEED TO REPEAT
-C     ANY OF THE ABOVE ANY TIME IN THE FUTURE.  SET "DONE" FLAG TO TRUE, AND 
+C     ANY OF THE ABOVE ANY TIME IN THE FUTURE.  SET "DONE" FLAG TO TRUE, AND
 C     ENTER THIS ROUTINE AT STATEMENT LABEL 65 IN SUBSEQUENT CYCLES
 C
       LBMSETP=.TRUE.
@@ -299,9 +299,9 @@ C
 C     Set up year boundaries for dispersal.
 
         NPRMS= 1
-        IBMYR2=IBMYR1+IFIX(PRMS(1))-1                   
+        IBMYR2=IBMYR1+IFIX(PRMS(1))-1
         IBMMRT= IBMYR2-IBMYR1+1
-        
+
         IF (LBMDEB) WRITE (JBMBPR,70) IBMYR1,IBMYR2
    70   FORMAT (/' IN BMSETP: IBMYR1=',I5,' IBMYR2=',I5)
 
@@ -317,7 +317,7 @@ c n-1 year within the current master cycle.
           IF (LBMDEB) WRITE (JBMBPR,80) PRMS(1),IBMYR2
    80     FORMAT (/' IN BMSETP:  AN OUTBREAK IS SCHEDULED FOR THE ',
      >            'NEXT MASTER CYCLE. DURATION WILL BE =',F5.0,
-     >            '  NEW IBMYR2=',I5)     
+     >            '  NEW IBMYR2=',I5)
         ENDIF
         GO TO 150
 C      ELSE

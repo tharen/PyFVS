@@ -1,11 +1,15 @@
       SUBROUTINE RDJUMP
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDJUMP      LAST REVISION:  08/29/14
 C----------
 C
 C  Purpose :
-C    This subroutine expands the area in root disease when the 
+C    This subroutine expands the area in root disease when the
 C    stand is clearcut.
 C
 C  Called By :
@@ -16,32 +20,27 @@ C    RDAREA  (SUBROUTINE)   [ROOT DISEASE]
 C    RDINF   (SUBROUTINE)   [ROOT DISEASE]
 C
 C  Local Variables :
-C    <incomplete>   
+C    <incomplete>
 C
 C  Common Block Variables Used :
-C    <incomplete>   
+C    <incomplete>
 C
 C  Revision History
 C    06/10/96 - Matthew K. Thompson
 C               Changed the summing of trees in tree records.
 C               Changed from an INTEGER summation to a REAL summation.
 C   08/29/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
 C.... Parameter include files
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 
 C.... Common include files
 
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'RDADD.F77'
 
 C.... Local variable declarations
@@ -66,7 +65,7 @@ C.... Jump out if a cut occurred
          IF (PCENTS(IRRSP,I,3) .LE. 0) GOTO 700
 
 C....    Expand centers by the diameter of the uninfected root systems
-C....    present at the time of the cut (given by 2*RRJINC) 
+C....    present at the time of the cut (given by 2*RRJINC)
 
          PCENTS(IRRSP,I,3) = PCENTS(IRRSP,I,3) +
      &                       2 * RRJINC(IRRSP) * TNJUMP(IRRSP)
@@ -96,7 +95,7 @@ C     TRENUM - Number of trees outside patch area represented by the
 C              record (so will weight roots by number of trees).
 C     XTRENU - Sum of number of trees outside patch area
 C     XJPINC - Sum of uninfected root radii in appropriate records
-C     RRJINC - Mean uninfected root radii (used to increment the 
+C     RRJINC - Mean uninfected root radii (used to increment the
 C              radii of centers next year)
 
   650 CONTINUE
@@ -118,7 +117,7 @@ C              radii of centers next year)
          I2 = ISCT(KSP,2)
 
          DO 400 J=I1, I2
-            I = IND1(J) 
+            I = IND1(J)
             TRENUM = FPROB(I) * (SAREA - PAREA(IDI))
             XJPINC = XJPINC + ROOTL(I) * TRENUM
             XTRENU = XTRENU + TRENUM

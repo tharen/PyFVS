@@ -1,5 +1,6 @@
       BLOCK DATA BRBLKD
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------------------------------------------------------------------
 C  **BRBLKD--CR   DATE OF LAST REVISION:  06/05/2014
 C----------------------------------------------------------------------
@@ -8,8 +9,8 @@ C  Block data for the Blister Rust model.
 C----------
 C     SPECIES LIST FOR CENTRAL ROCKIES VARIANT.
 C
-C    AL COMMON                  FIA SCIENTIFIC                         
-C  # CD NAME                    CD  NAME                               
+C    AL COMMON                  FIA SCIENTIFIC
+C  # CD NAME                    CD  NAME
 C -- -- ---------------------   --- -----------------------------------
 C  1 AF SUBALPINE FIR           019 ABIES LASIOCARPA var. LASIOCARPA
 C  2 CB CORKBARK FIR            018 ABIES LASIOCARPA var. ARIZONICA
@@ -57,7 +58,7 @@ C  dd-MMM-YYYY programmer_name
 C     description of change or update.
 C  23-FEB-2006 Lance David (FHTET)
 C     Created this Central Rockies version from NI for purpose of testing
-C     suitability to use WPBR model to represent Comandra Blister Rust on  
+C     suitability to use WPBR model to represent Comandra Blister Rust on
 C     lodgepole and ponderosa pines.
 C  08-MAY-2006 Lance R. David (FHTET)
 C     Changed random number seed variable names to unique variables
@@ -72,7 +73,6 @@ C**********************************************************************
 
 C.... Common include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BRCOM.F77'
 
 C.... Data statements.
@@ -91,7 +91,7 @@ C.... Col 1-7      9       11-13   15-19   21-25   27-30    32-35
 C.... Blister Rust Species Map.
 C.... WPBR Model species/indices are: LP/1, PP/2
 C.... Lodgepole and Ponderosa Pine set as host to Blister Rust
-C.... (comandrae), both species use the original coefficients 
+C.... (comandrae), both species use the original coefficients
 C.... and default values of white pine blister rust with NI variant.
 C....
 C.... FVS Central Rockies Species list for all model types:

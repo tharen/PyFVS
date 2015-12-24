@@ -1,6 +1,14 @@
       SUBROUTINE GRINCR (DEBUG,IPMODI,LTMGO,LMPBGO,LDFBGO,
      1                   LBWEGO,LCVATV,LBGCGO)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use eshap_mod
+      use outcom_mod
+      use pden_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -9,26 +17,13 @@ C     COMPUTES GROWTH AND MORTALITY ON EACH TREE RECORD.
 C
 C     CALLED FROM: PPMAIN AND TREGRO.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PDEN.F77'
-      INCLUDE 'OUTCOM.F77'
       INCLUDE 'STDSTK.F77'
-      INCLUDE 'ESHAP.F77'
-      INCLUDE 'VARCOM.F77'
-C
-COMMONS
 C
       REAL PRM(6)
       INTEGER MYACTS(3)
       INTEGER IPMODI,NTODO,ITODO,NP,IACTK,IDATE,I,IS,IGRP,IULIM,IG,IGSP
       INTEGER IPH,IC,ICDF,IBDF,ISPCC,ITFN,J,JJ,K,ISTOPRES,IRTNCD
-      REAL STAGEA,STAGEB      
+      REAL STAGEA,STAGEB
       LOGICAL LTMGO,LMPBGO,LDFBGO,LBWEGO,LCVATV,LBGCGO,DEBUG,LINCL
       INTEGER IBA
       CHARACTER*20 KARD
@@ -72,7 +67,7 @@ C----------
         CALL OPGET (ITODO,6,IDATE,IACTK,NP,PRM)
         IF (IACTK.LT.0) GOTO 9
         CALL OPDONE(ITODO,IY(ICYC))
-C        
+C
         IF(PRM(1) .GT. 0.)THEN
           KODTYP=IFIX(PRM(1))
           KARD='                    '
@@ -90,9 +85,9 @@ C
           BAMAX=PRM(2)
           LBAMAX=.TRUE.
           IF(DEBUG)WRITE(JOSTND,*)' IN GRINCR PROCESSING SETSITE',
-     &    ' BASAL AREA MAXIMUM = ',BAMAX,'  LBAMAX = ',LBAMAX     
+     &    ' BASAL AREA MAXIMUM = ',BAMAX,'  LBAMAX = ',LBAMAX
         ENDIF
-C 
+C
         IS=IFIX(PRM(3))
 C----------
 C     IF (IS<0) CHANGE ALL SPECIES IN THE GROUP
@@ -210,8 +205,8 @@ C
 C
       IF (DEBUG) WRITE(JOSTND,15) BTSDIX, SDIBC, SDIBC2, ICYC
    15 FORMAT(' AFTER SDICAL, BTSDIX, SDIBC, SDIBC2, CYCLE=',
-     &       F9.1,2F9.1,I2) 
-C 
+     &       F9.1,2F9.1,I2)
+C
       IBA = 1
       CALL SSTAGE (IBA,ICYC,.FALSE.)
 C
@@ -331,7 +326,7 @@ C
    72 CONTINUE
 C
 C     EVALUATE ECON EXTENSTION STATUS
-C     1 MEANS THIS CALL TO ECSTATUS.F IS AFTER THE CALL TO CUTS.F 
+C     1 MEANS THIS CALL TO ECSTATUS.F IS AFTER THE CALL TO CUTS.F
 C
       CALL ECSTATUS(ICYC, NCYC, IY, 1)
 C----------

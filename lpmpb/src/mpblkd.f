@@ -1,5 +1,6 @@
       BLOCK DATA MPBLKD
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **MPBLKD  DATE OF LAST REVISION:  08/22/14
 C----------
@@ -19,20 +20,15 @@ C       since the array allows the definition to be made in mpblkd.f,
 C       instead of always having to change the COMPUTED GO TO.
 C   	Added to common block in file MPBCOM.F77.
 C   07/02/10 Lance R. David (FMSC)
-C     Added IMPLICIT NONE.
 C   08/22/14 Lance R. David (FMSC)
 C     Function name was used as variable name.
 C     changed variable INT to INCRS
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
 
       INCLUDE 'MPBCOM.F77'
 
 COMMONS
-C
       DATA  JOMPB  / 7 /
 
       DATA IPLTNO/ 1 /,IMPROB/ 1 /,NATR/ 2 /, KEYMPB/ 2,3,6*0,1 /,

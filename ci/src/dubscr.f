@@ -1,5 +1,9 @@
       SUBROUTINE DUBSCR(ISPC,D,H,BA,CR,TPCCF,AVH,TMAI)
-      IMPLICIT NONE
+      use contrl_mod
+      use pden_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **DUBSCR--CI   DATE OF LAST REVISION:  08/31/11
 C----------
@@ -13,21 +17,6 @@ C
 C NOTE: 17=CW AND 19=OH DO NOT USE THIS ROUTINE; CROWNS FOR TREES OF
 C       ALL SIZES FOR THESE SPECIES ARE DUBBED IN **CROWN**.
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
 COMMONS
 C----------
       EXTERNAL RANN

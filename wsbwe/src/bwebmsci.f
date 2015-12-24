@@ -1,5 +1,9 @@
       SUBROUTINE BWEBMS (TRFBMS,ICVOPT)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BWEBMS--CI             DATE OF LAST REVISION:  10/06/11
 C----------
@@ -36,16 +40,6 @@ C    10/06/11 Lance R. David (FMSC)
 C       This routine created for the CI variant expansion to 19 species.
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-C
-C
-COMMONS
 C----------
 C  DECLARATIONS AND DIMENSIONS FOR INTERNAL VARIABLES
 C----------

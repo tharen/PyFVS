@@ -1,5 +1,9 @@
       SUBROUTINE CVCLAS (LTHIN)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **CVCLAS DATE OF LAST REVISION:  06/28/13
 C----------
@@ -46,24 +50,7 @@ C
 C  HEIGHT CLASS CODES: 1=0-10', 2=10-20',...   ...16=150' AND UP.
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'CVCOM.F77'
-C
-COMMONS
 C
 C----------
 C DIMENSION AND TYPE STATEMENTS FOR INTERNAL VARIABLES.

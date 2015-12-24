@@ -1,6 +1,7 @@
       SUBROUTINE SUMOUT(IOSUM,I17,IPT,ITYPE,JOPRT,JOSTND,JOSUM,
      >                  LEN,MGMID,NPLT,SAMWT,ITITLE)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **SUMOUT--LS   DATE OF LAST REVISION:  07/11/08
 C----------
@@ -43,15 +44,7 @@ C     LEN   = NUMBER OF ROWS (ENTRIES) IN IOSUM.
 C     MGMID = MANAGEMENT IDENTIFICATION FIELD. ASSUMED ALPHANUMERIC.
 C     NPLT  = PLOT IDENTIFICATION FIELD. ASSUMED ALPHANUMERIC.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'SUMTAB.F77'
-C
-COMMONS
 C
       CHARACTER CISN*11,NPLT*26,TIM*8,DAT*10,MGMID*4,VVER*7,REV*10
       CHARACTER ITITLE*72
@@ -96,7 +89,6 @@ C
      &  '--- ---- --- --- ---- ',7('----- '),'--- ---- --- --- ----  ',
      &  '------ ---- -----   -----')
       ENDIF
-C
 C
 C     STEP3: LOOP THRU ALL ROWS IN IOSUM...WRITE OUTPUT.
 C

@@ -1,5 +1,13 @@
       SUBROUTINE FMCBA (IYR,ISWTCH)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use varcom_mod
+      use contrl_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMCBA   FIRE-SN-DATE OF LAST REVISION:  02/09/2012
 C----------
@@ -21,33 +29,6 @@ C              =0 if called by any other subroutine (FMMAIN, FMPPHV, FMBURN)
 C     TOTBA:   THE TOTAL BASAL AREA IN THE STAND
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
-      INCLUDE 'FMFCOM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-COMMONS
 C----------
 C  LOCAL VARIABLE DECLARATIONS
 C----------
@@ -61,7 +42,7 @@ C----------
       LOGICAL DEBUG
 C----------
 C  FOR SOME ECOLOGICAL UNITS, THE HERB AND SHRUB VALUES ARE ONLY ESTIMATED FROM FOREST
-C  TYPE, DUE TO A LACK OF DATA. 
+C  TYPE, DUE TO A LACK OF DATA.
 C----------
 C                  herbs, shrubs
       DATA FULIV /0.1, 0.25,  ! pines
@@ -71,7 +52,7 @@ C                  herbs, shrubs
 
 C----------
 C  FOR COASTAL PLAIN, PIEDMONT, AND MOUNTAIN SITES, THE HERB AND SHRUB VALUES
-C  ARE SET BASED ON UNDERSTORY HEIGHT AND THE AGE OF THE ROUGH, USING VALUES FROM 
+C  ARE SET BASED ON UNDERSTORY HEIGHT AND THE AGE OF THE ROUGH, USING VALUES FROM
 C  "SOUTHERN FORESTRY SMOKE MANAGEMENT GUIDEBOOK" - GTR-SE-10, PG118, ALSO REPLICATED
 C  IN "WILDLAND FIRE IN ECOSYSTEMS: EFFECTS OF FIRE ON FLORA" - RMRS-GTR-42, VOL2, PG63
 C  SINCE UNDERSTORY HEIGHT IS NOT KNOWN, SITE INDEX IS USED AS A SURROGATE.
@@ -119,38 +100,38 @@ C-----------
 C-----------
 C  SET LIVE FUEL LEVELS
 C-----------
-      IF ((PCOM(1:3) .EQ. '232') .OR. (PCOM(1:3) .EQ. '231') .OR. 
+      IF ((PCOM(1:3) .EQ. '232') .OR. (PCOM(1:3) .EQ. '231') .OR.
      &    (PCOM(1:4) .EQ. 'M221')) THEN
-        
+
         IF (SITEAR(ISISP) .LT. 50) THEN
           J=1
         ELSEIF (SITEAR(ISISP) .LT. 65) THEN
           J=2
-        ELSEIF (SITEAR(ISISP) .LT. 80) THEN 
+        ELSEIF (SITEAR(ISISP) .LT. 80) THEN
           J=3
         ELSEIF (SITEAR(ISISP) .LT. 95) THEN
           J=4
-        ELSEIF (SITEAR(ISISP) .LT. 110) THEN 
+        ELSEIF (SITEAR(ISISP) .LT. 110) THEN
           J=5
-        ELSE 
+        ELSE
           J=6
         ENDIF
 
         IF (BURNYR .GT. 0) THEN
-          SHRUBAGE = IYR - BURNYR        
+          SHRUBAGE = IYR - BURNYR
         ELSE
           SHRUBAGE = (IYR - IY(1) + 5) ! so default is 5 years before inventory
         ENDIF
         SHRUBAGE = MIN(20,MAX(1,INT(SHRUBAGE)))
- 
+
         DO L=1,8
           FULIV3(L) = FULIV2(L,J)
         ENDDO
-        
-        FLIVE(1) = 0.0 ! no herbs       
-        FLIVE(2) = ALGSLP(SHRUBAGE,Y,FULIV3,8)    
-        IF ((PCOM(1:3) .EQ. '231') .OR. (PCOM(1:4) .EQ. 'M221')) THEN 
-          FLIVE(2) = FLIVE(2)*0.40   
+
+        FLIVE(1) = 0.0 ! no herbs
+        FLIVE(2) = ALGSLP(SHRUBAGE,Y,FULIV3,8)
+        IF ((PCOM(1:3) .EQ. '231') .OR. (PCOM(1:4) .EQ. 'M221')) THEN
+          FLIVE(2) = FLIVE(2)*0.40
         ENDIF
 
       ELSE
@@ -168,7 +149,7 @@ C----------
         CASE DEFAULT
           FTLIVEFU = 2 !hardwoods
         END SELECT
-C       
+C
         DO I=1,2
            FLIVE(I)=FULIV(I, FTLIVEFU)
         ENDDO
@@ -258,23 +239,23 @@ C----------
 C  LOAD DEAD FUELS AS A FUNCTION OF FOREST TYPE.
 C----------
          SELECT CASE (IFORTP)
-         CASE(101:105)          
+         CASE(101:105)
            FTDEADFU = 1 !eastern white pine
-         CASE(141,142)          
+         CASE(141,142)
            FTDEADFU = 2 !longleaf-slash pine
-         CASE(161:168)          
+         CASE(161:168)
            FTDEADFU = 3 !loblolly-shortleaf pine
-         CASE(181,402)          
+         CASE(181,402)
            FTDEADFU = 4 !eastern redcedar
-         CASE(401,403:409)          
+         CASE(401,403:409)
            FTDEADFU = 5 !oak-pine
-         CASE(501:520)         
+         CASE(501:520)
            FTDEADFU = 6 !oak-hickory
-         CASE(601:608)          
+         CASE(601:608)
            FTDEADFU = 7 !oak-gum-cypress
-         CASE(701:709)          
+         CASE(701:709)
            FTDEADFU = 8 !elm-ash-cottonwood
-         CASE(801:809)          
+         CASE(801:809)
            FTDEADFU = 9 !maple-beech-birch
          CASE DEFAULT
            FTDEADFU = 6 !oak-hickory
@@ -284,19 +265,19 @@ C
             STFUEL(ISZ,2) = FUINI(ISZ,FTDEADFU)
             STFUEL(ISZ,1) = 0
          ENDDO
-C----------        
+C----------
 C       CHANGE THE INITIAL FUEL LEVELS BASED ON PHOTO SERIES INFO INPUT
 C----------
         CALL OPFIND(1,MYACT(2),J)
         IF (J .GT. 0) THEN
           CALL OPGET(J,2,JYR,IACTK,NPRM,PRMS)
           IF ((PRMS(1) .GE. 0) .AND. (PRMS(2) .GE. 0)) THEN
-            CALL FMPHOTOVAL(NINT(PRMS(1)), NINT(PRMS(2)), FOTOVAL, 
+            CALL FMPHOTOVAL(NINT(PRMS(1)), NINT(PRMS(2)), FOTOVAL,
      >                      FOTOVALS)
             DO I = 1, MXFLCL
               IF (FOTOVAL(I) .GE. 0) STFUEL(I,2) = FOTOVAL(I)
               IF (I .LE. 9) STFUEL(I,1) = FOTOVALS(I)
-            ENDDO                 
+            ENDDO
 C----------
 C  IF FOTOVAL(1) IS NEGATIVE, THEN AN INVALID CODE WAS ENTERED.
 C  DON'T MARK EVENT DONE IF THIS IS A CALL FROM SVSTART--WILL
@@ -310,7 +291,7 @@ C----------
             CALL RCDSET (2,.TRUE.)
           ENDIF
         ENDIF
- 
+
 C-----------
 C  CHANGE THE INITIAL FUEL LEVELS BASED ON INPUT FROM THE USER
 C  FIRST DO FUELHARD (FUELINIT) THEN FUELSOFT
@@ -324,23 +305,23 @@ C-----------
           IF (PRMS(5) .GE. 0) STFUEL(6,2) = PRMS(5)
           IF (PRMS(6) .GE. 0) STFUEL(10,2) = PRMS(6)
           IF (PRMS(7) .GE. 0) STFUEL(11,2) = PRMS(7)
-          IF (PRMS(8) .GE. 0) STFUEL(1,2) = PRMS(8)          
-          IF (PRMS(9) .GE. 0) STFUEL(2,2) = PRMS(9)           
+          IF (PRMS(8) .GE. 0) STFUEL(1,2) = PRMS(8)
+          IF (PRMS(9) .GE. 0) STFUEL(2,2) = PRMS(9)
           IF (PRMS(1) .GE. 0) THEN
             IF ((PRMS(8) .LT. 0) .AND. (PRMS(9) .LT. 0)) THEN
               STFUEL(1,2) = PRMS(1) * 0.5
               STFUEL(2,2) = PRMS(1) * 0.5
-            ENDIF                 
+            ENDIF
             IF ((PRMS(8) .LT. 0) .AND. (PRMS(9) .GE. 0)) THEN
               STFUEL(1,2) = MAX(PRMS(1) - PRMS(9),0.)
-            ENDIF  
+            ENDIF
             IF ((PRMS(8) .GE. 0) .AND. (PRMS(9) .LT. 0)) THEN
               STFUEL(2,2) = MAX(PRMS(1) - PRMS(8),0.)
-            ENDIF  
-          ENDIF                
-          IF (PRMS(10) .GE. 0) STFUEL(7,2) = PRMS(10) 
-          IF (PRMS(11) .GE. 0) STFUEL(8,2) = PRMS(11) 
-          IF (PRMS(12) .GE. 0) STFUEL(9,2) = PRMS(12)  
+            ENDIF
+          ENDIF
+          IF (PRMS(10) .GE. 0) STFUEL(7,2) = PRMS(10)
+          IF (PRMS(11) .GE. 0) STFUEL(8,2) = PRMS(11)
+          IF (PRMS(12) .GE. 0) STFUEL(9,2) = PRMS(12)
 C----------
 C  DON'T MARK EVENT DONE IF THIS IS A CALL FROM SVSTART--WILL
 C  NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.
@@ -357,9 +338,9 @@ C----------
           IF (PRMS(4) .GE. 0) STFUEL(4,1) = PRMS(4)
           IF (PRMS(5) .GE. 0) STFUEL(5,1) = PRMS(5)
           IF (PRMS(6) .GE. 0) STFUEL(6,1) = PRMS(6)
-          IF (PRMS(7) .GE. 0) STFUEL(7,1) = PRMS(7)          
-          IF (PRMS(8) .GE. 0) STFUEL(8,1) = PRMS(8)                           
-          IF (PRMS(9) .GE. 0) STFUEL(9,1) = PRMS(9)          
+          IF (PRMS(7) .GE. 0) STFUEL(7,1) = PRMS(7)
+          IF (PRMS(8) .GE. 0) STFUEL(8,1) = PRMS(8)
+          IF (PRMS(9) .GE. 0) STFUEL(9,1) = PRMS(9)
 
 C         DON'T MARK EVENT DONE IF THIS IS A CALL FROM SVSTART--WILL
 C         NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.

@@ -1,6 +1,14 @@
       SUBROUTINE DISPLY
-      use contrl_mod, only: nofortype
-      IMPLICIT NONE
+      use contrl_mod, only: calc_forest_type
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use econ_mod
+      use outcom_mod
+      use screen_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -9,35 +17,7 @@ C  OF THE PROJECTION, AND AT THE END OF EACH CYCLE.  ESTIMATES
 C  STAND AGE IF MISSING FROM THE STNDINFO KEYWORD
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ECON.F77'
-C
-C
-      INCLUDE 'SCREEN.F77'
-C
-C
       INCLUDE 'SUMTAB.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-COMMONS
 C
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES (USED AS OUTPUT LABELS):
@@ -125,7 +105,6 @@ C----------
       WRITE(JOSTND,9004) AT1,ONTREM,(OSPTT(I),IOSPTT(I),I=1,4)
  9004 FORMAT(6X,A9,3X,5F7.1,F8.1,F9.0,' TREES   ',
      >       3(F5.0,'% ',A3,','),F5.0,'% ',A3)
-C
 C
       WRITE(JOSTND,9005) AT2,STD(1),OCVREM,(OSPTV(I),IOSPTV(I),I=1,4),
      &                       STD(2),OMCREM,(OSPMR(I),IOSPMR(I),I=1,4),
@@ -237,7 +216,7 @@ C----------
       DUM1=0.
       IXF=2
       ISNOFT=IFORTP
-      if (.not. nofortype) then
+      if (calc_forest_type) then
         CALL FORTYP(IXF,DUM1)
       endif
 C-------

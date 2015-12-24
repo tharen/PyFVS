@@ -1,5 +1,12 @@
       SUBROUTINE FMCFMD (IYR, FMD)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C   **FMCFMD FIRE-BM-DATE OF LAST REVISION: 08/20/04
 C----------
@@ -24,16 +31,9 @@ C----------
 
 C.... PARAMETER INCLUDE FILES.
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... COMMON INCLUDE FILES.
 
-      INCLUDE 'FMFCOM.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'SSTGMC.F77'
 
 C     LOCAL VARIABLE DECLARATIONS
@@ -335,16 +335,10 @@ C     THIS IS CRIBBED FROM SSTAGE, AND STRIPPED SO THAT IT YIELDS ONLY
 C     THE FIRST CANOPY BREAKPOINT, IF ANY.
 C
       SUBROUTINE BMSTAGE(CCA,CCB,LA)
-      IMPLICIT NONE
-C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-C
-COMMONS
-C
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C     INDEX: HT-ORDERED LIST OF TREE INDEX
 C     LA:    INDEX OF MEMBERS IN LAYER "A"
 C
@@ -544,7 +538,7 @@ C     C  = COMPLEXITY OF SIZE CLASS (1=SIMPLE, 2=COMPLEX)
 C     WDOM = WEIGHTED DOMINANT CATEGORY [ RETURNED ]
 C
       SUBROUTINE BMSZCLS(D,P,VL,N,WDOM)
-      IMPLICIT NONE
+      implicit none
 
       REAL    D,P
       LOGICAL VL
@@ -570,7 +564,7 @@ C     THE IDEA HERE IS TO SAMPLE DIAMETERS JITTERED
 C     BY 20%, THEN RECOMPUTE A WEIGHTED DOMINANT CATEGORY.
 C
       CALL RANNGET(SAVESO)
-      
+
       DO J = 1,PASS
 C
 C     ZERO BINS TO HOLD BA-BASED WEIGHTS FOR THE BLUE MOUNTAINS
@@ -609,7 +603,7 @@ C
             ENDIF
           ENDIF
         ENDDO
-        
+
 C
 C     CREATE COMPOSITE SIZE CATEGORIES
 C
@@ -652,7 +646,7 @@ C
         WDOM(ICLS) = WDOM(ICLS) + 1.0/FLOAT(PASS)
 
       ENDDO
-      
+
       CALL RANNPUT(SAVESO)
 
       RETURN

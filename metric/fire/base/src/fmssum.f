@@ -1,5 +1,8 @@
       SUBROUTINE FMSSUM (IYR)
-      IMPLICIT NONE
+      use metric_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMSSUM  DATE OF LAST REVISION:  12/16/04
 C----------
@@ -8,17 +11,8 @@ C  Purpose:
 C     Reports a summary of snag statistics for all years that
 C     coinside with a FVS cycle boundary.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'FMPARM.F77'
       INCLUDE 'FMCOM.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'METRIC.F77'
-C
-C
-COMMONS
 C
       INTEGER I, II, JOUT, K
       REAL    THD(7),TSF(7),THDSF
@@ -39,7 +33,7 @@ C
             THD(7)=THD(7)+DENIH(II)
          ELSE
             TSF(7)=TSF(7)+DENIH(II)
-         ENDIF         
+         ENDIF
 
          DO I=1,6
             IF (DBHS(II).GE.SNPRCL(I)) THEN
@@ -52,7 +46,7 @@ C
             ENDIF
          ENDDO
       ENDDO
-      THDSF=THD(7)+TSF(7)      
+      THDSF=THD(7)+TSF(7)
 
 	DO I = 1,7
 	  TSF(I) = TSF(I) / ACRtoHA

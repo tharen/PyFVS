@@ -1,19 +1,23 @@
        SUBROUTINE MIN(ISC,AGE,FIZ,DBH,HT,SH,TD,HTRUNC,GROSIMP,TVOLIMP)
+      use contrl_mod
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C
 CC  -by Tim Hammond.
 CC
-CC    This routine and its subroutine LOG were substituted for the 
+CC    This routine and its subroutine LOG were substituted for the
 CC  standard volume calculations in FVS in JUNE of 1990.  This
 CC  routine converts species codes and inventory zone codes from
 CC  FVS format to Kozak's format.  It determines the maturity
-CC  of a tree based on its height, DBH and species, and finally it  
-CC  converts the output of Kozak's volume function (LOG) to imperial 
+CC  of a tree based on its height, DBH and species, and finally it
+CC  converts the output of Kozak's volume function (LOG) to imperial
 CC  units.
-CC   
-CC  SPECIES CODES 
+CC
+CC  SPECIES CODES
 CC  Prog-code    FVS       Name             Kozak   Kozak-code
 CC      1        WP        White Pine       Pw      7
 CC      2        WL        Western Larch    L       10
@@ -31,35 +35,25 @@ CC     13        AC        cottonwood       CT     11
 CC     14        OC        other conifer    F       1
 CC     15        OH        other hardwood   Bi     14
 C
-CC    *** IM represents the maturity of the tree  
+CC    *** IM represents the maturity of the tree
 CC    *** it is equal to 1 if the tree is immature and 2 otherwise
 CC    *** AGE is the age of the tree passed as an argument
 C
-C
-      include 'PRGPRM.F77'
-c
-c
-      include 'CONTRL.F77'
-c
-c
-      include 'METRIC.F77'
-c
-c
       INTEGER*2 IS, IM, IFZ
       INTEGER   ISC, AGE, FIZ
-C 
+C
 CC    *** IS represents the Kozak species code
 CC    *** ISC is another argument from FVS representing the FVS
 CC    *** species code
 C
-C     ***  DBHMET = diameter outside bark in cm at breast height. 
+C     ***  DBHMET = diameter outside bark in cm at breast height.
 CC    ***  DBH    = diameter outside bark in inches at breast height.
 CC    ***  HTMET  = total height in m.
 CC    ***  HT     = total height in feet.
 CC    ***  SHMET  = stump height in m.
 CC    ***  SH     = stump height in feet.
 CC    ***  TD     = top diameter for use in inches.
-CC    ***  TDMET  = top diameter for utilization in cm. 
+CC    ***  TDMET  = top diameter for utilization in cm.
 CC    ***  GOL    = log length in m.
 CC    ***  HTRUNC = Height to point of top kill in feet
 CC    ***  HTM    = Height to point of top kill in metres
@@ -70,7 +64,7 @@ C
       REAL HTRUNC, HTM, HMERC
 C
 CC    *** volumes and top diameters are in metric
-CC    *** VLOG     = volumes for each log (40) 
+CC    *** VLOG     = volumes for each log (40)
 CC    *** TDL      = top diameters for each log (40)
 CC    *** HLL      = length of top log
 CC    *** DBT      = butt diameter of first log
@@ -116,7 +110,7 @@ C
       SHMET  =  SH     * FTtoM
       TDMET  =  TD     * INtoCM
       HTM    =  HTRUNC * FTtoM
-      
+
       GROSIMP = 0.0
 C
 CC    Set the maturity code to immature if AGE is less than 121

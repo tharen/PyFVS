@@ -1,5 +1,7 @@
       FUNCTION ADJMAI(INSPEC,SINDEX,POINTS,IERROR)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **ADJMAI--SO   DATE OF LAST REVISION:  04/24/08
 C----------
@@ -11,18 +13,6 @@ C                             SINDEX, THE SITE INDEX,
 C                             POINTS, THE NUMBER OF STOCKABLE POINTS.
 C         THE VARIABLE IERROR RETURNS A VALUE OF 1 IF A SPECIES
 C         CODE IS UNACCEPTABLE. OTHERWISE, IERROR IS SET TO ZERO.
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-COMMONS
-C
 C
       INTEGER IMAP(32),ISP(32),IERROR,INSPEC,NCALLS,I,INUM
       REAL POINTS,SINDEX,ADJMAI
@@ -36,7 +26,6 @@ C
 C     - 10 ---I
      & 212,213/
       DATA IMAP/8*1,6*2,3,3*4,2*5,6,2*7,6*9,3*10/
-C
 C
       NCALLS=1
       IERROR = 0

@@ -1,5 +1,11 @@
       SUBROUTINE AUTCOR (COV,VRNEXT)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use pden_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -11,25 +17,6 @@ C  AS THE SUM OF IFINT RANDOM VALUES WITH VARIANCE-COVARIANCE MATRIX
 C  DEFINED BY THE SERIAL CORRELATION FUNCTION OF THE ARMA(1,1) MODEL.
 C----------
 COMMON
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
 C
 COMMON
 C

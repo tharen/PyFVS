@@ -1,5 +1,9 @@
       SUBROUTINE BWEBMS (TRFBMS,ICVOPT)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BWEBMS--SO               DATE OF LAST REVISION:  07/14/10
 C----------
@@ -34,18 +38,9 @@ C    08/10/99 Minor changes by D.Graham to establish varients
 C    01-FEB-2005 Lance David (FHTET)
 C       Adapted from the SORNEC 11 species to 33 species variant.
 C    14-JUL-2010 Lance R. David (FMSC)
-C       Added IMPLICIT NONE and declared variables as needed.
 C
 C----------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-C
-COMMONS
 C----------
 C  DECLARATIONS AND DIMENSIONS FOR INTERNAL VARIABLES
 C----------
@@ -99,16 +94,16 @@ C
      &            3.060169, 2.452492, 2.622505 /
 
 C
-C     THE ARRAY IBIOMP IS AN INDEX ARRAY WHICH MAPS THE FVS 
+C     THE ARRAY IBIOMP IS AN INDEX ARRAY WHICH MAPS THE FVS
 C     SPECIES TO THE SPECIES REPRESENTED IN THE FOLIAGE BIOMASS
 C     EQUATIONS IN THIS SUBROUTINE.
 C
 C**** IBIOMP AS MODIFIED FOR THE SORNEC 33 SPECIES VARIANT.
 C
-      DATA IBIOMP / 
+      DATA IBIOMP /
 C       1    2    3    4    5    6    7    8    9   10   11   -- SO33 index
 C      WP   SP   DF   WF   MH   IC   LP   ES   SH   PP   JU   -- SO33 specie
-     &  1,   1,   3,   4,   5,   6,   7,   8,   3,  10,  11, !-- BIOMASS index 
+     &  1,   1,   3,   4,   5,   6,   7,   8,   3,  10,  11, !-- BIOMASS index
 C      12   13   14   15   16   17   18   19   20   21   22   -- SO33 index
 C      GF   AF   SF   NF   WB   WL   RC   WH   PY   WA   RA   -- SO33 specie
      &  4,   9,   9,   3,   1,   2,   6,   5,  11,  11,  11, !-- BIOMASS index

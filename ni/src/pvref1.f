@@ -1,4 +1,7 @@
       SUBROUTINE PVREF1 (KARD2,ARRAY2,I1,I2,LPVCOD,LPVREF)
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **PVREF1--NI   DATE OF LAST REVISION: 02/04/11
 C----------
@@ -20,13 +23,7 @@ C     PVCODE,PVREF   - ARRAYS OF PV CODE/REFERENCE CODE COMBINATIONS
 C                      FROM FSVEG DATA BASE
 C     HABPVR         - FVS HABITAT/ECOCLASS CODE CORRESPONDING TO
 C                      PV CODE/REFERENCE CODE COMBINATION
-      IMPLICIT NONE
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-      INCLUDE 'PLOT.F77'
-C
 C  DECLARATIONS
 C
       REAL         ARRAY2
@@ -609,7 +606,7 @@ C----------
       DO I= 10, 1, -1
         IF (KARD2(I:I) .EQ. '.') THEN
           KARD2=KARD2
-          KARD2(I:)=' '    
+          KARD2(I:)=' '
           GO TO 10
         END IF
       END DO

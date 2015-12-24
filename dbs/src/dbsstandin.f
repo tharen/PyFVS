@@ -1,5 +1,17 @@
       SUBROUTINE DBSSTANDIN(SQLSTR,LKECHO)
-      IMPLICIT NONE
+      use htcal_mod
+      use multcm_mod
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use econ_mod
+      use outcom_mod
+      use volstd_mod
+      use screen_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C
 C $Id$
 C
@@ -8,50 +20,10 @@ C     AUTH: D. GAMMEL -- SEM -- AUGUST 2002
 C     OVERHAUL: NL CROOKTON -- RMRS MOSCOW -- SEPTEMBER 2004
 C---
 COMMONS
-C
-C
-      INCLUDE  'PRGPRM.F77'
-C
-C
-      INCLUDE  'ARRAYS.F77'
-C
-C
-      INCLUDE  'COEFFS.F77'
-C
-C
-      INCLUDE  'CONTRL.F77'
-C
-C
-      INCLUDE  'PLOT.F77'
-C
-C
-      INCLUDE  'OUTCOM.F77'
-C
-C
-      INCLUDE  'HTCAL.F77'
-C
-C
-      INCLUDE  'ECON.F77'
-C
-C
       INCLUDE  'KEYCOM.F77'
-C
-C
-      INCLUDE  'MULTCM.F77'
-C
-C
-      INCLUDE  'VOLSTD.F77'
-C
-C
-      INCLUDE  'SCREEN.F77'
-C
-C
-      INCLUDE  'VARCOM.F77'
-C
 C
       INCLUDE  'DBSCOM.F77'
 C
-COMMONS
 
       CHARACTER*100 ColName
       CHARACTER*5000 SQLSTR
@@ -1098,7 +1070,7 @@ C     FUEL PHOTO CODE
          IF (CFotoCode .NE. ' ') THEN
            CFotoCode = ADJUSTL(CFotoCode)
            READ (CFotoCode,*,ERR=58)  ISTANDDATA(53)
-   58      CONTINUE           
+   58      CONTINUE
            CALL FMPHOTOCODE(ISTANDDATA(52),CFotoCode(1:13),FKOD,1)
            IF(LKECHO)WRITE (JOSTND,60) ADJUSTR(CFotoCode),FKOD
    60      FORMAT (T12,'PHOTO_CODE:',T26,A:

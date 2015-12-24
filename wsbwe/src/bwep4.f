@@ -1,5 +1,8 @@
       SUBROUTINE BWEP4(ICALL)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C **BWEP4                   DATE OF LAST REVISION:  08/28/13
 C----------
@@ -45,22 +48,18 @@ C   02-JUN-2009 Lance R. David (FMSC)
 C      Added Stand ID and comma delimiter to output tables, some header
 C      and column labels modified.
 C   14-JUL-2010 Lance R. David (FMSC)
-C      Added IMPLICIT NONE and declared variables as needed.
 C   28-AUG-2013 Lance R. David (FMSC)
 C      Added weather year to special events table.
 C
 C----------------------------------------------------------------------
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'BWECM2.F77'
       INCLUDE 'BWEBOX.F77'
       CHARACTER*15 VARY
       CHARACTER*6 STAGE(3)
       CHARACTER*5 TRESIZ(4)
       CHARACTER*3 TRESP(7),CROWN(4)
-      INTEGER I, ICALL, ICHECK, ICROWN, IS, ISIZE, J, KSP, N 
+      INTEGER I, ICALL, ICHECK, ICROWN, IS, ISIZE, J, KSP, N
 
       DATA TRESP/' WF',' DF',' GF','SAF',' ES',' WL','all'/,
      &     TRESIZ/'small','med. ','large',' all '/,
@@ -78,7 +77,7 @@ C
          ISTN=ITEMP(5)
          VARY='variable'
          IF (IWOPT .EQ. 2) VARY='constant'
-         IF (IWSRC.EQ.1) THEN         
+         IF (IWSRC.EQ.1) THEN
            WRITE (JOBWP4,50) STATES(IS,1),WSLOOK(ISTN,IS),
      &        VARY, WSEEDR
    50      FORMAT ('Budworm Defoliation Model Weather Options: ',
@@ -97,7 +96,7 @@ C
    60       FORMAT ('Budworm Defoliation Model Weather Options:',/,
      &        '    RAWS daily data processed from file = ',A,/,
      &        '    with ',I2,' complete years ',I4,' through ',F5.0,/,
-     &        '    No variation applied.',/) 
+     &        '    No variation applied.',/)
          ENDIF
 C
          VARY='was not'
@@ -110,7 +109,7 @@ C
      &          /,18X,'freq. / duration source: ',A20,/,
      &          18X, 'random number seed for outbreaks:',F10.0,/)
          IF (IOBOPT.EQ.3) THEN
-          WRITE (JOBWP4,73) 
+          WRITE (JOBWP4,73)
    73       FORMAT ('Outbreak Scheduling Option:  user has selected',
      &        ' starting and ending years')
             DO 78 N=1,NOBSCH
@@ -156,19 +155,19 @@ C
          WRITE (JOBWP4,120) VARY
   120    FORMAT (26X,'pupal weights ',A12,' during the outbreak'/)
 C
-         IF (ISPRAY.EQ.1) THEN 
+         IF (ISPRAY.EQ.1) THEN
             DO 135 KSP=1,NSPRAY
                WRITE (JOBWP4,130) ISPYR(KSP),STAGE(INSTSP),SPEFF
   130          FORMAT('Insecticide applied in year ',I4,/
      &         '   at peak ',A6,
      &         ' instar, resulting in ',F5.1,' % mortality.'/)
   135       CONTINUE
-         ELSEIF (ISPRAY.EQ.2) THEN 
+         ELSEIF (ISPRAY.EQ.2) THEN
             WRITE (JOBWP4,140) ISPVAR,STAGE(INSTSP),SPEFF
   140       FORMAT('When last year''s % defoliation is >',I4,'%, an ',
      &      'insecticide is applied',/,'   at peak ',A6,
      &      ' instar, resulting in ',F5.1,' % mortality.')
-            IF (LIMITS.EQ.1) THEN 
+            IF (LIMITS.EQ.1) THEN
               WRITE (JOBWP4,145)
   145         FORMAT ('  Only one application is allowed per',
      &           ' outbreak.')
@@ -177,10 +176,10 @@ C
   147         FORMAT ('  No limit on the number of applications ',
      &           'per outbreak.')
             ENDIF
-         ENDIF   
+         ENDIF
 C
          WRITE (JOBWP4,150)
-  150    FORMAT (//,  
+  150    FORMAT (//,
      &   10X,'**********',5X,'Special Events Table',5X,'**********',
      &   //8X,    ',',18X,' Sim , Wthr, Tree,  Tree, Crwn,       ,',/
      &    'Stand ID,',18X,' Year, Year, Spec,  Size, Third, Event,',/
@@ -209,7 +208,7 @@ C
         IF (ICROWN.EQ.0) ICROWN=3
       ENDIF
 C
-      WRITE (JOBWP4,250) 
+      WRITE (JOBWP4,250)
      &  NPLT,IEVENT(N,1),IEVENT(N,5),TRESP(IEVENT(N,2)),
      &  TRESIZ(ISIZE),CROWN(ICROWN),EVENT(IEVENT(N,4))
   250 FORMAT

@@ -1,5 +1,7 @@
       SUBROUTINE ECNGET (WK3,IPNT,ILIMIT)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -8,23 +10,12 @@ C     STORE THE ECONOMIC DATA FOR A GIVEN STAND.
 C
 C     PART OF THE PARALLEL PROCESSING EXTENSION TO PROGNOSIS.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-      INCLUDE 'CONTRL.F77'
-C
       INCLUDE 'ECNCOM.F77'
-C      
+C
       INCLUDE 'ECNCOMSAVES.F77'
 C
-C
-COMMONS
-C
-C
       INTEGER MXL,MXI,MXR
-C      
+C
       PARAMETER (MXL=6,MXI=20,MXR=14)
       INTEGER ILIMIT,IPNT,I
       LOGICAL LOGICS(MXL)
@@ -35,26 +26,26 @@ C
 C  GET THE INTEGER SCALARS.
 C
       CALL IFREAD (WK3, IPNT, ILIMIT, INTS, MXI, 2)
-      annCostCnt       = INTS( 1)  
-      annRevCnt        = INTS( 2)  
-      econStartYear    = INTS( 3)  
-      fixHrvCnt        = INTS( 4)  
-      fixPctCnt        = INTS( 5)  
-      pctMinUnits      = INTS( 6)  
-      plntCostCnt      = INTS( 7)  
-      varHrvCnt        = INTS( 8)  
-      varPctCnt        = INTS( 9)  
-      burnCnt          = INTS(10) 
-      hrvCstCnt        = INTS(11) 
-      hrvRvnCnt        = INTS(12) 
-      logTableId       = INTS(13) 
-      mechCnt          = INTS(14) 
-      startYear        = INTS(15) 
-      specCstCnt       = INTS(16) 
-      specRvnCnt       = INTS(17) 
-      sumTableId       = INTS(18) 
-      pretendStartYear = INTS(19) 
-      pretendEndYear   = INTS(20) 
+      annCostCnt       = INTS( 1)
+      annRevCnt        = INTS( 2)
+      econStartYear    = INTS( 3)
+      fixHrvCnt        = INTS( 4)
+      fixPctCnt        = INTS( 5)
+      pctMinUnits      = INTS( 6)
+      plntCostCnt      = INTS( 7)
+      varHrvCnt        = INTS( 8)
+      varPctCnt        = INTS( 9)
+      burnCnt          = INTS(10)
+      hrvCstCnt        = INTS(11)
+      hrvRvnCnt        = INTS(12)
+      logTableId       = INTS(13)
+      mechCnt          = INTS(14)
+      startYear        = INTS(15)
+      specCstCnt       = INTS(16)
+      specRvnCnt       = INTS(17)
+      sumTableId       = INTS(18)
+      pretendStartYear = INTS(19)
+      pretendEndYear   = INTS(20)
 C
 C  GET THE INTEGER ARRAYS
 C  ONE DIMENSIONAL
@@ -90,7 +81,7 @@ C
       CALL IFREAD (WK3,IPNT,ILIMIT, hrvRvnSp,    MAX_HARVESTS,        2)
       CALL IFREAD (WK3,IPNT,ILIMIT, hrvRvnTime,  MAX_HARVESTS,        2)
       CALL IFREAD (WK3,IPNT,ILIMIT, hrvRvnUnits, MAX_HARVESTS,        2)
-C  
+C
 C  GET THE LOGICAL SCALARS.
 C
       CALL LFREAD (WK3, IPNT, ILIMIT, LOGICS, MXL, 2)
@@ -99,7 +90,7 @@ C
       isFirstEcon     = LOGICS ( 3)
       doSev           = LOGICS ( 4)
       isEconToBe      = LOGICS ( 5)
-      isPretendActive = LOGICS ( 6) 
+      isPretendActive = LOGICS ( 6)
 C
 C  LOGICAL ARRAYS
 C

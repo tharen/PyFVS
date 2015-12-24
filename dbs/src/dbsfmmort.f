@@ -1,6 +1,8 @@
       SUBROUTINE DBSFMMORT(IYEAR,KILLED,TOTAL,BAKILL,
      -  VOKILL,KODE)
-      IMPLICIT NONE
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C
 C $Id$
 C
@@ -15,18 +17,8 @@ C              3: MORTALITY IN TERMS OF BASAL AREA
 C              4: MORTALITY IN TERMS OF CUFT VOLUME
 C              5: KODE FOR WHETHER THE REPORT ALSO DUMPS TO FILE
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'DBSCOM.F77'
 C
-C
-      INCLUDE 'PLOT.F77'
-C
-COMMONS
 C---
       INTEGER MXSP1
       PARAMETER (MXSP1 = MAXSP + 1)

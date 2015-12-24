@@ -77,5 +77,4 @@ module metric_mod
     !     LEGACY DECLARATION FOR WRD3
     !
           LOGICAL LMTRIC
-          COMMON /METRIC/ LMTRIC
 end module metric_mod

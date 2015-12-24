@@ -1,5 +1,8 @@
       SUBROUTINE HABTYP (KARD2,ARRAY2)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **HABTYP--NI   DATE OF LAST REVISION:  01/21/11
 C----------
@@ -11,18 +14,6 @@ C     FOR THE COLVILLE (R6), TRANSLATES PLANT ASSOCIATION INTO A
 C     CORRESPONDING NI HABITAT TYPE CODE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-COMMONS
 C----------
       INTEGER NPA,MTYPE,KTYPE,I,I1,I2,INDEX,NITYPE,K
       PARAMETER (NPA=40)
@@ -33,7 +24,7 @@ C
       REAL ARRAY2
       CHARACTER*10 KARD2
       DIMENSION KTYPE(95),MTYPE(30)
-C----------      
+C----------
       DATA KTYPE/
      &  5*1, 4*2, 4, 3*1, 3,4,5,6,7,8,9,8,8,9,7,3, 3*10, 4,11,20,29,11,
      &    11,13,14,17, 4*12, 3*13, 14,15,14,16,14,16, 3*17, 24,12,24,18,
@@ -105,7 +96,7 @@ C----------
 C----------
 C  EVALUATE CROSSWALK RESULTS AND WRITE ERROR REPORTS IF NEEDED
 C----------
-      IF(I2-I1.EQ.5 .OR. 
+      IF(I2-I1.EQ.5 .OR.
      &  ((IFOR.EQ.5 .OR. IFOR.EQ.12).AND. KODTYP.LE.40)) THEN
         CALL HBDECD(KODTYP,PCOML(1),NPA,ARRAY2,KARD2)
         IF(KODTYP .LE. 0) GO TO 50

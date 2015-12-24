@@ -1,5 +1,9 @@
       SUBROUTINE SITSET
-      IMPLICIT NONE
+      use contrl_mod
+      use volstd_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **SITSET--UT  DATE OF LAST REVISION:  02/09/12
 C----------
@@ -8,21 +12,6 @@ C  SPECIES WHICH WAS NOT ASSIGNED A SITE INDEX BY KEYWORD, AND LOADS
 C  THE SDIDEF ARRAY WITH SDI MAXIMUMS FOR EACH SPECIES WHICH WAS NOT
 C  ASSIGNED AN SDI MAXIMUM USING THE SDIMAX KEYWORD.
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
 COMMONS
 C----------
       INTEGER IFIASP, ERRFLAG

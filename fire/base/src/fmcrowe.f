@@ -1,5 +1,11 @@
       SUBROUTINE FMCROWE (SPILS,SPIYV,D,H,IC,SG,XV)
-      IMPLICIT NONE
+      use plot_mod
+      use fmparm_mod
+      use contrl_mod
+      use coeffs_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -48,84 +54,78 @@ C     ANGLE, TEMPHT, DBRK  = USED IN CALCULATING UMBTW
 C     TOTABV = TOTAL ABOVE GROUND BIOMASS (AS PER JENKINS ET. AL.)
 
 C   SPECIES LIST (SPILS)
-C     1   jack pine                                
-C     2   scotch pine                              
-C     3   red pine natural                         
-C     4   red pine plantation                      
-C     5   white pine                               
-C     6   white spruce                             
-C     7   Norway spruce                            
-C     8   balsam fir                               
-C     9   black spruce                             
-C     10  tamarack                                 
-C     11  n. white cedar                           
-C     12  eastern hemlock                          
-C     13  other softwoods    
-C     14  eastern redcedar                         
-C     15  black ash                                
-C     16  green ash                                
-C     17  cottonwood                               
-C     18  silver maple                             
-C     19  red maple                                
-C     20  black cherry                             
-C     21  American elm                             
-C     22  slippery elm                             
-C     23  rock elm                               
-C     24  yellow birch                             
-C     25  basswood                                 
-C     26  sugar maple                              
-C     27  black maple                            
-C     28  American beech                           
-C     29  white ash                              
-C     30  white oak                                
-C     31  swamp white oak                          
-C     32  bur oak                                  
-C     33  chinkapin oak                            
-C     34  northern red oak                         
-C     35  black oak                                
-C     36  northern pin oak                         
-C     37  bitternut hickory                        
-C     38  pignut hickory                           
-C     39  shagbark hickory                         
-C     40  bigtooth aspen                           
-C     41  quaking aspen                            
-C     42  balsam poplar                            
-C     43  paper birch                              
-C     44  commercial hardwoods    
-C     45  butternut                                
-C     46  black walnut                             
-C     47  eastern hophornbeam                      
-C     48  black locust                             
-C     49  non-commercial hardwoods  
-C     50  boxelder                                 
-C     51  striped maple                            
-C     52  mountain maple                         
-C     53  American hornbeam                        
-C     54  American chestnut                        
-C     55  hackberry / sugarberry              
-C     56  flowering dogwood                        
-C     57  hawthorn                                 
-C     58  apple sp.                                
-C     59  black gum / tupelos                               
-C     60  sycamore                                 
-C     61  pin cherry                               
-C     62  choke cherry                             
-C     63  wild plum                                
-C     64  willow                                   
-C     65  black willow                             
-C     66  diamond willow                         
-C     67  sassafras                                
-C     68  American mountain ash   
+C     1   jack pine
+C     2   scotch pine
+C     3   red pine natural
+C     4   red pine plantation
+C     5   white pine
+C     6   white spruce
+C     7   Norway spruce
+C     8   balsam fir
+C     9   black spruce
+C     10  tamarack
+C     11  n. white cedar
+C     12  eastern hemlock
+C     13  other softwoods
+C     14  eastern redcedar
+C     15  black ash
+C     16  green ash
+C     17  cottonwood
+C     18  silver maple
+C     19  red maple
+C     20  black cherry
+C     21  American elm
+C     22  slippery elm
+C     23  rock elm
+C     24  yellow birch
+C     25  basswood
+C     26  sugar maple
+C     27  black maple
+C     28  American beech
+C     29  white ash
+C     30  white oak
+C     31  swamp white oak
+C     32  bur oak
+C     33  chinkapin oak
+C     34  northern red oak
+C     35  black oak
+C     36  northern pin oak
+C     37  bitternut hickory
+C     38  pignut hickory
+C     39  shagbark hickory
+C     40  bigtooth aspen
+C     41  quaking aspen
+C     42  balsam poplar
+C     43  paper birch
+C     44  commercial hardwoods
+C     45  butternut
+C     46  black walnut
+C     47  eastern hophornbeam
+C     48  black locust
+C     49  non-commercial hardwoods
+C     50  boxelder
+C     51  striped maple
+C     52  mountain maple
+C     53  American hornbeam
+C     54  American chestnut
+C     55  hackberry / sugarberry
+C     56  flowering dogwood
+C     57  hawthorn
+C     58  apple sp.
+C     59  black gum / tupelos
+C     60  sycamore
+C     61  pin cherry
+C     62  choke cherry
+C     63  wild plum
+C     64  willow
+C     65  black willow
+C     66  diamond willow
+C     67  sassafras
+C     68  American mountain ash
 
 COMMONS
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'COEFFS.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'VARCOM.F77'
 
 C  VARIABLE DECLARATIONS
 
@@ -211,9 +211,9 @@ C       spruce
           TOTABV = EXP(-2.0773 + 2.3323*LOG(D*2.54))
 
       END SELECT
-      
+
       TOTABV = TOTABV * 2.2046
-      
+
       SELECT CASE (SPILS)
 
 C       hardwoods
@@ -221,20 +221,20 @@ C       hardwoods
           FOL = EXP(-4.0813 + 5.8816/(D*2.54))
           BARK = EXP(-2.0129 - 1.6805/(D*2.54))
           WOOD = EXP(-0.3065 - 5.4240/(D*2.54))
-          
+
 C       softwoods
         CASE (1:14)
           FOL = EXP(-2.9584 + 4.4766/(D*2.54))
           BARK = EXP(-2.0980 - 1.1432/(D*2.54))
           WOOD = EXP(-0.3737 - 1.8055/(D*2.54))
-                    
+
       END SELECT
-      
+
       FOL = FOL * TOTABV
       BARK = BARK * TOTABV
       WOOD = WOOD * TOTABV
       BRANCH = TOTABV - (FOL + BARK + WOOD)
-      
+
 C     RESET D
 
       IF (DX .LT. 1.0) THEN
@@ -243,26 +243,26 @@ C     RESET D
         BARK = D * BARK
         WOOD = D * WOOD
         BRANCH = D * BRANCH
-        TOTABV = D * TOTABV       
+        TOTABV = D * TOTABV
       ENDIF
-      
+
       IF (BRANCH .LT. 0) BRANCH = 0
       TTOPW = BRANCH
 
       IF (DEBUG) WRITE(JOSTND,*) 'D = ',D,'H = ',H,'TTOPW = ',TTOPW
 
-C     FOR SMALL TREES IN THE EAST WE WANT TO ADD IN AN ESTIMATE OF THE BOLE VOLUME TOO. 
+C     FOR SMALL TREES IN THE EAST WE WANT TO ADD IN AN ESTIMATE OF THE BOLE VOLUME TOO.
 C     SINCE SMALL TREES ARE UNMERCHANTABLE, THE "CROWN" IS REALY THE WHOLE TREE.
 
 C     FOR TREES LESS THAN THE MERCH DBH, ESTIMATE THE VOLUME OF THE BREAKPOINT TREE
 C     AND USE THIS WITH THE STANDARD VOLUME ESTIMATE OF THE BREAKPOINT TREE TO
 C     CREATE AN ADJUSTMENT FACTOR.
 
-      TEMP = 0.0       
-      IF  ((DX .LT. DBHMIN(SPIYV)) .AND. 
-     >    ((VVER(1:2) .EQ. 'SN') .OR. (VVER(1:2) .EQ. 'LS') .OR. 
-     >     (VVER(1:2) .EQ. 'NE') .OR. (VVER(1:2) .EQ. 'CS'))) THEN 
-      
+      TEMP = 0.0
+      IF  ((DX .LT. DBHMIN(SPIYV)) .AND.
+     >    ((VVER(1:2) .EQ. 'SN') .OR. (VVER(1:2) .EQ. 'LS') .OR.
+     >     (VVER(1:2) .EQ. 'NE') .OR. (VVER(1:2) .EQ. 'CS'))) THEN
+
         D = DBHMIN(SPIYV)
 
         CALL HTDBH(IFOR,SPIYV,D,H,0)
@@ -270,16 +270,16 @@ C     CREATE AN ADJUSTMENT FACTOR.
         XNEG1  = -1.0
         LMERCH = .FALSE.
         CALL FMSVL2(SPIYV,D,H,XNEG1,VT,LMERCH,DEBUG,JOSTND)
-        VT1 = 0.0015*DX*DX*HX     !!! MVD eqn. - volume of a cone minus some % for loss of tip volume  
+        VT1 = 0.0015*DX*DX*HX     !!! MVD eqn. - volume of a cone minus some % for loss of tip volume
         VT2 = 0.0015*D*D*H
         VT = (VT/VT2)*VT1
-        TEMP = SG * VT / P2T  
-        TTOPW = TTOPW + TEMP 
-        
+        TEMP = SG * VT / P2T
+        TTOPW = TTOPW + TEMP
+
 C     RESET D and H
 
         D = DX
-        H = HX        
+        H = HX
 
       ENDIF
 
@@ -357,11 +357,11 @@ C     ALSO BREAK THE CONE UP INTO PIECES TO FIGURE OUT WHAT GOES IN EACH
 C     SIZE CLASS.
 
       IF (DEBUG) WRITE(JOSTND,*) 'ABOUT TO CALC BOLE TIP'
-	
+
 C     NOW GET THE HEIGHT (HTF) AT A 4 INCH TOP DIAM (IB)
       DOBF = 4.0 / BRATIO(SPIYV,D,H)
       IF ((D .GT. DOBF) .AND. (D .GT. DBHMIN(SPIYV))) THEN
-	   
+
         HTF = 4.5 + (H - 4.5)/D*(D - DOBF)  !assumes constant taper
 
 C       CALCULATE TOTAL VOLUME OF UNMERCH TIP
@@ -394,14 +394,14 @@ C       MISSING DUE TO THE FACT THAT THE VOLUME EQUATIONS GO TO 4 INCHES DIB
 C       AND THE CROWN EQUATIONS START AT 4 INCHES DOB.
 C       THIS ENTAILS USING BRATIO TO GET THE DIB THAT CORRESPONDS TO 4 IN DOB
 C       AND GETTING THE HEIGHT AT THIS DIAMETER.
-C       THIS LILPCE NEEDS TO BE SUBRACTED FROM UMBTW, SINCE NOT INCLUDED IN THE 
+C       THIS LILPCE NEEDS TO BE SUBRACTED FROM UMBTW, SINCE NOT INCLUDED IN THE
 C       TTOPW CALCULATION. LATER IT WILL
 C       BE ADDED BACK INTO CROWNW, SO THE PIECE IS NOT EXCLUDED.
 
-        IF ((VVER(1:2) .EQ. 'SN') .OR. (VVER(1:2) .EQ. 'LS') .OR. 
-     >      (VVER(1:2) .EQ. 'NE') .OR. (VVER(1:2) .EQ. 'CS')) THEN 
+        IF ((VVER(1:2) .EQ. 'SN') .OR. (VVER(1:2) .EQ. 'LS') .OR.
+     >      (VVER(1:2) .EQ. 'NE') .OR. (VVER(1:2) .EQ. 'CS')) THEN
           DIB = 4 * BRATIO(SPIYV,D,H)
-          HTLP = 4.5 + (H - 4.5)/D*(D - 4.0)  !assumes constant taper      
+          HTLP = 4.5 + (H - 4.5)/D*(D - 4.0)  !assumes constant taper
           IF ((HTLP - HTF) .GT. 0) THEN
             LILPCE = MYPI*(HTLP - HTF)/12/12/12*(4*4 + 4*DIB + DIB*DIB)
           ELSE

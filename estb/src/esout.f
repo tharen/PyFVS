@@ -1,5 +1,8 @@
       SUBROUTINE ESOUT (LFG)
-      IMPLICIT NONE
+      use contrl_mod
+      use eshap_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **ESOUT  DATE OF LAST REVISION:   07/17/13
 C----------
@@ -7,22 +10,7 @@ C
 C     PART OF THE ESTABLISHMENT MODEL SUBSYSTEM.  COPIES THE
 C     PRINT DATA FROM FILE JOREGT TO JOSTND. CALLED FROM MAIN.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'ESHAP.F77'
-C
-C
       INCLUDE 'ESHAP2.F77'
-C
-C
-COMMONS
 C
       INTEGER ISTLNB
       CHARACTER*132 RECORD
@@ -63,6 +51,7 @@ C
 C
 C     PREPARE THE FILE FOR THE NEXT STAND.
 C
-      REWIND JOREGT
+C      REWIND JOREGT
+      CLOSE (JOREGT, STATUS="DELETE")
       RETURN
       END

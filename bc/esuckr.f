@@ -1,5 +1,16 @@
       SUBROUTINE ESUCKR
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use esparm_mod
+      use estree_mod
+      use contrl_mod
+      use coeffs_mod
+      use eshap_mod
+      use metric_mod
+      use escomn_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -8,23 +19,9 @@ C  ASSUMPTION: THE TREE LIST HAS BEEN COMPRESSED TO ABOUT 1/2 THE
 C  VALUE OF MAXTRE. COMPRS IS CALLED IN ESNUTR.
 C----------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'COEFFS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'BCPLOT.F77'
-      INCLUDE 'ESPARM.F77'
       INCLUDE 'ESHOOT.F77'
-      INCLUDE 'ESCOMN.F77'
-      INCLUDE 'ESHAP.F77'
-      INCLUDE 'ESTREE.F77'
       INCLUDE 'STDSTK.F77'
-      INCLUDE 'VARCOM.F77'
-      INCLUDE 'METRIC.F77'
-C
-COMMONS
 C
       INTEGER NUMSPR,I,ICL,ISSP,IPLOT,ISPSTO,II,MXRR,J,ITRGT,MXTODO
       REAL    CW,CRDUM,AX,BX,BACHLO,PREM,TPATOT
@@ -54,7 +51,7 @@ C----------
       HTAVE(I)=0.0
    10 CONTINUE
       TPATOT=0.0
-C 
+C
       DO I=1,NSPSPE
       DO J=1,100
       SPRMLT(I,J)=1.
@@ -65,7 +62,7 @@ C
       ENDDO
       HMULT=1.
       SMULT=1.
-C---------- 
+C----------
 C  PROCESS SPROUT KEYWORD OPTIONS.
 C----------
       CALL OPFIND (1,MYACTS(1),NTODO)
@@ -109,7 +106,7 @@ C
 C  SINGLE SPECIES
 C
       ELSE
-        DO JJ=1,NSPSPE 	
+        DO JJ=1,NSPSPE
         IF(J.EQ.ISPSPE(JJ))THEN
           SPRMLT(JJ,IT)=PRMS(2)
           HTMSPR(JJ,IT)=PRMS(3)
@@ -200,7 +197,7 @@ C  CHECK TO SEE IF THERE ARE OTHER VARIANT AND SPECIES SPECIFIC RULES
 C  FOR THE TREES-PER-ACRE A SPROUT RECORD WILL REPRESENT
 C----------
       IF(DEBUG)WRITE(JOSTND,*)' CALLING ESSPRT VVER,ISSP,NUMSPR,PREM= ',
-     &VVER(:2),ISSP,NUMSPR,PREM 
+     &VVER(:2),ISSP,NUMSPR,PREM
       CALL ESSPRT(VVER(:2),ISSP,NUMSPR,PREM)
       IF(DEBUG)WRITE(JOSTND,*)' AFTER ESSPRT PREM= ',PREM
 C----------
@@ -226,7 +223,7 @@ C
       PROB(ITRN)=PREM*SMULT
       HTI = 0.
       IF(DEBUG)WRITE(JOSTND,*)' BEFORE SPRTHT VVER,ISSP,SI,ISHAG= ',
-     &VVER(:2),ISSP,SITEAR(ISSP),ISHAG 
+     &VVER(:2),ISSP,SITEAR(ISSP),ISHAG
       CALL SPRTHT (VVER(:2),ISSP,SITEAR(ISSP),ISHAG,HTI)
       IF(DEBUG)WRITE(JOSTND,*)' AFTER SPRTHT HTI= ',HTI
       HT(ITRN)=HTI*HMULT
@@ -278,7 +275,7 @@ C
 C
       ABIRTH(ITRN)=ISHAG
       DEFECT(ITRN)=0.
-      ISPECL(ITRN)=0 
+      ISPECL(ITRN)=0
       OLDRN(ITRN)=0.
       PTOCFV(ITRN)=0.
       PMRCFV(ITRN)=0.
@@ -305,13 +302,13 @@ C
          DO 700 I=1,NSPSPE
         CLABEL=NSP(ISPSPE(I),1)
         HTAVE(I)=HTAVE(I)/(COUNTR(I)+.00001)
-        IF(TPASUM(I) .GT. 0.0) 
+        IF(TPASUM(I) .GT. 0.0)
      &  WRITE(JOREGT,1200) CLABEL,TPASUM(I)/ACRtoHA,HTAVE(I)*FTtoM
  1200   FORMAT(T9,A2,T14,F6.0,T22,F6.1)
   700   CONTINUE
         WRITE(JOREGT,1300) TPATOT / ACRtoHA
  1300   FORMAT(T15,'-----',/,T14,F6.0,/,54('-') )
-      ENDIF  
+      ENDIF
   900 CONTINUE
       ITRNRM=0
       RETURN

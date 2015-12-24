@@ -1,5 +1,12 @@
       SUBROUTINE SVSNAD(IYEAR,ISNADD,NSNGS,ISWTCH)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use svdata_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -7,7 +14,7 @@ C
 C     STAND VISUALIZATION GENERATION
 C     J.J.MARCHINEK -- RMRS MOSCOW -- MAY 1999
 C     A.H.DALLMANN  -- RMRS MOSCOW -- JANUARY 2000
-C     L.R. DAVID    -- FHTET FORT COLLINS -- JULY 2005 
+C     L.R. DAVID    -- FHTET FORT COLLINS -- JULY 2005
 C     S.N.SCHAROSCH -- ABACUS -- APRIL 2008
 C
 C     USED FOR PROCESSING SNAG ADDING INFORMATION
@@ -19,38 +26,14 @@ C     IYOFTD = YEAR OF TREE DEATH
 C     ISWTCH = 0 IF SVESTB CALLED SVSNAD DIRECTLY
 C            = 1 IF SVMORT CALLED SVRMOV, FIRE-CAUSED MORTALITY
 C            = 2 IF SVMORT CALLED SVRMOV, NORMAL MORTALITY
-C            = 3 IF SVMORT CALLED SVRMOV, WESTWIDE PINE BEETLE MORT               
+C            = 3 IF SVMORT CALLED SVRMOV, WESTWIDE PINE BEETLE MORT
 C            = 4 IF SVCUTS CALLED SVRMOV
 C
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
       INCLUDE 'SVDEAD.F77'
 C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'SVDATA.F77'
-C
 
-      INCLUDE 'CONTRL.F77'
-C
-C
-COMMONS
-C
 C
 C     ISNADD - VECTOR OF SNAGS THAT NEED TO BE ADDED
 C     SNASCO - SNAG SCORE
@@ -702,8 +685,6 @@ C>>>                 ENDIF
             ENDIF
          ENDDO
       ENDIF
-C
-C
 C
       IF (DEBUG) THEN
          IX=0

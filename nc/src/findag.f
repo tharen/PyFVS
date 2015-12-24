@@ -1,6 +1,10 @@
       SUBROUTINE FINDAG(I,ISPC,D1,D2,H,SITAGE,SITHT,AGMAX1,HTMAX1,
      &                  HTMAX2,DEBUG)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FINDAG--NC  DATE OF LAST REVISION:  01/17/11
 C----------
@@ -11,16 +15,6 @@ C  CALLED FROM **HTGF
 C----------
 C  COMMONS
 C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
 C----------
 C  DECLARATIONS
 C----------

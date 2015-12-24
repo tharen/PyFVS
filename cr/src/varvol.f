@@ -1,5 +1,11 @@
         SUBROUTINE VARVOL
-        IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use volstd_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C CR $Id$
 C----------
@@ -10,31 +16,7 @@ C  EQUAL TO 6.  IT ALSO CONTAINS ANY OTHER SPECIAL VOLUME CALCULATION
 C  METHOD SPECIFIC TO A VARIANT (METHB OR METHC = 8)
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'GGCOM.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-COMMONS
 C
 C----------
       REAL LOGLEN(20),BOLHT(21),TVOL(15)
@@ -60,12 +42,12 @@ C  21=NC, 22=PW, 23=GO, 24=AW, 25=EM, 26=BK, 27=SO, 28=PB, 29=AJ, 30=RM,
 C  31=OJ, 32=ER, 33=PM, 34=PD, 35=AZ, 36=CI, 37=OS, 38=OH
 C
 C  SPECIES EXPANSION:
-C  UJ,AJ,RM,OJ,ER USE CR JU                              
+C  UJ,AJ,RM,OJ,ER USE CR JU
 C  NC,PW USE CR CO
-C  GO,AW,EM,BK,SO USE CR OA                             
-C  PB USES CR AS                              
+C  GO,AW,EM,BK,SO USE CR OA
+C  PB USES CR AS
 C  PM,PD,AZ USE CR PI
-C  CI USES CR PP                              
+C  CI USES CR PP
 C----------
 C SOUTHWESTERN TREE VOLUME EQUATIONS (HANN AND BARE, 1978, INT-209)
 C GROSS T.C.F. COEFFICIENTS C.F. TABLE 2, PG.5
@@ -146,7 +128,6 @@ C----------
       IF((IFOR.LT.IGFOR).AND.(VEQNNC(ISPC)(1:1).NE.'3'))THEN
 C----------
 C
-C
 C  REGION 2 NATCRS LOGIC:
 C
 C  SET R2VOL PARAMETERS & CALL PROFILE TO COMPUTE R2 VOLUMES.
@@ -157,7 +138,6 @@ C----------
           VM=0.
           BBFV=0.
           GO TO 102
-C
 C
         ELSEIF(VEQNNC(ISPC)(4:6).EQ.'DVE')THEN   ! R2 DVE EQ. LOGIC
           DO 105 IZERO=1,15
@@ -228,7 +208,7 @@ C
             IF(IT.GT.0)HT2TD(IT,2)=X02
           ELSE
             IF(IT.GT.0)HT2TD(IT,2)=0.
-          ENDIF        
+          ENDIF
 C
           IF(DEBUG)WRITE(JOSTND,*)' AFTER PROFILE CF TVOL= ',TVOL
 C----------
@@ -302,7 +282,6 @@ C
         ENDIF
 C
       ELSE
-C
 C
 C----------
 C  REGION 3 NATCRS LOGIC:
@@ -399,7 +378,7 @@ C
             IF(IT.GT.0)HT2TD(IT,2)=X02
           ELSE
             IF(IT.GT.0)HT2TD(IT,2)=0.
-          ENDIF        
+          ENDIF
 C
           IF(DEBUG)WRITE(JOSTND,*)' AFTER PROFILE R3 CF TVOL= ',TVOL
 C----------
@@ -470,7 +449,7 @@ C
             TVOL(1)=TVOL1
             TVOL(4)=TVOL4
           ENDIF                    ! END R3 BF PROFILE EQ. LOGIC
-        ENDIF                      ! END R3 PROFILE LOGIC 
+        ENDIF                      ! END R3 PROFILE LOGIC
       ENDIF                        ! END R2/R3 CONDITIONAL STATEMENTS
 C----------
 C  SET RETURN VARIABLES.
@@ -497,7 +476,6 @@ C----------
       CTKFLG = .TRUE.
       BTKFLG = .TRUE.
 C
-C
 C----------
   102 CONTINUE
       IF(VN.LE.0.) THEN
@@ -507,8 +485,6 @@ C----------
         BTKFLG = .FALSE.
       ENDIF
       RETURN
-C
-C
 C
 C----------
 C  ENTER ANY OTHER CUBIC HERE
@@ -592,7 +568,6 @@ C
       ENDIF
       RETURN
 C
-C
 C----------
 C  ENTER ANY OTHER BOARD HERE
 C----------
@@ -644,7 +619,6 @@ C
         BTKFLG = .FALSE.
       ENDIF
       RETURN
-C
 C
 C----------
 C  ENTRY POINT FOR SENDING VOLUME EQN NUMBER TO THE FVS-TO-NATCRZ ROUTINE

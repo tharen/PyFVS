@@ -1,5 +1,7 @@
       SUBROUTINE ONSTHG(HTG, ISPC, D, HT, SI, BAL)
-      IMPLICIT NONE
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **ONSTHG--ON    DATE OF LAST REVISION:  24-Sep-2011
 C----------
@@ -8,12 +10,9 @@ C  SMALL TREES.  THE HEIGHT INCREMENT MODEL IS INTNDED FOR TREES
 C  THAT ARE LESS THAN 12 CM DBH
 C----------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'METRIC.F77'
 
 C     OUTPUT:
-C     HTG  = REAL annual height growth (ft) 
+C     HTG  = REAL annual height growth (ft)
 C
 C     INPUT:
 C     ISPC = INT Species # (MAXSP)
@@ -108,7 +107,7 @@ C     MAPPING OF FVS SPECIES INTO ONTARIO GROWTH SPECIES.
 
       KSP = OSPMAP(ISPC)
 
-      HTG = 
+      HTG =
      >  +  B00(KSP)
      >  + (B01(KSP)  * LHM)
      >  + (B02(KSP)  * HM)

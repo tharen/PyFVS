@@ -1,4 +1,8 @@
       REAL FUNCTION MISHGF(ITREE,ISPC)
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 ***********************************************************************
 *  **MISHGF--MS  Date of last revision:  09/30/10
 *----------------------------------------------------------------------
@@ -44,18 +48,14 @@
 *     30-FEB-2010 Lance R. David (FMSC)
 *        Subroutine created.
 ***********************************************************************
-      IMPLICIT NONE
 
 C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C.... Common include files.
 
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'MISCOM.F77'
 
 C.... Variable declarations.

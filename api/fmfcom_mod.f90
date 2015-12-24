@@ -1,6 +1,8 @@
 module fmfcom_mod
     use prgprm_mod, only: maxcyc,maxsp
     use fmparm_mod, only: mxflcl,mxdfmd,mxfmod
+    implicit none
+    save
 !.... Code segment FMFCOM.
 !----------
 !  $Id: FMFCOM.F77 767 2013-04-10 22:29:22Z rhavis@msn.com $
@@ -283,31 +285,6 @@ module fmfcom_mod
       REAL     TCLOAD
       REAL     USAV(3), UBD(2), ULHV
 !
-      COMMON/FMFCOM/ ACTCBH, ATEMP, BURNED, BURNCR, BURNLV, BURNSEAS,  &
-            CANCLS, CBD, CCCHNG, CCCRIT, CORFAC,                       &
-            DEPTH, DPMOD, EXPOSR, FIRACR, FLAG, FM89YR,                &
-            FMACRE, FMDEP, FMLOAD, FMOD, FWG, FWIND, FWT,              &
-            IFLOGIC, IFMSET, IFUELMON, LARGE, LHEAD,                   &
-            LSW, MEXT, MINSOL, MOIS, MOISEX, MPS, ND, NL,              &
-            OLARGE, OSMALL, LFLBRN, POTTYP, POTFSR, POTRINT,           &
-            PBRNCR, PFLACR, PLSIZ, POTKIL, POTVOL, PRESVL,             &
-            PRV8, PRV9, RFINAL, SCH, SMALL,                            &
-            SLCHNG, SLCRIT, SMOKE, SCBE, SOILTP, SURFVL,               &
-            SFRATE, SIRXI, SPHIS, SRHOBQ, SSIGMA, SXIR,                &
-            IFMBRB, IFMBRE, IFMFLB, LOWDBH, IDBRN, IDFUL,              &
-            IFMFLE, IFMMRB, IFMMRE, IFLALB, IFLALE,                    &
-            IDMRT,  IDFLAL, IBRPAS, IFLPAS, IMRPAS, IFAPAS,            &
-            IFSTEP, IPFSTP, IPFLMB, IPFLME, IDPFLM,                    &
-            IPFPAS, IDWPAS, IDCPAS, IDDWRP, IDDWCV, IDWRPB,            &
-            IDWRPE, IDWRPI, IDWCVB, IDWCVE, IDWCVI,                    &
-            ISNAGB, ISNAGE, ISNSTP, FIRTYPE,                           &
-            ICFPB, ICFPE, ICFPST,                                      &
-            IDRYB, IDRYE, JSNOUT, PREWND, POTSEAS, POTPAB,             &
-            POTEMP, FMDUSR, IDSHEAT, ISHEATB, ISHEATE,                 &
-            FWTUSR, LUSRFM, LATFUEL, LATSHRB, LPRV89, NFMODS,          &
-            PFLAM, TCLOAD, USAV, UBD, ULHV
-
-!
 !====================== CARBON REPORTING VARIABLES =========================
 !
 !     IDCRPT: ID NUMBER FOR MAIN CARBON REPORT
@@ -354,14 +331,6 @@ module fmfcom_mod
       REAL     BIOLIVE, BIOREM(2), BIOSNAG, BIODDW, BIOFLR
       REAL     BIOSHRB, BIOROOT, FATE(2,2,MAXCYC), CARBVAL(17)
 
-      COMMON /CRBCOM/                                                  &
-            IDCRPT, ICRPTB, ICRPTE, ICRPTI, ICRPAS,                    &
-            IDCHRV, ICHRVB, ICHRVE, ICHRVI, ICHPAS,                    &
-            ICMETH, ICMETRC, ICHABT,                                   &
-            CRDCAY, CDBRK, BIOCON,                                     &
-            BIOLIVE, BIOREM, BIOSNAG, BIODDW, BIOFLR,                  &
-            BIOSHRB, BIOROOT, FATE, CARBVAL
-
 !====================== CFIM MODEL VARIABLES =========================
 
 !     CFIM_ON:  Logical: TRUE = YES, DEFAULT = FALSE (CFIM MODEL)
@@ -374,8 +343,5 @@ module fmfcom_mod
       REAL    CFIM_BD, CFIM_DC, CFIM_INPUT(26)
 	  REAL	  POTCONS(3,3)
 	 
-      COMMON /CFIMCOM/                                                 &
-            CFIM_ON, CFIM_BD, CFIM_DC, CFIM_INPUT, POTCONS
-
 !.... End segment.
 end module fmfcom_mod

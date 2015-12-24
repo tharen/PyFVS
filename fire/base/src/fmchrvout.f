@@ -1,5 +1,14 @@
       SUBROUTINE FMCHRVOUT (IYR)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use fmprop_mod
+      use metric_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -16,18 +25,9 @@ C----------
 
 C     PARAMETER INCLUDE FILES.
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C     COMMON INCLUDE FILES
 
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
-      INCLUDE 'FMPROP.F77'
-      INCLUDE 'METRIC.F77'
 
 C     VARIABLE DECLARATIONS
 
@@ -109,8 +109,8 @@ C
         ENDDO
       ELSEIF (ICMETRC.EQ.2) THEN
         DO I = 1,6
-          V(I) = V(I) * TItoTM 
-        ENDDO     
+          V(I) = V(I) * TItoTM
+        ENDDO
       ENDIF
 
 C     SET ARRAY FOR CARBSTAT EVENT MONITOR FUNCTION
@@ -118,7 +118,7 @@ C     SET ARRAY FOR CARBSTAT EVENT MONITOR FUNCTION
       DO I = 1,6
           CARBVAL(11 + I) = V(I)
       ENDDO
-      
+
 C     RETURN IF THIS YEAR IS NOT WITHIN THE REPORTING PERIOD, OR
 C     ON THE REPORTING INTERVAL
 
@@ -142,10 +142,10 @@ C
         IF (ICMETRC.EQ.1) THEN
           WRITE(JROUT,707) IDCHRV
         ELSEIF (ICMETRC.EQ.2) THEN
-          WRITE(JROUT,709) IDCHRV                
+          WRITE(JROUT,709) IDCHRV
         ELSE
           WRITE(JROUT,708) IDCHRV
-        ENDIF        
+        ENDIF
         WRITE(JROUT,699) IDCHRV
         WRITE(JROUT, 44) IDCHRV,NPLT,MGMID
         WRITE(JROUT,700) IDCHRV
@@ -157,13 +157,13 @@ C
   699   FORMAT(1(/1X,I5))
   700   FORMAT(1X,I5,1X,122('-'))
   701   FORMAT(1X,I5,1X,30X,'******  CARBON REPORT VERSION 1.0 ******')
-  702   FORMAT(1X,I5,1X,38X,'HARVESTED PRODUCTS REPORT ' 
+  702   FORMAT(1X,I5,1X,38X,'HARVESTED PRODUCTS REPORT '
      >                      '(BASED ON STOCKABLE AREA)')
    44   FORMAT(1X,I5,' STAND ID: ',A26,4X,'MGMT ID: ',A4)
   704   FORMAT(1X,I5,1X,44(' '),'Merch Carbon')
   705   FORMAT(1X,I5,1X,43(' '),15('-'))
   706   FORMAT(1X,I5,1X,'YEAR  Prducts  Lndfill   Energy  Emissns  ',
-     >    ' Stored  Removed') 
+     >    ' Stored  Removed')
   707   FORMAT(1X,I5,1X,25(' '),
      > ('ALL VARIABLES ARE REPORTED IN METRIC TONS/HECTARE'))
   708   FORMAT(1X,I5,1X,30(' '),

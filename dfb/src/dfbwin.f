@@ -1,5 +1,8 @@
       SUBROUTINE DFBWIN(LDFBGO)
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **DFBWIN  DATE OF LAST REVISION:  05/30/13
 C----------
@@ -87,21 +90,7 @@ C   26-JAN-2010 Lance R. David (FHTET)
 C     Changed MYACT to MYACT(1) in call to OPREDT (from Don Robinson, ESSA).
 C-------------------------------------------------------------------------------
 COMMONS
-C
-C
-      INCLUDE  'PRGPRM.F77'
-C
-C
-      INCLUDE  'ARRAYS.F77'
-C
-C
-      INCLUDE  'CONTRL.F77'
-C
-C
       INCLUDE  'DFBCOM.F77'
-C
-C
-COMMONS
 C
       LOGICAL LDFBGO
 
@@ -193,7 +182,7 @@ C....    ON SPECIES.
      &                        (TOTSUC / SPCNUM))) / ELIGBL(ISPI)
                IF (PRPMRT(ISPI) .GT. 0.95) PRPMRT(ISPI) = 0.95
                IF (DEBUIN) WRITE(JODFB,*) ' IN DFBWIN: ISPI = ',
-     &            ISPI,' PRPMRT = ',PRPMRT(ISPI) 
+     &            ISPI,' PRPMRT = ',PRPMRT(ISPI)
             ENDIF
 
 C....       ENTER LOOP TO SET WK2 ARRAY (PROGNOSIS MORTALITY ARRAY) TO
@@ -204,7 +193,7 @@ C     Revision (RNH 03/98), to correct a run time error, IND1(0) is
 C     out of bounds.  The following IF statement skips species that
 C     are not in the tree list. This is a similar method to that used
 C     on line 132 in the origional code
-C     
+C
       IF ( ISCT(ISPI,1) .GT. 0.) THEN
 C
 
@@ -219,7 +208,7 @@ C
 C....             THE CURRENT RECORD WILL SHOW WINDTHROW MORTALITY.
                   IF (DEBUIN) WRITE(JODFB,*)
      &            ' IN DFBWIN: BEF MRT: I = ',I,
-     &            ' WK2 = ',WK2(I),' PROB = ',PROB(I) 
+     &            ' WK2 = ',WK2(I),' PROB = ',PROB(I)
 
                   WK2(I) = WK2(I) + PROB(I) * PRPMRT(ISPI)
                   IF (PROB(I) - WK2(I) .LT. 1E-6)
@@ -227,7 +216,7 @@ C....             THE CURRENT RECORD WILL SHOW WINDTHROW MORTALITY.
 
                   IF (DEBUIN) WRITE(JODFB,*)
      &            ' IN DFBWIN: AFT MRT: I = ',I,
-     &            ' WK2 = ',WK2(I),' PROB = ',PROB(I) 
+     &            ' WK2 = ',WK2(I),' PROB = ',PROB(I)
 
 C....             CALCULATE THE NUMBER OF DF TREES/ACRE WINDTHROWN THAT
 C....             ARE GREATER THEN OR EQUAL TO 9 INCHES DBH.
@@ -242,10 +231,10 @@ C....             CALCULATE THE TOTAL TREES/ACRE WINDTHROWN.
   500       CONTINUE
 C
 C     End of IF statement revision (RNH 03/98)
-C  
+C
       END IF
 C
-  
+
   600    CONTINUE
 
 C....    IF ENOUGH LARGE DF (DBH >= 9 INCHES) ARE KILLED THEN CHECK FOR
@@ -309,4 +298,4 @@ C....    NO OUTBREAK!!!   RESCHEDULE EVENT FOR NEXT CYCLE.
 
  1000 CONTINUE
       RETURN
-      END   
+      END

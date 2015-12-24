@@ -1,4 +1,6 @@
       BLOCK DATA DFBLKD
+      use prgprm_mod
+      implicit none
 C----------
 C  **DFBLKD--BC   DATE OF LAST REVISION:  08/13/03
 C----------
@@ -11,9 +13,7 @@ C     template
 C
 C------------------------------------
 C
-COMMONS
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'DFBCOM.F77'
 
 C.... WINSUC IS THE SPECIES DEPENDENT VALUES FOR WINDTHROW
@@ -73,6 +73,6 @@ C.... THIS VALUE MAY BE DIFFERENT FOR DIFFERENT VARIANTS OF FVS.
 
 C.... Set the variables for random number generator
 
-      DATA S0 / 55329D0 /, SS / 55329.0 / 
+      DATA S0 / 55329D0 /, SS / 55329.0 /
 
       END

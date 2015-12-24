@@ -1,5 +1,10 @@
       SUBROUTINE FMDYN (SM,LG,ITYP,XPTS,EQWT,IPTR,ICLSS,LDYN,FMD)
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use fmfcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -36,12 +41,7 @@ C     CORRESPONDING FMOD() MODEL. WEIGHTS SUM TO 1.0
 C
 C----------------------------------------------------------------------
 C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
 
-      INCLUDE 'FMPARM.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
 
 C     LOCAL VARIABLE DEFINITIONS:
 C

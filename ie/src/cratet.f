@@ -1,5 +1,13 @@
       SUBROUTINE CRATET
-      IMPLICIT NONE
+      use htcal_mod
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **CRATET--IE   DATE OF LAST REVISION:  09/23/11
 C----------
@@ -20,36 +28,6 @@ C        AND ISCT.
 C    8)  PRINT A TABLE DESCRIBING CONTROL PARAMETERS AND INPUT
 C        VARIABLES.
 C----------
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-C
-COMMONS
 C
 C----------
 C  INTERNAL VARIABLES.
@@ -79,7 +57,7 @@ C-----------
       CALL DBCHK (DEBUG,'CRATET',6,ICYC)
 C----------
 C  GROWTH EQUATIONS USED FOR LM AND PY WERE FIT
-C  USING SITE INDEX ADJUSTED TO A 50-YEAR AGE BASE. 
+C  USING SITE INDEX ADJUSTED TO A 50-YEAR AGE BASE.
 C  ADJUST THE SITE VALUES FOR THESE SPECIES TO THIS BASIS.
 C
 C  FIRST NEED AN ESTIMATE OF STAND CCF

@@ -1,5 +1,8 @@
-      SUBROUTINE BWEOB 
-      IMPLICIT NONE
+      SUBROUTINE BWEOB
+      use contrl_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C ------------
 C     **BWEOB                  DATE OF LAST REVISION:  08/28/13
 C ------------
@@ -13,7 +16,7 @@ C
 C  CALLED FROM:  BWEIN (FIRST OUTBREAK)
 C                BWEGO (SUBSEQUENT OUTBREAKS)
 C
-C  PARAMETERS: 
+C  PARAMETERS:
 C   IYROBL - YEAR THAT LAST REGIONAL OUTBREAK STARTED [BWECM2]
 C   IOBLOC - GEOGRAPHIC LOCATION INDEX  [BWECM2]
 C                1 = SOUTHWEST, 2 = NORTHWEST, 3 = MONTANA
@@ -34,7 +37,6 @@ C   IEVENT(250,5) - BW SPECIAL EVENTS SUMMARY TABLE [BWEBOX]
 C   IOBOPT - 1 = ONLY OB STARTS SCHEDULED, 2=STARTS & ENDS SCHEDULED
 C            3=USER SPECIFIES OB STARTS AND ENDS
 C
-C
 C Revision History:
 C   30-AUG-2006 Lance R. David (FHTET)
 C      Changed array orientation of IEVENT from (4,250) to (250,4).
@@ -44,17 +46,11 @@ C   02-JUN-2009 Lance R. David (FMSC)
 C      Added Stand ID and comma delimiter to output tables, some header
 C      and column labels modified.
 C   14-JUL-2010 Lance R. David (FMSC)
-C      Added IMPLICIT NONE and declared variables as needed.
 C   28-AUG-2013 Lance R. David (FMSC)
 C      Added weather year (if using RAWS) to special events table.
 C
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'BWECM2.F77'
       INCLUDE 'BWEBOX.F77'
 
@@ -93,7 +89,7 @@ C
       ELSEIF (IOBOPT.NE.3) THEN
          OBRANG = OBTABL(4,IOBLOC)-OBTABL(3,IOBLOC)
          X=0.0
-         IF (DEBUG) WRITE (JOSTND,*) 'IN BWEOB: OBRANG=',OBRANG 
+         IF (DEBUG) WRITE (JOSTND,*) 'IN BWEOB: OBRANG=',OBRANG
 C        PUT SEED VALUE FOR OUTBREAK RANDOM NUMBER SERIES.
          CALL BWERPT(OBSEED)
          CALL BWERAN(X)
@@ -107,7 +103,7 @@ C        PUT SEED VALUE FOR OUTBREAK RANDOM NUMBER SERIES.
          IF (DEBUG) WRITE (JOSTND,*)
      &    'IN BWEOB: IYRST,IYROBL,OBINT=',IYRST,IYROBL,OBINT
       ENDIF
-C      
+C
 C NEXT CALC. THE NEXT DURATION
 C
       IF (IOBOPT.NE.3) THEN

@@ -1,5 +1,7 @@
       SUBROUTINE HVINIT
-      IMPLICIT NONE
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **HVINIT DATE OF LAST REVISION:  06/03/10
 C----------
@@ -9,28 +11,13 @@ C
 C     MULTISTAND POLICY ROUTINE - N.L. CROOKSTON  - JULY 1987
 C     FORESTRY SCIENCES LABORATORY - MOSCOW, ID 83843
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'PPEPRM.F77'
-C
 C
       INCLUDE 'PPHVCM.F77'
 C
-C
       INCLUDE 'HVDNCM.F77'
 C
-C
-      INCLUDE 'METRIC.F77'
-C
-COMMONS
-C
-C
       INTEGER IHV
-C
 C
       LNEDNG=.FALSE.
       HXSIZE=ACRtoHA

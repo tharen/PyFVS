@@ -1,30 +1,22 @@
       SUBROUTINE GEMDG(DDS,IMODTY,IS,BAUTBA,SPBA,SI,DP,BAT,BARK,
      &CR,SLOPE,ASPECT,ELEV,PBAL,PCCFI,RELDEN,BAL)
-      IMPLICIT NONE
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C CR $Id$
 C----------
 C   THIS SUBROUTINE CALCULATES DDS. IT IS CALLED FROM DGF.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'GGCOM.F77'
 C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-COMMONS
 C----------
       REAL BAL,RELDEN,PCCFI,PBAL,ELEV,APECT,SLOPE,CR,BARK,BAT,DP
       REAL SI,SPBA,BAUTBA,DDS,DPP,BATEM,BGTTBA,BAL100
       INTEGER IS,IMODTY,IDDS
       REAL ASPECT,DF,CON1,CON2,DFMCPP,DFSWPP,ADJB,BAPP,BARAT,ADJR
-      REAL ADJ,SIMINR,XSLOPE,DIAGR      
+      REAL ADJ,SIMINR,XSLOPE,DIAGR
 C----------
 C  SPECIES ORDER:
 C   1=AF,  2=CB,  3=DF,  4=GF,  5=WF,  6=MH,  7=RC,  8=WL,  9=BC, 10=LM,
@@ -33,12 +25,12 @@ C  21=NC, 22=PW, 23=GO, 24=AW, 25=EM, 26=BK, 27=SO, 28=PB, 29=AJ, 30=RM,
 C  31=OJ, 32=ER, 33=PM, 34=PD, 35=AZ, 36=CI, 37=OS, 38=OH
 C
 C  SPECIES EXPANSION:
-C  UJ,AJ,RM,OJ,ER USE CR JU                              
+C  UJ,AJ,RM,OJ,ER USE CR JU
 C  NC,PW USE CR CO
-C  GO,AW,EM,BK,SO USE CR OA                             
-C  PB USES CR AS                              
+C  GO,AW,EM,BK,SO USE CR OA
+C  PB USES CR AS
 C  PM,PD,AZ USE CR PI
-C  CI USES CR PP                              
+C  CI USES CR PP
 C----------
 C  SET APPROPRIATE BOUNDS BY MODEL TYPE.
 C----------
@@ -254,7 +246,7 @@ C
             IF(DF .GT. DFSWPP) THEN
               IF(BGTTBA .GE. 0.5) THEN
                 DF = DFSWPP
-                IF(DF.LT.(DPP+.1))DF=DPP+.1      
+                IF(DF.LT.(DPP+.1))DF=DPP+.1
               ELSE
                 DF = (2.5 - 5.0 * BGTTBA) * DF
      &                + (-1.5 + 5.0 * BGTTBA) * DFSWPP

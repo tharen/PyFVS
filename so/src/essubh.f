@@ -1,30 +1,17 @@
       SUBROUTINE ESSUBH (I,HHT,EMSQR,DILATE,DELAY,ELEV,IHTSER,GENTIM,
      &                   TRAGE)
-      IMPLICIT NONE
+      use esparm_mod
+      use contrl_mod
+      use escomn_mod
+      use pden_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **ESSUBH--SO  DATE OF LAST REVISION:  05/08/09
 C----------
 C     CALLED FROM **ESTAB
 C     CALLS **SMHTGF
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
-      INCLUDE 'ESCOMN.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-COMMONS
-C
       LOGICAL DEBUG
       INTEGER I,IHTSER,ITIME,N,MODE0
       REAL    AGE,EMSQR,DILATE,DELAY,ELEV,GENTIM,H,HHT,TRAGE,DUM1
@@ -52,7 +39,6 @@ C
       TRAGE=TIME-DELAY
 C
       SELECT CASE(I)
-C
 C
 C     HEIGHT OF TALLEST SUBSEQUENT SPECIES FROM SP 9,30 CA VARIANT
 C

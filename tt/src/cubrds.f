@@ -1,19 +1,12 @@
       BLOCK DATA CUBRDS
-      IMPLICIT NONE
+      use volstd_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **CUBRDS--TT   DATE OF LAST REVISION:  03/09/10
 C----------
 C  DEFAULT PARAMETERS FOR THE CUBIC AND BOARD FOOT VOLUME EQUATIONS.
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
 COMMONS
 C----------
 C SPECIES ORDER FOR TETONS VARIANT:
@@ -82,19 +75,19 @@ C----------
 C  FLAG IDENTIFYING THE SIZE TRANSITION VARIABLE; 0=D, 1=D2H
 C----------
       DATA ICTRAN/
-     & 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
+     & 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
      & 0, 0, 0, 0, 0, 0, 0, 0/
 C----------
-C  TRANSITION SIZE.  TREES OF LARGER SIZE (D OR D2H) WILL COEFFICIENTS 
+C  TRANSITION SIZE.  TREES OF LARGER SIZE (D OR D2H) WILL COEFFICIENTS
 C  FOR LARGER SIZE TREES.
-C---------- 
+C----------
       DATA CTRAN/
      &      0.0,      0.0,     0.0,     0.0,     0.0,
      &     20.0,      0.0,     0.0,     0.0,  6000.0,
-     &      0.0,      0.0,     0.0,     0.0,     0.0, 
+     &      0.0,      0.0,     0.0,     0.0,     0.0,
      &      0.0,      0.0,     0.0/
 C----------
-C  COEFFICIENTS FOR BOARD FOOT VOLUME FOR TREES THAT ARE SMALLER THAN 
+C  COEFFICIENTS FOR BOARD FOOT VOLUME FOR TREES THAT ARE SMALLER THAN
 C  THE TRANSITION SIZE
 C----------
       DATA BFVEQS/
@@ -117,7 +110,7 @@ C----------
      &  -11.403,      0.0,     0.0, 0.01011,     0.0,     0.0,    0.0,
      &      0.0,      0.0,     0.0,     0.0,     0.0,     0.0,    0.0/
 C----------
-C  COEFFICIENTS FOR BOARD FOOT VOLUME FOR TREES THAT ARE LARGER THAN 
+C  COEFFICIENTS FOR BOARD FOOT VOLUME FOR TREES THAT ARE LARGER THAN
 C  THE TRANSITION SIZE
 C----------
       DATA BFVEQL/
@@ -146,12 +139,12 @@ C----------
      & 1, 1, 0, 1, 0, 1, 0, 0, 1, 0,
      & 1, 1, 0, 0, 0, 0, 1, 0/
 C----------
-C  TRANSITION SIZE.  TREES OF LARGER SIZE (D OR D2H) WILL USE COEFFICIENTS 
+C  TRANSITION SIZE.  TREES OF LARGER SIZE (D OR D2H) WILL USE COEFFICIENTS
 C  FOR LARGER SIZE TREES.
-C---------- 
+C----------
       DATA BTRAN/
      &  21100.0,  21100.0,     21.0, 42800.0,    21.0,
      &  14600.0,      0.0,     21.0, 42800.0,    20.5,
-     &  42800.0,  42800.0,     20.5,    20.5,     0.0, 
+     &  42800.0,  42800.0,     20.5,    20.5,     0.0,
      &     20.5,  42800.0,      0.0/
       END

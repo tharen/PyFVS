@@ -1,5 +1,8 @@
       SUBROUTINE SPESRT
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -8,20 +11,7 @@ C     REALIGNS THE SPECIES-ORDER SORT AFTER THE TREE LIST HAS
 C     BEEN COMPRESSED AND/OR TREES HAVE BEEN ADDED VIA THE
 C     REGENERATION ESTABLISHMENT SUBMODEL.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
       INTEGER I
-C
-COMMONS
 C
 C     INITIALIZE VARIABLES
 C
@@ -35,8 +25,8 @@ C
       ENDDO
       IF (IREC1.EQ.0) THEN
          ITRN=0
-      ELSE         
-C     
+      ELSE
+C
 C        SET UP INDEX POINTERS FOR CHAIN SORTING.
 C
 C        ESTABLISH A LINK IN THE CHAIN SORT FOR ALL LIVE TREES.

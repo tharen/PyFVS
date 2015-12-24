@@ -1,32 +1,17 @@
       SUBROUTINE CVNOHD
-      IMPLICIT NONE
+      use outcom_mod
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **CVNOHD--COVR   DATE OF LAST REVISION:  06/28/13
 C----------
 C     WRITES THE COVER STATISTICS TO A FLAT FILE (NOHEADINGS).
 C---------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
       INCLUDE 'CVCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-COMMONS
 C
       INTEGER I,ITHN,ISUM1,ISUM2,ISUM31,ISUM32,ISUM33,ISUM3,ISUM4,ISUM7
       INTEGER ISUM8,ISUM9,ISUM10,ISUM11,ISUM12,ISUM13,ISUM14,ISUM15

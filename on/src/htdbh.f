@@ -1,5 +1,8 @@
       SUBROUTINE HTDBH (IFOR,ISPC,D,H,MODE)
-      IMPLICIT NONE
+      use contrl_mod
+      use coeffs_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **HTDBH--ON  DATE OF LAST REVISION:  07/11/08
 C----------
@@ -27,18 +30,6 @@ C      MODE = MODE OF OPERATING THIS SUBROUTINE
 C             0 IF DIAMETER IS PROVIDED AND HEIGHT IS DESIRED
 C             1 IF HEIGHT IS PROVIDED AND DIAMETER IS DESIRED
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-COMMONS
-C
       REAL SNALL(3,MAXSP), SNDBAL(MAXSP)
       INTEGER IWYKCA(MAXSP)
       INTEGER MODE,ISPC,IFOR,I,J
@@ -274,7 +265,7 @@ C 67=SASSAFRAS             USE SN SASSAFRAS (82)
 C 68=AM. MOUNTAIN ASH      USE SN HACKBERRY (SP.) (29)
      & 484.7529797,     3.93933286,     -0.25998833 /
 
-C ONtario species 
+C ONtario species
       DATA ((SNALL(I,J),I=1,3), J= 69,72)/
 C 1=JACK PINE              USE SN EASTERN HEMLOCK (17)
      & 266.4562239,     3.99313675,     -0.38600287 ,
@@ -300,7 +291,7 @@ C----------
      &   0.1, 0.1, 0.2, 0.1, 0.1, 0.1, 0.1, 0.1,
      &   0.1, 0.4, 0.2, 0.2 /
 C----------
-C  FLAGS WHETHER TO USE WYKOFF EQUATIONS (0), OR CURTIS-ARNEY 
+C  FLAGS WHETHER TO USE WYKOFF EQUATIONS (0), OR CURTIS-ARNEY
 C  EQUATIONS (1).
 C----------
       DATA IWYKCA/

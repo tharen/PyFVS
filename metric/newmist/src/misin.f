@@ -1,5 +1,9 @@
       SUBROUTINE MISIN(PASKEY,ARRAY,LNOTBK,LKECHO)
-      IMPLICIT NONE
+      use contrl_mod
+      use metric_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -102,15 +106,11 @@ C.... Parameter statements.
 
 C.... Parameter include files.
 
-      INCLUDE 'PRGPRM.F77'
 
 C.... Common include files.
 
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'MISCOM.F77'
       INCLUDE 'DMCOM.F77'
-      INCLUDE 'METRIC.F77'
 
 C.... Variable declarations.
 

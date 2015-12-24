@@ -1,14 +1,12 @@
       SUBROUTINE EXRD
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C
 C     EXTRA EXTERNAL REFERENCES FOR THE WESTERN ROOT DISEASE MODEL
 C     VERSION 3.0
-C
-C
-      INCLUDE 'PRGPRM.F77'
 C
 C----------
       INTEGER ICODES(6),I3(*),I2(*),ITN1,ITN2,II,I,I1,II1

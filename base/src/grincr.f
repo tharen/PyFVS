@@ -2,7 +2,15 @@
      1                   LBWEGO,LCVATV,LBGCGO)
       use tree_data, only: save_tree_data,copy_tree_data,copy_cuts_data
      &                     ,copy_mort_data
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use eshap_mod
+      use outcom_mod
+      use pden_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -11,39 +19,9 @@ C     COMPUTES GROWTH AND MORTALITY ON EACH TREE RECORD.
 C
 C     CALLED FROM: PPMAIN AND TREGRO.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
       INCLUDE 'STDSTK.F77'
 C
-C
-      INCLUDE 'ESHAP.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-COMMONS
-C
-      REAL PRM(6),bratio
+      REAL PRM(6)
       INTEGER MYACTS(3)
       INTEGER IPMODI,NTODO,ITODO,NP,IACTK,IDATE,I,IS,IGRP,IULIM,IG,IGSP
       INTEGER IPH,IC,ICDF,IBDF,ISPCC,ITFN,J,JJ,K

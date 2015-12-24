@@ -1,5 +1,9 @@
       SUBROUTINE BRCGRO(K,PROP,BRHT,BRHTG,BRDG,NLCAN,HNEW,DNEW)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C**********************************************************************
 C  **BRCGRO       DATE OF LAST REVISION:  06/05/2014
 C----------------------------------------------------------------------
@@ -121,11 +125,7 @@ C     buffer of 25% before bole canker growth is applied.
 C**********************************************************************
 C.... Common include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BRCOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'PLOT.F77'
 
 C.... Local variable declarations.
 

@@ -1,27 +1,15 @@
       SUBROUTINE ESNSPE (PSPE,TPPLN,ISER,ITPP,TPP)
-      IMPLICIT NONE
+      use esparm_mod
+      use escomn_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **ESNSPE--ESTB   DATE OF LAST REVISION:   07/25/08
 C----------
 C     PREDICT PROBS FOR NUMBER OF SPECIES ON STOCKED PLOTS
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
-      INCLUDE 'ESCOMN.F77'
-C
-C
       INCLUDE 'ESCOM2.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-COMMONS
 C
       INTEGER ITPP,ISER
       REAL TPP,PSPE(6),PN,TPPLN

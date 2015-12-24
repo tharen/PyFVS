@@ -1,5 +1,7 @@
       SUBROUTINE BRSUM
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C**********************************************************************
 C  **BRSUM        DATE OF LAST REVISION:  06/05/2014
 C----------------------------------------------------------------------
@@ -36,9 +38,7 @@ C**********************************************************************
 
 C.... Common include files.
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'BRCOM.F77'
-      INCLUDE 'CONTRL.F77'
 
       INTEGER I3, I4, IBYR, IBBYR, II
 

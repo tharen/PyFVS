@@ -1,7 +1,11 @@
       SUBROUTINE BMPPIN (IREADx,IRECNTx,IJOPPR,LKECHO)
+      use contrl_mod
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BMPPIN               DATE OF LAST REVISION: 03/07/06
-C     ESSA - 
+C     ESSA -
 C----------
 C  **BMPPIN  DATE OF LAST REVISION: DECEMBER 13, 1994
 C  **BMPPIN  DATE OF LAST REVISION: May 6, 1998 (RNH, May98)
@@ -20,21 +24,21 @@ C     C26* (ie c26srt & c26bsr). Passed arguments are now 26 characters.
 C     NOTE: I also changed dimensions of NSSTDS and BMSTDS in BMCOM.f77.
 C
 C...Revised 3/28/00 AJM.  Modified BMHIST, WETSCORE, RPHERO, APHERO, SPRAY,
-c     SPRAY, SANITIZE, SALVAGE, SLASHMGT, and NONSTOCK, so that supplemental 
+c     SPRAY, SANITIZE, SALVAGE, SLASHMGT, and NONSTOCK, so that supplemental
 C     records can be 26 characters long.
 c
-C   Revised: 7/00 Fixed logicals in QRROT and QSRUST.  Because they were 
+C   Revised: 7/00 Fixed logicals in QRROT and QSRUST.  Because they were
 C     changed (in BMINIT?) to be OFF by default, the logicals herein
 C     need to be switched ON if the keyword is encountered.
 C
 C   Revised 4/01 AJM. Because I added CONTRL.F77 as common (so we can use
 C   variable KWDFIL in BMTOTALS [et al.]), I am renaming the IREAD &
-C   IRECNT arguments in this SUBROUTINE's argument list--so that they 
-C   won't be used here as passed arguments (i.e. they are now included 
+C   IRECNT arguments in this SUBROUTINE's argument list--so that they
+C   won't be used here as passed arguments (i.e. they are now included
 c   via common block.  Passed arguments are now dummy.)
 C
-C   Revised 9/19/01. ajm.  changed 8th argument in calls to MYOPEN from 
-c     1 to 0. (With a 1, format of output files was altered...1st column 
+C   Revised 9/19/01. ajm.  changed 8th argument in calls to MYOPEN from
+c     1 to 0. (With a 1, format of output files was altered...1st column
 c     was omitted, which resulted in errors in the ArcView Display tools.)
 C
 C   Revised 08/16/02 Lance R. David (FHTET)
@@ -44,10 +48,10 @@ C   10-NOV-2003 - Lance R. David (FHTET)
 C      Added LFLAG to KEYRDR call statement argument list.
 
 C   Revised 9/05 AJM (FHTET)
-C    Adding new keyword BMOUT.  It contains 2 fields.  
+C    Adding new keyword BMOUT.  It contains 2 fields.
 C    Field 1 invokes writing of *NEW* "cycle" output file (*.bmc)
 C    Field 2 invokes writing of *NEW* landscape average output file (*.bml).
-C    See new BMOUT routine for details.  This change concurrent with the 
+C    See new BMOUT routine for details.  This change concurrent with the
 C    addition to the WWPBM of a new stand level option processor: BMIN,
 C    used for processing ** stand level ** output generating keywords.
 C    Keywords BMTOTALS, BMDETAIL, and BMDVOUT are now *OBSOLETE*!
@@ -62,7 +66,7 @@ C
 C     CALLED FROM: PPIN
 C
 C PARAMETER DEFINITIONS
-C     IREAD  - logical unit number for the keyword file [I]               ! SEE 4/01 REVISION NOTE 
+C     IREAD  - logical unit number for the keyword file [I]               ! SEE 4/01 REVISION NOTE
 C     IRECNT - count for number of records read from the keyword file [O] ! DITTO
 C     IJOPPR - logical unit number for standard output file.
 C             (this is a dummmy variable for this routine because the
@@ -77,23 +81,15 @@ C VARIABLE DEFINITIONS
 C     DEFYRS - THE DEFAULT NUMBER OF YEARS AN OPTION WILL BE "ON" AT THE
 C              GIVEN PARAMETER VALUES.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'PPEPRM.F77'
       INCLUDE 'PPCNTL.F77'
 
 C Adding CONTRL for varialbe KWDFIL used with BMPPIN AJM 4/01
 
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'BMPRM.F77'
       INCLUDE 'BMCOM.F77'
       INCLUDE 'BMRRCM.F77'
       INCLUDE 'BMPCOM.F77'
-	INCLUDE 'METRIC.F77'
-C
-COMMONS
 C
       PARAMETER (KWCNT = 40)
 
@@ -123,7 +119,7 @@ C
 C *** Added BMFDBK to the end of table below. MJO May98
 CChanging BMTOTALS to BMOUT.  Changing LBMVOL to LBMCYC
 
-      DATA TABLE / 
+      DATA TABLE /
      >     'DISPERSE','RVDENSE ','BMTOTALS','BMDETAIL','DEBUG   ',
      >     'NODEBUG ','RANNSEED','END     ','NOTOTAL ','BMDVOUT',
      >     'BMHIST  ','BMPARM  ','VARYRAIN','ATTRACT ','WETSCORE',
@@ -198,7 +194,7 @@ C 1005 CONTINUE
  1010    FORMAT (/1X,A8,'   ALL STANDS WILL BE INVOLVED IN ',
      >   'THE WWPB DISPERSAL AREA.'/T13,'SIMULATION IS SCHEDULED',
      >   ' TO START IN ',I4,' WITH A MAXIMUM DURATION OF ',I4,' YEARS.')
-     
+
       ENDIF
       GOTO 10
  1200 CONTINUE
@@ -216,19 +212,19 @@ C
       WRITE(JOPPRT,1310) KEYWRD
  1310 FORMAT (/1X,A8,'   WWPB KEYWORD BMTOTALS IS NO LONGER SUPPORTED.'/
      >   ,T13,'Keyword BMTOTALS has been replaced by keyword "BMOUT";',
-     >     ' PLEASE REVISE YOUR KEYWORD SETS.'//,  
+     >     ' PLEASE REVISE YOUR KEYWORD SETS.'//,
      >   T13,'! * !   THIS PROGRAM WILL REDIRECT YOUR BMTOTALS OUTPUT ',
      >       'REQUEST TO KEYWORD BMOUT (see below).      ! * !' )
 C
-C  GO TO BMOUT PROCESSING.  SET LNOTBKs TO FALSE TO INVOKE THE WRITING 
-C  OF BOTH OF BMOUT's OUTPUT FILES 
+C  GO TO BMOUT PROCESSING.  SET LNOTBKs TO FALSE TO INVOKE THE WRITING
+C  OF BOTH OF BMOUT's OUTPUT FILES
 C  (THESE SHOULD ALREADY BE FALSE ANYWAY; THIS ENSURES IT SO.)
 C
       KEYWRD='BMOUT   '
       LNOTBK(1)=.FALSE.
       LNOTBK(2)=.FALSE.
 C
-      GO TO 5000     ! GO TO BMOUT 
+      GO TO 5000     ! GO TO BMOUT
 
 C COMMENT OUT ALL THE REST  AJM SEPT 5005
 C
@@ -424,12 +420,12 @@ C   for ARRAY(1) and ARRAY(2) parameters.
 C     NOTE AJM 12/05.
 C     SOMETIME IN THE FUTURE, WE MIGHT WANT TO CHANGE THE WAY THIS IS DONE.
 C     BECAUSE WE TEMPORARILY "CO-OPT" ARRAY BMSTDS() HERE, WE NECESSARILY
-C     CONSTRAIN BMCNT TO BE NO GREATER THAN MXSTND.  BUT BMCNT SHOULD BE ABLE 
-C     TO BE GREATER THAN MXSTND.  FOR EXAMPLE, USERS CURRENTLY MAY ENTER FOR 
-C     EACH STAND MORE THAN ONE RECORD IN THE BMHIST SUPPLEMENTAL RECORD LIST.  
-C     IDEALLY, BMHIST STAND DATA OUGHT TO BE KEPT IN ITS OWN ARRAY(S) DIMENSIONED 
-C     MXSTND*10. I AM LEAVING THIS AS IS FOR NOW, BECAUSE THERE IS NO IMMEDIATE 
-C     NEED TO ENABLE MORE THAN 10,000 (MXSTND) # OF BMHIST SUPPLEMETAL RECORDS. 
+C     CONSTRAIN BMCNT TO BE NO GREATER THAN MXSTND.  BUT BMCNT SHOULD BE ABLE
+C     TO BE GREATER THAN MXSTND.  FOR EXAMPLE, USERS CURRENTLY MAY ENTER FOR
+C     EACH STAND MORE THAN ONE RECORD IN THE BMHIST SUPPLEMENTAL RECORD LIST.
+C     IDEALLY, BMHIST STAND DATA OUGHT TO BE KEPT IN ITS OWN ARRAY(S) DIMENSIONED
+C     MXSTND*10. I AM LEAVING THIS AS IS FOR NOW, BECAUSE THERE IS NO IMMEDIATE
+C     NEED TO ENABLE MORE THAN 10,000 (MXSTND) # OF BMHIST SUPPLEMETAL RECORDS.
 C     NOTE HOWEVER THAT THE CONSTRAINT THAT THE NUMBER OF BMHIST RECORDS (BMCNT)
 C     BE NO GREATER THAN MXSTND IS THEORETICALLY AN UNREASONABLE CONSTRAINT.
         BMCNT=MXSTND
@@ -469,28 +465,28 @@ c     ATTRACT
 
       IF (LNOTBK(1)) PBSPEC= IFIX(ARRAY(1))
       IF (PBSPEC .LE. 1) PBSPEC= 1
-      IF (PBSPEC .GT. 4) PBSPEC= 4 
+      IF (PBSPEC .GT. 4) PBSPEC= 4
       IF (LNOTBK(2)) NBGEN= IFIX(ARRAY(2))
       IF (NBGEN .LE. 1) NBGEN= 1
       IF (NBGEN .GE. 5) NBGEN= 5
       IF (PBSPEC .EQ. 3) THEN
          NIBGEN = NBGEN
-      ENDIF    
+      ENDIF
 
       IF (LNOTBK(3)) HSPEC(PBSPEC,7)= 0
-      
+
       DO 2205 I= 3,7
        IF (LNOTBK(I)) THEN
          JSP= IFIX(ARRAY(I))
          HSPEC(PBSPEC,JSP)= 1
-       ENDIF 
- 2205 CONTINUE     
+       ENDIF
+ 2205 CONTINUE
 
 c    Turn off Ips as a driving variable if IPSDV was used before BMPARM and the main
 c    beetle species is Ips
 
       IF (IPSON .AND. PBSPEC .EQ. 3) IPSON= .FALSE.
-       
+
       IF(LKECHO)WRITE(JOPPRT,2210) KEYWRD,PBSPEC,NBGEN
  2210 FORMAT (/1X,A8,'   BEETLE SPECIES CODE IS:',I3,
      >       '     NUMBER OF GENERATIONS IS:',I3)
@@ -502,14 +498,14 @@ c    beetle species is Ips
  2225 CONTINUE
 
       GOTO 10
-      
+
  2300 CONTINUE
 C                        OPTION NUMBER 13 -- VARYRAIN
 c Landscape level, ON in year 'IDT'; stays ON until turned off by user.
-      
+
       IDT= 1
       IF (LNOTBK(1)) IDT= IFIX(ARRAY(1))
-      
+
       NPARMS= 6
       PRMS(1)= 0.0
       IF (LNOTBK(2)) PRMS(1)= ARRAY(2)
@@ -717,7 +713,7 @@ c      READ (IUNIT,*,END=2530) SUPLRECS,ARRAY
  2600 CONTINUE
 C                        OPTION NUMBER 16 -- REPRODN
 C
-C     This keyword sets the reproduction rate for BKP, used when beetles are 
+C     This keyword sets the reproduction rate for BKP, used when beetles are
 C     emerging from killed (or strip-killed) trees.
 C
       IBSP = PBSPEC
@@ -725,7 +721,7 @@ C
       IF (LNOTBK(2)) REPLAC= ARRAY(2) * CMtoIN
       IF (LNOTBK(3)) REPMAX= ARRAY(3)
       IF (LNOTBK(4)) DBHMAX= ARRAY(4) * CMtoIN
-      
+
       RSLOPE = (REPMAX - 1.0) / (DBHMAX - REPLAC)
       B = 1.0 - (REPLAC * RSLOPE)
 
@@ -745,30 +741,30 @@ C
         IF(INC(IBSP,I).LT.0.01) INC(IBSP,I)=0.01
 C
  2610 CONTINUE
-        
+
       IF(LKECHO)WRITE(JOPPRT, 2650) KEYWRD, IBSP,REPLAC*INtoCM,
      >  RSLOPE/INtoCM,REPMAX,DBHMAX*INtoCM
  2650 FORMAT(/1X,A8,'   FOR BEETLE TYPE ',I4,' REPRODUCTION WILL ',
      &  'OCCUR WITH BMULT=1 AT DBH=',F6.2,/T13,'SLOPE=',F6.3,
      &  ' AND MAXIMUM AT BMULT=',F5.2,' AND DBH=',F6.2)
-      
-      GOTO 10       
-      
+
+      GOTO 10
+
  2700 CONTINUE
- 
+
 C                        OPTION NUMBER 17 -- BKPKILL
 c
 c     This keyword is used to invoke climatic events which affect
-c     how the beetle reproduces once inside the tree. It affects 
-c     the amount of beetles emerging from the tree and the amount of 
+c     how the beetle reproduces once inside the tree. It affects
+c     the amount of beetles emerging from the tree and the amount of
 c     beetles in the outside world.
 
       IDT= 1
       IF (LNOTBK(1)) IDT= IFIX(ARRAY(1))
 
       NPARMS= 4
-      PRMS(1)= 1.0  
-      PRMS(2)= PBSPEC  
+      PRMS(1)= 1.0
+      PRMS(2)= PBSPEC
       IF (PBSPEC .LT. 3) PRMS(3)= 0.35
       IF (PBSPEC .EQ. 3) PRMS(3)= 0.035
       PRMS(4)= 0.035
@@ -776,7 +772,7 @@ c     beetles in the outside world.
       IF (LNOTBK(3)) PRMS(2)= ARRAY(3)
       IF (LNOTBK(4)) PRMS(3)= ARRAY(4)
       IF (LNOTBK(5)) PRMS(4)= ARRAY(5)
-      
+
       CALL GPNEW (KODE,IDT,317,NPARMS,PRMS)
       IF (KODE.GT.0) THEN
         CALL KEYDMP (JOPPRT,IRECNT,KEYWRD,ARRAY,KARD)
@@ -808,27 +804,27 @@ c     Landscape level, Lightning is always on unless user specifies a
 c     strike densiyt=0.  Keyword allows users to change strike density
 c     in different years (or to turn lightning off)
 
-      
+
       IDT= 1
       IF (LNOTBK(1)) IDT= IFIX(ARRAY(1))
 
       NPARMS= 2
       PRMS(1)= 1.0
       PRMS(2)= DENS
-      
+
       IF (LNOTBK(2)) PRMS(2)= MAX(0.0, ARRAY(2)) / HAtoACR
-      
+
       CALL GPNEW (KODE,IDT,306,NPARMS,PRMS(1))
       IF (KODE.GT.0) THEN
         CALL KEYDMP (JOPPRT,IRECNT,KEYWRD,ARRAY,KARD)
         WRITE(JOPPRT,2805) KEYWRD
- 2805   FORMAT(/1X,A8,' Unable to set options')    
+ 2805   FORMAT(/1X,A8,' Unable to set options')
         GOTO 2830
       ENDIF
-      
+
 c Note the use of a special stand id 'MXSTND' to hold landscape level global
 c parms. The special ID is picked up in the relevant routine.
-     
+
       CALL GPADSD(MXSTND)
       CALL GPCLOS(306)
 
@@ -837,9 +833,9 @@ c parms. The special ID is picked up in the relevant routine.
  2810 FORMAT(/1X,A8,'   LIGHTNING STRIKE DENSITY WILL CHANGE IN ',
      >  'DATE/CYCLE ',I4, ' END AFTER ',I4, ' YEARS,',
      >  /T13,'AND HAVE A STRIKE DENSITY OF ',F8.5,' TREES/HA.')
- 
+
  2830 CONTINUE
- 
+
       GOTO 10
  2900 CONTINUE
 c                        OPTION NUMBER 19 -- IPSDV
@@ -861,7 +857,7 @@ c     main beetle species. Also, set the number of generations for Ips
  2901   CONTINUE
  2902   CONTINUE
       ENDIF
-      
+
       IF (LNOTBK(2)) THEN
         MAXSZ= IFIX(ARRAY(2))*CMtoIN
         DO 2903 I= 1,NSCL
@@ -876,7 +872,7 @@ c     main beetle species. Also, set the number of generations for Ips
 
       IF (LNOTBK(3)) NIBGEN= IFIX(ARRAY(3))
       IF (LNOTBK(4)) PFSLSH= ARRAY(4)
-      
+
       IF (IPSON) THEN
         IF(LKECHO)WRITE(JOPPRT,2910) KEYWRD
  2910   FORMAT (/1X,A8,'   IPS IS A DRIVING VARIABLE',I5)
@@ -899,7 +895,7 @@ c     Landscape level, ON in year 'IDT'; stays ON for specified duration
 
       NPARMS= 4
       PRMS(1)= DEFYRS
-      PRMS(2)= 8.0 
+      PRMS(2)= 8.0
       PRMS(3)= WTHRSH
       PRMS(4)= CRASH
       IF (LNOTBK(2)) PRMS(1)= ARRAY(2)
@@ -912,10 +908,10 @@ c     Landscape level, ON in year 'IDT'; stays ON for specified duration
       IF (KODE.GT.0) THEN
         CALL KEYDMP (JOPPRT,IRECNT,KEYWRD,ARRAY,KARD)
         WRITE(JOPPRT,3005) KEYWRD
- 3005   FORMAT(/1X,A8,' Unable to set options')    
+ 3005   FORMAT(/1X,A8,' Unable to set options')
         GOTO 3030
       ENDIF
-      
+
       IF(LKECHO)WRITE(JOPPRT,3010) KEYWRD, IDT, PRMS(1), PRMS(2)*FTtoM,
      >  PRMS(3) / ACRtoHA, PRMS(4)
  3010 FORMAT(/1X,A8,'   Landscape windthrow to be attempted ',
@@ -926,16 +922,16 @@ c     Landscape level, ON in year 'IDT'; stays ON for specified duration
 
 c Note the use of stand ID MXSTND, which is a dummy for the use of the keyword for
 c the entire landscape. Any 1:MXSTND value could be used.
-     
+
       CALL GPADSD(MXSTND)
       CALL GPCLOS(305)
- 
- 3030 CONTINUE                    
-      GOTO 10 
-      
+
+ 3030 CONTINUE
+      GOTO 10
+
 C                        OPTION NUMBER 21 -- QRROT
 C
-C     Read in the parameters associated with quick root disease model 
+C     Read in the parameters associated with quick root disease model
 
  3100 CONTINUE
       IF (LNOTBK(1)) BMRRSR = ARRAY(1)
@@ -969,12 +965,12 @@ c                        OPTION NUMBER 23 -- OTHERBB
 c
 c     This is loosely based on the Type 3 bark beetles in the root disease models.
 c     Parameters are all initialized here (maybe should be done in a common block?)
-c     and are somewhat based on the defaults used in the Annosus model. 
+c     and are somewhat based on the defaults used in the Annosus model.
 c
 c     On in year specified, for specified number of years, but attacks only occur if
-c     conditions are right.                       
+c     conditions are right.
 
- 3300 CONTINUE                                    
+ 3300 CONTINUE
       IDT= 1
       IF (LNOTBK(1)) IDT= INT(ARRAY(1))
 
@@ -1505,7 +1501,7 @@ C
       IF (NOSTND .EQ. 0) THEN
         WRITE(JOPPRT,3814) KEYWRD
  3814   FORMAT(/1X,A8,' Stands not yet read; ',
-     >    'Keyword MUST follow inventory.')    
+     >    'Keyword MUST follow inventory.')
         GOTO 3841
       ENDIF
 C
@@ -1515,7 +1511,7 @@ C     consistent keyword fields.  Added IUNIT=IREAD (RNH (May 98)
 C
 C     Default variable values
 C
-      IDT= 1         
+      IDT= 1
       IUNIT = IREAD
       NPARMS= 5
       TEMP= 6.0
@@ -1555,10 +1551,10 @@ C         classes are (for SDWP): <3, <10, <20, <60
 
 C
 C     End from SALVAGE
-C      
+C
       ISIZ= 0
- 3910 CONTINUE    
-      IF (((PRMS(1) .EQ. 0.0) .OR. (PRMS(2) .EQ. 0.0)) 
+ 3910 CONTINUE
+      IF (((PRMS(1) .EQ. 0.0) .OR. (PRMS(2) .EQ. 0.0))
      >                         .AND. (ISIZ .LT. NSCL)) THEN
          ISIZ= ISIZ + 1
          IF (TEMP .LE. UPSIZ(ISIZ) .AND. PRMS(1) .EQ. 0.0)
@@ -1577,7 +1573,7 @@ C     From SALVAGE
 C
 C      IF(LKECHO)WRITE(JOPPRT, 3950) KEYWRD,IDT,TEMP,TEMP1,(PRMS(I),I=3,5)
 C 3950 FORMAT(/1X,A8,' SANITATION WILL OCCUR AT ', I5,
-C     >  ' MINIMUM DBH FOR SANITATION= ', F6.2, 
+C     >  ' MINIMUM DBH FOR SANITATION= ', F6.2,
 C     >  ' MAXIMUM DBH= ',F6.2,' MAX. RV TO REMOVE= ',F5.2,
 C     >  /T13,'MIN VOL. FOR SANITATION=',F8.0,' EFFICIENCY =',F4.2)
 C
@@ -1586,7 +1582,7 @@ C
       IF(LKECHO)WRITE(JOPPRT, 3950) KEYWRD,IDT,TEMP*INtoCM,TEMP1*INtoCM,
      >  PRMS(3),PRMS(4)*FT3pACRtoM3pHA,PRMS(4)
  3950 FORMAT(/1X,A8,' SANITATION WILL OCCUR AT ', I5,
-     >  ' MINIMUM DBH FOR SANITATION= ', F6.2, 
+     >  ' MINIMUM DBH FOR SANITATION= ', F6.2,
      >  ' MAXIMUM DBH= ',F6.2,' MAX. RV TO REMOVE= ',F5.2,
      >  /T13,'MIN VOL. FOR SANITATION=',F8.0,' EFFICIENCY =',F4.2)
 C
@@ -1597,7 +1593,7 @@ C
 c     Read the input stand IDs, find their location in BMSTDS, and assign
 c     that position to MYLST2.
 
-      J = 0     
+      J = 0
 C...Fix for 26-character supplemental records.  AJM 3/28/00
 *************************************************
  3821 CONTINUE
@@ -1627,24 +1623,23 @@ c     Apply the list to the global option list.
 C
 C     Change glaobal list code to 308 for SANI
 C
- 
+
       CALL GPADD (KODE, IDT, 308, NPARMS, PRMS(1), J, MYLST2)
       IF (KODE.GT.0) THEN
         CALL KEYDMP (JOPPRT,IRECNT,KEYWRD,ARRAY,KARD)
         WRITE(JOPPRT,3816) KEYWRD
- 3816   FORMAT(/1X,A8,' No room to set option.')    
+ 3816   FORMAT(/1X,A8,' No room to set option.')
         GOTO 3841
       ENDIF
 C
 C     End from SALVAGE
 C     Comment out teh following (RNH MAy98)
 C
-C 
 C      CALL GPNEW (KODE,IDT,308,NPARMS,PRMS)
 C      IF (KODE.GT.0) THEN
 C        CALL KEYDMP (JOPPRT,IRECNT,KEYWRD,ARRAY,KARD)
 C        WRITE(JOPPRT,3906) KEYWRD
-C 3906   FORMAT(/1X,A8,'WARNING: Unable to set options')    
+C 3906   FORMAT(/1X,A8,'WARNING: Unable to set options')
 C        GOTO 3960
 C      ENDIF
 C
@@ -1654,19 +1649,19 @@ C     Comment out GPADSD (RNH, may98)
 C
 C      CALL GPADSD(MXSTND)
       CALL GPCLOS(308)
-      
+
  3960 CONTINUE
 
 C
 C     Loop out for SANI (RNH, MAy98)
-C     
+C
  3841 CONTINUE
       GOTO 10
  4000 CONTINUE
 C                        OPTION NUMBER 30 -- OWVALUES: Outside World
-c      
-C This keyword now sets all values of the outside world that can vary during a 
-c simulation (such as BAhost, BAspecial, BAtotal, BKP, RV, #special). This may 
+c
+C This keyword now sets all values of the outside world that can vary during a
+c simulation (such as BAhost, BAspecial, BAtotal, BKP, RV, #special). This may
 c also be used with the keyword WORLD which sets the type of outside world.
 c If any fields are blank, the average initial conditions will be used.
 
@@ -1675,19 +1670,19 @@ c If any fields are blank, the average initial conditions will be used.
 C         Set PRMS to -1 to indicate that the user did not specify values.
          PRMS(I) = -1
  4005 CONTINUE
- 
+
       IDT= 1
       IF (LNOTBK(1)) IDT= IFIX(ARRAY(1))
-                                         
+
 c     total bkp
       IF (LNOTBK(2)) PRMS(1) = ARRAY(2) * M2pHAtoFT2pACR
-c     basal area of host above min size      
+c     basal area of host above min size
       IF (LNOTBK(3)) PRMS(2) = ARRAY(3) * M2pHAtoFT2pACR
-c     basal area of special trees      
+c     basal area of special trees
       IF (LNOTBK(4)) PRMS(3) = ARRAY(4) * M2pHAtoFT2pACR
 c     density of special trees
       IF (LNOTBK(5)) PRMS(4) = ARRAY(5) / HAtoACR
-c     total basal area      
+c     total basal area
       IF (LNOTBK(6)) PRMS(5) = ARRAY(6) * M2pHAtoFT2pACR
 c     rating value
       IF (LNOTBK(7)) PRMS(6) = ARRAY(7)
@@ -1699,7 +1694,7 @@ c     rating value
  4006   FORMAT(/1X,A8,'WARNING: Unable to set options')
         GOTO 4050
       ENDIF
-      
+
       IF(LKECHO)WRITE(JOPPRT,4010) KEYWRD, IDT,
      >  (PRMS(I)*FT2pACRtoM2pHA, I=1,3),
      >  PRMS(4)/ACRtoHA,PRMS(5)*FT2pACRtoM2pHA,PRMS(6)
@@ -1713,12 +1708,12 @@ c     rating value
       CALL GPADSD(MXSTND)
       CALL GPCLOS(310)
  4050 CONTINUE
-      
+
       GOTO 10
  4100 CONTINUE
 C                        OPTION NUMBER 31 -- OWTYPE (More outside world info)
-c                                                                           
-c This keyword sets whether the outside world should be used, the type of 
+c
+c This keyword sets whether the outside world should be used, the type of
 c outside world (floating or constant) and the % of the outside world that
 c is non-stoackable.
 
@@ -1727,7 +1722,7 @@ c is non-stoackable.
       IF (LNOTBK(3)) STOCKO = 100.0 - ARRAY(3)
       IF (STOCKO .LT. 1.0) STOCKO = 1.0
 
-      IF (.NOT. OUTOFF) THEN       
+      IF (.NOT. OUTOFF) THEN
         IF (UFLOAT .EQ. -1) THEN
           IF(LKECHO)WRITE(JOPPRT,4110) KEYWRD, STOCKO
  4110     FORMAT(/1X,A8,'   Outside world values are always the ',
@@ -1738,11 +1733,11 @@ c is non-stoackable.
  4115     FORMAT(/1X,A8,'   Outside world values are always ',
      >     'constant (users can change them).  The outside is ',F4.0,
      >     '% stockable.')
-        ENDIF                                                             
-        
+        ENDIF
+
 C       Change STOCKO into a proportion because that is what is used later
         STOCKO = STOCKO / 100.0
-      ELSE                                 
+      ELSE
         IF(LKECHO)WRITE(JOPPRT,4120) KEYWRD
  4120   FORMAT(/1X,A8,'   The outside world is NOT being simulated.')
       ENDIF
@@ -1750,10 +1745,10 @@ C       Change STOCKO into a proportion because that is what is used later
       GOTO 10
  4200 CONTINUE
 C                        OPTION NUMBER 32 -- OWIPSDV: More Outside World
-c      
+c
 c     This keyword supplements OWVALUES. It is used only for Ips as a driving
 c     variable, and not as a main beetle species.  Any blanks are assumed to
-c     be landscape averages as with OWVALUES. Note that there are fewer 
+c     be landscape averages as with OWVALUES. Note that there are fewer
 c     fields since we don't want the user re-specifiying values that can't
 c     differ (RV and total BA in the outside world).
 
@@ -1762,10 +1757,10 @@ c     differ (RV and total BA in the outside world).
 C         Set PRMS to -1 to indicate that the user did not specify values.
          PRMS(I) = -1
  4205 CONTINUE
- 
+
       IDT= 1
       IF (LNOTBK(1)) IDT= IFIX(ARRAY(1))
-                                         
+
       IF (LNOTBK(2)) PRMS(1) = ARRAY(2) * M2pHAtoFT2pACR
       IF (LNOTBK(3)) PRMS(2) = ARRAY(3) * M2pHAtoFT2pACR
       IF (LNOTBK(4)) PRMS(3) = ARRAY(4) * M2pHAtoFT2pACR
@@ -1775,10 +1770,10 @@ C         Set PRMS to -1 to indicate that the user did not specify values.
       IF (KODE.GT.0) THEN
         CALL KEYDMP (JOPPRT,IRECNT,KEYWRD,ARRAY,KARD)
         WRITE(JOPPRT,4206) KEYWRD
- 4206   FORMAT(/1X,A8,'WARNING: Unable to set options')    
+ 4206   FORMAT(/1X,A8,'WARNING: Unable to set options')
         GOTO 4250
       ENDIF
-      
+
       IF(LKECHO)WRITE(JOPPRT,4210) KEYWRD, IDT,
      >  (PRMS(I)*FT2pACRtoM2pHA, I=1,3),
      >  PRMS(4) / ACRtoHA
@@ -1787,27 +1782,27 @@ C         Set PRMS to -1 to indicate that the user did not specify values.
      &   ' m2/ha;',/T13,'Special trees: BA= ',F7.2,
      &   ' m2/ha and density= ',F7.2,' trees/ha.',/T13,'NOTE: ',
      &   '-1 means that landscape average or previous year value used')
-     
+
       IF (.NOT. IPSON) WRITE(JOPPRT,4211) KEYWRD
  4211 FORMAT(/1X,A8,'   WARNING: Ips may not be on as a driving ',
      >     'variable. Requested options will not be used.')
-     
+
       CALL GPADSD(MXSTND)
       CALL GPCLOS(311)
  4250 CONTINUE
-      
+
       GOTO 10
  4300 CONTINUE
 C                        OPTION NUMBER 33 -- QFIRE: Fire model.
-c      
+c
 
       NPARMS = 2
       PRMS(1)= DEFYRS
       PRMS(2)= 3.0
-      
+
       IDT= 1
       IF (LNOTBK(1)) IDT= IFIX(ARRAY(1))
-                                         
+
       IF (LNOTBK(2)) PRMS(1) = ARRAY(2)
       IF (LNOTBK(3)) PRMS(2) = ARRAY(3)
       PRMS(2) = AMIN1(PRMS(2),4.0)
@@ -1817,20 +1812,20 @@ c
       IF (KODE.GT.0) THEN
         CALL KEYDMP (JOPPRT,IRECNT,KEYWRD,ARRAY,KARD)
         WRITE(JOPPRT,4306) KEYWRD
- 4306   FORMAT(/1X,A8,'WARNING: Unable to set options')    
+ 4306   FORMAT(/1X,A8,'WARNING: Unable to set options')
         GOTO 4350
       ENDIF
-      
+
       IF(LKECHO)WRITE(JOPPRT,4310) KEYWRD,IDT,INT(PRMS(1)),INT(PRMS(2))
  4310 FORMAT(/1X,A8,'   Fire will be active in year/cycle ',I5,
      &  ' with a period of ',I4,' years, using fuel ',
      &  ' moisture type ',I4)
 
-     
+
       CALL GPADSD(MXSTND)
       CALL GPCLOS(313)
  4350 CONTINUE
-      
+
       GOTO 10
  4400 CONTINUE
 C                        OPTION NUMBER 34 -- QDEFOL: Defoliator model
@@ -1840,18 +1835,18 @@ c
       PRMS(1)= DEFYRS
       PRMS(2)= 0.25
       PRMS(3)= 0.0
-      PRMS(4)= 0.0 
+      PRMS(4)= 0.0
       TEMP= 8.0
       TEMP1= 30.0
-              
+
       IDT= 1
       IF (LNOTBK(1)) IDT= IFIX(ARRAY(1))
-                                         
+
       IF (LNOTBK(2)) PRMS(1) = ARRAY(2)
-      IF (LNOTBK(3)) PRMS(2) = ARRAY(3)                      
+      IF (LNOTBK(3)) PRMS(2) = ARRAY(3)
       PRMS(2) = AMIN1(PRMS(2),1.0)
       PRMS(2) = AMAX1(PRMS(2),0.0)
-      
+
       IF (LNOTBK(4)) TEMP= ARRAY(4)  * CMtoIN
       IF (LNOTBK(5)) TEMP1= ARRAY(5) * CMtoIN
 
@@ -1860,7 +1855,7 @@ c
       IF (((PRMS(3) .EQ. 0.0) .OR. (PRMS(4) .EQ. 0.0))
      >                         .AND. (ISIZ .LT. NSCL)) THEN
          ISIZ= ISIZ + 1
-         IF (TEMP .LE. UPSIZ(ISIZ) .AND. PRMS(3) .EQ. 0.0) 
+         IF (TEMP .LE. UPSIZ(ISIZ) .AND. PRMS(3) .EQ. 0.0)
      >                PRMS(3)= ISIZ
          IF (TEMP1 .LE. UPSIZ(ISIZ) .AND. PRMS(4) .EQ. 0.0)
      >                PRMS(4)= ISIZ
@@ -1869,8 +1864,8 @@ c
          IF (PRMS(3) .EQ. 0.0) PRMS(3)= NSCL
          IF (PRMS(4) .EQ. 0.0) PRMS(4)= NSCL
          GOTO 4415
-      ENDIF       
-      
+      ENDIF
+
  4415 CONTINUE
 
 
@@ -1902,7 +1897,7 @@ c     Remove NEW downed dead wood in specified stands in specified years.
       IF (NOSTND .EQ. 0) THEN
         WRITE(JOPPRT,4504) KEYWRD
  4504   FORMAT(/1X,A8,' Stands not yet read; ',
-     >    'Keyword MUST follow inventory.')    
+     >    'Keyword MUST follow inventory.')
         GOTO 4540
       ENDIF
 
@@ -1944,7 +1939,7 @@ C 4525     FORMAT(T13,'STAND ID: ',A8,'   position ',I4)
 C
 C...Fix for 26-character supplemental records.  AJM 3/28/00.
 ************************************************************
-      
+
       READ(IUNIT,*,END=4530) SUPLRECS
       IF (SUPLRECS(1:1) .EQ. '*') GOTO 4520
       IF (INDEX(SUPLRECS,'-999') .GT. 0) GOTO 4530
@@ -2096,7 +2091,7 @@ C      GOTO 10
 C
 C  ==========  OPTION NUMBER 39: COMMENT ==============================
 C
-C     COMMENT KEYWORD.  THIS ENABLES THE USER TO INCLUDE 
+C     COMMENT KEYWORD.  THIS ENABLES THE USER TO INCLUDE
 C     A DESCRIPTIONS WITHIN THE KEYWORD BLOCK.
 C
       IF(LKECHO)WRITE(JOPPRT,4901) KEYWRD
@@ -2130,7 +2125,7 @@ C
 C     IF FIELD ONE IS BLANK, NAME & OPEN THE CYCLE OUTPUT FILE (*.bmc)
 
       IF (.NOT. LNOTBK(1).OR.ARRAY(1).EQ.0) THEN
-         LBMCYC = .TRUE.          
+         LBMCYC = .TRUE.
 C
          OUTNAM=KWDFIL(:ISTLNB(KWDFIL))//'.bmc'
 C
@@ -2143,7 +2138,7 @@ C
          IF (KODE.GT.0) THEN
             WRITE (*,'('' OPEN FAILED FOR '')') OUTNAM
          ENDIF
-      ENDIF 
+      ENDIF
 C
 C-----------
 C IF FIELD 2 IS BLANK, NAME & OPEN THE LANDSCAPE PER YR OUTPUT FILE (*.bml)

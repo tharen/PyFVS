@@ -1,40 +1,26 @@
       SUBROUTINE ESINIT
-      IMPLICIT NONE
+      use esparm_mod
+      use contrl_mod
+      use prgprm_mod
+      use escomn_mod
+      use esrncm_mod
+      use eshap_mod
+      implicit none
 C----------
 C   **ESINIT--CI DATE OF LAST REVISION:   02/16/12
 C----------
 C     CALLED FROM INITRE, ONLY ONCE, TO INITIALIZE REGEN. MODEL.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
-      INCLUDE 'ESCOMN.F77'
-C
-C
-      INCLUDE 'ESHAP.F77'
-C
-C
       INCLUDE 'ESHAP2.F77'
-C
-C
-      INCLUDE 'ESRNCM.F77'
-C
 C
       INCLUDE 'ESWSBW.F77'
 C
-C
-COMMONS
 C----------
       EQUIVALENCE (NSTK,SUMPRB)
       LOGICAL LTEMP,LKECHO
       CHARACTER*40 CNAME
-      INTEGER NSTK,I,KODE,JOSTND
+      INTEGER NSTK,I,KODE,JSTND
       REAL X
 C----------
 C     SPECIES LIST FOR CENTRAL IDAHO VARIANT.
@@ -90,8 +76,9 @@ C----------
       NPTIDS=0
       INQUIRE (UNIT=JOREGT,OPENED=LTEMP)
       IF(.NOT.LTEMP) THEN
-        CNAME=' '
-        CALL MYOPEN (JOREGT,CNAME,4,133, 0,1,1,0,KODE)
+        CNAME=TRIM(KWDFIL)//'_RegenRpt.txt'
+C        CALL MYOPEN (JOREGT,CNAME,4,133, 0,1,1,0,KODE)
+        CALL MYOPEN (JOREGT,CNAME,1,133, 0,1,1,0,KODE)
         IF(KODE.GT.0) WRITE(*,'('' OPEN FAILED FOR '',I4)') JOREGT
       ENDIF
       RETURN
@@ -100,9 +87,9 @@ C
 C----------
 C     CALLED FROM INITRE WHEN NOTREES KEYWORD IS ENTERED.
 C----------
-      ENTRY ESEZCR (JOSTND,LKECHO)
+      ENTRY ESEZCR (JSTND,LKECHO)
       INADV=1
-      IF(LKECHO)WRITE(JOSTND,30)
+      IF(LKECHO)WRITE(JSTND,30)
    30 FORMAT(T12,'(EZCRUISE OPTION IN REGENERATION ESTABLISHMENT ',
      &  'MODEL IS AUTOMATICALLY INVOKED.)'  )
 C

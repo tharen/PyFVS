@@ -1,6 +1,10 @@
       SUBROUTINE SEVLHT(D,H,PULPVO,SWVOL,HT,ISPC,
      &           DEBUG,GR,VLSP)
-      IMPLICIT NONE
+      use contrl_mod
+      use volstd_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **SEVLHT  SN  DATE OF LAST REVISION:  02/09/2012
 C----------
@@ -10,25 +14,7 @@ C PROGRAM FOLLOWS EQUATIONS FOUND IN SE-282 BY CLARK ET AL, PAGES 5-6,
 C 39-41, AND 66-73.
 C----------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'SNCOM.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
-COMMONS
 C
 C----------
 C  DECLARE AND DIMENSION VARIABLES
@@ -120,7 +106,7 @@ C  SET PNT TO DETERMINE WHICH COEFFICIENTS TO USE
 C----------
       PNT = INDVL(ISPC)
       READ (VLSP,'(I3)')IVLSP
-c** IREG is not defined any where!      
+c** IREG is not defined any where!
 c**      IF ((ISPC .GE. 68 .AND. ISPC .LE. 69) .AND. (IREG .EQ. 3
 c**    &     .OR. IREG .EQ. 4 .OR. IREG .EQ. 6)) PNT = 25
 C----------

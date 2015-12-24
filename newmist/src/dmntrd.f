@@ -1,16 +1,19 @@
       SUBROUTINE DMNTRD
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
-C **DMNTRD -- NISI  Date of last revision: April 10 1994 
+C **DMNTRD -- NISI  Date of last revision: April 10 1994
 C----------------------------------------------------------------------
 C Purpose:
 C  Height and crown may change as each tree record is projected. In
 C contrast, DM infections are fixed on the branches and do not move
 C within the crown. This means that infection loads must be modified
 C so that they accurately represent the relationship between
-C nonmoving infections and moving crown third breakponts. In 
+C nonmoving infections and moving crown third breakponts. In
 C particular, new and uninfected crown is produced at the top, and
 C crown death may occur at the lower crown margin. By locating the
 C change in breakpoints, the proper proportions of existing infection
@@ -19,13 +22,13 @@ C----------------------------------------------------------------------
 C
 C Called by:
 C
-C     DMTREG 
+C     DMTREG
 C
 C Other routines called:
 C
 C     DMRANN
 C
-C Argument list definitions:                        
+C Argument list definitions:
 C
 C     [none]
 C
@@ -38,12 +41,12 @@ C                          following growth.
 C     INTEGER   u         Loop counter for treelist records.
 C     INTEGER   v         Loop counter for life history pools
 C     REAL      x         Sum of previous breakpoint values.
-C     REAL      Wt        Scalar to assign correct proportion 
+C     REAL      Wt        Scalar to assign correct proportion
 C                          of infection in old crown third across
 C                          breakpoint now lying in that crown third.
 C     REAL      Mult      Scalar to adjust infection density as a
 C                          function of the change in crown height
-C                          over the growth period. See additional 
+C                          over the growth period. See additional
 C                          note in code below.
 C     REAL      OldVal    Array of infection loads before growth, for
 C                          and individual record. Array is
@@ -62,9 +65,6 @@ C     BPCNT     DMCOM
 C
 C**********************************************************************
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'DMCOM.F77'
 
       INTEGER   i, j, k, L,u, v

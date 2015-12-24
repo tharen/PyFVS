@@ -1,5 +1,13 @@
       SUBROUTINE CROWN
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use pden_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C EM $Id:
 C----------
@@ -33,39 +41,10 @@ C    COEFFICIENTS WHICH ARE ORIGINALLY FROM CR
 C  QUAKING ASPEN (AS) AND PAPER BIRCH (PB) USE IE-AS WHICH ARE ORIGINALLY FROM UT
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
 C
       INCLUDE 'GGCOM.F77'
 C
-C
-COMMONS
 C----------
       EXTERNAL RANN
       LOGICAL DEBUG,NIVAR,CRVAR,UTTVAR,LPIJU,EMVAR
@@ -238,7 +217,7 @@ C---------
       LPIJU = .FALSE.
       IF(ISPC.EQ.5)THEN
         NIVAR=.TRUE.
-      ELSEIF(ISPC.EQ.11 .OR. (ISPC.GE.13 .AND. ISPC.LE.16) .OR. 
+      ELSEIF(ISPC.EQ.11 .OR. (ISPC.GE.13 .AND. ISPC.LE.16) .OR.
      &  ISPC.EQ.19)THEN
         CRVAR=.TRUE.
       ELSEIF(ISPC.EQ.6)THEN
@@ -379,8 +358,8 @@ C----------
 C----------
 C  CALCULATE THE PREDICTED CURRENT CROWN RATIO
 C----------
-        PCR = XCRCON + PARM(7)*D + PARM(8)*D*D + PARM(9)*ALOG(D) + 
-     &  PARM(10)*H + PARM(11)*H*H + PARM(12)*ALOG(H) + 
+        PCR = XCRCON + PARM(7)*D + PARM(8)*D*D + PARM(9)*ALOG(D) +
+     &  PARM(10)*H + PARM(11)*H*H + PARM(12)*ALOG(H) +
      &  PARM(13)*P + PARM(14)*ALOG(P)
         EXPPCR= EXP(PCR)
 C----------
@@ -403,8 +382,8 @@ C----------
 C----------
 C  CALCULATE THE PREDICTED CROWN RATIO AT THE START OF THE CYCLE.
 C----------
-        DCR = DCRCON + PARM(7)*D + PARM(8)*D*D + PARM(9)*ALOG(D) + 
-     &  PARM(10)*H + PARM(11)*H*H + PARM(12)*ALOG(H) + 
+        DCR = DCRCON + PARM(7)*D + PARM(8)*D*D + PARM(9)*ALOG(D) +
+     &  PARM(10)*H + PARM(11)*H*H + PARM(12)*ALOG(H) +
      &  PARM(13)*P + PARM(14)*ALOG(P)
         EXPDCR=EXP(DCR)
 C----------
@@ -560,7 +539,7 @@ C---------
       LPIJU = .FALSE.
       IF(ISPC.EQ.5)THEN
         NIVAR=.TRUE.
-      ELSEIF(ISPC.EQ.11 .OR. (ISPC.GE.13 .AND. ISPC.LE.16) .OR. 
+      ELSEIF(ISPC.EQ.11 .OR. (ISPC.GE.13 .AND. ISPC.LE.16) .OR.
      &  ISPC.EQ.19)THEN
         CRVAR=.TRUE.
       ELSEIF(ISPC.EQ.6)THEN
@@ -604,7 +583,6 @@ C
       IF(DEBUG)WRITE(JOSTND,90)ICYC
    90 FORMAT(' LEAVING SUBROUTINE CROWN  CYCLE =',I5)
       RETURN
-C
 C
 
       ENTRY CRCONS
@@ -673,7 +651,6 @@ C
       DATA ICFLG/MAXSP*0/
       DATA DLOW/MAXSP*0.0/
       DATA DHI/MAXSP*99.0/
-C
 C
       ICRHAB=MAPHAB(ITYPE)
       DO 80 ISPC=1,MAXSP

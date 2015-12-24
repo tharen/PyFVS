@@ -1,5 +1,7 @@
       SUBROUTINE DMNDMR
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -53,8 +55,6 @@ C     SUPRSD    DMCOM
 C
 C**********************************************************************
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
       INCLUDE 'DMCOM.F77'
 
       INTEGER   i,j,k,L

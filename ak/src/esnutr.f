@@ -1,5 +1,11 @@
       SUBROUTINE ESNUTR
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use eshap_mod
+      use outcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **ESNUTR--AK   DATE OF LAST REVISION:   10/03/12
 C----------
@@ -10,38 +16,14 @@ C----------
 C
 C     INTERFACE ROUTINE TO COUPLE THE REGEN MODEL AND PROGNOSIS.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ESHAP.F77'
-C
-C
       INCLUDE 'ESHAP2.F77'
-C
-C
-COMMONS
 C
       INTEGER NCLAS
       PARAMETER (NCLAS=MAXTRE*.4)
       LOGICAL DEBUG,LONE
       INTEGER IESTB(3),I,NP,IACTK,IDT,J,ITRGT,ISQ,KD,IST,NP1,NT
       INTEGER ITODO,KEEP,NPNATS,MYACT2(5),NTODO,KDT
-      REAL PRMS(3),XTPA,XCUF     
+      REAL PRMS(3),XTPA,XCUF
       DATA IESTB/427,428,429/,MYACT2/95,440,442,430,431/
       LONE=.FALSE.
 C
@@ -161,7 +143,7 @@ C
       NTALLY=IACTK-427
       IDSDAT=IFIX(PRMS(1))
       LONE=.TRUE.
-C      
+C
 C     CONVERT IDSDAT TO YEAR IF REQUIRED
 C
       IF((IDSDAT.LT.1000).AND.(IDSDAT.GE.1))IDSDAT=IY(IDSDAT)
@@ -216,7 +198,7 @@ C
             ISQ=ITODO
          ENDIF
   110    CONTINUE
-C      
+C
 C     CONVERT IDSDAT TO YEAR IF REQUIRED
 C
       IF((IDSDAT.LT.1000).AND.(IDSDAT.GE.1))IDSDAT=IY(IDSDAT)

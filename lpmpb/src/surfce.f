@@ -1,5 +1,9 @@
       SUBROUTINE SURFCE
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **SURFCE        DATE OF LAST REVISION:  06/14/13
 C----------
@@ -17,7 +21,6 @@ C          SURF  = SURFACE OF LPP BY CLASS TO 5 INCH TOPS
 C          SUR   = TEMPORARY.  SURFACE TO THE TOP
 C          SUR5  = TEMPORARY.  SURFACE TO 5 INCH TOP
 C
-C
 C Revision History:
 C   06/05/00  Glen Brink (FHTET)
 C     Added variables IDXWP,IDXWL,IDXDF,IDXLP and IDXPP, array indices of
@@ -25,31 +28,22 @@ C       White Pine, Western Larch, Douglas Fir, Lodgepole Pine and
 C       Ponderosa Pine respectively.  Added to common block in file
 C       MPBCOM.F77.
 C     Added array MPBSPM to govern the computations by species using an
-C       IF block as opposed to the old COMPUTED GO TO, since the array 
+C       IF block as opposed to the old COMPUTED GO TO, since the array
 C       allows the definition to be made in mpblkd.f, instead of always
 C       having to change the COMPUTED GO TO. Added to common block in
 C       file MPBCOM.F77.
 C   11/10/00  Lance David (FHTET)
 C     Basic cleanup of code and comments.
-C     Removed old & inactive code.  
+C     Removed old & inactive code.
 C   07/02/10 Lance R. David (FMSC)
-C     Added IMPLICIT NONE.
 C---------------------------------------------------------------------
 C
-COMMONS
-C
 
-      INCLUDE 'PRGPRM.F77'
 
-      INCLUDE 'ARRAYS.F77'
 
-      INCLUDE 'CONTRL.F77'
 
-      INCLUDE 'PLOT.F77'
 
       INCLUDE 'MPBCOM.F77'
-C
-COMMONS
 C
       INTEGER I, I1, I2, II, IS
       REAL SUR, SUR5, SURFLP

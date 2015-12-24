@@ -1,5 +1,9 @@
       SUBROUTINE HTDBH (IFOR,ISPC,D,H,MODE)
-      IMPLICIT NONE
+      use prgprm_mod
+      use varcom_mod
+      use coeffs_mod
+      use arrays_mod
+      implicit none
 C----------
 C  **HTDBH--SO  DATE OF LAST REVISION:  04/24/08
 C----------
@@ -19,21 +23,6 @@ C      MODE = MODE OF OPERATING THIS SUBROUTINE
 C             0 IF DIAMETER IS PROVIDED AND HEIGHT IS DESIRED
 C             1 IF HEIGHT IS PROVIDED AND DIAMETER IS DESIRED
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
 COMMONS
       REAL WINEMA(MAXSP,3),FREMNT(MAXSP,3),DESCHT(MAXSP,3)
       REAL H,D,P2,P3,P4,HAT3

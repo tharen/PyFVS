@@ -1,5 +1,9 @@
       SUBROUTINE FMSSEE (IT,JSP,D,H,SNUM,ITYP,DEBUG,IOUT)
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -24,15 +28,10 @@ C     SNUM: potential number of snags
 C     ITYP: Code of where snags are coming from (0=fmscut,  1=kill,
 C                                                3=initial, 4=keyword)
 C
-COMMONS
-      INCLUDE 'PRGPRM.F77'
 Cppe  INCLUDE 'PPEPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 Cppe  INCLUDE 'PPCNTL.F77'
 Csng  INCLUDE 'CONTRL.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'FMCOM.F77'
 C
 CCOMMONS
 

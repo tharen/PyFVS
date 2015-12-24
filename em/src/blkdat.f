@@ -1,5 +1,18 @@
       BLOCK DATA BLKDAT
-      IMPLICIT NONE
+      use htcal_mod
+      use fvsstdcm_mod
+      use pden_mod
+      use esparm_mod
+      use rancom_mod
+      use contrl_mod
+      use coeffs_mod
+      use econ_mod
+      use plot_mod
+      use screen_mod
+      use escomn_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **BLKDAT--EM   DATE OF LAST REVISION:  02/04/11
 C----------
@@ -10,52 +23,8 @@ C----------
 C     COMMON STATEMENT FOR MODEL COEFFICIENTS WHICH ARE HABITAT
 C     AND SITE DEPENDENT.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
-      INCLUDE 'ESCOMN.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'ECON.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
       INCLUDE 'OPCOM.F77'
 C
-C
-      INCLUDE 'RANCOM.F77'
-C
-C
-      INCLUDE 'SCREEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-      INCLUDE 'FVSSTDCM.F77'
-C
-C
-COMMONS
 C----------
       INTEGER I,J
 C----------
@@ -71,8 +40,8 @@ C  RM USES IE JU (ORIGINALLY FROM UT VARIANT)
 C  AS,PB USE IE AS (ORIGINALLY FROM UT VARIANT)
 C  GA,CW,BA,PW,NC,OH USE IE CO (ORIGINALLY FROM CR VARIANT)
 C----------
-C    AL COMMON                FIA SCIENTIFIC                         
-C  # CD NAME                  CD  NAME                               
+C    AL COMMON                FIA SCIENTIFIC
+C  # CD NAME                  CD  NAME
 C -- -- --------------------- --- -----------------------------------
 C  1 WB WHITEBARK PINE        101 PINUS ALBICALA (WB FROM EM11)
 C  2 WL WESTERN LARCH         073 LARIX OCCIDENTALIS (WL FROM EM11)
@@ -126,19 +95,19 @@ C
      &           4,  9, 11, 12, 19, 20, 11,  9, 12,  4/
 C
 C     OCURHT ZEROES OUT PROBABILITIES WHICH CANNOT OCCUR BY DEFINITION.
-C     (DIMENSIONED 16,MAXSP WITH THE 16 BEING THE HABITAT TYPE GROUP 
+C     (DIMENSIONED 16,MAXSP WITH THE 16 BEING THE HABITAT TYPE GROUP
 C      AS SHOWN IN TABLE 3, PG 6, GTR INT-279)
 C
       DATA ((OCURHT(I,J),I=1,16),J=1,2)/
      1  0., 0., 0., 0., 1., 1., 1., 1., 1., 1., 0., 1., 1., 0., 1., 0.,
      2  1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 0., 1., 0./
-      DATA ((OCURHT(I,J),I=1,16),J=3,4)/ 
+      DATA ((OCURHT(I,J),I=1,16),J=3,4)/
      3  1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 0.,
      4  0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0./
-      DATA ((OCURHT(I,J),I=1,16),J=5,6)/ 
+      DATA ((OCURHT(I,J),I=1,16),J=5,6)/
      5  0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0.,
      6  0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0., 0./
-      DATA ((OCURHT(I,J),I=1,16),J=7,8)/  
+      DATA ((OCURHT(I,J),I=1,16),J=7,8)/
      7  1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
      8  0., 0., 0., 0., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1./
       DATA ((OCURHT(I,J),I=1,16),J=9,10)/
@@ -243,7 +212,7 @@ C----------
 C
       DATA SIGMAR/
      & 0.11645, 0.11645, 0.14465, 0.4671,  0.4345,  0.2,     0.14465,
-     & 0.15850, 0.14465, 0.13420, 0.2,     0.3750,  0.2,     0.2,    
+     & 0.15850, 0.14465, 0.13420, 0.2,     0.3750,  0.2,     0.2,
      & 0.2,     0.2,     0.3750,  0.11645, 0.2   /
 C----------
 C   DATA STATEMENTS FOR VARIABLES IN VARCOM COMMON BLOCK

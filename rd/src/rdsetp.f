@@ -1,5 +1,9 @@
       SUBROUTINE RDSETP
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDSETP      LAST REVISION:  09/03/14
 C----------
@@ -68,9 +72,9 @@ C                projectable records.
 C
 C     05/13/97 - Matthew K. Thompson (FHTET)
 C                Changed code so that if number of plots equals number
-C                of disease plots than patch area equals stand area. 
+C                of disease plots than patch area equals stand area.
 C                Re-numbered statement labels.  Fixed call to RDIPRP,
-C                an element of the array TMP was being passed to RDIPRP 
+C                an element of the array TMP was being passed to RDIPRP
 C                not the whole array.  Removed the section of code that
 C                recalculates PROB.
 C     06/02/98 - Robert N. Havis (FHTET)
@@ -79,7 +83,6 @@ C                when non-host tree record was beeing analysed
 C     17-JUL-2002 Lance R. David (FHTET)
 C                Modified/added debug code.
 C   09/03/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
@@ -87,16 +90,12 @@ C------------------------------
 C
 C.... Parameter include files
 
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 
 C.... Common include files
 
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'RDADD.F77'
 
 C.... Local variable declarations
@@ -126,7 +125,7 @@ C.... considered as one center.
   200    CONTINUE
   300 CONTINUE
 
-      IIPI = INT(PI) 
+      IIPI = INT(PI)
       DO 303 IDI=MINRR,MAXRR
          IF (IIPI .EQ. NDPLTS(IDI)) THEN
             LONECT(IDI) = 1
@@ -221,21 +220,21 @@ C....    Initialized via the PLOTINF keyword
          DO 900 IDI=MINRR,MAXRR
             IF (IDI .GT. MINRR) TMP(IDI-1) = 0.0
 
-            DO 800 IK=1,50  
+            DO 800 IK=1,50
                IF (IANPLT(IDI,IK) .LE. 0) GOTO 900
                TMP(IDI) = PLPROP(IDI,IK)
 
                CALL RDIPRP(PROPN,IANPLT(IDI,IK),TMP)
-                
-  800       CONTINUE                          
-  900    CONTINUE                          
+
+  800       CONTINUE
+  900    CONTINUE
       ENDIF
 
 C.... Load the initial tree list from FVS into the root disease
 C.... tree list arrays that characterize the trees as inside and
 C.... outside of patches  (also infected and uninfected).
 C
-C     Note 
+C     Note
 
       IDI = MAXRR
       DO 2100 I = 1, IREC1
@@ -248,7 +247,6 @@ C     Branch outof loop for non-host tree ((RNH June98)
 C
       IF (IDI .LE. 0) GO TO 2100
 C
-C
          IF (RRTINV .AND. .NOT. LPLINF) THEN
 
 C....       The model is being initialized from the tree list.
@@ -257,7 +255,7 @@ C....       The model is being initialized from the tree list.
 
 C....          This tree record has a severity code 1, tree within
 C....          30 feet of infected tree.  This tree is given an infection
-C....          level around 10% of the tree species infection level at  
+C....          level around 10% of the tree species infection level at
 C....          death.
 
                IF (DEBUG) WRITE (JOSTND,*) '# Severity Code 1.'
@@ -295,7 +293,7 @@ C....          Model is initialized from the tree list.  This tree
 C....          record does not show infection (no root disease damage
 C....          code).  The tree record is given a random proportion
 C....          of roots infected for new infection. MEAN = 0.001.
-C....    
+C....
 C....          I don't see why we initialize root disease level in
 C....          a tree with no root disease. It doesn't matter at any
 C....          point but seems useless.
@@ -306,7 +304,7 @@ C              PROPI(I,1,1) = RDRANP(0.001)
             ENDIF
 
 C....       Scale PROB variables based on how patches are being
-C....       defined. 
+C....       defined.
 
             IF (LONECT(IDI) .EQ. 1 .OR.
      &             (SAREA .EQ. PAREA(IDI))) THEN
@@ -315,7 +313,7 @@ C....          Stand being run as one disease center so scale PROB
 C....          variables by value of patch area.
 
                IF (DEBUG) WRITE (JOSTND,1400)
- 1400          FORMAT(' # Run as 1 center, set PROBIU and PROBI.') 
+ 1400          FORMAT(' # Run as 1 center, set PROBIU and PROBI.')
 
                PROBIU(I) = PROBIU(I) * PAREA(IDI)
                PROBI(I,1,1) = PROBI(I,1,1) * PAREA(IDI)
@@ -324,11 +322,11 @@ C....          variables by value of patch area.
             ELSEIF (LONECT(IDI) .EQ. 0) THEN
 
 C....          Stand being run without knowledge of the patches so
-C....          scale PROB variables by value of patch area. 
+C....          scale PROB variables by value of patch area.
 
                IF (DEBUG) WRITE (JOSTND,1500)
  1500          FORMAT(' # No knowledge of patches, ',
-     &                'set PROBIU and PROBI.') 
+     &                'set PROBIU and PROBI.')
 
                PROBIU(I) = PROBIU(I) * PAREA(IDI)
                PROBI(I,1,1) = PROBI(I,1,1) * PAREA(IDI)
@@ -339,7 +337,7 @@ C....             If patch area equals stand area then there are no
 C....             trees outside patches.
 
                   IF (DEBUG) WRITE (JOSTND,1525)
- 1525             FORMAT(' # No knowledge of patches, PAREA = SAREA.') 
+ 1525             FORMAT(' # No knowledge of patches, PAREA = SAREA.')
 
                   FPROB(I) = 0.0
 
@@ -348,7 +346,7 @@ C....             trees outside patches.
 C....             Calculate trees/acre outside of the patches.
 
                   IF (DEBUG) WRITE (JOSTND,1550)
- 1550             FORMAT(' # No knowledge of patches, PAREA /= SAREA.') 
+ 1550             FORMAT(' # No knowledge of patches, PAREA /= SAREA.')
 
                   FPROB(I) = (PROB(I) * SAREA - (PROBIU(I) +
      &                       PROBI(I,1,1))) / (SAREA - PAREA(IDI))
@@ -361,7 +359,7 @@ C....          variables by value of the stand area.
 
                IF (DEBUG) WRITE (JOSTND,1600)
  1600          FORMAT(' # Run as multiple plots, ',
-     &                'set PROBIU, PROBI, and FPROB.') 
+     &                'set PROBIU, PROBI, and FPROB.')
 
                PROBIU(I)  = PROBIU(I) * SAREA
                PROBI(I,1,1) = PROBI(I,1,1) * SAREA
@@ -385,7 +383,7 @@ C....
 
 C....          If (not using PLOTINF or tree records are inside
 C....          infected plots) and the tree species is a host then
-C....              
+C....
 C....          The proportion of infection for each tree record is taken
 C....          from the random proportion function with the mean being
 C....          the value entered by the user in field 5 of the RRINIT
@@ -394,7 +392,7 @@ C....          keyword.
                IF (DEBUG) WRITE (JOSTND,1700)
  1700          FORMAT(' # Using only RRINIT, or tree record inside ',
      &                'infected plot specified by PLOTINF ',
-     &                'set PROBIU, PROBI, and FPROB.') 
+     &                'set PROBIU, PROBI, and FPROB.')
 
                IF (PAREA(IDI) .GT. 0.0)
      &            PROPI(I,1,1) = RDRANP(RRINCS(IDI))
@@ -405,7 +403,7 @@ C....          keyword.
      &                      PAREA(IDI) / (RRGEN(IDI,1) + 0.00001)
                FPROB(I) = PROB(I)
 
-            ELSE 
+            ELSE
 
 C....          Initialized by PLOTINF keyword, but this record
 C....          belongs to a plot which is outside disease centers
@@ -417,7 +415,7 @@ C
 C
       IF (DEBUG) WRITE (JOSTND,1800)
  1800          FORMAT(' # Using PLOTINF, this tree is in plot which ',
-     &                'is outside disease centers, set FPROB.') 
+     &                'is outside disease centers, set FPROB.')
 
                PROBI(I,1,1) = 0.0
                PROBIU(I) = 0.0
@@ -520,7 +518,7 @@ C           list), then skip it. Also skip if PROPI < 0
       DO 2500 IDI=MINRR,MAXRR
          PRINF(IDI) = PRINF(IDI) / (PRPTOT(IDI) + 1E-6)
  2500 CONTINUE
- 
+
       IF (DEBUG) WRITE (JOSTND,*) 'EXIT RDSETP'
 
       RETURN

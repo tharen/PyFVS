@@ -1,5 +1,13 @@
       SUBROUTINE ESFLTR
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use esparm_mod
+      use estree_mod
+      use contrl_mod
+      use eshap_mod
+      use pden_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **ESFLTR DATE OF LAST REVISION:  09/17/08
 C----------
@@ -7,35 +15,7 @@ C
 C      CALLED AFTER CRATET TO COLLECT INVENTORY INFORMATION FOR
 C      UNDERSTORY/OVERSTORY DENSITIES AND TO FLAG BEST TREES
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
-      INCLUDE 'ESTREE.F77'
-C
-C
-      INCLUDE 'ESHAP.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
       INCLUDE 'CALDEN.F77'
-C
-COMMONS
 C
       INTEGER IDENWK(MAXTRE),NOTE(30),ICHOIS(30),NULL(MAXSP),
      &          ITALL(MAXSP),IPLOT(MAXTRE)
@@ -43,7 +23,6 @@ C
       INTEGER I,N,KODE,NPS,IDT,IFLAG,IBGIN,NNN,III,IS,KT,IHOLD
       REAL HEIGHT,CHEK,ZPROB,D,PIX
       INTEGER NUM,J,IDENT
-      EQUIVALENCE (WK5,IDENWK),(WK6,IPLOT)
       DO 10 I=1,MAXPLT
       BAAINV(I)=0.0
    10 CONTINUE

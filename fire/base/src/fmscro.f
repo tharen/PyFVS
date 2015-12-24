@@ -1,5 +1,11 @@
       SUBROUTINE FMSCRO (I,SP,DEADYR,DSNAGS,ICALL)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -29,7 +35,7 @@ C
 *              called to deal with fire-killed snags or other snags).
 *     DKCL:    decay class
 *     ILIFE:   lifespan of the current class of crown material, as an
-*              integer value 
+*              integer value
 *     ICALL:   Where was this called from? 1=after a fire,2=after a cut
 *     FALLYR:  position in CWD2B array that corresponds to the year in
 *              which a pool of material should fall.
@@ -44,20 +50,14 @@ C
 *  Common block variables and parameters:
 *
 ***********************************************************************
-      
+
 C.... Parameter statements.
 
-C.... Parameter include files.   
-      INCLUDE 'PRGPRM.F77'
+C.... Parameter include files.
 Cppe  INCLUDE 'PPEPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... Common include files.
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'CONTRL.F77'
 Cppe  INCLUDE 'PPCNTL.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'PLOT.F77'
 
 C.... Variable declarations.
       INTEGER I, SP, DEADYR, SIZE, DKCL, IYR, ILIFE, YNEXTY,FALLYR
@@ -70,18 +70,18 @@ C
 C     CHECK FOR DEBUG.
 C
       CALL DBCHK (DEBUG,'FMSCRO',6,ICYC)
-      
+
 C.... Begin routine.
       IF (DSNAGS .LE. 0.0) RETURN
-      DKCL = DKRCLS(SP) 
+      DKCL = DKRCLS(SP)
 
       YRSCYC = FLOAT( IY(ICYC+1)-DEADYR )
 Csng  YRSCYC = FLOAT( IY(ICYC+1)-DEADYR )
 Cppe  YRSCYC = FLOAT( MIY(MICYC)-DEADYR )
-      
-C     find out how long it will be between the year of death and the 
-C     next year simulated, so that only crown material to fall in that 
-C     year or later is added to CWD2B2 or CWD2B.  
+
+C     find out how long it will be between the year of death and the
+C     next year simulated, so that only crown material to fall in that
+C     year or later is added to CWD2B2 or CWD2B.
 
 Cppe  IF (DEADYR .LT. MIY(1)) THEN
 Cppe    YNEXTY = MIY(1) - DEADYR
@@ -92,13 +92,13 @@ Csng    YNEXTY = IY(1) - DEADYR
          YNEXTY = IY(1) - DEADYR
       ELSE
          YNEXTY = 1
-      ENDIF 
-      
+      ENDIF
+
 C     You can skip everything else if all material will fall before
 C     the simulation begins.
 
       IF (YNEXTY .GT. TFMAX) GOTO 101
-      
+
 C     Call FMSNGDK to predict years, since death, for snag to become
 C     soft.
 
@@ -107,13 +107,13 @@ C     soft.
       IF (DEBUG) WRITE(JOSTND,7) ICYC, TSOFT, KODFOR, VVER(1:2)
     7 FORMAT(' FMSCRO CYCLE=',I2,' TSOFT=',F6.1,' KODFOR=',I5,
      &       ' VVER=',A2)
-      
+
 C     If called from CUTS, then OLDCRW will be holding last year's
 C     crown info, not the dead part of the crown. Thus, we need to do
 C     some additional calculations (which are normally done in FMSDIT).
 
       X = 1.0
-      IF (ICALL .EQ. 2) THEN        
+      IF (ICALL .EQ. 2) THEN
          OLDBOT = OLDHT(I) - OLDCRL(I)
          NEWBOT = HT(I) - (HT(I) * FLOAT(FMICR(I)) / 100.0)
          IF (OLDCRL(I) .GT. 0.0 .AND. (NEWBOT-OLDBOT) .GT. 0.0) THEN
@@ -122,22 +122,22 @@ C     some additional calculations (which are normally done in FMSDIT).
             X = 0.0
          ENDIF
       ENDIF
-      
-C     Divide each class of crown material equally among all the CWD2B2 
-C     pools between next year and the shorter of TSOFT or TFALL. 
+
+C     Divide each class of crown material equally among all the CWD2B2
+C     pools between next year and the shorter of TSOFT or TFALL.
 
       DO SIZE=0,5
-         
+
          RLIFE = TFALL(SP,SIZE)
          IF (RLIFE .GT. TSOFT) RLIFE = TSOFT
          ILIFE = INT(RLIFE)
-         
-C        next line asks whether ILIFE had to be truncated (or is zero), 
-C        and rounds it up to the next highest integer if so.  
+
+C        next line asks whether ILIFE had to be truncated (or is zero),
+C        and rounds it up to the next highest integer if so.
 
          IF (REAL(ILIFE) .LT. RLIFE .OR. ILIFE .LE.0) ILIFE =ILIFE+1
          RLIFE = REAL(ILIFE)
-         
+
 C        don't forget to consider the OLDCRW material as well as CROWNW.
 C        but only do this if it's not mortality reconciliation time (icall =4)
 C        since then oldcrw is no longer holding the dead part of the crown
@@ -159,17 +159,17 @@ C        SAR 11/20/12
          DO IYR=YNEXTY,ILIFE
 
             FALLYR = IYR + 1 - YNEXTY
-            
-C           Normally, we want to put the stuff into CWD2B2, but if this is 
-C           called during mortality reconciliation, CWD2B2 has already been 
+
+C           Normally, we want to put the stuff into CWD2B2, but if this is
+C           called during mortality reconciliation, CWD2B2 has already been
 C           copied to CWD2B in preparation for the next cycle, so that is
 C           where we need to put the stuff.
 
             IF (ICALL .NE. 4) THEN
-               CWD2B2(DKCL,SIZE,FALLYR) = CWD2B2(DKCL,SIZE,FALLYR) 
+               CWD2B2(DKCL,SIZE,FALLYR) = CWD2B2(DKCL,SIZE,FALLYR)
      >                                   + ANNUAL
 	    ELSE
-               CWD2B(DKCL,SIZE,FALLYR) = CWD2B(DKCL,SIZE,FALLYR) 
+               CWD2B(DKCL,SIZE,FALLYR) = CWD2B(DKCL,SIZE,FALLYR)
      >                                   + ANNUAL
             ENDIF
 

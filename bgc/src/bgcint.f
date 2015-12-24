@@ -1,4 +1,5 @@
       SUBROUTINE BGCINT
+      implicit none
 C----------
 C  **BGCINIT  BGC -- DATE OF LAST REVISION: 5/15/00
 C                 Revised 11/12/02.  Removing index ISTND, and removing PPE
@@ -14,17 +15,11 @@ C    WHEN THE FIRST BGC KEYWORD IS USED, BGCIN CALLES BGCINITALL
 C    TO SET BGC DEFAULT VALUES FOR PARAMETERS, SITE, AND CONTROL VARIABLES
 C    NEEDED TO EXECUTE MODEL.
 C
-COMMONS
-C
-C
       INCLUDE 'BGCCOM.F77'
       INCLUDE 'SITE.F77'
       INCLUDE 'ENTITY.F77'
 C      INCLUDE 'PRGPRM.F77'                             ! removed ajm 11/02
 C      INCLUDE 'PPCNTL.F77'                             ! removed ajm 11/02
-C
-C
-COMMONS
 C
 C      LBGCON(ISTND) = .FALSE.                          ! removed ajm 11/02
       LBGCON = .FALSE.
@@ -148,7 +143,7 @@ C  LEAVE CLIMATE IN EXTERNAL FILE FOR NOW
 C----------------------------------------------------------------------
 C
 C  Initialization of flag IBGC added here AJM 8/25/00.  If BGC increments
-C  will be used in FVS, this flag will be set to 1 in BGCIN (this 
+C  will be used in FVS, this flag will be set to 1 in BGCIN (this
 C  subroutine's calling subroutine.)
 C      IBGC(ISTND)=0                                    ! removed 11/02 ajm
       IBGC=0
@@ -156,6 +151,7 @@ C      IBGC(ISTND)=0                                    ! removed 11/02 ajm
       END
 C----------------------------------------------------------------------
       SUBROUTINE SOILH2O
+      implicit none
 C----------------------------
 C  calculates maximum volumetric soil water content from sand, silt
 C  and clay fractions.  Maximum volumetric content can also be read

@@ -1,9 +1,13 @@
       SUBROUTINE DMOPTS
-      IMPLICIT NONE      
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
-C **DMOPTS -- NISI  Date of last revision: April 10 1994 
+C **DMOPTS -- NISI  Date of last revision: April 10 1994
 C----------------------------------------------------------------------
 C Purpose:
 C  Users are provided three date-sensitive options in the model:
@@ -15,7 +19,7 @@ C----------------------------------------------------------------------
 C
 C Called by:
 C
-C     DMTREG 
+C     DMTREG
 C
 C Other routines called:
 C
@@ -23,7 +27,7 @@ C     OPFIND
 C     OPGET
 C     OPDONE
 C
-C Argument list definitions:                        
+C Argument list definitions:
 C
 C     [none]
 C
@@ -72,21 +76,17 @@ C     PI        PLOT
 C
 C**********************************************************************
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'ARRAYS.F77'
       INCLUDE 'DMCOM.F77'
 
 C Local variables.
-      
+
       INTEGER   i, n, p
       INTEGER   NTODO, IDATE, IACTK, NPAR
       INTEGER   MYACTS(2)
       REAL      Parm(2)
-      REAL      Mean, Var, x      
+      REAL      Mean, Var, x
       REAL      PltDns(MAXPLT)
-      
+
       DATA MYACTS /2008,2009/
 
 C See if options have been specified for DMALPH and/or DMBETA. A
@@ -104,7 +104,7 @@ C Parm() value of -999 means "don't change the existing value".
         CALL DMNAC(DMALPH,DMBETA)
       ENDIF
 
- 
+
 C Determine if DMCLMP has been specified. If not, the stems/acre
 C dispersion among plots is used. Plots are not assumed to be in any
 C order, even though I suspect that they probably are.
@@ -116,41 +116,41 @@ C order, even though I suspect that they probably are.
           CALL OPGET(I, 1, IDATE, IACTK, NPAR, Parm)
           CALL OPDONE(I, IY(ICYC))
           DMCLMP = Parm(1)
-   19   CONTINUE 
-      
-      ELSE 
-      
+   19   CONTINUE
+
+      ELSE
+
         IF (IPTINV .GT. 1) THEN
-        
-          DO 20 i=1, MAXPLT   
+
+          DO 20 i=1, MAXPLT
             PltDns(i) = 0.0
    20     CONTINUE
-      
+
           Mean = 0.0
-          DO 21 i = 1, ITRN 
+          DO 21 i = 1, ITRN
             p = ITRE(i)
             x = PROB(i)
             PltDns(p) = PltDns(p) + x
             Mean = Mean + x
-   21     CONTINUE        
-          Mean = Mean / PI 
-      
-          Var = 0.0 
+   21     CONTINUE
+          Mean = Mean / PI
+
+          Var = 0.0
           n = 0
           DO 22 i = 1, MAXPLT
             IF (PltDns(i) .GT. 0.0) THEN
               Var = Var + (PltDns(i) - Mean)**2
               n = n + 1
             END IF
-   22     CONTINUE                                    
- 
-          IF (n .GT. 1) THEN 
+   22     CONTINUE
+
+          IF (n .GT. 1) THEN
             Var = Var / (FLOAT(n) - 1.0)
             DMCLMP = Var / Mean
           END IF
-          
+
         END IF
-                 
+
       ENDIF
 
       RETURN

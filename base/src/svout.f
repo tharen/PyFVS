@@ -1,5 +1,13 @@
       SUBROUTINE SVOUT(IYEAR,IFMCLFG,AMSG)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use svdata_mod
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -32,7 +40,6 @@ C                  SVCUTS: to display post-thin SVS diagram.
 C                  SVSTART: to display SVS diagram for initial inventory.
 C                  FMSVOUT: to display fire burning through stand.
 C
-C
 C     CURRENT TREE CLASSES:
 C      0 - GREEN TREE (STANDING OR RECENTLY CUT TREE)
 C     90 - NEW WESTWIDE PINE BEETLE KILL, OFF-GREEN
@@ -47,25 +54,15 @@ C     99 - WILD CARD, WE DON'T USE THIS CODE...IT IS A GREEN
 C          TREE (STANDING OR RECENTLY CUT TREE)
 C----------
 C
-C
-COMMONS
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
-      INCLUDE 'ARRAYS.F77'
 
-      INCLUDE 'CONTRL.F77'
 
-      INCLUDE 'FMCOM.F77'
 
-      INCLUDE 'PLOT.F77'
 
-      INCLUDE 'SVDATA.F77'
 
       INCLUDE 'SVDEAD.F77'
 
-      INCLUDE 'METRIC.F77'
 
 COMMONS
 
@@ -83,7 +80,7 @@ COMMONS
       CHARACTER*100 CBUFF
       CHARACTER*23 PLTGEO
       LOGICAL DEBUG,LOPEN
-      CALL DBCHK (DEBUG,'SVOUT',5,ICYC)     
+      CALL DBCHK (DEBUG,'SVOUT',5,ICYC)
       IF (DEBUG) WRITE (JOSTND,5) IYEAR, AMSG, JSVOUT, NSVOBJ,
      >  JSVPIC, NIMAGE, IFMCLFG
     5 FORMAT (/' IN SVOUT: IYEAR=',I5,' AMSG=',A,' JSVOUT=',I3,
@@ -122,8 +119,8 @@ C                       XXXXXX. XXXX. XXXX.
 
       IF (JSVOUT.EQ.0) RETURN
       IF (JSVOUT.LT.0) GOTO 26 ! PROCESSING IMAGE, BUT NOT OUTPUTING
-      
-C     Make sure that the index file is opened (could be closed if a 
+
+C     Make sure that the index file is opened (could be closed if a
 C     restart is being done.
 
       inquire(unit=JSVOUT,opened=LOPEN)
@@ -132,15 +129,15 @@ C     restart is being done.
         open(unit=JSVOUT,file=trim(KWDFIL)//SUFFIX,
      >         status="old",err=7)
 
-c       find out the last used value of NIMAGE. 
-        
-        do 
+c       find out the last used value of NIMAGE.
+
+        do
           read(jsvout,'(a)',end=2) CBUFF
           if (CBUFF(:7).eq.STDTAG) NIMAGE=NIMAGE+1
         enddo
     2   continue
         close(unit=JSVOUT)
-        
+
         open(unit=JSVOUT,file=trim(KWDFIL)//SUFFIX,
      >         position="append",err=7)
         goto 9
@@ -152,7 +149,7 @@ c       find out the last used value of NIMAGE.
         RETURN
     9   continue
       endif
-      
+
       IF (IMETRIC.EQ.0) THEN
         IF (IPLGEM.LT.2) THEN
            PLTGEO='#PLOTSIZE 208.71 208.71'
@@ -175,7 +172,7 @@ C     THIS IS DONE TO INSURE THAT MULTIPLE RUNS ARE PROCESSED.
 
 C       FIND THE FIRST AND LAST CHAR OF THE KEYWORD NAME
 C       WATCH FOR DIRECTORY LEVELS...WE DON'T WANT THEM.
- 
+
         KYLAST=len_trim(KWDFIL)
         DO I=KYLAST,1,-1
           IF (KWDFIL(I:I).EQ.'/' .OR. KWDFIL(I:I).EQ.'\') EXIT
@@ -201,8 +198,8 @@ C       TRY TO OPEN A FILE WITH THE DIRECTORY NAME INCLUDED.
         WRITE (JSVOUT,10) STDTAG,NPLT(1:MAX(1,ISTLNB(NPLT))),IYEAR,
      >      AMSG,KWDFIL(:KYLAST)//'/'//TRIM(CBUFF)
    10   FORMAT (A,A,' Year=',I4.4,' ',A,'" "',A,'"')
-        GOTO 20 
-  
+        GOTO 20
+
 C       IF THE OPEN FAILS, THEN OPEN ONE WITHOUT THE DIR NAME INCLUDED.
 
    12   CONTINUE
@@ -223,14 +220,14 @@ C       SETTING JSVOUT TO ZERO TURNS OFF SVS...WE'RE DONE.
 
         JSVOUT=0
         RETURN
-        
+
    20   CONTINUE
         NOUT=JSVPIC
       ELSE
         NOUT=JSVOUT
       ENDIF
-      
-  
+
+
       CALL VARVER (VVER)
       SELECT CASE (VVER(:2))
         CASE ('CS','LS','NE','SN')
@@ -241,7 +238,7 @@ C       SETTING JSVOUT TO ZERO TURNS OFF SVS...WE'RE DONE.
           SFILE='  ON'
         CASE DEFAULT
           SFILE='WEST'
-      END SELECT          
+      END SELECT
       WRITE (NOUT,21) NPLT(1:MAX(1,ISTLNB(NPLT))),IYEAR,AMSG,
      >  SFILE,PLTGEO(1:ISTLNB(PLTGEO))
    21 FORMAT ('#TITLE Stand=',A,' Year=',I4.4,' ',A/
@@ -382,7 +379,7 @@ C         ROUND PLOTS
       ENDIF
 
    26 CONTINUE ! BRANCH HERE WHEN SKIPPING OUTPUT.
-   
+
 C     IF THE FFE IS ACTIVE, CALL SVCWD TO GENERATE CWD OBJECTS
 
       IF ( LFMON ) CALL SVCWD(IYEAR)
@@ -482,7 +479,7 @@ C              3) Snag will be removed at the bottom of SVOUT.
 
             CALL SVSNAGE(IYEAR,IS2F(ISVOBJ),SNCRDI,SNCRTO,
      >        SNHT,SNDI)
-              
+
 C           Keep snags with diameter less than 1", for better
 C           agreement with FFE logic.
 
@@ -589,7 +586,7 @@ C             have had their status code multiplied by -1.
                 IDIR = IFIX(FALLDIR(IS2F(ISVOBJ)))
               ENDIF
             ENDIF
-            
+
             IF( JSVOUT.LT.0) GOTO 32 ! PROCESSING IMAGE, BUT NOT OUTPUTING
 
             IF(IMETRIC.EQ.0) THEN

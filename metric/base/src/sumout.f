@@ -1,6 +1,8 @@
       SUBROUTINE SUMOUT(IOSUM,I20,ICFLAG,JOPRT,JOSTND,JOSUM,
      >                  LEN,MGMID,NPLT,SAMWT,ITITLE,IPTINV)
-      IMPLICIT NONE
+      use metric_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -48,13 +50,7 @@ C     MGMID = MANAGEMENT IDENTIFICATION FIELD. ASSUMED ALPHANUMERIC.
 C     NPLT  = PLOT IDENTIFICATION FIELD. ASSUMED ALPHANUMERIC.
 C NOTE: * Indicates R8 and R9 specific (CS, LS, NE, OZ, SE, SN)
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'SUMTAB.F77'
-      INCLUDE 'METRIC.F77'
-C
-COMMONS
 C
       CHARACTER CISN*11,NPLT*26,TIM*8,DAT*10,MGMID*4,VVER*7,REV*10
       CHARACTER ITITLE*72
@@ -151,7 +147,6 @@ C     &    '------  ----- -----  ----- ------')
         ENDIF
       ENDIF
 C
-C
 C     STEP3: LOOP THRU ALL ROWS IN IOSUM...WRITE OUTPUT.
 C
 C  THIS STEP TAKES JUST THE FIRST 12 ITEMS IN THE IOSUM ARRAY
@@ -194,7 +189,7 @@ C  LEAVE MERCH BF IN IMPERIAL UNITS
 
         X15 = ISDIAT(I)/ACRtoHA
 	  IF (X15 .GE. 9999.0) X15 = -1.0  ! f6.0
-	 
+
 	 X015=IOSUM(10,I)/ACRtoHA          ! F6.1
         IF (X015 .GE. 9999.0) X015= -1.0  ! f6.1
 

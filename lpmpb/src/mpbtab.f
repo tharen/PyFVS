@@ -1,5 +1,8 @@
       SUBROUTINE MPBTAB(CFTVOL)
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **MPBTAB        DATE OF LAST REVISION:  08/22/14
 C----------
@@ -53,29 +56,14 @@ C
 C Revision History
 C   03/26/91 Last noted revision date.
 C   07/02/10 Lance R. David (FMSC)
-C     Added IMPLICIT NONE.
 C   08/22/14 Lance R. David (FMSC)
 C     Function name was used as variable name.
 C     changed variable INDEX to INDX
 C----------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
       INCLUDE 'MPBCOM.F77'
 C
-C
       INCLUDE 'COLCOM.F77'
-C
-COMMONS
 C
 
       INTEGER I, J, INDX, NUMYR

@@ -1,5 +1,15 @@
       SUBROUTINE HTGF
-      IMPLICIT NONE
+      use htcal_mod
+      use multcm_mod
+      use pden_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use plot_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C CR $Id$
 C-----------
@@ -8,42 +18,8 @@ C   INCREMENT FOR EACH CYCLE AND LOADS IT INTO
 C    AN ARRAY, HTG.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'MULTCM.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
       INCLUDE 'GGCOM.F77'
 C
-C
-COMMONS
 C----------
       EXTERNAL RANN
       LOGICAL DEBUG
@@ -60,12 +36,12 @@ C  21=NC, 22=PW, 23=GO, 24=AW, 25=EM, 26=BK, 27=SO, 28=PB, 29=AJ, 30=RM,
 C  31=OJ, 32=ER, 33=PM, 34=PD, 35=AZ, 36=CI, 37=OS, 38=OH
 C
 C  SPECIES EXPANSION:
-C  UJ,AJ,RM,OJ,ER USE CR JU                              
+C  UJ,AJ,RM,OJ,ER USE CR JU
 C  NC,PW USE CR CO
-C  GO,AW,EM,BK,SO USE CR OA                             
-C  PB USES CR AS                              
+C  GO,AW,EM,BK,SO USE CR OA
+C  PB USES CR AS
 C  PM,PD,AZ USE CR PI
-C  CI USES CR PP                              
+C  CI USES CR PP
 C----------
 C LOAD HEIGHT-TO-SITE FOR SOUTHWEST MC MODEL TYPE
 C----------
@@ -170,7 +146,7 @@ C----------
 C  ADJUST AP FOR BREAST HIGH AGE CURVES IF NECESSARY
 C----------
       IF(IMODTY.EQ.1 .OR. IMODTY.EQ.2 .OR. IMODTY.EQ.4)THEN
-        IF(ISPC.EQ.20 .OR. ISPC.EQ.28 .OR. ISPC.EQ.38 
+        IF(ISPC.EQ.20 .OR. ISPC.EQ.28 .OR. ISPC.EQ.38
      &    .OR. ISPC.EQ.14 .OR. (IMODTY.EQ.3 .AND.
      &  (ISPC.EQ.21 .OR. ISPC.EQ.22 .OR. ISPC.EQ.37 .OR. ISPC.EQ.16
      &  .OR. (ISPC.GE.29 .AND. ISPC.LE.32))))THEN

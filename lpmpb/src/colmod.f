@@ -1,5 +1,6 @@
       SUBROUTINE COLMOD (IFINT,ICYC,IYEAR,NPLT)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C  **COLMOD        DATE OF LAST REVISION:  06/14/13
 C----------
@@ -31,23 +32,12 @@ C     Changed the minimum number of GREEN trees that must exist in
 C     a DBH class before trees from that class can be killed.
 C     The original value of 1.0E-12 was changed to 0.03.
 C   07/02/10 Lance R. David (FMSC)
-C     Added IMPLICIT NONE.
 C
 C**********************************************************************
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'COLCOM.F77'
 C
-C
       INCLUDE 'MPBCOM.F77'
-C
-C
-COMMONS
-C
 C
       CHARACTER*26 NPLT
 
@@ -55,7 +45,7 @@ C
      &        IYEAR, ICYC, IFINT, IRND, I, J, K, L, NUMYRS
 
       REAL    PMIN(10), PMAX(10), WAYNE(10), X, DTOTAL, PNEW
-      
+
 
 C
 C      Q VALUES FOR MIN AND MAX BOUNDARIES, BOUSFIELD'S NORMAL TPA
@@ -63,12 +53,12 @@ C
       DATA PMIN/.970,.950,.900,.800,.600,.500,.400,.150,.100,.050/
       DATA PMAX/1.0,1.0,1.0,1.0,.990,.980,.970,.900,.800,.700/
       DATA WAYNE/150.,100.,95.,66.,35.5,16.5,5.5,3.,1.5,.80/
- 
+
 C
 C     STATEMENT FUNCTION IRND (ROUNDING FUNCTION)
 C
       IRND(X) = IFIX(X + 0.5)
- 
+
 C
 C     PRINT DEBUG IF REQUESTED.
 C
@@ -82,7 +72,7 @@ C
       DO 2 I = 1,10
          STOTAL = STOTAL + START(I)
     2 CONTINUE
- 
+
       IF (DEBUIN) WRITE(JOMPB,*) 'IN COLMOD, STOTAL=', STOTAL
 C
 C     FIRST OBTAIN INITIAL INFESTATION VALUES.
@@ -174,7 +164,7 @@ C.... pine beetle.
      >   TDEAD(10)
 
       CALL EVSET4 (4,TDEAD(10))
-      
+
 C
 C     OUTPUT TREES PER DBH, TOTAL DEAD AND TOTAL LIVE PER TIME
 C

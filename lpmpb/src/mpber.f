@@ -1,13 +1,15 @@
       SUBROUTINE MPBER (NOER)
-      IMPLICIT NONE
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **MPBER         DATE OF LAST REVISION:  07/02/10
 C----------
 C
-C
 C     NOER  = TRUE WHEN MINIMUM CONDITIONS MET FOR AN OUTBREAK
 C             IE NOT AN 'ERROR'
-C
 C
 C Revision History
 C   05/31/00 GEB
@@ -16,29 +18,11 @@ C     Defined in mpblkd.f, which is variant dependent
 C   12/01/98 RNH
 C     Adapated to 24 species (CR variant)
 C   07/02/10 Lance R. David (FMSC)
-C     Added IMPLICIT NONE.
 C----------
       LOGICAL NOER
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'MPBCOM.F77'
 C
-C
-COMMONS
 
       INTEGER I, I1, I2, II
       REAL P, D
@@ -57,7 +41,6 @@ C     with new species mapping and new location for LP (RNH Dec98, GEB May2000)
 C
       I1 = ISCT(IDXLP,1)
 C      I1 = ISCT(7,1)
-C
 C
       IF ( I1 .EQ. 0 ) GO TO 90
 C

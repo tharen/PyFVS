@@ -1,5 +1,7 @@
       SUBROUTINE DFBSCH
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **DFBSCH DATE OF LAST REVISION:  05/30/13
 C----------
@@ -57,16 +59,7 @@ C     Added double precision variable TSEED to replace the addition statement
 C     as the arugument in the call to DFBCSD because it caused a LF95 error.
 C------------------------------------------------------------------------------
 COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
       INCLUDE 'DFBCOM.F77'
-C
-COMMONS
 C
 
       INTEGER IFINYR, I, I1, INVYR, IPREV, IYI, KODE, NEXT, NYR
@@ -183,4 +176,4 @@ C
       IF (DEBUIN) WRITE (JODFB,*) '** LEAVING SUBROUTINE DFBSCH'
 
       RETURN
-      END   
+      END

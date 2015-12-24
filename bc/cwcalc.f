@@ -1,13 +1,10 @@
       SUBROUTINE CWCALC(ISPC,P,D,H,CR,IICR,CW,IWHO,JOSTND)
-      IMPLICIT NONE
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'PLOT.F77'
-C
 COMMONS
 C  THIS ROUTINE CONTAINS A LIBRARY OF CROWN WIDTH EQUATIONS AVAILABLE
 C  FOR USE IN THE WESTERN UNITED STATES.
@@ -112,13 +109,13 @@ C----------
 C  CENTRAL IDAHO
 C----------
        DATA CIMAP/
-C            WP       WL       DF       GF       WH  
+C            WP       WL       DF       GF       WH
      &   '11903',  '07303', '20203', '01703', '26305',
-C            RC       LP       ES       AF       PP 
+C            RC       LP       ES       AF       PP
      &   '24203',  '10803', '09303', '01905', '12203',
-C            WB       PY       AS       WJ       MC 
+C            WB       PY       AS       WJ       MC
      &   '10105',  '23104', '74605', '06405', '47502',
-C            LM       CW       OS       OH 
+C            LM       CW       OS       OH
      &   '11301',  '74902', '12205', '74902'/
 C----------
 C  CENTRAL ROCKIES
@@ -139,7 +136,7 @@ C----------
 C  EAST CASCADES
 C----------
        DATA ECMAP/
-C             WP       WL       DF       SF       RC 
+C             WP       WL       DF       SF       RC
      &    '11905', '07303', '20205', '01105', '24205',
 C             GF       LP       ES       AF       PP
      &    '01703', '10805', '09305', '01905', '12205',
@@ -151,7 +148,7 @@ C             VN       RA       PB   GCtoTO   DGtoRA
      &    '32102', '35106', '37506', '63102', '35106',
 C             AS       CW       WO   PLtoRA   WItoBM
      &    '74605', '74705', '81505', '35106', '31206',
-C             OS       OH 
+C             OS       OH
      &    '26403', '74605'/
 C----------
 C  EASTERN MONTANA
@@ -187,7 +184,7 @@ C                      PW       LW       FD       BG       HW       CW
        DATA BCMAP/ '11903', '07303', '20203', '01703', '26305', '24205',
 C             PL       SE       BL       PY       EP       AT       AC
      &    '10805', '09303', '01905', '12203', '37506', '74605', '74902',
-C             OC       OH 
+C             OC       OH
      &    '20203', '37506' /
 C----------
 C  KOOKANTL
@@ -251,7 +248,7 @@ C             PM       RM       UJ       GB       NC       FC       MC
      &    '10602', '06405', '06405', '10201', '74902', '74902', '47502',
 C             BI       BE       OS       OH
      &    '31206', '74902', '12205', '81402'/
-     
+
 C----------
 C  WEST CASCADES
 C----------
@@ -272,23 +269,23 @@ C  WESTERN SIERRAS
 C----------
        DATA WSMAP/
 C          SP       DF       WF       GS       IC
-     & '11705', '20205', '01505', '21104', '08105',   
+     & '11705', '20205', '01505', '21104', '08105',
 C          JP       RF       PP       LP       WB
-     & '11605', '02006', '12205', '10805', '10105',   
+     & '11605', '02006', '12205', '10805', '10105',
 C          WP       PM       SF       KP       FP
-     & '11905', '10602', '01105', '10305', '10305',   
+     & '11905', '10602', '01105', '10305', '10305',
 C          CP       LM       MP       GP       WE
-     & '10805', '11301', '12205', '12702', '10305',   
+     & '10805', '11301', '12205', '12702', '10305',
 C          GB       BD       RW       MH       WJ
-     & '10201', '20205', '21104', '26403', '06405',   
+     & '10201', '20205', '21104', '26403', '06405',
 C          UJ       CJ       LO       CY       BL
-     & '06405', '06405', '80102', '80502', '80702',   
+     & '06405', '06405', '80102', '80502', '80702',
 C          BO       VO       IO       TO       GC
-     & '81802', '82102', '83902', '63102', '63102',   
+     & '81802', '82102', '83902', '63102', '63102',
 C          AS       CL       MA       DG       BM
-     & '74605', '98102', '36102', '35106', '31206',   
+     & '74605', '98102', '36102', '35106', '31206',
 C          MC       OS       OH
-     & '47502', '12205', '81802'/  
+     & '47502', '12205', '81802'/
 C
 C----------
 C  SET THE EQUATION NUMBER
@@ -746,7 +743,7 @@ C----------
       SELECT CASE (CWEQN)
 C-----------------------------------------------------------------------
 C  CASE 01102 BECHTOLD 2004 MODEL 2
-C  011          ABIES AMABILIS                     PACIFIC SILVER FIR   
+C  011          ABIES AMABILIS                     PACIFIC SILVER FIR
       CASE('01102')
         IF (HI .LT.  -9.) HI= -9.
         IF (HI .GT.  26.) HI= 26.
@@ -758,7 +755,7 @@ C  011          ABIES AMABILIS                     PACIFIC SILVER FIR
         IF (CW .GT. 33.) CW=33.
 C
 C  CASE 01105 CROOKSTON (R6) MODEL 2
-C  011          ABIES AMABILIS                     PACIFIC SILVER FIR   
+C  011          ABIES AMABILIS                     PACIFIC SILVER FIR
       CASE('01105')
         IF (EL .LT.   4.) EL=  4.
         IF (EL .GT.  72.) EL= 72.
@@ -773,7 +770,7 @@ C  011          ABIES AMABILIS                     PACIFIC SILVER FIR
         IF (CW .GT. 33.) CW=33.
 C-----------------------------------------------------------------------
 C  CASE 01502 BECHTOLD 2004 MODEL 2
-C  015          ABIES CONCOLOR                     WHITE FIR            
+C  015          ABIES CONCOLOR                     WHITE FIR
       CASE('01502')
         IF (HI .LT. -40.) HI=-40.
         IF (HI .GT.  19.) HI= 19.
@@ -781,13 +778,13 @@ C  015          ABIES CONCOLOR                     WHITE FIR
           CW= 2.4789 + (0.9317*D) + (- 0.0128*D*D) + (0.0327*CR) +
      &    (-0.1178*HI)
         ELSE
-          CW= (2.4789 + (0.9317*MIND) + (-0.0128*D*D) + (0.0327*CR) + 
+          CW= (2.4789 + (0.9317*MIND) + (-0.0128*D*D) + (0.0327*CR) +
      &   (-0.1178*HI))*(D/MIND)
         ENDIF
         IF (CW .GT. 35.) CW=35.
 C
 C  CASE 01505 CROOKSTON (R6) MODEL 2
-C  015          ABIES CONCOLOR                     WHITE FIR            
+C  015          ABIES CONCOLOR                     WHITE FIR
       CASE('01505')
         IF (EL .LT.   2.) EL=  2.
         IF (EL .GT.  75.) EL= 75.
@@ -802,7 +799,7 @@ C  015          ABIES CONCOLOR                     WHITE FIR
         IF (CW .GT. 35.) CW=35.
 C
 C  CASE 01506 DONNELLY (R6)
-C  015          ABIES CONCOLOR                     WHITE FIR            
+C  015          ABIES CONCOLOR                     WHITE FIR
       CASE('01506')
         IF (D .GE. OMIND) THEN
           CW= 3.8166*D**0.5229
@@ -812,21 +809,21 @@ C  015          ABIES CONCOLOR                     WHITE FIR
         IF (CW .GT. 35.) CW=35.
 C-----------------------------------------------------------------------
 C  CASE 01702 BECHTOLD 2004 MODEL 2
-C  017          ABIES GRANDIS                      GRAND FIR            
+C  017          ABIES GRANDIS                      GRAND FIR
       CASE('01702')
         IF (HI .LT. -48.) HI=-48.
         IF (HI .GT.  20.) HI= 20.
         IF (D .GE. MIND) THEN
-          CW= 3.0335 + (0.9752*D) + (-0.0113*D*D) + (0.0548*CR) + 
+          CW= 3.0335 + (0.9752*D) + (-0.0113*D*D) + (0.0548*CR) +
      &       (-0.0597*HI)
         ELSE
-          CW= (3.0335 + (0.9752*MIND) + (-0.0113*D*D) + (0.0548*CR) + 
+          CW= (3.0335 + (0.9752*MIND) + (-0.0113*D*D) + (0.0548*CR) +
      &       (-0.0597*HI))*(D/MIND)
         ENDIF
         IF (CW .GT. 40.) CW=40.
 C
 C  CASE 01703 CROOKSTON (R1)
-C  017          ABIES GRANDIS                      GRAND FIR            
+C  017          ABIES GRANDIS                      GRAND FIR
       CASE('01703')
         IF (D .GE. 1.0) THEN
           CW= 1.0303*EXP(1.14079 + 0.20904*ALOG(CL)+0.38787*ALOG(D))
@@ -837,7 +834,7 @@ C  017          ABIES GRANDIS                      GRAND FIR
         IF (CW .GT. 40.) CW=40.
 C
 C  CASE 01705 CROOKSTON (R6) MODEL 2
-C  017          ABIES GRANDIS                      GRAND FIR            
+C  017          ABIES GRANDIS                      GRAND FIR
       CASE('01705')
         IF (EL .LT.   3.) EL=  3.
         IF (EL .GT.  75.) EL= 75.
@@ -852,7 +849,7 @@ C  017          ABIES GRANDIS                      GRAND FIR
         IF (CW .GT. 40.) CW=40.
 C
 C  CASE 01706 DONNELLY (R6)
-C  017          ABIES GRANDIS                      GRAND FIR            
+C  017          ABIES GRANDIS                      GRAND FIR
       CASE('01706')
         IF (D .GE. OMIND) THEN
           CW= 4.1870*D**0.5341
@@ -862,14 +859,14 @@ C  017          ABIES GRANDIS                      GRAND FIR
         IF (CW .GT. 40.) CW=40.
 C
 C  CASE 01707 MOEUR
-C  017          ABIES GRANDIS                      GRAND FIR            
+C  017          ABIES GRANDIS                      GRAND FIR
       CASE('01707')
         CW= EXP(2.20611+ 1.08137*ALOG(D) + (-0.76936)*ALOG(H)
      &      + 0.29786*ALOG(CL))
         IF (CW .GT. 40.) CW=40.
 C-----------------------------------------------------------------------
 C  CASE 01801 BECHTOLD 2004 MODEL 1
-C  018          ABIES LASIOCARPA var. ARIZONICA    CORKBARK FIR         
+C  018          ABIES LASIOCARPA var. ARIZONICA    CORKBARK FIR
       CASE('01801')
         IF (D .GE. MIND) THEN
           CW= 6.073 + 0.3756*D
@@ -879,7 +876,7 @@ C  018          ABIES LASIOCARPA var. ARIZONICA    CORKBARK FIR
         IF (CW .GT. 15.) CW=15.
 C-----------------------------------------------------------------------
 C  CASE 01901 BECHTOLD 2004 MODEL 2
-C  019          ABIES LASIOCARPA                   SUBALPINE FIR        
+C  019          ABIES LASIOCARPA                   SUBALPINE FIR
       CASE('01901')
         IF (HI .LT. -14.) HI=-14.
         IF (HI .GT.  44.) HI= 44.
@@ -891,7 +888,7 @@ C  019          ABIES LASIOCARPA                   SUBALPINE FIR
         IF (CW .GT. 30.) CW=30.
 C
 C  CASE 01903 CROOKSTON (R1)
-C  019          ABIES LASIOCARPA                   SUBALPINE FIR        
+C  019          ABIES LASIOCARPA                   SUBALPINE FIR
       CASE('01903')
         IF (D .GE. 0.1) THEN
           CW= 1.02886*EXP(1.01255 + 0.30374*ALOG(CL)+0.37093*ALOG(D)
@@ -903,7 +900,7 @@ C  019          ABIES LASIOCARPA                   SUBALPINE FIR
         IF (CW .GT. 30.) CW=30.
 C
 C  CASE 01905 CROOKSTON (R6) MODEL 2
-C  019          ABIES LASIOCARPA                   SUBALPINE FIR        
+C  019          ABIES LASIOCARPA                   SUBALPINE FIR
       CASE('01905')
         IF (EL .LT.  10.) EL= 10.
         IF (EL .GT.  85.) EL= 85.
@@ -918,7 +915,7 @@ C  019          ABIES LASIOCARPA                   SUBALPINE FIR
         IF (CW .GT. 30.) CW=30.
 C
 C  CASE 01906 DONNELLY (R6)
-C  019          ABIES LASIOCARPA                   SUBALPINE FIR        
+C  019          ABIES LASIOCARPA                   SUBALPINE FIR
       CASE('01906')
         IF (D .GE. OMIND) THEN
           CW= 3.2348*D**0.5179
@@ -928,7 +925,7 @@ C  019          ABIES LASIOCARPA                   SUBALPINE FIR
         IF (CW .GT. 30.) CW=30.
 C
 C  CASE 01907 MOEUR
-C  019          ABIES LASIOCARPA                   SUBALPINE FIR        
+C  019          ABIES LASIOCARPA                   SUBALPINE FIR
       CASE('01907')
         CW= EXP(1.74558 + (1.08137*ALOG(D)) + (-0.73972*ALOG(H))
      &     + (0.29786*ALOG(CL)))
@@ -1122,7 +1119,7 @@ C  072          LARIX LYALLII                     SUBALPINE LARCH
         IF (CW .GT. 33.) CW=33.
 C-----------------------------------------------------------------------
 C  CASE 07302 BECHTOLD 2004 MODEL 2
-C  073          LARIX OCCIDENTALIS                 WESTERN LARCH        
+C  073          LARIX OCCIDENTALIS                 WESTERN LARCH
       CASE('07302')
         IF (D .GE. MIND) THEN
           CW= 1.5995 + 0.7675*D + 0.075*CR
@@ -1132,7 +1129,7 @@ C  073          LARIX OCCIDENTALIS                 WESTERN LARCH
         IF (CW .GT. 30.) CW=30.
 C
 C  CASE 07303 CROOKSTON (R1)
-C  073          LARIX OCCIDENTALIS                 WESTERN LARCH        
+C  073          LARIX OCCIDENTALIS                 WESTERN LARCH
       CASE('07303')
         IF (D .GE. 1.0) THEN
           CW= 1.02478*EXP(0.99889 + 0.19422*ALOG(CL)+0.59423*ALOG(D)
@@ -1144,7 +1141,7 @@ C  073          LARIX OCCIDENTALIS                 WESTERN LARCH
         IF (CW .GT. 40.) CW=40.
 C
 C  CASE 07305 CROOKSTON (R6) MODEL 2
-C  073          LARIX OCCIDENTALIS                 WESTERN LARCH        
+C  073          LARIX OCCIDENTALIS                 WESTERN LARCH
       CASE('07305')
         IF (EL .LT.  19.) EL= 19.
         IF (EL .GT.  72.) EL= 72.
@@ -1159,7 +1156,7 @@ C  073          LARIX OCCIDENTALIS                 WESTERN LARCH
         IF (CW .GT. 40.) CW=40.
 C
 C  CASE 07306 DONNELLY (R6)
-C  073          LARIX OCCIDENTALIS                 WESTERN LARCH        
+C  073          LARIX OCCIDENTALIS                 WESTERN LARCH
       CASE('07306')
         IF (D .GE. OMIND) THEN
           CW= 2.9571*D**0.6081
@@ -1169,14 +1166,14 @@ C  073          LARIX OCCIDENTALIS                 WESTERN LARCH
         IF (CW .GT. 40.) CW=40.
 C
 C  CASE 07307 MOEUR
-C  073          LARIX OCCIDENTALIS                 WESTERN LARCH        
+C  073          LARIX OCCIDENTALIS                 WESTERN LARCH
       CASE('07307')
         CW= EXP(2.31359 + 1.08137*ALOG(D) + (-0.80919*ALOG(H))
      &      + 0.29786*ALOG(CL))
         IF (CW .GT. 40.) CW=40.
 C-----------------------------------------------------------------------
 C  CASE 08105 CROOKSTON (R6) MODEL 2
-C  081          LIBOCEDRUS DECURRENS                INCENSE CEDAR     
+C  081          LIBOCEDRUS DECURRENS                INCENSE CEDAR
       CASE('08105')
         IF (EL .LT.   5.) EL=  5.
         IF (EL .GT.  62.) EL= 62.
@@ -1191,7 +1188,7 @@ C  081          LIBOCEDRUS DECURRENS                INCENSE CEDAR
         IF (CW .GT. 78.) CW=78.
 C
 C  CASE 08106 DONNELLY (R6)
-C  081          LIBOCEDRUS DECURRENS                INCENSE CEDAR        
+C  081          LIBOCEDRUS DECURRENS                INCENSE CEDAR
       CASE('08106')
         IF (D .GE. OMIND) THEN
           CW= 4.0920*D**0.4912
@@ -1211,7 +1208,7 @@ C  092          PICEA BREWERIANA                    BREWER SPRUCE
         IF (CW .GT. 38.) CW=38.
 C-----------------------------------------------------------------------
 C  CASE 09302 BECHTOLD 2004 MODEL 2
-C  093          PICEA ENGELMANNII                  ENGELMANN SPRUCE     
+C  093          PICEA ENGELMANNII                  ENGELMANN SPRUCE
       CASE('09302')
         IF (HI .LT. -25.) HI=-25.
         IF (HI .GT.  44.) HI= 44.
@@ -1223,7 +1220,7 @@ C  093          PICEA ENGELMANNII                  ENGELMANN SPRUCE
         IF (CW .GT. 40.) CW=40.
 C
 C  CASE 09303 CROOKSTON (R1)
-C  093          PICEA ENGELMANNII                  ENGELMANN SPRUCE     
+C  093          PICEA ENGELMANNII                  ENGELMANN SPRUCE
       CASE('09303')
         IF (D .GE. 0.1) THEN
           CW= 1.02687*EXP(1.28027 + 0.2249*ALOG(CL) + 0.47075*ALOG(D)
@@ -1235,7 +1232,7 @@ C  093          PICEA ENGELMANNII                  ENGELMANN SPRUCE
           IF (CW .GT. 40.) CW=40.
 C
 C  CASE 09305 CROOKSTON (R6) MODEL 2
-C  093          PICEA ENGELMANNII                  ENGELMANN SPRUCE     
+C  093          PICEA ENGELMANNII                  ENGELMANN SPRUCE
       CASE('09305')
         IF (EL .LT.   1.) EL=  1.
         IF (EL .GT.  85.) EL= 85.
@@ -1249,7 +1246,7 @@ C  093          PICEA ENGELMANNII                  ENGELMANN SPRUCE
         IF (CW .GT. 40.) CW=40.
 C
 C  CASE 09306 DONNELLY (R6)
-C  093          PICEA ENGELMANNII                  ENGELMANN SPRUCE     
+C  093          PICEA ENGELMANNII                  ENGELMANN SPRUCE
       CASE('09306')
         IF (D .GE. OMIND) THEN
           CW= 3.6802*D**0.4940
@@ -1259,7 +1256,7 @@ C  093          PICEA ENGELMANNII                  ENGELMANN SPRUCE
         IF (CW .GT. 40.) CW=40.
 C
 C  CASE 09307 MOEUR
-C  093          PICEA ENGELMANNII                  ENGELMANN SPRUCE     
+C  093          PICEA ENGELMANNII                  ENGELMANN SPRUCE
       CASE('09307')
         CW= EXP(3.76535 + 1.08137*ALOG(D) + (-1.18257*ALOG(H))
      &       + 0.29786*ALOG(CL))
@@ -1297,7 +1294,7 @@ C  098          PICEA SITCHENSIS                  SITKA SPRUCE
         IF (CW .GT. 60.) CW=60.
 C-----------------------------------------------------------------------
 C  CASE 10102 BECHTOLD 2004 MODEL 2
-C  101          PINUS ALBICAULIS                   WHITEBARK PINE       
+C  101          PINUS ALBICAULIS                   WHITEBARK PINE
       CASE('010102')
         IF (HI .LT.   6.) HI=  6.
         IF (HI .GT.  44.) HI= 44.
@@ -1309,7 +1306,7 @@ C  101          PINUS ALBICAULIS                   WHITEBARK PINE
         IF (CW .GT. 40.) CW=40.
 C
 C  CASE 10103 CROOKSTON (R1)
-C  101          PINUS ALBICAULIS                   WHITEBARK PINE       
+C  101          PINUS ALBICAULIS                   WHITEBARK PINE
       CASE('10103')
       IF (D .GE. 1.1) THEN
         CW= 1.0697*EXP(0.3007 + 0.2400*ALOG(CL) + 0.5696*ALOG(D))
@@ -1320,7 +1317,7 @@ C  101          PINUS ALBICAULIS                   WHITEBARK PINE
       IF (CW .GT. 40.) CW=40.
 C
 C  CASE 10105 CROOKSTON (R6) MODEL 2
-C  101          PINUS ALBICAULIS                   WHITEBARK PINE       
+C  101          PINUS ALBICAULIS                   WHITEBARK PINE
       CASE('10105')
         IF (D .GE. OMIND) THEN
           CW= 2.2354*BF*(D**0.66680)*(H**(-0.11658))*(CL**0.16927)
@@ -1331,7 +1328,7 @@ C  101          PINUS ALBICAULIS                   WHITEBARK PINE
         IF (CW .GT. 40.) CW=40.
 C
 C  CASE 10106 DONNELLY (R6)
-C  101          PINUS ALBICAULIS                   WHITEBARK PINE       
+C  101          PINUS ALBICAULIS                   WHITEBARK PINE
       CASE('10106')
         IF (D .GE. OMIND) THEN
           CW= 2.1606*D**0.6897
@@ -1341,14 +1338,14 @@ C  101          PINUS ALBICAULIS                   WHITEBARK PINE
         IF (CW .GT. 40.) CW=40.
 C
 C  CASE 10107 MOEUR
-C  101          PINUS ALBICAULIS                   WHITEBARK PINE       
+C  101          PINUS ALBICAULIS                   WHITEBARK PINE
       CASE('10107')
         CW= EXP(-.91984 + (1.08137*ALOG(D)) + (-0.07299*ALOG(H))
      &      + 0.29786*ALOG(CL))
         IF (CW .GT. 40.) CW=40.
 C-----------------------------------------------------------------------
 C  CASE 10201 BECHTOLD 2004 MODEL 1
-C  102          PINUS ARTISTA                      BRISTLECONE PINE     
+C  102          PINUS ARTISTA                      BRISTLECONE PINE
       CASE('10201')
         IF (D .GE. MIND) THEN
           CW= (7.4251 + 0.8991*D)
@@ -1358,7 +1355,7 @@ C  102          PINUS ARTISTA                      BRISTLECONE PINE
         IF (CW .GT. 25.) CW=25.
 C-----------------------------------------------------------------------
 C  CASE 10305 CROOKSTON (R6) MODEL 2
-C  103          PINUS ATTENUATA                     KNOBCONE PINE       
+C  103          PINUS ATTENUATA                     KNOBCONE PINE
       CASE('10305')
         IF (EL .LT.  12.) EL= 12.
         IF (EL .GT.  49.) EL= 49.
@@ -1372,7 +1369,7 @@ C  103          PINUS ATTENUATA                     KNOBCONE PINE
         IF (CW .GT. 46.) CW=46.
 C-----------------------------------------------------------------------
 C  CASE 10601 BECHTOLD 2004 MODEL 1
-C  106          PINUS EDULIS                      PINYON PINE (EDULIS)  
+C  106          PINUS EDULIS                      PINYON PINE (EDULIS)
       CASE('10601')
         IF (D .GE. MIND) THEN
           CW= -1.2638 + (1.9922*D) + (-0.0410*D*D)
@@ -1382,12 +1379,12 @@ C  106          PINUS EDULIS                      PINYON PINE (EDULIS)
         IF (CW .GT. 25.) CW=25.
 C
 C  CASE 10602 BECHTOLD 2004 MODEL 2
-C  106          PINUS EDULIS                      PINYON PINE (EDULIS)  
+C  106          PINUS EDULIS                      PINYON PINE (EDULIS)
       CASE('10602')
         IF (HI .LT. -40.) HI=-40.
         IF (HI .GT.  11.) HI= 11.
         IF (D .GE. MIND) THEN
-          CW= -5.4647 + (1.9660*D) + (-0.0395*D*D) + (0.0427*CR) + 
+          CW= -5.4647 + (1.9660*D) + (-0.0395*D*D) + (0.0427*CR) +
      &         (-0.0259*HI)
         ELSE
           CW= (-5.4647+(1.9660*MIND)+(-0.0395*MIND*MIND)+(0.0427*CR)+
@@ -1400,19 +1397,19 @@ C  106          PINUS EDULIS                      PINYON PINE (EDULIS)
         IF (CW .GT. 25.) CW=25.
 C-----------------------------------------------------------------------
 C  CASE 10802 BECHTOLD 2004 MODEL 2
-C  108          PINUS CONTORTA                     LODGEPOLE PINE       
+C  108          PINUS CONTORTA                     LODGEPOLE PINE
       CASE('10202')
         IF (D .GE. MIND) THEN
-          CW= -1.5440 + (1.3828*D) + (-0.0200*D*D) + (0.0396*CR) + 
+          CW= -1.5440 + (1.3828*D) + (-0.0200*D*D) + (0.0396*CR) +
      &        (-0.0083*BAREA)
         ELSE
-          CW= (-1.5440 + 1.3828*MIND + (-0.0200*D*D) + 0.0396*CR + 
+          CW= (-1.5440 + 1.3828*MIND + (-0.0200*D*D) + 0.0396*CR +
      &        (-0.0083*BAREA))*(D/MIND)
         ENDIF
         IF (CW .GT. 30.) CW=30.
 C
 C  CASE 10803 CROOKSTON (R1)
-C  108          PINUS CONTORTA                     LODGEPOLE PINE       
+C  108          PINUS CONTORTA                     LODGEPOLE PINE
       CASE('10803')
         IF (D .GE. 0.7) THEN
           CW= 1.03992*EXP(1.58777 + 0.30812*ALOG(CL)+0.64934*ALOG(D)
@@ -1424,7 +1421,7 @@ C  108          PINUS CONTORTA                     LODGEPOLE PINE
         IF (CW .GT. 40.) CW=40.
 C
 C  CASE 10805 CROOKSTON (R6) MODEL 2
-C  108          PINUS CONTORTA                     LODGEPOLE PINE       
+C  108          PINUS CONTORTA                     LODGEPOLE PINE
       CASE('10805')
         IF (EL .LT.   1.) EL=  1.
         IF (EL .GT.  79.) EL= 79.
@@ -1439,7 +1436,7 @@ C  108          PINUS CONTORTA                     LODGEPOLE PINE
         IF (CW .GT. 40.) CW=40.
 C
 C  CASE 10806 DONNELLY (R6)
-C  108          PINUS CONTORTA                     LODGEPOLE PINE       
+C  108          PINUS CONTORTA                     LODGEPOLE PINE
       CASE('10806')
         IF (D .GE. OMIND) THEN
           CW= 2.4132*D**0.6403
@@ -1449,14 +1446,14 @@ C  108          PINUS CONTORTA                     LODGEPOLE PINE
         IF (CW .GT. 40.) CW=40.
 C
 C  CASE 10807 MOEUR
-C  108          PINUS CONTORTA                     LODGEPOLE PINE       
+C  108          PINUS CONTORTA                     LODGEPOLE PINE
       CASE('10807')
         CW= EXP(1.06804 + 1.08137*ALOG(D) + (-0.55987)*ALOG(H)
      &      + 0.29786*ALOG(CL))
         IF (CW .GT. 40.) CW=40.
 C-----------------------------------------------------------------------
 C  CASE 11301 BECHTOLD 2004 MODEL 1
-C  113          PINUS FLEXILIS                     LIMBER PINE          
+C  113          PINUS FLEXILIS                     LIMBER PINE
       CASE('11301')
         IF (D .GE. MIND) THEN
           CW= 4.0181 + 0.8528*D
@@ -1466,7 +1463,7 @@ C  113          PINUS FLEXILIS                     LIMBER PINE
         IF (CW .GT. 25.) CW=25.
 C-----------------------------------------------------------------------
 C  CASE 11602 BECHTOLD 2004 MODEL 2
-C  116          PINUS JEFFREYI                    JEFFREY PINE        
+C  116          PINUS JEFFREYI                    JEFFREY PINE
       CASE('11602')
         IF (HI .LT. -38.) HI=-38.
         IF (HI .GT.  15.) HI= 15.
@@ -1479,8 +1476,8 @@ C  116          PINUS JEFFREYI                    JEFFREY PINE
         IF (CW .GT. 44.) CW=44.
 C
 C  CASE 11605 CROOKSTON (R6) MODEL 2
-C  116          PINUS JEFFREYI                    JEFFREY PINE        
-      CASE ('11605') 
+C  116          PINUS JEFFREYI                    JEFFREY PINE
+      CASE ('11605')
         IF (D .GE. OMIND) THEN
           CW= 4.0217*BF*(D**0.66815)*(H**(-0.11346))*(CL**0.09689)*
      &        ((BAREA+1.0)**(-0.06360))
@@ -1491,7 +1488,7 @@ C  116          PINUS JEFFREYI                    JEFFREY PINE
         IF (CW .GT. 39.) CW=39.
 C
 C  CASE 11606 DONNELLY (R6)
-C  116          PINUS JEFFREYI                    JEFFREY PINE        
+C  116          PINUS JEFFREYI                    JEFFREY PINE
       CASE('11606')
         IF (D .GE. OMIND) THEN
           CW= 3.2367*D**0.6247
@@ -1538,7 +1535,7 @@ C  117          PINUS LAMBERTIANA                  SUGAR PINE
         IF (CW .GT. 50.) CW=50.
 C-----------------------------------------------------------------------
 C  CASE 11902 BECHTOLD 2004 MODEL 2
-C  119          PINUS MONTICOLA                    WESTERN WHITE PINE  
+C  119          PINUS MONTICOLA                    WESTERN WHITE PINE
       CASE('11902')
         IF (HI .LT. -25.) HI=-25.
         IF (HI .GT.  32.) HI= 32.
@@ -1550,7 +1547,7 @@ C  119          PINUS MONTICOLA                    WESTERN WHITE PINE
         IF (CW .GT. 35.) CW=35.
 C
 C  CASE 11903 CROOKSTON (R1)
-C  119          PINUS MONTICOLA                    WESTERN WHITE PINE  
+C  119          PINUS MONTICOLA                    WESTERN WHITE PINE
       CASE('11903')
         IF (D .GE. 1.0) THEN
           CW= 1.0405*EXP(1.2799 + 0.11941*ALOG(CL) + 0.42745*ALOG(D)
@@ -1562,7 +1559,7 @@ C  119          PINUS MONTICOLA                    WESTERN WHITE PINE
         IF (CW .GT. 35.) CW=35.
 C
 C  CASE 11905 CROOKSTON (R6) MODEL 2
-C  119          PINUS MONTICOLA                    WESTERN WHITE PINE   
+C  119          PINUS MONTICOLA                    WESTERN WHITE PINE
       CASE('11905')
         IF (EL .LT.  10.) EL= 10.
         IF (EL .GT.  75.) EL= 75.
@@ -1576,7 +1573,7 @@ C  119          PINUS MONTICOLA                    WESTERN WHITE PINE
         IF (CW .GT. 35.) CW=35.
 C
 C  CASE 11906 DONNELLY (R6)
-C  119          PINUS MONTICOLA                    WESTERN WHITE PINE   
+C  119          PINUS MONTICOLA                    WESTERN WHITE PINE
       CASE('11906')
         IF (D .GE. OMIND) THEN
           CW= 3.4447*D**0.5185
@@ -1586,14 +1583,14 @@ C  119          PINUS MONTICOLA                    WESTERN WHITE PINE
         IF (CW .GT. 35.) CW=35.
 C
 C  CASE 11907 MOEUR
-C  119          PINUS MONTICOLA                    WESTERN WHITE PINE   
+C  119          PINUS MONTICOLA                    WESTERN WHITE PINE
       CASE('11907')
         CW= EXP(4.30800 + 1.08137*ALOG(D) + (-1.37265*ALOG(H))
      &       + 0.29786*ALOG(CL))
         IF (CW .GT. 35.) CW=35.
 C-----------------------------------------------------------------------
 C  CASE 12202 BECHTOLD 2004 MODEL 2
-C  122          PINUS PONDEROSA                    PONDEROSA PINE        
+C  122          PINUS PONDEROSA                    PONDEROSA PINE
       CASE('12202')
         IF (HI .LT. -56.) HI=-56.
         IF (HI .GT.  41.) HI= 41.
@@ -1607,7 +1604,7 @@ C  122          PINUS PONDEROSA                    PONDEROSA PINE
         IF (CW .GT. 46.) CW=46.
 C
 C  CASE 12203 CROOKSTON (R1)
-C  122          PINUS PONDEROSA                    PONDEROSA PINE       
+C  122          PINUS PONDEROSA                    PONDEROSA PINE
       CASE('12203')
         IF (D .GE. 2.0) THEN
           CW= 1.02687*EXP(1.49085 + 0.1862*ALOG(CL) + 0.68272*ALOG(D)
@@ -1619,8 +1616,8 @@ C  122          PINUS PONDEROSA                    PONDEROSA PINE
         IF (CW .GT. 46.) CW=46.
 C
 C  CASE 12205 CROOKSTON (R6) MODEL 2
-C  122          PINUS PONDEROSA                    PONDEROSA PINE       
-      CASE ('12205') 
+C  122          PINUS PONDEROSA                    PONDEROSA PINE
+      CASE ('12205')
         IF (EL .LT.  13.) EL= 13.
         IF (EL .GT.  75.) EL= 75.
         IF (D .GE. OMIND) THEN
@@ -1634,7 +1631,7 @@ C  122          PINUS PONDEROSA                    PONDEROSA PINE
         IF (CW .GT. 50.) CW=50.
 C
 C  CASE 12206 DONNELLY (R6)
-C  122          PINUS PONDEROSA                    PONDEROSA PINE       
+C  122          PINUS PONDEROSA                    PONDEROSA PINE
       CASE('12206')
         IF (D .GE. OMIND) THEN
           CW= 2.8541*D**0.6400
@@ -1644,7 +1641,7 @@ C  122          PINUS PONDEROSA                    PONDEROSA PINE
         IF (CW .GT. 50.) CW=50.
 C
 C  CASE 12207 MOEUR
-C  122          PINUS PONDEROSA                    PONDEROSA PINE       
+C  122          PINUS PONDEROSA                    PONDEROSA PINE
       CASE('12207')
         CW= EXP(1.62365+ 1.08137*ALOG(D) + (-0.68098*ALOG(H))
      &       + 0.29786*ALOG(CL))
@@ -1665,21 +1662,21 @@ C  127          PINUS SABINIANA                    GRAY PINE
         IF (CW .GT. 54.) CW=54.
 C-----------------------------------------------------------------------
 C  CASE 20202 BECHTOLD 2004 MODEL 2
-C  202          PSEUDOTSUGA MENZIESII              DOUGLAS FIR          
+C  202          PSEUDOTSUGA MENZIESII              DOUGLAS FIR
       CASE('20202')
         IF (HI .LT. -49.) HI= -49.
         IF (HI .GT.  67.) HI=  67.
         IF (D .GE. MIND) THEN
-          CW= 3.2346 + 1.1158*D + (-0.0112*D*D) + 0.0442*CR + 
+          CW= 3.2346 + 1.1158*D + (-0.0112*D*D) + 0.0442*CR +
      &        (-0.0057*BAREA) + (-0.0237*HI)
         ELSE
-          CW= (3.2346+1.1158*MIND+(-0.0112*MIND*MIND)+0.0442*CR + 
+          CW= (3.2346+1.1158*MIND+(-0.0112*MIND*MIND)+0.0442*CR +
      &        (-0.0057*BAREA) + (-0.0237*HI))*(D/MIND)
         ENDIF
         IF (CW .GT. 80.) CW=80.
 C
 C  CASE 20203 CROOKSTON (R1)
-C  202          PSEUDOTSUGA MENZIESII              DOUGLAS FIR          
+C  202          PSEUDOTSUGA MENZIESII              DOUGLAS FIR
       CASE('20203')
         IF (D .GE. 1.0) THEN
           CW= 1.01685*EXP(1.48372 + 0.27378*ALOG(CL)+0.49646*ALOG(D)
@@ -1691,7 +1688,7 @@ C  202          PSEUDOTSUGA MENZIESII              DOUGLAS FIR
         IF (CW .GT. 80.) CW=80.
 C
 C  CASE 20205 CROOKSTON (R6) MODEL 2
-C  202          PSEUDOTSUGA MENZIESII              DOUGLAS FIR          
+C  202          PSEUDOTSUGA MENZIESII              DOUGLAS FIR
       CASE('20205')
         IF (EL .LT.   1.) EL=  1.
         IF (EL .GT.  75.) EL= 75.
@@ -1706,7 +1703,7 @@ C  202          PSEUDOTSUGA MENZIESII              DOUGLAS FIR
         IF (CW .GT. 80.) CW=80.
 C
 C  CASE 20206 DONNELLY (R6)
-C  202          PSEUDOTSUGA MENZIESII              DOUGLAS FIR          
+C  202          PSEUDOTSUGA MENZIESII              DOUGLAS FIR
       CASE('20206')
         IF (D .GE. OMIND) THEN
           CW= 4.4215*D**0.5329
@@ -1716,7 +1713,7 @@ C  202          PSEUDOTSUGA MENZIESII              DOUGLAS FIR
         IF (CW .GT. 80.) CW=80.
 C
 C  CASE 20207 MOEUR
-C  202          PSEUDOTSUGA MENZIESII              DOUGLAS FIR          
+C  202          PSEUDOTSUGA MENZIESII              DOUGLAS FIR
       CASE('20207')
         CW= EXP(3.02271+ 1.08137*ALOG(D) + (-1.00486*ALOG(H))
      &      + 0.29786*ALOG(CL))
@@ -1743,7 +1740,7 @@ C  231          TAXUS PLICATA                      PACIFIC YEW
         IF (CW .GT. 30.) CW=30.
 C-----------------------------------------------------------------------
 C  CASE 24202 BECHTOLD 2004 MODEL 2
-C  242          THUJA PLICATA                      WESTERN REDCEDAR      
+C  242          THUJA PLICATA                      WESTERN REDCEDAR
       CASE('24202')
         IF (D .GE. MIND) THEN
           CW= 5.2911 + 1.0612*D + (-0.0153*D*D) + 0.0469*CR
@@ -1754,7 +1751,7 @@ C  242          THUJA PLICATA                      WESTERN REDCEDAR
         IF (CW .GT. 38.) CW=38.
 C
 C  CASE 24203 CROOKSTON (R1)
-C  242          THUJA PLICATA                      WESTERN REDCEDAR     
+C  242          THUJA PLICATA                      WESTERN REDCEDAR
       CASE('24203')
         IF (D .GE. 1.0) THEN
           CW= 1.03597*EXP(1.46111 + 0.26289*ALOG(CL)
@@ -1766,7 +1763,7 @@ C  242          THUJA PLICATA                      WESTERN REDCEDAR
         IF (CW .GT. 45.) CW=45.
 C
 C  CASE 24205 CROOKSTON (R6) MODEL 2
-C  242          THUJA PLICATA                      WESTERN REDCEDAR     
+C  242          THUJA PLICATA                      WESTERN REDCEDAR
       CASE('24205')
         IF (EL .LT.  1.) EL=  1.
         IF (EL .GT. 72.) EL= 72.
@@ -1781,7 +1778,7 @@ C  242          THUJA PLICATA                      WESTERN REDCEDAR
         IF (CW .GT. 45.) CW=45.
 C
 C  CASE 24206 DONNELLY (R6)
-C  242          THUJA PLICATA                      WESTERN REDCEDAR     
+C  242          THUJA PLICATA                      WESTERN REDCEDAR
       CASE('24206')
         IF (D .GE. OMIND) THEN
           CW= 6.2318*D**0.4259
@@ -1791,14 +1788,14 @@ C  242          THUJA PLICATA                      WESTERN REDCEDAR
         IF (CW .GT. 45.) CW=45.
 C
 C  CASE 24207 MOEUR
-C  242          THUJA PLICATA                      WESTERN REDCEDAR     
+C  242          THUJA PLICATA                      WESTERN REDCEDAR
       CASE('24207')
         CW= EXP(2.79784 + 1.08137*ALOG(D) + (-0.89666*ALOG(H))
      &       + 0.29786*ALOG(CL))
         IF (CW .GT. 45.) CW=45.
 C-----------------------------------------------------------------------
 C  CASE 26302 BECHTOLD 2004 MODEL 2
-C  263          TSUGA HETERPHYLLA                 WESTERN HEMLOCK      
+C  263          TSUGA HETERPHYLLA                 WESTERN HEMLOCK
       CASE('26302')
         IF (HI .LT. -34.) HI= -34.
         IF (HI .GT.  49.) HI=  49.
@@ -1812,7 +1809,7 @@ C  263          TSUGA HETERPHYLLA                 WESTERN HEMLOCK
         IF (CW .GT.54.) CW=54.
 C
 C  CASE 26303 CROOKSTON (R1)
-C  263          TSUGA HETERPHYLLA                 WESTERN HEMLOCK      
+C  263          TSUGA HETERPHYLLA                 WESTERN HEMLOCK
       CASE('26303')
         IF (D .GE. 0.1) THEN
           CW= 1.02460*EXP(1.3522 + 0.24844*ALOG(CL)+0.412117*ALOG(D)
@@ -1824,7 +1821,7 @@ C  263          TSUGA HETERPHYLLA                 WESTERN HEMLOCK
         IF (CW .GT.54.) CW=54.
 C
 C  CASE 26305 CROOKSTON (R6) MODEL 2
-C  263          TSUGA HETERPHYLLA                 WESTERN HEMLOCK      
+C  263          TSUGA HETERPHYLLA                 WESTERN HEMLOCK
       CASE('26305')
         IF (EL .LT.   1.) EL=  1.
         IF (EL .GT.  72.) EL= 72.
@@ -1839,7 +1836,7 @@ C  263          TSUGA HETERPHYLLA                 WESTERN HEMLOCK
         IF (CW .GT. 54.) CW=54.
 C
 C  CASE 26306 DONNELLY (R6)
-C  263          TSUGA HETERPHYLLA                 WESTERN HEMLOCK      
+C  263          TSUGA HETERPHYLLA                 WESTERN HEMLOCK
       CASE('26306')
         IF (D .GE. OMIND) THEN
           CW= 5.4864*D**0.5144
@@ -1849,7 +1846,7 @@ C  263          TSUGA HETERPHYLLA                 WESTERN HEMLOCK
         IF (CW .GT. 55.) CW=55.
 C-----------------------------------------------------------------------
 C  CASE 26402 BECHTOLD 2004 MODEL 2
-C  264          TSUGA MERTENSIANA                 MOUNTAIN HEMLOCK      
+C  264          TSUGA MERTENSIANA                 MOUNTAIN HEMLOCK
       CASE('26402')
         IF (D .GE. MIND) THEN
           CW= -0.3362 + 0.7142*D + 0.0414*CR
@@ -1859,20 +1856,20 @@ C  264          TSUGA MERTENSIANA                 MOUNTAIN HEMLOCK
         IF (CW .GT.45.) CW=45.
 C
 C  CASE 26403 CROOKSTON (R1)
-C  264          TSUGA MERTENSIANA                 MOUNTAIN HEMLOCK      
+C  264          TSUGA MERTENSIANA                 MOUNTAIN HEMLOCK
       CASE('26403')
         IF (H .GE. 5) THEN
           CW=.8*H*MAX(0.5,CR*0.01)
         ELSE IF (H .GE. 15) THEN
           CW=6.90396*(D**0.55645)*(H**(-0.28509))*(CL**0.20430)
-        ELSE 
+        ELSE
           CW=(0.8*H*MAX(0.5,CR*0.01))*(1-(H-5)*0.1)*6.90396
      &       *(D**0.55645)*(H**(-0.28509))*(CL**0.20430)*(H-5)*0.1
         IF (CW .GT.45.) CW=45.
         ENDIF
 C
 C  CASE 26405 CROOKSTON (R6) MODEL 2
-C  264          TSUGA MERTENSIANA                 MOUNTAIN HEMLOCK      
+C  264          TSUGA MERTENSIANA                 MOUNTAIN HEMLOCK
       CASE('26405')
         IF (EL .LT.  10.) EL= 10.
         IF (EL .GT.  79.) EL= 79.
@@ -2017,7 +2014,7 @@ C  631          LITHOCARPUS DENSIFLORUSI           TANOAK
         IF (CW .GT. 41.) CW=41.
 C-----------------------------------------------------------------------
 C  CASE 74602 BECTHOLD 2004 MODEL 2
-C  746          POPULUS TREMULOIDES                QUAKING ASPEN        
+C  746          POPULUS TREMULOIDES                QUAKING ASPEN
       CASE('74602')
         IF (HI .LT. -9.) HI= -9.
         IF (HI .GT. 33.) HI=  33.
@@ -2029,7 +2026,7 @@ C  746          POPULUS TREMULOIDES                QUAKING ASPEN
         IF (CW .GT. 45.) CW=45.
 C
 C  CASE 74603 CROOKSTON (R1)
-C  746          POPULUS TREMULOIDES                QUAKING ASPEN        
+C  746          POPULUS TREMULOIDES                QUAKING ASPEN
       CASE('74603')
         IF (D .GE. 0.1) THEN
           CW= 1.0396728*EXP(1.45297 + 0.060132*ALOG(D))
@@ -2039,7 +2036,7 @@ C  746          POPULUS TREMULOIDES                QUAKING ASPEN
         IF (CW .GT. 45.) CW=45.
 C
 C  CASE 74605 CROOKSTON (R6) MODEL 2
-C  746          POPULUS TREMULOIDES                QUAKING ASPEN        
+C  746          POPULUS TREMULOIDES                QUAKING ASPEN
       CASE('74605')
         IF (D .GE. OMIND) THEN
           CW= 4.7961*BF*(D**0.64167)*(H**(-0.18695))*(CL**0.18581)
@@ -2050,7 +2047,7 @@ C  746          POPULUS TREMULOIDES                QUAKING ASPEN
         IF (CW .GT. 45.) CW=45.
 C
 C  CASE 74606 DONNELLY (R6)
-C  746          POPULUS TREMULOIDES                QUAKING ASPEN        
+C  746          POPULUS TREMULOIDES                QUAKING ASPEN
       CASE('74606')
         IF (D .GE. OMIND) THEN
           CW= 4.0910*D**0.5907
@@ -2147,7 +2144,7 @@ C  815          QUERCUS GARRYANA                   OREGON WHITE OAK
         IF (CW .GT. 39.) CW=39.
 C
 C  CASE 81506 DONNELLY (R6)
-C  815          QUERCUS GARRYANA                   OREGON WHITE OAK       
+C  815          QUERCUS GARRYANA                   OREGON WHITE OAK
       CASE('81506')
         IF (D .GE. OMIND) THEN
           CW= 2.4922*D**0.8544

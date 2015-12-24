@@ -1,5 +1,7 @@
       SUBROUTINE RDTRIP (ITFN,I,WEIGHT)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDTRIP      LAST REVISION:  09/04/14
 C----------
@@ -24,27 +26,20 @@ C      Previous revision date noted was 11/06/89.
 C      Removed unused array PROBO. It was also unused in the old
 C      annosus model.
 C   09/04/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'RDCOM.F77'              
+      INCLUDE 'RDCOM.F77'
       INCLUDE 'RDADD.F77'
       INCLUDE 'RDARRY.F77'
-C
-COMMONS
 C
       INTEGER I, IDI, ITFN, ITYP, J, JINF
       REAL    TPAREA, WEIGHT
       TPAREA = 0.0
       DO 59 IDI=MINRR,MAXRR
          TPAREA = TPAREA + PAREA(IDI)
-   59 CONTINUE     
+   59 CONTINUE
       IF (IROOT .EQ. 0 .OR. TPAREA .EQ. 0) RETURN
 
       IF (WEIGHT .EQ. 0.6) ITFN = I

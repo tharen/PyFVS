@@ -1,26 +1,15 @@
       SUBROUTINE SUMHED
-      IMPLICIT NONE
+      use outcom_mod
+      use prgprm_mod
+      use plot_mod
+      use screen_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C  THIS SUBROUTINE WRITES A HEADER FOR THE SUMMARY OUTPUT ON THE
 C  SCREEN.
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'SCREEN.F77'
-C
-C
 COMMONS
 C----------
       INTEGER I1,I2,ISTFNB,ISTLNB

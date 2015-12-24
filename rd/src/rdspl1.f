@@ -1,5 +1,7 @@
       SUBROUTINE RDSPL1(RCROSS,STNEW,IDI,DIAM,RTD)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDSPL1      LAST REVISION:  09/03/14
 C----------
@@ -23,28 +25,21 @@ C
 C  Revision History :
 C   01/01/91 - Last revision date.
 C   09/03/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
 
       INCLUDE 'RDPARM.F77'
 
-      INCLUDE 'CONTRL.F77'
 
       INCLUDE 'RDCOM.F77'
 
       INCLUDE 'RDADD.F77'
 C
-COMMONS
-C
       INTEGER  II, IDI, JJ, NCROSS
       REAL     DIAM, R, R1, R2, R3, RCROSS, RDRANN, REMCRO, RMX,
      &         RTD, STNEW, XC, YC, XDIF, YDIF, DIS
-      
+
       STNEW = 0.0
       IF (DIAM .LT. SPDBH(IDI)) GOTO 300
 
@@ -86,7 +81,7 @@ C
 
   600    CONTINUE
 C
-C        STUMP IS OUTSIDE OF OTHER TYPE'S CENTERS 
+C        STUMP IS OUTSIDE OF OTHER TYPE'S CENTERS
 C        SO IT BECOMES A NEW CENTER
 
          STNEW = STNEW + 1.0
@@ -115,7 +110,7 @@ C        ADD PATCH AREA TO LAST PATCH
 C
          R1 = PCENTS(IDI,NCENTS(IDI),3)
          R2 = (0.25 * RTD)
-         R3 = SQRT((R1 * R1) + (R2 * R2))   
+         R3 = SQRT((R1 * R1) + (R2 * R2))
 
 C        Should the following line be .5 * DIMEN instead (half of one side of a square stand)?
 C           (If so, also change line in RDSPL2) -- Sarah

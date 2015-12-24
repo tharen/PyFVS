@@ -1,5 +1,12 @@
       SUBROUTINE DGF(DIAM)
-      IMPLICIT NONE
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use pden_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **DGF--NI23    DATE OF LAST REVISION:  06/16/11
 C----------
@@ -15,36 +22,9 @@ C  PREDICTION.  ENTRY **DGCONS** IS CALLED BY **RCON** TO LOAD SITE
 C  DEPENDENT COEFFICIENTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'CALCOM.F77'
 C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
       INCLUDE 'GGCOM.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
-COMMONS
 C
 C  DIMENSIONS FOR INTERNAL VARIABLES.
 C
@@ -69,7 +49,7 @@ C    DGCCF -- ARRAY CONTAINING THE COEFFICIENTS FOR THE CROWN
 C             COMPETITION FACTOR TERM IN THE DDS MODEL (ONE
 C             COEFFICIENT FOR EACH SPECIES, LOADED IN RCON).
 C----------
-C  SPECIES EXPANSION: 
+C  SPECIES EXPANSION:
 C  WB USE COEFFICIENTS FOR L
 C  LM AND PY USE COEFFICIENTS FROM TT FOR LM
 C  LL USE COEFFICIENTS FOR AF
@@ -223,7 +203,7 @@ C----------
      &  30*1,
      &  30*1,
      &  30*1,
-     &  30*1/     
+     &  30*1/
       DATA DGCCFA/
      & -0.02430,-0.24886,-0.01079,     0.0,     0.0,
      & -0.10144,-0.14793,-0.05438,     0.0,     0.0,
@@ -296,7 +276,7 @@ C----------
      & 1.568742,    0.0,     0.0,     0.0,     0.0,     0.0,
      &     0.0,     0.0,     0.0,     0.0,     0.0,     0.0,
      &     0.0,     0.0,     0.0,     0.0,     0.0,     0.0,
-     &     0.0,     0.0,     0.0,     0.0,     0.0,     0.0,     
+     &     0.0,     0.0,     0.0,     0.0,     0.0,     0.0,
      &     0.0,     0.0,     0.0,     0.0,     0.0,     0.0,
      &     0.0,     0.0,     0.0,     0.0,     0.0,     0.0,
      & 0.12520, 0.48076,     0.0,     0.0,     0.0,     0.0/
@@ -353,7 +333,7 @@ C----------
      & 4*0.0,
      & 4*0.0,
      & 4*0.0,
-     & -0.000484,-0.000306,      0.0,      0.0/     
+     & -0.000484,-0.000306,      0.0,      0.0/
 C----------
 C  DGEL CONTAINS THE COEFFICIENTS FOR THE ELEVATION TERM IN THE
 C  DIAMETER GROWTH EQUATION.  DGEL2 CONTAINS THE COEFFICIENTS FOR
@@ -541,8 +521,6 @@ C  END OF SPECIES LOOP.
 C----------
    20 CONTINUE
       RETURN
-C
-C
 C
       ENTRY DGCONS
 C----------

@@ -1,18 +1,14 @@
       SUBROUTINE CLIN (DEBUG,LKECHO)
-      IMPLICIT NONE
+      use contrl_mod
+      use metric_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
 C
-COMMONS
-C
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
       INCLUDE 'CLIMATE.F77'
-      INCLUDE 'METRIC.F77'
-C
-COMMONS
 C
       INTEGER    KWCNT
       PARAMETER (KWCNT = 7)
@@ -37,7 +33,6 @@ C
 C     SIGNAL THAT THE CLIMATE MODEL IS NOW ACTIVE.
 
    10 CONTINUE
-C
 C
       CALL KEYRDR (IREAD,JOSTND,DEBUG,KEYWRD,LNOTBK,
      >             ARRAY,IRECNT,KODE,KARD,LFLAG,LKECHO)

@@ -1,5 +1,13 @@
       SUBROUTINE DBSATRTLS(IWHO,KODE,TEM)
-      IMPLICIT NONE      
+      use plot_mod
+      use arrays_mod
+      use workcm_mod
+      use estree_mod
+      use contrl_mod
+      use metric_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -13,17 +21,8 @@ C            KODE  - FOR LETTING CALLING ROUTINE KNOW IF THIS IS A
 C                     REDIRECT OF THE FLAT FILE REPORT OR IN
 C                     ADDITION TO
 C
-COMMONS
 
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'ESTREE.F77'
-      INCLUDE 'VARCOM.F77'
-      INCLUDE 'WORKCM.F77'
       INCLUDE 'DBSCOM.F77'
-      INCLUDE 'METRIC.F77'
 
 COMMONS
 
@@ -81,7 +80,7 @@ C     IF IT DOESN'T THEN WE NEED TO CREATE IT
 
       iRet = fvsSQLExecDirect(StmtHndlOut,trim(SQLStmtStr),
      -            int(len_trim(SQLStmtStr),SQLINTEGER_KIND))
-      
+
       IF(iRet.NE.SQL_SUCCESS.AND.
      -    iRet.NE.SQL_SUCCESS_WITH_INFO) THEN
         IF(TRIM(DBMSOUT).EQ."ACCESS") THEN
@@ -92,7 +91,7 @@ C     IF IT DOESN'T THEN WE NEED TO CREATE IT
      -             'Year int null,'//
      -             'PrdLen int null,'//
      -             'TreeId Text null,'//
-     -             'TreeIndex int null,'//       
+     -             'TreeIndex int null,'//
      -             'Species Text null,'//
      -             'TreeVal int null,'//
      -             'SSCD int null,'//
@@ -124,7 +123,7 @@ C     IF IT DOESN'T THEN WE NEED TO CREATE IT
      -             'Year INT null,'//
      -             'PrdLen int null,'//
      -             'TreeId Text null,'//
-     -             'TreeIndex int null,'//  
+     -             'TreeIndex int null,'//
      -             'Species Text null,'//
      -             'TreeVal int null,'//
      -             'SSCD int null,'//
@@ -156,7 +155,7 @@ C     IF IT DOESN'T THEN WE NEED TO CREATE IT
      -             'Year int null,'//
      -             'PrdLen int null,'//
      -             'TreeId char(8) null,'//
-     -             'TreeIndex int null,'//  
+     -             'TreeIndex int null,'//
      -             'Species char(3) null,'//
      -             'TreeVal int null,'//
      -             'SSCD int null,'//
@@ -267,7 +266,7 @@ C
             IF(ISPOUT31.EQ.1)CSPECIES=ADJUSTL(TRIM(JSP(ISP(I))))
             IF(ISPOUT31.EQ.2)CSPECIES=ADJUSTL(TRIM(FIAJSP(ISP(I))))
             IF(ISPOUT31.EQ.3)CSPECIES=ADJUSTL(TRIM(PLNJSP(ISP(I))))
-            
+
 C           CREATE ENTRY FROM DATA FOR ATRTLIST TABLE
 
             IF(IATRTLID.EQ.-1) THEN
@@ -285,7 +284,7 @@ C           MAKE SURE WE DO NOT EXCEED THE MAX TABLE SIZE IN EXCEL
      -           TreeId,TreeIndex,Species,TreeVal,SSCD,PtIndex,TPH,
      -           MortPH,DBH,DG,
      -           Ht,HtG,PctCr,CrWidth,MistCD,BAPctile,PtBAL,TCuM,
-     -           MCuM,NCuM,MDefect,BDefect,TruncHt,EstHt,ActPt) 
+     -           MCuM,NCuM,MDefect,BDefect,TruncHt,EstHt,ActPt)
      -           VALUES(',
      -           IATRTLID,',',ICASE,',',CHAR(39),TRIM(NPLT),CHAR(39),
      -           ',',JYR,',',IFINT,",'",ADJUSTL(TID),"',",I,",'",

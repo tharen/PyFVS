@@ -1,5 +1,8 @@
       SUBROUTINE FILOPN
-      IMPLICIT NONE
+      use contrl_mod
+      use econ_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C--------
@@ -7,20 +10,6 @@ C
 C  THIS ROUTINE OPENS THE FILES FOR THE PROGNOSIS MODEL.
 C  TO PROMPT FOR FILE NAMES, SET LPT TRUE,
 C  IF PROMPTS ARE NOT WANTED, SET LPT FALSE.
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'ECON.F77'
-C
-C
-COMMONS
 C
       INTEGER LENKEY,KODE,I,LENNAM,ISTLNB
       CHARACTER*250 KEYFIL
@@ -47,23 +36,23 @@ C----------
            WRITE(*,2) VVER(:2),REV
     2      FORMAT(/T20,A2,' FVS METRIC VARIANT -- RV:',A10/)
         ENDIF
-C     
+C
       WRITE (*,'('' ENTER KEYWORD FILE NAME ('',I2.2,
      >        ''): '')') IREAD
 C
       ENDIF
-C     
+C
       READ (*,'(A)',END=100) KWDFIL
       CALL UNBLNK(KWDFIL,LENKEY)
       IF (LENKEY.LE.0) THEN
-         WRITE (*,'('' A KEYWORD FILE NAME IS REQUIRED'')') 
+         WRITE (*,'('' A KEYWORD FILE NAME IS REQUIRED'')')
          CALL RCDSET (3,.FALSE.)
       ENDIF
       CALL MYOPEN (IREAD,KWDFIL,3,150,0,1,1,0,KODE)
       IF (KODE.GT.0) THEN
          WRITE (*,'('' OPEN FAILED FOR '',A)')
      >        KWDFIL(1:LENKEY)
-         WRITE (*,'('' A KEYWORD FILE IS REQUIRED'')') 
+         WRITE (*,'('' A KEYWORD FILE IS REQUIRED'')')
          CALL RCDSET (3,.FALSE.)
       ENDIF
 C----------
@@ -77,7 +66,7 @@ C----------
       DO I= LENKEY, 1, -1
         IF (KWDFIL(I:I) .EQ. '.') THEN
         KEYFIL=KWDFIL
-        KWDFIL(I:)=' '    
+        KWDFIL(I:)=' '
         GO TO 10
         END IF
       END DO
@@ -116,9 +105,9 @@ C----------
          WRITE (*,'('' ALL OUTPUT IS SENT TO STANDARD OUT'')')
          JOSTND=6
       ENDIF
-C----------     
+C----------
 C  TREELIST OUTPUT.
-C----------     
+C----------
       IF (LPT) THEN
          WRITE (*,'('' ENTER TREELIST OUTPUT FILE NAME ('',
      >        I2.2,''):  '')') JOLIST

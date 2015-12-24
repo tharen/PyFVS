@@ -1,5 +1,10 @@
       SUBROUTINE FMCROW
-      IMPLICIT NONE
+      use contrl_mod
+      use fmcom_mod
+      use arrays_mod
+      use fmparm_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **FMCROW  FIRE-NI DATE OF LAST REVISION:  01/10/12
 C----------
@@ -31,23 +36,6 @@ C                  PCTILE
 *
 ***********************************************************************
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'FMPARM.F77'
-C
-C
-      INCLUDE 'FMCOM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
 COMMONS
 C----------
       LOGICAL DEBUG
@@ -110,7 +98,7 @@ C     9 = SUBALPINE FIR            -                 1
 C    10 = PONDEROSA PINE           -                13
 C    11 = WHITEBARK PINE           -                14
 C    12 = PACIFIC YEW              western redcedar  7
-C    13 = QUAKING ASPEN            -                        41 
+C    13 = QUAKING ASPEN            -                        41
 C    14 = WESTERN JUNIPER          R Mtn juniper    16
 C    15 = CURLLEAF MTN MAHOGANY    quaking aspen            41
 C    16 = LIMBER PINE              lodgepole pine   11
@@ -197,7 +185,7 @@ C
 C     PLACEHOLDER FOR UNUSED CALLS IN **FMCROWE**
 
       SUBROUTINE HTDBH(I10,I11,X10,X11,I12)
-      IMPLICIT NONE
+      implicit none
 
       INTEGER I10,I11,I12
       REAL    X10,X11

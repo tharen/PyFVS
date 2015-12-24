@@ -1,19 +1,12 @@
       BLOCK DATA CUBRDS
-      IMPLICIT NONE
+      use volstd_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **CUBRDS--UT   DATE OF LAST REVISION:  11/30/09
 C----------
 C  DEFAULT PARAMETERS FOR THE CUBIC AND BOARD FOOT VOLUME EQUATIONS.
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
-C
-C
 COMMONS
 C----------
       INTEGER I,J
@@ -49,7 +42,7 @@ C----------
      &      0.0,      0.0,     0.0,     0.0,     0.0,     0.0,    0.0,
      &      0.0,      0.0,     0.0,     0.0,     0.0,     0.0,    0.0,
      & 0.030288,      0.0,     0.0,0.002213,     0.0,     0.0,    0.0/
-C     
+C
       DATA ((CFVEQS(I,J),I=1,7),J=11,20) /
      &      0.0,      0.0,     0.0,     0.0,     0.0,     0.0,    0.0,
      &      0.0,      0.0,     0.0,     0.0,     0.0,     0.0,    0.0,
@@ -61,7 +54,7 @@ C
      &      0.0,      0.0,     0.0,     0.0,     0.0,     0.0,    0.0,
      &      0.0,      0.0,     0.0,     0.0,     0.0,     0.0,    0.0,
      &      0.0,      0.0,     0.0,     0.0,     0.0,     0.0,    0.0/
-C     
+C
       DATA ((CFVEQS(I,J),I=1,7),J=21,MAXSP) /
      &      0.0,      0.0,     0.0,     0.0,     0.0,     0.0,    0.0,
      &      0.0,      0.0,     0.0,     0.0,     0.0,     0.0,    0.0,
@@ -82,7 +75,7 @@ C----------
      &      0.0,      0.0,0.003865,0.001714,     0.0,     0.0,    0.0,
      &      0.0,      0.0,0.003865,0.001714,     0.0,     0.0,    0.0,
      &-1.557103,      0.0,     0.0,0.002474,     0.0,     0.0,    0.0/
-C     
+C
       DATA ((CFVEQL(I,J),I=1,7),J=11,20) /
      &      0.0,      0.0,     0.0,     0.0,0.002782,  1.9041, 1.0488,
      &      0.0,      0.0,     0.0,     0.0,0.002782,  1.9041, 1.0488,
@@ -94,7 +87,7 @@ C
      &      0.0,      0.0,     0.0,     0.0,     0.0,     0.0,    0.0,
      &      0.0,      0.0,     0.0,     0.0,     0.0,     0.0,    0.0,
      &      0.0,      0.0,     0.0, 0.00219,     0.0,     0.0,    0.0/
-C     
+C
       DATA ((CFVEQL(I,J),I=1,7),J=21,MAXSP) /
      &      0.0,      0.0,     0.0, 0.00219,     0.0,     0.0,    0.0,
      &      0.0,      0.0,     0.0,     0.0,     0.0,     0.0,    0.0,
@@ -108,9 +101,9 @@ C----------
      & 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
      & 0, 0, 0, 0/
 C----------
-C  TRANSITION SIZE.  TREES OF LARGER SIZE (D OR D2H) WILL COEFFICIENTS 
+C  TRANSITION SIZE.  TREES OF LARGER SIZE (D OR D2H) WILL COEFFICIENTS
 C  FOR LARGER SIZE TREES.
-C---------- 
+C----------
       DATA CTRAN/
      &      0.0,      0.0,     0.0,     0.0,     0.0,
      &     20.0,      0.0,     0.0,     0.0,  6000.0,
@@ -118,7 +111,7 @@ C----------
      &      0.0,      0.0,     0.0,     0.0,     0.0,
      &      0.0,      0.0,     0.0,     0.0/
 C----------
-C  COEFFICIENTS FOR BOARD FOOT VOLUME FOR TREES THAT ARE SMALLER THAN 
+C  COEFFICIENTS FOR BOARD FOOT VOLUME FOR TREES THAT ARE SMALLER THAN
 C  THE TRANSITION SIZE
 C----------
       DATA ((BFVEQS(I,J),I=1,7),J=1,10) /
@@ -151,7 +144,7 @@ C
      &  -11.403,      0.0,     0.0, 0.01011,     0.0,     0.0,    0.0,
      &  -11.403,      0.0,     0.0, 0.01011,     0.0,     0.0,    0.0/
 C----------
-C  COEFFICIENTS FOR BOARD FOOT VOLUME FOR TREES THAT ARE LARGER THAN 
+C  COEFFICIENTS FOR BOARD FOOT VOLUME FOR TREES THAT ARE LARGER THAN
 C  THE TRANSITION SIZE
 C----------
       DATA ((BFVEQL(I,J),I=1,7),J=1,10) /
@@ -191,9 +184,9 @@ C----------
      & 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
      & 0, 0, 1, 1/
 C----------
-C  TRANSITION SIZE.  TREES OF LARGER SIZE (D OR D2H) WILL USE COEFFICIENTS 
+C  TRANSITION SIZE.  TREES OF LARGER SIZE (D OR D2H) WILL USE COEFFICIENTS
 C  FOR LARGER SIZE TREES.
-C---------- 
+C----------
       DATA BTRAN/
      &  21100.0,  21100.0,    21.0, 59600.0,    21.0,
      &  14600.0,      0.0,    21.0, 42800.0, 63100.0,

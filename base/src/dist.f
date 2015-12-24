@@ -1,5 +1,8 @@
       SUBROUTINE DIST(N,ATTR,PCTWK)
-      IMPLICIT NONE
+      use contrl_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -12,18 +15,6 @@ C  IN THE ATTRIBUTE.  IF THE VALUE OF IFST IS 1, INS IS LOADED
 C  WITH SUBSCRIPTS TO TREE RECORDS TO BE PRINTED.  N IS THE CURRENT
 C  LENGTH OF THE TREE RECORD LIST (ITRN).
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
 COMMONS
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES.

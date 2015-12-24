@@ -1,5 +1,10 @@
       SUBROUTINE RDRDEL
-      IMPLICIT NONE
+      use outcom_mod
+      use contrl_mod
+      use plot_mod
+      use arrays_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDRDEL      LAST REVISION:  09/02/14
 C----------
@@ -27,21 +32,15 @@ C  Revision History
 C    21-MAR-00 Lance David (FHTET)
 C      Added Debug code.
 C   09/02/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
 C.... PARAMETER INCLUDE FILES
 C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'RDPARM.F77'
 C
 C.... COMMON INCLUDE FILES
 C
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'ARRAYS.F77'
-      INCLUDE 'OUTCOM.F77'
       INCLUDE 'RDCOM.F77'
       INCLUDE 'RDARRY.F77'
       INCLUDE 'RDADD.F77'
@@ -83,21 +82,21 @@ C
             IT = IND1(J)
             IF (PROBIU(IT) .EQ. 0.0 .AND. PROBIT(IT) .EQ. 0.0
      &        .AND. FPROB(IT) .EQ. 0.0) THEN
-              
+
               TOAKL = OAKL(1,IT) + OAKL(2,IT) + OAKL(3,IT)
-              
+
               IF (RDKILL(IT) .LE. 0.0 .AND. TOAKL .LE. 0.0) THEN
 
 C                WE ONLY WANT TO DELETE TREE RECORD IF NOTHING IS USING IT
 C                (FOR PRINTING, WE NEED TO ACCESS CFV(IT) AND FOR BEETLES,
-C                WE NEED THE DBH AND PROPI OF THESE RECORDS). CORRECTIONS 
+C                WE NEED THE DBH AND PROPI OF THESE RECORDS). CORRECTIONS
 C                WILL BE ADDED TO RDGROW TO COMPENSATE FOR NOT DELETING THESE
-C                RECORDS.              
+C                RECORDS.
 
                  PROB(IT) = 0.0
                  IVAC = IVAC + 1
                  IND1(J) = -IT
-              
+
               ENDIF
             ENDIF
   556    CONTINUE
@@ -139,7 +138,7 @@ C
       CALL DIST (ITRN,ONTCUR,WK3)
       CALL COMP (OSPCT,IOSPCT,SPCNT)
 C
-      IF (DEBUG) 
+      IF (DEBUG)
      &  WRITE(JOSTND,619) (I, PROBI(I,1,1),PROBIU(I),FPROB(I),I=1,ITRN)
   619 FORMAT(' IN RDRDEL AFT: I PROBI,PROBIU,FPROB',I4,3F8.2)
 

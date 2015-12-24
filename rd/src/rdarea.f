@@ -1,5 +1,7 @@
       SUBROUTINE RDAREA
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **RDAREA      LAST REVISION:  08/26/14
 C----------
@@ -15,56 +17,42 @@ C     RDSETP  [ROOT DISEASE]
 C     RDSPOR  [ROOT DISEASE]
 C     RDBB4   [ROOT DISEASE]
 C
-C  Calls :   
+C  Calls :
 C     DBCHK   (SUBROUTINE)   [FVS]
 C
 C  Local Variables :
 C     LMEM   - Logical
 C              A logical array that works as a grid map of the stand.
-C              If a point in the grid is in a patch then that point is 
-C              set to .TRUE.  Used to calculate patch area. 
+C              If a point in the grid is in a patch then that point is
+C              set to .TRUE.  Used to calculate patch area.
 C     SCL    - Real
 C              a value calculated to translate the X and Y coordinates
 C              from a coordinate system in feet to an integer
-C              coordinate system that is a 75 by 75 grid system. 
+C              coordinate system that is a 75 by 75 grid system.
 C     <incomplete>
 C
 C  Common Block Variables Used :
-C     PAREA    - (RDCOM)   (I/O) 
-C     SAREA    - (RDCOM)   (I)                          
+C     PAREA    - (RDCOM)   (I/O)
+C     SAREA    - (RDCOM)   (I)
 C     PCENTS   - (RDCOM)   (I)
-C     NCENTS   - (RDCOM)   (I) 
+C     NCENTS   - (RDCOM)   (I)
 C     <incomplete>
 C
 C  Revision History :
 C   06/10/96 - Matthew K. Thompson
 C     Renamed variables in inline functions.
 C   08/26/14 Lance R. David (FMSC)
-C     Added implicit none and declared variables.
 C
 C----------------------------------------------------------------------
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
       INCLUDE 'RDPARM.F77'
 C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
       INCLUDE 'RDCOM.F77'
-C
-C
-COMMONS
 C
       LOGICAL LMEM(75,75), DEBUG
 
       INTEGER ITRN0, ITRN1, IDUM1
-      
+
       INTEGER IGRID, IPAT, I, IN, IX, IX1, IX2, IX3, IXC, IXX, IY1, IY2,
      &        IYC, IYR, IYS, IYY, J, K, NTRY
       REAL    SCL, RTRNS, RDUM1, RDUM2, SDUM1, SDUM2, SDUM3
@@ -100,7 +88,7 @@ C.... specified it is the default input disease area.
   111 FORMAT (' AREAI ARTEM=',2F9.2)
 
 C.... If there are no patches, set the patch area to zero and return.
- 
+
       IF (NCENTS(IRRSP) .GT. 0) GOTO 5
       PAREA(IRRSP) = 0.0
 
@@ -118,7 +106,7 @@ C.... If there are no patches, set the patch area to zero and return.
 
 C.... Re-enter area calculation here if last area calculation was
 C.... not within the tolerance limits of the input patch area.
- 
+
 C.... Initialize LMEM
 
       DO 15 IYY=1,IGRID
@@ -127,8 +115,8 @@ C.... Initialize LMEM
    10    CONTINUE
    15 CONTINUE
 
-C.... Compute a scale value to translate the X and Y coordinates 
-C.... from feet to a integer coordinate system that is (75,75) 
+C.... Compute a scale value to translate the X and Y coordinates
+C.... from feet to a integer coordinate system that is (75,75)
 
       SCL = FLOAT(IGRID) / SQRT(SAREA * 43560.0)
 
@@ -149,7 +137,7 @@ C....    the X and Y axis.
 
 C....    Treat the points that fall on the X, and Y axis as special cases.
 C....
-C....    If the Y axis falls out of the stand, none of the points along 
+C....    If the Y axis falls out of the stand, none of the points along
 C....    X axis at IYC are in the stand.
 
          IF (IYC .LE. 0 .OR. IYC .GT. IGRID) GOTO 30
@@ -164,7 +152,7 @@ C....       values to .TRUE. in the "MAP" (LMEM).
 
    30    CONTINUE
 
-C....    Do the same thing along the Y axis. 
+C....    Do the same thing along the Y axis.
 
          IF (IXC .LE. 0 .OR. IXC .GT. IGRID) GOTO 50
 
@@ -217,16 +205,16 @@ C.... Count the points that are in and compute the area.
   215 CONTINUE
 
       ARCAL = SAREA * (FLOAT(IN) / FLOAT(IGRID*IGRID))
-      IF (.NOT. LSTART) GOTO 220 
-      
+      IF (.NOT. LSTART) GOTO 220
+
 C.... If PAREA = -1 then centers were input by user and there is no
 C.... area target to be met: area should be exactly what is calculated.
 
       IF (PAREA(IRRSP) .EQ. -1.0) GOTO 220
 
-C.... If the calculated acerage is within the allowable tolerance of the 
+C.... If the calculated acerage is within the allowable tolerance of the
 C.... input acreage specified (user supplied or default) then exit.  If
-C.... not then begin increasing the radii of the patches until the 
+C.... not then begin increasing the radii of the patches until the
 C.... tolerance is met. The whole process of matching calculated area
 C.... with input area is only done in the initialization phase of the
 C.... simulation.

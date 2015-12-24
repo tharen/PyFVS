@@ -1,39 +1,20 @@
       SUBROUTINE ESIN (PASKEY,ARRAY,LNOTBK,KARD,LKECHO)
-      IMPLICIT NONE
+      use plot_mod
+      use esparm_mod
+      use contrl_mod
+      use eshap_mod
+      use escomn_mod
+      use prgprm_mod
+      implicit none
 C----------
 C    ESIN--ESTB   DATE OF LAST REVISION:   02/07/13
 C----------
 C
 C     OPTION PROCESSOR FOR ESTABLISHMENT MODEL
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ESPARM.F77'
-C
-C
-      INCLUDE 'ESCOMN.F77'
-C
-C
-      INCLUDE 'ESHAP.F77'
-C
-C
       INCLUDE 'ESHAP2.F77'
 C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'ESWSBW.F77'
-C
-C
-COMMONS
 C
 C     INTERNAL STORAGE
 C

@@ -1,5 +1,12 @@
       SUBROUTINE FMCANC (IYR,FMOIS,CFTMP,CANBURN,ROS,INTSTY,FCLS)
-      IMPLICIT NONE
+      use plot_mod
+      use fmcom_mod
+      use fmparm_mod
+      use contrl_mod
+      use metric_mod
+      use fmfcom_mod
+      use prgprm_mod
+      implicit none
 C
 C  $Id$
 C
@@ -38,15 +45,8 @@ C----------
 C     PARAMETER STATEMENTS.
 
 C     PARAMETER INCLUDE FILES.
-      INCLUDE 'PRGPRM.F77'
-      INCLUDE 'FMPARM.F77'
 
 C     COMMON INCLUDE FILES.
-      INCLUDE 'PLOT.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
-      INCLUDE 'CONTRL.F77'
-      INCLUDE 'METRIC.F77'
 
 C     VARIABLE DECLARATIONS.
 
@@ -57,8 +57,8 @@ C     VARIABLE DECLARATIONS.
       INTEGER I,J, FCLS
       REAL CCR, CFB
       REAL CROSA
-      REAL CAC 
-      REAL ROSP, ROS 
+      REAL CAC
+      REAL ROSP, ROS
       REAL MWIND, USEMOIS
       REAL INTSTY, TOTLOAD
       REAL TA2KGM2
@@ -96,9 +96,9 @@ C     CHANGE LOADING TO METRIC
       TOTLOAD = (TCLOAD + SMALL + LARGE) * FT3pACRtoM3pHA
 
       CCR = 3. / CBD
-      CROSA = 11.021*(MWIND*3.6)**0.8966 * CBD**0.1901 * 
+      CROSA = 11.021*(MWIND*3.6)**0.8966 * CBD**0.1901 *
      &        Exp(-0.1714* USEMOIS)
-      CAC = CROSA / CCR 
+      CAC = CROSA / CCR
       ROSP = CROSA*Exp(-CAC)
 
       IF (CAC .GT. 1.0) THEN
@@ -123,7 +123,7 @@ C     Change from KJ/min/m to Kw/m
 C      INTSTY = INTSTY / 60       !now done by changing 18600 to 300
 
 
-C     CALCULATE INTENSITY CLASS      
+C     CALCULATE INTENSITY CLASS
       IF (INTSTY .LT. 10.0) THEN
         FCLS = 1
       ELSE IF (INTSTY .LT. 500.0) THEN
@@ -134,7 +134,7 @@ C     CALCULATE INTENSITY CLASS
         FCLS = 4
       ELSE IF (INTSTY .LT. 10000.0) THEN
         FCLS = 5
-      ELSE 
+      ELSE
         FCLS = 6
       ENDIF
 
@@ -142,7 +142,7 @@ C     CALCULATE INTENSITY CLASS
       IF (DEBUG) WRITE(JOSTND,*) 'CAC = ',CAC
       IF (DEBUG) WRITE(JOSTND,*) 'CROSA = ',CROSA
       IF (DEBUG) WRITE(JOSTND,*) 'CRBURN = ',CRBURN
-      
+
       IF (DEBUG) WRITE(JOSTND,8) FMOIS,CFTMP,RFINAL
     8 FORMAT(' FMCFIR FMOIS=',I2,' CFTMP=',A,
      >       ' RFINAL=',F13.3)

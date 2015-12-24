@@ -1,5 +1,7 @@
       SUBROUTINE OPLIST (LFIRST,NPLT,MGMID,ITITLE)
-      IMPLICIT NONE
+      use contrl_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -16,22 +18,9 @@ C
 C     WRITES THE ACTIVITIES THAT WERE DONE FOR THE PPE TO DATA SET
 C     JOUT.  CISN IS THE PPE INTERNAL STAND NUMBER.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
       INCLUDE 'OPCOM.F77'
 C
-C
       INCLUDE 'KEYCOM.F77'
-C
-C
-COMMONS
 C
       INTEGER NTRSLT,I1,I,ICY,I2,II,IACTK,IDT,KEY,LOC,J1,J2,J,ID,K
       INTEGER JOUT,NCNT
@@ -43,7 +32,7 @@ C
       LOGICAL LINE,LFIRST,LPPEON
       CHARACTER*8 KEYWRD,UNKNOW,TITL,SCHED,SUMMR
       CHARACTER*4 TAB2(17)
-      PARAMETER (NTRSLT=145)
+      PARAMETER (NTRSLT=146)
       INTEGER ITRSL1(NTRSLT),ITRSL2(NTRSLT)
       DATA ITRSL1/
      >       33,   80,   81,   82,   90,   91,   92,   93,   94,   95,
@@ -59,8 +48,8 @@ C
      >     2209, 2210, 2320, 2401, 2402, 2403, 2414, 2415, 2416, 2417,
      >     2430, 2431, 2432, 2433, 2501, 2505, 2506, 2507, 2512, 2520, 
      >     2521, 2522, 2523, 2525, 2529, 2530, 2538, 2539, 2548, 2549, 
-     >     2550, 2553, 2605, 2606, 2607, 2608, 2609, 2701, 2702, 2703,
-     >     2704, 2801, 2802, 2803, 2804/
+     >     2550, 2553, 2554, 2605, 2606, 2607, 2608, 2609, 2701, 2702, 
+     >     2703, 2704, 2801, 2802, 2803, 2804/
 C
       DATA ITRSL2/
      >       33,   17,   96,  102,    3,   58,   62,   70,   59,  207,
@@ -68,7 +57,7 @@ C
      >      135,   92,   48,   49,   71,  103,  107,  120,   41,   42,
      >       43,   44,   23,   24,   25,   26,   27,   28,   29,   30,
      >      112,  115,   35,  122,  124,  129,  136,  141,  128,  108,
-     >       78,   34,  216,  211,  212,  202,  203,  229,  213,  215, 
+     >       78,   34,  216,  211,  212,  202,  203,  229,  213,  215,
      >       93,  226,  203,  204,  230,  205,  406,  306,  336,  512,
      >      901,  902,  903,  904,  905,  906,  910,  911,  916, 1001,
      >     1004, 1005, 1002, 1007, 1010, 1011, 1023, 1024, 1114, 1108,
@@ -76,8 +65,8 @@ C
      >     1209, 1210, 1320, 1401, 1402, 1403, 1414, 1415, 1416, 1417,
      >     1430, 1431, 1432, 1433, 1501, 1505, 1506, 1507, 1512, 1520, 
      >     1521, 1522, 1523, 1525, 1533, 1534, 1538, 1539, 1548, 1549, 
-     >     1550, 1553, 1601, 1602, 1603, 1604, 1605, 1301, 1302, 1303, 
-     >     1304,  703,  704,  705,  706/
+     >     1550, 1553, 1554, 1601, 1602, 1603, 1604, 1605, 1301, 1302, 
+     >     1303, 1304,  703,  704,  705,  706/
 C
       DATA TAB2/'CMPU','BASE','ESTB','DFTM','MPB', 'COVR',
      >          'DBS ','CLIM','    ','RUST','MIST','WSBE','DFB',
@@ -348,7 +337,6 @@ C
       WRITE (JOSTND,180)
   180 FORMAT (130('-'))
       RETURN
-C
 C
       ENTRY PPACTS (JOUT,CLBWID,CISN)
 C

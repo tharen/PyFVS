@@ -1,52 +1,27 @@
       SUBROUTINE HTGF
-      IMPLICIT NONE
+      use htcal_mod
+      use multcm_mod
+      use pden_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use plot_mod
+      use varcom_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **HTGF--WS    DATE OF LAST REVISION:  05/10/12
 C-----------
 C   THIS SUBROUTINE COMPUTES THE PREDICTED PERIODIC HEIGHT
 C   INCREMENT FOR EACH CYCLE AND LOADS IT INTO ARRAY HTG().
 C   THIS ROUTINE IS CALLED FROM **TREGRO** DURING REGULAR CYCLING.
-C   ENTRY **HTCONS** IS CALLED FROM **RCON** TO LOAD SITE 
+C   ENTRY **HTCONS** IS CALLED FROM **RCON** TO LOAD SITE
 C   DEPENDENT CONSTANTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'MULTCM.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
-C
-      INCLUDE 'VARCOM.F77'
-C
-C
       INCLUDE 'GGCOM.F77'
 C
-C
-C
-COMMONS
 C----------
       EXTERNAL RANN
       LOGICAL DEBUG
@@ -127,7 +102,7 @@ C
 C  SURROGATE EQUATION ASSIGNMENT:
 C
 C    FROM EXISTING WS EQUATIONS --
-C      USE 1(SP) FOR 11(WP) AND 24(MH) 
+C      USE 1(SP) FOR 11(WP) AND 24(MH)
 C      USE 2(DF) FOR 22(BD)
 C      USE 3(WF) FOR 13(SF)
 C      USE 4(GS) FOR 23(RW)
@@ -137,7 +112,7 @@ C      USE 31(BO) FOR 28(LO), 29(CY), 30(BL), 32(VO), 33(IO), 40(BM), AND
 C                     43(OH)
 C
 C    FROM CA VARIANT --
-C      USE CA11(KP) FOR 12(PM), 14(KP), 15(FP), 16(CP), 17(LM), 19(GP), 20(WE), 
+C      USE CA11(KP) FOR 12(PM), 14(KP), 15(FP), 16(CP), 17(LM), 19(GP), 20(WE),
 C                       25(WJ), 26(WJ), AND 27(CJ)
 C      USE CA12(LP) FOR 9(LP) AND 10(WB)
 C
@@ -488,10 +463,9 @@ C
         IF(DEBUG)WRITE(JOSTND,9001)HTG(ITFN),HTG(ITFN+1)
  9001   FORMAT('  LOWER HTG = ',F8.4,'  UPPER HTG = ',F8.4)
 C
-C
 C----------
 C  SPECIES USING EQUATIONS FROM THE SO VARIANT (41=MC)
-C  IN SO, MISC. SPECIES - USE CURTIS, FOR. SCI. 20:307-316.  
+C  IN SO, MISC. SPECIES - USE CURTIS, FOR. SCI. 20:307-316.
 C  CURTIS CURVES ARE PRESENTED IN METRIC (3.2808 ?)
 C
 C EXCESSIVE HT GROWTH -- APPROX 30-40 FT/CYCLE, TAKE OUT METRIC MULT
@@ -538,7 +512,7 @@ C----------
 C  HEIGHT GROWTH MODIFIERS
 C----------
         IF(DEBUG)WRITE(JOSTND,*) ' AT 1319 CONTINUE FOR TREE',I,' HT= ',
-     &  HT(I),' AVH= ',AVH 
+     &  HT(I),' AVH= ',AVH
         RELHT = 0.0
         IF(AVH .GT. 0.0) RELHT=HT(I)/AVH
         IF(RELHT .GT. 1.5)RELHT=1.5
@@ -625,7 +599,6 @@ C
   161   CONTINUE
         IF(DEBUG)WRITE(JOSTND,*)
      &  ' I,SCALE,HTG,HTMAX, H= ',I,SCALE,HTG(I),HTMAX,H
-C
 C
 C----------
 C  SPECIES USING EQUATIONS FROM THE CA VARIANT (9=LP, 10=WB, 12=PM,
@@ -738,7 +711,6 @@ C----------
 C
         IF(DEBUG) WRITE(JOSTND,9003) HTG(ITFN),HTG(ITFN+1)
  9003   FORMAT( ' UPPER HTG =',F8.4,' LOWER HTG =',F8.4)
-C
 C
 C----------
 C  SPECIES USING EQUATIONS FROM THE WS VARIANT
@@ -962,7 +934,7 @@ C----------
      &    0.0,    0.0,    0.0,    0.0,    0.0,
      & -0.268, -0.268, -0.268,  3.097, -0.268,
      & -3.831,  1.711, -3.831, -2.898, -3.831/
-     
+
 C
       DATA HGEL2/
      &       0.,       0.,  -0.0453,       0.,       0.,

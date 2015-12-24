@@ -1,6 +1,11 @@
       SUBROUTINE INTREE (RECORD,IRDPLV,ISDSP,SDLO,SDHI,LKECHO)
-      use arrays_mod, only: barkrat
-      IMPLICIT NONE
+      use htcal_mod
+      use plot_mod
+      use arrays_mod
+      use contrl_mod
+      use estree_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  $Id$
 C----------
@@ -11,31 +16,7 @@ C
 C  THIS ROUTINE READS THE STAND TREE DATA AND SETS ALL VARIABLES
 C  WHICH ARE TREE RECORD SPECIFIC.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'ESTREE.F77'
-C
-C
       INCLUDE 'STDSTK.F77'
-C
-C
-COMMONS
 C
       INTEGER IG,IULIM,IGRP,IPP,IAXE,ISPI,IUP,IHIT3,IHIT2,IHIT1,I,IK
       INTEGER J,ITREI,ITH,IMC1,ITRRR,ITP1RR,K,NPNVRS,ISCRN,IPTKNT,IMAX
@@ -78,7 +59,7 @@ C
      &        ' DATA SET REFERENCE NUMBER =',I2,/
      &        ' TREE DATA FORMAT:',/30X,A80/30X,A80,/,
      &        ' MORDAT: ',L2,'; IRDPLV=',I3)
-    8 CONTINUE      
+    8 CONTINUE
 C
 C     SET FLAG TO SEE IF A FILE IS CONNECTED TO ISTDAT. WE WILL TRY TO OPEN
 C     ONE IF NECESSARY.
@@ -462,8 +443,6 @@ C----------
       IF(IDG.EQ.1 .OR. IDG.EQ.3) PDBH(I)=DG(I)
       IF(IHTG.EQ.1 .OR. IHTG.EQ.3) PHT(I)=HTG(I)
 
-      BARKRAT(I)= BRATIO(ISP(I),DBH(I),HT(I))
-
 C----------
 C  STORE ALL DEAD TREES IN THE BOTTOM OF THE ARRAYS
 C  TREES WITH HISTORY CODES 6,7 ARE RECENT DEAD (GET IMC()=7)
@@ -481,7 +460,6 @@ C----------
       DBH(IREC2)= DBH(I)
       DG(IREC2)= DG(I)
       HT(IREC2)= HT(I)
-      BARKRAT(IREC2)= BRATIO(ISP(I),DBH(I),HT(I))
       ITRUNC(IREC2) = ITRUNC(I)
       NORMHT(IREC2) = NORMHT(I)
       ICR(IREC2)= ICR(I)
@@ -505,7 +483,6 @@ C----------
       DBH(I)=0.
       DG(I)=0.
       HT(I)=0.
-      BARKRAT(I)=0.
       ITRUNC(I)=0
       NORMHT(I)=0
       ICR(I)=0

@@ -1,5 +1,14 @@
       SUBROUTINE HTGF
-      IMPLICIT NONE
+      use htcal_mod
+      use multcm_mod
+      use pden_mod
+      use arrays_mod
+      use contrl_mod
+      use coeffs_mod
+      use outcom_mod
+      use plot_mod
+      use prgprm_mod
+      implicit none
 C----------
 C  **HTGF--BM    DATE OF LAST REVISION:  07/08/11
 C----------
@@ -12,35 +21,6 @@ C  **HTCONS** IS CALLED FROM **RCON** TO LOAD SITE DEPENDENT
 C  CONSTANTS THAT NEED ONLY BE RESOLVED ONCE.
 C  CALLS ***FINDAG
 C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'OUTCOM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'MULTCM.F77'
-C
-C
-      INCLUDE 'HTCAL.F77'
-C
-C
-      INCLUDE 'PDEN.F77'
-C
 COMMONS
 C----------
       LOGICAL DEBUG
@@ -60,7 +40,7 @@ C----------
 C  IF THESE SITE INDEX RANGES CHANGE, ALSO CHANGE THEM IN **REGENT**
 C  AND **SITSET**
 C----------
-      DATA SLO/ 20., 50., 50., 50., 15.,  5., 30., 40., 50., 70., 
+      DATA SLO/ 20., 50., 50., 50., 15.,  5., 30., 40., 50., 70.,
      &          20., 20.,  5., 50., 30., 10., 70.,  5./
 C
       DATA SHI/ 80.,110.,110.,110., 30., 40., 70.,120.,150.,140.,
@@ -423,7 +403,7 @@ C  HEIGHT GROWTH MODIFIERS
 C----------
  1320 CONTINUE
       IF(DEBUG)WRITE(JOSTND,*) ' AT 1320 CONTINUE FOR TREE',I,' HT= ',
-     &HT(I),' AVH= ',AVH 
+     &HT(I),' AVH= ',AVH
       RELHT = 0.
       IF(AVH .GT. 0.) RELHT=HT(I)/AVH
       IF(RELHT .GT. 1.5)RELHT=1.5
