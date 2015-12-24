@@ -17,7 +17,7 @@ addons:
     
 script:
   - bash ./build_pyfvs.sh
-  - cd travis-ci && make
+  - cd bin/travis-ci && make
 
 branches:
   only:
