@@ -9,7 +9,7 @@ addons:
     - ppa:george-edison55/precise-backports
     - ppa:kubuntu-ppa/backports
     packages:
-    - cmake-2.8.12
+    - cmake
     - gfortran
     - unixodbc
     - unixodbc-dev
