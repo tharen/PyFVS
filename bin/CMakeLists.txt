@@ -392,9 +392,15 @@ if (WITH_PYMOD)
     ##      with a template setup.py script and avoid all the F2PY command
     ##      line manipulation. Link to the static FVS library.
     
-    find_package(PythonInterp 3.5 REQUIRED)
+    #find_package(PythonInterp 3 REQUIRED)
+    find_program(PYTHON_EXECUTABLE python3
+            PATHS ENV PATH
+            NO_DEFAULT_PATH
+            REQUIRED
+            )
     
     get_filename_component(PYTHON_INSTALL_PATH ${PYTHON_EXECUTABLE} PATH)
+    message(STATUS "**Python Executable: ${PYTHON_EXECUTABLE}")
         
     # Discover key Python configuration variables
     execute_process(
@@ -439,7 +445,6 @@ if (WITH_PYMOD)
         find_package(PythonLibs REQUIRED)
     endif ()
     
-    message(STATUS "Python Executable: ${PYTHON_EXECUTABLE}")
     message(STATUS "Python Libraries: ${PYTHON_LIBRARIES}")
     message(STATUS "Python Library: ${PYTHON_LIBRARY}")
 
