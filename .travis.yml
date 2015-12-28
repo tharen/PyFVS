@@ -16,8 +16,13 @@ addons:
     - unixodbc-dev
 #    - python3-numpy
 
+env:
+  global:
+    - BUILD_ROOT='pwd'/$REPO/bin
+    - PROJ_ROOT='pwd'/$REPO
+    
 script:
-  - cd $HOME/build/tharen/PyFVS && bash $HOME/build/tharen/PyFVS/build_fvs.sh
-  - cd $HOME/build/tharen/PyFVS/bin/travis-ci && make -j2
-  - cd $HOME/build/tharen/PyFVS/bin/travis-ci/pnc && bash /home/travis/build/tharen/PyFVS/bin/build_ext_py3.sh pnc
-  - cd $HOME/build/tharen/PyFVS/bin/travis-ci/wcc && bash /home/travis/build/tharen/PyFVS/bin/build_ext_py3.sh wcc
+  - cd $PROJ_ROOT && bash ./build_fvs.sh
+  - cd $BUILD_ROOT/travis-ci && make -j2
+  - cd $BUILD_ROOT/travis-ci/pnc && bash ./build_ext_py3.sh pnc
+  - cd $BUILD_ROOT/travis-ci/wcc && bash ./build_ext_py3.sh wcc
