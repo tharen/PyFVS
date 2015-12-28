@@ -22,7 +22,7 @@ env:
     - PROJ_ROOT=$PWD/$REPO
     
 script:
-  - cd $PROJ_ROOT && bash ./build_fvs.sh
+  - cd $PROJ_ROOT && bash ./config_build.sh
   - cd $BUILD_ROOT/travis-ci && make -j2
   - cd $BUILD_ROOT/travis-ci/pnc && bash $BUILD_ROOT/build_ext_py3.sh pnc
   - cd $BUILD_ROOT/travis-ci/wcc && bash $BUILD_ROOT/build_ext_py3.sh wcc
