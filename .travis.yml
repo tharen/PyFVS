@@ -14,10 +14,10 @@ addons:
     - gfortran
     - unixodbc
     - unixodbc-dev
-    - python3-numpy
+#    - python3-numpy
 
 script:
   - bash ./build_fvs.sh
   - cd bin/travis-ci && make -j2
   - cd pnc && bash ../../build_ext_py3.sh pnc
-#  - cd bin/travis-ci/wcc && bash ../../build_ext_py3.sh wcc
+  - cd wcc && bash ../../build_ext_py3.sh wcc
