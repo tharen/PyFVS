@@ -85,15 +85,6 @@ set(PROFILING OFF CACHE BOOL "Compile with profiling information.")
 
 message(STATUS "Build Type:" ${CMAKE_BUILD_TYPE})
 
-#FIXME: There is possibly more than one destination for the resulting binaries
-#      Perhaps this should be handled with installer packaging.
-#set(INSTALL_DIR "${CMAKE_BINARY_DIR}/${version}" CACHE PATH
-#        "Install location for compiled binaries.")
-#set(CMAKE_INSTALL_PREFIX ${INSTALL_DIR})
-#set(EXECUTABLE_OUTPUT_PATH ${INSTALL_DIR}/bin)
-#set(LIBRARY_OUTPUT_PATH ${INSTALL_DIR}/bin)
-#set(INCLUDE_INSTALL_PATH ${INSTALL_DIR}/lib)
-
 # If targetting the native architecture adjust the bit and OS flags
 if (NATIVE_ARCH)
     message(STATUS "Configure for native architecture target.")
