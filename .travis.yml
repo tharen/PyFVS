@@ -17,7 +17,7 @@ addons:
 #    - python3-numpy
 
 script:
-  - bash ./build_fvs.sh
-  - cd bin/travis-ci && make -j2
-  - cd pnc && bash ../../build_ext_py3.sh pnc
-  - cd wcc && bash ../../build_ext_py3.sh wcc
+  - bash /home/travis/build/tharen/PyFVS/build_fvs.sh
+  - cd /home/travis/build/tharen/PyFVS/bin/travis-ci && make -j2
+  - cd /home/travis/build/tharen/PyFVS/bin/travis-ci/pnc && bash /home/travis/build/tharen/PyFVS/bin/build_ext_py3.sh pnc
+  - cd /home/travis/build/tharen/PyFVS/bin/travis-ci/wcc && bash /home/travis/build/tharen/PyFVS/bin/build_ext_py3.sh wcc
