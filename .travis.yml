@@ -18,8 +18,8 @@ addons:
 
 env:
   global:
-    - BUILD_ROOT='pwd'/$REPO/bin
-    - PROJ_ROOT='pwd'/$REPO
+    - BUILD_ROOT=$PWD/$REPO/bin
+    - PROJ_ROOT=$PWD/$REPO
     
 script:
   - cd $PROJ_ROOT && bash ./build_fvs.sh
