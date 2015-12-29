@@ -14,18 +14,27 @@
 # Example: A project folder for a debug build and a seperate folder for release
 #   mkdir <FVS bin>/debug
 #   cd <FVS bin>/debug
-#   cmake .. -G"MinGW Makefiles" -DFVS_VARIANTS="pnc;wcc" -DCMAKE_BUILD_TYPE=DEBUG -DWITH_PYMOD=ON
+#   cmake .. -G"MinGW Makefiles" ^
+#       -DFVS_VARIANTS="pnc;wcc" ^
+#       -DCMAKE_BUILD_TYPE=DEBUG ^
+#       -DWITH_PYMOD=ON
 #   mingw32-make -j4
 #
 #   mkdir <FVS bin>/release
 #   cd <FVS bin>/release
-#   cmake .. -G"MinGW Makefiles" -DFVS_VARIANTS="pnc;wcc" -DCMAKE_BUILD_TYPE=RELEASE -DWITH_PYMOD=ON
+#   cmake .. -G"MinGW Makefiles" ^
+#       -DFVS_VARIANTS="pnc;wcc" ^
+#       -DCMAKE_BUILD_TYPE=RELEASE ^
+#       -DWITH_PYMOD=ON
 #   mingw32-make -j4
 #
 # Example: Linux 64 bit
 #   mkdir debug
 #   cd debug
-#   cmake .. -G"Unix Makefiles" -DFVS_VARIANTS="pnc;wcc" -DWITH_PYMOD=Yes -DCMAKE_BUILD_TYPE=Debug -DNATIVE_ARCH=ON -DSTATIC_LINK=ON
+#   cmake .. -G"Unix Makefiles" \
+#       -DFVS_VARIANTS="pnc;wcc" \
+#       -DWITH_PYMOD=Yes -DCMAKE_BUILD_TYPE=Debug \
+#       -DNATIVE_ARCH=ON -DSTATIC_LINK=ON
 #   make -j8
 #
 # CMake will create a subfolder for each FVS variant and copy the cmake list
@@ -376,80 +385,6 @@ add_library(common_objs OBJECT ${common_source})
 # Ensure the SQL and common objects are built in sequence
 add_dependencies(common_objs sql_lib)
 
-#---Locate key Python items
-# TODO: Check/Enforce Python 32/64 bit
-if (WITH_PYMOD)
-    ##TODO: This works well, but a safer approach may be to use distutils
-    ##      with a template setup.py script and avoid all the F2PY command
-    ##      line manipulation. Link to the static FVS library.
-    
-    #find_package(PythonInterp 3 REQUIRED)
-    find_program(PYTHON_EXECUTABLE python3
-            PATHS ENV PATH
-            NO_DEFAULT_PATH
-            REQUIRED
-            )
-    
-    get_filename_component(PYTHON_INSTALL_PATH ${PYTHON_EXECUTABLE} PATH)
-    message(STATUS "**Python Executable: ${PYTHON_EXECUTABLE}")
-        
-    # Discover key Python configuration variables
-    execute_process(
-            COMMAND ${PYTHON_EXECUTABLE} -c "import sysconfig;print(sysconfig.get_config_var('py_version_nodot'))"
-            OUTPUT_VARIABLE PYTHON_VER
-            OUTPUT_STRIP_TRAILING_WHITESPACE
-            )
-    execute_process(
-            COMMAND ${PYTHON_EXECUTABLE} -c "import sysconfig;print(sysconfig.get_config_var('SO'))"
-            OUTPUT_VARIABLE PYMOD_EXT
-            OUTPUT_STRIP_TRAILING_WHITESPACE
-            )
-    # TODO: Add error handling to report that Numpy is not available
-    execute_process(
-            COMMAND ${PYTHON_EXECUTABLE} -c "import numpy as n;print(n.get_include())"
-            OUTPUT_VARIABLE NUMPY_INCLUDE
-            OUTPUT_STRIP_TRAILING_WHITESPACE
-            )
-
-    if (WIN32)
-        set(PYTHON_LIBRARIES ${PYTHON_INSTALL_PATH}/libs)
-        find_library(PYTHON_LIBRARY
-            NAMES
-                python${PYTHON_VER}
-            PATHS
-                ${PYTHON_INSTALL_PATH}/libs
-                ${PYTHON_INSTALL_PATH}/..
-            # Avoid finding the .dll in the PATH.  We want the .lib.
-            NO_SYSTEM_ENVIRONMENT_PATH
-            )    
-        
-          find_path(PYTHON_INCLUDE_DIRS
-            NAMES Python.h
-            PATHS
-              ${PYTHON_INSTALL_PATH}/include
-            PATH_SUFFIXES
-              python${PYTHON_VER}
-          )
-
-    else ()
-        # Trust the CMake will find the right libraries
-        find_package(PythonLibs REQUIRED)
-    endif ()
-    
-    message(STATUS "Python Libraries: ${PYTHON_LIBRARIES}")
-    message(STATUS "Python Library: ${PYTHON_LIBRARY}")
-
-    # Locate the PyDoc script
-    if (WIN32)
-        file(GLOB_RECURSE PYDOC_EXE ${PYTHON_INSTALL_PATH}/*/pydoc.py)
-    else ()
-        find_program(PYDOC_EXE "pydoc")
-    endif ()
-
-    message(STATUS "PYDOC_EXE: ${PYDOC_EXE}")
-
-endif() # Global Python variables
-
 #---Configure each requested variant.
 message(STATUS "Configure variants: ${FVS_VARIANTS}")
 math(EXPR num_variants "${num_variants}-1")
@@ -510,6 +445,11 @@ message(STATUS "fvsexe: ${fvsexe}")
 message(STATUS "fvslib_shared: ${fvslib_shared}")
 #message(STATUS "Shared Link Flags: ${CMAKE_SHARED_LINKER_FLAGS}")
 #message(STATUS "Exe Link Flags: ${CMAKE_EXE_LINKER_FLAGS}")
+
+function(join VALUES GLUE OUTPUT)
+  string(REPLACE ";" "${GLUE}" _TMP_STR "${VALUES}")
+  set(${OUTPUT} "${_TMP_STR}" PARENT_SCOPE)
+endfunction()
 
 # Parse the source file list and populate Cmake lists
 set(include_dirs)
@@ -673,30 +613,9 @@ install(TARGETS ${fvslib_static} DESTINATION lib/static)
 
 # Build the Python module if requested
 if (WITH_PYMOD)
-    message(STATUS "Configure the Python module.")
+    message(STATUS "Configure and build the Python extension.")
 
     set(pymod_name "pyfvs${variant}")
-    set(pymod_sig "pyfvs${variant}.pyf")
-
-    include_directories(
-        ${PYTHON_INCLUDE_DIRS}
-        ${NUMPY_INCLUDE}
-        )
-
-    set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} ${PYTHON_LIBRARIES})
-
-    # Define the F2PY outputs to expect
-    file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/f2py")
-    # pyf signature file
-    set(f2py_sig "${CMAKE_CURRENT_BINARY_DIR}/f2py/${pymod_sig}")
-    # pyd/so python module
-    set(f2py_lib "${LIBRARY_OUTPUT_PATH}/${pymod_name}${PYMOD_EXT}")
-
-    # Generated wrapper code
-    set(f2py_wrappers "${CMAKE_CURRENT_BINARY_DIR}/f2py/${pymod_name}module.c")
-    list(APPEND f2py_wrappers "${CMAKE_CURRENT_BINARY_DIR}/f2py/${pymod_name}-f2pywrappers.f")
-    list(APPEND f2py_wrappers "${CMAKE_CURRENT_BINARY_DIR}/f2py/${pymod_name}-f2pywrappers2.f90")
-    list(APPEND f2py_wrappers "${CMAKE_CURRENT_BINARY_DIR}/f2py/fortranobject.c")
 
     # Process the source list for files to include in the Python module
     file(STRINGS ${source_list} source_files)
@@ -707,12 +626,20 @@ if (WITH_PYMOD)
                 "apisubs.f" "cmdline.f" "filopn.f" "fvs.f" "htcalc.f" "rann.f"
                 "htdbh.f"
                 
-                "prgprm_mod.f90" "esparm_mod.f90" "arrays_mod.f90" "contrl_mod.f90"
+                "prgprm_mod.f90" "esparm_mod.f90" "arrays_mod.f90" 
+                "contrl_mod.f90"
+
                 "coeffs_mod.f90" "econ_mod.f90" "escomn_mod.f90" "eshap_mod.f90"
                 "estree_mod.f90" "htcal_mod.f90" "multcm_mod.f90" "pden_mod.f90"
-                "workcm_mod.f90" "plot_mod.f90" "rancom_mod.f90" "screen_mod.f90"
-                "fvsstdcm_mod.f90" "varcom_mod.f90" "outcom_mod.f90" "volstd_mod.f90"
-                "fmparm_mod.f90" "fmcom_mod.f90" "fmfcom_mod.f90" "fmprop_mod.f90"
+                "workcm_mod.f90" "plot_mod.f90" "rancom_mod.f90" 
+                "screen_mod.f90"
+
+                "fvsstdcm_mod.f90" "varcom_mod.f90" "outcom_mod.f90" 
+                "volstd_mod.f90"
+
+                "fmparm_mod.f90" "fmcom_mod.f90" "fmfcom_mod.f90" 
+                "fmprop_mod.f90"
+
 #                "fmsvcm_mod.f90" "svdata_mod.f90"
                 "metric_mod.f90"
                 
@@ -738,95 +665,60 @@ if (WITH_PYMOD)
         endif()
     endforeach(fn)
     list(REMOVE_DUPLICATES pymod_source)
+    # Write the Python extension source files to a text file
+    string(REGEX REPLACE "[;]" " " foo "${pymod_source}")
+    file(WRITE ./pymod_source.txt "${foo}")
 
-    # Update the F2PY automation script template with the current
-    # configuration and save it to the build dir
-    set(f2py_gen "${CMAKE_CURRENT_BINARY_DIR}/f2py_gen.py")
-    configure_file("${CMAKE_CURRENT_LIST_DIR}/../../f2py_gen.py" ${f2py_gen})
-
-    # Execute the configured F2PY script to generate the wrapper code
+    # Execute the F2PY shell script to generate the extension
+    # FIXME: Need to generate the name of the extension library file
     add_custom_command(
-            OUTPUT ${f2py_sig} ${f2py_wrappers}
-            COMMAND ${PYTHON_EXECUTABLE} ${f2py_gen}
-            DEPENDS ${pymod_source}
+            TARGET ${fvslib_static}
+            POST_BUILD
+            COMMAND sh ../../build_ext_py3.sh ${variant}
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
             )
-
-    # Compile the Python module and link required libraries
-    if (NOT STATIC_LINK)
-        add_library(${pymod_name} SHARED ${f2py_wrappers}
-            $<TARGET_OBJECTS:common_objs>
-            $<TARGET_OBJECTS:${fvs_objs}>)
-        target_link_libraries(${pymod_name} ffe_lib sql_lib)
-
-    else ()
-        add_library(${pymod_name} SHARED ${f2py_wrappers}
-            $<TARGET_OBJECTS:common_objs>
-            $<TARGET_OBJECTS:${fvs_objs}>
-            $<TARGET_OBJECTS:sql_lib>
-            $<TARGET_OBJECTS:ffe_lib>)
-
-        if (WIN32)
-            target_link_libraries(${pymod_name} odbc32)
-        else ()
-            target_link_libraries(${pymod_name} odbc)
-        endif ()
-
-    endif ()
     
-    target_link_libraries(${pymod_name} ${PYTHON_LIBRARY})
-    
-    # FIXME: This is a work around, recent versions of CMake no longer add these libraries
-    if (${CMAKE_Fortran_COMPILER_ID} STREQUAL "GNU")
-        target_link_libraries(${pymod_name} gfortran quadmath)
-    endif ()
-
-    # Python is a C language, so link accordingly
-    set_target_properties(${pymod_name} PROPERTIES
-            LINKER_LANGUAGE CXX
-            SUFFIX ${PYMOD_EXT}
-            IMPORT_SUFFIX ${PYMOD_EXT}
-            PREFIX ""
-            IMPORT_PREFIX ""
-            )
-
-    # Ensure the signature and module code is fresh
-    add_dependencies(${pymod_name} ${f2py_sig})
-    add_custom_target(${pymod_name}-targ ALL DEPENDS ${pymod_name})
-
-    #TODO: setup a destination relative to Python site-packages or equivalent
-    install(TARGETS ${pymod_name} DESTINATION python)
-
-    # Add the build folder to the clean target
-    set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES
-             "${CMAKE_CURRENT_BINARY_DIR}/f2py"
-             )
-
-    # Generate a PyDoc HTML file for the module
     if (WIN32)
-        add_custom_command(
-                TARGET ${pymod_name}
-                POST_BUILD
-                COMMAND ${PYTHON_EXECUTABLE} ${PYDOC_EXE} -w ${pymod_name} > NUL
-                # Move to the output location so PyDoc can find the module
-                WORKING_DIRECTORY ${LIBRARY_OUTPUT_PATH}
-                )
+        set(pymod_fn "${CMAKE_CURRENT_BINARY_DIR}/${pymod_name}.pyd")
     else ()
-        add_custom_command(
-                TARGET ${pymod_name}
-                POST_BUILD
-                COMMAND ${PYDOC_EXE} -w ${pymod_name} > nul
-                # Move to the output location so PyDoc can find the module
-                WORKING_DIRECTORY ${LIBRARY_OUTPUT_PATH}
-                )
-    endif ()
+        # FIXME: Extension naming is different with Python 3
+        set(pymod_fn "${CMAKE_CURRENT_BINARY_DIR}/${pymod_name}.so")
+    endif()
 
-#    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${pymod_name}.html"
-#            DESTINATION "${INSTALL_DIR}/doc"
-#            )
-    set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES
-            "${CMAKE_CURRENT_BINARY_DIR}/${pymod_name}.html"
+    install(FILES "${pymod_fn}"
+            DESTINATION python
             )
+    # List output files to be cleaned
+    set_directory_properties(
+            PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES
+            "${pymod_fn};${pymod_name}.pyf;pymod_source.txt"
+            )
+
+#   # Generate a PyDoc HTML file for the module
+#    if (WIN32)
+#        add_custom_command(
+#                TARGET ${pymod_name}
+#                POST_BUILD
+#                COMMAND ${PYTHON_EXECUTABLE} ${PYDOC_EXE} -w ${pymod_name} > NUL
+#                # Move to the output location so PyDoc can find the module
+#                WORKING_DIRECTORY ${LIBRARY_OUTPUT_PATH}
+#                )
+#    else ()
+#        add_custom_command(
+#                TARGET ${pymod_name}
+#                POST_BUILD
+#                COMMAND ${PYDOC_EXE} -w ${pymod_name} > nul
+#                # Move to the output location so PyDoc can find the module
+#                WORKING_DIRECTORY ${LIBRARY_OUTPUT_PATH}
+#                )
+#    endif ()
+#
+##    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${pymod_name}.html"
+##            DESTINATION "${INSTALL_DIR}/doc"
+##            )
+#    set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES
+#            "${CMAKE_CURRENT_BINARY_DIR}/${pymod_name}.html"
+#            )
 
     message(STATUS "*** End PyMod Configuration ***")
 

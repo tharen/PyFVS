@@ -1,12 +1,14 @@
+sources=$(cat pymod_source.txt)
+
 if [ -v MSYSTEM ]
 then
   # Assume this is running on Windows under MSYS2/bash
-  f2py -h pyfvs$1.pyf -m pyfvs$1 --overwrite-signature $PROJ_ROOT/api/fvs_step.f90 
-  f2py -c ./pyfvs$1.pyf --compiler=mingw32 --fcompiler=gnu95 -L. -lFVS$1_static -lodbc32
+  $F2PY -h pyfvs$1.pyf -m pyfvs$1 --overwrite-signature $sources
+  $F2PY -c --compiler=mingw32 --fcompiler=gnu95 -lodbc32 ./pyfvs$1.pyf libFVS$1_static.a
 
 else
-  f2py -h pyfvs$1.pyf -m pyfvs$1 --overwrite-signature $PROJ_ROOT/api/fvs_step.f90 
-  f2py -c ./pyfvs$1.pyf -L. -lFVS$1_static -lodbc
+  $F2PY -h pyfvs$1.pyf -m pyfvs$1 --overwrite-signature $sources
+  $F2PY -c -lodbc ./pyfvs$1.pyf libFVS$1_static.a
 
 fi
 
