@@ -20,7 +20,7 @@ env:
   global:
     - BUILD_ROOT=$PWD/$REPO/bin
     - PROJ_ROOT=$PWD/$REPO
-    - F2PY=f2py3
+    - F2PY=f2py
     
 script:
   - cd $PROJ_ROOT && bash ./config_build.sh
