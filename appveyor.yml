@@ -1,0 +1,12 @@
+install:
+    - set "PATH=C:\msys64\usr\bin;C:\msys64\mingw64\bin;C:\Windows\System32;C:\Windows;%PATH%"
+    - set MSYSTEM=MINGW64
+
+build_script:
+    ps: >-
+      bash -c @"
+        cd ./bin
+        cmake -G \"MSYS Makefiles\" . -DFVS_VARIANTS=pnc,wcc -DMAKE_JOBS=2 -DCMAKE_SYSTEM_NAME=Windows
+        make -f makefile_all all
+        make -f makefile_all bundle
+      "@
