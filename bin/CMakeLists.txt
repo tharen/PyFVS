@@ -164,7 +164,8 @@ return()
 ##If edits are made, make them in the CMakeList.txt file in the parent directory.
 cmake_minimum_required (VERSION 2.8)
 
-set(CMAKE_SYSTEM_NAME @CMAKE_SYSTEM_NAME@)
+set (CMAKE_SYSTEM_NAME @CMAKE_SYSTEM_NAME@)
+set (MAKE_JOBS @MAKE_JOBS@)
 
 if (CMAKE_GENERATOR MATCHES "Visual Studio 10")
   set (CMAKE_C_FLAGS   "/D_WINDOWS /W3 /Zm100" CACHE STRING "VS10 mod A" FORCE)

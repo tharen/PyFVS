@@ -6,7 +6,7 @@ build_script:
     ps: >-
       bash -c @"
         cd ./bin
-        cmake -g \"MSYS Makefiles\" . -DFVS_VARIANTS=pnc,wcc -DMAKE_JOBS=2 -DCMAKE_SYSTEM_NAME=Windows
+        cmake -G \"MSYS Makefiles\" . -DFVS_VARIANTS=pnc,wcc -DMAKE_JOBS=1 -DCMAKE_SYSTEM_NAME=Windows
         make -f makefile_all all
         make -f makefile_all bundle
       "@
