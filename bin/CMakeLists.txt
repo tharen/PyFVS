@@ -29,6 +29,8 @@ else ()
   return()
 endif()
 
+message(STATUS "Target system is ${CMAKE_SYSTEM_NAME}")
+
 ## example 1: Single-variant GLOB: file(GLOB tobuild FVSiec_sourceList.txt)
 ## example 2: All-variant GLOB: file(GLOB tobuild FVS*_sourceList.txt)
 
