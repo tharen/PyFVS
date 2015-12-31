@@ -90,9 +90,9 @@ foreach (sourceList ${tobuild})
   
 endforeach(sourceList)
 
-foreach(toProcess ${dirsToProcess})
-  execute_process(COMMAND cmake -G ${CMAKE_GENERATOR} CMakeLists.txt WORKING_DIRECTORY ${toProcess})
-endforeach(toProcess)
+# foreach(toProcess ${dirsToProcess})
+  # execute_process(COMMAND cmake -G ${CMAKE_GENERATOR} CMakeLists.txt WORKING_DIRECTORY ${toProcess})
+# endforeach(toProcess)
 
 # TODO: Use add_subdirectory to configure a hierarchical build
 #     Once the CMakeLists.txt files are configured CMake can handle the rest.
@@ -121,7 +121,7 @@ endif ()
 # List all variants to be built
 set(all_vars "")
 foreach (source_list ${tobuild})
-  string(REGEX MATCH "^FVS(.*)_sourceList.txt" var ${source_list})
+  string(REGEX REPLACE ".*FVS(.*)_sourceList.txt" "${CMAKE_MATCH_1}" var ${source_list})
   list(APPEND all_vars ${CMAKE_MATCH_1})
 endforeach ()
 
@@ -144,11 +144,8 @@ file(APPEND ${top_make} "\t\tcp FVS\$\${var}_CmakeDir/libFVSfofem\$(SO_SUFFIX) \
 file(APPEND ${top_make} "\t\tcp FVS\$\${var}_CmakeDir/libFVSsql\$(SO_SUFFIX) \$(BUNDLE_DIR); \\\n")
 file(APPEND ${top_make} "\tdone\n")
 
-# List all variants to be built
-set(all_vars "")
-foreach (source_list ${tobuild})
-  string(REGEX MATCH "^FVS(.*)_sourceList.txt" var ${source_list})
-  set(var ${CMAKE_MATCH_1})
+# Configure targets for each variant
+foreach (var ${all_vars})
   file(APPEND ${top_make} "\n${var}:\n\t\$(MAKE) -j${MAKE_JOBS} -C FVS${var}_CmakeDir\n")
 endforeach ()
 
