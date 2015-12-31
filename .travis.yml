@@ -17,6 +17,5 @@ addons:
 
 script:
   - bash ./config_build.sh
-  - cd bin
-  - make -f makefile_all all
-  - make -f makefile_all bundle
+  - cd bin && make -f makefile_all all
+  #- make -f makefile_all bundle
