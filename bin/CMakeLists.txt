@@ -72,7 +72,7 @@ foreach (sourceList ${tobuild})
   file(STRINGS CMakeLists.txt cmakelistin NEWLINE_CONSUME)
 
   string(REGEX REPLACE ".*##DO NOT REMOVE THIS TAG##" ""
-          cmakelistout ${cmakelistin})
+      cmakelistout ${cmakelistin})
 
   file(MAKE_DIRECTORY ${prgName}_CmakeDir)
   file(REMOVE ${prgName}_CmakeDir/CMakeLists.txt)
@@ -82,7 +82,14 @@ foreach (sourceList ${tobuild})
   file(WRITE ${prgName}_CmakeDir/CMakeLists.txt ${cmakelistout})
   file(WRITE ${prgName}_CmakeDir/${prgName}_sourceList.txt ${newsourceList})
   list(APPEND dirsToProcess ${prgName}_CmakeDir)
-
+  
+  # Perform variable substitution on the variant CMakeLists.txt
+  configure_file(
+      ${prgName}_CmakeDir/CMakeLists.txt
+      ${prgName}_CmakeDir/CMakeLists.txt
+      @ONLY
+      )
+      
   unset(prgName CACHE)
   unset(slfn CACHE)
 
@@ -156,6 +163,8 @@ return()
 
 ##If edits are made, make them in the CMakeList.txt file in the parent directory.
 cmake_minimum_required (VERSION 2.8)
+
+set(CMAKE_SYSTEM_NAME @CMAKE_SYSTEM_NAME@)
 
 if (CMAKE_GENERATOR MATCHES "Visual Studio 10")
   set (CMAKE_C_FLAGS   "/D_WINDOWS /W3 /Zm100" CACHE STRING "VS10 mod A" FORCE)
