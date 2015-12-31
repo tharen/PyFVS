@@ -29,7 +29,7 @@ else ()
   return()
 endif()
 
-message(STATUS "Target system is ${CMAKE_SYSTEM_NAME}")
+message(STATUS "Target system: ${CMAKE_SYSTEM_NAME}")
 
 ## example 1: Single-variant GLOB: file(GLOB tobuild FVSiec_sourceList.txt)
 ## example 2: All-variant GLOB: file(GLOB tobuild FVS*_sourceList.txt)
@@ -154,8 +154,6 @@ return()
 ##If edits are made, make them in the CMakeList.txt file in the parent directory.
 cmake_minimum_required (VERSION 2.8)
 
-set(CMAKE_SYSTEM_NAME "Windows" CACHE STRING "Target system name")
-
 if (CMAKE_GENERATOR MATCHES "Visual Studio 10")
   set (CMAKE_C_FLAGS   "/D_WINDOWS /W3 /Zm100" CACHE STRING "VS10 mod A" FORCE)
   set (CMAKE_CXX_FLAGS "/D_WINDOWS /W3 /Zm100" CACHE STRING "VS10 mod B" FORCE)
@@ -170,6 +168,8 @@ else ()
   message(STATUS "Unknown toolchain; exiting")
   return()
 endif()
+
+message(STATUS "Target system: ${CMAKE_SYSTEM_NAME}")
 
 project (FVS C CXX Fortran)
 
