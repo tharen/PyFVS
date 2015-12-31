@@ -177,7 +177,7 @@ message(STATUS "Target system: ${CMAKE_SYSTEM_NAME}")
 project (FVS C CXX Fortran)
 
 set (CMAKE_Fortran_Format FIXED)
-set (CMAKE_VERBOSE_MAKEFILE ON)
+set (CMAKE_VERBOSE_MAKEFILE OFF)
 
 file(GLOB sourceList FVS*_sourceList.txt)
 get_filename_component (slfn ${sourceList} NAME CACHE)
