@@ -118,22 +118,20 @@ else ()
   file(APPEND ${top_make} "SO_SUFFIX = .so\n")
 endif ()
 
-# Phony targets
-file(APPEND ${top_make} "\n")
-file(APPEND ${top_make} ".PHONY: all\n")
-file(APPEND ${top_make} ".PHONY: bundle\n")
-
 # List all variants to be built
 set(all_vars "")
 foreach (source_list ${tobuild})
   string(REGEX MATCH "^FVS(.*)_sourceList.txt" var ${source_list})
-  set(var ${CMAKE_MATCH_1})
-  list(APPEND all_vars ${var})
-  file(APPEND ${top_make} "\n${var}:\n\t\$(MAKE) -j${MAKE_JOBS} -C FVS${var}_CmakeDir\n")
+  list(APPEND all_vars ${CMAKE_MATCH_1})
 endforeach ()
 
 string(REPLACE ";" " " _all_vars "${all_vars}")
-file(APPEND ${top_make} "\nALL_VARIANTS = ${_all_vars}\n")
+file(APPEND ${top_make} "ALL_VARIANTS = ${_all_vars}\n")
+
+# Phony targets
+file(APPEND ${top_make} "\n")
+file(APPEND ${top_make} ".PHONY: all\n")
+file(APPEND ${top_make} ".PHONY: bundle\n")
 
 file(APPEND ${top_make} "\nall: \$(ALL_VARIANTS)\n")
 
@@ -145,6 +143,14 @@ file(APPEND ${top_make} "\t\tcp FVS\$\${var}_CmakeDir/libFVS_\$\${var}\$(SO_SUFF
 file(APPEND ${top_make} "\t\tcp FVS\$\${var}_CmakeDir/libFVSfofem\$(SO_SUFFIX) \$(BUNDLE_DIR); \\\n")
 file(APPEND ${top_make} "\t\tcp FVS\$\${var}_CmakeDir/libFVSsql\$(SO_SUFFIX) \$(BUNDLE_DIR); \\\n")
 file(APPEND ${top_make} "\tdone\n")
+
+# List all variants to be built
+set(all_vars "")
+foreach (source_list ${tobuild})
+  string(REGEX MATCH "^FVS(.*)_sourceList.txt" var ${source_list})
+  set(var ${CMAKE_MATCH_1})
+  file(APPEND ${top_make} "\n${var}:\n\t\$(MAKE) -j${MAKE_JOBS} -C FVS${var}_CmakeDir\n")
+endforeach ()
 
 return()
 
