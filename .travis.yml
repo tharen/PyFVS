@@ -1,0 +1,22 @@
+language: python
+
+python:
+  - "3.5"
+    
+addons:
+  apt:
+    sources:
+    - george-edison55-precise-backports
+    - kubuntu-backports
+
+    packages:
+    - cmake
+    - gfortran
+    - unixodbc
+    - unixodbc-dev
+
+script:
+  - bash ./config_build.sh
+  - cd bin
+  - make -f makefile_all all
+  - make -f makefile_all bundle
