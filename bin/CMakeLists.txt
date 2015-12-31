@@ -90,9 +90,9 @@ foreach (sourceList ${tobuild})
   
 endforeach(sourceList)
 
-# foreach(toProcess ${dirsToProcess})
-  # execute_process(COMMAND cmake -G ${CMAKE_GENERATOR} CMakeLists.txt WORKING_DIRECTORY ${toProcess})
-# endforeach(toProcess)
+foreach(toProcess ${dirsToProcess})
+  execute_process(COMMAND cmake -G ${CMAKE_GENERATOR} CMakeLists.txt WORKING_DIRECTORY ${toProcess})
+endforeach(toProcess)
 
 # TODO: Use add_subdirectory to configure a hierarchical build
 #     Once the CMakeLists.txt files are configured CMake can handle the rest.
