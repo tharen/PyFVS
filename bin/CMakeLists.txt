@@ -301,7 +301,7 @@ if (CMAKE_SYSTEM_NAME MATCHES "Windows")
 
     set_target_properties(FVS_${varName}_static PROPERTIES
         LINKER_LANGUAGE Fortran
-        # OUTPUT_NAME FVS_${varName}
+        OUTPUT_NAME FVS_${varName}
         LINK_FLAGS ${flags})
 else ()
     set_target_properties(${prgName} PROPERTIES
