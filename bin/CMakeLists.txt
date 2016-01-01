@@ -205,9 +205,16 @@ endif ()
 
 if (CMAKE_COMPILER_IS_GNUCC)
   add_definitions(-DCMPgcc)
-  set (CMAKE_CXX_FLAGS "-cpp -w ${CMAKE_CXX_FLAGS}")
-  set (CMAKE_C_FLAGS "-cpp -w ${CMAKE_C_FLAGS}")
-  set (CMAKE_Fortran_FLAGS "-cpp -w -fno-align-commons ${CMAKE_Fortran_FLAGS}")
+  
+  if (CMAKE_SYSTEM_NAME MATCHES "Windows")
+    set (flags "-cpp -w")
+  else ()
+    set (flags "-cpp -w -fPIC")
+  endif ()
+  
+  set (CMAKE_CXX_FLAGS "${flags} ${CMAKE_CXX_FLAGS}")
+  set (CMAKE_C_FLAGS "${flags} ${CMAKE_C_FLAGS}")
+  set (CMAKE_Fortran_FLAGS "${flags} -fno-align-commons ${CMAKE_Fortran_FLAGS}")
 endif ()
 
 set (OUTPUT_NAME ${prgName})
