@@ -1,5 +1,5 @@
 cd bin
-cmake -G "Unix Makefiles" . \
+cmake -G"Unix Makefiles" . \
     -DFVS_VARIANTS=all \
-    -DMAKE_JOBS=2 \
-    -DCMAKE_SYSTEM_NAME=Windows
+    -DCMAKE_SYSTEM_NAME=Windows \
+    -DMAKE_JOBS=1
