@@ -14,8 +14,15 @@ addons:
     - gfortran
     - unixodbc
     - unixodbc-dev
-
+    - p7zip-full
+    
 script:
   - bash ./config_build.sh
-  - cd bin && make -f makefile_all all
-  #- make -f makefile_all bundle
+  - cd bin
+  - make -f makefile_all bundle
+
+deploy:
+  skip_cleanup: true
+  
+  script:
+    - 7z a -bd open-fvs.zip Open-FVS/*
