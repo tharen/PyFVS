@@ -2,7 +2,7 @@
 
 ## Towards using cmake! NCrookston July 24 2012
 
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required (VERSION 2.8.8)
 
 # Default variable values which can be set on the command line
 set(FVS_VARIANTS "all" CACHE STRING "FVS variants to configure, eg. pnc,wcc,oc,op")
@@ -147,8 +147,7 @@ file(APPEND ${top_make} "\nbundle: \$(ALL_VARIANTS)\n\tmkdir -p $(BUNDLE_DIR)\n"
 file(APPEND ${top_make} "\tfor var in \$(ALL_VARIANTS); do \\\n")
 file(APPEND ${top_make} "\t\tcp FVS\$\${var}_CmakeDir/FVS\$\${var}\$(EXE_SUFFIX) \$(BUNDLE_DIR); \\\n")
 file(APPEND ${top_make} "\t\tcp FVS\$\${var}_CmakeDir/libFVS_\$\${var}\$(SO_SUFFIX) \$(BUNDLE_DIR); \\\n")
-file(APPEND ${top_make} "\t\tcp FVS\$\${var}_CmakeDir/libFVSfofem\$(SO_SUFFIX) \$(BUNDLE_DIR); \\\n")
-file(APPEND ${top_make} "\t\tcp FVS\$\${var}_CmakeDir/libFVSsql\$(SO_SUFFIX) \$(BUNDLE_DIR); \\\n")
+file(APPEND ${top_make} "\t\tcp FVS\$\${var}_CmakeDir/libFVS_\$\${var}.a \$(BUNDLE_DIR); \\\n")
 file(APPEND ${top_make} "\tdone\n")
 
 # Configure targets for each variant
@@ -206,6 +205,9 @@ endif ()
 
 if (CMAKE_COMPILER_IS_GNUCC)
   add_definitions(-DCMPgcc)
+  set (CMAKE_CXX_FLAGS "-cpp -w ${CMAKE_CXX_FLAGS}")
+  set (CMAKE_C_FLAGS "-cpp -w ${CMAKE_C_FLAGS}")
+  set (CMAKE_Fortran_FLAGS "-cpp -w -fno-align-commons ${CMAKE_Fortran_FLAGS}")
 endif ()
 
 set (OUTPUT_NAME ${prgName})
@@ -269,18 +271,31 @@ include_directories(BEFORE ${includeDirs})
 
 message(STATUS "FVSvariant = FVS${varName}")
 
-add_library(FVSsql SHARED ${CsourceSQL})
-add_library(FVSfofem SHARED ${CsourceFFE})
+add_library(FVSsql OBJECT ${CsourceSQL})
+add_library(FVSfofem OBJECT ${CsourceFFE})
 ##add_library(FVScfim SHARED ${CsourceCFIM})
-add_library(FVS_${varName} SHARED ${FsourceFVS})
+add_library(FVS_${varName} SHARED ${FsourceFVS} $<TARGET_OBJECTS:FVSfofem> $<TARGET_OBJECTS:FVSsql>)
+add_library(FVS_${varName}_static STATIC ${FsourceFVS} $<TARGET_OBJECTS:FVSfofem> $<TARGET_OBJECTS:FVSsql>)
 add_executable (${prgName} ${FsourceMAIN})
 
-target_link_libraries(${prgName} FVS_${varName} FVSsql FVSfofem)
-target_link_libraries(FVS_${varName} FVSfofem FVSsql)
+target_link_libraries(${prgName} FVS_${varName}_static)
+# target_link_libraries(FVS_${varName} FVSfofem FVSsql)
 
 add_dependencies(FVS_${varName} dbstypedefs)
+add_dependencies(FVS_${varName}_static dbstypedefs)
 
-set_target_properties(${prgName} PROPERTIES LINKER_LANGUAGE Fortran)
+set_target_properties(${prgName} PROPERTIES
+    LINKER_LANGUAGE Fortran
+    LINK_FLAGS "-static")
+    
+set_target_properties(FVS_${varName} PROPERTIES
+    LINKER_LANGUAGE Fortran
+    LINK_FLAGS "-static")
+
+set_target_properties(FVS_${varName}_static PROPERTIES
+    LINKER_LANGUAGE Fortran
+    OUTPUT_NAME FVS_${varName}
+    LINK_FLAGS "-static")
 
 # set up function alias for DLL containing CPP code
 
