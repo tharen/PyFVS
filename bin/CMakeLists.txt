@@ -286,22 +286,28 @@ add_dependencies(FVS_${varName}_static dbstypedefs)
 
 if (CMAKE_SYSTEM_NAME MATCHES "Windows")
     set (flags "-static")
+    set_target_properties(${prgName} PROPERTIES
+        LINKER_LANGUAGE Fortran
+        LINK_FLAGS ${flags})
+        
+    set_target_properties(FVS_${varName} PROPERTIES
+        LINKER_LANGUAGE Fortran
+        LINK_FLAGS ${flags})
+
+    set_target_properties(FVS_${varName}_static PROPERTIES
+        LINKER_LANGUAGE Fortran
+        # OUTPUT_NAME FVS_${varName}
+        LINK_FLAGS ${flags})
 else ()
-    set (flags "")
+    set_target_properties(${prgName} PROPERTIES
+        LINKER_LANGUAGE Fortran)
+        
+    set_target_properties(FVS_${varName} PROPERTIES
+        LINKER_LANGUAGE Fortran)
+
+    set_target_properties(FVS_${varName}_static PROPERTIES
+        LINKER_LANGUAGE Fortran)
 endif ()
-
-set_target_properties(${prgName} PROPERTIES
-    LINKER_LANGUAGE Fortran
-    LINK_FLAGS ${flags})
-    
-set_target_properties(FVS_${varName} PROPERTIES
-    LINKER_LANGUAGE Fortran
-    LINK_FLAGS ${flags})
-
-set_target_properties(FVS_${varName}_static PROPERTIES
-    LINKER_LANGUAGE Fortran
-    OUTPUT_NAME FVS_${varName}
-    LINK_FLAGS ${flags})
 
 # set up function alias for DLL containing CPP code
 
