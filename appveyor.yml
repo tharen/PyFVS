@@ -19,9 +19,9 @@ install:
 build_script:
     ps: >-
       bash --login -c @"
-        cd /c/projects/testing
+        cd /c/projects/pyfvs
         ./configure_appveyor.sh
-        cd /c/projects/testing/bin
+        cd /c/projects/pyfvs/bin
         make -f makefile_all all bundle
       "@
 
