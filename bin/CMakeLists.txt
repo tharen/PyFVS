@@ -205,16 +205,9 @@ endif ()
 
 if (CMAKE_COMPILER_IS_GNUCC)
   add_definitions(-DCMPgcc)
-  
-  if (CMAKE_SYSTEM_NAME MATCHES "Windows")
-    set (flags "-cpp -w")
-  else ()
-    set (flags "-cpp -w -fPIC")
-  endif ()
-  
-  set (CMAKE_CXX_FLAGS "${flags} ${CMAKE_CXX_FLAGS}")
-  set (CMAKE_C_FLAGS "${flags} ${CMAKE_C_FLAGS}")
-  set (CMAKE_Fortran_FLAGS "${flags} -fno-align-commons ${CMAKE_Fortran_FLAGS}")
+  set (CMAKE_CXX_FLAGS "-cpp -w ${CMAKE_CXX_FLAGS}")
+  set (CMAKE_C_FLAGS "-cpp -w ${CMAKE_C_FLAGS}")
+  set (CMAKE_Fortran_FLAGS "-cpp -w -fno-align-commons ${CMAKE_Fortran_FLAGS}")
 endif ()
 
 set (OUTPUT_NAME ${prgName})
@@ -291,18 +284,24 @@ target_link_libraries(${prgName} FVS_${varName}_static)
 add_dependencies(FVS_${varName} dbstypedefs)
 add_dependencies(FVS_${varName}_static dbstypedefs)
 
+if (CMAKE_SYSTEM_NAME MATCHES "Windows")
+    set (flags "-static")
+else ()
+    set (flags "")
+endif ()
+
 set_target_properties(${prgName} PROPERTIES
     LINKER_LANGUAGE Fortran
-    LINK_FLAGS "-static")
+    LINK_FLAGS ${flags})
     
 set_target_properties(FVS_${varName} PROPERTIES
     LINKER_LANGUAGE Fortran
-    LINK_FLAGS "-static")
+    LINK_FLAGS ${flags})
 
 set_target_properties(FVS_${varName}_static PROPERTIES
     LINKER_LANGUAGE Fortran
     OUTPUT_NAME FVS_${varName}
-    LINK_FLAGS "-static")
+    LINK_FLAGS ${flags})
 
 # set up function alias for DLL containing CPP code
 
