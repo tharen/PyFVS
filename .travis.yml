@@ -18,7 +18,8 @@ script:
 - make -f makefile_all bundle
 
 after_success:
-  - 7z a -bd open-fvs-trunk.zip Open-FVS/*
+  - cd ${HOME}/bin
+  - 7z a -bd open-fvs_${TRAVIS_TAG}.zip Open-FVS/*
 
 deploy:
   provider: releases
