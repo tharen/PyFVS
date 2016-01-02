@@ -2,6 +2,6 @@
 
 cd bin
 cmake -G"Unix Makefiles" . \
-    -DFVS_VARIANTS=pnc,wcc,op \
+    -DFVS_VARIANTS=pnc \
     -DCMAKE_SYSTEM_NAME=Linux \
     -DMAKE_JOBS=1
