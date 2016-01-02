@@ -14,7 +14,7 @@ addons:
     - p7zip-full
 script:
   - bash ./config_build.sh
-  - cd ${HOME}/bin
+  - cd ${HOME}/tharen/PyFVS/bin
   - make -f makefile_all bundle
 
 after_success:
