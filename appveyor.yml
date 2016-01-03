@@ -6,7 +6,7 @@ version: 0.0.{build}
 
 install:
     # Workaround to remove the msys git sh.exe from PATH
-    - set PATH=%PATH:C:\Program Files (x86)\Git\bin;=%
+    - set PATH=%PATH:C:\Program Files\Git\usr\bin;=%
     - set PATH=C:\MinGW\bin;%PATH%
     
 build_script:
