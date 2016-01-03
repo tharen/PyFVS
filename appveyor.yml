@@ -5,7 +5,9 @@ version: 0.0.{build}
   # - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 install:
-    - set "PATH=C:\mingw64\bin;C:\Windows\System32;C:\Windows"
+    # Workaround to remove the msys git sh.exe from PATH
+    - set PATH=%PATH:C:\Program Files (x86)\Git\bin;=%
+    - set PATH=C:\MinGW\bin;%PATH%
     
 build_script:
     - cd bin
