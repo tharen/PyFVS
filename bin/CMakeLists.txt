@@ -671,10 +671,15 @@ if (WITH_PYMOD)
 
     # Execute the F2PY shell script to generate the extension
     # FIXME: Need to generate the name of the extension library file
+    if (CMAKE_GENERATOR MATCHES "MinGW Makefiles")
+        set(cmd cmd.exe /c ..\\..\\build_python_ext.bat ${variant})
+    else ()
+        set(cmd sh ../../build_ext_py3.sh ${variant})
+    endif ()
     add_custom_command(
             TARGET ${fvslib_static}
             POST_BUILD
-            COMMAND sh ../../build_ext_py3.sh ${variant}
+            COMMAND ${cmd}
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
             )
     
