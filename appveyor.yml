@@ -1,0 +1,29 @@
+version: 0.0.{build}
+
+# init:
+  # # Display remote desktop details
+  # - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
+install:
+    - set "PATH=C:\mingw64\bin;C:\Windows\System32;C:\Windows;%PATH%"
+    
+build_script:
+    - cd bin
+    - mkdir build
+    - cd build
+    - cmake -G"MinGW Makefiles" .. -DFVS_VARIANTS=pnc -DWITH_PYMOD=On -DCMAKE_INSTALL_PREFIX=Open-FVS
+    - mingw32-make install
+    
+
+after_build:
+    - C:\projects\pyfvs
+    - 7z a -bd open-fvs.zip Open-FVS\*
+
+artifacts:
+    - path: bin\open-fvs.zip
+      name: open-fvs
+      type: zip
+    
+# on_finish:
+  # # Pause the build for remote desktop access
+  # - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
