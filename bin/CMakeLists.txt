@@ -131,7 +131,9 @@ endif ()
 
 if (CMAKE_COMPILER_IS_GNUCC)
     message(STATUS "Add GCC compiler flags.")
-
+    
+    # TODO: These may be clobbering CMAKE FLAGS
+    
     # CMAKE_BUILD_TYPE = Debug
     set(debug_flags "-g3 -mfpmath=sse -msse -ffpe-trap=invalid,zero,overflow,underflow")
     set(CMAKE_Fortran_FLAGS_DEBUG "${debug_flags}")
@@ -280,11 +282,13 @@ set(dbstypedefs_f77 "${CMAKE_CURRENT_BINARY_DIR}/DBSTYPEDEFS.F77")
 # Execute the DBSTYPEDEFS.F77 generator.
 add_custom_command(
         OUTPUT ${dbstypedefs_f77}
-        COMMAND mkdbsTypeDefs
+        COMMAND $<TARGET_FILE:mkdbsTypeDefs>
         DEPENDS mkdbsTypeDefs)
 
 # Create a dummy target so the DBSTYPEDEFS.F77 generator will be called.
 add_custom_target(gen_dbstypedefs ALL DEPENDS ${dbstypedefs_f77})
+
+# TODO: use find_library to locate the correct odbc library
 
 # Compile the SQL object library
 if (NOT STATIC_LINK)
@@ -669,34 +673,54 @@ if (WITH_PYMOD)
     string(REGEX REPLACE "[;]" " " foo "${pymod_source}")
     file(WRITE ./pymod_source.txt "${foo}")
 
+    # Discover Python configuration variables
+    # FIXME: The wrong python is being called on appveyor, 
+    set(PYTHON_EXE python)
+    execute_process(
+            COMMAND ${PYTHON_EXE} -c "import sysconfig as s\nprint(s.get_platform().replace('-','_'))"
+            OUTPUT_VARIABLE PYTHON_PLATFORM
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+            )
+    execute_process(
+            COMMAND ${PYTHON_EXE} -c "import sysconfig as s\nprint(s.get_python_version().replace('.',''))"
+            OUTPUT_VARIABLE PYTHON_VER
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+            )
+    
     # Execute the F2PY shell script to generate the extension
-    # FIXME: Need to generate the name of the extension library file
+    # FIXME: This should be a custom command calling python setup build_ext instead of F2PY command line
     if (CMAKE_GENERATOR MATCHES "MinGW Makefiles")
         set(cmd cmd.exe /c ..\\..\\build_python_ext.bat ${variant})
     else ()
-        set(cmd sh ../../build_ext_py3.sh ${variant})
+        set(cmd bash ../../build_ext_py3.sh ${variant})
     endif ()
-    add_custom_command(
-            TARGET ${fvslib_static}
-            POST_BUILD
-            COMMAND ${cmd}
-            WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    
+    # Call a Python script to determine extension name to be generated
+    execute_process(
+            COMMAND ${PYTHON_EXE} ../platform_ext.py ${pymod_name}
+            OUTPUT_VARIABLE pymod_fn
+            OUTPUT_STRIP_TRAILING_WHITESPACE
             )
     
-    if (WIN32)
-        set(pymod_fn "${CMAKE_CURRENT_BINARY_DIR}/${pymod_name}.pyd")
-    else ()
-        # FIXME: Extension naming is different with Python 3
-        set(pymod_fn "${CMAKE_CURRENT_BINARY_DIR}/${pymod_name}.so")
-    endif()
-
-    install(FILES "${pymod_fn}"
-            DESTINATION python
+    # Compile the Python extension library
+    add_custom_command(
+            OUTPUT ${pymod_fn}
+            COMMAND ${cmd}
+            DEPENDS ${fvslib_static}
+            COMMENT "Compile python extension."
             )
-    # List output files to be cleaned
+    add_custom_target(${pymod_name}_ext ALL DEPENDS ${pymod_fn})
+    
+    install(
+        FILES ${pymod_fn}
+        DESTINATION python${PYTHON_VER})
+    
+    # Add intermediate files to the clean list
+    # NOTE: pymod_source.txt should not be cleaned
+    set(cf ${pymod_name}.pyf)
     set_directory_properties(
-            PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES
-            "${pymod_fn};${pymod_name}.pyf;pymod_source.txt"
+            PROPERTIES
+            ADDITIONAL_MAKE_CLEAN_FILES "${cf}"
             )
 
 #   # Generate a PyDoc HTML file for the module
