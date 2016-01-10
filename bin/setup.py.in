@@ -1,14 +1,35 @@
+"""
+Wrap and link the FVS Python extension library.
+
+This is a template setup.py to be configured with CMake.
+"""
+
 from __future__ import division, absolute_import, print_function
 
 import os
+import sys
+import subprocess
 from numpy.distutils.core import Extension
+from numpy.f2py import f2py2e
 
-fvs_variant = 'pnc'
-mod_path ='./pnc'
-ext_name = 'pyfvspnc'
-ext_pyf = './pyfvspnc.pyf'
-fvs_lib = 'FVSpnc_static'
+fvs_variant = '@variant@'
+mod_path ='./'
+ext_name = '@pyext_name@'
+ext_pyf = './@pyext_name@.pyf'
+fvs_lib = 'FVS@variant@_static'
 lib_dir = '.'
+
+sources = open('./pyext_source.txt').read()
+sources = sources.split(';')
+
+cmd_args = [
+    '-h','%s' % (ext_pyf,)
+    ,'-m','pyfvs%s' % (fvs_variant,)
+    ,'--overwrite-signature'
+    ]
+cmd_args.extend(sources)
+
+f2py2e.run_main(cmd_args)
 
 if os.name=='nt':
     odbc = 'odbc32'
@@ -23,6 +44,9 @@ ext1 = Extension(
         #extra_compile_args = ['-J={}'.format(mod_path),]
 )
 
+ccompiler = ''
+fcompiler = ''
+
 if __name__ == "__main__":
     from numpy.distutils.core import setup
     setup(name = ext_name,
@@ -30,5 +54,5 @@ if __name__ == "__main__":
           author            = "Tod Haren",
           author_email      = "tod.haren<at>gm....com",
           ext_modules = [ext1,],
-          build_ext = ['--compiler=mingw32','--fcompiler=gnu',]
+          build_ext = ['--compiler=%s' % ccompiler,'--fcompiler=%s' % fcompiler,]
           )

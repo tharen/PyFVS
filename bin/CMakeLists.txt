@@ -17,7 +17,7 @@
 #   cmake .. -G"MinGW Makefiles" ^
 #       -DFVS_VARIANTS="pnc;wcc" ^
 #       -DCMAKE_BUILD_TYPE=DEBUG ^
-#       -DWITH_PYMOD=ON
+#       -DWITH_PYEXT=ON
 #   mingw32-make -j4
 #
 #   mkdir <FVS bin>/release
@@ -25,7 +25,7 @@
 #   cmake .. -G"MinGW Makefiles" ^
 #       -DFVS_VARIANTS="pnc;wcc" ^
 #       -DCMAKE_BUILD_TYPE=RELEASE ^
-#       -DWITH_PYMOD=ON
+#       -DWITH_PYEXT=ON
 #   mingw32-make -j4
 #
 # Example: Linux 64 bit
@@ -33,7 +33,7 @@
 #   cd debug
 #   cmake .. -G"Unix Makefiles" \
 #       -DFVS_VARIANTS="pnc;wcc" \
-#       -DWITH_PYMOD=Yes -DCMAKE_BUILD_TYPE=Debug \
+#       -DWITH_PYEXT=Yes -DCMAKE_BUILD_TYPE=Debug \
 #       -DNATIVE_ARCH=ON -DSTATIC_LINK=ON
 #   make -j8
 #
@@ -56,7 +56,7 @@
 #
 # Additional arguments:
 #   -DSTATIC_LINK=ON/OFF - Statically link FFE & SQL with the FVS binaries.
-#   -DWITH_PYMOD=ON/OFF - Include Python module targets, default is OFF
+#   -DWITH_PYEXT=ON/OFF - Include Python module targets, default is OFF
 #   -DFVS_VARIANTS=<variant list> - Explicitly list the variants to include in
 #           the build as a semicolon seperated list of variant abbreviations,
 #           eg. pnc;wcc;ncc;soc, the default is to include all variants.
@@ -84,7 +84,7 @@ set(source_list_dir ${CMAKE_CURRENT_LIST_DIR})
 #TODO: Clean up cache variable to enable cmake-gui usage
 # Define default values for build configuration options
 set(FVS_VARIANTS "all" CACHE STRING "FVS variants to configure")
-set(WITH_PYMOD OFF CACHE BOOL "Build the Python module module.")
+set(WITH_PYEXT OFF CACHE BOOL "Build the Python module module.")
 set(NATIVE_ARCH ON CACHE BOOL "Target the local machine architecture.")
 set(32BIT_TARGET OFF CACHE BOOL "Set the target architecture to 32 bit.")
 set(UNIX_TARGET OFF CACHE BOOL "Set the target OS to be a UNIX flavor.")
@@ -415,7 +415,7 @@ foreach(v RANGE ${num_variants})
     # Replace template strings
     string(REGEX REPLACE "<<variant>>" "${variant}" cmakelist ${cmakelist})
     string(REGEX REPLACE "<<source_list>>" "${variant_dir}/sourcelist.txt" cmakelist ${cmakelist})
-    string(REGEX REPLACE "<<with_pymod>>" ${WITH_PYMOD} cmakelist ${cmakelist})
+    string(REGEX REPLACE "<<with_pyext>>" ${WITH_PYEXT} cmakelist ${cmakelist})
     file(WRITE ${variant_dir}/CMakeLists.txt ${cmakelist})
 
     # Add the the FVS variant CMakeLists.txt as a sub-project
@@ -459,7 +459,7 @@ endfunction()
 set(include_dirs)
 set(fvs_source)
 set(main_source)
-set(pymod_source)
+set(pyext_source)
 
 # Process the source list for the variant
 file(STRINGS ${source_list} source_files)
@@ -616,17 +616,17 @@ install(TARGETS ${fvslib_static} DESTINATION lib/static)
 #install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${fvslib_shared}_Export.h DESTINATION "./")
 
 # Build the Python module if requested
-if (WITH_PYMOD)
+if (WITH_PYEXT)
     message(STATUS "Configure and build the Python extension.")
 
-    set(pymod_name "pyfvs${variant}")
+    set(pyext_name "pyfvs${variant}")
 
     # Process the source list for files to include in the Python module
     file(STRINGS ${source_list} source_files)
     string(REPLACE "../" "${src_root}/" source_files "${source_files}")
 
     # Source files to be wrapped with F2PY
-    set(_pymod_src 
+    set(_pyext_src 
                 "apisubs.f" "cmdline.f" "filopn.f" "fvs.f" "htcalc.f" "rann.f"
                 "htdbh.f"
                 
@@ -653,25 +653,27 @@ if (WITH_PYMOD)
                 
 #                "step_grincr.f90" "dbs_commons.f" "fire_commons.f"
 #                "fvs_commons.f"
+                
+                "esblkd_mod.f90" "esrncm_mod.f90" "escprs.f90"
                 )
     # Routines to be skipped by F2PY
-    set(pymod_skip "") #required by f2py_gen
+    set(pyext_skip "") #required by f2py_gen
 
     foreach (fn ${source_files})
         if (NOT ${fn} MATCHES "^#.*")
             get_filename_component(filename ${fn} NAME)
 
-            list(FIND _pymod_src ${filename} x)
+            list(FIND _pyext_src ${filename} x)
             if (x GREATER -1)
-                list(APPEND pymod_source ${fn})
+                list(APPEND pyext_source ${fn})
             endif()
             unset(filename)
         endif()
     endforeach(fn)
-    list(REMOVE_DUPLICATES pymod_source)
+    list(REMOVE_DUPLICATES pyext_source)
     # Write the Python extension source files to a text file
-    string(REGEX REPLACE "[;]" " " foo "${pymod_source}")
-    file(WRITE ./pymod_source.txt "${foo}")
+    #string(REGEX REPLACE "[;]" " " foo "${pyext_source}")
+    file(WRITE ./pyext_source.txt "${pyext_source}")
 
     # Discover Python configuration variables
     # FIXME: The wrong python is being called on appveyor, 
@@ -687,37 +689,40 @@ if (WITH_PYMOD)
             OUTPUT_STRIP_TRAILING_WHITESPACE
             )
     
-    # Execute the F2PY shell script to generate the extension
-    # FIXME: This should be a custom command calling python setup build_ext instead of F2PY command line
-    if (CMAKE_GENERATOR MATCHES "MinGW Makefiles")
-        set(cmd cmd.exe /c ..\\..\\build_python_ext.bat ${variant})
-    else ()
-        set(cmd bash ../../build_ext_py3.sh ${variant})
-    endif ()
+#    # Execute the F2PY shell script to generate the extension
+#    # FIXME: This should be a custom command calling python setup build_ext instead of F2PY command line
+#    if (CMAKE_GENERATOR MATCHES "MinGW Makefiles")
+#        set(cmd cmd.exe /c ..\\..\\build_python_ext.bat ${variant})
+#    else ()
+#        set(cmd bash ../../build_ext_py3.sh ${variant})
+#    endif ()
     
     # Call a Python script to determine extension name to be generated
     execute_process(
-            COMMAND ${PYTHON_EXE} ../platform_ext.py ${pymod_name}
-            OUTPUT_VARIABLE pymod_fn
+            COMMAND ${PYTHON_EXE} ../platform_ext.py ${pyext_name}
+            OUTPUT_VARIABLE pyext_fn
             OUTPUT_STRIP_TRAILING_WHITESPACE
             )
+
+    # Configure the setup.py script for the current variant.
+    configure_file(../../setup.py.in setup.py @ONLY)
     
     # Compile the Python extension library
     add_custom_command(
-            OUTPUT ${pymod_fn}
-            COMMAND ${cmd}
+            OUTPUT ${pyext_fn}
+            COMMAND python setup.py build_ext --inplace
             DEPENDS ${fvslib_static}
             COMMENT "Compile python extension."
             )
-    add_custom_target(${pymod_name}_ext ALL DEPENDS ${pymod_fn})
+    add_custom_target(${pyext_name}_ext ALL DEPENDS ${pyext_fn})
     
     install(
-        FILES ${pymod_fn}
+        FILES ${pyext_fn}
         DESTINATION python${PYTHON_VER})
     
     # Add intermediate files to the clean list
-    # NOTE: pymod_source.txt should not be cleaned
-    set(cf ${pymod_name}.pyf)
+    # NOTE: pyext_source.txt should not be cleaned
+    set(cf ${pyext_name}.pyf)
     set_directory_properties(
             PROPERTIES
             ADDITIONAL_MAKE_CLEAN_FILES "${cf}"
@@ -726,27 +731,27 @@ if (WITH_PYMOD)
 #   # Generate a PyDoc HTML file for the module
 #    if (WIN32)
 #        add_custom_command(
-#                TARGET ${pymod_name}
+#                TARGET ${pyext_name}
 #                POST_BUILD
-#                COMMAND ${PYTHON_EXECUTABLE} ${PYDOC_EXE} -w ${pymod_name} > NUL
+#                COMMAND ${PYTHON_EXECUTABLE} ${PYDOC_EXE} -w ${pyext_name} > NUL
 #                # Move to the output location so PyDoc can find the module
 #                WORKING_DIRECTORY ${LIBRARY_OUTPUT_PATH}
 #                )
 #    else ()
 #        add_custom_command(
-#                TARGET ${pymod_name}
+#                TARGET ${pyext_name}
 #                POST_BUILD
-#                COMMAND ${PYDOC_EXE} -w ${pymod_name} > nul
+#                COMMAND ${PYDOC_EXE} -w ${pyext_name} > nul
 #                # Move to the output location so PyDoc can find the module
 #                WORKING_DIRECTORY ${LIBRARY_OUTPUT_PATH}
 #                )
 #    endif ()
 #
-##    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${pymod_name}.html"
+##    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${pyext_name}.html"
 ##            DESTINATION "${INSTALL_DIR}/doc"
 ##            )
 #    set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES
-#            "${CMAKE_CURRENT_BINARY_DIR}/${pymod_name}.html"
+#            "${CMAKE_CURRENT_BINARY_DIR}/${pyext_name}.html"
 #            )
 
     message(STATUS "*** End PyMod Configuration ***")
@@ -754,8 +759,8 @@ if (WITH_PYMOD)
 endif()
 
 # Add a make target for the variant to build everything seperate from 'all'
-if (WITH_PYMOD)
-    add_custom_target(${variant} DEPENDS ${pymod_name} ${fvsexe} ${fvslib_shared} ${fvslib_static})
+if (WITH_PYEXT)
+    add_custom_target(${variant} DEPENDS ${pyext_name} ${fvsexe} ${fvslib_shared} ${fvslib_static})
 else ()
     add_custom_target(${variant} DEPENDS ${fvsexe} ${fvslib_shared} ${fvslib_static})
 endif ()
