@@ -612,7 +612,7 @@ install(TARGETS ${fvslib_static} DESTINATION lib/static)
 #    STATIC_DEFINE ${fvslib_shared}_BUILT_AS_STATIC
 #    )
 
-# FIXME: Installation is not working
+# FIXME: Installation of header files is not working
 #install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${fvslib_shared}_Export.h DESTINATION "./")
 
 # Build the Python module if requested
@@ -620,7 +620,8 @@ if (WITH_PYEXT)
     message(STATUS "Configure and build the Python extension.")
 
     set(pyext_name "pyfvs${variant}")
-
+    
+    # TODO: Add a pyfvs_sources.txt file to avoid stuffing them here
     # Process the source list for files to include in the Python module
     file(STRINGS ${source_list} source_files)
     string(REPLACE "../" "${src_root}/" source_files "${source_files}")
@@ -671,46 +672,37 @@ if (WITH_PYEXT)
         endif()
     endforeach(fn)
     list(REMOVE_DUPLICATES pyext_source)
+
     # Write the Python extension source files to a text file
-    #string(REGEX REPLACE "[;]" " " foo "${pyext_source}")
     file(WRITE ./pyext_source.txt "${pyext_source}")
 
-    # Discover Python configuration variables
     # FIXME: The wrong python is being called on appveyor, 
     set(PYTHON_EXE python)
-    execute_process(
-            COMMAND ${PYTHON_EXE} -c "import sysconfig as s\nprint(s.get_platform().replace('-','_'))"
-            OUTPUT_VARIABLE PYTHON_PLATFORM
-            OUTPUT_STRIP_TRAILING_WHITESPACE
-            )
-    execute_process(
-            COMMAND ${PYTHON_EXE} -c "import sysconfig as s\nprint(s.get_python_version().replace('.',''))"
-            OUTPUT_VARIABLE PYTHON_VER
-            OUTPUT_STRIP_TRAILING_WHITESPACE
-            )
     
-#    # Execute the F2PY shell script to generate the extension
-#    # FIXME: This should be a custom command calling python setup build_ext instead of F2PY command line
-#    if (CMAKE_GENERATOR MATCHES "MinGW Makefiles")
-#        set(cmd cmd.exe /c ..\\..\\build_python_ext.bat ${variant})
-#    else ()
-#        set(cmd bash ../../build_ext_py3.sh ${variant})
-#    endif ()
-    
-    # Call a Python script to determine extension name to be generated
+    # Determine the file name of the Python library
     execute_process(
             COMMAND ${PYTHON_EXE} ../platform_ext.py ${pyext_name}
             OUTPUT_VARIABLE pyext_fn
             OUTPUT_STRIP_TRAILING_WHITESPACE
             )
-
+    
+    set(cmd_args "")
+    # F2PY/Distutils needs to know what compilers are being used
+    if (CMAKE_COMPILER_IS_MINGW EQUAL 1)
+        list(APPEND cmd_args "--compiler=mingw32")
+    endif ()
+    
+    if (CMAKE_Fortran_COMPILER_ID STREQUAL GNU)   
+        list(APPEND cmd_args "--fcompiler=gnu95")
+    endif ()
+    
     # Configure the setup.py script for the current variant.
     configure_file(../../setup.py.in setup.py @ONLY)
     
     # Compile the Python extension library
     add_custom_command(
             OUTPUT ${pyext_fn}
-            COMMAND python setup.py build_ext --inplace
+            COMMAND python ARGS setup.py build_ext --inplace ${cmd_args} > ../f2py_${variant}.log 2>&1
             DEPENDS ${fvslib_static}
             COMMENT "Compile python extension."
             )
@@ -718,7 +710,7 @@ if (WITH_PYEXT)
     
     install(
         FILES ${pyext_fn}
-        DESTINATION python${PYTHON_VER})
+        DESTINATION python)
     
     # Add intermediate files to the clean list
     # NOTE: pyext_source.txt should not be cleaned

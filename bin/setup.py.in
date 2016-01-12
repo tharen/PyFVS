@@ -19,33 +19,34 @@ ext_pyf = './@pyext_name@.pyf'
 fvs_lib = 'FVS@variant@_static'
 lib_dir = '.'
 
+# Load the source files to be wrapped from the list generated in CMake
 sources = open('./pyext_source.txt').read()
 sources = sources.split(';')
 
+# Generate the F2PY wrapper .pyf module
 cmd_args = [
     '-h','%s' % (ext_pyf,)
     ,'-m','pyfvs%s' % (fvs_variant,)
     ,'--overwrite-signature'
     ]
 cmd_args.extend(sources)
-
 f2py2e.run_main(cmd_args)
 
 if os.name=='nt':
     odbc = 'odbc32'
+    link_args = ['-static',]
+    compile_args = ['-static',]
 else:
     odbc = 'odbc'
     
 ext1 = Extension(
         name = ext_name,
         sources = [ext_pyf,],
-        libraries = [fvs_lib,odbc],
+        libraries = [fvs_lib, odbc],
         library_dirs = [lib_dir,],
-        #extra_compile_args = ['-J={}'.format(mod_path),]
+        extra_link_args = link_args,
+        extra_compile_args = compile_args
 )
-
-ccompiler = ''
-fcompiler = ''
 
 if __name__ == "__main__":
     from numpy.distutils.core import setup
@@ -54,5 +55,4 @@ if __name__ == "__main__":
           author            = "Tod Haren",
           author_email      = "tod.haren<at>gm....com",
           ext_modules = [ext1,],
-          build_ext = ['--compiler=%s' % ccompiler,'--fcompiler=%s' % fcompiler,]
           )
