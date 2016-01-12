@@ -1,6 +1,8 @@
 
 
 import os
+import sys
+import re
 import logging
 import logging.config
 
@@ -25,3 +27,29 @@ def init_logging():
 # init_logging()
 # log = logging.getLogger('pyfvs')
 # log.debug('logging initiated')
+
+def platform_ext():
+    """
+    Return the platform specific extension filename suffix.
+    """
+    if sys.version_info[:2]>=(3,2):
+        from importlib import machinery as m
+        abi = m.EXTENSION_SUFFIXES[0]
+        if re.match('.*\.(so|pyd)',abi):
+          ext = abi
+        else:
+            if sys.platform=='win32':
+                ext = ext = '{}{}'.format(abi,'pyd')
+            else:
+                ext = ext = '{}{}'.format(abi,'so')
+        
+        return ext
+
+    else:
+        if sys.platform=='win32':
+            ext = 'pyd'
+        else:
+            ext = 'so'
+        
+        return ext
+        

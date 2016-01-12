@@ -61,54 +61,95 @@ class FVS(object):
         self.config = config
 
         if not self.random:
-            self._random_seed = 1.0
+            self._random_seed = 12345.0
 
-        self._set_fvs_lib(self.variant)
+        self.fvslib_path = None
+        self._load_fvslib()
 
-    def _set_fvs_lib(self, variant):
+    def _load_lib_ini(self):
+        fvslib_path = self.config['fvs_lib']['fvslib_path']
+
+    def _init_fvslib_path(self):
+        """
+        Initialize the folder to load variant libraries from.
+        """
+        fvslib_path = self.config['fvs_lib']['fvslib_path']
+
+        if os.path.exists(fvslib_path):
+            self.fvslib_path = os.path.abspath(fvslib_path)
+            return
+
+        # Adjust fvs_bin path relative to the configuration file
+        fvslib_path = os.path.join(
+                os.path.dirname(pyfvs.config_path), fvslib_path)
+        if os.path.exists(fvslib_path):
+            self.fvslib_path = os.path.abspath(fvslib_path)
+            return
+
+        # Try the environment variable
+        fvslib_path = os.environ('FVSLIB_PATH')
+        if os.path.exists(fvslib_path):
+            self.fvslib_path = os.path.abspath(fvslib_path)
+            return
+
+        if not self.fvslib_path:
+            raise IOError('Could not find a suitable FVSLIB_PATH')
+
+    def _discover_libs(self):
+        """
+        Search the fvslib_path for libraries available for import.
+        """
+
+        self._init_fvslib_path()
+
+        self.variant_libs = {}
+        files = os.listdir(self.fvslib_path)
+        ext = pyfvs.platform_ext()
+        for f in files:
+            p = os.path.join(self.fvslib_path, f)
+            if (os.path.isfile(p)
+                    and f.startswith('pyfvs')
+                    and f.endswith(ext)):
+                n = f.split('.')[0]
+                d = {'lib_name':n, 'lib_path':p}
+                self.variant_libs[n[5:]] = d
+
+        if not self.variant_libs:
+            raise ValueError(
+                    'No variant libraries found in : {}'.format(self.fvslib_path))
+
+    def _load_fvslib(self):
         """
         Load the requested FVS variant library.
         """
-        libname = self.config['fvs_lib']['variants'][variant.lower()]
-        fvs_root = os.path.abspath(self.config['fvs_lib']['fvs_root'])
 
-        log.debug('FVS root: {}'.format(fvs_root))
-        if not os.path.exists(fvs_root):
-            raise IOError('FVS root does not exist: {}'.format(fvs_root))
+#         self._discover_libs()
+#         lib = self.variant_libs[variant]
+#         print(lib)
+#
+#         if sys.version_info[:2] >= (3, 5):
+#             import importlib.util
+#             spec = importlib.util.spec_from_file_location(lib['lib_name'], lib['lib_path'])
+#             self.fvslib = importlib.util.module_from_spec(spec)
+#             spec.loader.exec_module(self.fvslib)
+#
+#         elif sys.version_inof[0] <= 2:
+#             import imp
+#             foo = imp.load_source(libname, self.fvslib_path)
+#             foo.MyClass()
 
-        # Temporarily override the Python path
-        oldpath = sys.path
-        sys.path = [fvs_root, ]
-
-        try:
-            self.fvslib = __import__(libname)
-
-        except ImportError:
-            msg = ('The FVS library could not be imported. '
-                    'Variant: {}; fvs_root: {}'
-                    ).format(self.variant, fvs_root)
-            log.exception(msg)
-            raise
-
-        except:
-            log.exception(
-                    'An exception was raised importing the FVS{} '
-                    'variant library.'.format(self.variant))
-            raise
-
-        log.debug('FVS{} library path: {}'.format(
+        variant = 'pyfvs%s' % self.variant.lower()
+        self.fvslib = __import__(variant)
+        log.debug('Loaded FVS variant {} library from {}'.format(
                 self.variant, self.fvslib.__file__))
 
         # Initialize the FVS parameters and arrays
         # FIXME: This api function is subject to change
         self.fvslib.fvs_step.init_blkdata()
 
-        # Reset the Python path
-        sys.path = oldpath
-
     def __getattr__(self, attr):
         """
-        Return and object from self.fvslib
+        Return an object from self.fvslib
         """
         try:
             return self.fvslib.__dict__[attr]
@@ -221,15 +262,15 @@ class FVS(object):
             raise
 
         # Return the summary values for the cycles in the run
-        ncyc = self.contrl.ncyc
-        return(self.fvslib.outcom.iosum[i, :ncyc + 1])
+        ncyc = self.contrl_mod.ncyc
+        return(self.fvslib.outcom_mod.iosum[i, :ncyc + 1])
 
 def test():
     # Config file for testing
     pyfvs.config_path = os.path.join(os.path.split(__file__)[0], 'pyfvs.cfg')
 
     import pylab
-    kwds = r'C:\workspace\Open-FVS\PyFVS_GoogleCode\tests\pyfvs\fvspnc\pnt01.key'
+    kwds = r'C:\workspace\Open-FVS\PyFVS\tests\pyfvs\fvspnc\pnt01.key'
 
     # Demonstrate the stochastic variability in the FVS routines.
     iters = 10
@@ -237,7 +278,7 @@ def test():
 
     # Get species codes
     spp_attrs = fvs.fvsspeciescode(16)
-    print spp_attrs
+    print(spp_attrs)
 
     for i in range(iters):
         fvs.run_fvs(kwds)
