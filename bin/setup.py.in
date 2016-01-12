@@ -38,7 +38,9 @@ if os.name=='nt':
     compile_args = ['-static',]
 else:
     odbc = 'odbc'
-    
+    link_args = []
+    compile_args = []
+        
 ext1 = Extension(
         name = ext_name,
         sources = [ext_pyf,],
