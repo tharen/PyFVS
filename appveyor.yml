@@ -1,0 +1,87 @@
+# Drawing from: https://github.com/ogrisel/python-appveyor-demo/blob/master/appveyor.yml
+
+version: 0.0.1-{build}
+
+# init:
+  # # Display remote desktop details
+  # - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
+environment:
+  # global:
+    # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
+    # /E:ON and /V:ON options are not enabled in the batch script intepreter
+    # See: http://stackoverflow.com/a/13751649/163740
+    # CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\.appveyor\\run_with_env.cmd"
+
+  matrix:
+    # - PYTHON: "C:\\Miniconda35-x64"
+      # PYTHON_VERSION: "3.5.x"
+      # PYTHON_ARCH: "64"
+
+      # - PYTHON: "C:\\Python35-x64"
+      # PYTHON_VERSION: "3.5.x"
+      # PYTHON_ARCH: "64"
+
+    - PYTHON: "C:\\Miniconda-x64"
+      PYTHON_VERSION: "2.7"
+      PYTHON_ARCH: "64"
+
+    # - PYTHON: "C:\\Python27-x64"
+      # PYTHON_VERSION: "2.7.x"
+      # PYTHON_ARCH: "64"
+      
+install:
+    - "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\setpath.bat"
+    - "set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%" # Add the matrix row Python to PATH
+    - "del C:\\msys64\\Mingw64\\bin\\python.exe" # Conflicts with the target Python
+    - "conda create -q -y -n pyfvs_python --file %APPVEYOR_BUILD_FOLDER%\\requirements.txt"
+    - "activate pyfvs_python"
+    - "echo %PATH%"
+    - "echo %PYTHONPATH%"
+    
+build_script:
+    - "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\configure.bat"
+    - "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\build.bat"
+    - "set ARCHIVE_NAME=open-fvs-%APPVEYOR_REPO_TAG_NAME%-Python%PYTHON_VERSION%_%PYTHON_ARCH%-windows-ci.zip"
+
+after_build:
+    - pushd bin\build
+    - 7z a -bd %ARCHIVE_NAME% Open-FVS\*
+    - move /y %ARCHIVE_NAME% %APPVEYOR_BUILD_FOLDER%
+
+on_failure:
+    # Post error logs to the build log
+    - appveyor PushArtifact bin\build\build_err.log
+    - appveyor PushArtifact bin\build\f2py_*.log
+    
+artifacts:
+    - path: open-fvs-*.zip
+      name: open-fvs-zip
+      type: zip
+
+deploy:
+  - provider: GitHub
+    # release: myproduct-v$(appveyor_build_version)
+    description: 'Appveyor CI build.'
+    auth_token:
+      secure: kJTJhEXI8ycz28qE4v1LkJ54NZzrz0mVrSptvfliH7TFzXFPQG2Ojam2VWTJJb6s
+    artifact: open-fvs-zip  # Using artifact name works consistently
+    draft: false
+    prerelease: true
+    on:
+      # branch: master                 # release from master branch only
+      appveyor_repo_tag: true        # deploy on tag push only
+  
+  - provider: S3
+    access_key_id: AKIAIVJ4GCLXEX2KK5QQ
+    secret_access_key:
+      secure: 3i/lHf5+t5tHVnX5dM/iHO9vOuvEZk65jCR94F1QSObHs8X5D1ZkY+BLW4fetlLC
+    region: us-west-2
+    bucket: free5
+    set_public: true
+    folder: appveyor-builds
+    artifact: open-fvs-zip
+    
+# on_finish:
+  # # Pause the build for remote desktop access
+  # - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))

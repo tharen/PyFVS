@@ -1,14 +1,18 @@
 language: python
 python:
-#  - '2.7'
+  - '2.7'
   - '3.5'
   
+env:
+  global:
+    - FVS_STATUS=alpha
+    - BUILD_ROOT=${TRAVIS_BUILD_DIR}/bin/build
+
 addons:
   apt:
     sources:
     - george-edison55-precise-backports
     - kubuntu-backports
-
     packages:
     - cmake
     - gfortran
@@ -16,30 +20,63 @@ addons:
     - unixodbc-dev
     - p7zip-full
 
-env:
-    global:
-      - FVS_STATUS=alpha
-      
+install:
+  # Use miniconda in travis-ci http://conda.pydata.org/docs/travis.html
+  # We do this conditionally because it saves us some downloading if the
+  # version is the same.
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+      wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
+    else
+      wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+    fi
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  # Useful for debugging any issues with conda
+  - conda info -a
+  # Create an environment and install dependencies
+  - conda create -q -n pyfvs python=$TRAVIS_PYTHON_VERSION --file requirements.txt
+  - source activate pyfvs
+  # Define the name to be used for the archive of compiled products.
+  - export ARCHIVE_NAME=open-fvs-${TRAVIS_TAG}-Python${TRAVIS_PYTHON_VERSION}_64-${TRAVIS_OS_NAME}-ci.zip
+
 script:
-  - bash ./config_build.sh
-  - cd ${TRAVIS_BUILD_DIR}/bin
-  - make -f makefile_all bundle
+- source .travis-ci/configure.sh
+- cd ${BUILD_ROOT} && make -j2 install 2> build_err.log
+  
+after_failure:
+  # Push error logs to the console output
+  - "cat ${BUILD_ROOT}/build_err.log"
+  - "cat ${BUILD_ROOT}/f2py_pnc.log"
 
 after_success:
-  - cd ${TRAVIS_BUILD_DIR}/bin
-  - 7z a -bd open-fvs_${TRAVIS_TAG}-${FVS_STATUS}.zip Open-FVS/*
+  - ls ${BUILD_ROOT}/Open-FVS
+  - cd ${BUILD_ROOT} && 7z a -bd ${ARCHIVE_NAME} Open-FVS/*
+  - ls ${BUILD_ROOT}
 
 deploy:
-  provider: releases
-  api_key:
-    secure: cIv7F5Si2yS3QcL3bOu5QwTZdi/WiwsNhsS7+IL1LklXGKzBlzN1Df833+u1mzk1XN3VKafzrsAQ5UoshAcaN6TB6kE9FCBAGt/NO+BQJJcLr8Ig4NwU82cVQmnt8ata6t8MmNcPtRsqA4TUsd2Mvo2CKpeiZOMRo1JqasMElHqW4vh8Dbklsk4cd4zcvAOfnVT0qQC1Hzkgh0IzmB7y6dsaUOYoHbDVSMnkp+6j+yIZnWsGBsowXf7CF7hKQMMXiXbl5YGEMUob1OnOBw54xj5eM9Ax9mpYiyymvE+QKHj5nP1fkQoW89tgzcem53TK9qcSN+E3yApd0aK1Z11VVqIBvif7c1YmaL0w9uMv7reDnJ6zCS63GGO3nBLKUTrEo2xjrDsLpQRtK2sHYLG4JPtGB9ojzloTe0YLgemjf5bwmVWvyycVtMF0DZABnL5JWMqG9ogUA2CcNDHBqRyArcg5qkzC8LBGR5XG8V71O6M3QZVsCP+6NfxFAUGvKO3i36TQjOCMuWQdhmp75VaCH/B1o2B+UVMr7ekI4i0m16KP7JG4+47BSyPDUD7QLR0k055ext/F+RonBVtL8dpbQzZ3bASWQ/iW00tz910LanCFLRGAhUSe+bUISVsVQSltpqgV3j64OM3wC/LIyO4YSTyEx8NTTC+IRBfOgMc4ed0=
-  file: ${TRAVIS_BUILD_DIR}/bin/open-fvs_${TRAVIS_TAG}-${FVS_STATUS}.zip
-  skip_cleanup: true
-  on:
-    repo: tharen/PyFVS
-    tags: true
-    all_branches: true
+  - provider: releases
+    skip_cleanup: true
+    prerelease: true
+    api_key:
+      secure: cIv7F5Si2yS3QcL3bOu5QwTZdi/WiwsNhsS7+IL1LklXGKzBlzN1Df833+u1mzk1XN3VKafzrsAQ5UoshAcaN6TB6kE9FCBAGt/NO+BQJJcLr8Ig4NwU82cVQmnt8ata6t8MmNcPtRsqA4TUsd2Mvo2CKpeiZOMRo1JqasMElHqW4vh8Dbklsk4cd4zcvAOfnVT0qQC1Hzkgh0IzmB7y6dsaUOYoHbDVSMnkp+6j+yIZnWsGBsowXf7CF7hKQMMXiXbl5YGEMUob1OnOBw54xj5eM9Ax9mpYiyymvE+QKHj5nP1fkQoW89tgzcem53TK9qcSN+E3yApd0aK1Z11VVqIBvif7c1YmaL0w9uMv7reDnJ6zCS63GGO3nBLKUTrEo2xjrDsLpQRtK2sHYLG4JPtGB9ojzloTe0YLgemjf5bwmVWvyycVtMF0DZABnL5JWMqG9ogUA2CcNDHBqRyArcg5qkzC8LBGR5XG8V71O6M3QZVsCP+6NfxFAUGvKO3i36TQjOCMuWQdhmp75VaCH/B1o2B+UVMr7ekI4i0m16KP7JG4+47BSyPDUD7QLR0k055ext/F+RonBVtL8dpbQzZ3bASWQ/iW00tz910LanCFLRGAhUSe+bUISVsVQSltpqgV3j64OM3wC/LIyO4YSTyEx8NTTC+IRBfOgMc4ed0=
+    file: ${BUILD_ROOT}/${ARCHIVE_NAME}
+    on:
+      repo: tharen/PyFVS
+      tags: true
 
-script:
-  - bash ./build_pyfvs.sh
-  - cd bin/travis-ci && make -j2
+  # Amazon S3 Storage
+  - provider: s3
+    skip_cleanup: true
+    access_key_id: AKIAJJEBC4GKLPLOX5XA
+    secret_access_key:
+      secure: mTfB4nkuYfAyFVsIGxMCeNVDaf0OY806kVdvis1Nxn0c7zMf0hNjt239clC3PDh6vmyk/iaSTxk3hDfKGdGTAZSZDd5tJcRdVqfz2uNqW09bL5eZj+0Y80gXhHpsB8QZPgjlNuBBw7AlnIjOPUlos50aMOrSvv832fiujBYX7ZFQvq9WEp2/O8Jcr7T2fwX7uS7Iw68ipSiP75LaWYYojhZw4Ij3vSd7O95SNwR7qjtUJb9oc4VAELej2TYNSnJUU8VAXcA1ZAi8CvlqbftZki57XUvoAmUPpp27Ywg/KOzzvhdzx+D34vFzCMK/X+a0AHdsyAuScpfC7jLdrXLa7ueZLMrnuVpwAKgBc0d/r4NFPeOl+ccbmHyyREi775NB7LOSWPAwJPVvRjKm7lhrjbIY5kKVCF3QpsA14vguDV+KHZmz+Gd+8l8/VslUNxdnSh3h9+ytWxhmEuMe+xarD4/bJbIgdpPmNITlGG1fNsZ14v53ldgyqqI1ZqRaOtzTcowRWDaU5GbV7BJnkgzwDDtUdFZZj/RQNkh2g+CYzALIjcnMBjw8tCOTs65c0M36MIMFtJ9nbAGcq/NY6y5YBKiFEgC+/3/54iQgaAwDh5spFi5viL9qcqBHW/u/IieMJRhDGkPIFcLCVusYzoOmAwgeoXPJPOO+ZMRlAnhonh0=
+    region: us-west-2
+    bucket: free5
+    local-dir: ${BUILD_ROOT}/Open-FVS
+    upload-dir: travis-builds
+    acl: public_read
+    on:
+      repo: tharen/PyFVS

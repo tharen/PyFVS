@@ -1,0 +1,60 @@
+"""
+Wrap and link the FVS Python extension library.
+
+This is a template setup.py to be configured with CMake.
+"""
+
+from __future__ import division, absolute_import, print_function
+
+import os
+import sys
+import subprocess
+from numpy.distutils.core import Extension
+from numpy.f2py import f2py2e
+
+fvs_variant = '@variant@'
+mod_path ='./'
+ext_name = '@pyext_name@'
+ext_pyf = './@pyext_name@.pyf'
+fvs_lib = 'FVS@variant@_static'
+lib_dir = '.'
+
+# Load the source files to be wrapped from the list generated in CMake
+sources = open('./pyext_source.txt').read()
+sources = sources.split(';')
+
+# Generate the F2PY wrapper .pyf module
+cmd_args = [
+    '-h','%s' % (ext_pyf,)
+    ,'-m','pyfvs%s' % (fvs_variant,)
+    ,'--overwrite-signature'
+    ]
+cmd_args.extend(sources)
+f2py2e.run_main(cmd_args)
+
+if os.name=='nt':
+    odbc = 'odbc32'
+    link_args = ['-static',]
+    compile_args = ['-static',]
+else:
+    odbc = 'odbc'
+    link_args = []
+    compile_args = []
+        
+ext1 = Extension(
+        name = ext_name,
+        sources = [ext_pyf,],
+        libraries = [fvs_lib, odbc],
+        library_dirs = [lib_dir,],
+        extra_link_args = link_args,
+        extra_compile_args = compile_args
+)
+
+if __name__ == "__main__":
+    from numpy.distutils.core import setup
+    setup(name = ext_name,
+          description       = "F2PY wrappers for the Open-FVS library ({})".format(fvs_variant.upper()),
+          author            = "Tod Haren",
+          author_email      = "tod.haren<at>gm....com",
+          ext_modules = [ext1,],
+          )

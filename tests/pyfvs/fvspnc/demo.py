@@ -19,7 +19,7 @@ import pyfvspnc as fvs
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
-print 'Using module:', fvs.__file__
+print('Using module:', fvs.__file__)
 fvs.fvs_step.init_blkdata()
 
 # ensure runs will bomb if the previous call failed, ensure all files are closed
@@ -45,7 +45,7 @@ summary = numpy.zeros((reps, 40, 20), dtype='i')
 # The current FVS API requires using command line style arguments passed to the
 # setcommandline subroutine to initialize the FVS arrays
 cl = '--keywordfile=%s' % (kwd,)
-for rep in xrange(reps):
+for rep in range(reps):
 
     # initialize the run
     i = fvs.fvssetcmdline(cl)
@@ -55,7 +55,7 @@ for rep in xrange(reps):
     # fvs.contrl.ncyc = numpy.int(num_cycles)
     fvs.ransed(True, random.random())
 
-    # print 'FVS Returned with exit code %d' % i
+    # print('FVS Returned with exit code %d' % i)
 
     cycle = 0
     while 1:
@@ -90,19 +90,19 @@ for rep in xrange(reps):
         summary[rep, i, :] = fvs.fvssummary(i + 1)  # +1 since Fortran indexes start at 1
 
     # Print the periodic growth for this iteration to show progress
-    print '%3d CUFT %s' % (rep, ' '.join('%5d' % v for v in summary[rep, :num_cycles, 3]))
-    # print 'BDFT',','.join('%6d' % v for v in summary[:,5])
+    print('%3d CUFT %s' % (rep, ' '.join('%5d' % v for v in summary[rep, :num_cycles, 3])))
+    # print('BDFT',','.join('%6d' % v for v in summary[:,5]))
 
 et = time.clock()
 
-print '%d reps; total elapsed time: %.2f, %.3f second per rep' % (reps, et - st, (et - st) / (rep + 1))
+print('%d reps; total elapsed time: %.2f, %.3f second per rep' % (reps, et - st, (et - st) / (rep + 1)))
 
 fig, ax = plt.subplots(nrows=1, ncols=1)
 
 v = 3
 # plot the cubic foot growth curves for each iteration
 mean_curve = numpy.mean(summary[:, :num_cycles, v], axis=0)
-print summary[0, :num_cycles, 0]
+print(summary[0, :num_cycles, 0])
 ax.plot(summary[0, :num_cycles, 0], mean_curve)
 
 if rep > 0:
