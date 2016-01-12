@@ -32,10 +32,9 @@ environment:
       
 install:
     - "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\setpath.bat"
-    - "set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%" # Add the matrix row Python to PATH
     - "del C:\\msys64\\Mingw64\\bin\\python.exe" # Conflicts with the target Python
-    - "conda create -q -y -n pyfvs_python --file %APPVEYOR_BUILD_FOLDER%\\requirements.txt"
-    - "activate pyfvs_python"
+    - "%PYTHON%\\Scripts\\conda create -q -y -n pyfvs_python --file %APPVEYOR_BUILD_FOLDER%\\requirements.txt"
+    - "%PYTHON%\\Scripts\\activate pyfvs_python"
     - "echo %PATH%"
     - "echo %PYTHONPATH%"
     
