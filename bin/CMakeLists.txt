@@ -78,7 +78,7 @@ set(version "Open-FVS")
 
 #Assumes the FVS source is one level up from the parent CmakeLists.txt
 #Used to set the prefix of all files in *sourceList.txt
-get_filename_component(src_root "${CMAKE_CURRENT_LIST_DIR}/.." ABSOLUTE)
+get_filename_component(source_root "${CMAKE_CURRENT_LIST_DIR}/.." ABSOLUTE)
 set(source_list_dir ${CMAKE_CURRENT_LIST_DIR})
 
 #TODO: Clean up cache variable to enable cmake-gui usage
@@ -135,26 +135,27 @@ if (CMAKE_COMPILER_IS_GNUCC)
     # TODO: These may be clobbering CMAKE FLAGS
     
     # CMAKE_BUILD_TYPE = Debug
-    set(debug_flags "-g3 -mfpmath=sse -msse -ffpe-trap=invalid,zero,overflow,underflow")
-    set(CMAKE_Fortran_FLAGS_DEBUG "${debug_flags}")
+    set(debug_flags "-g3 -mfpmath=sse -msse")
+    set(CMAKE_Fortran_FLAGS_DEBUG "${debug_flags} -ffpe-trap=invalid,zero,overflow,underflow")
     set(CMAKE_CXX_FLAGS_DEBUG "${debug_flags}")
     set(CMAKE_C_FLAGS_DEBUG "${debug_flags}")
     
     # CMAKE_BUILD_TYPE = Release
-    set(release_flags "-Ofast -mfpmath=sse -msse -funroll-loops")
+    set(release_flags "-Ofast -mfpmath=sse -msse")
     if (ENABLE_LTO)
-        set(release_flags "${release_flags} -flto -fwhole-program")
+        set(release_flags "${release_flags} -funroll-loops -flto -fwhole-program")
+    else ()
+        set(CMAKE_Fortran_FLAGS_RELEASE "${release_flags} -funroll-loops")
     endif ()
-    set(CMAKE_Fortran_FLAGS_RELEASE "${release_flags}")
     set(CMAKE_CXX_FLAGS_RELEASE "${release_flags}")
     set(CMAKE_C_FLAGS_RELEASE "${release_flags}")
     
     if (PROFILING)
         add_definitions(-DPROFILING)
-        set(profile_flags "-pg -fprofile-arcs -ftest-coverage")
+        set(profile_flags "-pg")
         set(CMAKE_CXX_FLAGS "${profile_flags} ${CMAKE_CXX_FLAGS}")
         set(CMAKE_C_FLAGS "${profile_flags} ${CMAKE_C_FLAGS}")
-        set(CMAKE_Fortran_FLAGS "${profile_flags} ${CMAKE_Fortran_FLAGS}")
+        set(CMAKE_Fortran_FLAGS "${profile_flags} -fprofile-arcs -ftest-coverage ${CMAKE_Fortran_FLAGS}")
         set(CMAKE_EXE_LINKER_FLAGS "${profile_flags} ${CMAKE_EXE_LINKER_FLAGS}")
         set(CMAKE_SHARED_LINKER_FLAGS "${profile_flags} ${CMAKE_SHARED_LINKER_FLAGS}")
     endif ()
@@ -177,7 +178,7 @@ if (CMAKE_COMPILER_IS_GNUCC)
         set(flags "${flags} -m64 -pipe")
     endif ()
 
-    # Specify the target OS; perhaps useful for use with MinGW.
+    # Specify the target OS; perhaps useful with MinGW.
     if (UNIX_TARGET)
         message(STATUS "Add -fPIC for UNIX targets.")
         set(flags "${flags} -fPIC")
@@ -240,7 +241,7 @@ endif()
 
 list(LENGTH FVS_VARIANTS num_variants)
 message(STATUS "FVS Variants = (${num_variants}) ${FVS_VARIANTS}")
-message(STATUS "Source Root = ${src_root}")
+message(STATUS "Source Root = ${source_root}")
 
 #---Top Level Objects
 list(GET source_lists 0 source_list)
@@ -248,7 +249,7 @@ list(GET source_lists 0 source_list)
 # Read the source file names as a list
 file(STRINGS ${source_list} source_file_list)
 # Localize the paths
-string(REPLACE "../" "${src_root}/" source_file_list "${source_file_list}")
+string(REPLACE "../" "${source_root}/" source_file_list "${source_file_list}")
 
 #---Include Dirs
 # Loop through the source files to gather the C header and include file paths
@@ -270,11 +271,11 @@ include_directories(BEFORE ${include_dirs})
 # Setup targets for the mkdbsTypeDefs generator, and SQL library
 # Get the SQL source code file
 file(STRINGS ${source_list} sql_source REGEX "fvsSQL.c")
-string(REPLACE "../" "${src_root}/" sql_source "${sql_source}")
+string(REPLACE "../" "${source_root}/" sql_source "${sql_source}")
 
 # Add the command to generate the SQL type defs
 file(STRINGS ${source_list} typedefs_src REGEX "mkdbsTypeDefs.c")
-string(REPLACE "../" "${src_root}/" typedefs_src "${typedefs_src}")
+string(REPLACE "../" "${source_root}/" typedefs_src "${typedefs_src}")
 add_executable(mkdbsTypeDefs ${typedefs_src})
 
 set(dbstypedefs_f77 "${CMAKE_CURRENT_BINARY_DIR}/DBSTYPEDEFS.F77")
@@ -347,7 +348,7 @@ endif ()
 set(common_source)
 #list(GET source_lists 0 sl)
 #file(STRINGS ${sl} common_source REGEX "(.*f$)|(.*f90$)")
-#string(REPLACE "../" "${src_root}/" common_source "${common_source}")
+#string(REPLACE "../" "${source_root}/" common_source "${common_source}")
 
 #set(temp_src)
 #foreach(fn ${common_source})
@@ -369,7 +370,7 @@ set(common_source)
 #    set(temp_src)
 #    # Read the list of source files for this variant
 #    file(STRINGS ${sl} fl)
-#    string(REPLACE "../" "${src_root}/" fl "${fl}")
+#    string(REPLACE "../" "${source_root}/" fl "${fl}")
 #
 #    # Compare each file currently in the common list with the variant file list
 #    foreach(fn ${common_source})
@@ -403,7 +404,7 @@ foreach(v RANGE ${num_variants})
     list(GET source_lists ${v} srclst_fn)
     message(STATUS "Source List File: ${srclst_fn}")
     file(STRINGS ${srclst_fn} source_list NEWLINE_CONSUME)
-    string(REPLACE "../" "${src_root}/" source_list "${source_list}")
+    string(REPLACE "../" "${source_root}/" source_list "${source_list}")
     file(WRITE ${variant_dir}/sourcelist.txt ${source_list})
 
     # Write out the new variant CMakeLists file
@@ -413,8 +414,10 @@ foreach(v RANGE ${num_variants})
            cmakelist ${cmakelist})
 
     # Replace template strings
+    # TODO: use string(configure ...) instead of this mess
     string(REGEX REPLACE "<<variant>>" "${variant}" cmakelist ${cmakelist})
     string(REGEX REPLACE "<<source_list>>" "${variant_dir}/sourcelist.txt" cmakelist ${cmakelist})
+    string(REGEX REPLACE "<<source_root>>" "${source_root}" cmakelist ${cmakelist})
     string(REGEX REPLACE "<<with_pyext>>" ${WITH_PYEXT} cmakelist ${cmakelist})
     file(WRITE ${variant_dir}/CMakeLists.txt ${cmakelist})
 
@@ -440,6 +443,7 @@ set(fvslib_static "FVS${variant}_static")
 #Replaced by regex during configuration
 set(variant <<variant>>)
 set(source_list <<source_list>>)
+set(source_root <<source_root>>)
 
 message(STATUS "Configure variant: ${variant}")
 message(STATUS "CMake Build Type: ${CMAKE_BUILD_TYPE}")
@@ -464,7 +468,7 @@ set(pyext_source)
 # Process the source list for the variant
 file(STRINGS ${source_list} source_files)
 # Localize the paths
-string(REPLACE "../" "${src_root}/" source_files "${source_files}")
+string(REPLACE "../" "${source_root}/" source_files "${source_files}")
 
 foreach (fn ${source_files})
     if (NOT ${fn} MATCHES "^#.*")
@@ -624,11 +628,12 @@ if (WITH_PYEXT)
     # TODO: Add a pyfvs_sources.txt file to avoid stuffing them here
     # Process the source list for files to include in the Python module
     file(STRINGS ${source_list} source_files)
-    string(REPLACE "../" "${src_root}/" source_files "${source_files}")
+    string(REPLACE "../" "${source_root}/" source_files "${source_files}")
 
     # Source files to be wrapped with F2PY
     set(_pyext_src 
-                "apisubs.f" "cmdline.f" "filopn.f" "fvs.f" "htcalc.f" "rann.f"
+                "apisubs.f" "cmdline.f" "fvs.f"
+                "filopn.f" "htcalc.f" "rann.f"
                 "htdbh.f"
                 
                 "prgprm_mod.f90" "esparm_mod.f90" "arrays_mod.f90" 
@@ -649,7 +654,8 @@ if (WITH_PYEXT)
                 "metric_mod.f90"
                 
                 "carbon_data.f90" "downwood_data.f90" "tree_data.f90"
-                "fvs_step.f90" "snag_data.f90" "siteht_mod.f90"
+                "fvs_step.f90"
+                "snag_data.f90" "siteht_mod.f90"
                 "findage_mod.f90"
                 
 #                "step_grincr.f90" "dbs_commons.f" "fire_commons.f"
@@ -696,6 +702,10 @@ if (WITH_PYEXT)
         list(APPEND cmd_args "--fcompiler=gnu95")
     endif ()
     
+#    if (CMAKE_BUILD_TYPE STREQUAL Debug)
+#        list(APPEND cmd_args "--debug")
+#    endif ()
+  
     # Configure the setup.py script for the current variant.
     configure_file(../../setup.py.in setup.py @ONLY)
     
@@ -703,11 +713,11 @@ if (WITH_PYEXT)
     add_custom_command(
             OUTPUT ${pyext_fn}
             COMMAND python ARGS setup.py build_ext --inplace ${cmd_args} > ../f2py_${variant}.log 2>&1
-            DEPENDS ${fvslib_static}
+            DEPENDS ${fvslib_static} ./pyext_source.txt
             COMMENT "Compile python extension."
             )
     add_custom_target(${pyext_name}_ext ALL DEPENDS ${pyext_fn})
-    
+
     install(
         FILES ${pyext_fn}
         DESTINATION python)
@@ -720,32 +730,32 @@ if (WITH_PYEXT)
             ADDITIONAL_MAKE_CLEAN_FILES "${cf}"
             )
 
-#   # Generate a PyDoc HTML file for the module
-#    if (WIN32)
-#        add_custom_command(
-#                TARGET ${pyext_name}
-#                POST_BUILD
-#                COMMAND ${PYTHON_EXECUTABLE} ${PYDOC_EXE} -w ${pyext_name} > NUL
-#                # Move to the output location so PyDoc can find the module
-#                WORKING_DIRECTORY ${LIBRARY_OUTPUT_PATH}
-#                )
-#    else ()
-#        add_custom_command(
-#                TARGET ${pyext_name}
-#                POST_BUILD
-#                COMMAND ${PYDOC_EXE} -w ${pyext_name} > nul
-#                # Move to the output location so PyDoc can find the module
-#                WORKING_DIRECTORY ${LIBRARY_OUTPUT_PATH}
-#                )
-#    endif ()
-#
-##    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${pyext_name}.html"
-##            DESTINATION "${INSTALL_DIR}/doc"
-##            )
-#    set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES
-#            "${CMAKE_CURRENT_BINARY_DIR}/${pyext_name}.html"
-#            )
+    # Generate a PyDoc HTML file for the module
+    # TODO: Incorporate pydoc generation into setup.py
+    set(PYDOC_EXE pydoc)
+    add_custom_command(
+            TARGET ${pyext_name}_ext
+            #TARGET ${pyext_fn}
+            POST_BUILD
+            COMMAND ${PYDOC_EXE} -w ${pyext_name} > ../pydoc_${pyext_name}.log
+            )
 
+    install(FILES ${pyext_name}.html
+            DESTINATION python/docs
+            )
+    set_directory_properties(
+            PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES
+            ${pyext_name}.html
+            )
+
+    # Copy the Python source package
+    install(
+            DIRECTORY ${source_root}/python/
+            DESTINATION python
+            FILES_MATCHING REGEX ".*\\.(py|cfg)$"
+            PATTERN "__pycache__" EXCLUDE
+            )
+    
     message(STATUS "*** End PyMod Configuration ***")
 
 endif()
