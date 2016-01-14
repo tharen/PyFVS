@@ -47,7 +47,7 @@ script:
   - cd ${BUILD_ROOT} && make -j2 install 2> build_err.log
   
   # Run unit tests
-  - sh ${BUILD_ROOT}/.travis-ci/run_tests.sh
+  - source ${TRAVIS_BUILD_DIR}/.travis-ci/run_tests.sh
   
 after_failure:
   # Push error logs to the console output
