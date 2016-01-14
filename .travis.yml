@@ -43,8 +43,11 @@ install:
   - export ARCHIVE_NAME=open-fvs-${TRAVIS_TAG}-Python${TRAVIS_PYTHON_VERSION}_64-${TRAVIS_OS_NAME}-ci.zip
 
 script:
-- source .travis-ci/configure.sh
-- cd ${BUILD_ROOT} && make -j2 install 2> build_err.log
+  - source .travis-ci/configure.sh
+  - cd ${BUILD_ROOT} && make -j2 install 2> build_err.log
+  
+  # Run unit tests
+  - sh ${BUILD_ROOT}/.travis-ci/run_tests.sh
   
 after_failure:
   # Push error logs to the console output
