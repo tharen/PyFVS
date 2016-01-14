@@ -12,6 +12,7 @@
       use prgprm_mod
       use varcom_mod
       use screen_mod
+      use keycom_mod
       implicit none
 C----------
 C  $Id$
@@ -19,8 +20,6 @@ C----------
 C
 C  THIS ROUTINE PROCESSES OPTIONS AND INITIATES THE
 C  PROGNOSIS RUN.  CALLED FROM **MAIN**.
-C
-      INCLUDE  'KEYCOM.F77'
 C
       INCLUDE  'SNCOM.F77'
 C

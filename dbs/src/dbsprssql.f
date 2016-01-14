@@ -2,6 +2,7 @@
       use contrl_mod
       use plot_mod
       use prgprm_mod
+      use keycom_mod
       implicit none
 C
 C $Id$
@@ -15,8 +16,6 @@ C            LSCHED   - SPECIFIES IF THIS IS A SCHEDULED EVENT OR NOT
 C            KODE     - RETURN KODE 0 - FAILED IN PARSING, 1 - OK
 C
       INCLUDE 'OPCOM.F77'
-C
-      INCLUDE 'KEYCOM.F77'
 C
       INCLUDE 'DBSCOM.F77'
 C

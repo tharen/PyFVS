@@ -32,6 +32,7 @@ module fvs_step
     use blkdat_mod, only: blkdat
     use esblkd_mod, only: esblkd
     use cubrds_mod, only: cubrds
+    use keywds_mod, only: keywds
 
     contains
 
@@ -42,6 +43,7 @@ module fvs_step
         call blkdat()
         call esblkd()
         call cubrds()
+        call keywds()
     end subroutine init_blkdata
 
     subroutine fvs_init(keywords, irtncd)

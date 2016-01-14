@@ -2,6 +2,7 @@
       use contrl_mod
       use plot_mod
       use prgprm_mod
+      use keycom_mod
       implicit none
 C
 C $Id$
@@ -11,8 +12,6 @@ C     PURPOSE: TO POPULATE A DATABASE WITH THE COMPUTE TABLE
 C              INFORMATION
 C
       INCLUDE 'OPCOM.F77'
-C
-      INCLUDE 'KEYCOM.F77'
 C
       INCLUDE 'DBSCOM.F77'
 C

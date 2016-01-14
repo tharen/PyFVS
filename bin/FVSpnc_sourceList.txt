@@ -1,6 +1,8 @@
 ../api/variants/pn/prgprm_mod.f90
 ../api/variants/pn/esparm_mod.f90
 
+../api/keycom_mod.f90
+../api/keywds_mod.f90
 ../api/arrays_mod.f90
 ../api/contrl_mod.f90
 ../api/coeffs_mod.f90
@@ -141,7 +143,7 @@
 ../base/src/keydmp.f
 ../base/src/keyopn.f
 ../base/src/keyrdr.f
-../base/src/keywds.f
+
 ../base/src/ksstag.f
 ../base/src/lb1mem.f
 ../base/src/lbaglr.f
@@ -287,7 +289,7 @@
 ../common/GLBLCNTL.F77
 
 ../common/INCLUDESVN.F77
-../common/KEYCOM.F77
+
 
 ../common/MULTCM.F77
 ../common/OPCOM.F77

@@ -2,6 +2,7 @@
       use outcom_mod
       use plot_mod
       use prgprm_mod
+      use keycom_mod
       implicit none
 C
 C $Id$
@@ -17,8 +18,6 @@ COMMONS
       INCLUDE 'DBSCOM.F77'
 C
       INCLUDE 'OPCOM.F77'
-C
-      INCLUDE 'KEYCOM.F77'
 C
 C---
 

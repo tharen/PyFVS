@@ -11,6 +11,7 @@
       use screen_mod
       use varcom_mod
       use prgprm_mod
+      use keycom_mod
       implicit none
 C
 C $Id$
@@ -20,8 +21,6 @@ C     AUTH: D. GAMMEL -- SEM -- AUGUST 2002
 C     OVERHAUL: NL CROOKTON -- RMRS MOSCOW -- SEPTEMBER 2004
 C---
 COMMONS
-      INCLUDE  'KEYCOM.F77'
-C
       INCLUDE  'DBSCOM.F77'
 C
 
