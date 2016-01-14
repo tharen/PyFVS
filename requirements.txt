@@ -1,2 +1,3 @@
 numpy
 # matplotlib
+nose_parameterized
