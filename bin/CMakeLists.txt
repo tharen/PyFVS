@@ -708,6 +708,7 @@ if (WITH_PYEXT)
   
     # Configure the setup.py script for the current variant.
     configure_file(../../setup.py.in setup.py @ONLY)
+    configure_file(${source_root}/python/pyfvs_wrap.pyf.in ${pyext_name}.pyf @ONLY)
     
     # Compile the Python extension library
     add_custom_command(

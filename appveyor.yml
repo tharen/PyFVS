@@ -2,9 +2,9 @@
 
 version: 0.0.1-{build}
 
-# init:
-  # # Display remote desktop details
-  # - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+init:
+  # Display remote desktop details
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 environment:
   # global:
@@ -27,31 +27,39 @@ environment:
       PYTHON_ARCH: "64"
 
     # - PYTHON: "C:\\Python27-x64"
-      # PYTHON_VERSION: "2.7.x"
+      # PYTHON_VERSION: "2.7"
       # PYTHON_ARCH: "64"
       
 install:
-    - "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\setpath.bat"
-    - "del C:\\msys64\\Mingw64\\bin\\python.exe" # Conflicts with the target Python
-    - "%PYTHON%\\Scripts\\conda create -q -y -n pyfvs_python --file %APPVEYOR_BUILD_FOLDER%\\requirements.txt"
-    - "%PYTHON%\\Scripts\\activate pyfvs_python"
-    - "echo %PATH%"
-    - "echo %PYTHONPATH%"
+    - "%PYTHON%\\Scripts\\conda create -q -y --name=py27-x64 --file %APPVEYOR_BUILD_FOLDER%\\requirements.txt"
+    - "%PYTHON%\\Scripts\\activate py27-x64"
+    - "set PYTHON_HOME=%PYTHON%\\envs\\py27-x64"
+    - "%PYTHON_HOME%\\Scripts\\pip install git+https://github.com/wolever/nose-parameterized.git"
+    - "%PYTHON_HOME%\\Scripts\\pip list"
+    - "del C:\\msys64\\Mingw64\\bin\\python.exe"
+    - "del C:\\msys64\\Mingw64\\bin\\cmake.exe"
     
 build_script:
+    - "set OLDPATH=%PATH%"
+    - "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\setpath.bat"
+    - "set PATH=%PYTHON_HOME%;%PYTHON_HOME%\\Scripts;%PATH%"
+    - "echo %PATH%"
+    - "echo %PYTHONPATH%"
     - "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\configure.bat"
     - "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\build.bat"
+    - "set PATH=%OLDPATH%"
     - "set ARCHIVE_NAME=open-fvs-%APPVEYOR_REPO_TAG_NAME%-Python%PYTHON_VERSION%_%PYTHON_ARCH%-windows-ci.zip"
 
 after_build:
-    - pushd bin\build
+    - pushd bin\\build
     - 7z a -bd %ARCHIVE_NAME% Open-FVS\*
     - move /y %ARCHIVE_NAME% %APPVEYOR_BUILD_FOLDER%
 
 on_failure:
+    - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
     # Post error logs to the build log
-    - appveyor PushArtifact bin\build\build_err.log
-    - appveyor PushArtifact bin\build\f2py_*.log
+    - appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\\bin\\build\\build_err.log
+    - appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\\bin\\build\\f2py_*.log
 
 test_script:
     - "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\run_tests.bat"

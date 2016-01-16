@@ -23,14 +23,18 @@ lib_dir = '.'
 sources = open('./pyext_source.txt').read()
 sources = sources.split(';')
 
-# Generate the F2PY wrapper .pyf module
-cmd_args = [
-    '-h','%s' % (ext_pyf,)
-    ,'-m','pyfvs%s' % (fvs_variant,)
-    ,'--overwrite-signature'
-    ]
-cmd_args.extend(sources)
-f2py2e.run_main(cmd_args)
+if '--gen-pyf' in sys.argv:
+    i = sys.argv.find('--gen-pyf')
+    sys.argv.pop(i)
+    
+    # Generate the F2PY wrapper .pyf module
+    cmd_args = [
+        '-h','%s' % (ext_pyf,)
+        ,'-m','pyfvs%s' % (fvs_variant,)
+        ,'--overwrite-signature'
+        ]
+    cmd_args.extend(sources)
+    f2py2e.run_main(cmd_args)
 
 if os.name=='nt':
     odbc = 'odbc32'

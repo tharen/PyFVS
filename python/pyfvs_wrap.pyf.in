@@ -1,0 +1,1321 @@
+!    -*- f90 -*-
+! Note: the context of this file is case sensitive.
+
+python module @pyext_name@ ! in 
+    interface  ! in :@pyext_name@
+        module prgprm_mod ! in :@pyext_name@:@source_root@/api/variants/pn/prgprm_mod.f90
+            integer, parameter,optional :: maxplt=500
+            integer, parameter,optional :: maxtre=3000
+            integer, parameter,optional :: maxcy1=41
+            integer, parameter,optional :: maxstr=20
+            integer, parameter,optional :: maxcyc=40
+            integer, parameter,optional :: maxsp=39
+            integer, parameter,optional :: mxfrcds=20
+            integer, parameter,optional :: maxtp1=3001
+        end module prgprm_mod
+        module esparm_mod ! in :@pyext_name@:@source_root@/api/variants/pn/esparm_mod.f90
+            integer, parameter,optional :: nspspe=14
+            integer, parameter,optional :: ndbhcl=10
+        end module esparm_mod
+        module arrays_mod ! in :@pyext_name@:@source_root@/api/arrays_mod.f90
+            use prgprm_mod
+            real dimension(3000) :: htg
+            real dimension(3000) :: dbh
+            real dimension(3000,2) :: ht2td
+            integer dimension(6,3000) :: damsev
+            real dimension(3000) :: crwdth
+            integer dimension(3000) :: defect
+            real dimension(3000) :: cfv
+            real dimension(3000) :: oldpct
+            integer dimension(3000) :: ind
+            real dimension(3000) :: abirth
+            integer dimension(3000) :: normht
+            integer dimension(3000) :: imc
+            integer dimension(3000) :: ind1
+            integer dimension(3000) :: ind2
+            real dimension(3000) :: pct
+            real dimension(3000) :: zrand
+            real dimension(3000) :: bfv
+            integer dimension(3000) :: icr
+            real dimension(3000) :: prob
+            integer dimension(3000) :: kutkod
+            real dimension(3000) :: dg
+            real dimension(3000) :: ht
+            real dimension(3000) :: wk1
+            integer dimension(3000) :: idtree
+            real dimension(3000) :: wk3
+            real dimension(3000) :: wk2
+            real dimension(3000) :: wk5
+            real dimension(3000) :: wk4
+            real dimension(3000) :: oldrn
+            real dimension(3000) :: wk6
+            real dimension(3000) :: yrdlos
+            integer dimension(3000) :: itrunc
+            real dimension(3000) :: pltsiz
+            integer dimension(3000) :: isp
+            integer dimension(3000) :: ispecl
+            integer dimension(3000) :: itre
+        end module arrays_mod
+        module contrl_mod ! in :@pyext_name@:@source_root@/api/contrl_mod.f90
+            use prgprm_mod
+            integer dimension(41) :: iy
+            logical :: lauton
+            real :: pbawt
+            logical :: lfia
+            integer :: irecrd
+            logical :: lzeide
+            real dimension(39) :: rcor2
+            real dimension(39,4) :: sizcap
+            logical :: lrcor2
+            real :: autmin
+            real :: autmax
+            real :: d0
+            logical :: lbkden
+            integer :: ncyc
+            logical :: lmort
+            logical :: ltrip
+            real :: bamax
+            integer :: jolist
+            real :: bamin
+            integer :: iccode
+            integer :: nptgrp
+            integer :: icyc
+            integer :: iread
+            real :: fintm
+            integer :: jostnd
+            character*250 :: kwdfil
+            logical :: notrip
+            logical :: ldcor2
+            logical :: lbvols
+            integer dimension(30,52) :: ispgrp
+            integer dimension(39) :: methc
+            integer dimension(39) :: methb
+            logical :: lstart
+            character*160 :: trefmt
+            real :: d0mult
+            integer :: ithnpn
+            real dimension(39) :: dbhmin
+            integer :: ithnpi
+            integer dimension(30,52) :: iptgrp
+            integer dimension(7) :: itable
+            real :: yr
+            integer :: ifst
+            integer :: irecnt
+            integer :: ithnpa
+            logical :: lflag
+            logical :: lsite
+            integer dimension(39) :: ibegin
+            logical dimension(39) :: ldgcal
+            real :: trm
+            character dimension(39,4),intent(c) :: iused
+            real :: dbhsdi
+            integer :: itrn
+            integer :: jocalb
+            integer :: numsp
+            logical :: lfire
+            integer :: lstknt
+            integer dimension(39) :: kptr
+            integer dimension(39) :: kount
+            real :: ptpawt
+            integer dimension(6) :: ins
+            real :: cfmin
+            real :: dbhzeide
+            real :: dgsd
+            real :: dr016
+            logical dimension(39) :: lhtdrg
+            integer :: istdat
+            real :: auteff
+            integer :: josum
+            real :: eff
+            real :: pccfwt
+            integer dimension(39,2) :: isct
+            integer dimension(39) :: iref
+            integer :: nspgrp
+            real dimension(39) :: stmp
+            logical :: lsumry
+            logical :: ldubdg
+            integer :: jotree
+            logical, optional :: calc_forest_type=.true.
+            integer :: nstknt
+            character dimension(30,10),intent(c) :: ptgname
+            integer :: icflag
+            integer :: icl1
+            integer :: icl2
+            integer :: icl3
+            integer :: icl4
+            integer :: icl5
+            integer :: icl6
+            logical :: mordat
+            real :: bfmin
+            real :: spclwt
+            character dimension(30,10),intent(c) :: namgrp
+            real :: tcwt
+            logical :: lcvols
+            logical, optional :: fast_age_search=.false.
+            real dimension(39) :: frmcls
+            real dimension(39) :: topd
+            real :: dbhstage
+            integer :: idg
+            integer :: irec1
+            integer :: irec2
+            real :: tcfmin
+        end module contrl_mod
+        module coeffs_mod ! in :@pyext_name@:@source_root@/api/coeffs_mod.f90
+            use prgprm_mod, only: maxsp
+            real dimension(39) :: crcon
+            real dimension(39) :: dgdsq
+            real :: h2cof
+            real dimension(9,39) :: bfdeft
+            real dimension(39) :: rhcon
+            real dimension(39) :: atten
+            real :: bjphi
+            real :: bhat
+            real dimension(40) :: bjrho
+            real dimension(39) :: cor2
+            real dimension(39) :: difh
+            real dimension(39) :: vardg
+            real dimension(39) :: htcon
+            real :: hdgcof
+            real dimension(39) :: fm
+            real dimension(39) :: wci
+            real dimension(39) :: fu
+            real dimension(39) :: dgccf
+            real dimension(39) :: dgcon
+            real dimension(39) :: cfla1
+            real dimension(39) :: cfla0
+            real dimension(39) :: ht2
+            real dimension(39) :: ht1
+            integer dimension(39) :: iorder
+            real dimension(39) :: bfla0
+            real dimension(39) :: bfla1
+            real dimension(39) :: fl
+            real dimension(39) :: smcon
+            real dimension(39) :: sigmar
+            real dimension(39) :: cor
+            real dimension(9,39) :: cfdeft
+            real dimension(39) :: bkrat
+            real :: ahat
+            real :: bjthet
+            real dimension(39) :: sigma
+        end module coeffs_mod
+        module econ_mod ! in :@pyext_name@:@source_root@/api/econ_mod.f90
+            logical :: lecbug
+            integer :: josume
+            logical :: lecon
+        end module econ_mod
+        module escomn_mod ! in :@pyext_name@:@source_root@/api/escomn_mod.f90
+            use esparm_mod, only: nspspe,ndbhcl
+            use prgprm_mod, only: mxfrcds,maxsp
+            real :: xsin
+            real :: bwb4
+            integer dimension(20) :: iforst
+            real :: regt
+            real :: xcosas
+            real dimension(39) :: sumpi
+            integer dimension(14) :: ispspe
+            real :: elevsq
+            real dimension(20) :: bnorml
+            real :: bwaf
+            real dimension(39) :: xmin
+            real dimension(10) :: dbhmid
+            real :: baa
+            real dimension(39) :: sumpx
+            real :: xcos
+            integer :: iprep
+            integer dimension(20) :: iforcd
+            integer :: iphy
+            real dimension(20,39) :: ocurnf
+            real :: xsinas
+            integer :: ihab
+            integer :: nnid
+            real :: sqregt
+            real :: slo
+            real :: time
+            real dimension(39) :: hhtmax
+            real :: baasq
+            real :: baaln
+            real dimension(16,39) :: ocurht
+            real :: sqbwaf
+        end module escomn_mod
+        module eshap_mod ! in :@pyext_name@:@source_root@/api/eshap_mod.f90
+            use prgprm_mod
+            integer :: load
+            integer dimension(500) :: ipprep
+            integer :: nptids
+            integer dimension(500) :: iptids
+            integer :: minrep
+            integer dimension(3) :: ialn
+            real :: thres1
+            real :: thres2
+            integer dimension(16) :: ihabt
+            integer dimension(500) :: iphys
+            real dimension(500) :: pasp
+            integer :: ntally
+            real :: zmech
+            integer :: meth
+            integer :: iblk
+            integer :: kdtold
+            real :: stoadj
+            real :: xtes
+            logical :: lautal
+            real dimension(39) :: htadj
+            real dimension(39) :: xesmlt
+            real :: esb
+            real :: esa
+            integer dimension(500) :: iphab
+            real :: confid
+            logical :: lingrw
+            logical :: lsprut
+            integer :: ihtype
+            integer :: inadv
+            integer :: iyrlrm
+            integer :: joregt
+            real :: pmech
+            real dimension(500) :: pslo
+            real dimension(5) :: sumpre
+            real :: esdraw
+            integer :: ipinfo
+            integer :: iprint
+            integer :: itrnrm
+            real :: oldtim
+            real :: zburn
+            integer :: idsdat
+            integer :: mode
+            real :: pburn
+            integer :: ifo
+        end module eshap_mod
+        module estree_mod ! in :@pyext_name@:@source_root@/api/estree_mod.f90
+            use prgprm_mod, only: maxtre
+            integer dimension(3000) :: iestat
+        end module estree_mod
+        module htcal_mod ! in :@pyext_name@:@source_root@/api/htcal_mod.f90
+            use prgprm_mod, only: maxsp
+            logical :: lhcor2
+            logical dimension(39) :: lhtcal
+            integer :: ihtg
+            integer :: ifinth
+            real :: finth
+            real dimension(39) :: hsig
+            real dimension(39) :: hcor2
+        end module htcal_mod
+        module multcm_mod ! in :@pyext_name@:@source_root@/api/multcm_mod.f90
+            use prgprm_mod, only: maxsp
+            real dimension(39) :: xdmult
+            real dimension(39) :: xrhmlt
+            real dimension(39) :: xmdia1
+            real dimension(39) :: xmdia2
+            real dimension(39) :: xhmult
+            real dimension(39) :: xmmult
+            real dimension(39) :: xrdmlt
+        end module multcm_mod
+        module pden_mod ! in :@pyext_name@:@source_root@/api/pden_mod.f90
+            use prgprm_mod, only: maxplt,maxsp
+            real dimension(500) :: ptpa
+            real :: oldfnt
+            real dimension(500) :: baaa
+            real dimension(39,500) :: over
+            real :: regnbk
+            real dimension(500) :: pccf
+        end module pden_mod
+        module workcm_mod ! in :@pyext_name@:@source_root@/api/workcm_mod.f90
+            use prgprm_mod
+            real dimension(3000) :: work1
+            real dimension(39) :: work2
+            real dimension(3000) :: work3
+            integer dimension(3000) :: iwork1
+        end module workcm_mod
+        module plot_mod ! in :@pyext_name@:@source_root@/api/plot_mod.f90
+            use prgprm_mod
+            real :: slope
+            real :: tprob
+            real :: oldba
+            integer :: managd
+            character*4 :: mgmid
+            real :: fint
+            real :: atba
+            real :: brk
+            real :: aspect
+            character dimension(39,3,4),intent(c) :: nsp
+            real dimension(39) :: sitear
+            integer :: ifor
+            real :: vmltyr
+            integer :: ismall
+            integer :: nsitet
+            integer :: nonstk
+            character*40 :: dbcn
+            real :: sdimax
+            real :: vmlt
+            integer :: kodfor
+            real :: pi
+            integer :: kodtyp
+            real :: rmsqd
+            integer dimension(500) :: ipvec
+            character dimension(39,4),intent(c) :: fiajsp
+            real :: ormsqd
+            real :: oldavh
+            real :: reldm1
+            real :: relden
+            real :: sdibc2
+            real :: samwt
+            real :: tlong
+            real :: oldtpa
+            real :: tlat
+            integer :: iszcl
+            real :: atavd
+            real :: baf
+            integer :: icage
+            integer :: jspindef
+            integer :: iphreg
+            real dimension(39) :: sdidef
+            integer :: itype
+            real :: btsdix
+            real :: attpa
+            real :: sdibc
+            real :: avh
+            real dimension(39) :: barank
+            real :: fpa
+            real :: stndsi
+            integer :: imodty
+            character dimension(39,6),intent(c) :: plnjsp
+            integer :: islop
+            integer dimension(122) :: jtype
+            integer :: istate
+            character*26 :: nplt
+            real dimension(20,6) :: sitetr
+            integer :: igl
+            real :: pmsdiu
+            real :: sdiac2
+            real :: ba
+            real :: covyr
+            integer :: ifint
+            real :: atsdix
+            real :: grospc
+            integer :: iptinv
+            character dimension(39,4),intent(c) :: jsp
+            real :: sdiac
+            integer :: ifortp
+            real :: pmsdil
+            integer :: iage
+            integer :: istcl
+            real :: rmai
+            character*10 :: cpvref
+            real :: atccf
+            real :: atavh
+            real :: covmlt
+            integer :: icnty
+            integer dimension(39) :: jspin
+            real dimension(39) :: reldsp
+            integer :: iaspec
+            real :: elev
+            real :: tfpa
+            integer :: isisp
+        end module plot_mod
+        module rancom_mod ! in :@pyext_name@:@source_root@/api/rancom_mod.f90
+            real :: ss
+            double precision :: s1
+            double precision :: s0
+        end module rancom_mod
+        module screen_mod ! in :@pyext_name@:@source_root@/api/screen_mod.f90
+            integer :: joscrn
+            logical :: lscrn
+        end module screen_mod
+        module fvsstdcm_mod ! in :@pyext_name@:@source_root@/api/fvsstdcm_mod.f90
+            integer :: kolist
+            logical :: fstopen
+        end module fvsstdcm_mod
+        module varcom_mod ! in :@pyext_name@:@source_root@/api/varcom_mod.f90
+            use prgprm_mod
+            character*8 :: pcom
+            character*8 :: pcomx
+            real dimension(39) :: aa
+            real dimension(39) :: bb12
+            real dimension(39) :: bb11
+            real dimension(39) :: bb10
+            real :: slpmrt
+            real dimension(39,9) :: htt1
+            real dimension(39,9) :: htt2
+            real dimension(39) :: b1accf
+            real dimension(39) :: b0astd
+            real dimension(39) :: bb13
+            real :: effmsb
+            real dimension(39) :: b0accf
+            real :: dlomsb
+            real dimension(39) :: b0bccf
+            integer :: isilft
+            integer dimension(39) :: maxsdi
+            real :: qmdmsb
+            logical :: lbamax
+            real :: tpamrt
+            real :: cepmrt
+            integer dimension(39) :: istagf
+            real :: dhimsb
+            integer dimension(39) :: iabflg
+            real dimension(39) :: b1bccf
+            real dimension(500) :: ptbaa
+            logical :: lfixsd
+            real dimension(39) :: b1bstd
+            integer :: ibasp
+            real dimension(3000) :: ptbalt
+            real :: slpmsb
+            real :: cepmsb
+            integer :: mflmsb
+            real dimension(39) :: bb
+            logical :: lflagv
+            real dimension(39) :: bb9
+            real dimension(39) :: bb8
+            real dimension(39) :: bb7
+            real dimension(39) :: bb6
+            real dimension(39) :: bb5
+            real dimension(39) :: bb4
+            real dimension(39) :: bb3
+            real dimension(39) :: bb2
+            real dimension(39) :: bb1
+            real dimension(39) :: bb0
+            common /varchr/ pcom,pcomx
+        end module varcom_mod
+        module outcom_mod ! in :@pyext_name@:@source_root@/api/outcom_mod.f90
+            use prgprm_mod
+            character dimension(4,3),intent(c) :: iosptt
+            character dimension(4,3),intent(c) :: iospbr
+            character dimension(4,3),intent(c) :: iosptv
+            character dimension(4,3),intent(c) :: iospmr
+            character dimension(4,3),intent(c) :: iospac
+            character dimension(4,3),intent(c) :: iospct
+            character dimension(4,3),intent(c) :: iospcv
+            character dimension(4,3),intent(c) :: iospmc
+            character dimension(4,3),intent(c) :: iospbv
+            character dimension(4,3),intent(c) :: iosprt
+            character dimension(4,3),intent(c) :: iospmo
+            character dimension(6,3),intent(c) :: ionsp
+            character*72 :: ititle
+            real dimension(4) :: ospbr
+            real dimension(6) :: prbio
+            real dimension(4) :: ospbv
+            real dimension(6) :: htio
+            real dimension(7) :: ocvrem
+            real dimension(7) :: omcrem
+            real dimension(7) :: obfrem
+            real dimension(7) :: omort
+            real dimension(6) :: dgio
+            real dimension(4) :: osprt
+            integer*4 dimension(20,41) :: iosum
+            real dimension(4) :: ospcv
+            real dimension(4) :: ospct
+            real dimension(7) :: obfcur
+            real dimension(4) :: osptt
+            real dimension(7) :: oacc
+            real dimension(7) :: omccur
+            real dimension(4) :: ospac
+            real dimension(6) :: pctio
+            integer dimension(6) :: ioicr
+            real dimension(7) :: ocvcur
+            real dimension(4) :: osptv
+            real dimension(6) :: dbhio
+            real dimension(7) :: ontres
+            real dimension(4) :: ospmr
+            real dimension(7) :: ontcur
+            real dimension(4) :: ospmo
+            real dimension(7) :: ontrem
+            real dimension(4) :: ospmc
+            common /outchr/ iosptt,iospbr,iosptv,iospmr,iospac,iospct,iospcv,iospmc,iospbv,iosprt,iospmo,ionsp,ititle
+        end module outcom_mod
+        module volstd_mod ! in :@pyext_name@:@source_root@/api/volstd_mod.f90
+            use prgprm_mod, only: maxsp
+            real dimension(39) :: ctran
+            real dimension(7,20) :: logvol
+            real dimension(7,39) :: bfveql
+            real dimension(39) :: bfstmp
+            integer dimension(39) :: ibtran
+            real dimension(39) :: bfmind
+            real dimension(7,39) :: bfveqs
+            real :: alpha
+            character dimension(39,10),intent(c) :: veqnnb
+            character dimension(39,10),intent(c) :: veqnnc
+            real dimension(21,3) :: logdia
+            real dimension(39) :: bftopd
+            real dimension(39) :: btran
+            real dimension(7,39) :: cfveql
+            integer dimension(39) :: ictran
+            real dimension(7,39) :: cfveqs
+            logical :: lstats
+        end module volstd_mod
+        module fmparm_mod ! in :@pyext_name@:@source_root@/api/fmparm_mod.f90
+            use prgprm_mod, only: maxsp,maxcy1,maxtre
+            real, parameter,optional :: p2t=0.0005
+            integer, parameter,optional :: mxfmod=5
+            integer, parameter,optional :: mxflcl=11
+            integer, parameter,optional :: tfmax=60
+            integer, parameter,optional :: mxsnag=2000
+            integer, parameter,optional :: maxopt=40
+            integer, parameter,optional :: mxdfmd=256
+        end module fmparm_mod
+        module fmcom_mod ! in :@pyext_name@:@source_root@/api/fmcom_mod.f90
+            use fmparm_mod
+            use prgprm_mod, only: maxsp,maxcy1,maxtre
+            real dimension(39) :: alldwn
+            integer :: burnyr
+            real :: canmht
+            real :: cbhcut
+            integer :: covtyp
+            real :: crburn
+            real dimension(3000,6) :: crownw
+            real dimension(3000) :: curkil
+            real dimension(3,11,2,5) :: cwd
+            real dimension(4,6,60) :: cwd2b
+            real dimension(4,6,60) :: cwd2b2
+            real :: cwdcut
+            real dimension(2,11) :: cwdnew
+            real dimension(3,10,2,5) :: cwdvol
+            real dimension(3,10,2,5) :: cwdcov
+            real dimension(2000) :: dbhs
+            real dimension(39) :: decayx
+            real dimension(2000) :: denih
+            real dimension(2000) :: denis
+            real dimension(2000) :: dend
+            real dimension(11,4) :: dkr
+            integer dimension(39) :: dkrcls
+            real dimension(4) :: dkrdef
+            real dimension(39,19) :: dspdbh
+            real dimension(39) :: fallx
+            real dimension(2) :: flive
+            real dimension(3000) :: firkil
+            real :: folmc
+            real dimension(3000) :: fmprob
+            real dimension(39) :: fmtba
+            integer :: nfmsvpx
+            integer dimension(3000) :: fmicr
+            integer :: fmkod
+            real :: fmslop
+            integer :: ftreat
+            real dimension(3000) :: fmortmlt
+            real dimension(5,4) :: fuarea
+            integer dimension(3000) :: grow
+            logical dimension(2000) :: hard
+            integer :: hartyp
+            integer :: harvyr
+            real dimension(2000) :: htdead
+            real dimension(2000) :: htih
+            real dimension(2000) :: htis
+            real :: htr1
+            real :: htr2
+            real dimension(39,4) :: htx
+            real :: htxsft
+            integer :: icansp
+            integer :: icbhmt
+            integer :: icycrm
+            integer :: ifmyr1
+            integer :: ifmyr2
+            integer :: iftyr
+            integer :: isalvc
+            integer :: isalvs
+            integer :: isngsm
+            integer :: itrnl
+            integer :: jcout
+            integer dimension(3) :: jfrout
+            integer dimension(3) :: jlout
+            logical :: lanhed
+            real dimension(39) :: leaflf
+            logical :: lfmon
+            logical :: lfmon2
+            logical dimension(3) :: lfrout
+            logical :: ldynfm
+            real :: limbrk
+            logical :: ldhead
+            logical :: lshead
+            logical :: lvwest
+            real dimension(39,19) :: maxht
+            real dimension(39,19) :: minht
+            integer :: nsnag
+            integer :: nyrs
+            real :: nzero
+            integer :: oldcovtyp
+            real dimension(3000) :: oldcrl
+            real dimension(3000) :: oldht
+            real dimension(3000,6) :: oldcrw
+            integer :: oldict
+            integer :: oldict2
+            real dimension(2) :: oldictwt
+            real dimension(2000) :: pbfrih
+            real dimension(2000) :: pbfris
+            real :: pbscor
+            real :: pbsoft
+            real :: pbsize
+            real :: pbsmal
+            real :: pbtime
+            integer :: pburnyr
+            real :: percov
+            real dimension(11,4) :: prduff
+            real :: prsnag
+            real dimension(39) :: psoft
+            real dimension(11) :: prpile
+            real dimension(2000,2) :: salvspa
+            real :: sccf
+            real dimension(11,4) :: setdecay
+            real dimension(3000) :: sngnew
+            real dimension(6) :: snprcl
+            integer dimension(2000) :: sps
+            real dimension(6) :: tcwd
+            real dimension(6) :: tcwd2
+            real dimension(39,6) :: tfall
+            real dimension(11,4) :: toduff
+            real :: tonrmc
+            real :: tonrms
+            real :: tonrmh
+            real :: totacr
+            real dimension(39) :: v2t
+            integer dimension(2000) :: yrdead
+            logical :: lremt
+            integer :: nsnagsalv
+            real dimension(2000) :: htdeadsalv
+            integer dimension(2000) :: spssalv
+            real dimension(2000) :: dbhssalv
+            real dimension(2000) :: htihsalv
+            real dimension(2000) :: htissalv
+            logical dimension(2000) :: hardsalv
+            real dimension(3000) :: premst
+            real dimension(3000) :: premcr
+            integer dimension(3000) :: ispcc
+            real dimension(3000) :: dbhc
+            real dimension(3000) :: htc
+            real dimension(3000,6) :: crownwc
+            common /fmcom/ alldwn,burnyr,canmht,cbhcut,covtyp,crburn,crownw,curkil,cwd,cwd2b,cwd2b2,cwdcut,cwdnew,cwdvol,cwdcov,dbhs,decayx,denih,denis,dend,dkr,dkrcls,dkrdef,dspdbh,fallx,flive,firkil,folmc,fmprob,fmtba,nfmsvpx,fmicr,fmkod,fmslop,ftreat,fmortmlt,fuarea,grow,hard,hartyp,harvyr,htdead,htih,htis,htr1,htr2,htx,htxsft,icansp,icbhmt,icycrm,ifmyr1,ifmyr2,iftyr,isalvc,isalvs,isngsm,itrnl,jcout,jfrout,jlout,lanhed,leaflf,lfmon,lfmon2,lfrout,ldynfm,limbrk,ldhead,lshead,lvwest,maxht,minht,nsnag,nyrs,nzero,oldcovtyp,oldcrl,oldht,oldcrw,oldict,oldict2,oldictwt,pbfrih,pbfris,pbscor,pbsoft,pbsize,pbsmal,pbtime,pburnyr,percov,prduff,prsnag,psoft,prpile,salvspa,sccf,setdecay,sngnew,snprcl,sps,tcwd,tcwd2,tfall,toduff,tonrmc,tonrms,tonrmh,totacr,v2t,yrdead,lremt,nsnagsalv,htdeadsalv,spssalv,dbhssalv,htihsalv,htissalv,hardsalv,premst,premcr,ispcc,dbhc,htc,crownwc
+        end module fmcom_mod
+        module fmfcom_mod ! in :@pyext_name@:@source_root@/api/fmfcom_mod.f90
+            use fmparm_mod, only: mxfmod,mxdfmd,mxflcl
+            use prgprm_mod, only: maxsp,maxcyc
+            real dimension(2) :: potpab
+            real :: sch
+            real dimension(14) :: fmacre
+            real dimension(4) :: fwtusr
+            integer :: idsheat
+            integer :: icfpe
+            logical dimension(39) :: lsw
+            integer :: ifmmre
+            integer :: ifmmrb
+            integer dimension(2) :: potseas
+            integer :: idmrt
+            real :: burncr
+            real :: rfinal
+            integer :: ifapas
+            integer :: idful
+            real dimension(2) :: biocon
+            real :: dpmod
+            integer :: icfpb
+            real dimension(4) :: potkil
+            integer dimension(2) :: plsiz
+            integer :: icrpas
+            integer :: idbrn
+            integer :: jsnout
+            real :: bioflr
+            real dimension(4) :: cancls
+            logical :: latfuel
+            integer :: iddwcv
+            integer :: ipflmb
+            integer :: isheatb
+            real dimension(256,2,7) :: fmload
+            real dimension(256) :: fmdep
+            integer :: idrye
+            real dimension(3) :: mext
+            logical :: latshrb
+            real :: large
+            real :: fwind
+            integer dimension(5) :: fmod
+            real :: small
+            integer :: nl
+            real :: cccrit
+            integer :: idpflm
+            integer :: firtype
+            real :: prv9
+            real dimension(3) :: srhobq
+            integer :: icmeth
+            real dimension(2) :: cdbrk
+            logical :: lprv89
+            integer dimension(256) :: ifuelmon
+            real dimension(2) :: prewnd
+            integer :: icrpti
+            integer :: icrpte
+            real :: osmall
+            integer :: icrptb
+            integer :: iflalb
+            real dimension(3) :: sirxi
+            integer :: iflale
+            logical :: cfim_on
+            real dimension(3,11) :: burned
+            real dimension(2) :: potrint
+            real :: tcload
+            integer :: icmetrc
+            integer :: fm89yr
+            integer :: ichpas
+            integer :: idcpas
+            integer dimension(4) :: fmdusr
+            real dimension(26) :: cfim_input
+            integer :: idwrpi
+            integer :: idwrpb
+            real :: pbrncr
+            real dimension(3) :: usav
+            integer :: idwrpe
+            real :: bioshrb
+            real :: ulhv
+            integer :: ipfstp
+            integer dimension(2) :: pottyp
+            real dimension(2,7) :: fwg
+            integer :: iflpas
+            integer :: imrpas
+            real dimension(5) :: fwt
+            integer :: iflogic
+            integer :: isheate
+            integer :: soiltp
+            real :: bioroot
+            real :: olarge
+            integer :: ipfpas
+            integer :: ifmflb
+            real dimension(3) :: ssigma
+            real :: minsol
+            real dimension(2) :: biorem
+            real dimension(2,5) :: mois
+            real dimension(3) :: scbe
+            real dimension(3) :: sphis
+            real :: prv8
+            integer :: idcrpt
+            real :: slchng
+            integer dimension(3) :: flag
+            real :: exposr
+            real dimension(3) :: sfrate
+            integer :: ibrpas
+            integer :: ifmbre
+            real dimension(2,8) :: presvl
+            integer :: ifmbrb
+            logical :: lhead
+            real dimension(3) :: sxir
+            integer :: idchrv
+            real dimension(4,3) :: pflacr
+            real dimension(2) :: burnlv
+            real :: biosnag
+            real :: bioddw
+            integer :: idwpas
+            integer :: nfmods
+            real :: crdcay
+            real dimension(2) :: firacr
+            real :: cbd
+            real dimension(4) :: pflam
+            real dimension(2) :: potvol
+            real :: cfim_dc
+            integer dimension(256,2,4) :: surfvl
+            logical :: lusrfm
+            real dimension(3,3) :: potcons
+            integer :: ichrve
+            integer :: ichrvb
+            real dimension(2,2,40) :: fate
+            integer :: ipflme
+            integer :: nd
+            integer :: ichrvi
+            real dimension(2) :: potemp
+            real :: ccchng
+            integer :: idryb
+            real dimension(4) :: corfac
+            integer :: ifmfle
+            integer :: idwcve
+            real :: slcrit
+            integer :: iddwrp
+            real dimension(2) :: smoke
+            integer :: idwcvb
+            integer :: idflal
+            integer :: idwcvi
+            real dimension(2) :: ubd
+            real dimension(4) :: potfsr
+            integer :: atemp
+            integer :: isnstp
+            integer :: ifmset
+            real :: cfim_bd
+            integer :: icfpst
+            integer :: ichabt
+            integer :: isnage
+            integer :: isnagb
+            integer :: burnseas
+            integer :: ifstep
+            real :: depth
+            integer :: actcbh
+            real dimension(17) :: carbval
+            real dimension(256) :: moisex
+            logical :: lflbrn
+            real :: biolive
+            real dimension(7) :: lowdbh
+            integer dimension(2,4) :: mps
+        end module fmfcom_mod
+        module fmprop_mod ! in :@pyext_name@:@source_root@/api/fmprop_mod.f90
+            use prgprm_mod, only: maxsp
+            real dimension(2,101,3,2,2) :: faprop
+            integer dimension(39) :: biogrp
+        end module fmprop_mod
+        module metric_mod ! in :@pyext_name@:@source_root@/api/metric_mod.f90
+            real, parameter,optional :: tmtoti=1.102311
+            real, parameter,optional :: intom=0.0254001
+            real, parameter,optional :: btutokj=1.0550559
+            real, parameter,optional :: hatoacr=2.471
+            real, parameter,optional :: ftoc1=0.554
+            real, parameter,optional :: ft2tom2=0.0929034
+            real, parameter,optional :: mtoin=39.37
+            real, parameter,optional :: ftoc2=-17.7
+            real, parameter,optional :: ft3tom3=0.028317
+            real, parameter,optional :: titotm=0.90718
+            real, parameter,optional :: ft3pacrtom3pha=0.0699713
+            real, parameter,optional :: m2phatoft2pacr=4.3560773
+            real, parameter,optional :: mitokm=1.609
+            real, parameter,optional :: m3phatoft3pacr=14.291564
+            real, parameter,optional :: cmtoin=0.3937
+            real, parameter,optional :: ctof2=32
+            real, parameter,optional :: ctof1=1.8
+            real, parameter,optional :: kmtomi=0.6214
+            real, parameter,optional :: m3toft3=35.314455
+            real, parameter,optional :: m2toft2=10.763867
+            real, parameter,optional :: ft2pacrtom2pha=0.2295643
+            real, parameter,optional :: cmtoft=0.0328084
+            real, parameter,optional :: fttom=0.3048
+            real, parameter,optional :: intocm=2.54
+            real, parameter,optional :: acrtoha=0.4046945
+            real, parameter,optional :: kgtolb=2.2046226
+            real, parameter,optional :: fttocm=30.48
+            logical :: lmtric
+            integer, parameter,optional :: n_metric_prms=13
+            real, parameter,optional :: mtoft=3.28084
+            real, parameter,optional :: lbtokg=0.4535924
+        end module metric_mod
+        module carbon_data ! in :@pyext_name@:@source_root@/api/carbon_data.f90
+            use prgprm_mod, only: maxcy1
+            real dimension(17,41) :: carbon_summary
+            subroutine copy_forest_carbon(carb) ! in :@pyext_name@:@source_root@/api/carbon_data.f90:carbon_data
+                use contrl_mod, only: icyc
+                real dimension(*) :: carb
+            end subroutine copy_forest_carbon
+            subroutine copy_harvest_carbon(carb) ! in :@pyext_name@:@source_root@/api/carbon_data.f90:carbon_data
+                use contrl_mod, only: icyc
+                real dimension(*) :: carb
+            end subroutine copy_harvest_carbon
+        end module carbon_data
+        module downwood_data ! in :@pyext_name@:@source_root@/api/downwood_data.f90
+            use prgprm_mod, only: maxcy1
+            real dimension(16,41) :: downwood_summary
+            subroutine copy_downwood(ddw) ! in :@pyext_name@:@source_root@/api/downwood_data.f90:downwood_data
+                use contrl_mod, only: icyc
+                real dimension(*) :: ddw
+            end subroutine copy_downwood
+        end module downwood_data
+        module tree_data ! in :@pyext_name@:@source_root@/api/tree_data.f90
+            use contrl_mod, only: icyc,itrn
+            use plot_mod, only: grospc
+            use prgprm_mod, only: maxcy1,maxtre
+            real dimension(3000,41) :: cuft_total
+            real dimension(3000,41) :: cuft_net
+            real dimension(3000,41) :: defect_cuft
+            real dimension(3000,41) :: ht_merch_bdft
+            real dimension(3000,41) :: ht_incr
+            real dimension(3000,41) :: dbh_incr
+            integer dimension(3000,41) :: spp_seq
+            real dimension(3000,41) :: live_tpa
+            logical, optional :: save_tree_data=.true.
+            real dimension(3000,41) :: defect_bdft
+            integer dimension(3000,41) :: tree_seq
+            integer dimension(3000,41) :: plot_seq
+            real dimension(3000,41) :: ba_pctl
+            real dimension(3000,41) :: cut_tpa
+            real dimension(3000,41) :: pnt_bal
+            integer dimension(3000,41) :: age
+            real dimension(3000,41) :: cr_ratio
+            real dimension(3000,41) :: bdft_net
+            real dimension(3000,41) :: ht_merch_cuft
+            real dimension(3000,41) :: live_dbh
+            real dimension(3000,41) :: ht_total
+            real dimension(3000,41) :: mort_tpa
+            integer dimension(3000,41) :: tree_id
+            integer dimension(41) :: num_recs
+            real dimension(3000,41) :: cr_width
+            subroutine init_tree_data ! in :@pyext_name@:@source_root@/api/tree_data.f90:tree_data
+            end subroutine init_tree_data
+            subroutine copy_tree_data ! in :@pyext_name@:@source_root@/api/tree_data.f90:tree_data
+                use workcm_mod, only: work1
+                use arrays_mod, only: htg,dbh,ht2td,dg,isp,crwdth,defect,ht,wk1,bfv,icr,cfv,idtree,pct,itre,prob,abirth
+                use varcom_mod, only: ptbalt
+            end subroutine copy_tree_data
+            subroutine copy_mort_data ! in :@pyext_name@:@source_root@/api/tree_data.f90:tree_data
+                use arrays_mod, only: wk2
+            end subroutine copy_mort_data
+            subroutine copy_cuts_data ! in :@pyext_name@:@source_root@/api/tree_data.f90:tree_data
+                use arrays_mod, only: wk3
+            end subroutine copy_cuts_data
+        end module tree_data
+        module fvs_step ! in :@pyext_name@:@source_root@/api/fvs_step.f90
+            use plot_mod, only: sdiac2,mgmid,nplt,sdiac
+            use arrays_mod, only: wk1,ind,bfv,cfv,wk3,prob
+            use esblkd_mod, only: esblkd
+            use workcm_mod, only: iwork1
+            use tree_data, only: init_tree_data
+            use keywds_mod, only: keywds
+            use contrl_mod, only: iy,ncyc,itable,icyc,lstart,itrn,icl1,lflag,irec2,icl6,jostnd
+            use cubrds_mod, only: cubrds
+            use blkdat_mod, only: blkdat
+            use outcom_mod, only: ocvcur,obfcur,omccur,ititle
+            use prgprm_mod, only: maxtp1,maxcy1,maxcyc
+            subroutine init_blkdata ! in :@pyext_name@:@source_root@/api/fvs_step.f90:fvs_step
+            end subroutine init_blkdata
+            subroutine fvs_init(keywords,irtncd) ! in :@pyext_name@:@source_root@/api/fvs_step.f90:fvs_step
+                character*256 intent(in) :: keywords
+                integer intent(out) :: irtncd
+            end subroutine fvs_init
+            subroutine fvs_grow(irtncd) ! in :@pyext_name@:@source_root@/api/fvs_step.f90:fvs_step
+                integer intent(out) :: irtncd
+            end subroutine fvs_grow
+            subroutine fvs_end(irtncd) ! in :@pyext_name@:@source_root@/api/fvs_step.f90:fvs_step
+                use plot_mod
+                use arrays_mod
+                use workcm_mod
+                use tree_data, only: copy_tree_data,save_tree_data,copy_mort_data,copy_cuts_data
+                use contrl_mod
+                use outcom_mod
+                integer intent(out) :: irtncd
+            end subroutine fvs_end
+        end module fvs_step
+        module snag_data ! in :@pyext_name@:@source_root@/api/snag_data.f90
+            use fmparm_mod, only: mxsnag
+            use prgprm_mod, only: maxcy1
+            real dimension(41,2000) :: dead_dbh
+            real dimension(41,2000) :: soft_vol
+            real dimension(41,2000) :: hard_ht
+            real dimension(41,2000) :: hard_density
+            integer dimension(41,2000) :: spp_seq
+            integer dimension(41,2000) :: year_dead
+            real dimension(41,2000) :: soft_ht
+            real dimension(41,2000) :: soft_density
+            real dimension(41,2000) :: hard_vol
+            integer dimension(41) :: num_recs
+            subroutine copy_snag_data ! in :@pyext_name@:@source_root@/api/snag_data.f90:snag_data
+                use contrl_mod, only: icyc
+                use fmcom_mod, only: sps,hard,nsnag,yrdead,htih,denih,htis,dbhs,denis
+                use plot_mod, only: grospc
+            end subroutine copy_snag_data
+        end module snag_data
+        module siteht_mod ! in :@pyext_name@:@source_root@/api/variants/pn/siteht_mod.f90
+            integer, parameter,optional :: max_age=200
+            integer, optional,dimension(39) :: lu_tally=0
+            real dimension(200,101,6) :: siteht_lu
+            integer, parameter,optional :: min_site=50
+            integer dimension(39) :: spp_lu
+            integer, parameter,optional :: max_site=150
+            integer, optional,dimension(39) :: fail_over=0
+            integer, parameter,optional :: min_age=1
+            subroutine get_siteht(si,spp,age,siteht) ! in :@pyext_name@:@source_root@/api/variants/pn/siteht_mod.f90:siteht_mod
+                real intent(in) :: si
+                integer intent(in) :: spp
+                real intent(in) :: age
+                real intent(out) :: siteht
+            end subroutine get_siteht
+        end module siteht_mod
+        module findage_mod ! in :@pyext_name@:@source_root@/api/variants/wc/findage_mod.f90
+            use contrl_mod, only: fast_age_search,jostnd
+            use plot_mod
+            use arrays_mod
+            use siteht_mod, only: get_siteht
+            use prgprm_mod
+            real, optional,dimension(39) :: max_age=maxsp*200.
+            real, optional,dimension(8) :: age_steps=100.0
+            subroutine findag(i,ispc,d,d2,h,sitage,sitht,agmax1,htmax,htmax2,debug) ! in :@pyext_name@:@source_root@/api/variants/wc/findage_mod.f90:findage_mod
+                integer :: i
+                integer :: ispc
+                real :: d
+                real :: d2
+                real :: h
+                real :: sitage
+                real :: sitht
+                real :: agmax1
+                real :: htmax
+                real :: htmax2
+                logical :: debug
+            end subroutine findag
+            subroutine guess_age(site_idx,spp_idx,height,site_height,site_age) ! in :@pyext_name@:@source_root@/api/variants/wc/findage_mod.f90:findage_mod
+                use siteht_mod, only: get_siteht
+                real intent(in) :: site_idx
+                integer intent(in) :: spp_idx
+                real intent(in) :: height
+                real intent(out) :: site_height
+                real intent(out) :: site_age
+            end subroutine guess_age
+        end module findage_mod
+        subroutine escprs(itrgt,debug) ! in :@pyext_name@:@source_root@/api/strp/escprs.f90
+            use findage_mod, only: findag
+            use arrays_mod
+            use contrl_mod
+            use eshap_mod
+            use outcom_mod
+            use prgprm_mod
+            integer :: itrgt
+            logical :: debug
+        end subroutine escprs
+        module esrncm_mod ! in :@pyext_name@:@source_root@/api/strp/esrncm_mod.f90
+            double precision :: ess1
+            double precision :: ess0
+            real :: esss
+        end module esrncm_mod
+        module esblkd_mod ! in :@pyext_name@:@source_root@/api/strp/esblkd_mod.f90
+            subroutine esblkd ! in :@pyext_name@:@source_root@/api/strp/esblkd_mod.f90:esblkd_mod
+                use esrncm_mod
+                use prgprm_mod
+                use eshap_mod
+            end subroutine esblkd
+        end module esblkd_mod
+        subroutine fvsdimsizes(ntrees,ncycles,nplots,maxtrees,maxspecies,maxplots,maxcycles) ! in :@pyext_name@:@source_root@/base/src/apisubs.f
+            use contrl_mod
+            use plot_mod
+            use prgprm_mod
+            integer intent(out) :: ntrees
+            integer intent(out) :: ncycles
+            integer intent(out) :: nplots
+            integer intent(out) :: maxtrees
+            integer intent(out) :: maxspecies
+            integer intent(out) :: maxplots
+            integer intent(out) :: maxcycles
+        end subroutine fvsdimsizes
+        subroutine fvssummary(summary,icycle,ncycles,maxrow,maxcol,rtncode) ! in :@pyext_name@:@source_root@/base/src/apisubs.f
+            use outcom_mod
+            use contrl_mod
+            use prgprm_mod
+            integer dimension(20),intent(out) :: summary
+            integer intent(in) :: icycle
+            integer intent(hide) :: ncycles
+            integer intent(hide) :: maxrow
+            integer intent(hide) :: maxcol
+            integer intent(hide) :: rtncode
+        end subroutine fvssummary
+        subroutine fvstreeattr(name,nch,action,ntrees,attr,rtncode) ! in :@pyext_name@:@source_root@/base/src/apisubs.f
+            use arrays_mod
+            use fmcom_mod
+            use fmparm_mod
+            use contrl_mod
+            use varcom_mod
+            use prgprm_mod
+            character*10 intent(in) :: name
+            integer intent(in) :: nch
+            character*4 intent(in) :: action
+            integer, optional,intent(in),check(len(attr)>=ntrees),depend(attr) :: ntrees=len(attr)
+            real(kind=8) dimension(ntrees),intent(inout) :: attr
+            integer intent(out) :: rtncode
+        end subroutine fvstreeattr
+        subroutine fvsspeciesattr(name,nch,action,attr,rtncode) ! in :@pyext_name@:@source_root@/base/src/apisubs.f
+            use contrl_mod
+            use volstd_mod
+            use plot_mod
+            use prgprm_mod
+            character*10 intent(in) :: name
+            integer intent(in) :: nch
+            character*4 intent(in) :: action
+            real(kind=8) dimension(39),intent(inout) :: attr
+            integer intent(out) :: rtncode
+        end subroutine fvsspeciesattr
+        subroutine fvsevmonattr(name,nch,action,attr,rtncode) ! in :@pyext_name@:@source_root@/base/src/apisubs.f
+            use fmcom_mod
+            use arrays_mod
+            use fmparm_mod
+            use prgprm_mod
+            character*9 intent(in) :: name
+            integer intent(in) :: nch
+            character*4 intent(in) :: action
+            double precision intent(inout) :: attr
+            integer intent(out) :: rtncode
+        end subroutine fvsevmonattr
+        subroutine fvsaddtrees(in_dbh,in_species,in_ht,in_cratio,in_plot,in_tpa,ntrees,rtncode) ! in :@pyext_name@:@source_root@/base/src/apisubs.f
+            use plot_mod
+            use arrays_mod
+            use estree_mod
+            use contrl_mod
+            use outcom_mod
+            use varcom_mod
+            use prgprm_mod
+            real(kind=8) dimension(ntrees),intent(in) :: in_dbh
+            real(kind=8) dimension(ntrees),intent(in),depend(ntrees) :: in_species
+            real(kind=8) dimension(ntrees),intent(in),depend(ntrees) :: in_ht
+            real(kind=8) dimension(ntrees),intent(in),depend(ntrees) :: in_cratio
+            real(kind=8) dimension(ntrees),intent(in),depend(ntrees) :: in_plot
+            real(kind=8) dimension(ntrees),intent(in),depend(ntrees) :: in_tpa
+            integer, optional,intent(in),check(len(in_dbh)>=ntrees),depend(in_dbh) :: ntrees=len(in_dbh)
+            integer intent(out) :: rtncode
+        end subroutine fvsaddtrees
+        subroutine fvsspeciescode(fvs_code,fia_code,plant_code,indx,nchfvs,nchfia,nchplant,rtncode) ! in :@pyext_name@:@source_root@/base/src/apisubs.f
+            use plot_mod
+            use prgprm_mod
+            character*4 intent(out) :: fvs_code
+            character*4 intent(out) :: fia_code
+            character*6 intent(out) :: plant_code
+            integer intent(in) :: indx
+            integer intent(hide) :: nchfvs
+            integer intent(hide) :: nchfia
+            integer intent(hide) :: nchplant
+            integer intent(hide) :: rtncode
+        end subroutine fvsspeciescode
+        subroutine fvscuttrees(ptocut,ntrees,rtncode) ! in :@pyext_name@:@source_root@/base/src/apisubs.f
+            use contrl_mod
+            use arrays_mod
+            use prgprm_mod
+            double precision dimension(ntrees) :: ptocut
+            integer, optional,intent(hide),depend(ptocut) :: ntrees=len(ptocut)
+            integer intent(out) :: rtncode
+        end subroutine fvscuttrees
+        subroutine fvsstandid(sid,scn,mid,ncsid,nccn,ncmid) ! in :@pyext_name@:@source_root@/base/src/apisubs.f
+            use plot_mod
+            use prgprm_mod
+            character*26 intent(out) :: sid
+            character*40 intent(out) :: scn
+            character*4 intent(out) :: mid
+            integer intent(out) :: ncsid
+            integer intent(out) :: nccn
+            integer intent(out) :: ncmid
+        end subroutine fvsstandid
+        subroutine fvsclosefile(filename,nch) ! in :@pyext_name@:@source_root@/base/src/apisubs.f
+            character*nch intent(in) :: filename
+            integer intent(in) :: nch
+        end subroutine fvsclosefile
+        subroutine fvsaddactivity(idt,iactk,inprms,nprms,rtncode) ! in :@pyext_name@:@source_root@/base/src/apisubs.f
+            use contrl_mod
+            use prgprm_mod
+            integer intent(in) :: idt
+            integer intent(in) :: iactk
+            real(kind=8) dimension(nprms),intent(in) :: inprms
+            integer, optional,check(len(inprms)>=nprms),depend(inprms) :: nprms=len(inprms)
+            integer intent(out) :: rtncode
+        end subroutine fvsaddactivity
+        subroutine fvssvsdimsizes(nsvsobjs,ndeadobjs,ncwdobjs,mxsvsobjs,mxdeadobjs,mxcwdobjs) ! in :@pyext_name@:@source_root@/base/src/apisubs.f
+            use svdata_mod
+            use prgprm_mod
+            integer intent(out) :: nsvsobjs
+            integer intent(out) :: ndeadobjs
+            integer intent(out) :: ncwdobjs
+            integer intent(out) :: mxsvsobjs
+            integer intent(out) :: mxdeadobjs
+            integer intent(out) :: mxcwdobjs
+        end subroutine fvssvsdimsizes
+        subroutine fvssvsobjdata(name,nch,action,nobjs,attr,rtncode) ! in :@pyext_name@:@source_root@/base/src/apisubs.f
+            use contrl_mod
+            use prgprm_mod
+            use svdata_mod
+            use plot_mod
+            character*10 intent(in) :: name
+            integer intent(in) :: nch
+            character*4 intent(in) :: action
+            integer, optional,intent(in),check(len(attr)>=nobjs),depend(attr) :: nobjs=len(attr)
+            real(kind=8) dimension(nobjs),intent(inout) :: attr
+            integer intent(out) :: rtncode
+        end subroutine fvssvsobjdata
+        subroutine fvsffeattrs(name,nch,action,nobjs,attr,rtncode) ! in :@pyext_name@:@source_root@/base/src/apisubs.f
+            use fmcom_mod
+            use fmparm_mod
+            use prgprm_mod
+            character*10 intent(in) :: name
+            integer intent(in) :: nch
+            character*4 intent(in) :: action
+            integer, optional,intent(in),check(len(attr)>=nobjs),depend(attr) :: nobjs=len(attr)
+            real(kind=8) dimension(nobjs),intent(inout) :: attr
+            integer intent(out) :: rtncode
+        end subroutine fvsffeattrs
+        subroutine fvsunitconversion(name,nch,value,rtncode) ! in :@pyext_name@:@source_root@/base/src/apisubs.f
+            use metric_mod
+            character*15 intent(in) :: name
+            integer intent(in) :: nch
+            real(kind=8) intent(inout) :: value
+            integer intent(out) :: rtncode
+        end subroutine fvsunitconversion
+        subroutine fvssetcmdline(thecmdline,lencl,irtncd) ! in :@pyext_name@:@source_root@/base/src/cmdline.f
+            character*(*) intent(in) :: thecmdline
+            integer, optional,intent(hide),depend(thecmdline) :: lencl=slen(thecmdline)
+            integer intent(out) :: irtncd
+        end subroutine fvssetcmdline
+        block data setglblcntl ! in :@pyext_name@:@source_root@/base/src/cmdline.f
+        end block data setglblcntl
+        subroutine fvsgetstoppointcodes(spptcd,spptyr) ! in :@pyext_name@:@source_root@/base/src/cmdline.f
+            integer intent(out) :: spptcd
+            integer intent(out) :: spptyr
+        end subroutine fvsgetstoppointcodes
+        subroutine fvssetstoppointcodes(spptcd,spptyr) ! in :@pyext_name@:@source_root@/base/src/cmdline.f
+            integer intent(in) :: spptcd
+            integer intent(in) :: spptyr
+        end subroutine fvssetstoppointcodes
+        subroutine fvsgetrestartcode(restrtcd) ! in :@pyext_name@:@source_root@/base/src/cmdline.f
+            integer intent(out) :: restrtcd
+            entry clearrestartcode()
+        end subroutine fvsgetrestartcode
+        subroutine fvsrestart(restrtcd) ! in :@pyext_name@:@source_root@/base/src/cmdline.f
+            integer intent(out) :: restrtcd
+        end subroutine fvsrestart
+        subroutine fvsrestartlaststand(restrtcd) ! in :@pyext_name@:@source_root@/base/src/cmdline.f
+            integer intent(out) :: restrtcd
+        end subroutine fvsrestartlaststand
+        subroutine fvsgetkeywordfilename(fn,mxch,nch) ! in :@pyext_name@:@source_root@/base/src/cmdline.f
+            character*mxch intent(out) :: fn
+            integer intent(hide) :: mxch
+            integer intent(hide) :: nch
+        end subroutine fvsgetkeywordfilename
+        subroutine fvssetrtncode(rtncode) ! in :@pyext_name@:@source_root@/base/src/cmdline.f
+            integer intent(out) :: rtncode
+        end subroutine fvssetrtncode
+        subroutine fvsgetrtncode(rtncode) ! in :@pyext_name@:@source_root@/base/src/cmdline.f
+            integer intent(out) :: rtncode
+        end subroutine fvsgetrtncode
+        subroutine fvsstoppoint(locode,istopdone) ! in :@pyext_name@:@source_root@/base/src/cmdline.f
+            use contrl_mod
+            use prgprm_mod
+            integer intent(in) :: locode
+            integer intent(out) :: istopdone
+            entry getamstopping(istopdone)
+        end subroutine fvsstoppoint
+        subroutine filopn ! in :@pyext_name@:@source_root@/base/src/filopn.f
+            use contrl_mod
+            use fvsstdcm_mod
+            use svdata_mod
+            use econ_mod
+            use prgprm_mod
+            entry filclose()
+        end subroutine filopn
+        subroutine openifclosed(ifileref,sufx,lok) ! in :@pyext_name@:@source_root@/base/src/filopn.f
+            integer :: ifileref
+            character*(*) :: sufx
+            logical :: lok
+        end subroutine openifclosed
+        subroutine fvs(irtncd) ! in :@pyext_name@:@source_root@/base/src/fvs.f
+            use pden_mod
+            use arrays_mod
+            use workcm_mod
+            use contrl_mod
+            use econ_mod
+            use outcom_mod
+            use plot_mod
+            use prgprm_mod
+            integer intent(out) :: irtncd
+        end subroutine fvs
+        subroutine rann(sel) ! in :@pyext_name@:@source_root@/base/src/rann.f
+            use rancom_mod
+            real intent(out) :: sel
+            double precision intent(in,out) :: passs0
+            logical intent(in) :: lset
+            real intent(inout) :: seed
+            entry rannget(passs0)
+            entry ransed(lset,seed)
+            entry rannput(passs0)
+        end subroutine rann
+        subroutine htcalc(sindx,ispc,ag,hguess,jostnd,debug) ! in :@pyext_name@:@source_root@/pn/src/htcalc.f
+            use varcom_mod
+            use prgprm_mod
+            real intent(in) :: sindx
+            integer intent(in) :: ispc
+            real intent(in) :: ag
+            real intent(out) :: hguess
+            integer intent(hide) :: jostnd
+            logical intent(hide) :: debug
+        end subroutine htcalc
+        subroutine htdbh(ifor,ispc,d,h,mode) ! in :@pyext_name@:@source_root@/pn/src/htdbh.f
+            integer intent(in) :: ifor
+            integer intent(in) :: ispc
+            real intent(inout) :: d
+            real intent(inout) :: h
+            integer intent(in) :: mode
+        end subroutine htdbh
+    end interface 
+end python module @pyext_name@
+
+! This file was auto-generated with f2py (version:2).
+! See http://cens.ioc.ee/projects/f2py2e/
