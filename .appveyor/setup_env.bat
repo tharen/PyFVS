@@ -1,7 +1,8 @@
 :: Prepare the environment
 %PYTHON%\\Scripts\\conda create -q -y --name=%ENV_NAME% --file %APPVEYOR_BUILD_FOLDER%\\requirements.txt
+%PYTHON%\\Scripts\\conda info --envs
 call %PYTHON%\\Scripts\\activate %ENV_NAME%
-set PYTHON_HOME=%PYTHON%\\envs\\py27-x64
+set PYTHON_HOME=%PYTHON%\\envs\\%ENV_NAME%
 
 :: Install nose-parameterized with pip until is becomes available on Anaconda
 ::%PYTHON_HOME%\\Scripts\\pip install git+https://github.com/wolever/nose-parameterized.git
