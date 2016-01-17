@@ -19,11 +19,23 @@ cmake -G "MinGW Makefiles" .. ^
     -DFVS_VARIANTS="pnc;wcc" ^
     -DCMAKE_SYSTEM_NAME=Windows ^
     -DWITH_PYEXT=Yes ^
-    -DCMAKE_INSTALL_PREFIX=Open-FVS
+    -DCMAKE_INSTALL_PREFIX=Open-FVS || goto :error_configure
 
 :: Compile and install locally
-mingw32-make install 2> build_err.log
-
-popd
+mingw32-make install 2> build_err.log || goto :error_build
 
 set PATH=%OLDPATH%
+
+goto :exit
+
+:error_build
+echo Build failed.
+goto :exit
+
+:error_configure
+echo CMake configure failed.
+goto :exit
+
+:exit
+popd
+exit /b %errorlevel%

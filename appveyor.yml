@@ -15,9 +15,9 @@ environment:
 
   matrix:
     - PYTHON: "C:\\Miniconda35-x64"
-      PYTHON_VERSION: "3.5"
+      PYTHON_VERSION: "3.4" # NOTE: Not a type, use support for Python 3.4
       PYTHON_ARCH: "64"
-      ENV_NAME: "py35_x64_conda"
+      ENV_NAME: "py34_x64_conda"
 
       # - PYTHON: "C:\\Python35-x64"
       # PYTHON_VERSION: "3.5.x"
