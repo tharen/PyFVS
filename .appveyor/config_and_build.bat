@@ -4,6 +4,10 @@ set PATH=%PATH%;C:\Windows\System32;C:\Windows
 echo %PATH%
 echo %PYTHONPATH%
 
+:: Python and CMake include with MSYS MinGW conflict with the target executables
+del C:\msys64\Mingw64\bin\python.exe
+del C:\msys64\Mingw64\bin\cmake.exe
+
 :: Activate the target Python environment
 call %PYTHON%\Scripts\activate %ENV_NAME%
 ::set PATH=%PYTHON_HOME%;%PYTHON_HOME%\Scripts;%PATH%

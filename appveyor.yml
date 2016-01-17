@@ -47,7 +47,7 @@ after_build:
     - move /y %ARCHIVE_NAME% %APPVEYOR_BUILD_FOLDER%
 
 on_failure:
-#    - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+   - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
     # Post error logs to the build log
     - appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\\bin\\build\\build_err.log
     - appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\\bin\\build\\f2py_*.log
