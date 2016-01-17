@@ -1,5 +1,5 @@
 :: Prepare the environment
-call %PYTHON%\Scripts\conda create -q -y python=3.4 --name=%ENV_NAME% --file %APPVEYOR_BUILD_FOLDER%\requirements.txt
+call %PYTHON%\Scripts\conda create -q -y --name=%ENV_NAME% --file %APPVEYOR_BUILD_FOLDER%\requirements.txt
 call %PYTHON%\Scripts\conda info --envs
 call %PYTHON%\Scripts\activate %ENV_NAME%
 set PYTHON_HOME=%PYTHON%\envs\%ENV_NAME%
