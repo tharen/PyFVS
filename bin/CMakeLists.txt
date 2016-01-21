@@ -721,7 +721,7 @@ if (WITH_PYEXT)
 
     install(
         FILES ${pyext_fn}
-        DESTINATION python)
+        DESTINATION python/pyfvs)
     
     # Add intermediate files to the clean list
     # NOTE: pyext_source.txt should not be cleaned
@@ -733,7 +733,7 @@ if (WITH_PYEXT)
 
     # Generate a PyDoc HTML file for the module
     # TODO: Incorporate pydoc generation into setup.py
-    set(PYDOC_EXE pydoc)
+    set(PYDOC_EXE python -m pydoc)
     add_custom_command(
             TARGET ${pyext_name}_ext
             #TARGET ${pyext_fn}
@@ -742,18 +742,18 @@ if (WITH_PYEXT)
             )
 
     install(FILES ${pyext_name}.html
-            DESTINATION python/docs
+            DESTINATION python/pyfvs/docs
             )
     set_directory_properties(
             PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES
             ${pyext_name}.html
             )
 
-    # Copy the Python source package
+    # Copy the Python source package with docs and support files.
     install(
             DIRECTORY ${source_root}/python/
             DESTINATION python
-            FILES_MATCHING REGEX ".*\\.(py|cfg)$"
+            FILES_MATCHING REGEX ".*\\.(py|cfg|rst|md|txt|key|tre)$"
             PATTERN "__pycache__" EXCLUDE
             )
     

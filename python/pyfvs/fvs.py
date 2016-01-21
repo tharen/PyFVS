@@ -12,6 +12,9 @@ import sys
 import logging
 import logging.config
 import random
+import importlib
+
+sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
 
 import pyfvs
 
@@ -46,100 +49,38 @@ class FVS(object):
     TODO: Add methods for execution with the start/stop routines.
     TODO: Add methods to collect tree attribute arrays.
     """
-    def __init__(self, variant, random=False, config=pyfvs.get_config()):
+    def __init__(self, variant, stochastic=False, config=pyfvs.get_config()):
         """
         Initialize a FVS variant library.
         
         @param variant:
-        @param random: If True the FVS random number generater will be
+        @param stochastic: If True the FVS random number generater will be
                         reseeded on each call to run_fvs. If False the 
                         generator will be set to a fixed value of 1.0
         @param config:
         """
         self.variant = variant
-        self.random = random
+        self.stochastic = stochastic
         self.config = config
 
-        if not self.random:
+        if not self.stochastic:
             self._random_seed = 12345.0
 
         self.fvslib_path = None
         self._load_fvslib()
-
-    def _load_lib_ini(self):
-        fvslib_path = self.config['fvs_lib']['fvslib_path']
-
-    def _init_fvslib_path(self):
-        """
-        Initialize the folder to load variant libraries from.
-        """
-        fvslib_path = self.config['fvs_lib']['fvslib_path']
-
-        if os.path.exists(fvslib_path):
-            self.fvslib_path = os.path.abspath(fvslib_path)
-            return
-
-        # Adjust fvs_bin path relative to the configuration file
-        fvslib_path = os.path.join(
-                os.path.dirname(pyfvs.config_path), fvslib_path)
-        if os.path.exists(fvslib_path):
-            self.fvslib_path = os.path.abspath(fvslib_path)
-            return
-
-        # Try the environment variable
-        fvslib_path = os.environ('FVSLIB_PATH')
-        if os.path.exists(fvslib_path):
-            self.fvslib_path = os.path.abspath(fvslib_path)
-            return
-
-        if not self.fvslib_path:
-            raise IOError('Could not find a suitable FVSLIB_PATH')
-
-    def _discover_libs(self):
-        """
-        Search the fvslib_path for libraries available for import.
-        """
-
-        self._init_fvslib_path()
-
-        self.variant_libs = {}
-        files = os.listdir(self.fvslib_path)
-        ext = pyfvs.platform_ext()
-        for f in files:
-            p = os.path.join(self.fvslib_path, f)
-            if (os.path.isfile(p)
-                    and f.startswith('pyfvs')
-                    and f.endswith(ext)):
-                n = f.split('.')[0]
-                d = {'lib_name':n, 'lib_path':p}
-                self.variant_libs[n[5:]] = d
-
-        if not self.variant_libs:
-            raise ValueError(
-                    'No variant libraries found in : {}'.format(self.fvslib_path))
 
     def _load_fvslib(self):
         """
         Load the requested FVS variant library.
         """
 
-#         self._discover_libs()
-#         lib = self.variant_libs[variant]
-#         print(lib)
-#
-#         if sys.version_info[:2] >= (3, 5):
-#             import importlib.util
-#             spec = importlib.util.spec_from_file_location(lib['lib_name'], lib['lib_path'])
-#             self.fvslib = importlib.util.module_from_spec(spec)
-#             spec.loader.exec_module(self.fvslib)
-#
-#         elif sys.version_inof[0] <= 2:
-#             import imp
-#             foo = imp.load_source(libname, self.fvslib_path)
-#             foo.MyClass()
+        variant_ext = 'pyfvs.pyfvs%sc' % self.variant.lower()[:2]
+        try:
+            self.fvslib = importlib.import_module(variant_ext)
+        except ImportError:
+            log.error('No library found for variant {}.'.format(self.variant))
+            raise
 
-        variant = 'pyfvs%s' % self.variant.lower()
-        self.fvslib = __import__(variant)
         log.debug('Loaded FVS variant {} library from {}'.format(
                 self.variant, self.fvslib.__file__))
 
@@ -188,7 +129,7 @@ class FVS(object):
         self.keywords = keywords
         self.fvslib.fvssetcmdline('--keywordfile={}'.format(keywords))
 
-    def run_fvs(self, keywords):
+    def xrun_fvs(self, keywords):
         """
         Execute an FVS run for the given keyword file and return the error code.
         
@@ -198,7 +139,7 @@ class FVS(object):
         """
         self._init_fvs(keywords)
 
-        if self.random:
+        if self.stochastic:
             self.set_random_seed()
         else:
             self.set_random_seed(self._random_seed)
@@ -216,6 +157,50 @@ class FVS(object):
             log.error('FVS encountered an error, {}'.format(r))
 
         return r
+
+    def run_fvs(self, keywords):
+        """
+        Execute an FVS run for the given keyword file and return the error code.
+        
+        Args
+        ----
+        @param keywords: Path of the keyword file initialize FVS with.
+        """
+
+        if not os.path.exists(keywords):
+            msg = 'The keyword file does not exist: {}'.format(keywords)
+            log.error(msg)
+            raise ValueError(msg)
+
+        self.fvs_step.fvs_init(keywords)
+
+        if self.stochastic:
+            self.set_random_seed()
+        else:
+            self.set_random_seed(self._random_seed)
+
+        nc = self.contrl_mod.ncyc
+        for n in range(nc):
+            self.fvs_step.fvs_grow()
+
+        r = self.fvs_step.fvs_end()
+
+        if r == 1:
+            msg = 'FVS returned error code {}.'.format(r)
+            log.error(msg)
+            raise IOError(msg)
+
+        if r != 0 and r <= 10:
+            log.warning('FVS return with error code {}.'.format(r))
+
+        if r > 10:
+            log.error('FVS encountered an error, {}'.format(r))
+
+        return r
+
+    @property
+    def num_cycles(self):
+        return self.contrl_mod.ncyc
 
     def get_summary(self, variable):
         """
@@ -265,30 +250,55 @@ class FVS(object):
         ncyc = self.contrl_mod.ncyc
         return(self.fvslib.outcom_mod.iosum[i, :ncyc + 1])
 
-def test():
-    # Config file for testing
-    pyfvs.config_path = os.path.join(os.path.split(__file__)[0], 'pyfvs.cfg')
+# def test():
+    # # Config file for testing
+    # pyfvs.config_path = os.path.join(os.path.split(__file__)[0], 'pyfvs.cfg')
 
-    import pylab
-    kwds = r'C:\workspace\Open-FVS\PyFVS\tests\pyfvs\fvspnc\pnt01.key'
+    # import pylab
+    # kwds = r'C:\workspace\Open-FVS\PyFVS\tests\pyfvs\fvspnc\pnt01.key'
 
-    # Demonstrate the stochastic variability in the FVS routines.
-    iters = 10
-    fvs = FVS('pnc', random=True)
+    # # Demonstrate the stochastic variability in the FVS routines.
+    # iters = 10
+    # fvs = FVS('pnc', stochastic=True)
 
-    # Get species codes
-    spp_attrs = fvs.fvsspeciescode(16)
-    print(spp_attrs)
+    # # Get species codes
+    # spp_attrs = fvs.fvsspeciescode(16)
+    # print(spp_attrs)
 
-    for i in range(iters):
-        fvs.run_fvs(kwds)
+    # for i in range(iters):
+        # fvs.run_fvs(kwds)
 
-        # Plot the BDFT volume
-        bdft = fvs.get_summary('merch bdft')
-        years = fvs.get_summary('year')
-        pylab.plot(years, bdft)
+        # # Plot the BDFT volume
+        # bdft = fvs.get_summary('merch bdft')
+        # years = fvs.get_summary('year')
+        # pylab.plot(years, bdft)
 
-    pylab.show()
+    # pylab.show()
+
+def main():
+    print sys.executable
+    import argparse
+
+    parser = argparse.ArgumentParser(description='Open-FVS Python runner.')
+    parser.add_argument('fvs_variant', type=str
+            , metavar='FVS Variant'
+            , help='FVS variant to run')
+    parser.add_argument('-k', '--keyword_file', type=str, dest='keyword_file'
+            , metavar='Keyword File', default=None, required=True
+            , help='FVS keyword file to execute.')
+    parser.add_argument('-s', '--stochastic', dest='stochastic'
+            , action='store_true', default=False
+            , help='Run FVS with stochastic components.')
+    args = parser.parse_args()
+#     print(args)
+    fvs = FVS(args.fvs_variant, stochastic=args.stochastic)
+    fvs.run_fvs(args.keyword_file)
+
+    print(fvs.outcom_mod.iosum[:6, :fvs.num_cycles + 1].T)
+#     print(fvs.get_summary('merch bdft'))
 
 if __name__ == '__main__':
-    test()
+    if len(sys.argv) > 1:
+        main()
+#     else:
+#         test()

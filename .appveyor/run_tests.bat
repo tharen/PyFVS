@@ -6,7 +6,7 @@ set PYTHONPATH=%APPVEYOR_BUILD_FOLDER%\bin\build\Open-FVS\python;%PYTHONPATH%
 
 call %PYTHON_HOME%\python.exe -c "import numpy;print('Numpy version:',numpy.version.version)"
 
-pushd %APPVEYOR_BUILD_FOLDER%\bin\build\Open-FVS\python\test
-call %PYTHON_HOME%\python.exe -m unittest test_variants
+pushd %APPVEYOR_BUILD_FOLDER%\bin\build\Open-FVS\python
+call nose2
 
 popd

@@ -7,3 +7,4 @@ set PYTHON_HOME=%PYTHON%\envs\%ENV_NAME%
 :: Install nose-parameterized with pip until is becomes available on Anaconda
 ::%PYTHON_HOME%\Scripts\pip install git+https://github.com/wolever/nose-parameterized.git
 call %PYTHON_HOME%\Scripts\pip install nose-parameterized
+call %PYTHON_HOME%\Scripts\pip install nose2
