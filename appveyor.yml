@@ -15,7 +15,7 @@ environment:
 
   matrix:
     # - PYTHON: "C:\\Miniconda35-x64"
-      # PYTHON_VERSION: "3.4" # NOTE: Not a type, use support for Python 3.4
+      # PYTHON_VERSION: "3.4" # NOTE: Not a typo, use support for Python 3.4
       # PYTHON_ARCH: "64"
       # ENV_NAME: "py34_x64_conda"
 
@@ -35,24 +35,31 @@ environment:
       # ENV_NAME: "py27_x64"
 
 install:
+    # Setup the python environment and install required packages
     - cmd: .appveyor\\setup_env.bat
 
 build_script:
+    # Configure the CMake project and execute the build
     - cmd: .appveyor\\config_and_build.bat
 
 after_build:
+    # TODO: Create a binary wheel package
+    # Create a zip file package of the compiled libraries and python package
     - "set ARCHIVE_NAME=open-fvs-%APPVEYOR_REPO_TAG_NAME%-Python%PYTHON_VERSION%_%PYTHON_ARCH%-windows-ci.zip"
     - pushd bin\\build
     - 7z a -bd %ARCHIVE_NAME% Open-FVS\*
     - move /y %ARCHIVE_NAME% %APPVEYOR_BUILD_FOLDER%
 
 on_failure:
+    # Report remote desktop connection parameters and wait
     - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
     # Post error logs to the build log
     - appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\\bin\\build\\build_err.log
     - appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\\bin\\build\\f2py_*.log
 
 test_script:
+    # Run tests against the final package
+    # TODO: Use pip install pyfvs....whl to test the binary wheel
     - "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\run_tests.bat"
 
 artifacts:

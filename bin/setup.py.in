@@ -56,5 +56,5 @@ if __name__ == "__main__":
           description       = "F2PY wrappers for the Open-FVS library ({})".format(fvs_variant.upper()),
           author            = "Tod Haren",
           author_email      = "tod.haren<at>gm....com",
-          ext_modules = [ext1,],
+          ext_modules=[ext1,]
           )

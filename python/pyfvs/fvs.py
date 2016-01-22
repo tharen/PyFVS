@@ -14,7 +14,7 @@ import logging.config
 import random
 import importlib
 
-sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
+#sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
 
 import pyfvs
 
@@ -53,7 +53,7 @@ class FVS(object):
         """
         Initialize a FVS variant library.
         
-        @param variant:
+        @param variant: FVS variant abbreviation, PN, WC, etc.
         @param stochastic: If True the FVS random number generater will be
                         reseeded on each call to run_fvs. If False the 
                         generator will be set to a fixed value of 1.0
@@ -77,10 +77,14 @@ class FVS(object):
         variant_ext = 'pyfvs.pyfvs%sc' % self.variant.lower()[:2]
         try:
             self.fvslib = importlib.import_module(variant_ext)
+        
         except ImportError:
             log.error('No library found for variant {}.'.format(self.variant))
             raise
-
+            
+        except:
+            raise
+            
         log.debug('Loaded FVS variant {} library from {}'.format(
                 self.variant, self.fvslib.__file__))
 
@@ -90,14 +94,16 @@ class FVS(object):
 
     def __getattr__(self, attr):
         """
-        Return an object from self.fvslib
+        Return an attribute from self.fvslib if it is n ot defined locally.
         """
+        
         try:
-            return self.fvslib.__dict__[attr]
-        except KeyError:
-            msg = 'No object {} in FVS{}.'.format(attr, self.variant)
+            return getattr(self.fvslib, attr)
+        
+        except AttributeError:
+            msg = 'No FVS object {}.'.format(attr,)
             log.exception(msg)
-            raise KeyError(msg)
+            raise AttributeError(msg)
 
     def set_random_seed(self, seed=None):
         """
@@ -108,6 +114,7 @@ class FVS(object):
         ----
         @param seed: None, or a number to seed the random number generator with. 
         """
+        
         if seed is None:
             seed = random.random()
 
@@ -121,6 +128,7 @@ class FVS(object):
         ----
         @param keywords: Path of the keyword file initialize FVS with.
         """
+        
         if not os.path.exists(keywords):
             msg = 'The specified keyword file does not exist: {}'.format(keywords)
             log.error(msg)
@@ -141,6 +149,7 @@ class FVS(object):
 
         if self.stochastic:
             self.set_random_seed()
+            
         else:
             self.set_random_seed(self._random_seed)
 
@@ -179,10 +188,12 @@ class FVS(object):
         else:
             self.set_random_seed(self._random_seed)
 
-        nc = self.contrl_mod.ncyc
+        # Loop through all growth cycles
+        nc = self.num_cycles
         for n in range(nc):
             self.fvs_step.fvs_grow()
 
+        # Finalize the projection
         r = self.fvs_step.fvs_end()
 
         if r == 1:
@@ -215,6 +226,7 @@ class FVS(object):
                         period length, accretion, mortality, sample weight, 
                         forest type, size class, stocking class 
         """
+        
         variables = {'year': 0
             , 'age': 1
             , 'tpa': 2
@@ -239,16 +251,17 @@ class FVS(object):
 
         try:
             i = variables[variable.lower()]
+            
         except KeyError:
             msg = '{} is not an available summary variable({}).'.format(
                     variable, variables.keys())
             raise KeyError(msg)
+            
         except:
             raise
 
         # Return the summary values for the cycles in the run
-        ncyc = self.contrl_mod.ncyc
-        return(self.fvslib.outcom_mod.iosum[i, :ncyc + 1])
+        return(self.fvslib.outcom_mod.iosum[i, :self.num_cycles + 1])
 
 # def test():
     # # Config file for testing
@@ -275,30 +288,71 @@ class FVS(object):
 
     # pylab.show()
 
-def main():
-    print sys.executable
+def handle_command_line():
+    """
+    Return arguments collected from the command line.
+    """
     import argparse
 
-    parser = argparse.ArgumentParser(description='Open-FVS Python runner.')
+    parser = argparse.ArgumentParser(
+            description='Open-FVS Python runner.')
+    
     parser.add_argument('fvs_variant', type=str
             , metavar='FVS Variant'
             , help='FVS variant to run')
-    parser.add_argument('-k', '--keyword_file', type=str, dest='keyword_file'
-            , metavar='Keyword File', default=None, required=True
+    
+    parser.add_argument('keyword_file', type=str
+            , metavar='Keyword File'
             , help='FVS keyword file to execute.')
+            
     parser.add_argument('-s', '--stochastic', dest='stochastic'
             , action='store_true', default=False
             , help='Run FVS with stochastic components.')
+            
+    parser.add_argument('-d', '--debug', dest='debug'
+            , action='store_true', default=False
+            , help='Set logging level to debug.')
+            
     args = parser.parse_args()
-#     print(args)
-    fvs = FVS(args.fvs_variant, stochastic=args.stochastic)
+    
+    return args
+
+def main():
+    """
+    Execute a FVS projection from the command line.
+    
+    Basic Usage:
+        python fvs.py -h
+        python fvs.py <variant> <keyword file>
+        python -m pyfvs.fvs <variant> <keyword file>
+    """
+    
+    args = handle_command_line()
+    
+    if args.debug:
+        log.setLevel(logging.DEBUG)
+        
+    try:
+        fvs = FVS(args.fvs_variant, stochastic=args.stochastic)
+        
+    except ImportError:
+        log.error(
+            'Variant code \'{}\' is not '
+            'a supported variant.'.format(args.fvs_variant))
+        sys.exit(1)
+    
+    except:
+        sys.exit(1)
+        
     fvs.run_fvs(args.keyword_file)
 
     print(fvs.outcom_mod.iosum[:6, :fvs.num_cycles + 1].T)
 #     print(fvs.get_summary('merch bdft'))
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
+    if len(sys.argv)>1 and sys.argv[1]=='--test':
+        test()
+        
+    else:
         main()
-#     else:
-#         test()
+        
