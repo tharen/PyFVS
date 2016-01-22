@@ -1,5 +1,4 @@
-pip install --upgrade nose-parameterized
-pip install --upgrade nose2
+pip install --upgrade nose-parameterized nose2
 
 export PYTHONPATH=${TRAVIS_BUILD_DIR}/bin/build/Open-FVS/python:$PYTHONPATH
 
