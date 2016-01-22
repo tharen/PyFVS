@@ -1,14 +1,4 @@
 PyFVS - Python wrappers for Open-FVS.
-=====
-
-|Branch|Status|
-|---|---|
-|[master](https://github.com/tharen/PyFVS/tree/master)|[![Build Status](https://travis-ci.org/tharen/PyFVS.svg?branch=master)](https://travis-ci.org/tharen/PyFVS)|
-|[dev](https://github.com/tharen/PyFVS/tree/dev)|[![Build Status](https://travis-ci.org/tharen/PyFVS.svg?branch=dev)](https://travis-ci.org/tharen/PyFVS)|
-
-=====
-
-A Python package and extension for interacting with the Forest Vegetation Simulator.
 
 The Forest Vegetation Simulator (FVS) growth and yield model developed by the
 USDA Forest Service.  FVS includes a suite of regional variants, individually

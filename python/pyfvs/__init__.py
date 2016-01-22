@@ -11,11 +11,28 @@ import logging.config
 # The config file is used to initialize logging and FVS library paths.
 config_path = os.path.join(os.path.split(__file__)[0], 'pyfvs.cfg')
 
+# TODO: Get the version from a package file, git tag, etc.
+__version__ = '0.0.1a0'
+
+def version():
+    return __version__
+    
 def get_config():
     """
     Return the configuration dict.
     """
-    cfg = eval(open(config_path).read())
+    try:
+        cfg = eval(open(config_path).read())
+ 
+    except:
+        cfg = {
+            'logging':{
+                'version':1
+                ,'disable_existing_loggers':True
+                ,'incremental':False
+                }
+            }
+        
     return cfg
 
 def init_logging():
