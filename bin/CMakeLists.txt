@@ -84,7 +84,7 @@ set(source_list_dir ${CMAKE_CURRENT_LIST_DIR})
 #TODO: Clean up cache variable to enable cmake-gui usage
 # Define default values for build configuration options
 set(FVS_VARIANTS "all" CACHE STRING "FVS variants to configure")
-set(WITH_PYEXT OFF CACHE BOOL "Build the Python module module.")
+set(WITH_PYEXT ON CACHE BOOL "Build the Python module module.")
 set(NATIVE_ARCH ON CACHE BOOL "Target the local machine architecture.")
 set(32BIT_TARGET OFF CACHE BOOL "Set the target architecture to 32 bit.")
 set(UNIX_TARGET OFF CACHE BOOL "Set the target OS to be a UNIX flavor.")
@@ -755,6 +755,7 @@ if (WITH_PYEXT)
             DESTINATION python
             FILES_MATCHING REGEX ".*\\.(py|cfg|rst|md|txt|key|tre)$"
             PATTERN "__pycache__" EXCLUDE
+            PATTERN "*genrpt.txt" EXCLUDE
             )
     
     message(STATUS "*** End PyMod Configuration ***")
