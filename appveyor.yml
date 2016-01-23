@@ -60,11 +60,12 @@ on_failure:
 
 test_script:
     # Run tests against the final package
-    - cmd: .appveyor\\run_tests.bat
+    # - cmd: .appveyor\\run_tests.bat
+    - "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\run_tests.bat"
 
-after_test:
-    # Build the wheel package
-    - cmd: .appveyor\\build_wheel.bat
+# after_test:
+    # # Build the wheel package
+    # - cmd: .appveyor\\build_wheel.bat
     
 artifacts:
     - path: open-fvs-*.zip
