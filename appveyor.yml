@@ -61,7 +61,8 @@ on_failure:
 test_script:
     # Run tests against the final package
     # TODO: Use pip install pyfvs....whl to test the binary wheel
-    - "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\run_tests.bat"
+    - cd %APPVEYOR_BUILD_FOLDER%
+    - cmd: .appveyor\\run_tests.bat
 
 after_test:
     # Build the wheel package
