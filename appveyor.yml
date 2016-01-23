@@ -96,7 +96,9 @@ deploy:
     bucket: free5
     set_public: true
     folder: appveyor-builds
-    artifact: open-fvs-zip pyfvs-wheel
+    artifact:
+        open-fvs-zip
+        pyfvs-wheel
 
 # on_finish:
   # # Pause the build for remote desktop access
