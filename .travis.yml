@@ -36,7 +36,7 @@ install:
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
   # Create an environment and install dependencies
-  - conda create -q -n pyfvs python=$TRAVIS_PYTHON_VERSION --file ./travis-ci/requirements_conda.txt
+  - conda create -q -n pyfvs python=$TRAVIS_PYTHON_VERSION --file .travis-ci/requirements_conda.txt
   - source activate pyfvs
   - pip install -r .travis-ci/requirements_pip.txt
   # Useful for debugging any issues with conda
