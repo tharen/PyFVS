@@ -87,3 +87,4 @@ deploy:
     acl: public_read
     on:
       repo: tharen/PyFVS
+      all_branches: true

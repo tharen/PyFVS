@@ -60,11 +60,11 @@ on_failure:
 
 test_script:
     # Run tests against the final package
-    - cmd: "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\run_tests.bat"
+    - cmd: .appveyor\\run_tests.bat
 
 after_test:
     # Build the wheel package
-    - cmd: "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\build_wheel.bat"
+    - cmd: .appveyor\\build_wheel.bat
     
 artifacts:
     - path: open-fvs-*.zip
@@ -80,7 +80,7 @@ deploy:
     description: 'Appveyor CI build.'
     auth_token:
       secure: kJTJhEXI8ycz28qE4v1LkJ54NZzrz0mVrSptvfliH7TFzXFPQG2Ojam2VWTJJb6s
-    artifact: open-fvs-zip  # Using artifact name works consistently
+    artifact: open-fvs-zip pyfvs-wheel  # Using artifact name works consistently
     draft: false
     prerelease: true
     on:
