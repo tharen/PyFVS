@@ -1,4 +1,5 @@
 include pyfvs/*.pyd
+include pyfvs/*.so
 include pyfvs/*.cfg
 include pyfvs/README.*
 include pyfvs/test/*.py
