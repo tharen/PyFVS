@@ -49,6 +49,7 @@ after_build:
     - pushd bin\\build
     - 7z a -bd %ARCHIVE_NAME% Open-FVS\*
     - move /y %ARCHIVE_NAME% %APPVEYOR_BUILD_FOLDER%
+    - popd
 
 on_failure:
     # Report remote desktop connection parameters and wait
@@ -62,10 +63,17 @@ test_script:
     # TODO: Use pip install pyfvs....whl to test the binary wheel
     - "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\run_tests.bat"
 
+after_test:
+    # Build the wheel package
+    - cmd: .appveyor\\build_wheel.bat
+
 artifacts:
     - path: open-fvs-*.zip
       name: open-fvs-zip
       type: zip
+    - path: *.whl
+      name: pyfvs-wheel
+      type: whl
 
 deploy:
   - provider: GitHub
@@ -88,7 +96,7 @@ deploy:
     bucket: free5
     set_public: true
     folder: appveyor-builds
-    artifact: open-fvs-zip
+    artifact: open-fvs-zip pyfvs-wheel
 
 # on_finish:
   # # Pause the build for remote desktop access

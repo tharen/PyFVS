@@ -87,7 +87,8 @@ def main():
         
     if args.run_tests:
         import subprocess
-        subprocess.call('nose2')
+        os.chdir(os.path.join(os.path.dirname(__file__), 'test'))
+        subprocess.call('python -m nose2')
         sys.exit()
     
     if args.help_variants:

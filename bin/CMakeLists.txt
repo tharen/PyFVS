@@ -718,7 +718,10 @@ if (WITH_PYEXT)
             COMMENT "Compile python extension."
             )
     add_custom_target(${pyext_name}_ext ALL DEPENDS ${pyext_fn})
-
+    
+    # NOTE: Installation is primarily for packaging purposes
+    #       All scripts, modules, tests, etc. should be included in the
+    #       install target.  The final packaging uses setuptools.
     install(
         FILES ${pyext_fn}
         DESTINATION python/pyfvs)
@@ -753,10 +756,14 @@ if (WITH_PYEXT)
     install(
             DIRECTORY ${source_root}/python/
             DESTINATION python
-            FILES_MATCHING REGEX ".*\\.(py|cfg|rst|md|txt|key|tre)$"
+            FILES_MATCHING REGEX ".*\\.(py|cfg|rst|md|key|tre)$"
             PATTERN "__pycache__" EXCLUDE
             PATTERN "*genrpt.txt" EXCLUDE
             )
+    install(FILES
+                ${source_root}/python/MANIFEST.in
+                ${source_root}/python/README.txt
+            DESTINATION python)
     
     message(STATUS "*** End PyMod Configuration ***")
 

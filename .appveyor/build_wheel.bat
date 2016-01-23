@@ -9,6 +9,11 @@ call %PYTHON_HOME%\python.exe -c "import numpy;print('Numpy version:',numpy.vers
 
 :: Move into the package parent folder
 pushd %APPVEYOR_BUILD_FOLDER%\bin\build\Open-FVS\python
-:: Execute all test scripts
-call python -m nose2
+
+call python setup.py bdist_wheel
+call pip install --no-index --find-links dist pyfvs
+call fvs --run-tests
+
+move /y dist\*.whl %APPVEYOR_BUILD_FOLDER%
+
 popd
