@@ -49,7 +49,7 @@ after_build:
     - pushd bin\\build
     - 7z a -bd %ARCHIVE_NAME% Open-FVS\*
     - move /y %ARCHIVE_NAME% %APPVEYOR_BUILD_FOLDER%
-    - popd
+    # - popd
 
 on_failure:
     # # Report remote desktop connection parameters and wait
