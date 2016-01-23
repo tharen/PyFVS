@@ -71,7 +71,7 @@ artifacts:
     - path: open-fvs-*.zip
       name: open-fvs-zip
       type: zip
-    - path: *.whl
+    - path: pyfvs*.whl
       name: pyfvs-wheel
       type: whl
 
