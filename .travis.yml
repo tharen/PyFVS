@@ -59,6 +59,7 @@ after_success:
   - ls ${BUILD_ROOT}/Open-FVS
   - cd ${BUILD_ROOT} && 7z a -bd ${ARCHIVE_NAME} Open-FVS/*
   - ls ${BUILD_ROOT}
+  - source ${TRAVIS_BUILD_DIR}/.travis-ci/build_wheel.sh
 
 deploy:
   - provider: releases
@@ -80,6 +81,7 @@ deploy:
     region: us-west-2
     bucket: free5
     local-dir: ${BUILD_ROOT}/Open-FVS
+    file: ${BUILD_ROOT}/pyfvs*.whl
     upload-dir: travis-builds
     acl: public_read
     on:
