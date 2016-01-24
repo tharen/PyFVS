@@ -14,17 +14,17 @@ call python -c "import sys;print(sys.version)"
 
 
 :: Build and test the binary wheel
-%CMD_IN_ENV% python setup.py build_ext --inplace || goto :err_hldr
-%CMD_IN_ENV% python setup.py bdist_wheel || goto :err_hldr
+%CMD_IN_ENV% python setup.py build_ext --inplace || goto :errhdlr
+%CMD_IN_ENV% python setup.py bdist_wheel || goto :errhdlr
 cd dist
-call pip install --no-index --find-links . pyfvs || goto :err_hdlr
-call fvs --run-tests || goto :err_hdlr
+call pip install --no-index --find-links . pyfvs || goto :errhdlr
+call fvs --run-tests || goto :errhdlr
 
 move /y *.whl %APPVEYOR_BUILD_FOLDER%\artifacts
 
 goto :exit
 
-:err_hdlr
+:errhdlr
 echo Error building wheel package
 echo %cd%
 dir
