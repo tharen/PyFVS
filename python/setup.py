@@ -1,14 +1,25 @@
 import os
 import shutil
 
-from setuptools import setup, Distribution
+from setuptools import setup, Extension
+from Cython.Build import cythonize
+import numpy
+
+# NOTE: Python 2.7 C compiler for Windows
+#       https://www.microsoft.com/en-us/download/details.aspx?id=44266
+#       Python 3.4 requires VS 2010
+#       Python 3.5 requires VS 2015
 
 # TODO: Get the version from the git tag and or revision.
 version = '0.0.1a0'
 
 if os.name=='nt':
     so_ext = 'pyd'
+    extra_link_args = []
+    extra_compile_args = []
 else:
+    extra_link_args = []
+    extra_compile_args = []
     so_ext = 'so'
 
 description = open('./README.txt').readline().strip()
@@ -16,11 +27,12 @@ long_desc = open('./README.txt').read().strip()
 
 shutil.copyfile('./README.txt', 'pyfvs/README.txt')
 
-# Force setuptools to make a platform dependent distribution
-# http://lucumr.pocoo.org/2014/1/27/python-on-wheels/
-class BinaryDistribution(Distribution):
-    def is_pure(self):
-        return False
+# Collect all Cython source files as a list of extensions
+extensions = [
+        Extension("pyfvs.*", ["pyfvs/*.pyx"]
+            , extra_link_args=extra_link_args
+            , extra_compile_args=extra_compile_args
+            )]
 
 setup(
     name='pyfvs'
@@ -30,9 +42,11 @@ setup(
     , url='https://github.com/tharen/PyFVS'
     , author="Tod Haren"
     , author_email="tod.haren@gmail.com"
+    , setup_requires=['cython','numpy>=1.9',]
     , tests_require=['nose2','nose-parameterized']
     , install_requires=['numpy>=1.9',]
-    , distclass=BinaryDistribution
+    , ext_modules = cythonize(extensions)
+    , include_dirs=[numpy.get_include()]
     , packages=['pyfvs',]
     , include_package_data=True # package the files listed in MANIFEST.in
     , entry_points={

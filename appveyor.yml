@@ -44,7 +44,7 @@ install:
     - "conda create -q -n %ENV_NAME% python=%PYTHON_VERSION% numpy"    
     - conda info -a
     - activate %ENV_NAME%
-    - pip install nose2 nose-parameterized
+    - pip install nose2 nose-parameterized cython
     
 build_script:
     # Configure the CMake project and execute the build
@@ -71,11 +71,11 @@ after_test:
     - "dir %APPVEYOR_BUILD_FOLDER%\\artifacts"
     
 artifacts:
-    - path: "%APPVEYOR_BUILD_FOLDER%\\artifacts\\open-fvs-*.zip"
+    - path: open-fvs-*.zip
       name: open-fvs-zip
       type: zip
       
-    - path: "%APPVEYOR_BUILD_FOLDER%\\artifacts\\pyfvs*.whl"
+    - path: pyfvs*.whl
       name: pyfvs-wheel
       type: whl
 
