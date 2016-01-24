@@ -25,6 +25,11 @@ environment:
       PYTHON_ARCH: "64"
       ENV_NAME: "py27_x64_conda"
 
+    - PYTHON: "C:\\Miniconda"
+      PYTHON_VERSION: "2.7"
+      PYTHON_ARCH: "32"
+      ENV_NAME: "py27_x86_conda"
+
     # - PYTHON: "C:\\Python27-x64"
       # PYTHON_VERSION: "2.7"
       # PYTHON_ARCH: "64"

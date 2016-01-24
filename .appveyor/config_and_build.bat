@@ -1,5 +1,12 @@
 set OLDPATH=%PATH%
-set PATH=%PYTHON%;C:\msys64\mingw64\bin;C:\Program Files (x86)\cmake\bin
+
+if %PYTHON_ARCH% eq "64" (
+    set MINGW_BIN=C:\msys64\mingw64\bin
+) else (
+    set MINGW_BIN=C:\msys64\mingw32\bin
+)
+
+set PATH=%PYTHON%;%MINGW_BIN%;C:\Program Files (x86)\cmake\bin
 set PATH=%PATH%;C:\Windows\System32;C:\Windows
 echo %PATH%
 echo %PYTHONPATH%
@@ -7,8 +14,8 @@ call python -c "import sys;print(sys.executable)"
 call python -c "import sys;print(sys.version)"
 
 :: Python and CMake include with MSYS MinGW conflict with the target executables
-del C:\msys64\Mingw64\bin\python.exe
-del C:\msys64\Mingw64\bin\cmake.exe
+del %MINGW_BIN%\python.exe
+del %MINGW_BIN%\cmake.exe
 
 :: Activate the target Python environment
 call %PYTHON%\Scripts\activate %ENV_NAME%
