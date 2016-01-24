@@ -1,6 +1,6 @@
 set OLDPATH=%PATH%
 
-if %PYTHON_ARCH% eq "64" (
+if %PYTHON_ARCH% equ "64" (
     set MINGW_BIN=C:\msys64\mingw64\bin
 ) else (
     set MINGW_BIN=C:\msys64\mingw32\bin
