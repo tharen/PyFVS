@@ -756,7 +756,7 @@ if (WITH_PYEXT)
     install(
             DIRECTORY ${source_root}/python/
             DESTINATION python
-            FILES_MATCHING REGEX ".*\\.(py|cfg|rst|md|key|tre)$"
+            FILES_MATCHING REGEX ".*\\.(py|pyx|cfg|rst|md|key|tre)$"
             PATTERN "__pycache__" EXCLUDE
             PATTERN "*genrpt.txt" EXCLUDE
             )
