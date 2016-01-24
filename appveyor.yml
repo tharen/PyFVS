@@ -68,7 +68,7 @@ test_script:
 after_test:
     # Build the wheel package
     - "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\build_wheel.bat"
-    - "dir %APPVEYOR_BUILD_FOLDER%\\artifacts"
+    - "dir"
     
 artifacts:
     - path: open-fvs-*.zip
