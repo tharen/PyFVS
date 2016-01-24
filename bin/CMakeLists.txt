@@ -713,7 +713,7 @@ if (WITH_PYEXT)
     # Compile the Python extension library
     add_custom_command(
             OUTPUT ${pyext_fn}
-            COMMAND python ARGS setup.py build_ext --inplace ${cmd_args} > ../f2py_${variant}.log 2>&1
+            COMMAND python ARGS setup.py build_ext --inplace ${cmd_args} >> ../f2py.log 2>&1
             DEPENDS ${fvslib_static} ./pyext_source.txt
             COMMENT "Compile python extension."
             )

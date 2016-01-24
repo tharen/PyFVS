@@ -26,17 +26,24 @@ cmake -G "MinGW Makefiles" .. ^
 :: Compile and install locally
 mingw32-make install 2> build_err.log || goto :error_build
 
+:: Exit clean
 goto :exit
+
+:: Report errors from each phase
+:error_configure
+set err_code = 2
+echo CMake configure failed.
+goto :err_exit
 
 :error_build
+set err_code = 1
 echo Build failed.
-goto :exit
+goto :err_exit
 
-:error_configure
-echo CMake configure failed.
-goto :exit
+:err_exit
+exit /b %err_code%
 
 :exit
 popd
 set PATH=%OLDPATH%
-exit /b %errorlevel%
+exit /b 0
