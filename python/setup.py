@@ -30,7 +30,7 @@ setup(
     , url='https://github.com/tharen/PyFVS'
     , author="Tod Haren"
     , author_email="tod.haren@gmail.com"
-    , test_requires=['nose2','nose-parameterized']
+    , tests_require=['nose2','nose-parameterized']
     , install_requires=['numpy>=1.9',]
     , distclass=BinaryDistribution
     , packages=['pyfvs',]

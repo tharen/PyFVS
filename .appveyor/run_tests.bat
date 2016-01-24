@@ -3,7 +3,7 @@
 REM call %PYTHON%\Scripts\activate %ENV_NAME%
 
 :: Report the current numpy version
-call %PYTHON_HOME%\python.exe -c "import numpy;print('Numpy version:',numpy.version.version)"
+call python -c "import numpy;print('Numpy version:',numpy.version.version)"
 
 :: Move into the package parent folder
 pushd %APPVEYOR_BUILD_FOLDER%\bin\build\Open-FVS\python

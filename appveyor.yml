@@ -70,11 +70,11 @@ after_test:
     - "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\build_wheel.bat"
     
 artifacts:
-    - path: open-fvs-*.zip
+    - path: %APPVEYOR_BUILD_FOLDER%\\artifacts\\open-fvs-*.zip
       name: open-fvs-zip
       type: zip
       
-    - path: pyfvs*.whl
+    - path: %APPVEYOR_BUILD_FOLDER%\\artifacts\\pyfvs*.whl
       name: pyfvs-wheel
       type: whl
 
@@ -85,8 +85,8 @@ deploy:
     auth_token:
       secure: kJTJhEXI8ycz28qE4v1LkJ54NZzrz0mVrSptvfliH7TFzXFPQG2Ojam2VWTJJb6s
     artifact:  # Using artifact name works consistently
-        open-fvs-zip
-        pyfvs-wheel
+        - open-fvs-zip
+        - pyfvs-wheel
     draft: false
     prerelease: true
     on:
@@ -102,8 +102,8 @@ deploy:
     set_public: true
     folder: appveyor-builds
     artifact:
-        open-fvs-zip
-        pyfvs-wheel
+        - open-fvs-zip
+        - pyfvs-wheel
 
 # on_finish:
   # # Pause the build for remote desktop access
