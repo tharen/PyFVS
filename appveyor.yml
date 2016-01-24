@@ -2,10 +2,6 @@
 
 version: 0.0.1-{build}
 
-# init:
- # # Display remote desktop details
- # - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-
 environment:
   # global:
     # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
@@ -34,10 +30,22 @@ environment:
       # PYTHON_ARCH: "64"
       # ENV_NAME: "py27_x64"
 
+init:
+ # # Display remote desktop details
+ # - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+    - "echo %PYTHON_VERSION% %PYTHON%"
+    
 install:
     # Setup the python environment and install required packages
-    - cmd: .appveyor\\setup_env.bat
-
+    # - cmd: .appveyor\\setup_env.bat
+    - "set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+    - conda config --set always_yes yes --set changeps1 no
+    - conda update -q conda
+    - "conda create -q -n %ENV_NAME% python=%PYTHON_VERSION% numpy"    
+    - conda info -a
+    - activate %ENV_NAME%
+    - pip install nose2 nose-parameterized
+    
 build_script:
     # Configure the CMake project and execute the build
     - cmd: .appveyor\\config_and_build.bat

@@ -24,8 +24,6 @@ cmake -G "MinGW Makefiles" .. ^
 :: Compile and install locally
 mingw32-make install 2> build_err.log || goto :error_build
 
-set PATH=%OLDPATH%
-
 goto :exit
 
 :error_build
@@ -38,4 +36,5 @@ goto :exit
 
 :exit
 popd
+set PATH=%OLDPATH%
 exit /b %errorlevel%
