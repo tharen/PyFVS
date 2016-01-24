@@ -52,11 +52,7 @@ build_script:
 
 after_build:
     # Create a zip file package of the compiled libraries and python package
-    - "set ARCHIVE_NAME=open-fvs-%APPVEYOR_REPO_TAG_NAME%-Python%PYTHON_VERSION%_%PYTHON_ARCH%-windows-ci.zip"
-    - pushd bin\\build
-    - 7z a -bd .\artifacts\%ARCHIVE_NAME% Open-FVS\*
-    # - move /y %ARCHIVE_NAME% %APPVEYOR_BUILD_FOLDER%
-    - popd
+    - "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\bundle_archive.bat"
 
 on_failure:
     # # Report remote desktop connection parameters and wait
