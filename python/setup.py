@@ -44,7 +44,7 @@ setup(
     , author_email="tod.haren@gmail.com"
     , setup_requires=['cython','numpy>=1.9',]
     , tests_require=['nose2','nose-parameterized']
-    , install_requires=['numpy>=1.9',]
+    , install_requires=['numpy>=1.9',] #'numexpr']
     , ext_modules = cythonize(extensions)
     , include_dirs=[numpy.get_include()]
     , packages=['pyfvs',]

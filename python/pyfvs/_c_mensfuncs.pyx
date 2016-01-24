@@ -4,8 +4,8 @@ Functions to compute mensurational summaries and statistics from tree lists.
 
 import numpy as np
 
-import numexpr as ne
-import pandas as pd
+#import numexpr as ne
+#import pandas as pd
 
 cimport numpy as np
 cimport cython

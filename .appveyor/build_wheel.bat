@@ -12,8 +12,10 @@ echo %PYTHONPATH%
 call python -c "import sys;print(sys.executable)"
 call python -c "import sys;print(sys.version)"
 
+
 :: Build and test the binary wheel
-call python setup.py bdist_wheel || goto :err_hldr
+%CMD_IN_ENV% python setup.py build_ext --inplace || goto :err_hldr
+%CMD_IN_ENV% python setup.py bdist_wheel || goto :err_hldr
 cd dist
 call pip install --no-index --find-links . pyfvs || goto :err_hdlr
 call fvs --run-tests || goto :err_hdlr
