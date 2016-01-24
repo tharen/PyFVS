@@ -18,7 +18,7 @@ cd dist
 call pip install --no-index --find-links . pyfvs || goto :err_hdlr
 call fvs --run-tests || goto :err_hdlr
 
-move /y *.whl %APPVEYOR_BUILD_FOLDER%.\artifacts
+move /y *.whl %APPVEYOR_BUILD_FOLDER%\artifacts
 
 goto :exit
 
