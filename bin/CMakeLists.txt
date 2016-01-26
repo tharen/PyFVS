@@ -684,7 +684,11 @@ if (WITH_PYEXT)
 
     # FIXME: The wrong python is being called on appveyor, 
     set(PYTHON_EXE python)
-    
+    execute_process(
+            COMMAND ${PYTHON_EXE} -c "import sys;print(sys.version)"
+            COMMAND ${PYTHON_EXE} -c "import sys;print(sys.executable)"
+            )
+            
     # Determine the file name of the Python library
     execute_process(
             COMMAND ${PYTHON_EXE} ../platform_ext.py ${pyext_name}

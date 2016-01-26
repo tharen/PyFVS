@@ -21,6 +21,9 @@ del %MINGW_PATH%\cmake.exe
 call %PYTHON%\Scripts\activate %ENV_NAME%
 ::set PATH=%PYTHON_HOME%;%PYTHON_HOME%\Scripts;%PATH%
 
+call python -c "import sys;print(sys.version)"
+call python -c "import sys;print(sys.executable)"
+
 :: Configure CMake
 mkdir bin\build
 pushd bin\build
