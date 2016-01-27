@@ -1,13 +1,16 @@
 set OLDPATH=%PATH%
 
-REM if %PYTHON_ARCH% == "64" (
-    REM set MINGW_PATH=C:\msys64\mingw64\bin
-REM ) else (
-    REM set MINGW_PATH=C:\msys64\mingw32\bin
-REM )
+if %PYTHON_ARCH% == "64" (
+    set MINGW_PATH=C:\msys64\mingw64\bin
+    set win32=No
+) else (
+    set MINGW_PATH=C:\msys64\mingw32\bin
+    set win32=Yes
+)
 
 :: set PATH=%PYTHON%;C:\msys64\mingw64\bin;C:\Program Files (x86)\cmake\bin
-set PATH=%PYTHON%;C:\msys64\mingw32\bin;C:\Program Files (x86)\cmake\bin
+:: set PATH=%PYTHON%;C:\msys64\mingw32\bin;C:\Program Files (x86)\cmake\bin
+set PATH=%PYTHON%;%MINGW_PATH%;C:\Program Files (x86)\cmake\bin
 set PATH=%PATH%;C:\Windows\System32;C:\Windows
 echo %PATH%
 echo %PYTHONPATH%
@@ -31,6 +34,8 @@ pushd bin\build
 cmake -G "MinGW Makefiles" .. ^
     -DFVS_VARIANTS="pnc;wcc" ^
     -DCMAKE_SYSTEM_NAME=Windows ^
+    -DNATIVE_ARCH=No ^
+    -D32BIT_TARGET=%win32% ^
     -DWITH_PYEXT=Yes ^
     -DCMAKE_INSTALL_PREFIX=Open-FVS || goto :error_configure
 
