@@ -63,8 +63,8 @@ on_failure:
     # Post error logs to the build log
     - appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\\bin\\build\\build_err.log
     - appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\\bin\\build\\f2py.log
-    # # Report remote desktop connection parameters and wait
-    # - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+    # Report remote desktop connection parameters and wait
+    - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
     
 test_script:
     # Run tests against the final package
