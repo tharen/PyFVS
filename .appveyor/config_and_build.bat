@@ -1,12 +1,12 @@
 set OLDPATH=%PATH%
 
-if %PYTHON_ARCH% == "64" (
-    set MINGW_PATH=C:\msys64\mingw64\bin
-    set win32=No
-) else (
-    set MINGW_PATH=C:\msys64\mingw32\bin
-    set win32=Yes
-)
+REM if %PYTHON_ARCH% == "64" (
+    REM set MINGW_PATH=C:\msys64\mingw64\bin
+    REM set win32=No
+REM ) else (
+    REM set MINGW_PATH=C:\msys64\mingw32\bin
+    REM set win32=Yes
+REM )
 
 set PATH=%PYTHON%;C:\msys64\mingw64\bin;C:\Program Files (x86)\cmake\bin
 :: set PATH=%PYTHON%;C:\msys64\mingw32\bin;C:\Program Files (x86)\cmake\bin
