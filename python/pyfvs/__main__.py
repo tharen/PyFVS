@@ -27,7 +27,7 @@ def handle_command_line():
     import argparse
 
     parser = argparse.ArgumentParser(
-            description='Open-FVS launcher.')
+            description='PyFVS Command Line Interface.')
     
     parser.add_argument('fvs_variant', nargs='?', type=str
             , metavar='FVS Variant'
@@ -65,9 +65,15 @@ def list_variants():
         so = '.pyd'
     else:
         so = '.so'
-    vars = glob.glob(os.path.join(root,'*{}'.format(so,)))
-    vars = [os.path.splitext(os.path.basename(var))[0][5:7].upper()
-            for var in vars]
+    _vars = glob.glob(os.path.join(root,'*{}'.format(so,)))
+    vars = []
+    for var in _vars:
+        libname = os.path.splitext(os.path.basename(var))[0]
+        if not (libname.startswith('py') or libname.startswith('_py')):
+            continue
+            
+        vars.append(libname[5:7].upper())
+        
     return vars
     
 def main():
@@ -88,7 +94,7 @@ def main():
     if args.run_tests:
         import subprocess
         os.chdir(os.path.join(os.path.dirname(__file__), 'test'))
-        subprocess.call('python -m nose2 -v'.split())
+        subprocess.call('nose2')
         sys.exit()
     
     if args.help_variants:

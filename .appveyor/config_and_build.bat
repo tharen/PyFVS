@@ -6,7 +6,8 @@ REM ) else (
     REM set MINGW_PATH=C:\msys64\mingw32\bin
 REM )
 
-set PATH=%PYTHON%;C:\msys64\mingw64\bin;C:\Program Files (x86)\cmake\bin
+:: set PATH=%PYTHON%;C:\msys64\mingw64\bin;C:\Program Files (x86)\cmake\bin
+set PATH=%PYTHON%;C:\msys64\mingw32\bin;C:\Program Files (x86)\cmake\bin
 set PATH=%PATH%;C:\Windows\System32;C:\Windows
 echo %PATH%
 echo %PYTHONPATH%

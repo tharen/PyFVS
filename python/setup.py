@@ -51,7 +51,7 @@ setup(
     , include_package_data=True # package the files listed in MANIFEST.in
     , entry_points={
             'console_scripts': [
-            'fvs=pyfvs.__main__:main'
+            'pyfvs=pyfvs.__main__:main'
             ]
         }
     , test_suite='nose2.collector.collector'
