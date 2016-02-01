@@ -23,7 +23,7 @@ Contents:
 .. autoclass:: FVSTrees
    :members:
    
-   automodule:: pyfvspnc
+.. automodule:: pyfvspnc
    :members:
    
 Indices and tables

@@ -1,5 +1,5 @@
 
-docs/*
+*/_build/*
 
 .hg
 .hgignore
@@ -39,6 +39,7 @@ bin
 # Packages
 *.egg
 *.egg-info
+*.whl
 dist
 build
 eggs
@@ -65,3 +66,5 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+.cproject
+
