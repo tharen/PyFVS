@@ -3,29 +3,20 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to PyFVS's documentation!
-=================================
-
-Contents:
+PyFVS Documentation
+===================
 
 .. toctree::
    :maxdepth: 2
 
-.. automodule:: pyfvs
-   :members:
+   introduction
+   modules
 
-.. automodule:: pyfvs.fvs
-   :members:
-
-.. autoclass:: FVS
-   :members:
-
-.. autoclass:: FVSTrees
-   :members:
+.. toctree::
+   :hidden:
    
-.. automodule:: pyfvspnc
-   :members:
-   
+   self
+      
 Indices and tables
 ==================
 

@@ -1,5 +1,5 @@
 """
-PyFVS
+pyfvs.fvs
 
 Class module for controlling and interogating FVS using the Python variant 
 modules compiled with Open-FVS.
