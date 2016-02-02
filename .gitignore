@@ -64,6 +64,8 @@ nosetests.xml
 
 # Mr Developer
 .mr.developer.cfg
+
+.cproject
 .project
 .pydevproject
 .cproject

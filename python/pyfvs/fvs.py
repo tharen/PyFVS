@@ -16,7 +16,7 @@ import logging.config
 import random
 import importlib
 
-#sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
+# sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
 
 import pyfvs
 
@@ -48,17 +48,17 @@ class FVS(object):
     # Return a tuple of species codes given an FVS ID using the FVS API.
     spp_attrs = fvs.fvsspeciescode(16)
     """
-    # TODO: Add methods for execution with the start/stop routines.
-    # TODO: Add methods to collect tree attribute arrays.
-    def __init__(self, variant, stochastic=False, config=None):
+    def __init__(self, variant, stochastic=False, bootstrap=0
+        , config=None):
         """
         Initialize a FVS variant library.
-        
         :param variant: FVS variant abbreviation, PN, WC, etc.
         :param stochastic: If True the FVS random number generater will be
-                        reseeded on each call to run_fvs. If False the 
-                        generator will be set to a fixed value of 1.0
-        :param config: Optional configuration file for logging, etc.
+                reseeded on each call to run_fvs. If False the generator will 
+                be set to a fixed value of 1.0
+        :param bootstrap: Number of bootstrap resamples of the plot data to 
+                execute.
+        :param config:
         """
         # TODO: Document configuration options
 
@@ -70,8 +70,8 @@ class FVS(object):
         else:
             self.config = config
 
-        if not self.stochastic:
-            self._random_seed = 12345.0
+        # if not self.stochastic:
+            # self._random_seed = 12345.0
 
         self.fvslib_path = None
         self._load_fvslib()

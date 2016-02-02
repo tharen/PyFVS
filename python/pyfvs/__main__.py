@@ -27,7 +27,8 @@ def handle_command_line():
     import argparse
 
     parser = argparse.ArgumentParser(
-            description='PyFVS Command Line Interface.')
+            description='PyFVS Command Line Interface.'
+            , epilog='PyFVS is on GitHub (https://github.com/tharen/PyFVS).')
 
     parser.add_argument('fvs_variant', nargs='?', type=str
             , metavar='FVS Variant'
@@ -41,10 +42,18 @@ def handle_command_line():
             , action='store_true', default=False
             , help='Run FVS with stochastic components.')
 
+    parser.add_argument('-b', '--bootstrap', dest='bootstrap'
+            , metavar='', type=int, nargs=1, default=0
+            , help='(not impl) Bootstrap resampling of sample plot data.')
+            
     parser.add_argument('-d', '--debug', dest='debug'
             , action='store_true', default=False
             , help='Set logging level to debug.')
 
+    parser.add_argument('-p', '--prompt', dest='prompt'
+            , action='store_true', default=False
+            , help='Prompt the user for I/O files.')
+    
     parser.add_argument('-v', '--version', action='version'
             , version=pyfvs.__version__)
 
@@ -91,8 +100,16 @@ def main():
 
     args = handle_command_line()
 
+    if args.bootstrap>0:
+        log.info('Bootstrap resampling of plot data is not implemented.')
+        
     if args.debug:
         log.setLevel(logging.DEBUG)
+
+    if args.prompt:
+        # Run FVS in prompt mode
+        r = FVS(args.fvs_variant).fvs()
+        sys.exit(r)
 
     if not os.path.exists(args.keyword_file):
         msg = 'The keyword file is does not exist: {}'.format(args.keyword_file)
