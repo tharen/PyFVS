@@ -75,7 +75,7 @@ if not exist "%env_name%\libs\libpython%python_ver%.a" (
     )
 REM goto :exit
 
-set PATH=%PATH:C:\progs\git\bin;=%
+set PATH=%PATH:C:\progs\git\usr\bin;=%
 
 :: Configure CMake
 cmake -G "MinGW Makefiles" .. ^

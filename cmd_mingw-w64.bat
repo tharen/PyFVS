@@ -9,6 +9,7 @@ set PATH=%PATH%;C:\Windows\System32;C:\Windows
 set PATH=C:\progs\cmake\bin;%PATH%
 set PATH=C:\Ruby22-x64\bin;%PATH%
 set PATH=C:\progs\Git\bin;C:\progs\Git\usr\bin;%PATH%
+set path=%path%;C:\Miniconda3\Scripts
 
 ::set PATH=C:\Anaconda3;C:\Anaconda3\Scripts;%PATH%
 
