@@ -1,4 +1,5 @@
 import os
+import sys
 import shutil
 
 from setuptools import setup, Extension
@@ -33,6 +34,8 @@ extensions = [
             , extra_link_args=extra_link_args
             , extra_compile_args=extra_compile_args
             )]
+
+_is_64bit = (getattr(sys, 'maxsize', None) or getattr(sys, 'maxint')) > 2**32
 
 setup(
     name='pyfvs'

@@ -29,7 +29,8 @@ def get_config():
     Return the configuration dict.
     """
     try:
-        cfg = eval(open(config_path).read())
+        with open(config_path) as foo:
+            cfg = eval(foo.read())
 
     except:
         cfg = {

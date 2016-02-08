@@ -16,7 +16,7 @@ import logging.config
 import random
 import importlib
 
-# sys.path.append(os.path.abspath(os.path.dirname(__file__) + '/' + '..'))
+import numpy as np
 
 import pyfvs
 
@@ -48,17 +48,17 @@ class FVS(object):
     # Return a tuple of species codes given an FVS ID using the FVS API.
     spp_attrs = fvs.fvsspeciescode(16)
     """
-    def __init__(self, variant, stochastic=False, bootstrap=0
-        , config=None):
+    def __init__(self, variant, stochastic=False, bootstrap=0, config=None):
         """
         Initialize a FVS variant library.
-        :param variant: FVS variant abbreviation, PN, WC, etc.
+        
+        :param variant: FVS variant abbreviation, PN, WC, etc. (Required)
         :param stochastic: If True the FVS random number generater will be
                 reseeded on each call to run_fvs. If False the generator will 
-                be set to a fixed value of 1.0
+                be set to a fixed value of 1.0. (Optional)
         :param bootstrap: Number of bootstrap resamples of the plot data to 
-                execute.
-        :param config:
+                execute. (Optional)
+        :param config: Configuration dictionary. (Optional)
         """
         # TODO: Document configuration options
 
@@ -70,8 +70,7 @@ class FVS(object):
         else:
             self.config = config
 
-        # if not self.stochastic:
-            # self._random_seed = 12345.0
+        self._random_seed = 55329 # Default FVS random number seed
 
         self.fvslib_path = None
         self._load_fvslib()
@@ -118,13 +117,20 @@ class FVS(object):
         Reseed the FVS random number generator.  If seed is provided it will
         be used as the seed, otherwise a random number will be used.
         
-        :param seed: None, or a number to seed the random number generator with. 
+        :param seed: An odd number to seed the random number generator with.
         """
 
         if seed is None:
-            seed = random.random()
-
-        self.ransed(True, seed)
+            self._random_seed = random.choice(range(1,100000,2))
+        else:
+            self._random_seed = seed
+        
+        # Seed the FVS random number generator
+        self.ransed(True, self._random_seed)
+        
+        # Seed the numpy and python random number generators as well
+        np.random.seed(self._random_seed)
+        random.seed(self._random_seed)
 
     def _init_fvs(self, keywords):
         """
@@ -161,8 +167,6 @@ class FVS(object):
 
         if self.stochastic:
             self.set_random_seed()
-        else:
-            self.set_random_seed(self._random_seed)
 
     def grow_projection(self, cycles=1):
         """
