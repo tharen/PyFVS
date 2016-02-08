@@ -18,6 +18,8 @@ import collections
 from ._fields import *
 from . import eventmonitor
 
+from six import with_metaclass
+
 # initiate logging as prepared by fvs._utils
 log = logging.getLogger('pyfvs.keywords.keywords')
 
@@ -63,7 +65,7 @@ class KeywordMetaClass(type):
 
 # NOTE: Python 3 introduced the metaclass keyword argument
 # TODO: Revert back to create an equivalent for Python 2.6+
-class KeywordBase(object, metaclass=KeywordMetaClass):
+class KeywordBase(with_metaclass(KeywordMetaClass, object)):
     """
     An FVS keyword represented as a list of 7 fields
     
