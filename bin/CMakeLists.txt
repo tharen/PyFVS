@@ -180,8 +180,9 @@ if (CMAKE_COMPILER_IS_GNUCC)
 
     # Specify the target OS; perhaps useful with MinGW.
     if (UNIX_TARGET)
-        message(STATUS "Add -fPIC for UNIX targets.")
+        message(STATUS "Add *NIX GCC flags and defs.")
         set(flags "${flags} -fPIC")
+	add_definitions(-DANSI)
     endif()
 
     # Enable link time optimizations
