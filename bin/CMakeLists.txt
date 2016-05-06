@@ -165,6 +165,12 @@ if (CMAKE_COMPILER_IS_GNUCC OR APPLE)
     # TODO: Need to specify target architectures.
     if (NATIVE_ARCH)
         set(flags "-march=native")
+        if (APPLE)
+            # TODO: Catch the Clang compiler explicitly
+            # Add -mno-avx per: http://stackoverflow.com/a/10894096/673590
+            set(flags "${flags} -mno-avx")
+        endif()
+
     endif()
     
     # TODO: Is pthread necessary
@@ -185,7 +191,7 @@ if (CMAKE_COMPILER_IS_GNUCC OR APPLE)
         add_definitions(-DANSI)
     endif()
 
-    # Enable link time optimizations
+   # Enable link time optimizations
     if (ENABLE_LTO)
         message(STATUS "Enable link time optimizations.")
         set(flags "${flags} -flto")
