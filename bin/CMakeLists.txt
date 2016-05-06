@@ -129,7 +129,7 @@ endif ()
 # TODO: Check for target OS and compiler instead of relying on the CMake generator
 # TODO: Add Cygwin GNU toolchains
 
-if (CMAKE_COMPILER_IS_GNUCC)
+if (CMAKE_COMPILER_IS_GNUCC OR APPLE)
     message(STATUS "Add GCC compiler flags.")
     
     # TODO: These may be clobbering CMAKE FLAGS
