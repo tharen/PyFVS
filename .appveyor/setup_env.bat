@@ -1,9 +1,11 @@
-:: Prepare the environment
-call %PYTHON%\Scripts\conda create -q -y --name=%ENV_NAME% --file %APPVEYOR_BUILD_FOLDER%\requirements.txt
-call %PYTHON%\Scripts\conda info --envs
+:: Create a conda environment
+call %PYTHON%\Scripts\conda create -q -y --name=%ENV_NAME% ^
+    --file %APPVEYOR_BUILD_FOLDER%\.appveyor\requirements_conda.txt
 call %PYTHON%\Scripts\activate %ENV_NAME%
 set PYTHON_HOME=%PYTHON%\envs\%ENV_NAME%
+call %PYTHON%\Scripts\conda info -a
 
-:: Install nose-parameterized with pip until is becomes available on Anaconda
+:: Install requirements not provided by Anaconda
 ::%PYTHON_HOME%\Scripts\pip install git+https://github.com/wolever/nose-parameterized.git
-call %PYTHON_HOME%\Scripts\pip install nose-parameterized
+call %PYTHON_HOME%\Scripts\pip install ^
+    -r %APPVEYOR_BUILD_FOLDER%\.appveyor\requirements_pip.txt

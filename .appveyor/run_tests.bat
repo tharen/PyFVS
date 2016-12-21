@@ -1,12 +1,17 @@
-::%PYTHON%\Scripts\pip install --upgrade nose-parameterized
-::%PYTHON%\Scripts\conda update -y --all
 
-call %PYTHON%\Scripts\activate %ENV_NAME%
-set PYTHONPATH=%APPVEYOR_BUILD_FOLDER%\bin\build\Open-FVS\python;%PYTHONPATH%
+:: Make sure the named Python environment is active
+REM call %PYTHON%\Scripts\activate %ENV_NAME%
 
-call %PYTHON_HOME%\python.exe -c "import numpy;print('Numpy version:',numpy.version.version)"
+:: Report the current numpy version
+call python -c "import numpy;print('Numpy version:',numpy.version.version)"
 
-pushd %APPVEYOR_BUILD_FOLDER%\bin\build\Open-FVS\python\test
-call %PYTHON_HOME%\python.exe -m unittest test_variants
+:: Move into the package parent folder
+pushd %APPVEYOR_BUILD_FOLDER%\bin\build\Open-FVS\python
 
+echo %PYTHONPATH%
+call python -c "import sys;print(sys.executable)"
+call python -c "import sys;print(sys.version)"
+
+:: Execute all test scripts
+call python -m nose2
 popd

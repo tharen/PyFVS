@@ -13,7 +13,6 @@ from numpy.distutils.core import Extension
 from numpy.f2py import f2py2e
 
 fvs_variant = '@variant@'
-mod_path ='./'
 ext_name = '@pyext_name@'
 ext_pyf = './@pyext_name@.pyf'
 fvs_lib = 'FVS@variant@_static'
@@ -23,14 +22,11 @@ lib_dir = '.'
 sources = open('./pyext_source.txt').read()
 sources = sources.split(';')
 
-if '--gen-pyf' in sys.argv:
-    i = sys.argv.find('--gen-pyf')
-    sys.argv.pop(i)
-    
-    # Generate the F2PY wrapper .pyf module
+def gen_f2py_pyf(ext_pyf, ext_name, sources):
+    """Generate the F2PY wrapper .pyf module."""
     cmd_args = [
-        '-h','%s' % (ext_pyf,)
-        ,'-m','pyfvs%s' % (fvs_variant,)
+        '-h', ext_pyf
+        ,'-m', ext_name
         ,'--overwrite-signature'
         ]
     cmd_args.extend(sources)
@@ -56,9 +52,9 @@ ext1 = Extension(
 
 if __name__ == "__main__":
     from numpy.distutils.core import setup
-    setup(name = ext_name,
+    setup(name = 'pyfvs',
           description       = "F2PY wrappers for the Open-FVS library ({})".format(fvs_variant.upper()),
           author            = "Tod Haren",
           author_email      = "tod.haren<at>gm....com",
-          ext_modules = [ext1,],
+          ext_modules=[ext1,]
           )

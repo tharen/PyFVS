@@ -1,4 +1,6 @@
 """
+pyfvs.fvs
+
 Class module for controlling and interogating FVS using the Python variant 
 modules compiled with Open-FVS.
 
@@ -12,6 +14,9 @@ import sys
 import logging
 import logging.config
 import random
+import importlib
+
+import numpy as np
 
 import pyfvs
 
@@ -42,104 +47,51 @@ class FVS(object):
     
     # Return a tuple of species codes given an FVS ID using the FVS API.
     spp_attrs = fvs.fvsspeciescode(16)
-    
-    TODO: Add methods for execution with the start/stop routines.
-    TODO: Add methods to collect tree attribute arrays.
     """
-    def __init__(self, variant, random=False, config=pyfvs.get_config()):
+    def __init__(self, variant, stochastic=False, bootstrap=0, config=None):
         """
         Initialize a FVS variant library.
         
-        @param variant:
-        @param random: If True the FVS random number generater will be
-                        reseeded on each call to run_fvs. If False the 
-                        generator will be set to a fixed value of 1.0
-        @param config:
+        :param variant: FVS variant abbreviation, PN, WC, etc. (Required)
+        :param stochastic: If True the FVS random number generater will be
+                reseeded on each call to run_fvs. If False the generator will 
+                be set to a fixed value of 1.0. (Optional)
+        :param bootstrap: Number of bootstrap resamples of the plot data to 
+                execute. (Optional)
+        :param config: Configuration dictionary. (Optional)
         """
-        self.variant = variant
-        self.random = random
-        self.config = config
+        # TODO: Document configuration options
 
-        if not self.random:
-            self._random_seed = 12345.0
+        self.variant = variant
+        self.stochastic = stochastic
+
+        if not config:
+            self.config = pyfvs.get_config()
+        else:
+            self.config = config
+
+        self._random_seed = 55329 # Default FVS random number seed
 
         self.fvslib_path = None
         self._load_fvslib()
-
-    def _load_lib_ini(self):
-        fvslib_path = self.config['fvs_lib']['fvslib_path']
-
-    def _init_fvslib_path(self):
-        """
-        Initialize the folder to load variant libraries from.
-        """
-        fvslib_path = self.config['fvs_lib']['fvslib_path']
-
-        if os.path.exists(fvslib_path):
-            self.fvslib_path = os.path.abspath(fvslib_path)
-            return
-
-        # Adjust fvs_bin path relative to the configuration file
-        fvslib_path = os.path.join(
-                os.path.dirname(pyfvs.config_path), fvslib_path)
-        if os.path.exists(fvslib_path):
-            self.fvslib_path = os.path.abspath(fvslib_path)
-            return
-
-        # Try the environment variable
-        fvslib_path = os.environ('FVSLIB_PATH')
-        if os.path.exists(fvslib_path):
-            self.fvslib_path = os.path.abspath(fvslib_path)
-            return
-
-        if not self.fvslib_path:
-            raise IOError('Could not find a suitable FVSLIB_PATH')
-
-    def _discover_libs(self):
-        """
-        Search the fvslib_path for libraries available for import.
-        """
-
-        self._init_fvslib_path()
-
-        self.variant_libs = {}
-        files = os.listdir(self.fvslib_path)
-        ext = pyfvs.platform_ext()
-        for f in files:
-            p = os.path.join(self.fvslib_path, f)
-            if (os.path.isfile(p)
-                    and f.startswith('pyfvs')
-                    and f.endswith(ext)):
-                n = f.split('.')[0]
-                d = {'lib_name':n, 'lib_path':p}
-                self.variant_libs[n[5:]] = d
-
-        if not self.variant_libs:
-            raise ValueError(
-                    'No variant libraries found in : {}'.format(self.fvslib_path))
+        self.trees = FVSTrees(self)
 
     def _load_fvslib(self):
         """
         Load the requested FVS variant library.
         """
 
-#         self._discover_libs()
-#         lib = self.variant_libs[variant]
-#         print(lib)
-#
-#         if sys.version_info[:2] >= (3, 5):
-#             import importlib.util
-#             spec = importlib.util.spec_from_file_location(lib['lib_name'], lib['lib_path'])
-#             self.fvslib = importlib.util.module_from_spec(spec)
-#             spec.loader.exec_module(self.fvslib)
-#
-#         elif sys.version_inof[0] <= 2:
-#             import imp
-#             foo = imp.load_source(libname, self.fvslib_path)
-#             foo.MyClass()
+        variant_ext = 'pyfvs.pyfvs%sc' % self.variant.lower()[:2]
+        try:
+            self.fvslib = importlib.import_module(variant_ext)
 
-        variant = 'pyfvs%s' % self.variant.lower()
-        self.fvslib = __import__(variant)
+        except ImportError:
+            log.error('No library found for variant {}.'.format(self.variant))
+            raise
+
+        except:
+            raise
+
         log.debug('Loaded FVS variant {} library from {}'.format(
                 self.variant, self.fvslib.__file__))
 
@@ -149,37 +101,44 @@ class FVS(object):
 
     def __getattr__(self, attr):
         """
-        Return an object from self.fvslib
+        Return an attribute from self.fvslib if it is n ot defined locally.
         """
+
         try:
-            return self.fvslib.__dict__[attr]
-        except KeyError:
-            msg = 'No object {} in FVS{}.'.format(attr, self.variant)
+            return getattr(self.fvslib, attr)
+
+        except AttributeError:
+            msg = 'No FVS object {}.'.format(attr,)
             log.exception(msg)
-            raise KeyError(msg)
+            raise AttributeError(msg)
 
     def set_random_seed(self, seed=None):
         """
         Reseed the FVS random number generator.  If seed is provided it will
         be used as the seed, otherwise a random number will be used.
         
-        Args
-        ----
-        @param seed: None, or a number to seed the random number generator with. 
+        :param seed: An odd number to seed the random number generator with.
         """
-        if seed is None:
-            seed = random.random()
 
-        self.ransed(True, seed)
+        if seed is None:
+            self._random_seed = random.choice(range(1,100000,2))
+        else:
+            self._random_seed = seed
+        
+        # Seed the FVS random number generator
+        self.ransed(True, self._random_seed)
+        
+        # Seed the numpy and python random number generators as well
+        np.random.seed(self._random_seed)
+        random.seed(self._random_seed)
 
     def _init_fvs(self, keywords):
         """
         Initialize FVS with the given keywords file.
         
-        Args
-        ----
-        @param keywords: Path of the keyword file initialize FVS with.
+        :param keywords: Path of the keyword file initialize FVS with.
         """
+
         if not os.path.exists(keywords):
             msg = 'The specified keyword file does not exist: {}'.format(keywords)
             log.error(msg)
@@ -188,48 +147,93 @@ class FVS(object):
         self.keywords = keywords
         self.fvslib.fvssetcmdline('--keywordfile={}'.format(keywords))
 
-    def run_fvs(self, keywords):
+    def init_projection(self, keywords):
         """
-        Execute an FVS run for the given keyword file and return the error code.
+        Initialize a projection with the provided keyword file.
         
-        Args
-        ----
-        @param keywords: Path of the keyword file initialize FVS with.
+        :param keywords: Path to the FVS keywords file.
         """
-        self._init_fvs(keywords)
 
-        if self.random:
+        if not os.path.exists(keywords):
+            msg = 'The keyword file does not exist: {}'.format(keywords)
+            log.error(msg)
+            raise ValueError(msg)
+
+        r = self.fvs_step.fvs_init(keywords)
+
+        # TODO: Handle and format error codes
+        if not r == 0:
+            log.error('FVS returned non-zero: {}'.format(r))
+
+        if self.stochastic:
             self.set_random_seed()
-        else:
-            self.set_random_seed(self._random_seed)
 
-        r = self.fvslib.fvs()
+    def grow_projection(self, cycles=1):
+        """
+        Execute the FVS projection.
+        
+        :param cycles: Number of cycles to execute. Set to zero to run all 
+                remaining cycles. 
+        """
+
+        if not cycles:
+            cycles = self.num_cycles - self.current_cycle
+
+        for n in range(cycles + 1):
+            r = self.fvs_step.fvs_grow()
+            # TODO: Handle non-zero exit codes
+
+    def end_projection(self):
+        """
+        Terminate the current projection.
+        """
+        # Finalize the projection
+        r = self.fvs_step.fvs_end()
+
         if r == 1:
             msg = 'FVS returned error code {}.'.format(r)
             log.error(msg)
             raise IOError(msg)
 
         if r != 0 and r <= 10:
-            log.warning('FVS return with error code {}.'.format(r))
+            log.warning('FVS returned with error code {}.'.format(r))
 
         if r > 10:
             log.error('FVS encountered an error, {}'.format(r))
 
         return r
 
+    def execute_projection(self, keywords):
+        """
+        Convenience method to execute all cycles.
+        
+        :param keywords: Path of the keyword file initialize FVS with.
+        """
+
+        self.init_projection(keywords)
+        self.grow_projection(0)
+        self.end_projection()
+
+    @property
+    def current_cycle(self):
+        return self.contrl_mod.icyc
+
+    @property
+    def num_cycles(self):
+        return self.contrl_mod.ncyc
+
     def get_summary(self, variable):
         """
         Return the FVS summary value for a single projection cycle.
         
-        Args
-        ----
-        @param variable: The summary variable to return. One of the following:
+        :param variable: The summary variable to return. One of the following:
                         year, age, tpa, total cuft, merch cuft, merch bdft, 
                         removed tpa, removed total cuft, removed merch cuft, 
                         removed merch bdft, baa after, ccf after, top ht after, 
                         period length, accretion, mortality, sample weight, 
                         forest type, size class, stocking class 
         """
+
         variables = {'year': 0
             , 'age': 1
             , 'tpa': 2
@@ -254,41 +258,49 @@ class FVS(object):
 
         try:
             i = variables[variable.lower()]
+
         except KeyError:
             msg = '{} is not an available summary variable({}).'.format(
                     variable, variables.keys())
             raise KeyError(msg)
+
         except:
             raise
 
         # Return the summary values for the cycles in the run
-        ncyc = self.contrl_mod.ncyc
-        return(self.fvslib.outcom_mod.iosum[i, :ncyc + 1])
+        return(self.fvslib.outcom_mod.iosum[i, :self.num_cycles + 1])
 
-def test():
-    # Config file for testing
-    pyfvs.config_path = os.path.join(os.path.split(__file__)[0], 'pyfvs.cfg')
+class FVSTrees(object):
+    """
+    Provides runtime access to tree attribute arrays.
+    """
+    def __init__(self, parent):
+        self.parent = parent
 
-    import pylab
-    kwds = r'C:\workspace\Open-FVS\PyFVS\tests\pyfvs\fvspnc\pnt01.key'
+    @property
+    def num_recs(self):
+        return self.parent.contrl_mod.itrn
 
-    # Demonstrate the stochastic variability in the FVS routines.
-    iters = 10
-    fvs = FVS('pnc', random=True)
+    @property
+    def tpa(self):
+        return self.parent.arrays_mod.prob[:self.num_recs + 1]
 
-    # Get species codes
-    spp_attrs = fvs.fvsspeciescode(16)
-    print(spp_attrs)
+    @property
+    def dbh(self):
+        """Diameter at breast height"""
+        return self.parent.arrays_mod.dbh[:self.num_recs + 1]
 
-    for i in range(iters):
-        fvs.run_fvs(kwds)
+    @property
+    def age(self):
+        """Tree age"""
+        return self.parent.arrays_mod.age[:self.num_recs + 1]
 
-        # Plot the BDFT volume
-        bdft = fvs.get_summary('merch bdft')
-        years = fvs.get_summary('year')
-        pylab.plot(years, bdft)
+    @property
+    def cfv(self):
+        """Total cubic foot volume per tree"""
+        return self.parent.arrays_mod.cfv[:self.num_recs + 1]
 
-    pylab.show()
-
-if __name__ == '__main__':
-    test()
+    @property
+    def bfv(self):
+        """Total scribner board foot volume per tree"""
+        return self.parent.arrays_mod.bfv[:self.num_recs + 1]

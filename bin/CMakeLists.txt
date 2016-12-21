@@ -84,7 +84,7 @@ set(source_list_dir ${CMAKE_CURRENT_LIST_DIR})
 #TODO: Clean up cache variable to enable cmake-gui usage
 # Define default values for build configuration options
 set(FVS_VARIANTS "all" CACHE STRING "FVS variants to configure")
-set(WITH_PYEXT OFF CACHE BOOL "Build the Python module module.")
+set(WITH_PYEXT ON CACHE BOOL "Build the Python module module.")
 set(NATIVE_ARCH ON CACHE BOOL "Target the local machine architecture.")
 set(32BIT_TARGET OFF CACHE BOOL "Set the target architecture to 32 bit.")
 set(UNIX_TARGET OFF CACHE BOOL "Set the target OS to be a UNIX flavor.")
@@ -129,7 +129,7 @@ endif ()
 # TODO: Check for target OS and compiler instead of relying on the CMake generator
 # TODO: Add Cygwin GNU toolchains
 
-if (CMAKE_COMPILER_IS_GNUCC)
+if (CMAKE_COMPILER_IS_GNUCC OR APPLE)
     message(STATUS "Add GCC compiler flags.")
     
     # TODO: These may be clobbering CMAKE FLAGS
@@ -165,6 +165,12 @@ if (CMAKE_COMPILER_IS_GNUCC)
     # TODO: Need to specify target architectures.
     if (NATIVE_ARCH)
         set(flags "-march=native")
+        if (APPLE)
+            # TODO: Catch the Clang compiler explicitly
+            # Add -mno-avx per: http://stackoverflow.com/a/10894096/673590
+            set(flags "${flags} -mno-avx")
+        endif()
+
     endif()
     
     # TODO: Is pthread necessary
@@ -182,10 +188,10 @@ if (CMAKE_COMPILER_IS_GNUCC)
     if (UNIX_TARGET)
         message(STATUS "Add *NIX GCC flags and defs.")
         set(flags "${flags} -fPIC")
-	add_definitions(-DANSI)
+        add_definitions(-DANSI)
     endif()
 
-    # Enable link time optimizations
+   # Enable link time optimizations
     if (ENABLE_LTO)
         message(STATUS "Enable link time optimizations.")
         set(flags "${flags} -flto")
@@ -685,7 +691,11 @@ if (WITH_PYEXT)
 
     # FIXME: The wrong python is being called on appveyor, 
     set(PYTHON_EXE python)
-    
+    execute_process(
+            COMMAND ${PYTHON_EXE} -c "import sys\nprint(sys.version)"
+            COMMAND ${PYTHON_EXE} -c "import sys\nprint(sys.executable)"
+            )
+            
     # Determine the file name of the Python library
     execute_process(
             COMMAND ${PYTHON_EXE} ../platform_ext.py ${pyext_name}
@@ -714,15 +724,18 @@ if (WITH_PYEXT)
     # Compile the Python extension library
     add_custom_command(
             OUTPUT ${pyext_fn}
-            COMMAND python ARGS setup.py build_ext --inplace ${cmd_args} > ../f2py_${variant}.log 2>&1
+            COMMAND python ARGS setup.py build_ext --inplace ${cmd_args} >> ../f2py.log 2>&1
             DEPENDS ${fvslib_static} ./pyext_source.txt
             COMMENT "Compile python extension."
             )
     add_custom_target(${pyext_name}_ext ALL DEPENDS ${pyext_fn})
-
+    
+    # NOTE: Installation is primarily for packaging purposes
+    #       All scripts, modules, tests, etc. should be included in the
+    #       install target.  The final packaging uses setuptools.
     install(
         FILES ${pyext_fn}
-        DESTINATION python)
+        DESTINATION python/pyfvs)
     
     # Add intermediate files to the clean list
     # NOTE: pyext_source.txt should not be cleaned
@@ -734,7 +747,7 @@ if (WITH_PYEXT)
 
     # Generate a PyDoc HTML file for the module
     # TODO: Incorporate pydoc generation into setup.py
-    set(PYDOC_EXE pydoc)
+    set(PYDOC_EXE python -m pydoc)
     add_custom_command(
             TARGET ${pyext_name}_ext
             #TARGET ${pyext_fn}
@@ -743,20 +756,25 @@ if (WITH_PYEXT)
             )
 
     install(FILES ${pyext_name}.html
-            DESTINATION python/docs
+            DESTINATION python/pyfvs/docs
             )
     set_directory_properties(
             PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES
             ${pyext_name}.html
             )
 
-    # Copy the Python source package
+    # Copy the Python source package with docs and support files.
     install(
             DIRECTORY ${source_root}/python/
             DESTINATION python
-            FILES_MATCHING REGEX ".*\\.(py|cfg)$"
+            FILES_MATCHING REGEX ".*\\.(py|pyx|cfg|rst|md|key|tre)$"
             PATTERN "__pycache__" EXCLUDE
+            PATTERN "*genrpt.txt" EXCLUDE
             )
+    install(FILES
+                ${source_root}/python/MANIFEST.in
+                ${source_root}/python/README.txt
+            DESTINATION python)
     
     message(STATUS "*** End PyMod Configuration ***")
 

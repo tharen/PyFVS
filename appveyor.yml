@@ -2,20 +2,16 @@
 
 version: 0.0.1-{build}
 
-#init:
-#  # Display remote desktop details
-#  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-
 environment:
-  # global:
+  global:
     # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
     # /E:ON and /V:ON options are not enabled in the batch script intepreter
     # See: http://stackoverflow.com/a/13751649/163740
-    # CMD_IN_ENV: "cmd /E:ON /V:ON /C .\\.appveyor\\run_with_env.cmd"
-
+    CMD_IN_ENV: "cmd /E:ON /V:ON /C %APPVEYOR_BUILD_FOLDER%\\.appveyor\\run_with_env.cmd"
+    
   matrix:
     # - PYTHON: "C:\\Miniconda35-x64"
-      # PYTHON_VERSION: "3.4" # NOTE: Not a type, use support for Python 3.4
+      # PYTHON_VERSION: "3.4" # NOTE: Not a typo, use support for Python 3.4
       # PYTHON_ARCH: "64"
       # ENV_NAME: "py34_x64_conda"
 
@@ -29,36 +25,64 @@ environment:
       PYTHON_ARCH: "64"
       ENV_NAME: "py27_x64_conda"
 
+    # - PYTHON: "C:\\Miniconda"
+      # PYTHON_VERSION: "2.7"
+      # PYTHON_ARCH: "32"
+      # ENV_NAME: "py27_x86_conda"
+
     # - PYTHON: "C:\\Python27-x64"
       # PYTHON_VERSION: "2.7"
       # PYTHON_ARCH: "64"
       # ENV_NAME: "py27_x64"
 
+init:
+ # # Display remote desktop details
+ # - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+    - "echo %PYTHON_VERSION% %PYTHON%"
+    
 install:
-    - cmd: .appveyor\\setup_env.bat
-
+    # Setup the python environment and install required packages
+    # - cmd: .appveyor\\setup_env.bat
+    - "set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+    - conda config --set always_yes yes --set changeps1 no
+    - conda update -q conda
+    - "conda create -q -n %ENV_NAME% python=%PYTHON_VERSION% numpy"    
+    - conda info -a
+    - activate %ENV_NAME%
+    - pip install nose2 nose-parameterized cython
+    
 build_script:
+    # Configure the CMake project and execute the build
     - cmd: .appveyor\\config_and_build.bat
 
 after_build:
-    - "set ARCHIVE_NAME=open-fvs-%APPVEYOR_REPO_TAG_NAME%-Python%PYTHON_VERSION%_%PYTHON_ARCH%-windows-ci.zip"
-    - pushd bin\\build
-    - 7z a -bd %ARCHIVE_NAME% Open-FVS\*
-    - move /y %ARCHIVE_NAME% %APPVEYOR_BUILD_FOLDER%
+    # Create a zip file package of the compiled libraries and python package
+    - "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\bundle_archive.bat"
 
 on_failure:
-    - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
     # Post error logs to the build log
     - appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\\bin\\build\\build_err.log
-    - appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\\bin\\build\\f2py_*.log
-
+    - appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\\bin\\build\\f2py.log
+    # Report remote desktop connection parameters and wait
+    - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+    
 test_script:
+    # Run tests against the final package
     - "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\run_tests.bat"
 
+after_test:
+    # Build the wheel package
+    - "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\build_wheel.bat"
+    - "dir"
+    
 artifacts:
     - path: open-fvs-*.zip
       name: open-fvs-zip
       type: zip
+      
+    - path: pyfvs*.whl
+      name: pyfvs-wheel
+      type: whl
 
 deploy:
   - provider: GitHub
@@ -66,7 +90,7 @@ deploy:
     description: 'Appveyor CI build.'
     auth_token:
       secure: kJTJhEXI8ycz28qE4v1LkJ54NZzrz0mVrSptvfliH7TFzXFPQG2Ojam2VWTJJb6s
-    artifact: open-fvs-zip  # Using artifact name works consistently
+    artifact: open-fvs-zip pyfvs-wheel # Using artifact name works consistently
     draft: false
     prerelease: true
     on:
@@ -81,7 +105,7 @@ deploy:
     bucket: free5
     set_public: true
     folder: appveyor-builds
-    artifact: open-fvs-zip
+    artifact: open-fvs-zip pyfvs-wheel
 
 # on_finish:
   # # Pause the build for remote desktop access

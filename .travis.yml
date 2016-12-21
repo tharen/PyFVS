@@ -35,11 +35,12 @@ install:
   - hash -r
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
+  # Create an environment and install dependencies
+  - conda create -q -n pyfvs python=$TRAVIS_PYTHON_VERSION --file .travis-ci/requirements_conda.txt
+  - source activate pyfvs
+  - pip install -r .travis-ci/requirements_pip.txt
   # Useful for debugging any issues with conda
   - conda info -a
-  # Create an environment and install dependencies
-  - conda create -q -n pyfvs python=$TRAVIS_PYTHON_VERSION --file requirements.txt
-  - source activate pyfvs
   # Define the name to be used for the archive of compiled products.
   - export ARCHIVE_NAME=open-fvs-${TRAVIS_TAG}-Python${TRAVIS_PYTHON_VERSION}_64-${TRAVIS_OS_NAME}-ci.zip
 
@@ -56,8 +57,9 @@ after_failure:
   - "cat ${BUILD_ROOT}/f2py_pnc.log"
 
 after_success:
-  - ls ${BUILD_ROOT}/Open-FVS
-  - cd ${BUILD_ROOT} && 7z a -bd ${ARCHIVE_NAME} Open-FVS/*
+  - mkdir ${BUILD_ROOT}/artifacts
+  - cd ${BUILD_ROOT} && 7z a -bd ./artifacts/${ARCHIVE_NAME} Open-FVS/*
+  - source ${TRAVIS_BUILD_DIR}/.travis-ci/build_wheel.sh
   - ls ${BUILD_ROOT}
 
 deploy:
@@ -66,7 +68,9 @@ deploy:
     prerelease: true
     api_key:
       secure: cIv7F5Si2yS3QcL3bOu5QwTZdi/WiwsNhsS7+IL1LklXGKzBlzN1Df833+u1mzk1XN3VKafzrsAQ5UoshAcaN6TB6kE9FCBAGt/NO+BQJJcLr8Ig4NwU82cVQmnt8ata6t8MmNcPtRsqA4TUsd2Mvo2CKpeiZOMRo1JqasMElHqW4vh8Dbklsk4cd4zcvAOfnVT0qQC1Hzkgh0IzmB7y6dsaUOYoHbDVSMnkp+6j+yIZnWsGBsowXf7CF7hKQMMXiXbl5YGEMUob1OnOBw54xj5eM9Ax9mpYiyymvE+QKHj5nP1fkQoW89tgzcem53TK9qcSN+E3yApd0aK1Z11VVqIBvif7c1YmaL0w9uMv7reDnJ6zCS63GGO3nBLKUTrEo2xjrDsLpQRtK2sHYLG4JPtGB9ojzloTe0YLgemjf5bwmVWvyycVtMF0DZABnL5JWMqG9ogUA2CcNDHBqRyArcg5qkzC8LBGR5XG8V71O6M3QZVsCP+6NfxFAUGvKO3i36TQjOCMuWQdhmp75VaCH/B1o2B+UVMr7ekI4i0m16KP7JG4+47BSyPDUD7QLR0k055ext/F+RonBVtL8dpbQzZ3bASWQ/iW00tz910LanCFLRGAhUSe+bUISVsVQSltpqgV3j64OM3wC/LIyO4YSTyEx8NTTC+IRBfOgMc4ed0=
-    file: ${BUILD_ROOT}/${ARCHIVE_NAME}
+    file:
+      - ${BUILD_ROOT}/artifacts/${ARCHIVE_NAME}
+      - ${BUILD_ROOT}/artifacts/*.whl
     on:
       repo: tharen/PyFVS
       tags: true
@@ -79,8 +83,9 @@ deploy:
       secure: lmFYrGZSd7JpeNCRV0BU0t9ipav/Dg1JK3PX94Wz8y03ymlrGaVjvdUyokdf+fXwFeWb+B4aulU1bI2EW4vv6+U4rm0TPsIHf6myyhXftoKxLydhKDi2H4TRSaaJt6dNABSM156stqYFPSD/TtIZfCa63qZjfkK+RlNGe1WdJ16nhd57M9B/TO0A7Nq6X3TvaVKuL0yGTi8L8cfD3aumbk3ReoD/1bXjYReAteKc5lrWmyxHRyPZyrE2xhrtjTBm88GdXv/LFkeopTC2y2eLD1h2cTCOurBw1RFlxvXBshnLULDlrNkzTCGF6O5aCx7icfXCuNAcgZidYSutziXyWt69NYxlwD/Elqh0coKxnrDaMp/dj84P89DLqA+MyhcXlw2Kf2npLtLgpW1wpBXIGWDRAv1GtJHd+IjabE5htdVz6nhlONsCI/rdHN33rTvgnwiQn3Ypg9dp7vt1JFVYFImdWrflR5CH/sAJAH30FKgerVaHOHty52O/8KXkYggxzCJIOVXb7nmgJSgk/EgGeoI0t8oieudXp/J20+uTAKm3lDwtOCpoVHbi0YSWJgP8Z5KoSMq5AVWubFYxclUwDd/xwjhhN1wZ/YVQIZ4xG8dP33+ZkodZ46AX0u+IwI2REsV0t03nG0FtwXWETcCb8SWvdqGqJCHNEcHeL/yG28A=
     region: us-west-2
     bucket: free5
-    local-dir: ${BUILD_ROOT}/Open-FVS
+    local-dir: ${BUILD_ROOT}/artifacts
     upload-dir: travis-builds
     acl: public_read
     on:
       repo: tharen/PyFVS
+      all_branches: true
