@@ -6,7 +6,29 @@ c     the shared library version of FVS. Other routines that exist
 c     inside FVS may also be called.
 
 c     Created in late 2011 by Nick Crookston, RMRS-Moscow
+      
+      subroutine fvsgetversion(api,svn,fvs_variant) 
+     &    bind(c, name="fvsgetversion")
+      
+      use iso_c_binding, only: c_char, c_null_char
+      implicit none
 
+!Python F2PY Interface Directives
+!f2py intent(out) :: api, svn, fvs_variant
+
+      character(kind=c_char) :: api(5), svn(7), fvs_variant(3)
+      !integer, intent(out) :: foo
+      
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsgetversion
+!GxxCC$ ATTRIBUTES REFERENCE :: api, svn, fvs_variant
+      
+      api = C_CHAR_"0.1a"//C_NULL_CHAR
+      svn = 'abcdef'
+      fvs_variant = C_CHAR_'XX'//C_NULL_CHAR
+      !foo = 98765
+      
+      end subroutine fvsgetversion
+      
       subroutine fvsDimSizes(ntrees,ncycles,nplots,maxtrees,maxspecies,
      -                       maxplots,maxcycles)
       use contrl_mod
@@ -23,6 +45,8 @@ c     Created in late 2011 by Nick Crookston, RMRS-Moscow
 !DEC$ ATTRIBUTES REFERENCE :: NTREES, NCYCLES, NPLOTS, MAXTREES
 !DEC$ ATTRIBUTES REFERENCE :: MAXSPECIES, MAXPLOTS, MAXCYCLES
 #endif
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsdimsizes
 
       integer :: ntrees,ncycles,nplots,maxtrees,maxspecies,maxplots,
      -           maxcycles
@@ -57,6 +81,8 @@ c     Created in late 2011 by Nick Crookston, RMRS-Moscow
 !DEC$ ATTRIBUTES REFERENCE :: SUMMARY, ICYCLE, NCYCLES, MAXROW
 !DEC$ ATTRIBUTES REFERENCE :: MAXCOL, RTNCODE
 #endif
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvssummary
 
       integer :: summary(20),icycle,ncycles,maxrow,maxcol,rtnCode
 
@@ -105,6 +131,8 @@ c
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE,ALIAS:'FVSTREEATTR'::FVSTREEATTR
 !DEC$ ATTRIBUTES REFERENCE :: NAME, NCH, ACTION, NTREES, ATTR, RTNCODE
 #endif
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvstreeattr
 
       integer :: nch,rtnCode,ntrees
       real(kind=8)      :: attr(ntrees)
@@ -247,6 +275,8 @@ c
 !DEC$ ATTRIBUTES REFERENCE :: NAME, NCH, ACTION, ATTR, RTNCODE
 #endif
 
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsspeciesattr
+
       integer :: nch,rtnCode
       real(kind=8)      :: attr(MAXSP)
       character(len=10) :: name
@@ -339,6 +369,8 @@ c
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE,ALIAS:'FVSEVMONATTR'::FVSEVMONATTR
 !DEC$ ATTRIBUTES REFERENCE :: NAME, NCH, ACTION, ATTR, RTNCODE
 #endif
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsevmonattr
 
       integer :: nch,rtncode,iv,i
       double precision  :: attr
@@ -675,6 +707,8 @@ c                 or when ntrees is zero
 !DEC$ ATTRIBUTES REFERENCE :: IN_PLOT, IN_TPA, NTREES, RTNCODE
 #endif
 
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsaddtrees
+
       real(kind=8) :: in_dbh(ntrees),in_species(ntrees),
      -    in_ht(ntrees),in_cratio(ntrees),in_plot(ntrees),
      -    in_tpa(ntrees)
@@ -776,6 +810,8 @@ c     indx    = species index
 !DEC$ ATTRIBUTES REFERENCE :: NCHFVS, NCHFIA, NCHPLANT, RTNCODE
 #endif
 
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsspeciescode
+
       integer :: indx,nchfvs,nchfia,nchplant,rtnCode
       character(len=4) :: fvs_code
       character(len=4) :: fia_code
@@ -816,6 +852,8 @@ c     indx    = species index
 !DEC$ ATTRIBUTES REFERENCE :: PTOCUT, NTREES, RTNCODE
 #endif
 
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvscuttrees
+
       integer :: ntrees,rtnCode
       double precision :: pToCut(ntrees)
       pToCut = 0.
@@ -848,6 +886,8 @@ c     indx    = species index
 !DEC$ ATTRIBUTES REFERENCE :: SID, SCN, MID, NCSID, NCCN, NCMID
 #endif
 
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsstandid
+
       integer :: ncsID,ncCN,ncmID
       character(len=26) sID
       character(len=4)  mID
@@ -874,6 +914,8 @@ c     indx    = species index
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE,ALIAS:'FVSCLOSEFILE'::FVSCLOSEFILE
 !DEC$ ATTRIBUTES REFERENCE :: FILENAME, NCH
 #endif
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsclosefile
 
 C     this routine closes "filename" if it is opened, it is not called
 C     from within FVS. nch is the length of filename.
@@ -912,6 +954,8 @@ C     add an activity to the schedule.
 !DEC$ ATTRIBUTES REFERENCE :: IDT, IACTK, INPRMS, NPRMS, RTNCODE
 #endif
 
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsaddactivity
+
       integer :: i,idt,iactk,nprms,rtnCode,kode
       integer, parameter :: mxtopass=20
       real(kind=8) inprms(nprms)
@@ -949,6 +993,8 @@ C     add an activity to the schedule.
 !DEC$ ATTRIBUTES REFERENCE :: NSVSOBJS,NDEADOBJS,NCWDOBJS
 !DEC$ ATTRIBUTES REFERENCE :: MXSVSOBJS,MXDEADOBJS,MXCWDOBJS
 #endif
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvssvsdimsizes
 
       integer :: nsvsobjs,  ndeadobjs,  ncwdobjs,
      -           mxsvsobjs, mxdeadobjs, mxcwdobjs
@@ -996,6 +1042,8 @@ c               4= the length of the "name" string was too big or small
 !DEC$ ATTRIBUTES ALIAS:'FVSSVSOBJDATA':: FVSSVSOBJDATA
 !DEC$ ATTRIBUTES REFERENCE :: NAME, NCH, ACTION, NOBJS, ATTR, RTNCODE
 #endif
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvssvsobjdata
 
       integer :: nch,rtnCode,nobjs
       real(kind=8)      :: attr(nobjs)
@@ -1328,6 +1376,8 @@ c               4= the length of the "name" string was too big or small
 !DEC$ ATTRIBUTES REFERENCE :: NAME, NCH, ACTION, NOBJS, ATTR, RTNCODE
 #endif
 
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsffeattrs
+
       integer :: nch,rtnCode,nobjs
       real(kind=8)      :: attr(nobjs)
       character(len=10) :: name
@@ -1429,6 +1479,7 @@ c               1= "name" not found,
 !DEC$ ATTRIBUTES REFERENCE :: NAME, NCH, VALUE, RTNCODE
 #endif
 
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsunitconversion
 
       integer :: nch,rtnCode
       real(kind=8)       :: value

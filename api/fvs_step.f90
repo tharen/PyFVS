@@ -46,13 +46,13 @@ module fvs_step
         call keywds()
     end subroutine init_blkdata
 
-    subroutine fvs_init(keywords, irtncd)
+    subroutine fvs_init(keywords_file, irtncd)
         ! Initialize an FVS run.  Extracted from fvs.f to break the execution
         ! into explicit components for improved interaction with external code.
         !
         ! Modifications include preprocessor directives to optionally exclude
         ! extranious FVS routines.
-
+        
 !#define xFVSREPORTS
 !#define xFVSEXTENSIONS
 !#define xFVSSTARTSTOP
@@ -61,13 +61,16 @@ module fvs_step
 
         implicit none
 
+        !GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvs_init
+
         !Python F2PY Interface Directives
-        !f2py character(len=256),intent(in) :: keywords
+        !f2py character(len=*),intent(in) :: keywords_file
         !f2py integer,intent(out) :: irtncd
+        
+        character(len=*), intent(in) :: keywords_file
+        integer, intent(out) :: irtncd
 
         character(len=256) :: keywords
-        integer :: irtncd
-
         INTEGER I,IA,N,K,NTODO,ITODO,IACTK,IDAT,NP
         REAL STAGEA,STAGEB
         LOGICAL DEBUG,LCVGO
@@ -89,7 +92,8 @@ module fvs_step
 
         ! Initialize the command line argument
         ! TODO: Accept keywords as a buffer rather than a file name
-        keywords = '--keywordfile='//adjustl(keywords)
+        ! TODO: Check length of path
+        keywords = '--keywordfile='//adjustl(keywords_file)
         call fvssetcmdline(keywords,len_trim(keywords), irtncd)
 
         !
@@ -336,12 +340,15 @@ module fvs_step
 
     subroutine fvs_grow(irtncd)
         !Execute a FVS grow cycle.  Adapted from fvs.f
-
-
+        
         implicit none
+
+        !GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvs_grow
 
         !Python F2PY Interface Directives
         !f2py integer,intent(out) :: irtncd
+        
+        integer, intent(out) :: irtncd
 
         INTEGER I,IA,N,K,NTODO,ITODO,IACTK,IDAT,NP
         REAL STAGEA,STAGEB
@@ -351,7 +358,7 @@ module fvs_step
         INTEGER MYACT(1)
         REAL PRM(1)
         DATA MYACT/100/
-        INTEGER IRSTRTCD,ISTOPDONE,IRTNCD,lenCl
+        INTEGER IRSTRTCD,ISTOPDONE,lenCl
 
         character(len=100) :: fmt
 
@@ -444,6 +451,7 @@ module fvs_step
 
     subroutine fvs_end(irtncd)
         !Finalize an FVS run.  Extracted from fvs.f
+        
         use tree_data, only: &
                 save_tree_data,copy_tree_data &
                 ,copy_cuts_data,copy_mort_data
@@ -454,9 +462,13 @@ module fvs_step
         use outcom_mod
         implicit none
 
+        !GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvs_end
+        
         !Python F2PY Interface Directives
         !f2py integer,intent(out) :: irtncd
 
+        integer, intent(out) :: irtncd
+        
         INTEGER I,IA,N,K,NTODO,ITODO,IACTK,IDAT,NP
         REAL STAGEA,STAGEB
         LOGICAL DEBUG,LCVGO
@@ -465,7 +477,7 @@ module fvs_step
         INTEGER MYACT(1)
         REAL PRM(1)
         DATA MYACT/100/
-        INTEGER IRSTRTCD,ISTOPDONE,IRTNCD,lenCl
+        INTEGER IRSTRTCD,ISTOPDONE,lenCl
 
         DEBUG=.FALSE.
 

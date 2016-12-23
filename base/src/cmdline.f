@@ -25,6 +25,8 @@ c     Created in 2011 and 2012 by Nick Crookston, RMRS-Moscow
 !DEC$ ATTRIBUTES REFERENCE :: theCmdLine,lenCL,IRTNCD
 #endif
 
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvssetcmdline
+
       integer :: i,n,irtn,ieq,iend,lenCL,IRTNCD
       logical fstat
       character(len=256) arg
@@ -217,6 +219,8 @@ c     open/reopen the keyword/output file.
 !DEC$ ATTRIBUTES REFERENCE :: spptcd,spptyr
 #endif
 
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsgetstoppointcodes
+
       integer :: spptcd,spptyr
       spptcd = minorstopptcode
       spptyr = minorstopptyear
@@ -238,6 +242,8 @@ c     open/reopen the keyword/output file.
 !DEC$ ATTRIBUTES REFERENCE :: spptcd,spptyr
 #endif
 
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvssetstoppointcodes
+
       integer :: spptcd,spptyr
       minorstopptcode = spptcd
       minorstopptyear = spptyr
@@ -258,6 +264,8 @@ c     open/reopen the keyword/output file.
 !DEC$ ATTRIBUTES ALIAS : 'FVSGETRESTARTCODE' :: FVSGETRESTARTCODE
 !DEC$ ATTRIBUTES REFERENCE :: restrtcd
 #endif
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsgetrestartcode
 
       integer :: restrtcd
       if (fvsRtnCode == 0) then
@@ -283,6 +291,8 @@ c     open/reopen the keyword/output file.
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE,ALIAS : 'FVSRESTART' :: FVSRESTART
 !DEC$ ATTRIBUTES REFERENCE :: restrtcd
 #endif
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsrestart
 
       integer :: restrtcd
 
@@ -336,6 +346,8 @@ cc     -        " restrtcd=",restrtcd
 !DEC$ ATTRIBUTES REFERENCE :: restrtcd
 #endif
 
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsrestartlaststand
+
       integer :: restrtcd
       if (readFilePos == -1) then
         call fvsSetRtnCode (1)
@@ -365,6 +377,8 @@ cc     -        " restrtcd=",restrtcd
 !DEC$ ATTRIBUTES REFERENCE :: fn,mxch,nch
 #endif
 
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsgetkeywordfilename
+
       integer :: mxch,nch
       character(mxch) fn
       fn = " "
@@ -387,6 +401,8 @@ cc     -        " restrtcd=",restrtcd
 !DEC$ ATTRIBUTES ALIAS : 'FVSSETRTNCODE' :: FVSSETRTNCODE
 !DEC$ ATTRIBUTES REFERENCE :: rtnCode
 #endif
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvssetrtncode
 
       fvsRtnCode = rtnCode
 
@@ -411,6 +427,8 @@ C     if in an error state, close the files.
 !DEC$ ATTRIBUTES REFERENCE :: rtnCode
 #endif
 
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsgetrtncode
+
       rtnCode = fvsRtnCode
       return
       end
@@ -432,6 +450,8 @@ c     note that this routine is called during the simulation
 !DEC$ ATTRIBUTES ALIAS : 'FVSSTOPPOINT' :: FVSSTOPPOINT
 !DEC$ ATTRIBUTES REFERENCE :: LOCODE,ISTOPDONE
 #endif
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsstoppoint
 
       include "GLBLCNTL.F77"
 

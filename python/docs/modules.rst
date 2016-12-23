@@ -19,7 +19,10 @@ Contents:
 
 .. autoclass:: FVSTrees
    :members:
-   
+
+.. automodule:: pyfvs.keywords.keywords
+    :members:
+    
 #.. automodule:: pyfvspnc
 #   :members:
    
