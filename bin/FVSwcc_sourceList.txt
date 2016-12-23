@@ -620,7 +620,9 @@
 ../wc/src/htdbh.f
 
 ../wc/src/logs.f
-../wc/src/morts.f
+../wc/src/morts.f90
+../wc/src/morts_organon.f
+../wc/src/morts_fvs.f
 ../wc/src/pvref6.f
 ../wc/src/regent.f
 ../wc/src/sichg.f

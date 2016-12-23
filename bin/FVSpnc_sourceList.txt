@@ -625,7 +625,9 @@
 
 
 ../wc/src/logs.f
-../wc/src/morts.f
+../wc/src/morts.f90
+../wc/src/morts_organon.f
+../wc/src/morts_fvs.f
 ../wc/src/regent.f
 ../ws/src/r5crwd.f
 ../wc/src/smhgdg.f
