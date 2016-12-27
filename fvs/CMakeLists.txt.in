@@ -1,0 +1,156 @@
+cmake_minimum_required(VERSION 2.8.8 FATAL_ERROR)
+
+project(FVS@fvs_variant@ C CXX Fortran)
+#include(GenerateExportHeader)
+
+enable_language(Fortran)
+
+set(fvsexe "${fvs_variant}_exe")
+set(fvslib_shared "fvs${fvs_variant}")
+set(fvslib_static "fvs${fvs_variant}_static")
+
+#Replaced by regex during configuration
+set(fvs_variant @fvs_variant@)
+set(src_list_path @src_list_path@)
+
+message(STATUS "Configure variant: ${fvs_variant}")
+message(STATUS "CMake Build Type: ${CMAKE_BUILD_TYPE}")
+message(STATUS "Profiling: ${PROFILING}")
+message(STATUS "source_list: ${src_list_path}")
+message(STATUS "fvsexe: ${fvsexe}")
+message(STATUS "fvslib_shared: ${fvslib_shared}")
+
+# Parse the source file list and populate Cmake lists
+set(include_dirs)
+set(fvs_source)
+set(main_source)
+
+# Process the source list for the variant
+file(STRINGS ${src_list_path} source_files)
+# Localize the paths
+string(REPLACE "../" "${src_root}/"
+        source_files "${source_files}")
+
+foreach (fn ${source_files})
+    if (NOT ${fn} MATCHES "^#.*")
+        get_filename_component(filename ${fn} NAME)
+        get_filename_component(pathname ${fn} PATH)
+        get_filename_component(extname ${fn} EXT)
+
+        # Need the location of C headers and include files
+        if (${fn} MATCHES "(.*\\.h$)|(.*\\.F77$)")
+            list(APPEND include_dirs ${pathname})
+        endif()
+
+        # Separate the core FVS code from executable main routine
+        if ((${extname} STREQUAL ".f") 
+                OR (${extname} STREQUAL ".f90"))
+            if (${filename} STREQUAL "main.f")
+                list(APPEND main_source ${fn})
+            else()
+                list (APPEND fvs_source ${fn})
+            endif()
+        endif()
+
+        unset(filename CACHE)
+        unset(pathname CACHE)
+        unset(extname CACHE)
+    endif()
+endforeach(fn)
+
+list(REMOVE_DUPLICATES include_dirs)
+list(REMOVE_DUPLICATES fvs_source)
+list(REMOVE_DUPLICATES main_source)
+
+# Include the variant build folder to catch .mod files
+list(APPEND include_dirs ${CMAKE_CURRENT_BINARY_DIR})
+
+# Add the newly found include dirs
+include_directories(BEFORE ${include_dirs})
+
+# Remove source files already in common, FFE, SQL
+set(sl ${common_source} ${ffe_source} ${sql_source})
+foreach(fn ${sl})
+    list(FIND fvs_source ${fn} i)
+    if (NOT ${i} EQUAL -1)
+        list(REMOVE_ITEM fvs_source ${fn})
+    endif()
+endforeach()
+
+#---CMake Variables
+file(WRITE "cmakevars-${fvs_variant}.txt" "CMake Variables - ${fvs_variant}")
+get_cmake_property(_variableNames VARIABLES)
+foreach (_variableName ${_variableNames})
+    file(APPEND
+            "cmakevars-${fvs_variant}.txt"
+            "${_variableName}=${${_variableName}}\n"
+            )
+endforeach()
+
+#---Compile the variant FVS code to an object library
+set(fvs_objs "fvs${fvs_variant}_objs")
+add_library(${fvs_objs} OBJECT ${fvs_source})
+
+# Ensure common source files are built before the variant sources
+add_dependencies(${fvs_objs} common_objs)
+
+#---Link the shared library and executables
+if (NOT STATIC_LINK)
+    add_library(${fvslib_shared} SHARED
+        $<TARGET_OBJECTS:common_objs>
+        $<TARGET_OBJECTS:${fvs_objs}>)
+    target_link_libraries(${fvslib_shared} ffe_lib sql_lib)
+
+    add_library(${fvslib_static}
+        $<TARGET_OBJECTS:common_objs>
+        $<TARGET_OBJECTS:${fvs_objs}>)
+    target_link_libraries(${fvslib_static} ffe_lib sql_lib)
+
+    add_executable (${fvsexe} ${main_source}
+        $<TARGET_OBJECTS:common_objs>
+        $<TARGET_OBJECTS:${fvs_objs}>)
+    target_link_libraries(${fvsexe} ffe_lib sql_lib)
+
+else ()
+    add_library(${fvslib_shared} SHARED
+        $<TARGET_OBJECTS:common_objs>
+        $<TARGET_OBJECTS:${fvs_objs}>
+        $<TARGET_OBJECTS:ffe_lib>
+        $<TARGET_OBJECTS:sql_lib>
+        )
+
+    add_library(${fvslib_static}
+        $<TARGET_OBJECTS:common_objs>
+        $<TARGET_OBJECTS:${fvs_objs}>
+        $<TARGET_OBJECTS:ffe_lib>
+        $<TARGET_OBJECTS:sql_lib>
+        )
+
+    add_executable (${fvsexe} ${main_source}
+        $<TARGET_OBJECTS:common_objs>
+        $<TARGET_OBJECTS:${fvs_objs}>
+        $<TARGET_OBJECTS:ffe_lib>
+        $<TARGET_OBJECTS:sql_lib>
+        )
+
+endif ()
+
+SET_TARGET_PROPERTIES(${fvsexe}
+        PROPERTIES OUTPUT_NAME "fvs${fvs_variant}")
+
+if (WIN32)
+    target_link_libraries(${fvslib_shared} odbc32)
+    target_link_libraries(${fvsexe} odbc32)
+else ()
+    target_link_libraries(${fvslib_shared} ltdl odbc)
+    target_link_libraries(${fvsexe} ltdl odbc)
+endif ()
+
+set_target_properties(${fvsexe} PROPERTIES
+    LINKER_LANGUAGE Fortran)
+set_target_properties(${fvslib_shared} PROPERTIES
+    LINKER_LANGUAGE Fortran
+    PREFIX ""
+    IMPORT_PREFIX ""
+    )
+
