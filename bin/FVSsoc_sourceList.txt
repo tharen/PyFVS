@@ -42,12 +42,6 @@
 ../api/variants/so/htgf.f90
 ../api/variants/so/cubrds_mod.f90
 
-../api/carbon_data.f90
-../api/downwood_data.f90
-../api/tree_data.f90
-../api/fvs_step.f90
-../api/step_tregro.f90
-../api/snag_data.f90
 ../api/main.f90
 ../api/comcup.f90
 ../api/prtrls.f90
@@ -57,6 +51,15 @@
 ../api/strp/escprs.f90
 ../api/strp/esrncm_mod.f90
 ../api/strp/esblkd_mod.f90
+
+##--- New modules
+../api/fvs_step.f90
+../api/step_tregro.f90
+../api/carbon_data.f90
+../api/downwood_data.f90
+../api/tree_data.f90
+../api/snag_data.f90
+../api/guess_age.f90
 
 ##--- FVS subroutines
 ../base/src/algcmp.f

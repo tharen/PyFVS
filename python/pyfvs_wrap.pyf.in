@@ -1013,13 +1013,6 @@ python module @pyext_name@ ! in
                 real :: htmax2
                 logical :: debug
             end subroutine findag
-            subroutine guess_age(site_idx,spp_idx,height,site_height,site_age) ! in :@pyext_name@:@source_root@/api/variants/wc/findage_mod.f90:findage_mod
-                real intent(in) :: site_idx
-                integer intent(in) :: spp_idx
-                real intent(in) :: height
-                real intent(out) :: site_height
-                real intent(out) :: site_age
-            end subroutine guess_age
         end module findage_mod
         subroutine escprs(itrgt,debug) ! in :@pyext_name@:@source_root@/api/strp/escprs.f90
             use findage_mod, only: findag
@@ -1296,6 +1289,13 @@ python module @pyext_name@ ! in
             real intent(inout) :: h
             integer intent(in) :: mode
         end subroutine htdbh
+        subroutine guess_age(site_idx,spp_idx,height,site_height,site_age) ! in :@pyext_name@:@source_root@/api/variants/wc/findage_mod.f90:findage_mod
+            real intent(in) :: site_idx
+            integer intent(in) :: spp_idx
+            real intent(in) :: height
+            real intent(out) :: site_height
+            real intent(out) :: site_age
+        end subroutine guess_age
     end interface 
 end python module @pyext_name@
 

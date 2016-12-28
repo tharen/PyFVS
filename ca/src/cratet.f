@@ -1,4 +1,6 @@
       SUBROUTINE CRATET
+      use findage_mod, only: findag
+      
       use htcal_mod
       use plot_mod
       use arrays_mod

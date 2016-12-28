@@ -1,5 +1,7 @@
+##--- Ported common data modules
 ../api/variants/wc/prgprm_mod.f90
 ../api/variants/wc/esparm_mod.f90
+#
 
 ../api/keycom_mod.f90
 ../api/keywds_mod.f90
@@ -10,6 +12,7 @@
 ../api/econ_mod.f90
 ../api/escomn_mod.f90
 ../api/eshap_mod.f90
+../api/estcor_mod.f90
 ../api/estree_mod.f90
 ../api/htcal_mod.f90
 ../api/multcm_mod.f90
@@ -30,20 +33,16 @@
 ../api/fmsvcm_mod.f90
 ../api/metric_mod.f90
 
-../api/carbon_data.f90
-../api/downwood_data.f90
-../api/tree_data.f90
-../api/fvs_step.f90
-../api/step_tregro.f90
-../api/snag_data.f90
 
-../api/main.f90
+##--- Ported subroutine modules
 ../api/variants/wc/blkdat.f90
-../api/variants/wc/siteht_mod.f90
+#../api/variants/wc/siteht_mod.f90
 ../api/variants/wc/findage_mod.f90
 ../api/variants/wc/cratet.f90
 ../api/variants/wc/htgf.f90
 ../api/variants/wc/cubrds_mod.f90
+
+../api/main.f90
 ../api/comcup.f90
 ../api/prtrls.f90
 ../api/fmcrbout.f90
@@ -52,6 +51,15 @@
 ../api/strp/escprs.f90
 ../api/strp/esrncm_mod.f90
 ../api/strp/esblkd_mod.f90
+
+##--- New modules
+../api/fvs_step.f90
+../api/step_tregro.f90
+../api/carbon_data.f90
+../api/downwood_data.f90
+../api/tree_data.f90
+../api/snag_data.f90
+../api/guess_age.f90
 
 ../base/src/algcmp.f
 ../base/src/algevl.f
