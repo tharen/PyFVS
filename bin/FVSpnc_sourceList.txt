@@ -4,6 +4,7 @@
 ../api/keycom_mod.f90
 ../api/keywds_mod.f90
 ../api/arrays_mod.f90
+../api/calcom_mod.f90
 ../api/contrl_mod.f90
 ../api/coeffs_mod.f90
 ../api/econ_mod.f90
@@ -39,13 +40,12 @@
 ../api/main.f90
 ../api/variants/pn/blkdat.f90
 ../api/variants/pn/sitset.f90
-../api/variants/pn/siteht_mod.f90
+#../api/variants/pn/siteht_mod.f90
 ../api/variants/wc/findage_mod.f90
 ../api/variants/wc/cratet.f90
 ../api/variants/wc/htgf.f90
 ../api/variants/wc/cubrds_mod.f90
 ../api/comcup.f90
-../api/variants/wc/htgf.f90
 ../api/prtrls.f90
 ../api/fmcrbout.f90
 ../api/fmchrvout.f90
@@ -264,7 +264,7 @@
 ../clim/base/clmorts.f
 ../clim/base/clputget.f
 
-../common/CALCOM.F77
+
 ../common/CALDEN.F77
 ../common/CLIMATE.F77
 

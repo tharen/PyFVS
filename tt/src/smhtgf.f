@@ -7,6 +7,7 @@
       use pden_mod
       use varcom_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C  **SMHTGF--TT   DATE OF LAST REVISION:  02/08/13
@@ -17,8 +18,6 @@ C CALLED FROM **REGENT.
 C CALLS **FINDAG
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
 C----------
       EXTERNAL RANN
       LOGICAL DEBUG,LESTB

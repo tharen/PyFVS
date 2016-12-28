@@ -4,6 +4,7 @@
 ../api/keycom_mod.f90
 ../api/keywds_mod.f90
 ../api/arrays_mod.f90
+../api/calcom_mod.f90
 ../api/contrl_mod.f90
 ../api/coeffs_mod.f90
 ../api/econ_mod.f90

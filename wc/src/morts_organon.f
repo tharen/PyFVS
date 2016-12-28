@@ -9,6 +9,7 @@
       use estree_mod
       use prgprm_mod
       use varcom_mod, only : ptbalt
+      use calcom_mod
       implicit none
 C----------
 C  **MORTS--WC  DATE OF LAST REVISION:  08/13/15
@@ -34,8 +35,6 @@ C  PY:                                 USE PY FROM SW ORGANON
 C  DG, HT, CH:                         USE DG FROM NW ORGANON
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
 C----------
 C  DEFINITIONS:
 C

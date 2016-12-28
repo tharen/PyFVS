@@ -670,7 +670,8 @@ if (WITH_PYEXT)
 
                 "carbon_data.f90" "downwood_data.f90" "tree_data.f90"
                 "fvs_step.f90"
-                "snag_data.f90" "siteht_mod.f90"
+                "snag_data.f90"
+                # "siteht_mod.f90"
                 "findage_mod.f90"
 
 #                "step_grincr.f90" "dbs_commons.f" "fire_commons.f"

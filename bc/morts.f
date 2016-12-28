@@ -9,6 +9,7 @@
       use pden_mod
       use metric_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C  $Id$
@@ -23,7 +24,6 @@ C  IS CALLED FROM **TREGRO** WHEN CYCLING FOR GROWTH PREDICTION.  ENTRY
 C  **MORCON** IS ACCESSED TO LOAD SITE DEPENDENT CONSTANTS.
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
       INCLUDE 'BCPLOT.F77'
 C
 C----------

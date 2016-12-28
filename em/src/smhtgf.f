@@ -7,6 +7,7 @@
       use pden_mod
       use varcom_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C  **SMHTGF--EM   DATE OF LAST REVISION:  03/26/09
@@ -15,8 +16,6 @@ C THIS SUBROUTINE COMPUTES THE HEIGHT GROWTH FOR SMALL TREES (HTGRTH)
 C IN REAL SCALE.  THIS ROUTINE IS CALLED FROM REGENT.
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
       EXTERNAL RANN
 C
       INTEGER I,ISPC

@@ -1,5 +1,5 @@
       SUBROUTINE SITSET
-      use siteht_mod, only: get_siteht
+!      use siteht_mod, only: get_siteht
 
       use prgprm_mod
       use contrl_mod

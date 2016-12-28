@@ -6,6 +6,7 @@
       use outcom_mod
       use pden_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C  **DGF--BM    DATE OF LAST REVISION:  02/16/10
@@ -40,8 +41,6 @@ C  PREDICTION.  ENTRY **DGCONS** IS CALLED BY **RCON** TO LOAD SITE
 C  DEPENDENT COEFFICIENTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES.
 C

@@ -993,27 +993,10 @@ python module @pyext_name@ ! in
                 use plot_mod, only: grospc
             end subroutine copy_snag_data
         end module snag_data
-        module siteht_mod ! in :@pyext_name@:@source_root@/api/variants/pn/siteht_mod.f90
-            integer, parameter,optional :: max_age=200
-            integer, optional,dimension(39) :: lu_tally=0
-            real dimension(200,101,6) :: siteht_lu
-            integer, parameter,optional :: min_site=50
-            integer dimension(39) :: spp_lu
-            integer, parameter,optional :: max_site=150
-            integer, optional,dimension(39) :: fail_over=0
-            integer, parameter,optional :: min_age=1
-            subroutine get_siteht(si,spp,age,siteht) ! in :@pyext_name@:@source_root@/api/variants/pn/siteht_mod.f90:siteht_mod
-                real intent(in) :: si
-                integer intent(in) :: spp
-                real intent(in) :: age
-                real intent(out) :: siteht
-            end subroutine get_siteht
-        end module siteht_mod
         module findage_mod ! in :@pyext_name@:@source_root@/api/variants/wc/findage_mod.f90
             use contrl_mod, only: fast_age_search,jostnd
             use plot_mod
             use arrays_mod
-            use siteht_mod, only: get_siteht
             use prgprm_mod
             real, optional,dimension(39) :: max_age=maxsp*200.
             real, optional,dimension(8) :: age_steps=100.0
@@ -1031,7 +1014,6 @@ python module @pyext_name@ ! in
                 logical :: debug
             end subroutine findag
             subroutine guess_age(site_idx,spp_idx,height,site_height,site_age) ! in :@pyext_name@:@source_root@/api/variants/wc/findage_mod.f90:findage_mod
-                use siteht_mod, only: get_siteht
                 real intent(in) :: site_idx
                 integer intent(in) :: spp_idx
                 real intent(in) :: height

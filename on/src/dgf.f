@@ -7,6 +7,7 @@
       use pden_mod
       use metric_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C  **DGF--ON    DATE OF LAST REVISION:  07/11/08
@@ -31,8 +32,6 @@ C  02/23/06 - ONTARIO DIAMETER GROWTH EQUATIONS ARE FROM MARGARET PENNER
 C
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
 C----------
 C  VARIABLES DEFINED:
 C  DELD  -- TREE'S DIAMETER GROWTH FOR ONE YEAR

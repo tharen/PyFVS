@@ -5,6 +5,7 @@
       use coeffs_mod
       use pden_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C  **DGF--KT    DATE OF LAST REVISION:  04/03/08
@@ -21,8 +22,6 @@ C  PREDICTION.  ENTRY **DGCONS** IS CALLED BY **RCON** TO LOAD SITE
 C  DEPENDENT COEFFICIENTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
       INCLUDE 'KOTCOM.F77'
 C
 C  DIMENSIONS FOR INTERNAL VARIABLES.

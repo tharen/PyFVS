@@ -6,6 +6,7 @@
       use outcom_mod
       use pden_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C  **DGF--OP    DATE OF LAST REVISION:  06/17/2015
@@ -31,8 +32,6 @@ C  RED FIR DATA FROM TOMMY GREGG FOR R6, AND PLOTTED HT VS DBH. GROWING
 C  RED FIR WITH THE NOBLE FIR EQUATION MATCHES VERY WELL. 2/15/02 GED.
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
 C  DIMENSIONS FOR INTERNAL VARIABLES.
 C
 C     DIAM -- ARRAY LOADED WITH TREE DIAMETERS (PASSED AS AN

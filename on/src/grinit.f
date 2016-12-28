@@ -11,6 +11,7 @@
       use metric_mod
       use varcom_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C  **GRINIT--ON  DATE OF LAST REVISION:  07/21/11
@@ -22,7 +23,6 @@ C
       INCLUDE 'OPCOM.F77'
       INCLUDE 'SUMTAB.F77'
       INCLUDE 'CWDCOM.F77'
-      INCLUDE 'CALCOM.F77'
 C
 C----------
       INTEGER I,J,K

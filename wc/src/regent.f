@@ -9,6 +9,8 @@
       use plot_mod
       use varcom_mod
       use prgprm_mod
+      use calcom_mod
+      use estcor_mod
       implicit none
 C----------
 C  **REGENT--WC   DATE OF LAST REVISION:  02/08/13
@@ -28,10 +30,6 @@ C  **SMHGDG IS CALLED TO CALCULATE SMALL TREE HEIGHT AND DIAMETER
 C  INCREMENT
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
-      INCLUDE 'ESTCOR.F77'
-C
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES:
 C

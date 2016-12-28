@@ -7,6 +7,7 @@
       use plot_mod
       use metric_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C  $Id$
@@ -18,8 +19,6 @@ C   MAINTAINS AN INGROWTH ACCUMULATOR, MAKES THE CORRECTION
 C   TO RELATIVE DENSITY FOR NON-STOCKABLE POINTS, AND LOADS PCT
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
 C----------
       INTEGER I,IS,IP,ISPC,I1,I2,I3,II
       REAL SSUMN,TEMP1,TEMP2,RAT,TOTAL,CCFT,CW,BATREE,DP,P,BAT,RELDT

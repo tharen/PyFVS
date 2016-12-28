@@ -8,6 +8,7 @@
       use coeffs_mod
       use pden_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C NI $Id$
@@ -22,8 +23,6 @@ C  IS CALLED FROM **TREGRO** WHEN CYCLING FOR GROWTH PREDICTION.  ENTRY
 C  **MORCON** IS ACCESSED TO LOAD SITE DEPENDENT CONSTANTS.
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
 C----------
 C  DEFINITIONS:
 C

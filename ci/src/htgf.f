@@ -7,6 +7,7 @@
       use coeffs_mod
       use outcom_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C  **HTGF--CI    DATE OF LAST REVISION:   08/14/12
@@ -20,8 +21,6 @@ C  **HTCONS** IS CALLED FROM **RCON** TO LOAD SITE DEPENDENT
 C  CONSTANTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
 C----------
 C   MODEL COEFFICIENTS AND CONSTANTS:
 C

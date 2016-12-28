@@ -10,6 +10,7 @@
       use pden_mod
       use varcom_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C  **MORTS--EM   DATE OF LAST REVISION:  09/09/13
@@ -26,8 +27,6 @@ C  BAMAX BASED MORTALITY TAKES OVER. IF NOT SET BY THE USER, BAMAX IS
 C  DETERMINED FROM MAX SDI AT 10" DBH.
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
 C----------
 C  DEFINITIONS:
 C

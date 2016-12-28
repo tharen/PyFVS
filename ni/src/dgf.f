@@ -4,6 +4,7 @@
       use plot_mod
       use coeffs_mod
       use arrays_mod
+      use calcom_mod
       implicit none
 C----------
 C  **DGF--NI    DATE OF LAST REVISION:  04/09/08
@@ -20,8 +21,6 @@ C  PREDICTION.  ENTRY **DGCONS** IS CALLED BY **RCON** TO LOAD SITE
 C  DEPENDENT COEFFICIENTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
 C  DIMENSIONS FOR INTERNAL VARIABLES.
 C
 C     DIAM -- ARRAY LOADED WITH TREE DIAMETERS (PASSED AS AN

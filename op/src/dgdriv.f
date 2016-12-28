@@ -5,6 +5,8 @@
       use contrl_mod
       use coeffs_mod
       use prgprm_mod
+      use calcom_mod
+      use estcor_mod
       implicit none
 C----------
 C OP $Id: dgdriv.f 1146 2014-02-06 16:44:38Z rhavis@msn.com $
@@ -24,11 +26,7 @@ C  **DGF** IS ACCESSED TO LOAD LN(DDS) INTO THE ARRAY WK3.  DDS
 C  REPRESENTS CHANGE IN SQUARED DIAMETER.
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
       INCLUDE 'MULTCM.F77'
-C
-      INCLUDE 'ESTCOR.F77'
 C
       INCLUDE 'ORGANON.F77'
 C
