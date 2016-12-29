@@ -20,7 +20,8 @@ foreach (variant ${FVS_VARIANTS})
         $<TARGET_OBJECTS:sql_lib>
         $<TARGET_OBJECTS:common_objs>
         )
-    
+    target_link_libraries(${fvslib} odbc ltdl)
+
     ## Optionally link to the shared/static library
     #set(fvs_objs "fvs${variant}_static")
     #add_library(${fvslib} SHARED ${wrap_src})

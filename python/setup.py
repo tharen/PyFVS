@@ -6,7 +6,7 @@ extensions = [
     Extension(
         'pyfvspnc'
         , ['pyfvspnc.pyx',]
-        , libraries=['fvspnc','odbc','ltdl']
+        , libraries=['fvspnc',]
         , library_dirs=['../build',]
         )
     ]
