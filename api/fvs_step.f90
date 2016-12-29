@@ -40,6 +40,10 @@ module fvs_step
         ! Initialize the variant parameters and arrays
         ! TODO: This should probably be elevated to a toplevel routine.
         ! TODO: Perhaps this should initialize whatever setcmdline is doing.
+
+#ifdef _WINDLL
+        !GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: init_blkdata
+#endif
         call blkdat()
         call esblkd()
         call cubrds()
@@ -61,7 +65,9 @@ module fvs_step
 
         implicit none
 
+#ifdef _WINDLL
         !GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvs_init
+#endif
 
         !Python F2PY Interface Directives
         !f2py character(len=*),intent(in) :: keywords_file
@@ -343,7 +349,9 @@ module fvs_step
         
         implicit none
 
+#ifdef _WINDLL
         !GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvs_grow
+#endif
 
         !Python F2PY Interface Directives
         !f2py integer,intent(out) :: irtncd
@@ -462,8 +470,10 @@ module fvs_step
         use outcom_mod
         implicit none
 
-        !GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvs_end
-        
+#ifdef _WINDLL
+       !GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvs_end
+#endif
+
         !Python F2PY Interface Directives
         !f2py integer,intent(out) :: irtncd
 
