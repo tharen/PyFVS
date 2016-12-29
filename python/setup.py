@@ -87,7 +87,7 @@ setup(
     , packages=['pyfvs','pyfvs.keywords']
     , package_data={
             '':['*.pyd','*.cfg','*.so','README.*']
-            ,'pyfvs':['docs/*','examples/*','test/*.py']
+            ,'pyfvs':['docs/*','examples/*','test/*.py','test/rmrs/*']
             }
     #, include_package_data=True # package the files listed in MANIFEST.in
     , entry_points={

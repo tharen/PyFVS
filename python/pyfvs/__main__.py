@@ -68,7 +68,7 @@ def handle_command_line():
     if args.run_tests:
         import subprocess
         os.chdir(os.path.join(os.path.dirname(__file__), 'test'))
-        subprocess.call('nose2')
+        subprocess.call('pytest')
         sys.exit()
 
     if args.help_variants:
