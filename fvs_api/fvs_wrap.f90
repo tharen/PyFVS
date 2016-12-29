@@ -17,8 +17,8 @@ module fvs_wrap
 
     end function f2c_string
 
-    subroutine version(ver) bind(c, name='ver')
-        character(kind=c_char, len=1) :: ver
+    subroutine version(ver) bind(c, name='version')
+        character(kind=c_char, len=1) :: ver(7)
 
         ver = '0.0.0a0'
 

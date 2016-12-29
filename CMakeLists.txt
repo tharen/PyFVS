@@ -16,6 +16,9 @@ foreach (variant ${FVS_VARIANTS})
     add_library(${fvslib}
         SHARED ${wrap_src}
         $<TARGET_OBJECTS:${fvs_objs}>
+        $<TARGET_OBJECTS:ffe_lib>
+        $<TARGET_OBJECTS:sql_lib>
+        $<TARGET_OBJECTS:common_objs>
         )
     
     ## Optionally link to the shared/static library
