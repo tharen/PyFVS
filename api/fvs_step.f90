@@ -535,6 +535,10 @@ module fvs_step
         call getlun(i)
         inquire(unit=i,opened=LFLAG)
         if (LFLAG) close(unit=i)
+        
+        ! Ensure all files are closed
+        write(*,*) 'Done'
+        call filclose
 
         return
     end subroutine fvs_end

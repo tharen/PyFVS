@@ -75,7 +75,14 @@ class FVS(object):
         self._random_seed = 55329  # Default FVS random number seed
 
         self.fvslib_path = None
+        self.fvslib = None
+        self.projection_active = False
+        
         self._load_fvslib()
+        
+        # if self.fvslib is None:
+            # raise ValueError('Error initializing the FVS library.')
+            
         self.trees = FVSTrees(self)
         self._spp_codes = None
         self._spp_seq = None
@@ -204,6 +211,8 @@ class FVS(object):
 
         if self.stochastic:
             self.set_random_seed()
+        
+        self.projection_active = True
 
     def grow_projection(self, cycles=1):
         """
@@ -219,12 +228,15 @@ class FVS(object):
         for n in range(cycles):
             r = self.fvs_step.fvs_grow()
             # TODO: Handle non-zero exit codes
-
+        
+        return r
+        
     def __del__(self):
         """
         Cleanup when the instance is destroyed.
         """
-        self.end_projection()
+        if self.projection_active:
+            self.end_projection()
 
     def end_projection(self):
         """
@@ -232,6 +244,7 @@ class FVS(object):
         """
         # Finalize the projection
         r = self.fvs_step.fvs_end()
+        self.projection_active = False
 
         if r == 1:
             msg = 'FVS returned error code {}.'.format(r)
@@ -255,7 +268,8 @@ class FVS(object):
 
         self.init_projection(keywords)
         self.grow_projection(0)
-        self.end_projection()
+        r = self.end_projection()
+        return r
 
     def write_treelist(self, plots, treelist_path):
         """
