@@ -80,9 +80,9 @@ setup(
     , url='https://github.com/tharen/PyFVS'
     , author="Tod Haren"
     , author_email="tod.haren@gmail.com"
-    , setup_requires=['cython','numpy>=1.9',]
-    , tests_require=['nose2','nose-parameterized']
-    , install_requires=['numpy>=1.9',] #'numexpr']
+    , setup_requires=['cython','numpy>=1.9','pytest-runner']
+    , tests_require=['pytest',]
+    , install_requires=['numpy>=1.11',] #'numexpr']
     , ext_modules=extensions
     , packages=['pyfvs','pyfvs.keywords']
     , package_data={
