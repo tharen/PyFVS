@@ -5,16 +5,17 @@ enable_language(Fortran)
 
 add_subdirectory(fvs)
 
+include(./fvs_api/CMakeLists.txt)
+
 foreach (variant ${FVS_VARIANTS})
     message(STATUS "Configure wrapper for: ${variant}")
     set(fvslib "fvs${variant}-wrap")
-    set(wrap_src "../fvs_api/fvs_wrap.f90")
 
     # Link the wrapper with the FVS variant library
     # Link the cmake object library
     set(fvs_objs "fvs${variant}_objs")
     add_library(${fvslib}
-        SHARED ${wrap_src}
+        SHARED ${api_src}
         $<TARGET_OBJECTS:${fvs_objs}>
         $<TARGET_OBJECTS:ffe_lib>
         $<TARGET_OBJECTS:sql_lib>
@@ -32,6 +33,8 @@ foreach (variant ${FVS_VARIANTS})
         OUTPUT_NAME "fvs${variant}"
         LINKER_LANGUAGE Fortran
         )
+    
+    include_directories("./fvs/pn/common")
 
 endforeach ()
 

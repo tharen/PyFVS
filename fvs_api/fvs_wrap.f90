@@ -1,28 +1,10 @@
 module fvs_wrap
-    use iso_c_binding
+    use iso_c_binding, only : c_char
+    use cstr, only : f2c_string, c2f_string
 
     implicit none
 
     contains
-
-    pure function f2c_string(f_str) result(c_str)
-        ! Convert from a fortran string to a C string
-        ! From http://fortranwiki.org/fortran/show/Generating+C+Interfaces
-        use, intrinsic :: iso_c_binding, only: c_char, c_null_char
-        implicit none
-        character(len=*), intent(in) :: f_str
-        character(kind=c_char, len=1) :: c_str(len_trim(f_str)+1)
-        integer i,n
-
-        n = len_trim(f_str)
-        do i=1,n
-            c_str(i:i) = f_str(i:i)
-        end do
-        c_str(n+1:n+1) = c_null_char
-
-        !c_str = f_str // c_null_char
-
-    end function f2c_string
 
     subroutine version(ver) bind(c, name='version')
         character(kind=c_char, len=1) :: ver(7)
@@ -30,6 +12,20 @@ module fvs_wrap
         ver = f2c_string('0.0.0a0')
 
     end subroutine version
+
+    subroutine run_fvs(kwd, rtn) bind(c, name='run_fvs')
+        use iso_c_binding, only : c_int
+        character(kind=c_char), intent(in) :: kwd(*)
+        integer(c_int), intent(out) :: rtn
+        character(len=255) :: kwd_f
+        integer :: l
+        
+        kwd_f = c2f_string(kwd)
+        l = len_trim(kwd_f)
+        print *, kwd_f(1:l+14)
+        call fvssetcmdline('--keywordfile='//trim(kwd_f),l+14,rtn)
+        call fvs(rtn)
+    end subroutine run_fvs
 
 end module fvs_wrap
 
