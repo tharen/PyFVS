@@ -1,12 +1,96 @@
+import os
 
 cdef extern:
-    void fvs_version "version" (char* ver)
+    void f_api_version "api_version" (char* ver)
+    void f_run_fvs "run_fvs" (char* kwd, int* rtn)
+    
+    # Variant parameters access methods
+    int f_get_maxtre "get_maxtre" ()
+    
+    # Common block data
+#    cdef struct arrays:
+#        float abirth[3000]
+#        float bfv[3000]
+#        float cfv[3000]
+#        float dbh[3000]
+#        float dg[3000]
+#        float ht[3000]
+#        float htg[3000]
+#        float oldrn[3000]
+#        float oldpct[3000]
+#        float pct[3000]
+#        float prob[3000]
+#        float wk1[3000]
+#        float wk2[3000]
+#        float wk3[3000]
+#        float wk4[3000]
+#        float wk5[3000]
+#        float wk6[3000]
+#        float zrand[3000]
+#        int idtree[3000]
+#        int icr[3000]
+#        int imc[3000]
+#        int ind[3000]
+#        int ind1[3000]
+#        int normht[3000]
+#        int itrunc[3000]
+#        int ind2[3000]
+#        int isp[3000]
+#        int itre[3000]
+#        int kutkod[3000]
+#        int defect[3000]
+#        int ispecl[3000]
+#        int pltsiz[3000]
+#        int crwdth[3000]
+#        int yrdlos[3000]
+#        #int damsev[6,3000]
+#        #int ht3td[3000,2]
 
-def py_version():
+#    cdef arrays arrays_
+
+#def get_arrays():
+#    pass
+#    #print(arrays_)
+#    #print(icr_)
+
+def get_maxtre():
+    """Return the value of the variant MAXTRE parameter."""
+    return f_get_maxtre()
+
+def api_version():
+    """Return the PyFVS API version identifier."""
     cdef char* v
-
-    _v = b'\0*7'
-    v = _v
-    fvs_version(v)
+    v_ = b'8'*8
+    v = v_
+    f_api_version(v)
     return v
+
+def run_fvs(char* kwd):
+    """
+    Execute a FVS simulation.
+
+    Args
+    ----
+    kwd - Path of a valid FVS Keyword file.
+
+    Returns
+    -------
+    rtn - FVS return code
+
+    """
+    cdef int rtn=0
+
+    if not os.path.exists(kwd):
+        raise ValueError('Keyword file does not exist: {}'.format(kwd))
+
+#    try:
+#        b_kwd = kwd.encode('utf-8')
+#
+#    except:
+#        print('Error encoding kwd argument to bytes: {}'.format(kwd))
+#        raise
+
+    f_run_fvs(kwd, &rtn)
+
+    return rtn
 

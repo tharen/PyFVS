@@ -1,13 +1,13 @@
 import shutil
 
-from distutils.core import setup
+from setuptools import setup
 from distutils.extension import Extension
 from Cython.Build import cythonize
 
 
 extensions = []
 
-variants = ['pnc','wcc','cac','soc']
+variants = ['pnc',] #'wcc','cac','soc']
 for variant in variants:
     cython_ext = 'pyfvs{}.pyx'.format(variant)
     shutil.copy('pyfvsvar.pyx.in',cython_ext)
@@ -22,5 +22,7 @@ for variant in variants:
 setup(
     name = 'PyFVS'
     , ext_modules = cythonize(extensions)
+    , setup_requires=['pytest-runner',]
+    , tests_require=['pytest',]
 )
 
