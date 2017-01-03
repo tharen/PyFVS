@@ -3,7 +3,7 @@ import shutil
 from setuptools import setup
 from distutils.extension import Extension
 from Cython.Build import cythonize
-
+import numpy
 
 extensions = []
 
@@ -16,6 +16,7 @@ for variant in variants:
         , [cython_ext,]
         , libraries=['fvs{}'.format(variant),]
         , library_dirs=['../build',]
+        , include_dirs=[numpy.get_include(),]
         )
     extensions.append(ext)
 

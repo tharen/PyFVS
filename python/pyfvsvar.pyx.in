@@ -8,11 +8,11 @@ cdef extern:
     int f_get_maxtre "get_maxtre" ()
     
     # Common block data
-#    cdef struct arrays:
-#        float abirth[3000]
-#        float bfv[3000]
-#        float cfv[3000]
-#        float dbh[3000]
+    cdef struct arrays:
+        float abirth[3000]
+        float bfv[3000]
+        float cfv[3000]
+        float dbh[3000]
 #        float dg[3000]
 #        float ht[3000]
 #        float htg[3000]
@@ -46,7 +46,7 @@ cdef extern:
 #        #int damsev[6,3000]
 #        #int ht3td[3000,2]
 
-#    cdef arrays arrays_
+    cdef arrays arrays_
 
 #def get_arrays():
 #    pass
@@ -93,4 +93,22 @@ def run_fvs(char* kwd):
     f_run_fvs(kwd, &rtn)
 
     return rtn
+
+import numpy as np
+cimport numpy as np
+np.import_array()
+
+cdef class FVS:
+    #cdef arrays_ arrays
+
+    cpdef run_fvs(self, char* kwd):
+        cdef int rtn = 0
+        f_run_fvs(kwd, &rtn)
+        return rtn
+
+    @property
+    def cfv(self):
+        cdef np.ndarray ndarry
+        ndarray = np.array(arrays_.cfv, copy=False)
+        return ndarray
 
