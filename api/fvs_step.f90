@@ -34,6 +34,10 @@ module fvs_step
     use cubrds_mod, only: cubrds
     use keywds_mod, only: keywds
 
+    logical sim_active
+
+    private :: sim_active
+
     contains
 
     subroutine init_blkdata()
@@ -88,6 +92,14 @@ module fvs_step
         INTEGER IRSTRTCD,ISTOPDONE,lenCl
 
         character(len=100) :: fmt
+
+        ! Don't clober an active simulation
+        if (sim_active) then
+            irtncd = -1
+            return
+        end if
+
+        sim_active = .false.
 
         ! Initialize parameters and arrays
         ! TODO: This should probably be elevated to a toplevel call
@@ -341,6 +353,9 @@ module fvs_step
         CALL EVTSTV(-1)
 
         !This is 40, the entrance to the grower loop in fvs.f
+
+        ! Flag the simulation as active
+        sim_active = .true.
         return
     end subroutine fvs_init
 
@@ -369,6 +384,11 @@ module fvs_step
         INTEGER IRSTRTCD,ISTOPDONE,lenCl
 
         character(len=100) :: fmt
+
+        if (.not. sim_active) then
+            irtncd = -1
+            return
+        end if
 
         DEBUG=.FALSE.
 
@@ -454,6 +474,7 @@ module fvs_step
             ENDDO
         ENDIF
 
+        sim_active = .true.
         return
     end subroutine fvs_grow
 
@@ -488,6 +509,12 @@ module fvs_step
         REAL PRM(1)
         DATA MYACT/100/
         INTEGER IRSTRTCD,ISTOPDONE,lenCl
+
+        ! Bail if a simulation is not active
+        if (.not. sim_active) then
+            irtncd = -1
+            return
+        end if
 
         DEBUG=.FALSE.
 
@@ -550,6 +577,8 @@ module fvs_step
         write(*,*) 'Done'
         call filclose
 
+        ! Flag the simulation as inactive
+        sim_active = .false.
         return
     end subroutine fvs_end
 
