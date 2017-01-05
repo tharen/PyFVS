@@ -6,4 +6,4 @@ REM set PATH=C:\Ruby22-x64\bin;%PATH%
 REM set PATH=C:\progs\Git\bin;C:\progs\Git\usr\bin;%PATH%
 set path=%path%;C:\Miniconda3\Scripts;C:\Miniconda3
 
-call activate pyfvs_py34_amd64
+call activate fomo

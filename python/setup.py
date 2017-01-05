@@ -13,7 +13,7 @@ import numpy
 #       Python 3.5 requires VS 2015
 
 # TODO: Get the version from the git tag and or revision.
-version = '0.0.1a0'
+version = '0.0.5a0'
 
 description = open('./README.txt').readline().strip()
 long_desc = open('./README.txt').read().strip()
