@@ -8,25 +8,21 @@ c     inside FVS may also be called.
 c     Created in late 2011 by Nick Crookston, RMRS-Moscow
       
       subroutine fvsgetversion(api,svn,fvs_variant) 
-     &    bind(c, name="fvsgetversion")
-      
-      use iso_c_binding, only: c_char, c_null_char
       implicit none
 
 !Python F2PY Interface Directives
 !f2py intent(out) :: api, svn, fvs_variant
 
-      character(kind=c_char) :: api(5), svn(7), fvs_variant(3)
+      character :: api(5), svn(7), fvs_variant(3)
       !integer, intent(out) :: foo
       
 #ifdef _WINDLL
 !GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsgetversion
-!xxGCC$ ATTRIBUTES REFERENCE :: api, svn, fvs_variant
 #endif
 
-      api = C_CHAR_"0.1a"//C_NULL_CHAR
+      api = "0.1a"
       svn = 'abcdef'
-      fvs_variant = C_CHAR_'XX'//C_NULL_CHAR
+      fvs_variant = 'XX'
       !foo = 98765
       
       end subroutine fvsgetversion

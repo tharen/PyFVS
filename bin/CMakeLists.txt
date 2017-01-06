@@ -538,6 +538,10 @@ endforeach()
 set(fvs_objs "fvs${variant}_objs")
 add_library(${fvs_objs} OBJECT ${fvs_source} ${common_source})
 
+set(objs_timestamp "${variant}_timestamp")
+add_custom_target(${objs_timestamp} ALL
+        COMMAND ${CMAKE_COMMAND} -E touch "${variant}_timestamp")
+
 # Ensure common source files are built before the variant sources
 add_dependencies(${fvs_objs} common_objs)
 
@@ -649,7 +653,7 @@ if (WITH_PYEXT)
     set(_pyext_src
                 "apisubs.f" "cmdline.f" "fvs.f"
                 "filopn.f" "htcalc.f" "rann.f"
-                "htdbh.f"
+                "htdbh.f" "forkod.f"
 
                 "prgprm_mod.f90" "esparm_mod.f90" "arrays_mod.f90"
                 "contrl_mod.f90"
@@ -679,9 +683,11 @@ if (WITH_PYEXT)
 
                 "esblkd_mod.f90" "esrncm_mod.f90" "escprs.f90"
                 )
+                
     # Routines to be skipped by F2PY
     set(pyext_skip "") #required by f2py_gen
 
+    # Get the path names of the source files to be wrapped
     foreach (fn ${source_files})
         if (NOT ${fn} MATCHES "^#.*")
             get_filename_component(filename ${fn} NAME)
@@ -729,10 +735,11 @@ if (WITH_PYEXT)
     # Configure the setup.py script for the current variant.
     configure_file(../../setup.py.in setup.py @ONLY)
     configure_file(${source_root}/python/pyfvs_wrap.pyf.in ${pyext_name}.pyf @ONLY)
-
-    # Compile the Python extension library
+    
+    # Generate the F2PY wrappers and compile the Python extension library
     add_custom_command(
             OUTPUT ${pyext_fn}
+            COMMAND ${CMAKE_COMMAND} -E env "PYTHONPATH=${CMAKE_SOURCE_DIR}$<SEMICOLON>$ENV{PYTHONPATH}" python -c "import gen_pyf as g$<SEMICOLON>import sys$<SEMICOLON>print(sys.path)$<SEMICOLON>g.gen_pyf('${pyext_name}.pyf','${pyext_name}','./pyext_source.txt')" > ../py<<variant>>_f2py.log 2>&1
             COMMAND python ARGS setup.py build_ext --inplace --force ${cmd_args} >> ../py<<variant>>_f2py.log 2>&1
             DEPENDS ${fvslib_static} ./pyext_source.txt
             COMMENT "Compile python extension."
