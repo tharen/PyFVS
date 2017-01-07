@@ -574,7 +574,6 @@ module fvs_step
         if (LFLAG) close(unit=i)
         
         ! Ensure all files are closed
-        write(*,*) 'Done'
         call filclose
 
         ! Flag the simulation as inactive

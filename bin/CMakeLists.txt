@@ -731,15 +731,16 @@ if (WITH_PYEXT)
 #    if (CMAKE_BUILD_TYPE STREQUAL Debug)
 #        list(APPEND cmd_args "--debug")
 #    endif ()
-
+    
     # Configure the setup.py script for the current variant.
     configure_file(../../setup.py.in setup.py @ONLY)
+    configure_file(../../gen_pyf.py.in gen_pyf.py @ONLY)
     configure_file(${source_root}/python/pyfvs_wrap.pyf.in ${pyext_name}.pyf @ONLY)
     
     # Generate the F2PY wrappers and compile the Python extension library
     add_custom_command(
             OUTPUT ${pyext_fn}
-            COMMAND ${CMAKE_COMMAND} -E env "PYTHONPATH=${CMAKE_SOURCE_DIR}$<SEMICOLON>$ENV{PYTHONPATH}" python -c "import gen_pyf as g$<SEMICOLON>import sys$<SEMICOLON>print(sys.path)$<SEMICOLON>g.gen_pyf('${pyext_name}.pyf','${pyext_name}','./pyext_source.txt')" > ../py<<variant>>_f2py.log 2>&1
+            COMMAND python ARGS gen_pyf.py > ../py<<variant>>_f2py.log 2>&1
             COMMAND python ARGS setup.py build_ext --inplace --force ${cmd_args} >> ../py<<variant>>_f2py.log 2>&1
             DEPENDS ${fvslib_static} ./pyext_source.txt
             COMMENT "Compile python extension."

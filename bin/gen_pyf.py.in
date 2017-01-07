@@ -1,0 +1,13 @@
+from numpy.f2py import f2py2e
+
+sources = open('./pyext_source.txt').read()
+sources = sources.split(';')
+
+cmd_args = [
+        '-h', '@pyext_name@.pyf'
+        ,'-m', '@pyext_name@'
+        ,'--overwrite-signature'
+        ]
+cmd_args.extend(sources)
+f2py2e.run_main(cmd_args)
+
