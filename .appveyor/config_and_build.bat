@@ -26,7 +26,7 @@ call %PYTHON%\Scripts\activate %ENV_NAME%
 ::set PATH=%PYTHON_HOME%;%PYTHON_HOME%\Scripts;%PATH%
 
 :: Build libpython just incase it's absent
-call python bin\build\gen_libpython.py
+call python bin\gen_libpython.py
 
 call python -c "import sys;print(sys.version)"
 call python -c "import sys;print(sys.executable)"
