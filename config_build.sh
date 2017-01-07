@@ -7,3 +7,4 @@ cmake -G"Unix Makefiles" .. \
     -DSTATIC_LINK=ON -DENABLE_LTO=OFF \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=$(pwd)/dist
+
