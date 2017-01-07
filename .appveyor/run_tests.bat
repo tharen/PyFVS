@@ -1,6 +1,6 @@
 
 :: Make sure the named Python environment is active
-REM call %PYTHON%\Scripts\activate %ENV_NAME%
+call %PYTHON%\Scripts\activate %ENV_NAME%
 
 :: Report the current numpy version
 call python -c "import numpy;print('Numpy version:',numpy.version.version)"

@@ -46,10 +46,10 @@ install:
     - "set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
     - conda config --set always_yes yes --set changeps1 no
     - conda update -q conda
-    - "conda create -q -n %ENV_NAME% python=%PYTHON_VERSION% numpy"    
+    - "conda create -q -n %ENV_NAME% python=%PYTHON_VERSION% numpy pandas cython pytest"    
     - conda info -a
     - activate %ENV_NAME%
-    - pip install nose2 nose-parameterized cython
+    - "python %APPVEYOR_BUILD_FOLDER%\\bin\\gen_libpython.py"
     
 build_script:
     # Configure the CMake project and execute the build
