@@ -49,7 +49,6 @@ install:
     - "conda create -q -n %ENV_NAME% python=%PYTHON_VERSION% numpy pandas cython pytest"    
     - conda info -a
     - activate %ENV_NAME%
-    - "python %APPVEYOR_BUILD_FOLDER%\\bin\\gen_libpython.py"
     
 build_script:
     # Configure the CMake project and execute the build
