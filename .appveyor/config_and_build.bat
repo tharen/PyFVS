@@ -44,7 +44,7 @@ cmake -G "MinGW Makefiles" .. ^
     -DCMAKE_INSTALL_PREFIX=Open-FVS || goto :error_configure
 
 :: Compile and install locally
-cmake --build . --target install -- -j4 2> build_err.log || goto :error_build
+cmake --build . --target install 2> build_err.log || goto :error_build
 
 :: Exit clean
 goto :exit
