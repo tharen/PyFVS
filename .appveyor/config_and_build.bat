@@ -32,11 +32,12 @@ call python -c "import sys;print(sys.executable)"
 mkdir bin\build
 pushd bin\build
 cmake -G "MinGW Makefiles" .. ^
-    -DFVS_VARIANTS="pnc;wcc" ^
+    -DFVS_VARIANTS="pnc;wcc;soc;cac" ^
     -DCMAKE_SYSTEM_NAME=Windows ^
     -DNATIVE_ARCH=No ^
     -D32BIT_TARGET=%win32% ^
     -DWITH_PYEXT=Yes ^
+    -DCMAKE_BUILD_TYPE=Release ^
     -DCMAKE_INSTALL_PREFIX=Open-FVS || goto :error_configure
 
 :: Compile and install locally

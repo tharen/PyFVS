@@ -13,5 +13,5 @@ call python -c "import sys;print(sys.executable)"
 call python -c "import sys;print(sys.version)"
 
 :: Execute all test scripts
-call python -m nose2
+call pytest --verbose
 popd

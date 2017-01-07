@@ -1,4 +1,5 @@
+pandas
 numpy
-# matplotlib
-nose2
-nose-parameterized
+pytest
+cython
+
