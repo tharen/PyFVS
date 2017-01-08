@@ -40,6 +40,7 @@ install:
     # Setup the python environment and install required packages
     # - cmd: .appveyor\\setup_env.bat
     - "set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+    - conda config --add channels conda-forge
     - conda config --set always_yes yes --set changeps1 no
     - conda update -q conda
     #- "conda create -q -n %ENV_NAME% python=%PYTHON_VERSION% numpy pandas cython pytest"
