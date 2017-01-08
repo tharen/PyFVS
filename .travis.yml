@@ -47,7 +47,7 @@ install:
 
 script:
   - source .travis-ci/configure.sh
-  - cd ${BUILD_ROOT} && make -j2 install 2> build_err.log
+  - cd ${BUILD_ROOT} && cmake --build . --target install 2> build_err.log
   
   # Run unit tests
   - source ${TRAVIS_BUILD_DIR}/.travis-ci/run_tests.sh
