@@ -62,7 +62,7 @@ def test_bare_ground(variant, kwd_path, sum_path):
     sum_test.columns = fldnames
     
     for fld in fldnames[:18]:
-        assert np.array_equal(sum_check.loc[:,fld],sum_test.loc[:,fld])
+        assert np.all(np.isclose(sum_check.loc[:,fld],sum_test.loc[:,fld], atol=1))
     
 if __name__=='__main__':
     test_bare_ground(*bare_ground_params[0])
