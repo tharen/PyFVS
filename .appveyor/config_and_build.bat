@@ -8,14 +8,13 @@ REM ) else (
     REM set win32=Yes
 REM )
 
+set MINGW_PATH=C:\msys64\mingw64\bin
+set win32=No
+
 set PATH=%PYTHON%;C:\msys64\mingw64\bin;C:\Program Files (x86)\cmake\bin
-:: set PATH=%PYTHON%;C:\msys64\mingw32\bin;C:\Program Files (x86)\cmake\bin
-REM set PATH=%PYTHON%;%MINGW_PATH%;C:\Program Files (x86)\cmake\bin
 set PATH=%PATH%;C:\Windows\System32;C:\Windows
 echo %PATH%
 echo %PYTHONPATH%
-call python -c "import sys;print(sys.executable)"
-call python -c "import sys;print(sys.version)"
 
 :: Python and CMake include with MSYS MinGW conflict with the target executables
 del %MINGW_PATH%\python.exe
@@ -23,13 +22,12 @@ del %MINGW_PATH%\cmake.exe
 
 :: Activate the target Python environment
 call %PYTHON%\Scripts\activate %ENV_NAME%
-::set PATH=%PYTHON_HOME%;%PYTHON_HOME%\Scripts;%PATH%
-
-:: Build libpython just incase it's absent
-call python bin\gen_libpython.py
 
 call python -c "import sys;print(sys.version)"
 call python -c "import sys;print(sys.executable)"
+
+:: Build libpython just in case it's absent
+call python bin\gen_libpython.py
 
 :: Configure CMake
 mkdir bin\build

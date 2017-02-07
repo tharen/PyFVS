@@ -10,20 +10,16 @@ environment:
     CMD_IN_ENV: "cmd /E:ON /V:ON /C %APPVEYOR_BUILD_FOLDER%\\.appveyor\\run_with_env.cmd"
     
   matrix:
-    # - PYTHON: "C:\\Miniconda35-x64"
-      # PYTHON_VERSION: "3.4" # NOTE: Not a typo, use support for Python 3.4
-      # PYTHON_ARCH: "64"
-      # ENV_NAME: "py34_x64_conda"
-
-      # - PYTHON: "C:\\Python35-x64"
-      # PYTHON_VERSION: "3.5.x"
-      # PYTHON_ARCH: "64"
-      # ENV_NAME: "py35_x64"
 
     - PYTHON: "C:\\Miniconda-x64"
       PYTHON_VERSION: "2.7"
       PYTHON_ARCH: "64"
       ENV_NAME: "py27_x64_conda"
+
+    - PYTHON: "C:\\Miniconda-x64"
+      PYTHON_VERSION: "3.4"
+      PYTHON_ARCH: "64"
+      ENV_NAME: "py34_x64_conda"
 
     # - PYTHON: "C:\\Miniconda"
       # PYTHON_VERSION: "2.7"
@@ -46,9 +42,11 @@ install:
     - "set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
     - conda config --set always_yes yes --set changeps1 no
     - conda update -q conda
-    - "conda create -q -n %ENV_NAME% python=%PYTHON_VERSION% numpy pandas cython pytest"    
+    #- "conda create -q -n %ENV_NAME% python=%PYTHON_VERSION% numpy pandas cython pytest"
+    - conda create -q -n %ENV_NAME% python=$PYTHON_VERSION --file .appveyor\\requirements_conda.txt
     - conda info -a
     - activate %ENV_NAME%
+    - python -c "import sys;print(sys.executable)"
     
 build_script:
     # Configure the CMake project and execute the build

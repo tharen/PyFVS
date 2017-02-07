@@ -1,0 +1,18 @@
+channels: !!python/tuple
+- conda-forge
+- defaults
+dependencies:
+- python=3.4
+- alabaster
+- click
+- cython>=0.25.2
+- numpy
+- pandas>=0.19.1
+- pip
+- pyodbc
+- setuptools
+- sphinx>=1.4.8
+- wheel
+- pip:
+  - pytest
+  - sphinxcontrib-napoleon>=0.5.3

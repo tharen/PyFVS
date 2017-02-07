@@ -1,3 +1,0 @@
-# requirements available with pip
-nose-parameterized
-nose2

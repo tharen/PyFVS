@@ -1,5 +1,5 @@
 # requirements available with conda
-numpy>=1.9
+numpy
+cython
 pandas
 pytest
-
