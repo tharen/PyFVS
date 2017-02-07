@@ -3,8 +3,8 @@ set oldpath=%path%
 REM call activate pyfvs_py34_amd64
 python gen_libpython.py
 
-if not exist ".\buildfoo" mkdir ".\buildfoo"
-cd .\buildfoo
+if not exist ".\build" mkdir ".\build"
+cd .\build
 
 set path=%path:C:\progs\git\bin;=%
 set path=%path:C:\progs\git\usr\bin;=%
