@@ -95,7 +95,6 @@ setup(
             'pyfvs=pyfvs.__main__:main'
             ]
         }
-    , test_suite='nose2.collector.collector'
     , classifiers=[
             'Development Status :: 3 - Alpha'
             , 'Environment :: Console'
