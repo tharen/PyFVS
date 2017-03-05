@@ -32,8 +32,8 @@ environment:
       # ENV_NAME: "py27_x64"
 
 init:
- # # Display remote desktop details
- # - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+    # Display remote desktop details
+    - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
     - "echo %PYTHON_VERSION% %PYTHON%"
     
 install:
