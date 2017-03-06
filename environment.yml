@@ -5,7 +5,7 @@ dependencies:
 - alabaster
 - click
 - cython
-- numpy=1.11
+- numpy
 - pandas
 - pip
 - pyodbc
