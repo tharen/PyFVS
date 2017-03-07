@@ -3,7 +3,7 @@ set pythonpath=
 
 :: Make sure the named Python environment is active
 call %PYTHON%\Scripts\activate %ENV_NAME%
-conda install wheel
+call conda install wheel
 
 :: Move into the package parent folder
 pushd %APPVEYOR_BUILD_FOLDER%\bin\build\Open-FVS\python
