@@ -21,7 +21,17 @@ environment:
       PYTHON_ARCH: "64"
       ENV_NAME: "py34_x64_conda"
 
-    # - PYTHON: "C:\\Miniconda"
+    - PYTHON: "C:\\Miniconda-x64"
+      PYTHON_VERSION: "3.5"
+      PYTHON_ARCH: "64"
+      ENV_NAME: "pyfvs"
+
+    - PYTHON: "C:\\Miniconda-x64"
+      PYTHON_VERSION: "3.6"
+      PYTHON_ARCH: "64"
+      ENV_NAME: "pyfvs"
+
+      # - PYTHON: "C:\\Miniconda"
       # PYTHON_VERSION: "2.7"
       # PYTHON_ARCH: "32"
       # ENV_NAME: "py27_x86_conda"
@@ -38,12 +48,10 @@ init:
     
 install:
     # Setup the python environment and install required packages
-    # - cmd: .appveyor\\setup_env.bat
     - "set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
     #- conda config --add channels conda-forge
     - conda config --set always_yes yes --set changeps1 no
     - conda update -q conda
-    #- "conda create -q -n %ENV_NAME% python=%PYTHON_VERSION% numpy pandas cython pytest"
     - conda env create -q -n %ENV_NAME% python=%PYTHON_VERSION% -f environment.yml
     - conda info -a
     - activate %ENV_NAME%

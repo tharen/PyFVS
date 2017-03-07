@@ -1,5 +1,0 @@
-# requirements available with conda
-numpy
-cython
-pandas
-pytest
