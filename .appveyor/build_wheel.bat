@@ -18,7 +18,7 @@ call python -c "import sys;print(sys.version)"
 %CMD_IN_ENV% python setup.py bdist_wheel || goto :errhdlr
 cd dist
 call pip install --no-index --find-links . pyfvs || goto :errhdlr
-call fvs --run-tests || goto :errhdlr
+call pyfvs --run-tests || goto :errhdlr
 
 move /y *.whl %APPVEYOR_BUILD_FOLDER%
 
