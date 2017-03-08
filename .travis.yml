@@ -9,6 +9,8 @@ env:
   global:
     - FVS_STATUS=alpha
     - BUILD_ROOT=${TRAVIS_BUILD_DIR}/bin/build
+    - FVS_VARIANTS="pnc"
+    #- FVS_VARIANTS="pnc;wcc;soc;cac"
 
 addons:
   apt:
@@ -49,7 +51,7 @@ install:
 
 script:
   - source .travis-ci/configure.sh
-  - cd ${BUILD_ROOT} && cmake --build . --target install -- -j2 2> build_err.log
+  - cd ${BUILD_ROOT} && cmake --build . --target install 2> build_err.log
   
   # Run unit tests
   - source ${TRAVIS_BUILD_DIR}/.travis-ci/run_tests.sh

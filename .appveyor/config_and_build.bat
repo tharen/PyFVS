@@ -33,7 +33,7 @@ call python bin\gen_libpython.py
 mkdir bin\build
 pushd bin\build
 cmake -G "MinGW Makefiles" .. ^
-    -DFVS_VARIANTS="pnc;wcc;soc;cac" ^
+    -DFVS_VARIANTS=%FVS_VARIANTS% ^
     -DCMAKE_SYSTEM_NAME=Windows ^
     -DNATIVE_ARCH=No ^
     -D32BIT_TARGET=%win32% ^
@@ -42,7 +42,7 @@ cmake -G "MinGW Makefiles" .. ^
     -DCMAKE_INSTALL_PREFIX=Open-FVS || goto :error_configure
 
 :: Compile and install locally
-cmake --build . --target install -- -j2 2> build_err.log || goto :error_build
+cmake --build . --target install 2> build_err.log || goto :error_build
 
 :: Exit clean
 goto :exit
