@@ -131,17 +131,18 @@ endif ()
 
 if (CMAKE_COMPILER_IS_GNUCC OR APPLE)
     message(STATUS "Add GCC compiler flags.")
-    
+
     # TODO: These may be clobbering CMAKE FLAGS
-    
+
     # CMAKE_BUILD_TYPE = Debug
     set(debug_flags "-g3 -mfpmath=sse -msse")
     set(CMAKE_Fortran_FLAGS_DEBUG "${debug_flags} -ffpe-trap=invalid,zero,overflow,underflow")
     set(CMAKE_CXX_FLAGS_DEBUG "${debug_flags}")
     set(CMAKE_C_FLAGS_DEBUG "${debug_flags}")
-    
+
     # CMAKE_BUILD_TYPE = Release
     set(release_flags "-Ofast -mfpmath=sse -msse")
+    # set(release_flags "-O2 -mfpmath=387")
     if (ENABLE_LTO)
         set(release_flags "${release_flags} -funroll-loops -flto -fwhole-program")
     else ()
@@ -149,7 +150,7 @@ if (CMAKE_COMPILER_IS_GNUCC OR APPLE)
     endif ()
     set(CMAKE_CXX_FLAGS_RELEASE "${release_flags}")
     set(CMAKE_C_FLAGS_RELEASE "${release_flags}")
-    
+
     if (PROFILING)
         add_definitions(-DPROFILING)
         set(profile_flags "-pg")
@@ -159,7 +160,7 @@ if (CMAKE_COMPILER_IS_GNUCC OR APPLE)
         set(CMAKE_EXE_LINKER_FLAGS "${profile_flags} ${CMAKE_EXE_LINKER_FLAGS}")
         set(CMAKE_SHARED_LINKER_FLAGS "${profile_flags} ${CMAKE_SHARED_LINKER_FLAGS}")
     endif ()
-    
+
     # Flags for all build types
     # TODO: Add additional architecture and optimization flags -mtune=, -mfpmath=sse, etc.
     # TODO: Need to specify target architectures.
@@ -172,7 +173,7 @@ if (CMAKE_COMPILER_IS_GNUCC OR APPLE)
         endif()
 
     endif()
-    
+
     # TODO: Is pthread necessary
     # set(flags "-pipe -pthread")
     if (32BIT_TARGET)
@@ -200,22 +201,22 @@ if (CMAKE_COMPILER_IS_GNUCC OR APPLE)
     set(CMAKE_CXX_FLAGS "-cpp ${flags} ${CMAKE_CXX_FLAGS}")
     set(CMAKE_C_FLAGS "-cpp ${flags} ${CMAKE_C_FLAGS}")
     set(CMAKE_Fortran_FLAGS "-cpp ${flags} ${CMAKE_Fortran_FLAGS}")
-    
+
     # Linker Flags
     set(CMAKE_EXE_LINKER_FLAGS "${flags} ${CMAKE_EXE_LINKER_FLAGS}")
     set(CMAKE_SHARED_LINKER_FLAGS "${flags} ${CMAKE_SHARED_LINKER_FLAGS}")
     set(flags "")
-    
+
     if (NOT UNIX_TARGET)
         set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -static")
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static")
         add_definitions(-DANSI -DWINDOWS -DCMPgcc)
-    
+
     elseif (UNIX_TARGET)
         set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS}")
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
         add_definitions(-DANSI -DCMPgcc)
-    
+
     endif ()
 
 endif ()
@@ -537,10 +538,14 @@ endforeach()
 set(fvs_objs "fvs${variant}_objs")
 add_library(${fvs_objs} OBJECT ${fvs_source} ${common_source})
 
+set(objs_timestamp "${variant}_timestamp")
+add_custom_target(${objs_timestamp} ALL
+        COMMAND ${CMAKE_COMMAND} -E touch "${variant}_timestamp")
+
 # Ensure common source files are built before the variant sources
 add_dependencies(${fvs_objs} common_objs)
 
-##TODO: Need a fixup for VBA 
+##TODO: Need a fixup for VBA
 #if (WIN32)
 #    set_target_properties(${fvs_lib} PROPERTIES
 #            LINK_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--output-def,${fvs_lib}.def"
@@ -610,6 +615,13 @@ set_target_properties(${fvslib_shared} PROPERTIES
            # )
 # endif ()
 
+if (NOT UNIX_TARGET)
+    set_target_properties(${fvslib_shared} PROPERTIES
+            LINK_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--output-def,${fvslib_shared}.def,--out-implib,${fvslib_shared}.a -Wl,--add-stdcall-alias"
+            )
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${fvslib_shared}.def DESTINATION lib)
+endif ()
+
 install(TARGETS ${fvsexe} DESTINATION bin)
 install(TARGETS ${fvslib_shared} DESTINATION lib)
 install(TARGETS ${fvslib_static} DESTINATION lib/static)
@@ -631,48 +643,51 @@ if (WITH_PYEXT)
     message(STATUS "Configure and build the Python extension.")
 
     set(pyext_name "pyfvs${variant}")
-    
+
     # TODO: Add a pyfvs_sources.txt file to avoid stuffing them here
     # Process the source list for files to include in the Python module
     file(STRINGS ${source_list} source_files)
     string(REPLACE "../" "${source_root}/" source_files "${source_files}")
 
     # Source files to be wrapped with F2PY
-    set(_pyext_src 
+    set(_pyext_src
                 "apisubs.f" "cmdline.f" "fvs.f"
                 "filopn.f" "htcalc.f" "rann.f"
-                "htdbh.f"
-                
-                "prgprm_mod.f90" "esparm_mod.f90" "arrays_mod.f90" 
+                "htdbh.f" "forkod.f"
+
+                "prgprm_mod.f90" "esparm_mod.f90" "arrays_mod.f90"
                 "contrl_mod.f90"
 
                 "coeffs_mod.f90" "econ_mod.f90" "escomn_mod.f90" "eshap_mod.f90"
                 "estree_mod.f90" "htcal_mod.f90" "multcm_mod.f90" "pden_mod.f90"
-                "workcm_mod.f90" "plot_mod.f90" "rancom_mod.f90" 
+                "workcm_mod.f90" "plot_mod.f90" "rancom_mod.f90"
                 "screen_mod.f90"
 
-                "fvsstdcm_mod.f90" "varcom_mod.f90" "outcom_mod.f90" 
+                "fvsstdcm_mod.f90" "varcom_mod.f90" "outcom_mod.f90"
                 "volstd_mod.f90"
 
-                "fmparm_mod.f90" "fmcom_mod.f90" "fmfcom_mod.f90" 
+                "fmparm_mod.f90" "fmcom_mod.f90" "fmfcom_mod.f90"
                 "fmprop_mod.f90"
 
 #                "fmsvcm_mod.f90" "svdata_mod.f90"
                 "metric_mod.f90"
-                
+
                 "carbon_data.f90" "downwood_data.f90" "tree_data.f90"
                 "fvs_step.f90"
-                "snag_data.f90" "siteht_mod.f90"
+                "snag_data.f90"
+                # "siteht_mod.f90"
                 "findage_mod.f90"
-                
+
 #                "step_grincr.f90" "dbs_commons.f" "fire_commons.f"
 #                "fvs_commons.f"
-                
+
                 "esblkd_mod.f90" "esrncm_mod.f90" "escprs.f90"
                 )
+                
     # Routines to be skipped by F2PY
     set(pyext_skip "") #required by f2py_gen
 
+    # Get the path names of the source files to be wrapped
     foreach (fn ${source_files})
         if (NOT ${fn} MATCHES "^#.*")
             get_filename_component(filename ${fn} NAME)
@@ -689,54 +704,56 @@ if (WITH_PYEXT)
     # Write the Python extension source files to a text file
     file(WRITE ./pyext_source.txt "${pyext_source}")
 
-    # FIXME: The wrong python is being called on appveyor, 
+    # FIXME: The wrong python is being called on appveyor,
     set(PYTHON_EXE python)
     execute_process(
             COMMAND ${PYTHON_EXE} -c "import sys\nprint(sys.version)"
             COMMAND ${PYTHON_EXE} -c "import sys\nprint(sys.executable)"
             )
-            
+
     # Determine the file name of the Python library
     execute_process(
             COMMAND ${PYTHON_EXE} ../platform_ext.py ${pyext_name}
             OUTPUT_VARIABLE pyext_fn
             OUTPUT_STRIP_TRAILING_WHITESPACE
             )
-    
+
     set(cmd_args "")
     # F2PY/Distutils needs to know what compilers are being used
     if (CMAKE_COMPILER_IS_MINGW EQUAL 1)
         list(APPEND cmd_args "--compiler=mingw32")
     endif ()
-    
-    if (CMAKE_Fortran_COMPILER_ID STREQUAL GNU)   
+
+    if (CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
         list(APPEND cmd_args "--fcompiler=gnu95")
     endif ()
-    
+
 #    if (CMAKE_BUILD_TYPE STREQUAL Debug)
 #        list(APPEND cmd_args "--debug")
 #    endif ()
-  
+    
     # Configure the setup.py script for the current variant.
     configure_file(../../setup.py.in setup.py @ONLY)
+    configure_file(../../gen_pyf.py.in gen_pyf.py @ONLY)
     configure_file(${source_root}/python/pyfvs_wrap.pyf.in ${pyext_name}.pyf @ONLY)
     
-    # Compile the Python extension library
+    # Generate the F2PY wrappers and compile the Python extension library
     add_custom_command(
             OUTPUT ${pyext_fn}
-            COMMAND python ARGS setup.py build_ext --inplace ${cmd_args} >> ../f2py.log 2>&1
+            COMMAND python ARGS gen_pyf.py > ../py<<variant>>_f2py.log 2>&1
+            COMMAND python ARGS setup.py build_ext --inplace --force ${cmd_args} >> ../py<<variant>>_f2py.log 2>&1
             DEPENDS ${fvslib_static} ./pyext_source.txt
             COMMENT "Compile python extension."
             )
     add_custom_target(${pyext_name}_ext ALL DEPENDS ${pyext_fn})
-    
+
     # NOTE: Installation is primarily for packaging purposes
     #       All scripts, modules, tests, etc. should be included in the
     #       install target.  The final packaging uses setuptools.
     install(
         FILES ${pyext_fn}
         DESTINATION python/pyfvs)
-    
+
     # Add intermediate files to the clean list
     # NOTE: pyext_source.txt should not be cleaned
     set(cf ${pyext_name}.pyf)
@@ -767,15 +784,15 @@ if (WITH_PYEXT)
     install(
             DIRECTORY ${source_root}/python/
             DESTINATION python
-            FILES_MATCHING REGEX ".*\\.(py|pyx|cfg|rst|md|key|tre)$"
+            FILES_MATCHING REGEX ".*\\.(py|pyx|cfg|rst|md|key|tre|save)$"
             PATTERN "__pycache__" EXCLUDE
             PATTERN "*genrpt.txt" EXCLUDE
             )
     install(FILES
-                ${source_root}/python/MANIFEST.in
                 ${source_root}/python/README.txt
+                ${source_root}/python/mingw-gcc.specs.in
             DESTINATION python)
-    
+
     message(STATUS "*** End PyMod Configuration ***")
 
 endif()

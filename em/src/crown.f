@@ -7,6 +7,7 @@
       use pden_mod
       use varcom_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C EM $Id:
@@ -41,8 +42,6 @@ C    COEFFICIENTS WHICH ARE ORIGINALLY FROM CR
 C  QUAKING ASPEN (AS) AND PAPER BIRCH (PB) USE IE-AS WHICH ARE ORIGINALLY FROM UT
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
       INCLUDE 'GGCOM.F77'
 C
 C----------

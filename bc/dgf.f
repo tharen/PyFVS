@@ -5,6 +5,7 @@
       use coeffs_mod
       use prgprm_mod
       use metric_mod
+      use calcom_mod
       implicit none
 C----------
 C  $Id$
@@ -22,7 +23,6 @@ C  DEPENDENT COEFFICIENTS THAT NEED ONLY BE RESOLVED ONCE.
 C
 
 COMMONS
-      INCLUDE 'CALCOM.F77'
       INCLUDE 'BCPLOT.F77'
 C
 C  DIMENSIONS FOR INTERNAL VARIABLES.

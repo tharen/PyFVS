@@ -9,6 +9,8 @@
       use plot_mod
       use varcom_mod
       use prgprm_mod
+      use calcom_mod
+      use estcor_mod
       implicit none
 C----------
 C  **REGENT--AK   DATE OF LAST REVISION:  01/11/12
@@ -27,10 +29,6 @@ C  FROM **TREGRO** DURING CYCLING.  ENTRY **REGCON** IS CALLED FROM
 C  **RCON** TO LOAD MODEL PARAMETERS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
-      INCLUDE 'ESTCOR.F77'
-C
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES:
 C

@@ -7,6 +7,7 @@
       use pden_mod
       use varcom_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C IE $Id:
@@ -39,8 +40,6 @@ C  PI, JU USE COEFFICIENTS FROM UT (WHICH ARE FROM CR SO,
 C         USE CR LOGIC)
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
       INCLUDE 'GGCOM.F77'
 C
 C----------

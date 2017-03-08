@@ -7,6 +7,7 @@
       use pden_mod
       use varcom_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C CA $Id$
@@ -23,8 +24,6 @@ C  PREDICTION.  ENTRY **DGCONS** IS CALLED BY **RCON** TO LOAD SITE
 C  DEPENDENT COEFFICIENTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
 C  DEFINITIONS OF INTERNAL VARIABLES.
 C
 C     DIAM -- ARRAY LOADED WITH TREE DIAMETERS (PASSED AS AN

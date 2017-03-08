@@ -9,6 +9,8 @@
       use plot_mod
       use varcom_mod
       use prgprm_mod
+      use calcom_mod
+      use estcor_mod
       implicit none
 C----------
 C  **REGENT--UT  DATE OF LAST REVISION:  08/16/12
@@ -29,10 +31,6 @@ C  **RCON** TO LOAD MODEL PARAMETERS THAT NEED ONLY BE RESOLVED ONCE.
 C  CALLS **FINDAG TO CALCULATE ASPEN TREE AGE
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
-      INCLUDE 'ESTCOR.F77'
-C
       INCLUDE 'GGCOM.F77'
 C
 C----------

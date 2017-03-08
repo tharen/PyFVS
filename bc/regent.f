@@ -9,6 +9,8 @@
       use plot_mod
       use metric_mod
       use prgprm_mod
+      use calcom_mod
+      use estcor_mod
       implicit none
 C----------
 C  $Id$
@@ -36,8 +38,6 @@ C  COMPUTES INCREMENTS FROM AGE 5 TO THE END OF THE CYCLE.
 
 COMMONS
 
-      INCLUDE 'CALCOM.F77'
-      INCLUDE 'ESTCOR.F77'
       INCLUDE 'BCPLOT.F77'
 
 COMMONS

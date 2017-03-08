@@ -43,7 +43,7 @@ KW_FMT_ONELINE_STACKED = 5
 
 class KeywordMetaClass(type):
     """
-    Magic for KeywordBase
+    Metaclass magic for KeywordBase
     """
     # TODO: Test this with Python 2.6+
     @classmethod
@@ -53,7 +53,7 @@ class KeywordMetaClass(type):
 
     def __new__(mcl, name, bases, attrs):
         # generate a list of field names from the OrderedDict
-        flds = [k for k, v in attrs.items()
+        flds = [k for k in attrs.keys()
                 if isinstance(attrs[k], KeywordFieldBase)]
 
         attrs['__fields__'] = flds
@@ -67,7 +67,7 @@ class KeywordMetaClass(type):
 # TODO: Revert back to create an equivalent for Python 2.6+
 class KeywordBase(with_metaclass(KeywordMetaClass, object)):
     """
-    An FVS keyword represented as a list of 7 fields
+    Base class of an FVS keyword represented as a list of 7 fields
     
     Fields are defined on subclasses using one of the Field classes.  Field 
         order is enforced as the order of definition during class creation.  
@@ -78,21 +78,25 @@ class KeywordBase(with_metaclass(KeywordMetaClass, object)):
     To designate fields as supplemental records put their attribute name in the
         __supplemental__ class attribute.
     
-    @param mnemonic: FVS shortname for the keyword
-    @param name: Long name for the keyword
-    @param children: Nested keywords for multipart keywords
-    @param rank: Precedence in the key file
-    @param format: Key file format
+    :param mnemonic: FVS shortname for the keyword
+    :param name: Long name for the keyword
+    :param children: Nested keywords for multipart keywords
+    :param rank: Precedence in the key file
+    :param format: Key file format
             0 - Single line, <= 7 data fields
             1 - Supplemental data is on a second line
             2 - Supplemental data on multiple lines, one per valid field
             3 - Block keyword with children keywords and END statement
             4 - PARMS keyword format, fields can be expressions, constants, or values
             5 - Single line with children (supplemental records, etc.)
-            ##TODO: refine formatting options
-            ##TODO: implement PARMS as and alternative to field formatting
-    @param comment: single line comment string
+    :param comment: single line comment string
     """
+
+    # TODO: Refine keyword formatting options
+    # TODO: Implement PARMS as and alternative to field formatting
+    # TODO: Format 0 keywords should include an optional parms_fmt argument
+    #       to automatically handle PARMS compatible keywords.
+
     __metaclass__ = KeywordMetaClass
     __fields__ = ()
     __supplemental__ = ()
@@ -104,6 +108,7 @@ class KeywordBase(with_metaclass(KeywordMetaClass, object)):
         # #TODO: field ordering was move to the metaclass
 #        new_inst = super(KeywordBase, cls).__new__(cls, *args, **kargs)
         new_inst = super(KeywordBase, cls).__new__(cls,)
+
 
         for f in cls.__fields__:
             fld = copy.deepcopy(getattr(cls, f))
@@ -413,11 +418,11 @@ class AddHocKeyword(KeywordBase):
         """
         A generic class KeywordBase class for keywords defined at run-time
         
-        @param mnemonic:  FVS keyword identifier
-        @param field_vals:  Iterator of field values
-        @param format:  Keyword formatting code (see KeywordBase)
-        @param name:  Descriptive identifier  
-        @param comment:  Description of the keyword's purpose 
+        :param mnemonic:  FVS keyword identifier
+        :param field_vals:  Iterator of field values
+        :param format:  Keyword formatting code (see KeywordBase)
+        :param name:  Descriptive identifier  
+        :param comment:  Description of the keyword's purpose 
         """
         KeywordBase.__init__(self, mnemonic, name=name, comment=comment
                              , format=format, **kargs)
@@ -2639,7 +2644,7 @@ def print_test():
     #---COMPUTE
     x = COMPUTE(11)
 
-    baa = ExpressionBlock(title='BAA Compute')
+    baa = eventmonitor.ExpressionBlock(title='BAA Compute')
     baa += 'PI = 3.14159265'
     baa += '_BAC = PI / 576.0'
     baa += 'BAA = TPA * DBH*DBH*_BAC'

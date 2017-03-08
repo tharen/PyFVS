@@ -70,3 +70,5 @@ nosetests.xml
 .pydevproject
 .cproject
 
+python/docs/_build/
+*.log

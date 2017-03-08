@@ -20,6 +20,8 @@
       use escomn_mod
       use varcom_mod
       use prgprm_mod
+      use calcom_mod
+      use estcor_mod
       implicit none
 C----------
 C  $Id$
@@ -30,15 +32,11 @@ C     DATA CHARACTER FILE, INTO MEMORY.
 C
       INCLUDE 'PPDNCM.F77'
 C
-      INCLUDE 'CALCOM.F77'
-C
       INCLUDE 'CALDEN.F77'
 C
       INCLUDE 'ESHAP2.F77'
 C
       INCLUDE 'ESCOM2.F77'
-C
-      INCLUDE 'ESTCOR.F77'
 C
       INCLUDE 'OPCOM.F77'
 C

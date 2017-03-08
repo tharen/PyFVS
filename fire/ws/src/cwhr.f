@@ -4,7 +4,7 @@
       use fmfcom_mod
       use fmparm_mod
       use prgprm_mod
-      implicit none
+!      implicit none
 C----------
 C  **CWHR   FIRE-WS-DATE OF LAST REVISION: 03/14/05
 C----------
@@ -491,7 +491,7 @@ C
 C     LOOKS LIKE THIS DOES A CORRECTED % CANOPY COVER
 C
       FUNCTION PCNETAVG(grosspercentcover)
-      implicit none
+!      implicit none
       real pcRndPack, avg1
 
       pcRndPack = (1. - 1. / Exp(grosspercentcover / 100.)) * 100.

@@ -10,6 +10,7 @@
       use volstd_mod
       use varcom_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C CI $Id$
@@ -25,8 +26,6 @@ C
       INCLUDE 'CICOM.F77'
 C
       INCLUDE 'CWDCOM.F77'
-C
-      INCLUDE 'CALCOM.F77'
 C
 C----------
       CHARACTER*26 DBLK

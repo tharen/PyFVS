@@ -6,7 +6,27 @@ c     the shared library version of FVS. Other routines that exist
 c     inside FVS may also be called.
 
 c     Created in late 2011 by Nick Crookston, RMRS-Moscow
+      
+      subroutine fvsgetversion(api,svn,fvs_variant) 
+      implicit none
 
+!Python F2PY Interface Directives
+!f2py intent(out) :: api, svn, fvs_variant
+
+      character :: api(5), svn(7), fvs_variant(3)
+      !integer, intent(out) :: foo
+      
+#ifdef _WINDLL
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsgetversion
+#endif
+
+      api = "0.1a"
+      svn = 'abcdef'
+      fvs_variant = 'XX'
+      !foo = 98765
+      
+      end subroutine fvsgetversion
+      
       subroutine fvsDimSizes(ntrees,ncycles,nplots,maxtrees,maxspecies,
      -                       maxplots,maxcycles)
       use contrl_mod
@@ -22,6 +42,8 @@ c     Created in late 2011 by Nick Crookston, RMRS-Moscow
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE,ALIAS:'FVSDIMSIZES'::FVSDIMSIZES
 !DEC$ ATTRIBUTES REFERENCE :: NTREES, NCYCLES, NPLOTS, MAXTREES
 !DEC$ ATTRIBUTES REFERENCE :: MAXSPECIES, MAXPLOTS, MAXCYCLES
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsdimsizes
 #endif
 
       integer :: ntrees,ncycles,nplots,maxtrees,maxspecies,maxplots,
@@ -56,6 +78,8 @@ c     Created in late 2011 by Nick Crookston, RMRS-Moscow
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE,ALIAS:'FVSSUMMARY'::FVSSUMMARY
 !DEC$ ATTRIBUTES REFERENCE :: SUMMARY, ICYCLE, NCYCLES, MAXROW
 !DEC$ ATTRIBUTES REFERENCE :: MAXCOL, RTNCODE
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvssummary
 #endif
 
       integer :: summary(20),icycle,ncycles,maxrow,maxcol,rtnCode
@@ -104,6 +128,8 @@ c
 #ifdef _WINDLL
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE,ALIAS:'FVSTREEATTR'::FVSTREEATTR
 !DEC$ ATTRIBUTES REFERENCE :: NAME, NCH, ACTION, NTREES, ATTR, RTNCODE
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvstreeattr
 #endif
 
       integer :: nch,rtnCode,ntrees
@@ -245,6 +271,8 @@ c
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE:: FVSSPECIESATTR
 !DEC$ ATTRIBUTES ALIAS:'FVSSPECIESATTR'::FVSSPECIESATTR
 !DEC$ ATTRIBUTES REFERENCE :: NAME, NCH, ACTION, ATTR, RTNCODE
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsspeciesattr
 #endif
 
       integer :: nch,rtnCode
@@ -338,6 +366,8 @@ c
 #ifdef _WINDLL
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE,ALIAS:'FVSEVMONATTR'::FVSEVMONATTR
 !DEC$ ATTRIBUTES REFERENCE :: NAME, NCH, ACTION, ATTR, RTNCODE
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsevmonattr
 #endif
 
       integer :: nch,rtncode,iv,i
@@ -673,6 +703,8 @@ c                 or when ntrees is zero
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE,ALIAS:'FVSADDTREES'::FVSADDTREES
 !DEC$ ATTRIBUTES REFERENCE :: IN_DBH, IN_SPECIES, IN_HT, IN_CRATIO
 !DEC$ ATTRIBUTES REFERENCE :: IN_PLOT, IN_TPA, NTREES, RTNCODE
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsaddtrees
 #endif
 
       real(kind=8) :: in_dbh(ntrees),in_species(ntrees),
@@ -774,6 +806,8 @@ c     indx    = species index
 !DEC$ ATTRIBUTES C,DECORATE :: FVSSPECIESCODE
 !DEC$ ATTRIBUTES REFERENCE :: FVS_CODE, FIA_CODE, PLANT_CODE, INDX
 !DEC$ ATTRIBUTES REFERENCE :: NCHFVS, NCHFIA, NCHPLANT, RTNCODE
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsspeciescode
 #endif
 
       integer :: indx,nchfvs,nchfia,nchplant,rtnCode
@@ -814,8 +848,9 @@ c     indx    = species index
 #ifdef _WINDLL
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE,ALIAS:'FVSCUTTREES'::FVSCUTTREES
 !DEC$ ATTRIBUTES REFERENCE :: PTOCUT, NTREES, RTNCODE
-#endif
 
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvscuttrees
+#endif
       integer :: ntrees,rtnCode
       double precision :: pToCut(ntrees)
       pToCut = 0.
@@ -846,6 +881,8 @@ c     indx    = species index
 #ifdef _WINDLL
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE,ALIAS:'FVSSTANDID'::FVSSTANDID
 !DEC$ ATTRIBUTES REFERENCE :: SID, SCN, MID, NCSID, NCCN, NCMID
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsstandid
 #endif
 
       integer :: ncsID,ncCN,ncmID
@@ -873,6 +910,8 @@ c     indx    = species index
 #ifdef _WINDLL
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE,ALIAS:'FVSCLOSEFILE'::FVSCLOSEFILE
 !DEC$ ATTRIBUTES REFERENCE :: FILENAME, NCH
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsclosefile
 #endif
 
 C     this routine closes "filename" if it is opened, it is not called
@@ -910,6 +949,8 @@ C     add an activity to the schedule.
 !DEC$ ATTRIBUTES DLLEXPORT,ALIAS:'FVSADDACTIVITY'::FVSADDACTIVITY
 !DEC$ ATTRIBUTES C,DECORATE :: FVSADDACTIVITY
 !DEC$ ATTRIBUTES REFERENCE :: IDT, IACTK, INPRMS, NPRMS, RTNCODE
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsaddactivity
 #endif
 
       integer :: i,idt,iactk,nprms,rtnCode,kode
@@ -948,6 +989,8 @@ C     add an activity to the schedule.
 !DEC$ ATTRIBUTES ALIAS:'FVSSVSDIMSIZES':: FVSSVSDIMSIZES
 !DEC$ ATTRIBUTES REFERENCE :: NSVSOBJS,NDEADOBJS,NCWDOBJS
 !DEC$ ATTRIBUTES REFERENCE :: MXSVSOBJS,MXDEADOBJS,MXCWDOBJS
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvssvsdimsizes
 #endif
 
       integer :: nsvsobjs,  ndeadobjs,  ncwdobjs,
@@ -995,6 +1038,8 @@ c               4= the length of the "name" string was too big or small
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE :: FVSSVSOBJDATA
 !DEC$ ATTRIBUTES ALIAS:'FVSSVSOBJDATA':: FVSSVSOBJDATA
 !DEC$ ATTRIBUTES REFERENCE :: NAME, NCH, ACTION, NOBJS, ATTR, RTNCODE
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvssvsobjdata
 #endif
 
       integer :: nch,rtnCode,nobjs
@@ -1326,6 +1371,8 @@ c               4= the length of the "name" string was too big or small
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE :: FVSFFEATTRS
 !DEC$ ATTRIBUTES ALIAS:'FVSFFEATTRS':: FVSFFEATTRS
 !DEC$ ATTRIBUTES REFERENCE :: NAME, NCH, ACTION, NOBJS, ATTR, RTNCODE
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsffeattrs
 #endif
 
       integer :: nch,rtnCode,nobjs
@@ -1427,8 +1474,9 @@ c               1= "name" not found,
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE
 !DEC$ ATTRIBUTES ALIAS:'FVSUNITCONVERSIONS'::FVSUNITCONVERSIONS
 !DEC$ ATTRIBUTES REFERENCE :: NAME, NCH, VALUE, RTNCODE
-#endif
 
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsunitconversion
+#endif
 
       integer :: nch,rtnCode
       real(kind=8)       :: value

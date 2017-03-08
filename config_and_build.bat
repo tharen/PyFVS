@@ -1,21 +1,14 @@
 set oldpath=%path%
-set path=C:\progs\mingw-w64\x86_64-5.3.0-posix-seh-rt_v4-rev0\mingw64\bin
-REM set path=C:\progs\mingw-w64\x86_64-5.3.0-win32-sjlj-rt_v4-rev0\mingw64\bin
-::set path=C:\progs\msys64\mingw64\bin
-set path=%path%;C:\progs\cmake-3.4.1-win32-x86\bin
-set path=C:\progs\Git\bin;C:\progs\Git\usr\bin;%path%
-set path=%path%;C:\Windows;C:\Windows\System32
-REM set path=%path%;C:\Windows\System32\WindowsPowerShell\v1.0
 
-REM set python=C:\Python3.4.4.amd64
-REM set python_ver=3.4
-REM set env_name=pyfvs_py34
-REM set python_arch=amd64
+set PATH=C:\progs\mingw-w64\x86_64-6.2.0-release-win32-seh-rt_v5-rev1\mingw64\bin
+set PATH=%PATH%;C:\Windows\System32;C:\Windows
+set PATH=C:\progs\cmake\bin;%PATH%
+REM set PATH=C:\Ruby22-x64\bin;%PATH%
+REM set PATH=C:\progs\Git\bin;C:\progs\Git\usr\bin;%PATH%
+set path=%path%;C:\Miniconda3\Scripts;C:\Miniconda3
 
-set python=C:\Python2.7.11.amd64
-set python_ver=27
-set env_name=pyfvs_py27
-set python_arch=amd64
+:: Activate the Python environment
+call activate pyfvs_py34_amd64
 
 :: Configure the build environment
 set proj_root=%~dp0
@@ -23,39 +16,12 @@ set build_root=%~dp0\bin\build
 mkdir %build_root%
 pushd %build_root%
 
-REM set numpy_url=http://downloads.sourceforge.net/project/numpy/NumPy/1.10.2/numpy-1.10.2-win32-superpack-python2.7.exe
-REM powershell -Command "(New-Object Net.WebClient).DownloadFile('%numpy_url%', 'numpy.exe')"
-
-:: Create and activate the target Python environment
-call %python%\Scripts\pip install virtualenv
-if not exist "%env_name%" (
-    call %python%\Scripts\virtualenv.exe %env_name%
-    )
-call %env_name%\Scripts\activate
-
 REM goto :build_libpython
 
 REM :: Install needed packages
 python -m pip install --upgrade pip
 REM pip install -r %proj_root%\requirements.txt
 pip install nose-parameterized nose2
-
-:: Determine if numpy is installed
-python -c "import numpy as n;print('.'.join(n.version.version.split('.')[:2]))" > foo || goto :install_numpy
-set /p numpy_ver= < foo
-del foo
-echo Numpy version %numpy_ver% currently installed
-if %numpy_ver% geq 1.9 goto :skip_numpy
-
-:install_numpy
-:: Use numpy from: http://www.lfd.uci.edu/~gohlke/pythonlibs/#numpy
-start /wait c:\progs\git\usr\bin\curl.exe -fsS -o numpy-1.10.4+vanilla-cp27-none-win_amd64.whl https://free5.s3-us-west-2.amazonaws.com/appveyor-builds/numpy/numpy-1.10.4%%2Bvanilla-cp27-none-win_amd64.whl
-%env_name%\Scripts\pip install --no-index --find-links=. "numpy>=1.9"
-if %errorlevel% neq 0 (
-    echo Failed to install Numpy
-    goto :exit
-    )
-:skip_numpy
 
 :build_libpython
 :: Build the MinGW import library
@@ -75,17 +41,15 @@ if not exist "%env_name%\libs\libpython%python_ver%.a" (
     )
 REM goto :exit
 
-set PATH=%PATH:C:\progs\git\usr\bin;=%
-
 :: Configure CMake
 cmake -G "MinGW Makefiles" .. ^
-    -DFVS_VARIANTS="pnc;wcc" ^
+    -DFVS_VARIANTS="pnc;wcc;soc" ^
     -DCMAKE_SYSTEM_NAME=Windows ^
     -DWITH_PYEXT=Yes ^
     -DCMAKE_INSTALL_PREFIX=Open-FVS || goto :error_configure
 
 :: Compile and install locally
-mingw32-make -j8 install 2> build_err.log || goto :error_build
+cmake --build . --target install -- -j8 2> build_err.log || goto :error_build
 
 set PATH=%OLDPATH%
 

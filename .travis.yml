@@ -3,6 +3,7 @@ python:
   - '2.7'
   - '3.4'
   - '3.5'
+  - '3.6'
   
 env:
   global:
@@ -34,11 +35,13 @@ install:
   - export PATH="$HOME/miniconda/bin:$PATH"
   - hash -r
   - conda config --set always_yes yes --set changeps1 no
+  - conda config --add channels conda-forge
   - conda update -q conda
   # Create an environment and install dependencies
-  - conda create -q -n pyfvs python=$TRAVIS_PYTHON_VERSION --file .travis-ci/requirements_conda.txt
+  #- conda create -q -n pyfvs python=$TRAVIS_PYTHON_VERSION --file .travis-ci/requirements_conda.txt
+  - conda env create -q -n pyfvs python=$TRAVIS_PYTHON_VERSION -f environment.yml
   - source activate pyfvs
-  - pip install -r .travis-ci/requirements_pip.txt
+  #- pip install -r .travis-ci/requirements_pip.txt
   # Useful for debugging any issues with conda
   - conda info -a
   # Define the name to be used for the archive of compiled products.
@@ -46,7 +49,7 @@ install:
 
 script:
   - source .travis-ci/configure.sh
-  - cd ${BUILD_ROOT} && make -j2 install 2> build_err.log
+  - cd ${BUILD_ROOT} && cmake --build . --target install 2> build_err.log
   
   # Run unit tests
   - source ${TRAVIS_BUILD_DIR}/.travis-ci/run_tests.sh

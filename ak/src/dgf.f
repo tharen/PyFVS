@@ -5,6 +5,7 @@
       use coeffs_mod
       use outcom_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C  **DGF--AK    DATE OF LAST REVISION:   02/14/08
@@ -23,8 +24,6 @@ C  EQUATIONS FOR RED ALDER AND COTTONWOOD ADDED 3/13/98
 C   (FROM PN VARIANT)
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
 C  DIMENSIONS FOR INTERNAL VARIABLES.
 C
 C     DIAM -- ARRAY LOADED WITH TREE DIAMETERS (PASSED AS AN

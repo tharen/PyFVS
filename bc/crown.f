@@ -6,6 +6,7 @@
       use outcom_mod
       use metric_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C  $Id$
@@ -28,7 +29,6 @@ C  PROCESSING OF CROWN CHANGE FOR SMALL TREES IS CONTROLLED BY
 C  **REGENT**.
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
       INCLUDE 'BCPLOT.F77'
 C
 C----------

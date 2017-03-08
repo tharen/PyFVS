@@ -7,6 +7,8 @@
       use coeffs_mod
       use metric_mod
       use prgprm_mod
+      use calcom_mod
+      use estcor_mod
       implicit none
 C----------
 C  $Id$
@@ -26,8 +28,6 @@ C  **DGF** IS ACCESSED TO LOAD LN(DDS) INTO THE ARRAY WK3.  DDS
 C  REPRESENTS CHANGE IN SQUARED DIAMETER.
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-      INCLUDE 'ESTCOR.F77'
       INCLUDE 'BCPLOT.F77'
 C
 C----------

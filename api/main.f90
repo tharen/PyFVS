@@ -2,7 +2,7 @@
       use blkdat_mod, only: blkdat
       use esblkd_mod, only: esblkd
       use cubrds_mod, only: cubrds
-      use siteht_mod
+      !use siteht_mod !(Precompiled site index curves
       use plot_mod, only: sitear
       IMPLICIT NONE
 
@@ -54,17 +54,17 @@
         IF (rtnCode .NE. 0) exit
       ENDDO
 
-      ![6, 16, 18, 19, 22]
-      write(*,*) 'lookup: ',lu_tally(6),lu_tally(16) &
-            ,lu_tally(18),lu_tally(19),lu_tally(22)
-      write(*,*) 'failover: ',fail_over(6),fail_over(16) &
-            ,fail_over(18),fail_over(19),fail_over(22)
-
-      write(*,*) 'site: ', sitear(6),sitear(16),sitear(18) &
-            ,sitear(19),sitear(22)
-
-      lu_tally(:) = 0
-      fail_over(:) = 0
+      !![6, 16, 18, 19, 22]
+      !write(*,*) 'lookup: ',lu_tally(6),lu_tally(16) &
+      !      ,lu_tally(18),lu_tally(19),lu_tally(22)
+      !write(*,*) 'failover: ',fail_over(6),fail_over(16) &
+      !      ,fail_over(18),fail_over(19),fail_over(22)
+      !
+      !write(*,*) 'site: ', sitear(6),sitear(16),sitear(18) &
+      !      ,sitear(19),sitear(22)
+      !
+      !lu_tally(:) = 0
+      !fail_over(:) = 0
 
       enddo
 

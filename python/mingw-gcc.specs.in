@@ -1,0 +1,19 @@
+# This is a GCC spec file needed to enforce MSVCRT version linking
+# MinGW by default links to msvcrt.dll, but Python is compiled against 
+# compiler specific versions. Linking to both creates runtime problems.
+# Ref:
+#   http://www.mingw.org/wiki/HOWTO_Use_the_GCC_specs_file
+*cpp:
+%(msvcrt_version) %{{posix:-D_POSIX_SOURCE}} %{{mthreads:-D_MT}} %{{municode:-DUNICODE}} %{{pthread:-D_REENTRANT}} %{{!no-pthread:-U_REENTRANT}} 
+
+*libgcc:
+%{{mthreads:-lmingwthrd}} -l%(msvcrt) -lmingw32      %{{static|static-libgcc:-lgcc -lgcc_eh}}  %{{!static:    %{{!static-libgcc:      %{{!shared:        %{{!shared-libgcc:-lgcc -lgcc_eh}}        %{{shared-libgcc:-lgcc_s -lgcc}}       }}      %{{shared:-lgcc_s -lgcc}}     }}   }}     -l%(moldname) -lmingwex
+
+*msvcrt:
+{msvcrt}
+
+*msvcrt_version:
+-D__MSVCRT_VERSION__={msvcrt_version:}
+
+*moldname:
+{moldname}

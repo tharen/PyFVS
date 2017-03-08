@@ -11,6 +11,7 @@
       use metric_mod
       use varcom_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C  $Id$
@@ -21,7 +22,6 @@ C
       INCLUDE 'OPCOM.F77'
       INCLUDE 'SUMTAB.F77'
       INCLUDE 'CWDCOM.F77'
-      INCLUDE 'CALCOM.F77'
       INCLUDE 'BCPLOT.F77'
 C
 C----------

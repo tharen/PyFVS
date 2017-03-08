@@ -12,6 +12,11 @@ import re
 import logging
 import logging.config
 
+# # Bring standard modules into the package namespace
+# from .keywords.keywords import *
+# from .keywords.eventmonitor import *
+# from .fvs import FVS, FVSTrees
+
 # TODO: Look in local path as well as user home path
 # Use a config file written as a Python dictionary.
 # The config file is used to initialize logging and FVS library paths.
@@ -23,6 +28,16 @@ __version__ = '0.0.1a0'
 def version():
     """Return the current PyFVS API version number."""
     return __version__
+
+treelist_format = {
+    'template':(
+        '{plot:04d}{tree:04d}{tpa:>7.1f}{status:1d}{species:2s}'
+        '{diam:>5.1f}000{height:>3.0f}{cr_code:>7d}{age:>27d}')
+    , 'fvs_format':(
+        'I4,T1,I8,F7.1,I1,A2,F5.1,F3.1,F3.0,F3.0,F3.1'
+        ',I1,6I2,2I1,I2,2I3,2I1,F3.0'
+        )
+    }
 
 def get_config():
     """

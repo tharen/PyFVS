@@ -1,9 +1,0 @@
-include pyfvs/*.pyd
-include pyfvs/*.so
-include pyfvs/*.cfg
-include pyfvs/README.*
-include pyfvs/test/*.py
-include pyfvs/examples/*.py
-include pyfvs/examples/*.key
-include pyfvs/examples/*.tre
-include pyfvs/docs/*.*

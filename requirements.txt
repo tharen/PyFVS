@@ -1,4 +1,0 @@
-numpy
-# matplotlib
-nose2
-nose-parameterized

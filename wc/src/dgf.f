@@ -6,6 +6,7 @@
       use outcom_mod
       use pden_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C  **DGF--WC    DATE OF LAST REVISION:  08/21/15
@@ -25,8 +26,6 @@ C  ** REPLACED OREGON WHITE OAK EQUATION CREATED BY GOULD AND HARRINGTON
 C     FROM PNW STATION DATE 04/19/10 ESM
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
 C  DIMENSIONS FOR INTERNAL VARIABLES.
 C
 C     DIAM -- ARRAY LOADED WITH TREE DIAMETERS (PASSED AS AN

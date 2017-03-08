@@ -13,6 +13,7 @@
       use varcom_mod
       use metric_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C  $Id$
@@ -23,7 +24,6 @@ C  PROGNOSIS RUN.  CALLED FROM **MAIN**.
 C
       INCLUDE  'KEYCOM.F77'
       INCLUDE  'CWDCOM.F77'
-      INCLUDE  'CALCOM.F77'
       INCLUDE  'BCPLOT.F77'
 C
       INTEGER IDUM1,IDUM2,IDUM3,IHAB,NEWYR,ISPEC,IFOREST,INTDIST,IFORST

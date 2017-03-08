@@ -3,7 +3,7 @@ set pythonpath=
 
 :: Make sure the named Python environment is active
 call %PYTHON%\Scripts\activate %ENV_NAME%
-pip install --upgrade nose-parameterized nose2 wheel
+call conda install wheel
 
 :: Move into the package parent folder
 pushd %APPVEYOR_BUILD_FOLDER%\bin\build\Open-FVS\python
@@ -28,7 +28,7 @@ goto :exit
 echo Error building wheel package
 echo %cd%
 dir
-pip list
+conda list
 
 :exit
 popd

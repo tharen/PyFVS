@@ -7,6 +7,7 @@
       use coeffs_mod
       use metric_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C  $Id$
@@ -19,7 +20,6 @@ C  CYCLING.  ENTRY **HTCONS** IS CALLED FROM **RCON** TO LOAD SITE
 C  DEPENDENT CONSTANTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
       INCLUDE 'BCPLOT.F77'
 C
 C----------

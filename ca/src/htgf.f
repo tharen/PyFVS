@@ -1,4 +1,6 @@
       SUBROUTINE HTGF
+      use findage_mod, only: findag
+      
       use htcal_mod
       use multcm_mod
       use pden_mod

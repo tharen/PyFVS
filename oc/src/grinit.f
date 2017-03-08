@@ -9,6 +9,7 @@
       use volstd_mod
       use varcom_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C OC $Id: grinit.f 1388 2014-12-19 16:34:36Z rhavis@msn.com $
@@ -23,8 +24,6 @@ C
       INCLUDE 'SUMTAB.F77'
 C
       INCLUDE 'CWDCOM.F77'
-C
-      INCLUDE 'CALCOM.F77'
 C
       INCLUDE 'ORGANON.F77'
 C

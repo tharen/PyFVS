@@ -5,6 +5,7 @@
       use coeffs_mod
       use outcom_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C NI $Id:
@@ -27,8 +28,6 @@ C  PROCESSING OF CROWN CHANGE FOR SMALL TREES IS CONTROLLED BY
 C  **REGENT**.
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
 C----------
 C  DECLARATIONS AND DIMENSIONS FOR INTERNAL VARIABLES:
 C

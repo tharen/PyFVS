@@ -13,8 +13,6 @@ module contrl_mod
             LMORT,LSITE,LFIRE,                                        &
             LSTART,LSUMRY,LTRIP,MORDAT,NOTRIP,LBKDEN,LAUTON,LCVOLS,   &
             LBVOLS,LFIA,LZEIDE
-      logical :: calc_forest_type=.true.
-      logical :: fast_age_search=.false.
       INTEGER ICCODE,ICFLAG,ICL1,ICL2,ICL3,ICL4,ICL5,ICL6,ICYC,       &
             IDG,IFST,INS(6),IBEGIN(MAXSP),IREAD,IREC1,IREC2,          &
             IRECNT,IRECRD,IREF(MAXSP),ISCT(MAXSP,2),ISTDAT,ITRN,      &
@@ -27,6 +25,11 @@ module contrl_mod
             BFMIN,BAMIN,RCOR2(MAXSP),FRMCLS(MAXSP),SPCLWT,YR,TCFMIN,  &
             SIZCAP(MAXSP,4),PBAWT,PCCFWT,PTPAWT,DR016,DBHSTAGE,       &
             DBHZEIDE,DBHSDI
+
+      logical :: calc_forest_type=.true.
+      logical :: fast_age_search=.false.
+      logical :: use_fvs_morts=.false.
+
 !----------
 !  DEFINITIONS OF VARIABLES IN 'CONTRL' COMMON BLOCK:
 !----------

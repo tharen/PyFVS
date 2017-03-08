@@ -5,9 +5,7 @@ Created on Feb 2, 2016
 '''
 
 import unittest
-
-# https://pypi.python.org/pypi/nose-parameterized/
-from nose_parameterized import parameterized
+import pytest
 
 from pyfvs import fvs
 from pyfvs.keywords import keywords as kw

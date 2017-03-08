@@ -34,25 +34,33 @@ module fvs_step
     use cubrds_mod, only: cubrds
     use keywds_mod, only: keywds
 
+    logical sim_active
+
+    private :: sim_active
+
     contains
 
     subroutine init_blkdata()
         ! Initialize the variant parameters and arrays
         ! TODO: This should probably be elevated to a toplevel routine.
         ! TODO: Perhaps this should initialize whatever setcmdline is doing.
+
+#ifdef _WINDLL
+        !GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: init_blkdata
+#endif
         call blkdat()
         call esblkd()
         call cubrds()
         call keywds()
     end subroutine init_blkdata
 
-    subroutine fvs_init(keywords, irtncd)
+    subroutine fvs_init(keywords_file, irtncd)
         ! Initialize an FVS run.  Extracted from fvs.f to break the execution
         ! into explicit components for improved interaction with external code.
         !
         ! Modifications include preprocessor directives to optionally exclude
         ! extranious FVS routines.
-
+        
 !#define xFVSREPORTS
 !#define xFVSEXTENSIONS
 !#define xFVSSTARTSTOP
@@ -61,13 +69,18 @@ module fvs_step
 
         implicit none
 
+#ifdef _WINDLL
+        !GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvs_init
+#endif
+
         !Python F2PY Interface Directives
-        !f2py character(len=256),intent(in) :: keywords
+        !f2py character(len=*),intent(in) :: keywords_file
         !f2py integer,intent(out) :: irtncd
+        
+        character(len=*), intent(in) :: keywords_file
+        integer, intent(out) :: irtncd
 
         character(len=256) :: keywords
-        integer :: irtncd
-
         INTEGER I,IA,N,K,NTODO,ITODO,IACTK,IDAT,NP
         REAL STAGEA,STAGEB
         LOGICAL DEBUG,LCVGO
@@ -80,6 +93,14 @@ module fvs_step
 
         character(len=100) :: fmt
 
+        ! Don't clober an active simulation
+        if (sim_active) then
+            irtncd = -1
+            return
+        end if
+
+        sim_active = .false.
+
         ! Initialize parameters and arrays
         ! TODO: This should probably be elevated to a toplevel call
         call init_blkdata()
@@ -89,7 +110,8 @@ module fvs_step
 
         ! Initialize the command line argument
         ! TODO: Accept keywords as a buffer rather than a file name
-        keywords = '--keywordfile='//adjustl(keywords)
+        ! TODO: Check length of path
+        keywords = '--keywordfile='//adjustl(keywords_file)
         call fvssetcmdline(keywords,len_trim(keywords), irtncd)
 
         !
@@ -331,17 +353,25 @@ module fvs_step
         CALL EVTSTV(-1)
 
         !This is 40, the entrance to the grower loop in fvs.f
+
+        ! Flag the simulation as active
+        sim_active = .true.
         return
     end subroutine fvs_init
 
     subroutine fvs_grow(irtncd)
         !Execute a FVS grow cycle.  Adapted from fvs.f
-
-
+        
         implicit none
+
+#ifdef _WINDLL
+        !GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvs_grow
+#endif
 
         !Python F2PY Interface Directives
         !f2py integer,intent(out) :: irtncd
+        
+        integer, intent(out) :: irtncd
 
         INTEGER I,IA,N,K,NTODO,ITODO,IACTK,IDAT,NP
         REAL STAGEA,STAGEB
@@ -351,9 +381,14 @@ module fvs_step
         INTEGER MYACT(1)
         REAL PRM(1)
         DATA MYACT/100/
-        INTEGER IRSTRTCD,ISTOPDONE,IRTNCD,lenCl
+        INTEGER IRSTRTCD,ISTOPDONE,lenCl
 
         character(len=100) :: fmt
+
+        if (.not. sim_active) then
+            irtncd = -1
+            return
+        end if
 
         DEBUG=.FALSE.
 
@@ -439,11 +474,13 @@ module fvs_step
             ENDDO
         ENDIF
 
+        sim_active = .true.
         return
     end subroutine fvs_grow
 
     subroutine fvs_end(irtncd)
         !Finalize an FVS run.  Extracted from fvs.f
+        
         use tree_data, only: &
                 save_tree_data,copy_tree_data &
                 ,copy_cuts_data,copy_mort_data
@@ -454,9 +491,15 @@ module fvs_step
         use outcom_mod
         implicit none
 
+#ifdef _WINDLL
+       !GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvs_end
+#endif
+
         !Python F2PY Interface Directives
         !f2py integer,intent(out) :: irtncd
 
+        integer, intent(out) :: irtncd
+        
         INTEGER I,IA,N,K,NTODO,ITODO,IACTK,IDAT,NP
         REAL STAGEA,STAGEB
         LOGICAL DEBUG,LCVGO
@@ -465,7 +508,13 @@ module fvs_step
         INTEGER MYACT(1)
         REAL PRM(1)
         DATA MYACT/100/
-        INTEGER IRSTRTCD,ISTOPDONE,IRTNCD,lenCl
+        INTEGER IRSTRTCD,ISTOPDONE,lenCl
+
+        ! Bail if a simulation is not active
+        if (.not. sim_active) then
+            irtncd = -1
+            return
+        end if
 
         DEBUG=.FALSE.
 
@@ -523,7 +572,12 @@ module fvs_step
         call getlun(i)
         inquire(unit=i,opened=LFLAG)
         if (LFLAG) close(unit=i)
+        
+        ! Ensure all files are closed
+        call filclose
 
+        ! Flag the simulation as inactive
+        sim_active = .false.
         return
     end subroutine fvs_end
 

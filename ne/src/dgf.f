@@ -6,6 +6,7 @@
       use outcom_mod
       use pden_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C  **DGF--NE    DATE OF LAST REVISION:  03/24/11
@@ -27,8 +28,6 @@ C  UNITED STATES' TECK & HILT. RESEARCH PAPER NE-649
 C
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
       INCLUDE 'TWIGCOM.F77'
 C
 C----------

@@ -10,6 +10,7 @@
       use volstd_mod
       use varcom_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C WS $Id$
@@ -22,8 +23,6 @@ C
       INCLUDE 'SUMTAB.F77'
 C
       INCLUDE 'CWDCOM.F77'
-C
-      INCLUDE 'CALCOM.F77'
 C
       INCLUDE 'GGCOM.F77'
 C

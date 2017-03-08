@@ -6,6 +6,7 @@
       use outcom_mod
       use pden_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C  **DGF--SO    DATE OF LAST REVISION:  11/17/09
@@ -25,8 +26,6 @@ C ES DIAMETER GROWTH EQUATIONS ARE FROM BM VARIANT   6/5/89
 C
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
 C  DIMENSIONS FOR INTERNAL VARIABLES.
 C
 C     DIAM -- ARRAY LOADED WITH TREE DIAMETERS (PASSED AS AN

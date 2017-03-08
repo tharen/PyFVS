@@ -1,6 +1,5 @@
 module prgprm_mod
     implicit none
-    ! TODO: PRGPRM.F77 is deeply embedded.
     !CODE SEGMENT PRGPRM
     !----------
     !  **PRGPRM--CA    DATE OF LAST REVISION:  08/23/2012

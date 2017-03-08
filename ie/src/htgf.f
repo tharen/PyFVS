@@ -6,6 +6,7 @@
       use contrl_mod
       use coeffs_mod
       use prgprm_mod
+      use calcom_mod
       implicit none
 C----------
 C  **HTGF--NI23  DATE OF LAST REVISION:  07/08/11
@@ -18,8 +19,6 @@ C  CYCLING.  ENTRY **HTCONS** IS CALLED FROM **RCON** TO LOAD SITE
 C  DEPENDENT CONSTANTS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-      INCLUDE 'CALCOM.F77'
-C
 C----------
 C   MODEL COEFFICIENTS AND CONSTANTS:
 C

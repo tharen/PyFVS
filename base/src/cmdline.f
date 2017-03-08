@@ -23,6 +23,8 @@ c     Created in 2011 and 2012 by Nick Crookston, RMRS-Moscow
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE :: FVSSETCMDLINE
 !DEC$ ATTRIBUTES ALIAS : 'FVSSETCMDLINE' :: FVSSETCMDLINE
 !DEC$ ATTRIBUTES REFERENCE :: theCmdLine,lenCL,IRTNCD
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvssetcmdline
 #endif
 
       integer :: i,n,irtn,ieq,iend,lenCL,IRTNCD
@@ -215,6 +217,8 @@ c     open/reopen the keyword/output file.
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE :: FVSGETSTOPPOINTCODES
 !DEC$ ATTRIBUTES ALIAS : 'FVSGETSTOPPOINTCODES' :: FVSGETSTOPPOINTCODES
 !DEC$ ATTRIBUTES REFERENCE :: spptcd,spptyr
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsgetstoppointcodes
 #endif
 
       integer :: spptcd,spptyr
@@ -236,6 +240,8 @@ c     open/reopen the keyword/output file.
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE :: FVSSETSTOPPOINTCODES
 !DEC$ ATTRIBUTES ALIAS : 'FVSSETSTOPPOINTCODES' :: FVSSETSTOPPOINTCODES
 !DEC$ ATTRIBUTES REFERENCE :: spptcd,spptyr
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvssetstoppointcodes
 #endif
 
       integer :: spptcd,spptyr
@@ -257,6 +263,8 @@ c     open/reopen the keyword/output file.
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE :: FVSGETRESTARTCODE
 !DEC$ ATTRIBUTES ALIAS : 'FVSGETRESTARTCODE' :: FVSGETRESTARTCODE
 !DEC$ ATTRIBUTES REFERENCE :: restrtcd
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsgetrestartcode
 #endif
 
       integer :: restrtcd
@@ -282,6 +290,8 @@ c     open/reopen the keyword/output file.
 #ifdef _WINDLL
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE,ALIAS : 'FVSRESTART' :: FVSRESTART
 !DEC$ ATTRIBUTES REFERENCE :: restrtcd
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsrestart
 #endif
 
       integer :: restrtcd
@@ -334,6 +344,8 @@ cc     -        " restrtcd=",restrtcd
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE :: FVSRESTARTLASTSTAND
 !DEC$ ATTRIBUTES ALIAS : 'FVSRESTARTLASTSTAND' :: FVSRESTARTLASTSTAND
 !DEC$ ATTRIBUTES REFERENCE :: restrtcd
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsrestartlaststand
 #endif
 
       integer :: restrtcd
@@ -363,6 +375,8 @@ cc     -        " restrtcd=",restrtcd
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE :: FVSGETKEYWORDFILENAME
 !DEC$ ATTRIBUTES ALIAS:'FVSGETKEYWORDFILENAME' :: FVSGETKEYWORDFILENAME
 !DEC$ ATTRIBUTES REFERENCE :: fn,mxch,nch
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsgetkeywordfilename
 #endif
 
       integer :: mxch,nch
@@ -386,6 +400,8 @@ cc     -        " restrtcd=",restrtcd
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE :: FVSSETRTNCODE
 !DEC$ ATTRIBUTES ALIAS : 'FVSSETRTNCODE' :: FVSSETRTNCODE
 !DEC$ ATTRIBUTES REFERENCE :: rtnCode
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvssetrtncode
 #endif
 
       fvsRtnCode = rtnCode
@@ -409,6 +425,8 @@ C     if in an error state, close the files.
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE :: FVSGETRTNCODE
 !DEC$ ATTRIBUTES ALIAS : 'FVSGETRTNCODE' :: FVSGETRTNCODE
 !DEC$ ATTRIBUTES REFERENCE :: rtnCode
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsgetrtncode
 #endif
 
       rtnCode = fvsRtnCode
@@ -431,6 +449,8 @@ c     note that this routine is called during the simulation
 !DEC$ ATTRIBUTES DLLEXPORT,C,DECORATE :: FVSSTOPPOINT
 !DEC$ ATTRIBUTES ALIAS : 'FVSSTOPPOINT' :: FVSSTOPPOINT
 !DEC$ ATTRIBUTES REFERENCE :: LOCODE,ISTOPDONE
+
+!GCC$ ATTRIBUTES STDCALL,DLLEXPORT :: fvsstoppoint
 #endif
 
       include "GLBLCNTL.F77"

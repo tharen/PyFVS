@@ -10,7 +10,6 @@ import os
 import sys
 import subprocess
 from numpy.distutils.core import Extension
-from numpy.f2py import f2py2e
 
 fvs_variant = '@variant@'
 ext_name = '@pyext_name@'
@@ -21,16 +20,6 @@ lib_dir = '.'
 # Load the source files to be wrapped from the list generated in CMake
 sources = open('./pyext_source.txt').read()
 sources = sources.split(';')
-
-def gen_f2py_pyf(ext_pyf, ext_name, sources):
-    """Generate the F2PY wrapper .pyf module."""
-    cmd_args = [
-        '-h', ext_pyf
-        ,'-m', ext_name
-        ,'--overwrite-signature'
-        ]
-    cmd_args.extend(sources)
-    f2py2e.run_main(cmd_args)
 
 if os.name=='nt':
     odbc = 'odbc32'

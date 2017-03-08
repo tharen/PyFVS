@@ -13,6 +13,7 @@
       use varcom_mod
       use screen_mod
       use keycom_mod
+      use calcom_mod
       implicit none
 C----------
 C  $Id$
@@ -24,8 +25,6 @@ C
       INCLUDE  'SNCOM.F77'
 C
       INCLUDE  'CWDCOM.F77'
-C
-      INCLUDE  'CALCOM.F77'
 C
       INTEGER IDUM1,IDUM2,IDUM3,IHAB,NEWYR,ISPEC,IFOREST,INTDIST,IFORST
       INTEGER IREGN,IRDUM,INUM,IDFLG,IDTYPE,IXF,IXTMP,ITB,ITC,JJTAB
