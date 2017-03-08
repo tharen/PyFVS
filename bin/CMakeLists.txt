@@ -793,7 +793,7 @@ if (WITH_PYEXT)
             DESTINATION python)
     install(FILES
                 ${source_root}/python/README.txt
-                ${source_root}/python/version
+                ${source_root}/python/pyfvs/version
             DESTINATION python/pyfvs)
 
     message(STATUS "*** End PyMod Configuration ***")

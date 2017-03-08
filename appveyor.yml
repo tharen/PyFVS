@@ -41,7 +41,7 @@ init:
     
 install:
     # Read the version number
-    - ps: $env:pkg_version = (Get-Content -Path "python/version").Trim()
+    - ps: $env:pkg_version = (Get-Content -Path "python/pyfvs/version").Trim()
     - ps: Update-AppveyorBuild -Version "$env:pkg_version-$env:APPVEYOR_BUILD_NUMBER"
     # Setup the python environment and install required packages
     - "set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
@@ -63,9 +63,9 @@ after_build:
 
 on_failure:
     # Post error logs to the build log
-    - appveyor PushArtifact **\*.log
-    # - appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\\bin\\build\\build_err.log
-    # - appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\\bin\\build\\pypnc_f2py.log
+    #- appveyor PushArtifact **\*.log
+    - appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\\bin\\build\\build_err.log
+    - appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\\bin\\build\\pypnc_f2py.log
     # Report remote desktop connection parameters and wait
     - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
     
