@@ -1,7 +1,5 @@
 # Drawing from: https://github.com/ogrisel/python-appveyor-demo/blob/master/appveyor.yml
 
-version: 0.0.1-{build}
-
 environment:
   global:
     # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
@@ -11,25 +9,25 @@ environment:
     
   matrix:
 
-    - PYTHON: "C:\\Miniconda-x64"
-      PYTHON_VERSION: "2.7"
-      PYTHON_ARCH: "64"
-      ENV_NAME: "pyfvs"
+    #- PYTHON: "C:\\Miniconda-x64"
+    #  PYTHON_VERSION: "2.7"
+    #  PYTHON_ARCH: "64"
+    #  ENV_NAME: "pyfvs"
 
     - PYTHON: "C:\\Miniconda-x64"
       PYTHON_VERSION: "3.4"
       PYTHON_ARCH: "64"
       ENV_NAME: "pyfvs"
 
-    - PYTHON: "C:\\Miniconda-x64"
-      PYTHON_VERSION: "3.5"
-      PYTHON_ARCH: "64"
-      ENV_NAME: "pyfvs"
+    #- PYTHON: "C:\\Miniconda-x64"
+    #  PYTHON_VERSION: "3.5"
+    #  PYTHON_ARCH: "64"
+    #  ENV_NAME: "pyfvs"
 
-    - PYTHON: "C:\\Miniconda-x64"
-      PYTHON_VERSION: "3.6"
-      PYTHON_ARCH: "64"
-      ENV_NAME: "pyfvs"
+    #- PYTHON: "C:\\Miniconda-x64"
+    #  PYTHON_VERSION: "3.6"
+    #  PYTHON_ARCH: "64"
+    #  ENV_NAME: "pyfvs"
 
 init:
     # Display remote desktop details
@@ -37,6 +35,9 @@ init:
     - "echo %PYTHON_VERSION% %PYTHON%"
     
 install:
+    # Read the version number
+    - ps: $env:pkg_version = (Get-Content -Path "python/version").Trim()
+    - ps: ps: Update-AppveyorBuild -Version "$env:pkg_version-$env:APPVEYOR_BUILD_NUMBER"
     # Setup the python environment and install required packages
     - "set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
     #- conda config --add channels conda-forge

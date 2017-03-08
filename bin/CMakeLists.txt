@@ -789,9 +789,12 @@ if (WITH_PYEXT)
             PATTERN "*genrpt.txt" EXCLUDE
             )
     install(FILES
-                ${source_root}/python/README.txt
                 ${source_root}/python/mingw-gcc.specs.in
             DESTINATION python)
+    install(FILES
+                ${source_root}/python/README.txt
+                ${source_root}/python/version
+            DESTINATION python/pyfvs)
 
     message(STATUS "*** End PyMod Configuration ***")
 

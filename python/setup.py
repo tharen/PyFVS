@@ -13,12 +13,10 @@ import numpy
 #       Python 3.5 requires VS 2015
 
 # TODO: Get the version from the git tag and or revision.
-version = '0.0.5a0'
+version = open('version').readline().strip()
 
-description = open('./README.txt').readline().strip()
-long_desc = open('./README.txt').read().strip()
-
-shutil.copyfile('./README.txt', 'pyfvs/README.txt')
+description = open('./pyfvs/README.txt').readline().strip()
+long_desc = open('./pyfvs/README.txt').read().strip()
 
 _is_64bit = (getattr(sys, 'maxsize', None) or getattr(sys, 'maxint')) > 2**32
 _is_windows = sys.platform=='win32'
@@ -80,13 +78,13 @@ setup(
     , url='https://github.com/tharen/PyFVS'
     , author="Tod Haren"
     , author_email="tod.haren@gmail.com"
-    , setup_requires=['cython','numpy>=1.9','pytest-runner']
+    , setup_requires=['cython','numpy>=1.11','pytest-runner']
     , tests_require=['pytest',]
     , install_requires=['numpy>=1.11',] #'numexpr']
     , ext_modules=extensions
     , packages=['pyfvs','pyfvs.keywords']
     , package_data={
-            '':['*.pyd','*.cfg','*.so','README.*']
+            '':['*.pyd','*.cfg','*.so','README.*','version']
             ,'pyfvs':['docs/*','examples/*','test/*.py','test/rmrs/*']
             }
     #, include_package_data=True # package the files listed in MANIFEST.in

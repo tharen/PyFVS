@@ -1,10 +1,10 @@
 PyFVS - Python wrappers for Open-FVS.
 =====
 
-|Branch|Status|
-|---|---|
-|[master](https://github.com/tharen/PyFVS/tree/master)|[![Build Status](https://travis-ci.org/tharen/PyFVS.svg?branch=master)](https://travis-ci.org/tharen/PyFVS)|
-|[dev](https://github.com/tharen/PyFVS/tree/dev)|[![Build Status](https://travis-ci.org/tharen/PyFVS.svg?branch=dev)](https://travis-ci.org/tharen/PyFVS)|
+|Branch|Travis CI|AppVeyor|
+|---|---|---|
+|[master](https://github.com/tharen/PyFVS/tree/master)|[![Build Status](https://travis-ci.org/tharen/PyFVS.svg?branch=master)](https://travis-ci.org/tharen/PyFVS)|[![Build status](https://ci.appveyor.com/api/projects/status/251imms9weaivea1/branch/master?svg=true)](https://ci.appveyor.com/project/tharen/pyfvs/branch/master)|
+|[dev](https://github.com/tharen/PyFVS/tree/dev)|[![Build Status](https://travis-ci.org/tharen/PyFVS.svg?branch=dev)](https://travis-ci.org/tharen/PyFVS)|[![Build status](https://ci.appveyor.com/api/projects/status/251imms9weaivea1/branch/dev?svg=true)](https://ci.appveyor.com/project/tharen/pyfvs/branch/dev)|
 
 =====
 
