@@ -13,7 +13,7 @@ import numpy
 #       Python 3.5 requires VS 2015
 
 # TODO: Get the version from the git tag and or revision.
-version = open('version').readline().strip()
+version = open('./pyfvs/version').readline().strip()
 
 description = open('./pyfvs/README.txt').readline().strip()
 long_desc = open('./pyfvs/README.txt').read().strip()
