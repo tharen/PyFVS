@@ -802,7 +802,7 @@ endif()
 
 # Add a make target for the variant to build everything seperate from 'all'
 if (WITH_PYEXT)
-    add_custom_target(${variant} DEPENDS ${pyext_name} ${fvsexe} ${fvslib_shared} ${fvslib_static})
+    add_custom_target(${variant} DEPENDS ${pyext_name}_ext ${fvsexe} ${fvslib_shared} ${fvslib_static})
 else ()
     add_custom_target(${variant} DEPENDS ${fvsexe} ${fvslib_shared} ${fvslib_static})
 endif ()
