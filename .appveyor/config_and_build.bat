@@ -33,7 +33,7 @@ call python bin\gen_libpython.py
 mkdir bin\build
 pushd bin\build
 cmake -G "MinGW Makefiles" .. ^
-    -DFVS_VARIANTS="pnc;wcc;soc;cac" ^
+    -DFVS_VARIANTS=%FVS_VARIANTS% ^
     -DCMAKE_SYSTEM_NAME=Windows ^
     -DNATIVE_ARCH=No ^
     -D32BIT_TARGET=%win32% ^
