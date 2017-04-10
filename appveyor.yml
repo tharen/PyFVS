@@ -9,30 +9,30 @@ environment:
     
   matrix:
 
-    #- PYTHON: "C:\\Miniconda-x64"
-    #  PYTHON_VERSION: "2.7"
-    #  PYTHON_ARCH: "64"
-    #  ENV_NAME: "pyfvs"
-    #  FVS_VARIANTS: "pnc;wcc;soc;cac"
+    - PYTHON: "C:\\Miniconda-x64"
+      PYTHON_VERSION: "2.7"
+      PYTHON_ARCH: "64"
+      ENV_NAME: "pyfvs"
+      FVS_VARIANTS: "pnc;wcc;soc;cac"
     
     - PYTHON: "C:\\Miniconda-x64"
       PYTHON_VERSION: "3.4"
       PYTHON_ARCH: "64"
       ENV_NAME: "pyfvs"
-      #FVS_VARIANTS: "pnc;wcc;soc;cac"
-      FVS_VARIANTS: "pnc"
+      FVS_VARIANTS: "pnc;wcc;soc;cac"
+      #FVS_VARIANTS: "pnc"
 
-    #- PYTHON: "C:\\Miniconda-x64"
-    #  PYTHON_VERSION: "3.5"
-    #  PYTHON_ARCH: "64"
-    #  ENV_NAME: "pyfvs"
-    #  FVS_VARIANTS: "pnc;wcc;soc;cac"
+    - PYTHON: "C:\\Miniconda-x64"
+      PYTHON_VERSION: "3.5"
+      PYTHON_ARCH: "64"
+      ENV_NAME: "pyfvs"
+      FVS_VARIANTS: "pnc;wcc;soc;cac"
 
-    #- PYTHON: "C:\\Miniconda-x64"
-    #  PYTHON_VERSION: "3.6"
-    #  PYTHON_ARCH: "64"
-    #  ENV_NAME: "pyfvs"
-    #  FVS_VARIANTS: "pnc;wcc;soc;cac"
+    - PYTHON: "C:\\Miniconda-x64"
+      PYTHON_VERSION: "3.6"
+      PYTHON_ARCH: "64"
+      ENV_NAME: "pyfvs"
+      FVS_VARIANTS: "pnc;wcc;soc;cac"
     
 init:
     # Display remote desktop details
