@@ -1,6 +1,7 @@
 import os
 import sys
 import shutil
+import re
 
 from setuptools import setup, Extension
 from Cython.Build import cythonize
@@ -12,16 +13,17 @@ import numpy
 #       Python 3.4 requires VS 2010
 #       Python 3.5 requires VS 2015
 
-# TODO: Get the version from the git tag and or revision.
-version = open('./pyfvs/version').readline().strip()
+__version__ = re.search(
+        r'__version__\s*=\s*[\'"]([^\'"]*)[\'"]',  # It excludes inline comment too
+        open('pyfvs/__init__.py').read()).group(1)
 
 description = open('./pyfvs/README.txt').readline().strip()
 long_desc = open('./pyfvs/README.txt').read().strip()
 
-_is_64bit = (getattr(sys, 'maxsize', None) or getattr(sys, 'maxint')) > 2**32
-_is_windows = sys.platform=='win32'
+_is_64bit = (getattr(sys, 'maxsize', None) or getattr(sys, 'maxint')) > 2 ** 32
+_is_windows = sys.platform == 'win32'
 
-class build_ext_subclass( build_ext ):
+class build_ext_subclass(build_ext):
     """
     Subclass build_ext to get the configured compiler vendor
     
@@ -29,12 +31,13 @@ class build_ext_subclass( build_ext ):
     """
     def build_extensions(self):
         comp = self.compiler.compiler_type
-        if comp=='mingw32' and _is_windows and _is_64bit:
+        if comp == 'mingw32' and _is_windows and _is_64bit:
             # MinGW w64 has problems link to MSVC compiled Python
             # A customized mingw spec file helps
+            # Populate the spec file template with compiler details
             spec_file = './mingw-gcc.specs'
             v = sys.version_info[:2]
-            
+
             if v >= (3, 3) and v <= (3, 4):
                 d = {'msvcrt':'msvcr100', 'msvcrt_version':'0x1000'
                         , 'moldname':'moldname'}
@@ -46,23 +49,23 @@ class build_ext_subclass( build_ext ):
                         , 'moldname':'moldname'}
                 with open(spec_file + '.in') as infile:
                     open(spec_file, 'w').write(infile.read().format(**d))
-            
+
             args = [
                     '-static-libgcc', '-static-libstdc++'
-                    ,'-specs={}'.format(spec_file)
-                    ,'-Wl,--allow-multiple-definition'
+                    , '-specs={}'.format(spec_file)
+                    , '-Wl,--allow-multiple-definition'
                     ]
-            
+
             # Make sure all libraries know this is a 64 bit windows library
             define_macros = [('MS_WIN64', None), ]
-            
+
             for e in self.extensions:
                 e.extra_compile_args = args
                 e.extra_link_args = args
                 e.define_macros = define_macros
-        
+
         build_ext.build_extensions(self)
-        
+
 # Collect all Cython source files as a list of extensions
 extensions = cythonize([
         Extension("pyfvs.*"
@@ -72,22 +75,22 @@ extensions = cythonize([
 
 setup(
     name='pyfvs'
-    , version=version
+    , version=__version__
     , description=description
     , long_description=long_desc
     , url='https://github.com/tharen/PyFVS'
     , author="Tod Haren"
     , author_email="tod.haren@gmail.com"
-    , setup_requires=['cython','numpy>=1.11','pytest-runner']
-    , tests_require=['pytest',]
-    , install_requires=['numpy>=1.11',] #'numexpr']
+    , setup_requires=['cython', 'numpy>=1.11', 'pytest-runner']
+    , tests_require=['pytest', ]
+    , install_requires=['numpy>=1.11', ]  # 'numexpr']
     , ext_modules=extensions
-    , packages=['pyfvs','pyfvs.keywords']
+    , packages=['pyfvs', 'pyfvs.keywords']
     , package_data={
-            '':['*.pyd','*.cfg','*.so','README.*','version']
-            ,'pyfvs':['docs/*','examples/*','test/*.py','test/rmrs/*']
+            '':['*.pyd', '*.cfg', '*.so', 'README.*', 'version']
+            , 'pyfvs':['docs/*', 'examples/*', 'test/*.py', 'test/rmrs/*']
             }
-    #, include_package_data=True # package the files listed in MANIFEST.in
+    # , include_package_data=True # package the files listed in MANIFEST.in
     , entry_points={
             'console_scripts': [
             'pyfvs=pyfvs.__main__:main'

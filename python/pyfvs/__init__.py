@@ -22,8 +22,7 @@ import logging.config
 # The config file is used to initialize logging and FVS library paths.
 config_path = os.path.join(os.path.split(__file__)[0], 'pyfvs.cfg')
 
-vp = os.path.join(os.path.split(__file__)[0],'version')
-__version__ = open(vp).readline().strip()
+__version__ = '0.0.5a0'
 
 def version():
     """Return the current PyFVS API version number."""
