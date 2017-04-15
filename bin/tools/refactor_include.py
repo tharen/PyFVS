@@ -19,43 +19,44 @@ import re
 from collections import OrderedDict
 
 include_modules = {
-#        'arrays.f77':'arrays'
-        'calcom.f77':'calcom_mod'
+        'organon.f77':'organon_mod'
+#        'arrays.f77':'arrays_mod'
+#        'calcom.f77':'calcom_mod'
 ##        , 'calden.f77':'calden'
 ##        , 'cicom.f77':'cicom'
 ##        , 'climate.f77':'climate'
-#        , 'coeffs.f77':'coeffs'
-#        , 'contrl.f77':'contrl'
+#        , 'coeffs.f77':'coeffs_mod'
+#        , 'contrl.f77':'contrl_mod'
 ##        , 'cvcom.f77':'cvcom'
 ##        , 'cwdcom.f77':'cwdcom'
 ##        , 'dbstk.f77':'dbstk'
 ##        , 'ecncom.f77':'ecncom'
 ##        , 'ecncomsaves.f77':'ecncomsaves'
-#        , 'econ.f77':'econ'
+#        , 'econ.f77':'econ_mod'
 ##        , 'emcom.f77':'emcom'
 ##        , 'escom2.f77':'escom2'
-#        , 'escomn.f77':'escomn'
-#        , 'eshap.f77':'eshap'
+#        , 'escomn.f77':'escomn_mod'
+#        , 'eshap.f77':'eshap_mod'
 ##        , 'eshap2.f77':'eshap2'
 ##        , 'eshoot.f77':'eshoot'
 ##        , 'esrncm.f77':'esrncm'
-        , 'estcor.f77':'estcor_mod'
-#        , 'estree.f77':'estree'
+#        , 'estcor.f77':'estcor_mod'
+#        , 'estree.f77':'estree_mod'
 ##        , 'eswsbw.f77':'eswsbw'
-#        , 'fvsstdcm.f77':'fvsstdcm'
+#        , 'fvsstdcm.f77':'fvsstdcm_mod'
 ##        , 'ggcom.f77':'ggcom'
 ##        , 'glblcntl.f77':'glblcntl'
-#        , 'htcal.f77':'htcal'
+#        , 'htcal.f77':'htcal_mod'
 ##        , 'hvdncm.f77':'hvdncm'
 ##        , 'includesvn.f77':'includesvn'
-#        , 'keycom.f77':'keycom'
+#        , 'keycom.f77':'keycom_mod'
 ##        , 'kotcom.f77':'kotcom'
-#        , 'metric.f77':'metric'
-#        , 'multcm.f77':'multcm'
+#        , 'metric.f77':'metric_mod'
+        , 'multcm.f77':'multcm_mod'
 ##        , 'opcom.f77':'opcom'
-#        , 'outcom.f77':'outcom'
-#        , 'pden.f77':'pden'
-#        , 'plot.f77':'plot'
+#        , 'outcom.f77':'outcom_mod'
+#        , 'pden.f77':'pden_mod'
+#        , 'plot.f77':'plot_mod'
 ##        , 'ppcisn.f77':'ppcisn'
 ##        , 'ppcmad.f77':'ppcmad'
 ##        , 'ppcntl.f77':'ppcntl'
@@ -69,35 +70,35 @@ include_modules = {
 ##        , 'ppspla.f77':'ppspla'
 ##        , 'ppspnb.f77':'ppspnb'
 ##        , 'ppsprd.f77':'ppsprd'
-#        , 'rancom.f77':'rancom'
-#        , 'screen.f77':'screen'
+#        , 'rancom.f77':'rancom_mod'
+#        , 'screen.f77':'screen_mod'
 ##        , 'sncom.f77':'sncom'
 ##        , 'sstgmc.f77':'sstgmc'
 ##        , 'stdstk.f77':'stdstk'
 ##        , 'sumtab.f77':'sumtab'
-#        , 'svdata.f77':'svdata'
+#        , 'svdata.f77':'svdata_mod'
 ##        , 'svdead.f77':'svdead'
 ##        , 'svrcom.f77':'svrcom'
 ##        , 'twigcom.f77':'twigcom'
-#        , 'varcom.f77':'varcom'
-#        , 'volstd.f77':'volstd'
-#        , 'workcm.f77':'workcm'
+#        , 'varcom.f77':'varcom_mod'
+#        , 'volstd.f77':'volstd_mod'
+#        , 'workcm.f77':'workcm_mod'
 
         ###--- fire\base\common
-#        , 'fmcom.f77':'fmcom'
-#        , 'fmfcom.f77':'fmfcom'
+#        , 'fmcom.f77':'fmcom_mod'
+#        , 'fmfcom.f77':'fmfcom_mod'
 ##        , 'fmopcm.f77':'fmopcm'
-#        , 'fmparm.f77':'fmparm'
-#        , 'fmprop.f77':'fmprop'
+#        , 'fmparm.f77':'fmparm_mod'
+#        , 'fmprop.f77':'fmprop_mod'
 ##        , 'fmsngl.f77':'fmsngl'
-#        , 'fmsvcm.f77':'fmsvcm'
+#        , 'fmsvcm.f77':'fmsvcm_mod'
 
         ###--- variant commons
-#        , 'esparm.f77':'esparm'
-#        , 'prgprm.f77':'prgprm'
+#        , 'esparm.f77':'esparm_mod'
+#        , 'prgprm.f77':'prgprm_mod'
         }
 
-def main(src, dest=None, inplace=False, skip=[]):
+def main(src, dest=None, inplace=False, skip=[], dry_run=False):
     """
     Walk a directory tree, mirroring files and refactoring along the way.
     """
@@ -120,20 +121,22 @@ def main(src, dest=None, inplace=False, skip=[]):
                 for fn in files:
                     src_fn = os.path.join(root, fn)
                     dest_fn = os.path.join(root.replace(src, dest), fn)
-                    print('Copy: {}'.format(src_fn))
-                    shutil.copy2(src_fn, dest_fn)
+                    # print('Copy: {}'.format(src_fn))
+                    if not dry_run:
+                        shutil.copy2(src_fn, dest_fn)
             else:
                 for fn in files:
                     src_fn = os.path.join(root, fn)
                     dest_fn = os.path.join(root.replace(src, dest), fn)
                     if fn.endswith('.f'):
-                        print('Refactor: {}'.format(src_fn))
-                        if refactor(src_fn, include_modules, dest_fn):
+                        # print('Refactor: {}'.format(src_fn))
+                        if refactor(src_fn, include_modules, dest_fn, dry_run=dry_run):
                             refactored_files.append(src)
 
                     else:
                         print('Copy: {}'.format(src_fn))
-                        shutil.copy2(src_fn, dest_fn)
+                        if not dry_run:
+                            shutil.copy2(src_fn, dest_fn)
 
             for dir in dirs:
                 try:
@@ -148,11 +151,11 @@ def main(src, dest=None, inplace=False, skip=[]):
             for fn in files:
                 if fn.endswith('.f'):
                     src_fn = os.path.join(root, fn)
-                    print('Scanning: {}'.format(src_fn))
-                    if refactor(src_fn, include_modules):
+                    # print('Scanning: {}'.format(src_fn))
+                    if refactor(src_fn, include_modules, dry_run=dry_run):
                         refactored_files.append(src)
             
-def refactor(src, include_modules, dest=None):
+def refactor(src, include_modules, dest=None, dry_run=False):
     """
     Refactor a fortran (F77) module by replacing INCLUDE statements with USE.
     
@@ -195,7 +198,7 @@ def refactor(src, include_modules, dest=None):
             in_signature = True
             routine_name = m.groups()[3]
             routine_type = m.groups()[2]
-            print('\t{} {}'.format(routine_type, routine_name))
+            # print('\t{} {}'.format(routine_type, routine_name))
             routine = dict([
                     ('name',routine_name)
                     ,('type',routine_type)
@@ -246,17 +249,21 @@ def refactor(src, include_modules, dest=None):
     
     # Nothing to write out if no includes were refactored.
     if not found_new:
-        print('Skipping: {}'.format(src))
+        # print('Skipping: {}'.format(src))
         return False
-        
+    
+    if dry_run:
+        return True
+
     if dest is None:
         # Refactoring inplace
         back = '{}.bak'.format(src)
-        print('Backup {} -> {}'.format(src,back))
+        # print('Backup {} -> {}'.format(src,back))
         shutil.copy2(src, back)
         dest = src
         
     with open(dest, 'w') as out:
+        print('Refactored {} -> {}'.format(src, dest))
         for line in header:
             out.write(line + '\n')
 
@@ -324,4 +331,4 @@ def search_depends(r,include):
 if __name__ == '__main__':
     main(r'C:\workspace\forest_modeling\pyfvs'
          #, r'C:\workspace\forest_modeling\pyfvs_refactor'
-         , inplace=True)
+         , inplace=True, dry_run=False)

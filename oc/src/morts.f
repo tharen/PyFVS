@@ -9,6 +9,8 @@
       use pden_mod
       use varcom_mod
       use prgprm_mod
+      use organon_mod
+      use multcm_mod
       implicit none
 C----------
 C  **MORTS--OC   DATE OF LAST REVISION:  04/12/15
@@ -29,10 +31,6 @@ C  IF THERE ARE NO VALID ORGANON TREES, THEN ORGANON MORTALITY RATES HAVE
 C  NOT BEEN CALCULATED (**EXECUTE** WAS NOT CALLED); USE FVS MORTALITY LOGIC
 C----------
 COMMONS
-      INCLUDE 'MULTCM.F77'
-C
-      INCLUDE 'ORGANON.F77'
-C
 C----------
 C  DEFINITIONS:
 C

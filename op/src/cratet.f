@@ -7,6 +7,7 @@
       use outcom_mod
       use varcom_mod
       use prgprm_mod
+      use organon_mod
       implicit none
 C----------
 C  **CRATET--OP   DATE OF LAST REVISION:  07/16/15
@@ -28,8 +29,6 @@ C        AND ISCT.
 C    8)  PRINT A TABLE DESCRIBING CONTROL PARAMETERS AND INPUT
 C        VARIABLES.
 C----------
-C
-      INCLUDE 'ORGANON.F77'
 C
 C----------
 C  INTERNAL VARIABLES.

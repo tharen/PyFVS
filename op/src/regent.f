@@ -10,6 +10,8 @@
       use prgprm_mod
       use calcom_mod
       use estcor_mod
+      use organon_mod
+      use multcm_mod
       implicit none
 C----------
 C  **REGENT--OP   DATE OF LAST REVISION:  06/17/15
@@ -29,10 +31,6 @@ C  **SMHGDG IS CALLED TO CALCULATE SMALL TREE HEIGHT AND DIAMETER
 C  INCREMENT
 C----------
 COMMONS
-      INCLUDE 'MULTCM.F77'
-C
-      INCLUDE 'ORGANON.F77'
-C
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES:
 C

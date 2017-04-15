@@ -1,5 +1,6 @@
       SUBROUTINE VARPUT (WK3,IPNT,ILIMIT,REALS,LOGICS,INTS)
       use prgprm_mod
+      use organon_mod
       implicit none
 C----------
 C  $Id: varput.f 874 2013-05-16 19:44:36Z drobinsonessa@gmail.com $
@@ -10,8 +11,6 @@ C
 C     PART OF THE PARALLEL PROCESSING EXTENSION TO PROGNOSIS.
 C----------
 COMMONS
-      INCLUDE 'ORGANON.F77'
-C
 C----------
 C     NOTE: THE ACTUAL STORAGE LIMIT FOR INTS, LOGICS, AND REALS
 C     IS MAXTRE (SEE PRGPRM).

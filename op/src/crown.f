@@ -7,6 +7,7 @@
       use pden_mod
       use varcom_mod
       use prgprm_mod
+      use organon_mod
       implicit none
 C----------
 C  **CROWN--OP   DATE OF LAST REVISION:  03/30/15
@@ -24,8 +25,6 @@ C  CROWN RATIO WHEN DBH IS LESS THAN 1 INCH.  PROCESSING OF
 C  CROWN CHANGE FOR SMALL TREES IS CONTROLLED BY **REGENT**.
 C----------
 COMMONS
-      INCLUDE 'ORGANON.F77'
-C
 C----------
       LOGICAL DEBUG
       REAL CRNEW(MAXTRE),WEIBA(17),WEIBB0(17),WEIBB1(17),WEIBC0(17)
