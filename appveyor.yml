@@ -41,9 +41,9 @@ init:
     
 install:
     # Read the version number
-    - ps: $env:pkg_version = (Get-Content -Path "python/pyfvs/version").Trim()
+    - ps: $env:pkg_version = (Get-Content -Path "python/pyfvs/__init__.py" | Select-String '^__version__=(.+)$' AllMatches | Foreach-Object {$_.Matches} | Foreach-Object {$_.Groups[1].Value}).Trim()
     - ps: Update-AppveyorBuild -Version "$env:pkg_version-$env:APPVEYOR_BUILD_NUMBER"
-    # Setup the python environment and install required packages
+    # Setup the python environmen/t and install required packages
     - "set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
     #- conda config --add channels conda-forge
     - conda config --set always_yes yes --set changeps1 no
