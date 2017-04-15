@@ -12,7 +12,7 @@ import numpy as np
 import pyfvs
 from pyfvs import fvs
 
-variants = [('pnc',), ('wcc',), ('soc',), ('cac',)]
+variants = [('pnc',), ('wcc',), ('soc',), ('cac',), ('oc',)]
 
 root = os.path.split(__file__)[0]
 bare_ground_params = [
@@ -20,18 +20,24 @@ bare_ground_params = [
         ['wcc', 'rmrs/wc_bareground.key', 'rmrs/wc_bareground.sum.save'],
         ['soc', 'rmrs/so_bareground.key', 'rmrs/so_bareground.sum.save'],
         ['cac', 'rmrs/ca_bareground.key', 'rmrs/ca_bareground.sum.save'],
+        ['oc', 'rmrs/oc_bareground.key', 'rmrs/oc_bareground.sum.save'],
         ]
 
 @pytest.mark.parametrize(('variant', 'kwd_path', 'sum_path'), bare_ground_params)
 def test_tree_data(variant, kwd_path, sum_path):
     try:
         f = fvs.FVS(variant)
-    except:
-        print('Skipping tests for variant: {}'.format(variant))
+
+    except ImportError:
+        pytest.skip('No variant library: {}'.format(variant))
         return None
-        
+
+    except:
+        raise
+
     print('**', kwd_path)
     f.init_projection(os.path.join(root, kwd_path))
+    f.tree_data.live_tpa[:, :] = 0.0
 
     for c in range(f.contrl_mod.ncyc):
         r = f.grow_projection()

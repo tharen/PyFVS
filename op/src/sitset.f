@@ -4,6 +4,7 @@
       use plot_mod
       use varcom_mod
       use prgprm_mod
+      use organon_mod
       implicit none
 C----------
 C  **SITSET--OP   DATE OF LAST REVISION:  07/22/15
@@ -14,8 +15,6 @@ C SPECIES, GIVEN A SITE INDEX AND SITE SPECIES, AND LOADS THE SDIDEF
 C ARRAY WITH SDI MAXIMUMS FOR SPECIES WHICH WERE NOT ASSIGNED A VALUE
 C USING THE SDIMAX KEYWORD.
 C----------
-C
-      INCLUDE 'ORGANON.F77'
 C
       LOGICAL DEBUG
       CHARACTER FORST*2,FORDUM*2,DIST*2,PROD*2,VAR*2,VOLEQ*10

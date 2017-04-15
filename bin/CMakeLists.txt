@@ -254,8 +254,14 @@ message(STATUS "Source Root = ${source_root}")
 #---Top Level Objects
 list(GET source_lists 0 source_list)
 
-# Read the source file names as a list
-file(STRINGS ${source_list} source_file_list)
+# Read the source file names as a list as strip whitespace
+file(STRINGS ${source_list} x)
+set(source_file_list)
+foreach(y ${x})
+    string(STRIP ${y} z)
+    list(APPEND source_file_list ${z})
+endforeach()
+
 # Localize the paths
 string(REPLACE "../" "${source_root}/" source_file_list "${source_file_list}")
 
@@ -473,8 +479,15 @@ set(fvs_source)
 set(main_source)
 set(pyext_source)
 
-# Process the source list for the variant
-file(STRINGS ${source_list} source_files)
+# Process the source list for the variant as strip whitespace
+# file(STRINGS ${source_list} source_files)
+file(STRINGS ${source_list} x)
+set(source_files)
+foreach(y ${x})
+    string(STRIP ${y} z)
+    list(APPEND source_files ${z})
+endforeach()
+
 # Localize the paths
 string(REPLACE "../" "${source_root}/" source_files "${source_files}")
 
@@ -646,7 +659,15 @@ if (WITH_PYEXT)
 
     # TODO: Add a pyfvs_sources.txt file to avoid stuffing them here
     # Process the source list for files to include in the Python module
-    file(STRINGS ${source_list} source_files)
+    file(STRINGS ${source_list} x)
+    set(source_files)
+    foreach(y ${x})
+        string(STRIP ${y} z)
+        list(APPEND source_files ${z})
+    endforeach()
+    #string(REGEX REPLACE "([cC].+)\ +;" "1;" source_files "${source_files}")
+    # string(REGEX REPLACE "(.+)\ +" "1" source_files ${source_files})
+    # string(STRIP source_files ${source_files})
     string(REPLACE "../" "${source_root}/" source_files "${source_files}")
 
     # Source files to be wrapped with F2PY

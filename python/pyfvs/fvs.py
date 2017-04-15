@@ -92,7 +92,12 @@ class FVS(object):
         Load the requested FVS variant library.
         """
 
-        variant_ext = 'pyfvs.pyfvs%sc' % self.variant.lower()[:2]
+        # FIXME: Variant libraries should be compiled without the climate fvs trailing 'c'
+        if self.variant.lower() in ('oc', 'op'):
+            variant_ext = 'pyfvs.pyfvs%s' % self.variant.lower()[:2]
+
+        else:
+            variant_ext = 'pyfvs.pyfvs%sc' % self.variant.lower()[:2]
         try:
             self.fvslib = importlib.import_module(variant_ext)
 

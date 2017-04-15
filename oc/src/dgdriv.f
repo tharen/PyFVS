@@ -7,6 +7,8 @@
       use prgprm_mod
       use calcom_mod
       use estcor_mod
+      use organon_mod
+      use multcm_mod
       implicit none
 C----------
 C OC $Id: dgdriv.f 1146 2014-02-06 16:44:38Z rhavis@msn.com $
@@ -26,10 +28,6 @@ C  **DGF** IS ACCESSED TO LOAD LN(DDS) INTO THE ARRAY WK3.  DDS
 C  REPRESENTS CHANGE IN SQUARED DIAMETER.
 C----------
 COMMONS
-      INCLUDE 'MULTCM.F77'
-C
-      INCLUDE 'ORGANON.F77'
-C
 C----------
 C  DIMENSIONS AND DATA STATEMENTS FOR INTERNAL VARIABLES.
 C

@@ -5,6 +5,7 @@
       use estree_mod
       use contrl_mod
       use prgprm_mod
+      use organon_mod
       implicit none
 C----------
 C  $Id: org_intree.f 1146 2014-02-06 16:44:38Z rhavis@msn.com $
@@ -17,8 +18,6 @@ C  THIS ROUTINE READS THE ORGANON TREE DATA FROM THE .INP FILE AND
 C  SETS ALL VARIABLES WHICH ARE TREE RECORD SPECIFIC.
 C
       INCLUDE 'STDSTK.F77'
-C
-      INCLUDE 'ORGANON.F77'
 C
 C----------
       CHARACTER TITLE*20,EVEN,RAD,TYPE(5),VER*7

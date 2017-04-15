@@ -3,6 +3,7 @@
       use volstd_mod
       use plot_mod
       use prgprm_mod
+      use organon_mod
       implicit none
 C----------
 C  **ORIN  ORGANON--DATE OF LAST REVISION:  04/15/2015
@@ -11,8 +12,6 @@ C
 C     ORGANON EXTENSION KEYWORD PROCESSOR.
 C----------
 COMMONS
-      INCLUDE 'ORGANON.F77'
-C
 C----------
 C VARIABLE DECLARATIONS:
 C----------

@@ -1,6 +1,10 @@
       SUBROUTINE VOLCAL(VERSION,SPP,CFTD,CFSH,LOGLL,LOGML,LOGTD,LOGSH,
      1                  LOGTA,DBH,HT,CR,VERROR,TERROR,VWARNING,
      2                  TWARNING,IERROR,CFVOL,BFVOL)
+
+!f2py intent(in) :: version,spp,dbh,ht,cr,cftd,cfsh,logll,logml,logtd,logsh,logta
+!f2py intent(out) :: verror,terror,vwarning,twarning,ierror,cfvol,bfvol
+
 C
 C  04/25/2014 - THERE ARE COMMON SUBROUTINE NAMES IN THE SOURCE CODE
 C               USED TO BUILD THE ORGANON DLLS. IN ORDER TO LINK THE
