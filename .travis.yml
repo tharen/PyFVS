@@ -10,7 +10,7 @@ env:
     - FVS_STATUS=alpha
     - BUILD_ROOT=${TRAVIS_BUILD_DIR}/bin/build
     #- FVS_VARIANTS="pnc"
-    - FVS_VARIANTS="pnc;wcc;soc;cac"
+    - FVS_VARIANTS="pnc;wcc;soc;cac;oc"
 
 addons:
   apt:
@@ -47,7 +47,7 @@ install:
   # Useful for debugging any issues with conda
   - conda info -a
   # Define the name to be used for the archive of compiled products.
-  - export ARCHIVE_NAME=open-fvs-${TRAVIS_TAG}-Python${TRAVIS_PYTHON_VERSION}_64-${TRAVIS_OS_NAME}-ci.zip
+  - export ARCHIVE_NAME=pyfvs-${TRAVIS_TAG}-Python${TRAVIS_PYTHON_VERSION}_64-${TRAVIS_OS_NAME}-ci.zip
 
 script:
   - source .travis-ci/configure.sh

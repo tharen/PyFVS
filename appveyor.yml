@@ -13,26 +13,26 @@ environment:
       PYTHON_VERSION: "2.7"
       PYTHON_ARCH: "64"
       ENV_NAME: "pyfvs"
-      FVS_VARIANTS: "pnc;wcc;soc;cac"
+      FVS_VARIANTS: "pnc;wcc;soc;cac;oc"
     
     - PYTHON: "C:\\Miniconda-x64"
       PYTHON_VERSION: "3.4"
       PYTHON_ARCH: "64"
       ENV_NAME: "pyfvs"
-      FVS_VARIANTS: "pnc;wcc;soc;cac"
+      FVS_VARIANTS: "pnc;wcc;soc;cac;oc"
       #FVS_VARIANTS: "pnc"
 
     - PYTHON: "C:\\Miniconda-x64"
       PYTHON_VERSION: "3.5"
       PYTHON_ARCH: "64"
       ENV_NAME: "pyfvs"
-      FVS_VARIANTS: "pnc;wcc;soc;cac"
+      FVS_VARIANTS: "pnc;wcc;soc;cac;oc"
 
     - PYTHON: "C:\\Miniconda-x64"
       PYTHON_VERSION: "3.6"
       PYTHON_ARCH: "64"
       ENV_NAME: "pyfvs"
-      FVS_VARIANTS: "pnc;wcc;soc;cac"
+      FVS_VARIANTS: "pnc;wcc;soc;cac;oc"
     
 init:
     # Display remote desktop details
@@ -79,8 +79,8 @@ after_test:
     - "dir"
     
 artifacts:
-    - path: open-fvs-*.zip
-      name: open-fvs-zip
+    - path: pyfvs-*.zip
+      name: pyfvs-zip
       type: zip
       
     - path: pyfvs*.whl
@@ -93,7 +93,7 @@ deploy:
     description: 'Appveyor CI build.'
     auth_token:
       secure: kJTJhEXI8ycz28qE4v1LkJ54NZzrz0mVrSptvfliH7TFzXFPQG2Ojam2VWTJJb6s
-    artifact: open-fvs-zip pyfvs-wheel # Using artifact name works consistently
+    artifact: pyfvs-zip pyfvs-wheel # Using artifact name works consistently
     draft: false
     prerelease: true
     on:
@@ -108,7 +108,7 @@ deploy:
     bucket: free5
     set_public: true
     folder: appveyor-builds
-    artifact: open-fvs-zip pyfvs-wheel
+    artifact: pyfvs-zip pyfvs-wheel
 
 # on_finish:
   # # Pause the build for remote desktop access
