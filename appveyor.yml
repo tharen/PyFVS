@@ -40,8 +40,8 @@ init:
     - "echo %PYTHON_VERSION% %PYTHON%"
     
 install:
-    # Read the version number
-    - ps: $env:pkg_version = (Get-Content -Path "python/pyfvs/__init__.py" | Select-String '^__version__=(.+)$' -AllMatches | Foreach-Object {$_.Matches} | Foreach-Object {$_.Groups[1].Value}).Trim()
+    # Parse the version number
+    - ps: $env:pkg_version = (select-string -Path .\python\pyfvs\__init__.py -Pattern "__version__[ =']+(.*)\'" -AllMatches|%{$_.Matches}|%{$_.Groups[1]}|%{$_.Value}).Trim()
     - ps: Update-AppveyorBuild -Version "$env:pkg_version-$env:APPVEYOR_BUILD_NUMBER"
     # Setup the python environmen/t and install required packages
     - "set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
