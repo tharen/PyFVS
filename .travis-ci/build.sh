@@ -1,4 +1,5 @@
 source activate pyfvs
+conda env list
 python -c "import sys;print(sys.executable)"
 python --version
 
