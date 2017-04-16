@@ -55,6 +55,11 @@ script:
   
   # Run unit tests
   - source ${TRAVIS_BUILD_DIR}/.travis-ci/run_tests.sh
+
+  - mkdir ${BUILD_ROOT}/artifacts
+  - cd ${BUILD_ROOT} && 7z a -bd ./artifacts/${ARCHIVE_NAME} Open-FVS/*
+  - source ${TRAVIS_BUILD_DIR}/.travis-ci/build_wheel.sh
+  - ls ${BUILD_ROOT}/artifacts
   
 after_failure:
   # Push error logs to the console output
@@ -62,9 +67,6 @@ after_failure:
   - "cat ${BUILD_ROOT}/f2py_pnc.log"
 
 after_success:
-  - mkdir ${BUILD_ROOT}/artifacts
-  - cd ${BUILD_ROOT} && 7z a -bd ./artifacts/${ARCHIVE_NAME} Open-FVS/*
-  - source ${TRAVIS_BUILD_DIR}/.travis-ci/build_wheel.sh
   - ls ${BUILD_ROOT}
 
 deploy:
