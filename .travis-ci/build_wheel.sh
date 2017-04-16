@@ -1,6 +1,7 @@
 
 pushd ${TRAVIS_BUILD_DIR}/bin/build/Open-FVS/python
 
+source activate pyfvs
 python setup.py build_ext --inplace
 python setup.py bdist_wheel
 

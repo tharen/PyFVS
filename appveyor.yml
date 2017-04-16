@@ -50,7 +50,7 @@ install:
     - conda update -q conda
     - conda env create -q -n %ENV_NAME% python=%PYTHON_VERSION% -f environment.yml
     - conda info -a
-    - activate %ENV_NAME%
+    - call activate %ENV_NAME%
     - python -c "import sys;print(sys.executable)"
     
 build_script:
