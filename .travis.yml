@@ -50,11 +50,7 @@ install:
   - export ARCHIVE_NAME=pyfvs-${TRAVIS_TAG}-Python${TRAVIS_PYTHON_VERSION}_64-${TRAVIS_OS_NAME}-ci.zip
 
 script:
-  - source activate pyfvs
-  - python -c "import sys;print(sys.executable)"
-  - python --version
-  - source .travis-ci/configure.sh
-  - cd ${BUILD_ROOT} && cmake --build . --target install 2> build_err.log
+  - source ${TRAVIS_BUILD_DIR}/.travis-ci/build.sh
   
   # Run unit tests
   - source ${TRAVIS_BUILD_DIR}/.travis-ci/run_tests.sh
