@@ -41,3 +41,11 @@ GitHub. Pull requests would gladly be considered.
 https://sourceforge.net/p/open-fvs/code/HEAD/tree/branches/PyFVS/
 https://github.com/tharen/PyFVS
 https://github.com/tharen/PyFVS/issues
+
+Documentation is in progress
+-----------
+
+ - [Getting Started](docs/getting_started.md)
+ - [API](docs/api.md)
+ - [FVS Variants](docs/fvs_variants.md)
+ 

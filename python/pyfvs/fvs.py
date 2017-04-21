@@ -15,12 +15,14 @@ import logging
 import logging.config
 import random
 import importlib
+import tempfile
 
 import numpy as np
 import pandas as pd
 import pandas.io
 
 import pyfvs
+from pyfvs.keywords import keywords as kw
 
 # FIXME: This is a hack for PyDev scripting
 # os.chdir(os.path.split(__file__)[0])
@@ -77,12 +79,14 @@ class FVS(object):
         self.fvslib_path = None
         self.fvslib = None
         self.projection_active = False
-        
+
         self._load_fvslib()
-        
+
         # if self.fvslib is None:
             # raise ValueError('Error initializing the FVS library.')
-            
+
+        self._keywords = None
+        self._workspace = None
         self.trees = FVSTrees(self)
         self._spp_codes = None
         self._spp_seq = None
@@ -92,7 +96,12 @@ class FVS(object):
         Load the requested FVS variant library.
         """
 
-        variant_ext = 'pyfvs.pyfvs%sc' % self.variant.lower()[:2]
+        # FIXME: Variant libraries should be compiled without the climate fvs trailing 'c'
+        if self.variant.lower() in ('oc', 'op'):
+            variant_ext = 'pyfvs.pyfvs%s' % self.variant.lower()[:2]
+
+        else:
+            variant_ext = 'pyfvs.pyfvs%sc' % self.variant.lower()[:2]
         try:
             self.fvslib = importlib.import_module(variant_ext)
 
@@ -109,7 +118,8 @@ class FVS(object):
         # Initialize the FVS parameters and arrays
         # FIXME: This api function is subject to change
         self.fvslib.fvs_step.init_blkdata()
-        #self.fvslib.initialize_api.init()
+        self.fvslib.tree_data.init_tree_data()
+        # self.fvslib.initialize_api.init()
 
     # TODO: Add species code translation methods.
     @property
@@ -121,7 +131,7 @@ class FVS(object):
             jsp = self.fvslib.plot_mod.jsp
             # F2PY returns arrays of characters with the wrong shape and order
             # Transform and reshape so the array is in the expected form
-            jsp = jsp.T.reshape(-1, 4).view('S4').astype(str)[:,0]
+            jsp = jsp.T.reshape(-1, 4).view('S4').astype(str)[:, 0]
             self._spp_codes = np.char.strip(jsp)
 
         return self._spp_codes
@@ -140,7 +150,7 @@ class FVS(object):
 
 
         # lookup for the FVS sequence code of each species
-        #fvslib.spp_seq = {fvslib.spp_codes[x]:x + 1 for x in range(fvslib.prgprm_mod.maxsp)}
+        # fvslib.spp_seq = {fvslib.spp_codes[x]:x + 1 for x in range(fvslib.prgprm_mod.maxsp)}
 
 
     def __getattr__(self, attr):
@@ -191,18 +201,97 @@ class FVS(object):
         self.keywords = keywords
         self.fvslib.fvssetcmdline('--keywordfile={}'.format(keywords))
 
-    def init_projection(self, keywords):
+    @property
+    def workspace(self):
         """
-        Initialize a projection with the provided keyword file.
+        Return the current workspace folder.
+        """
+        if self._workspace is None:
+            # FIXME: look in self.config first
+            self._workspace = tempfile.mkdtemp(prefix='pyfvs')
 
-        :param keywords: Path to the FVS keywords file.
+        return self._workspace
+
+    @workspace.setter
+    def workspace(self, workspace):
+        """
+        Set the current workspace folder.
+        
+        Args
+        ----
+        workspace: Path to set as the current FVS workspace.
+        """
+        if not os.path.exists(workspace):
+            raise ValueError('Workspace folder must already exist.')
+
+        self._workspace = workspace
+
+    # TODO: Further define how KeywordSet objects are used by and FVS instance
+    #       They should be the preferred source, instead of a path to an
+    #       existing file.
+    @property
+    def keywords(self):
+        """
+        Return the current keywords instance, creating one if necessary.
+        """
+        if self._keywords is None:
+            self.init_keywords()
+
+        return self._keywords
+
+    @keywords.setter
+    def keywords(self, keywords):
+        """
+        Set the current keywords instance.
+        
+        Args
+        ----
+        keywords: Instance of KeywordSet class.
         """
 
-        if not os.path.exists(keywords):
+        if not isinstance(keywords, kw.KeywordSet):
+            raise TypeError('kwd object must be an instance of KeywordSet')
+
+        self._keywords = keywords
+
+    def init_keywords(self, title='', comment=''):
+        """
+        Return an initialized KeywordSet instance.
+        
+        Args
+        ----
+        title: Keywords title
+        comment: Keywords comment
+        
+        Returns
+        -------
+        keywords: An initialized KeywordSet object
+        """
+        self._keywords = kw.KeywordSet(title=title, comment=comment)
+        return self._keywords
+
+    def init_projection(self, keywords=None):
+        """
+        Initialize a projection with the provided keywords.
+        
+        Args
+        ----
+        keywords: Path to the FVS keywords file, or a KeywordSet instance.
+                If None then use self.keywords.
+        """
+
+        if keywords is None:
+            keywords = self.keywords
+
+        if isinstance(keywords, kw.KeywordSet):
+            keywords.write(self.workspace)
+
+        elif not os.path.exists(keywords):
             msg = 'The keyword file does not exist: {}'.format(keywords)
             log.error(msg)
             raise ValueError(msg)
 
+        # fvs_init requires a path
         r = self.fvs_step.fvs_init(keywords)
 
         # TODO: Handle and format error codes
@@ -211,7 +300,7 @@ class FVS(object):
 
         if self.stochastic:
             self.set_random_seed()
-        
+
         self.projection_active = True
 
     def grow_projection(self, cycles=1):
@@ -228,9 +317,9 @@ class FVS(object):
         for n in range(cycles):
             r = self.fvs_step.fvs_grow()
             # TODO: Handle non-zero exit codes
-        
+
         return r
-        
+
     def __del__(self):
         """
         Cleanup when the instance is destroyed.
@@ -320,7 +409,7 @@ class FVS(object):
 
     def get_summary(self, variable):
         """
-        Return the FVS summary value for a single projection cycle.
+        Return an FVS summary value through the current projection cycle.
 
         :param variable: The summary variable to return. One of the following:
                         year, age, tpa, total cuft, merch cuft, merch bdft,
@@ -330,6 +419,7 @@ class FVS(object):
                         forest type, size class, stocking class
         """
 
+        # Map summary variable to the array index
         variables = {'year': 0
             , 'age': 1
             , 'tpa': 2
@@ -368,7 +458,7 @@ class FVS(object):
 
 class FVSTrees(object):
     """
-    Provides runtime access to tree attribute arrays.
+    Provide runtime access to tree attribute arrays.
     """
     def __init__(self, parent):
         self.parent = parent

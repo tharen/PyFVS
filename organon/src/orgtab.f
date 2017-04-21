@@ -1,15 +1,12 @@
       SUBROUTINE ORGTAB (JOSTND,IMODTY)
-      IMPLICIT NONE
+      use organon_mod
+      implicit none
 C----------
 C  **ORGTAB  ORGANON--DATE OF LAST REVISION:  06/22/2015
 C----------
 C
 C    WRITES TABLE OF FVS-ORGANON PARAMETER SETTINGS.
 C----------
-COMMONS
-C
-      INCLUDE 'ORGANON.F77'
-C
 COMMONS
 C----------
 C VARIABLE DECLARATIONS:
@@ -51,20 +48,20 @@ C
   610   FORMAT(/,'     TREE DATA IS NOT FROM AN ORGANON .INP FILE ',
      &  'AND WILL BE EDITTED.',/,'     INITIAL PARAMETER SETTINGS ',
      &  'ARE FROM DEFAULT SETTINGS OR KEYWORDS.')
-      ENDIF      
+      ENDIF
 C----------
 C  IMPORTANT SITE INDEX VALUES; SDI; STAND AGE
 C----------
       SELECT CASE (VVER(:2))
       CASE ('OC')
-        WRITE(JOSTND,200) RVARS(1),RVARS(2)                !DF, PP     
+        WRITE(JOSTND,200) RVARS(1),RVARS(2)                !DF, PP
  200    FORMAT(/,'                DOUGLAS-FIR SITE INDEX: ',F6.2,/,
      &  '             PONDEROSA PINE SITE INDEX: ',F6.2)
         WRITE(JOSTND,201) RVARS(3),RVARS(4),RVARS(5)       !DF, GF/WF, PP
  201    FORMAT(/,'                   DOUGLAS-FIR MAX SDI: ',F6.2,/,
      &  '               GRAND/WHITE FIR MAX SDI: ',F6.2,/,
      &  '                PONDEROSA PINE MAX SDI: ',F6.2)
-      CASE DEFAULT                                            
+      CASE DEFAULT
         WRITE(JOSTND,210) RVARS(1),RVARS(2)                !DF, WH
  210    FORMAT(/,'                DOUGLAS-FIR SITE INDEX: ',F6.2,/,
      &           '            WESTERN HEMLOCK SITE INDEX: ',F6.2)
@@ -176,7 +173,7 @@ C----------
 C----------
 C  VOLUME SPECIFICATIONS
 C----------
-C  ORGANON USER'S GUIDE SHOW THESE AS DEFAULTS: 
+C  ORGANON USER'S GUIDE SHOW THESE AS DEFAULTS:
 C    CFTD=0.0
 C    CFSH=0.0
 C    LOGTD=6.0
@@ -186,15 +183,15 @@ C    LOGLL=32.0
 C    LOGML=8.0
 C  JEFF HAS THESE SET AT:
 C  VOLS     VOLS     VOLS       VOLS      GRINIT GRINIT GRINIT
-C  TOPD(i), STMP(i), BFTOPD(i), BFSTMP(i), 10.0,  32.0,  12.0 
+C  TOPD(i), STMP(i), BFTOPD(i), BFSTMP(i), 10.0,  32.0,  12.0
 C  BUT, FOR EXAMPLE, TOPD(i)=0.0 IN **GRINIT**, THEN = 4.5 OR 6.0 IN **SITSET**
 C  SO THESE NEED TO BE EXAMINED AND STRAIGHTENED OUT
 C
 C      IF (LKECHO .AND. LORGVOLS ) THEN
 C        WRITE(JOSTND,311) KEYWRD, LOGTA,LOGML,LOGLL
 C  311   FORMAT (/1X,A8,'   ORGANON ',
-C     >  'LOG TRIM IS ', F4.1, ' INCHES', 
-C     >  '; MINIMUM LOG LENGTH IS ', F4.1, ' FEET', 
+C     >  'LOG TRIM IS ', F4.1, ' INCHES',
+C     >  '; MINIMUM LOG LENGTH IS ', F4.1, ' FEET',
 C     >  '; TARGET LOG LENGTH IS ', F4.1, ' FEET;' )
 C
 C        WRITE(JOSTND,312) ARRAY(4), ARRAY(5)
@@ -206,7 +203,6 @@ C        WRITE(JOSTND,313) ARRAY(6), ARRAY(7)
 C  313   FORMAT ('           ',
 C     >  ' CF STUMP HEIGHT IS ', F4.1, ' FEET;',
 C     >  ' CF MIN TOP DIB IS ', F4.1, ' INCHES' )
-C
 C
       RETURN
       END

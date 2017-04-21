@@ -10,6 +10,8 @@
       use varcom_mod
       use prgprm_mod
       use calcom_mod
+      use organon_mod
+      use multcm_mod
       implicit none
 C----------
 C OP $ID$
@@ -19,13 +21,9 @@ C  INITIALIZE PROGNOSIS MODEL VARIABLES
 C
       INCLUDE 'OPCOM.F77'
 C
-      INCLUDE 'MULTCM.F77'
-C
       INCLUDE 'SUMTAB.F77'
 C
       INCLUDE 'CWDCOM.F77'
-C
-      INCLUDE 'ORGANON.F77'
 C
 C----------
       INTEGER I,J,K

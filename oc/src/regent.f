@@ -10,6 +10,8 @@
       use prgprm_mod
       use calcom_mod
       use estcor_mod
+      use organon_mod
+      use multcm_mod
       implicit none
 C----------
 C  **REGENT--OC  DATE OF LAST REVISION:  03/30/15
@@ -37,10 +39,6 @@ C  FROM **GRINCR** DURING CYCLING.  ENTRY **REGCON** IS CALLED FROM
 C  **RCON** TO LOAD MODEL PARAMETERS THAT NEED ONLY BE RESOLVED ONCE.
 C----------
 COMMONS
-      INCLUDE 'MULTCM.F77'
-C
-      INCLUDE 'ORGANON.F77'
-C
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES:
 C

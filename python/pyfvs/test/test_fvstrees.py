@@ -37,7 +37,15 @@ fvs_variant = 'PN'
 class TreesTest(unittest.TestCase):
 
     def test_fsv_trees(self):
-        f = fvs.FVS(fvs_variant)
+        try:
+            f = fvs.FVS(fvs_variant)
+
+        except ImportError:
+            pytest.skip('No variant library: {}'.format(fvs_variant))
+            return None
+
+        except:
+            raise
 
         p = './bg_test.key'
         kwds = bg_kwds()

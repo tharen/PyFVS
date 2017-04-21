@@ -1,5 +1,0 @@
-pandas
-numpy=1.11
-cython
-pytest
-

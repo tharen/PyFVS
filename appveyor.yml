@@ -7,55 +7,52 @@ environment:
     # See: http://stackoverflow.com/a/13751649/163740
     CMD_IN_ENV: "cmd /E:ON /V:ON /C %APPVEYOR_BUILD_FOLDER%\\.appveyor\\run_with_env.cmd"
     
+    FVS_VARIANTS: "pnc;wcc;soc;cac;oc"
+    #FVS_VARIANTS: "pnc;oc"
+    
   matrix:
-
-    - PYTHON: "C:\\Miniconda-x64"
+    # https://www.appveyor.com/docs/build-environment/#miniconda
+    
+    - MINICONDA: "C:\\Miniconda-x64"
       PYTHON_VERSION: "2.7"
       PYTHON_ARCH: "64"
-      ENV_NAME: "pyfvs"
-      FVS_VARIANTS: "pnc;wcc;soc;cac"
-    
-    - PYTHON: "C:\\Miniconda-x64"
+      
+    - MINICONDA: "C:\\Miniconda3-x64"
       PYTHON_VERSION: "3.4"
       PYTHON_ARCH: "64"
-      ENV_NAME: "pyfvs"
-      FVS_VARIANTS: "pnc;wcc;soc;cac"
-      #FVS_VARIANTS: "pnc"
-
-    - PYTHON: "C:\\Miniconda-x64"
+    
+    - MINICONDA: "C:\\Miniconda35-x64"
       PYTHON_VERSION: "3.5"
       PYTHON_ARCH: "64"
-      ENV_NAME: "pyfvs"
-      FVS_VARIANTS: "pnc;wcc;soc;cac"
 
-    - PYTHON: "C:\\Miniconda-x64"
+    - MINICONDA: "C:\\Miniconda36-x64"
       PYTHON_VERSION: "3.6"
       PYTHON_ARCH: "64"
-      ENV_NAME: "pyfvs"
-      FVS_VARIANTS: "pnc;wcc;soc;cac"
     
 init:
     # Display remote desktop details
     - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-    - "echo %PYTHON_VERSION% %PYTHON%"
+    - echo PYTHON_VERSION - %PYTHON_VERSION%
+    - echo MINICONDA - %MINICONDA%
     
 install:
-    # Read the version number
-    - ps: $env:pkg_version = (Get-Content -Path "python/pyfvs/version").Trim()
+    # Parse the version number
+    - ps: $env:pkg_version = (select-string -Path .\python\pyfvs\__init__.py -Pattern "__version__[ =']+(.*)\'" -AllMatches|%{$_.Matches}|%{$_.Groups[1]}|%{$_.Value}).Trim()
     - ps: Update-AppveyorBuild -Version "$env:pkg_version-$env:APPVEYOR_BUILD_NUMBER"
+    
     # Setup the python environment and install required packages
-    - "set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
-    #- conda config --add channels conda-forge
+    - set PATH=%MINICONDA%;%MINICONDA%\\Scripts;%PATH%
     - conda config --set always_yes yes --set changeps1 no
     - conda update -q conda
-    - conda env create -q -n %ENV_NAME% python=%PYTHON_VERSION% -f environment.yml
+    # Edit the environment.yml file for the target Python version
+    - call sed -i -E 's/(python=)(.*)/\1'%PYTHON_VERSION%'/' ./environment.yml
+    - conda env create -q -n pyfvs -f environment.yml
     - conda info -a
-    - activate %ENV_NAME%
-    - python -c "import sys;print(sys.executable)"
+    - call activate pyfvs
     
 build_script:
     # Configure the CMake project and execute the build
-    - cmd: .appveyor\\config_and_build.bat
+    - call .appveyor\\config_and_build.bat
 
 after_build:
     # Create a zip file package of the compiled libraries and python package
@@ -63,24 +60,19 @@ after_build:
 
 on_failure:
     # Post error logs to the build log
-    #- appveyor PushArtifact **\*.log
     - appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\\bin\\build\\build_err.log
     - appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\\bin\\build\\pypnc_f2py.log
+    
     # Report remote desktop connection parameters and wait
     - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
     
 test_script:
     # Run tests against the final package
-    - "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\run_tests.bat"
+    - call "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\run_tests.bat"
 
-after_test:
-    # Build the wheel package
-    - "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\build_wheel.bat"
-    - "dir"
-    
 artifacts:
-    - path: open-fvs-*.zip
-      name: open-fvs-zip
+    - path: pyfvs*.zip
+      name: pyfvs-zip
       type: zip
       
     - path: pyfvs*.whl
@@ -93,7 +85,7 @@ deploy:
     description: 'Appveyor CI build.'
     auth_token:
       secure: kJTJhEXI8ycz28qE4v1LkJ54NZzrz0mVrSptvfliH7TFzXFPQG2Ojam2VWTJJb6s
-    artifact: open-fvs-zip pyfvs-wheel # Using artifact name works consistently
+    artifact: pyfvs-zip pyfvs-wheel # Using artifact name works consistently
     draft: false
     prerelease: true
     on:
@@ -108,7 +100,7 @@ deploy:
     bucket: free5
     set_public: true
     folder: appveyor-builds
-    artifact: open-fvs-zip pyfvs-wheel
+    artifact: pyfvs-zip pyfvs-wheel
 
 # on_finish:
   # # Pause the build for remote desktop access

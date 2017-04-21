@@ -6,6 +6,7 @@
       use outcom_mod
       use volstd_mod
       use prgprm_mod
+      use organon_mod
       implicit none
 C----------
 C  **VOLS--OP    DATE OF LAST REVISION:   05/11/11
@@ -25,8 +26,6 @@ C  **VARVOL**, WHICH IS VARIANT SPECIFIC.
 C----------
 C
       INCLUDE 'GGCOM.F77'
-C
-      INCLUDE 'ORGANON.F77'
 C
 C----------
 C  DIMENSIONS FOR INTERNAL VARIABLES.

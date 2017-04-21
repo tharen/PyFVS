@@ -254,8 +254,14 @@ message(STATUS "Source Root = ${source_root}")
 #---Top Level Objects
 list(GET source_lists 0 source_list)
 
-# Read the source file names as a list
-file(STRINGS ${source_list} source_file_list)
+# Read the source file names as a list as strip whitespace
+file(STRINGS ${source_list} x)
+set(source_file_list)
+foreach(y ${x})
+    string(STRIP ${y} z)
+    list(APPEND source_file_list ${z})
+endforeach()
+
 # Localize the paths
 string(REPLACE "../" "${source_root}/" source_file_list "${source_file_list}")
 
@@ -398,6 +404,8 @@ add_library(common_objs OBJECT ${common_source})
 # Ensure the SQL and common objects are built in sequence
 add_dependencies(common_objs sql_lib)
 
+add_custom_target(dev MESSAGE "Copy files for development")
+
 #---Configure each requested variant.
 message(STATUS "Configure variants: ${FVS_VARIANTS}")
 math(EXPR num_variants "${num_variants}-1")
@@ -431,6 +439,9 @@ foreach(v RANGE ${num_variants})
 
     # Add the the FVS variant CMakeLists.txt as a sub-project
     add_subdirectory(${variant_dir} ${variant_dir})
+    
+    add_dependencies(dev "pyfvs${variant}_dev")
+    
 endforeach()
 
 return()
@@ -473,8 +484,15 @@ set(fvs_source)
 set(main_source)
 set(pyext_source)
 
-# Process the source list for the variant
-file(STRINGS ${source_list} source_files)
+# Process the source list for the variant as strip whitespace
+# file(STRINGS ${source_list} source_files)
+file(STRINGS ${source_list} x)
+set(source_files)
+foreach(y ${x})
+    string(STRIP ${y} z)
+    list(APPEND source_files ${z})
+endforeach()
+
 # Localize the paths
 string(REPLACE "../" "${source_root}/" source_files "${source_files}")
 
@@ -646,7 +664,15 @@ if (WITH_PYEXT)
 
     # TODO: Add a pyfvs_sources.txt file to avoid stuffing them here
     # Process the source list for files to include in the Python module
-    file(STRINGS ${source_list} source_files)
+    file(STRINGS ${source_list} x)
+    set(source_files)
+    foreach(y ${x})
+        string(STRIP ${y} z)
+        list(APPEND source_files ${z})
+    endforeach()
+    #string(REGEX REPLACE "([cC].+)\ +;" "1;" source_files "${source_files}")
+    # string(REGEX REPLACE "(.+)\ +" "1" source_files ${source_files})
+    # string(STRIP source_files ${source_files})
     string(REPLACE "../" "${source_root}/" source_files "${source_files}")
 
     # Source files to be wrapped with F2PY
@@ -654,7 +680,7 @@ if (WITH_PYEXT)
                 "apisubs.f" "cmdline.f" "fvs.f"
                 "filopn.f" "htcalc.f" "rann.f"
                 "htdbh.f" "forkod.f"
-
+                
                 "prgprm_mod.f90" "esparm_mod.f90" "arrays_mod.f90"
                 "contrl_mod.f90"
 
@@ -683,7 +709,7 @@ if (WITH_PYEXT)
 
                 "esblkd_mod.f90" "esrncm_mod.f90" "escprs.f90"
                 )
-                
+
     # Routines to be skipped by F2PY
     set(pyext_skip "") #required by f2py_gen
 
@@ -788,12 +814,9 @@ if (WITH_PYEXT)
             PATTERN "__pycache__" EXCLUDE
             PATTERN "*genrpt.txt" EXCLUDE
             )
-    install(FILES
-                ${source_root}/python/mingw-gcc.specs.in
-            DESTINATION python)
+
     install(FILES
                 ${source_root}/python/README.txt
-                ${source_root}/python/pyfvs/version
             DESTINATION python/pyfvs)
 
     message(STATUS "*** End PyMod Configuration ***")
@@ -806,3 +829,9 @@ if (WITH_PYEXT)
 else ()
     add_custom_target(${variant} DEPENDS ${fvsexe} ${fvslib_shared} ${fvslib_static})
 endif ()
+
+add_custom_target(${pyext_name}_dev
+    DEPENDS ${pyext_name}_ext
+    COMMAND ${CMAKE_COMMAND} -E copy ${pyext_fn} ${source_root}/python/pyfvs/.
+#    COMMAND ${CMAKE_COMMAND} -E copy ${source_root}/python/mingw-gcc.specs.in ${source_root}/python/.
+    )

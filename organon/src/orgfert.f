@@ -9,6 +9,8 @@ In the initial overhaul of what Jeff did, I'm leaving this out of the OC and OP 
    call to MORTS.
 2) In the FVS-Organon variants, the PN array needs to be loaded before the call to subroutine EXECUTE which occurs in
    subroutine DGDRIV. Right now the only way people can trigger a fertilizer effect in the Organon equations is by using
+      use organon_mod
+      implicit none
    the FERTILIZ keyword (PN values are not contained in the .INP file, and there isn't an FVS-Organon keyword for them).
    So given that, they just as well fake a fertilizer effect using the FVS logic.
 
@@ -19,16 +21,10 @@ When its time to include a fertilizer effect, then the way to do this might be
 3) Effect needs to be different depending on IORG(i) values. If it is a valid Organon tree then let the Organon effect be
    implemented. Only apply the FVS logic to non-valid Organon trees. This may necessitate some restructuring of the subroutines
    involved.
-4) The Organon effect only gets applied if: a) the stand has at least 80 percent of its basal area in Douglas-fir, b) the stand is 
+4) The Organon effect only gets applied if: a) the stand has at least 80 percent of its basal area in Douglas-fir, b) the stand is
    even-aged, and c) the stand age is less than 70 years.
-   
-   
-C
-C
-      INCLUDE 'ORGANON.F77'
-C
-C
-COMMONS
+
+
 C
       .
       .
@@ -47,35 +43,35 @@ C-----------
           PN(1)   = FFPRMS(1)
           INDS(8)		= 1
         END IF
-C----------         
+C----------
 C  WRITE OUT THE VARIABLES TO THE DEBUG/OUTPUT FILE FOR REVIEW LATER.
-C----------        
+C----------
         IF( INDS(8) .EQ. 1 ) THEN
           IF (DEBUG) THEN
             WRITE(JOSTND,123) ICYC, PN(1)
  123        FORMAT(' STAND HAS BEEN FERTILIZED ',
      &           ' ORGANON.DLL, CYCLE=',I2, ' PN= ', F9.3 )
             WRITE(JOSTND,124) ICYC,
-     &           YSF(1), 
-     &           YSF(2), 
-     &           YSF(3), 
-     &           YSF(4), 
-     &           YSF(5) 
+     &           YSF(1),
+     &           YSF(2),
+     &           YSF(3),
+     &           YSF(4),
+     &           YSF(5)
  124        FORMAT(
-     &           ' ORGANON.DLL, CYCLE=',I2, 
+     &           ' ORGANON.DLL, CYCLE=',I2,
      &           ', YSF(1)=', F6.2,
      &           ', YSF(2)=', F6.2,
      &           ', YSF(3)=', F6.2,
      &           ', YSF(4)=', F6.2,
      &           ', YSF(5)=', F6.2 )
             WRITE(JOSTND,125) ICYC,
-     &           PN(1), 
-     &           PN(2), 
-     &           PN(3), 
-     &           PN(4), 
-     &           PN(5) 
+     &           PN(1),
+     &           PN(2),
+     &           PN(3),
+     &           PN(4),
+     &           PN(5)
  125        FORMAT(
-     &           ' ORGANON.DLL, CYCLE=',I2, 
+     &           ' ORGANON.DLL, CYCLE=',I2,
      &           ', PN(1)=', F6.2,
      &           ', PN(2)=', F6.2,
      &           ', PN(3)=', F6.2,

@@ -8,10 +8,11 @@ REM ) else (
     REM set win32=Yes
 REM )
 
-set MINGW_PATH=C:\msys64\mingw64\bin
+set MINGW_PATH=C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64
 set win32=No
 
-set PATH=%PYTHON%;C:\msys64\mingw64\bin;C:\Program Files (x86)\cmake\bin
+set PATH=%MINICONDA%;%MINICONDA%\Scripts
+set PATH=%PATH%;%MINGW_PATH%\bin;C:\Program Files (x86)\cmake\bin
 set PATH=%PATH%;C:\Windows\System32;C:\Windows
 echo %PATH%
 echo %PYTHONPATH%
@@ -20,8 +21,7 @@ echo %PYTHONPATH%
 del %MINGW_PATH%\python.exe
 del %MINGW_PATH%\cmake.exe
 
-:: Activate the target Python environment
-call %PYTHON%\Scripts\activate %ENV_NAME%
+call activate pyfvs
 
 call python -c "import sys;print(sys.version)"
 call python -c "import sys;print(sys.executable)"
@@ -29,9 +29,14 @@ call python -c "import sys;print(sys.executable)"
 :: Build libpython just in case it's absent
 call python bin\gen_libpython.py
 
+copy %MINGW_PATH%\x86_64-w64-mingw32\lib\libmsvcr100.a %MINICONDA%\envs\pyfvs\libs
+if %PYTHON_VERSION%=="2.7" (
+    copy %MINGW_PATH%\x86_64-w64-mingw32\lib\libmsvcr90.a %MINICONDA%\envs\pyfvs\libs
+    )
+
 :: Configure CMake
 mkdir bin\build
-pushd bin\build
+cd bin\build
 cmake -G "MinGW Makefiles" .. ^
     -DFVS_VARIANTS=%FVS_VARIANTS% ^
     -DCMAKE_SYSTEM_NAME=Windows ^

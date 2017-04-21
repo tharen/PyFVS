@@ -8,6 +8,8 @@
       use pden_mod
       use varcom_mod
       use prgprm_mod
+      use organon_mod
+      use multcm_mod
       implicit none
 C----------
 C  **HTGF--OP    DATE OF LAST REVISION:  06/17/15
@@ -22,10 +24,6 @@ C  CONSTANTS THAT NEED ONLY BE RESOLVED ONCE. CALLS **FINDAG
 c  TO CALCULATE TREE AGE.
 C----------
 COMMONS
-      INCLUDE 'MULTCM.F77'
-C
-      INCLUDE 'ORGANON.F77'
-C
 C----------
       LOGICAL DEBUG
       INTEGER MAPHD(MAXSP)
