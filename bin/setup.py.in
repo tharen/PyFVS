@@ -9,7 +9,20 @@ from __future__ import division, absolute_import, print_function
 import os
 import sys
 import subprocess
+import numpy
 from numpy.distutils.core import Extension
+
+if ((os.name=='nt') and (sys.version_info[:2]>=(3, 5))
+        and (numpy.version.version<='1.13')):
+    # Monkey patch numpy until version 1.13 is mainstream
+    # This is fixes the of building extensions with Python 3.5+ resultinging
+    #       the error message `ValueError: Unknown MS Compiler version 1900`
+    # numpy_fix uses the patch referenced here:
+    #       https://github.com/numpy/numpy/pull/8355
+    sys.path.insert(0,os.path.join('@source_root@','python/numpy_fix'))
+    import misc_util, mingw32ccompiler
+    sys.modules['numpy.distutils.mingw32ccompiler'] = mingw32ccompiler
+    sys.modules['numpy.distutils.misc_util'] = misc_util
 
 fvs_variant = '@variant@'
 ext_name = '@pyext_name@'
@@ -29,7 +42,7 @@ else:
     odbc = 'odbc'
     link_args = []
     compile_args = []
-        
+
 ext1 = Extension(
         name = ext_name,
         sources = [ext_pyf,],

@@ -20,51 +20,21 @@ __version__ = re.search(
 description = open('./pyfvs/README.txt').readline().strip()
 long_desc = open('./pyfvs/README.txt').read().strip()
 
+if ((os.name=='nt') and (sys.version_info[:2]>=(3, 5))
+        and (numpy.version.version<='1.13')):
+    # Monkey patch numpy for MinGW until version 1.13 is mainstream
+    # This is fixes the of building extensions with Python 3.5+ resultinging
+    #       the error message `ValueError: Unknown MS Compiler version 1900`
+    # numpy_fix uses the patch referenced here:
+    #       https://github.com/numpy/numpy/pull/8355
+    root = os.path.split(__file__)[0]
+    sys.path.insert(0,os.path.join(root,'numpy_fix'))
+    import misc_util, mingw32ccompiler
+    sys.modules['numpy.distutils.mingw32ccompiler'] = mingw32ccompiler
+    sys.modules['numpy.distutils.misc_util'] = misc_util
+
 _is_64bit = (getattr(sys, 'maxsize', None) or getattr(sys, 'maxint')) > 2 ** 32
 _is_windows = sys.platform == 'win32'
-
-class build_ext_subclass(build_ext):
-    """
-    Subclass build_ext to get the configured compiler vendor
-    
-    ref: http://stackoverflow.com/a/5192738/673590
-    """
-    def build_extensions(self):
-        comp = self.compiler.compiler_type
-        if comp == 'mingw32' and _is_windows and _is_64bit:
-            # MinGW w64 has problems link to MSVC compiled Python
-            # A customized mingw spec file helps
-            # Populate the spec file template with compiler details
-            spec_file = './mingw-gcc.specs'
-            v = sys.version_info[:2]
-
-            if v >= (3, 3) and v <= (3, 4):
-                d = {'msvcrt':'msvcr100', 'msvcrt_version':'0x1000'
-                        , 'moldname':'moldname'}
-                with open(spec_file + '.in') as infile:
-                    open(spec_file, 'w').write(infile.read().format(**d))
-
-            elif v >= (2, 6) and v <= (3, 2):
-                d = {'msvcrt':'msvcr90', 'msvcrt_version':'0x0900'
-                        , 'moldname':'moldname'}
-                with open(spec_file + '.in') as infile:
-                    open(spec_file, 'w').write(infile.read().format(**d))
-
-            args = [
-                    '-static-libgcc', '-static-libstdc++'
-                    , '-specs={}'.format(spec_file)
-                    , '-Wl,--allow-multiple-definition'
-                    ]
-
-            # Make sure all libraries know this is a 64 bit windows library
-            define_macros = [('MS_WIN64', None), ]
-
-            for e in self.extensions:
-                e.extra_compile_args = args
-                e.extra_link_args = args
-                e.define_macros = define_macros
-
-        build_ext.build_extensions(self)
 
 # Collect all Cython source files as a list of extensions
 extensions = cythonize([
@@ -107,5 +77,4 @@ setup(
             , 'Programming Language :: Fortran'
             ]
     , keywords=''
-    , cmdclass={'build_ext':build_ext_subclass},
     )

@@ -814,9 +814,7 @@ if (WITH_PYEXT)
             PATTERN "__pycache__" EXCLUDE
             PATTERN "*genrpt.txt" EXCLUDE
             )
-    install(FILES
-                ${source_root}/python/mingw-gcc.specs.in
-            DESTINATION python)
+
     install(FILES
                 ${source_root}/python/README.txt
             DESTINATION python/pyfvs)

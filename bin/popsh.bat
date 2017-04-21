@@ -1,12 +1,9 @@
-
-:popsh
-::@echo off&cls
+@echo off&cls
 setlocal EnableDelayedExpansion
-set old_path=%path%
 set $line=%path%
 set $line=%$line: =#%
 set $line=%$line:;= %
 
-for %%a in (%$line%) do echo %%a | find /i "sh" || set $newpath=!$newpath!;%%a
-set $newpath=!$newpath:#= !
-echo set path=!$newpath:~1!
+for "tokens=*" %%a in (%$line%) do echo "%%a" | find /i "git" || set $newpath=!$newpath!;"%%a"
+REM set $newpath=!$newpath:#= !
+REM echo set path=!$newpath:~1!

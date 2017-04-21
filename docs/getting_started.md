@@ -176,6 +176,9 @@ downgrade all packages to a consistent compatible state.
 In future development sessions you can simply call `activate pyfvs_env` from
 the command line.
 
+>**Note**: You should edit the environment.yml file to specify your target
+python version.
+
 >**Tip**: Conda environments generally come with the necessary development libraries and
 headers, etc. However, it may be necessary to (re)build the Python static 
 library for your flavor of MinGW. A Python script `bin/get_libpython.py`
@@ -202,9 +205,9 @@ Execute this batch file when you start a development session.
 MinGW tools and must not be present in the PATH variable. You will receive an 
 error message when CMake configures saying as much.
 
->**Tip:** To automate the step of running the batch file (some of us 
-forget) it can be made to run automatically when the conda environment is 
-activated. Simply copy the set_env.bat file into 
+>**Tip:** Conda environments can execute script on 
+[activate/deactivate](https://conda.io/docs/using/envs.html#saved-environment-variables). 
+This is useful for setting environment variables, etc. Simply copy the set_env.bat file into 
 `C:\Miniconda3\envs\pyfvs_env\etc\conda\activate.d`. Create the subfolders as
 necessary. Conda will execute any files in this folder during activation. A 
 complementary file to undo the changes, e.g. unset_env.bat, can be placed in 
@@ -235,14 +238,14 @@ the appropriate Python executable, packages, etc.
   you want to compile. **Not all variants are currently available through 
   PyFVS**, but can be added as needed.
   
-  - If `DNATIVE_ARCH` is ON then CMake will attempt to set optimizations 
+  - If `-DNATIVE_ARCH` is ON then CMake will attempt to set optimizations 
   for the local machine architecture. Turn this off if you will be sharing
   compiled libraries in a heterogeneous environment.
   
-  - `DCMAKE_BUILD_TYPE` sets certain compiler optimization flags. Current 
+  - `-DCMAKE_BUILD_TYPE` sets certain compiler optimization flags. Current 
   options include Debug and Release.
   
-  - `DCMAKE_INSTALL_PREFIX` sets the location the compiled libraries, packages,
+  - `-DCMAKE_INSTALL_PREFIX` sets the location the compiled libraries, packages,
   etc. will be copied to when the install target is run. In this case it will
   simply be a local subfolder.
 

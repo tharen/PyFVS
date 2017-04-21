@@ -8,7 +8,6 @@ Modules and objects for executing and interacting with FVS variants.
 
 import os
 import sys
-import re
 import logging
 import logging.config
 
