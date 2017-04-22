@@ -12,7 +12,11 @@ from pyfvs.keywords import keywords as kw
 
 variants = [
         ('pnc_basic', 'pnc'),
-        ('wcc_basic', 'wcc')]
+        ('wcc_basic', 'wcc'),
+        ('cac_basic', 'cac'),
+        ('soc_basic', 'soc'),
+        ('oc_basic', 'oc'),
+        ('op_basic', 'op')]
 
 def bg_kwds():
     kwds = kw.KeywordSet(top_level=True)

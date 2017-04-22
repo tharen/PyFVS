@@ -2,6 +2,8 @@
       use metric_mod
       use plot_mod
       use prgprm_mod
+      use fmparm_mod
+      use fmcom_mod
       implicit none
 C----------
 C  **FMSSUM  DATE OF LAST REVISION:  12/16/04
@@ -10,9 +12,6 @@ C
 C  Purpose:
 C     Reports a summary of snag statistics for all years that
 C     coinside with a FVS cycle boundary.
-C
-      INCLUDE 'FMPARM.F77'
-      INCLUDE 'FMCOM.F77'
 C
       INTEGER I, II, JOUT, K
       REAL    THD(7),TSF(7),THDSF
