@@ -7,6 +7,8 @@
       use metric_mod
       use varcom_mod
       use prgprm_mod
+      use fmparm_mod
+      use fmcom_mod
       implicit none
 C----------
 C  $Id$
@@ -16,9 +18,7 @@ C     ADD NEW TREES FROM A FILE OR EXTERNAL DATA BASE.
 
 C     COMMONS
 
-	INCLUDE 'FMPARM.F77'
       INCLUDE 'ESHAP2.F77'
-	INCLUDE 'FMCOM.F77'
 	INCLUDE 'BCPLOT.F77'
 
       INTEGER       ICALL

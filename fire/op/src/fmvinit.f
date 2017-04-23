@@ -2,6 +2,9 @@
       use contrl_mod
       use plot_mod
       use prgprm_mod
+      use fmparm_mod
+      use fmcom_mod
+      use fmfcom_mod
       implicit none
 C----------
 C  **FMVINIT  FIRE-OP-DATE OF LAST REVISION: 06/15/15
@@ -19,9 +22,6 @@ C----------
 ***********************************************************************
 COMMONS
 
-      INCLUDE 'FMPARM.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
 
 COMMONS
 

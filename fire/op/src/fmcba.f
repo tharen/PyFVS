@@ -3,6 +3,9 @@
       use plot_mod
       use arrays_mod
       use prgprm_mod
+      use fmparm_mod
+      use fmcom_mod
+      use fmfcom_mod
       implicit none
 C----------
 C  **FMCBA   FIRE-OP-DATE OF LAST REVISION:  06/15/15
@@ -40,11 +43,8 @@ C     CALLED FROM: FMMAIN
 C     Parameter statements.
 
 C     Parameter include files.
-      INCLUDE 'FMPARM.F77'
 
 C     Common include files.
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
 
 C     Variable declarations.
 
