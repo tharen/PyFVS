@@ -10,7 +10,7 @@ env:
     - FVS_STATUS=alpha
     - BUILD_ROOT=${TRAVIS_BUILD_DIR}/bin/build
     #- FVS_VARIANTS="pnc;oc"
-    - FVS_VARIANTS="pnc;wcc;soc;cac;oc;op"
+    - FVS_VARIANTS="pnc;wcc;soc;cac;ecc;oc;op"
 
 git:
   depth: 5
