@@ -85,7 +85,8 @@ deploy:
     description: 'Appveyor CI build.'
     auth_token:
       secure: kJTJhEXI8ycz28qE4v1LkJ54NZzrz0mVrSptvfliH7TFzXFPQG2Ojam2VWTJJb6s
-    artifact: pyfvs-zip pyfvs-wheel # Using artifact name works consistently
+    # artifact: pyfvs-zip pyfvs-wheel # Using artifact name works consistently
+    artifact: pyfvs-wheel
     draft: false
     prerelease: true
     on:
