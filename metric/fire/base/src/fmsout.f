@@ -3,6 +3,9 @@
       use metric_mod
       use plot_mod
       use prgprm_mod
+      use fmparm_mod
+      use fmcom_mod
+      use fmfcom_mod
       implicit none
 C----------
 C  **FMSOUT--FIRE/M   DATE OF LAST REVISION:  04/08/14
@@ -38,14 +41,11 @@ C.... PARAMETER INCLUDE FILES.
 
 Cppe      INCLUDE 'PPEPRM.F77'
 Cppe      INCLUDE 'PPCNTL.F77'
-      INCLUDE 'FMPARM.F77'
 
 C.... COMMON INCLUDE FILES.
 
 Csng  INCLUDE 'CONTRL.F77'
 Csng  INCLUDE 'PLOT.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
 C
 C.... VARIABLE DECLARATIONS.
       INTEGER  YRLAST, JYR, II

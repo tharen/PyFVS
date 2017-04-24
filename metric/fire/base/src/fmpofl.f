@@ -3,6 +3,9 @@
       use metric_mod
       use plot_mod
       use prgprm_mod
+      use fmparm_mod
+      use fmcom_mod
+      use fmfcom_mod
       implicit none
 
 C  **FMPOFL FIRE-BASE/M DATE OF LAST REVISION:  08/26/14
@@ -30,12 +33,6 @@ C     SFMOD:  SEVERE FUEL MODELS USED.  TRACKED BECAUSE IN SN, DIFFERENT
 C             FUEL MODELS MAY BE SELECTED FOR SEVERE AND MODERATE CASES.
 C     SFWT:   SEVERE FUEL MODEL WEIGHT.  USED WITH SFMOD.
 C     SNFMODS:NUMBER OF FUEL MODELS USED IN THE SEVERE CASE.
-C
-      INCLUDE 'FMPARM.F77'
-C
-      INCLUDE 'FMCOM.F77'
-C
-      INCLUDE 'FMFCOM.F77'
 C
 C  VARIABLE DECLARATIONS.
 
@@ -553,6 +550,9 @@ C
       use plot_mod
       use arrays_mod
       use prgprm_mod
+      use fmparm_mod
+      use fmcom_mod
+      use fmfcom_mod
       implicit none
 
 C  **FMPTRH FIRE-BASE-DATE OF LAST REVISION:  05/18/2004
@@ -562,10 +562,6 @@ C     FLAME LENGTHS.  NOT DESIGNED TO BE CALLED FROM OTHER PARTS
 C     OF THE PROGRAM.
 C
 C     NL CROOKSTON -- RMRS MOSCOW -- MAY 2004
-C
-      INCLUDE 'FMPARM.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
 C
 C     SET THE MAXIMUM NUMBER OF REPLICATIONS.
 

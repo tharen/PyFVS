@@ -2,6 +2,8 @@
       use contrl_mod
       use arrays_mod
       use prgprm_mod
+      use fmparm_mod
+      use fmcom_mod
       implicit none
 C----------
 C  **FMCROW  FIRE-OP DATE OF LAST REVISION:  06/15/15
@@ -37,10 +39,8 @@ C                  PCTILE
 ***********************************************************************
 
 C.... Parameter include files.
-      INCLUDE 'FMPARM.F77'
 
 C.... Common include files.
-      INCLUDE 'FMCOM.F77'
 
 C.... Parameter statements.
 

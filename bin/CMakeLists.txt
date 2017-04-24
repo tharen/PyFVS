@@ -404,7 +404,7 @@ add_library(common_objs OBJECT ${common_source})
 # Ensure the SQL and common objects are built in sequence
 add_dependencies(common_objs sql_lib)
 
-add_custom_target(dev MESSAGE "Copy files for development")
+add_custom_target(dev COMMENT "Copy files for development")
 
 #---Configure each requested variant.
 message(STATUS "Configure variants: ${FVS_VARIANTS}")
@@ -439,8 +439,6 @@ foreach(v RANGE ${num_variants})
 
     # Add the the FVS variant CMakeLists.txt as a sub-project
     add_subdirectory(${variant_dir} ${variant_dir})
-    
-    add_dependencies(dev "pyfvs${variant}_dev")
     
 endforeach()
 
@@ -818,6 +816,13 @@ if (WITH_PYEXT)
     install(FILES
                 ${source_root}/python/README.txt
             DESTINATION python/pyfvs)
+    
+    # Add the python extension to the development target
+    add_custom_target(${pyext_name}_dev
+        DEPENDS ${pyext_name}_ext
+        COMMAND ${CMAKE_COMMAND} -E copy ${pyext_fn} ${source_root}/python/pyfvs/.
+        )
+    add_dependencies(dev ${pyext_name}_dev)
 
     message(STATUS "*** End PyMod Configuration ***")
 
@@ -829,9 +834,3 @@ if (WITH_PYEXT)
 else ()
     add_custom_target(${variant} DEPENDS ${fvsexe} ${fvslib_shared} ${fvslib_static})
 endif ()
-
-add_custom_target(${pyext_name}_dev
-    DEPENDS ${pyext_name}_ext
-    COMMAND ${CMAKE_COMMAND} -E copy ${pyext_fn} ${source_root}/python/pyfvs/.
-#    COMMAND ${CMAKE_COMMAND} -E copy ${source_root}/python/mingw-gcc.specs.in ${source_root}/python/.
-    )

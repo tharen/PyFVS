@@ -4,6 +4,9 @@
       use plot_mod
       use arrays_mod
       use prgprm_mod
+      use fmparm_mod
+      use fmcom_mod
+      use fmfcom_mod
       implicit none
 C----------
 C  **FMDOUT--FIRE-BASE-METRIC  DATE OF LAST REVISION:  04/08/14
@@ -27,12 +30,9 @@ C.... PARAMETER STATEMENTS.
 
 C.... PARAMETER INCLUDE FILES.
 
-      INCLUDE 'FMPARM.F77'
 
 C.... COMMON INCLUDE FILES.
 
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
 
 C.... VARIABLE DECLARATIONS.
       REAL      TOTSNG(2), TOTLIV(2), TONREM, CONV, CONV2

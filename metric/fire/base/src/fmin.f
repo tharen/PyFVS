@@ -2,6 +2,9 @@
       use contrl_mod
       use metric_mod
       use prgprm_mod
+      use fmparm_mod
+      use fmcom_mod
+      use fmfcom_mod
       implicit none
 C----------
 C  $Id:
@@ -18,10 +21,6 @@ C     PARAMETER DEFINITIONS
 C     ICALL = 1 call is within a stand (called from INITRE)
 C             2 call from outside a stand (called from PPIN)
 COMMONS
-      INCLUDE 'FMPARM.F77'
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
-C
       INTEGER    KWCNT
       PARAMETER (KWCNT = 55)
 

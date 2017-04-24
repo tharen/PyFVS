@@ -4,6 +4,9 @@
       use plot_mod
       use arrays_mod
       use prgprm_mod
+      use fmparm_mod
+      use fmcom_mod
+      use fmfcom_mod
       implicit none
 C----------
 C  **FMFOUT FIRE-BASE-METRIC-DATE OF LAST REVISION:  04/08/14
@@ -40,12 +43,9 @@ C.... PARAMETER STATEMENTS.
 
 C.... PARAMETER INCLUDE FILES.
 
-      INCLUDE 'FMPARM.F77'
 
 C.... COMMON INCLUDE FILES.
 C
-      INCLUDE 'FMCOM.F77'
-      INCLUDE 'FMFCOM.F77'
 
 C.... VARIABLE DECLARATIONS.
 C        note: if change MAXCL,must also change the formats 335,345!

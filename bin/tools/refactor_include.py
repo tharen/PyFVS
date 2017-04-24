@@ -85,13 +85,13 @@ include_modules = {
 #        , 'workcm.f77':'workcm_mod'
 
         ###--- fire\base\common
-#        , 'fmcom.f77':'fmcom_mod'
-#        , 'fmfcom.f77':'fmfcom_mod'
+       , 'fmcom.f77':'fmcom_mod'
+       , 'fmfcom.f77':'fmfcom_mod'
 ##        , 'fmopcm.f77':'fmopcm'
-#        , 'fmparm.f77':'fmparm_mod'
-#        , 'fmprop.f77':'fmprop_mod'
+       , 'fmparm.f77':'fmparm_mod'
+       , 'fmprop.f77':'fmprop_mod'
 ##        , 'fmsngl.f77':'fmsngl'
-#        , 'fmsvcm.f77':'fmsvcm_mod'
+       , 'fmsvcm.f77':'fmsvcm_mod'
 
         ###--- variant commons
 #        , 'esparm.f77':'esparm_mod'
