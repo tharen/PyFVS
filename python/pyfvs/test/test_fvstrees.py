@@ -15,6 +15,7 @@ variants = [
         ('wcc_basic', 'wcc'),
         ('cac_basic', 'cac'),
         ('soc_basic', 'soc'),
+        ('ecc_basic', 'ecc'),
         ('oc_basic', 'oc'),
         ('op_basic', 'op')]
 
