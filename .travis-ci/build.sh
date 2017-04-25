@@ -20,8 +20,12 @@ cmake -G"Unix Makefiles" .. \
 #        Python source package, enabling a more simple python setup.py process
 cmake --build . --target install 2> build_err.log
 
-# Build the additional Python extensions
 cd Open-FVS/python
+
+# Ensure the version information is consistent
+call python setup.py version
+
+# Build the additional Python extensions
 python setup.py build_ext --inplace
 
 # Create archives

@@ -3,8 +3,10 @@ PyFVS
 
 Modules and objects for executing and interacting with FVS variants.
 
-@author: tod.haren@gmail.com
+@author: Tod Haren, tod.haren at gmail
 """
+
+__author__ = 'Tod Haren, tod.haren at gmail'
 
 import os
 import sys
@@ -16,12 +18,13 @@ import logging.config
 # from .keywords.eventmonitor import *
 # from .fvs import FVS, FVSTrees
 
+# If the __version__ file is present, use it.
+from _version import __version__, __status__, __git_tag__
+
 # TODO: Look in local path as well as user home path
 # Use a config file written as a Python dictionary.
 # The config file is used to initialize logging and FVS library paths.
 config_path = os.path.join(os.path.split(__file__)[0], 'pyfvs.cfg')
-
-__version__ = '0.0.7'
 
 def version():
     """Return the current PyFVS API version number."""

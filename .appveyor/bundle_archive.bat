@@ -1,10 +1,16 @@
 :: Create the wheel and source zip artifacts
 
+set path=C:\Program Files (x86)\Git\bin;%PATH%
+
 call activate pyfvs
 set ARCHIVE_NAME=pyfvs-%PKG_VERSION%-Python%PYTHON_VERSION%_%PYTHON_ARCH%-windows-ci.zip
 
-:: Create the wheel
 cd Open-FVS\python
+
+:: Ensure the version info is consistent
+call python setup.py version
+
+:: Create the wheel
 call python setup.py build_ext --inplace
 call python setup.py bdist_wheel
 mv dist/*.whl %APPVEYOR_BUILD_FOLDER%

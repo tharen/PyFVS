@@ -37,7 +37,7 @@ init:
     
 install:
     # Parse the version number
-    - ps: $env:pkg_version = (select-string -Path .\python\pyfvs\__init__.py -Pattern "__version__[ =']+(.*)\'" -AllMatches|%{$_.Matches}|%{$_.Groups[1]}|%{$_.Value}).Trim()
+    - ps: $env:pkg_version = (select-string -Path .\python\pyfvs\_version.py -Pattern "__version__[ =']+(.*)\'" -AllMatches|%{$_.Matches}|%{$_.Groups[1]}|%{$_.Value}).Trim()
     - ps: Update-AppveyorBuild -Version "$env:pkg_version-$env:APPVEYOR_BUILD_NUMBER"
     
     # Setup the python environment and install required packages
