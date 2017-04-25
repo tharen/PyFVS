@@ -23,7 +23,7 @@ cmake --build . --target install 2> build_err.log
 cd Open-FVS/python
 
 # Ensure the version information is consistent
-call python setup.py version
+python setup.py version
 
 # Build the additional Python extensions
 python setup.py build_ext --inplace

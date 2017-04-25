@@ -82,13 +82,14 @@ artifacts:
 deploy:
   - provider: GitHub
     # release: myproduct-v$(appveyor_build_version)
-    description: 'Appveyor CI build.'
+    description: 'Appveyor CI tag build.'
     auth_token:
-      secure: kJTJhEXI8ycz28qE4v1LkJ54NZzrz0mVrSptvfliH7TFzXFPQG2Ojam2VWTJJb6s
+      secure: Pi+Rn4LnPIHYZJ6uMQa4im0nQvZ6YMoBsGiGwzEpe1ZcJsunZ9D/snlNfjLlvA2w
     # artifact: pyfvs-zip pyfvs-wheel # Using artifact name works consistently
     artifact: pyfvs-wheel
-    draft: false
-    prerelease: true
+    draft: true
+    prerelease: false
+    force_update: true
     on:
       # branch: master                 # release from master branch only
       appveyor_repo_tag: true        # deploy on tag push only
