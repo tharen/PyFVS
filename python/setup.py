@@ -44,7 +44,7 @@ def update_version():
         print('Current folder is not a Git repo, skipping version update.')
         return
     
-    m = re.match('pyfvs-v(\d\.\d\.\d)-(alpha|beta)?-(.*)', desc)
+    m = re.match('pyfvs-v(\d+\.\d+\.\d+)-(alpha|beta)?-(.*)', desc)
     if not m:
         print('The current tag is not a version tag (pyfvs-v#.#.#): {}'.format(desc))
         return
