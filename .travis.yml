@@ -76,6 +76,8 @@ deploy:
     prerelease: true
     api_key:
       secure: DIF7bPl0y55Q8F8Go0CY40FxN8icu54d2MWRmiuLlGfkeIzcDHHHdJ8W8ZqX/9qyPruWMX/8HvagdKzcLTFC0namicronzZL5XUloR/PGBCT9tRqL3xax36fIHvrmZYIaY7xWIr678s+dG+64lkX5i+BJnt1IDzHjGm+223k3PH/kXRH3NFauPu4PgUszTnIWa+0IBnOhXrodf1A0ljFrtypUleASS19A3PuglHQJRXlDfOpt++M2UHXNBVbhr83jMg8O3XB+BY1QT8g3fYs1kUKmUbxEF6Ab9A/qZtcxIvqK9c55q7sjnaRqvlS5TtQ9ADE1Y97y3hmGNE+xL+x4QCwSC10BGIWvcuVC8Gol/WJY6/EPskNMjKhk9xqhOhqdBiDdyPnLSjhA1zA7e/2mGYwBBw8h9/lvsKvbjHMD47uuKCeDovnB07rYqk6A1bQx4JWAHFwoZB1SuWFT2OcI9aqLE9I/GhiREJgX8I5adJiiqdfLCifSHQINoWUa3b3ZuspFzC+yXIDOwsma5xr7dfMkf+htqofwnzq2R/wM59ryEayfCtdz1VOfrxEnJJfWnL/u9LRbNhGVSP2PBsp59ZIvE5JW3UT12G+bIh9a+veNaExzcoIQYPfb+VJlytvDA21TC/4Ju2gFNwcxeVWm6etkTSUfvsMMYGsUc6+wPY=
+    overwrite: true
+    file_glob: true
     file: "${TRAVIS_BUILD_DIR}/artifacts/*.whl"
     on:
       repo: tharen/PyFVS
