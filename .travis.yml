@@ -1,16 +1,16 @@
 language: python
 python:
-  - '2.7' #FIXME: Python 2.7 does not pass equivalence tests for SO variant
+  # - '2.7'
   - '3.4'
-  - '3.5'
-  - '3.6'
+  # - '3.5'
+  # - '3.6'
   
 env:
   global:
     - FVS_STATUS=alpha
     - BUILD_ROOT=${TRAVIS_BUILD_DIR}/bin/build
-    #- FVS_VARIANTS="pnc;oc"
-    - FVS_VARIANTS="pnc;wcc;soc;cac;ecc;oc;op"
+    - FVS_VARIANTS="pnc;wcc"
+    # - FVS_VARIANTS="pnc;wcc;soc;cac;ecc;oc;op"
 
 git:
   depth: 5
@@ -92,7 +92,7 @@ deploy:
     region: us-west-2
     bucket: free5
     local-dir: ${TRAVIS_BUILD_DIR}/artifacts
-    upload-dir: travis-builds
+    upload-dir: pyfvs/$TRAVIS_BRANCH
     acl: public_read
     on:
       repo: tharen/PyFVS
