@@ -142,6 +142,7 @@ C----------
       SIZCAP(I,3) = 0.
       SIZCAP(I,4) = 999.
       JSPIN(I)=3
+      LEAVESP(I)=.FALSE.
    5  CONTINUE
       LFLAGV = .FALSE.
       LBAMAX = .FALSE.
@@ -279,6 +280,8 @@ C----------
       DR016=0.
       DBHSDI=0.
       JSPINDEF=0
+      GLOCCC=0
+      CCCOEF=0.01 
 C
       DO 30 J=1,9
       DO 20 K=1,MAXSP

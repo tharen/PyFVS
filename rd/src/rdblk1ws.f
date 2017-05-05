@@ -55,9 +55,9 @@ C....  19   AS   ASPEN                 39   NF   NOBLE FIR
 C....  20   BS   BLUE SPRUCE           40   NH   NON-HOST
 C....
 C.... SPECIES LIST FOR WESTERN SIERRAS VARIANT. ***** 43 species *****
-C....
-C.... ----------FVS UT VARIANT-----------   WRD MODEL SPECIES    ANNOSUS
-C....  # CD COMMON NAME                     OR SURROGATE SP.     TYPE
+C.... 
+C.... ----------FVS WS VARIANT-----------   WRD MODEL SPECIES    ANNOSUS     
+C....  # CD COMMON NAME                     OR SURROGATE SP.     TYPE        
 C.... -- -- ----------------------------- ---------------------  --------
 C....  1 SP SUGAR PINE                          SUGAR PINE (12)  P-TYPE
 C....  2 DF DOUGLAS-FIR                        DOUGLAS-FIR (3)   S-TYPE
@@ -122,5 +122,5 @@ C.... The following IRTSPC is for the WS variant 43 species.
 
       DATA IOUNIT /22/
       DATA IRUNIT /18/
-
+      
       END

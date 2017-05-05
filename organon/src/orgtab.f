@@ -2,7 +2,7 @@
       use organon_mod
       implicit none
 C----------
-C  **ORGTAB  ORGANON--DATE OF LAST REVISION:  06/22/2015
+C ORGANON $Id$
 C----------
 C
 C    WRITES TABLE OF FVS-ORGANON PARAMETER SETTINGS.
@@ -133,7 +133,7 @@ C  INITIAL ORGANON CALIBRATION VALUES
 C----------
       SELECT CASE (VVER(:2))
       CASE ('OC')
-        WRITE(JOSTND,400) ((ACALIB(I,J),J=1,3),I=1,18)
+        WRITE(JOSTND,400) ((ACALIB(I,J),I=1,3),J=1,18)
  400    FORMAT(/,'     STARTING CALIBRATION RATIOS:',/,
      &  5X,'       SPECIES GROUP   HT/DBH    HTCB    DIAM',/,
      &  5X,'         DOUGLAS FIR:',3F8.2,/,
@@ -155,7 +155,7 @@ C----------
      &  5X,'     PACIFIC DOGWOOD:',3F8.2,/,
      &  5X,'      WILLOW SPECIES:',3F8.2)
       CASE DEFAULT
-        WRITE(JOSTND,410) ((ACALIB(I,J),J=1,3),I=1,11)
+        WRITE(JOSTND,410) ((ACALIB(I,J),I=1,3),J=1,11)
  410    FORMAT(/,'        STARTING CALIBRATION RATIOS:',/,
      &  5X,'                 SPECIES GROUP   HT/DBH    HTCB    DIAM',/,
      &  5X,'                   DOUGLAS FIR:',3F8.2,/,

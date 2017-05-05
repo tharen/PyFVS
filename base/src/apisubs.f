@@ -1,7 +1,7 @@
 
 c $Id$
 
-c     This is a collection of routines that provide an interface to
+c     This is a collection of routines that provide an interface to 
 c     the shared library version of FVS. Other routines that exist
 c     inside FVS may also be called.
 
@@ -1553,5 +1553,5 @@ c               1= "name" not found,
       end select
       return
       end
-
+      
 

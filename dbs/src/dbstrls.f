@@ -29,7 +29,7 @@ C
       INTEGER ISPC,I1,I2,I3
       INTEGER*4 IDCMP1,IDCMP2
       DATA IDCMP1,IDCMP2/10000000,20000000/
-      REAL CW,P,CCFT,DGI,DP,TEM,ESTHT
+      REAL CW,P,CCFT,DGI,DP,TEM,ESTHT,TREAGE
 C---------
 C     IF TREEOUT IS NOT TURNED ON OR THE IWHO VARIABLE IS NOT 1
 C     THEN JUST RETURN
@@ -107,7 +107,8 @@ C     IF NOT, THEN WE NEED TO CREATE IT
      -             'EstHt double null,'//
      -             'ActPt int null,'//
      -             'Ht2TDCF real null,'//
-     -             'Ht2TDBF real null)'
+     -             'Ht2TDBF real null,'//
+     -             'TreeAge double null)'
 
         ELSEIF(TRIM(DBMSOUT).EQ."EXCEL") THEN
           SQLStmtStr='CREATE TABLE FVS_TreeList('//
@@ -141,7 +142,8 @@ C     IF NOT, THEN WE NEED TO CREATE IT
      -             'EstHt Number null,'//
      -             'ActPt int null,'//
      -             'Ht2TDCF real null,'//
-     -             'Ht2TDBF real null)'
+     -             'Ht2TDBF real null,'//
+     -             'TreeAge Number null)'
         ELSE
           SQLStmtStr='CREATE TABLE FVS_TreeList('//
      -             'CaseID char(36),'//
@@ -174,7 +176,8 @@ C     IF NOT, THEN WE NEED TO CREATE IT
      -             'EstHt real null,'//
      -             'ActPt int null,'//
      -             'Ht2TDCF real null,'//
-     -             'Ht2TDBF real null)'
+     -             'Ht2TDBF real null,'//
+     -             'TreeAge real null)'
         ENDIF
         iRet = fvsSQLCloseCursor(StmtHndlOut)
         iRet = fvsSQLExecDirect(StmtHndlOut,trim(SQLStmtStr),
@@ -239,7 +242,15 @@ C           BEEN SET, IN WHICH CASE IT IS EQUAL TO CURRENT HEIGHT
             ELSE
               ESTHT = HT(I)
             ENDIF
+            
+C           DETERMINE TREE AGE
 
+            IF (LBIRTH(I)) THEN
+              TREAGE = ABIRTH(I)
+            ELSE
+              TREAGE = 0
+            ENDIF
+ 
 C           GET DG INPUT
 
             DGI=DG(I)
@@ -269,7 +280,7 @@ C
      -           'MortPA,DBH,DG,',
      -           'HT,HTG,PctCr,CrWidth,MistCD,BAPctile,PtBAL,TCuFt,',
      -           'MCuFt,BdFt,MDefect,BDefect,TruncHt,',
-     -           'EstHt,ActPt,Ht2TDCF,Ht2TDBF) VALUES(''',
+     -           'EstHt,ActPt,Ht2TDCF,Ht2TDBF,TreeAge) VALUES(''',
      -           CASEID,''',''',TRIM(NPLT),
      -           ''',',JYR,',',IFINT,",'",ADJUSTL(TID),"',",I,",'",
      -           trim(CSPECIES),"',",IMC(I),',',ISPECL(I),',',ITRE(I),
@@ -277,7 +288,7 @@ C
      -           ',',ICR(I),',',CW,',',IDMR,',',PCT(I),',',IPTBAL,',',
      -           CFV(I),',',WK1(I),',',BFV(I),',',ICDF,',',IBDF,',',
      -           ((ITRUNC(I)+5)/100),',',ESTHT,',',IPVEC(ITRE(I)),
-     -           ',',HT2TD(I,2),',',HT2TD(I,1),')'
+     -           ',',HT2TD(I,2),',',HT2TD(I,1),',',TREAGE,')'
 
             iRet = fvsSQLCloseCursor(StmtHndlOut)
 
@@ -310,6 +321,14 @@ C       DECODE DEFECT AND ROUND OFF POINT BAL.
         IBDF= DEFECT(I)-((DEFECT(I)/100)*100)
         IPTBAL=NINT(PTBALT(I))
 
+C       DETERMINE TREE AGE
+
+        IF (LBIRTH(I)) THEN
+          TREAGE = ABIRTH(I)
+        ELSE
+          TREAGE = 0
+        ENDIF        
+
 C       CYCLE 0, PRINT INPUT DG ONLY, UNLESS DIRECTED TO PRINT ESTIMATES.
         DGI=DG(I)
         IF(ICYC.EQ.0 .AND. TEM.EQ.0) DGI=WORK1(I)
@@ -335,14 +354,14 @@ C
         IF(ISPOUT6.EQ.1)CSPECIES=ADJUSTL(TRIM(JSP(ISP(I))))
         IF(ISPOUT6.EQ.2)CSPECIES=ADJUSTL(TRIM(FIAJSP(ISP(I))))
         IF(ISPOUT6.EQ.3)CSPECIES=ADJUSTL(TRIM(PLNJSP(ISP(I))))
-
+        
         WRITE(SQLStmtStr,*)'INSERT INTO ',TABLENAME,
      -       ' (CaseID,StandID,Year,PrdLen,',
      -       'TreeId,TreeIndex,Species,TreeVal,SSCD,PtIndex,TPA,',
      -       'MortPA,DBH,DG,',
      -       'HT,HTG,PctCr,CrWidth,MistCD,BAPctile,PtBAL,TCuFt,',
      -       'MCuFt,BdFt,MDefect,BDefect,TruncHt,',
-     -       'EstHt,ActPt,Ht2TDCF,Ht2TDBF) VALUES(''',
+     -       'EstHt,ActPt,Ht2TDCF,Ht2TDBF,TreeAge) VALUES(''',
      -       CASEID,''',''',TRIM(NPLT),
      -       ''',',JYR,',',IFINT,",'",ADJUSTL(TID),"',",I,
      -       ",'",trim(CSPECIES),"',",IMC(I),',',ISPECL(I),',',ITRE(I),
@@ -350,13 +369,13 @@ C
      -       ',',ICR(I),',',CW,',',IDMR,',',PCT(I),',',IPTBAL,',',
      -       CFV(I),',',WK1(I),',',BFV(I),',',ICDF,',',IBDF,',',
      -       ((ITRUNC(I)+5)/100),',',ESTHT,',',IPVEC(ITRE(I)),
-     -       ',',HT2TD(I,2),',',HT2TD(I,1),')'
-
+     -       ',',HT2TD(I,2),',',HT2TD(I,1),',',TREAGE,')'
+        
         iRet = fvsSQLCloseCursor(StmtHndlOut)
-
+        
         iRet = fvsSQLExecDirect(StmtHndlOut,trim(SQLStmtStr),
      -            int(len_trim(SQLStmtStr),SQLINTEGER_KIND))
-
+        
         IF (iRet.NE.SQL_SUCCESS) ITREELIST = 0
         CALL DBSDIAGS(SQL_HANDLE_STMT,StmtHndlOut,
      -              'DBSTRLS:Inserting Row: '//trim(SQLStmtStr))

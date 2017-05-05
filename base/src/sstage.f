@@ -15,33 +15,39 @@ C
 C   N.L.CROOKSTON - INT MOSCOW - JUNE 1996 AND WITH
 C   A.R.STAGE - INT MOSCOW - JUNE 1997
 C
-C   INIBA = 1 IF CALL IS PRIOR TO THINNINGS.  OTHER VALUES MEAN AFTER
+C   INBA = 1 IF CALL IS PRIOR TO THINNINGS.  OTHER VALUES MEAN AFTER
 C           THINNING.
 C   INICYCLE = THE CYCLE NUMBER.
 C   LSUPRT = IF TRUE, SUPPRESS THE PRINTING, EVEN IF IT IS REQUESTED.
 C
       INCLUDE 'SSTGMC.F77'
 C
+C
+COMMONS
+C
+      COMMON/SSTAGC/TMPCCC
+C
       INTEGER IOUT,ICD,MSP1,MSP2,IS3OK,IS2OK,I2,IS1OK,IS3I2,IS3I1
       INTEGER IS2I2,IS2I1,IS1I2,IS1I1,ILARGE,IILG,ID2I2,ID2I1,IHTLS3
       INTEGER IHTS1,IHTS2,IHTS3,IHTSS1,IHTSS2,IHTSS3,IHTLS1,IHTLS2
       INTEGER ICRBS1,ICRBS2,ICRBS3,ICRCV1,ICRCV2,ICRCV3,ICOVR,NTREES
-      INTEGER II,ID1I1,ID1I2
+      INTEGER II,ID1I1,ID1I2,NTODO,IDATE,IACTK,NP,IDT,MYACTS(2)
+      INTEGER IBA2
       REAL COVER,DMIND,CRS3,CRS2,CRS1,DIFF,X,SUMPRB,DIFF1,DIFF2,COV
-      REAL DBHS3,DBHS2,DBHS1,XBAMAX
+      REAL DBHS3,DBHS2,DBHS1,XBAMAX,TMPCCC,PRM(1)
       LOGICAL LSUPRT
 
       REAL SSWK(MAXTRE)
 
       INTEGER INDEX(MAXTRE),IHTLS,IHTSS,NSTR,DBSKODE
-      INTEGER INBA,IBA,INICYCLE,ICYCLE, I, J
+      INTEGER INBA,IBA,INICYCLE,ICYCLE,I,J
       REAL XHTLS,XHTSS,XNSTR,XSDI,VSET
       REAL TPA1, TPA2, TPA3
 
       LOGICAL DEBUG,LSET
 
       CHARACTER*3 SP11,SP21,SP12,SP22,SP13,SP23
-      INTEGER ISP11,ISP21,ISP12,ISP22,ISP13,ISP23,J1,J2
+      INTEGER ISP11,ISP21,ISP12,ISP22,ISP13,ISP23,J1,J2 
 
 C     STAGE CLASS CODES ARE:
 C
@@ -63,6 +69,12 @@ C     CALLED BY FFE THRU ENTRY POINT BELOW.
       REAL FMTPA, FMCCM, FMPCT, FMSAW, FMSSD, FMGAP, FMDBH
       REAL TMPPRB(MAXTRE),FPROB(MAXTRE)
       INTEGER TMPSCL, FMSTCL, FMFLAG, TMPICR(MAXTRE),FICR(MAXTRE)
+C----------
+C  DATA STATEMENTS.
+C  ACTIVITY 231 = THINCC KEYWORD
+C  ACTIVITY 444 = CCADJ KEYWORD
+C----------
+      DATA MYACTS/231,444/
 
       TMPTPA = TPAMIN
       TMPCCM = CCMIN
@@ -72,13 +84,78 @@ C     CALLED BY FFE THRU ENTRY POINT BELOW.
       TMPGAP = GAPPCT
       FMFLAG = 0
       IBA    = INBA
+      IBA2   = IBA
       ICYCLE = INICYCLE
+      DEBUG  = .FALSE.
+
+C     SETUP THE DEBUG FLAG.
+
+      CALL DBCHK (DEBUG,'SSTAGE',6,ICYCLE)
 
       DO I=1, ITRN
         TMPPRB(I) = PROB(I)
         TMPICR(I) = ICR(I)
       ENDDO
+C-----------
+C  PROCESS CCADJ KEYWORD.
+C-----------
+      IF(INBA.EQ.1.AND.GLOCCC.EQ.0)CALL OPFIND(2,MYACTS,NTODO)    
+      IF(NTODO.EQ.0)THEN
+        IF(INBA.EQ.1)THEN
+          IF(GLOCCC.EQ.1)THEN
+            CCCOEF=TMPCCC
+            GLOCCC=2
+            GOTO 6
+          ELSE
+            GOTO 6
+          ENDIF
+        ELSEIF(INBA.EQ.2)THEN
+          IF(TMPCCC.EQ.0)THEN
+            GOTO 6
+          ELSE
+            CCCOEF=TMPCCC
+            GOTO 6   
+          ENDIF
+        ELSE
+          GOTO 6
+        ENDIF   
+      ELSE
+        GOTO 3
+      ENDIF
+  3   CONTINUE
+      CALL OPGET(1,1,IDATE,IACTK,NP,PRM)
+      IF(NTODO.EQ.1.AND.IACTK.EQ.231)GOTO 6
+      IF(NTODO.EQ.1.AND.IACTK.EQ.444)THEN
+        IF(ICYCLE.EQ.1)THEN
+          CCCOEF=PRM(1)
+          GOTO 4
+        ELSE
+          TMPCCC=PRM(1)
+          GOTO 4
+        ENDIF
+      ENDIF
 
+      IF(NTODO.GE.2)THEN
+        GLOCCC=1
+        CALL OPFIND(1,MYACTS(2),NTODO)
+        CALL OPGET(1,1,IDATE,IACTK,NP,PRM)
+        IF(ICYCLE.EQ.1)THEN
+          CCCOEF=PRM(1)
+     			GOTO 4
+        ELSEIF(ICYCLE.GT.1)THEN
+          TMPCCC=PRM(1)
+          GOTO 4
+        ENDIF           
+      ENDIF
+   4  CONTINUE        
+      IDT=IDATE      
+      CALL OPDONE(1,IDT)        
+
+   6  CONTINUE
+   
+      IF(DEBUG)WRITE(JOSTND,*)'CCCOEF=',CCCOEF,'PRM(1)=',PRM(1),
+     &'NTODO=',NTODO,'GLOCCC=',GLOCCC
+C             
 C     IF WE ARE NOT CALCULATING SSTAGE, THEN SET THE EVENT MONITOR
 C     VARIABLES TO FALSE AND RETURN.
 
@@ -110,6 +187,11 @@ C     ENTRY POINT FOR CALLS FROM FFE
       TMPSSD = FMSSD
       TMPGAP = FMGAP
       FMFLAG = 1
+      DEBUG = .FALSE.
+
+C     SETUP THE DEBUG FLAG.
+
+      CALL DBCHK (DEBUG,'SSTAGE',6,ICYCLE)
 
       DO I=1, ITRN
         TMPPRB(I) = FPROB(I)
@@ -121,7 +203,7 @@ C     ENTRY POINT FOR CALLS FROM FFE
 C *******************************************************************
 
 C     IF THIS CALL FOLLOWS THINNING, AND IF THERE ARE NO REMOVALS,
-C     THE THE STAGE AFTER THINNING IS THE SAME AS THE ONE PRIOR.
+C     THEN THE STAGE AFTER THINNING IS THE SAME AS THE ONE PRIOR.
 C     IF CALLED FROM FFE, THEN USE AFTER THINNING VALUES.
 
       IF (FMFLAG .EQ. 1) THEN
@@ -132,10 +214,6 @@ C     IF CALLED FROM FFE, THEN USE AFTER THINNING VALUES.
         XBAMAX = BTSDIX
         IF(IBA.NE.1 .AND. ONTREM(7).GT.0.)XBAMAX=ATSDIX
       ENDIF
-
-C     SETUP THE DEBUG FLAG.
-
-      CALL DBCHK (DEBUG,'SSTAGE',6,ICYCLE)
 
       IF (DEBUG) WRITE (JOSTND,'('' IN SSTAGE, IBA, ICYCLE='',2I5)')
      >       IBA,ICYCLE
@@ -405,7 +483,8 @@ C     FOR THE PURPOSES OF COMPUTING THE COVER, INCLUDE THE TREES THAT
 C     ARE WITHIN THE GAP IN THE UPPER STRATUM.
 
       I2 = MAX(IS1I2,IS2I1-1)
-      CALL COVOLP (DEBUG,JOSTND,I2-IS1I1+1,INDEX(IS1I1),WK6,CRS1)
+      CALL COVOLP (DEBUG,JOSTND,I2-IS1I1+1,INDEX(IS1I1),WK6,CRS1,
+     &CCCOEF)
       IF (DEBUG) WRITE (JOSTND,'('' I2='',I4,'' CRS1='',F8.2)') I2,CRS1
       IF (CRS1.GT. TMPCCM) IS1OK = 1
 
@@ -415,7 +494,8 @@ C     CHECK THE SECOND....
       CRS2 = 0.
       IF (NSTR .GE. 2) THEN
          I2 = MAX(IS2I2,IS3I1-1)
-         CALL COVOLP (DEBUG,JOSTND,I2-IS2I1+1,INDEX(IS2I1),WK6,CRS2)
+         CALL COVOLP (DEBUG,JOSTND,I2-IS2I1+1,INDEX(IS2I1),WK6,CRS2,
+     &    CCCOEF)
          IF (DEBUG) WRITE (JOSTND,'('' I2='',I4,'' CRS2='',F8.2)')
      >              I2,CRS2
          IF (CRS2.GT. TMPCCM) IS2OK = 1
@@ -426,7 +506,8 @@ C     CHECK THE THIRD...
       IS3OK = 0
       CRS3 = 0.
       IF (NSTR .GE. 3) THEN
-         CALL COVOLP (DEBUG,JOSTND,IS3I2-IS3I1+1,INDEX(IS3I1),WK6,CRS3)
+         CALL COVOLP (DEBUG,JOSTND,IS3I2-IS3I1+1,INDEX(IS3I1),WK6,CRS3,
+     &    CCCOEF)
          IF (DEBUG) WRITE (JOSTND,'('' I2='',I4,'' CRS3='',F8.2)')
      >              I2,CRS3
           IF (CRS3.GT. TMPCCM) IS3OK = 1
@@ -567,7 +648,7 @@ C
 
    80 CONTINUE
 C
-      CALL COVOLP (DEBUG,JOSTND,NTREES,INDEX,WK6,COVER)
+      CALL COVOLP (DEBUG,JOSTND,NTREES,INDEX,WK6,COVER,CCCOEF)
 C
       ICOVR = IFIX(COVER+.5)
       IF (NTREES.LE.1)ICRCV1=ICOVR
@@ -634,13 +715,13 @@ C     SET THE IOSTR, WHICH IS USED BY STRSTAT, AN EVENT MONITOR FUNCTION.
           ENDDO
         ENDDO
       ENDIF
-
+      
       J = 1
       IF (IBA.NE.1) J=2
       OSTRST(1,J) = DBHS1              ! nominal dbh for stratum 1
       OSTRST(2,J) = FLOAT(IHTS1)       ! nominal height for stratum 1
       OSTRST(3,J) = FLOAT(IHTLS1)      ! height of the tallest tree in stratum 1
-      OSTRST(4,J) = FLOAT(IHTSS1)      ! height of the shortest tree in stratum 1
+      OSTRST(4,J) = FLOAT(IHTSS1)      ! height of the shortest tree in stratum 1      
       OSTRST(5,J) = FLOAT(ICRBS1)      ! height to crown base for stratum 1
       OSTRST(6,J) = FLOAT(ICRCV1)      ! canopy cover for stratum 1
       OSTRST(7,J) = ISP11              ! major species 1 for stratum 1
@@ -650,7 +731,7 @@ C     SET THE IOSTR, WHICH IS USED BY STRSTAT, AN EVENT MONITOR FUNCTION.
       OSTRST(11,J) = DBHS2             ! nominal dbh for stratum 2
       OSTRST(12,J) = FLOAT(IHTS2)      ! nominal height for stratum 2
       OSTRST(13,J) = FLOAT(IHTLS2)     ! height of the tallest tree in stratum 2
-      OSTRST(14,J) = FLOAT(IHTSS2)     ! height of the shortest tree in stratum 2
+      OSTRST(14,J) = FLOAT(IHTSS2)     ! height of the shortest tree in stratum 2         
       OSTRST(15,J) = FLOAT(ICRBS2)     ! height to crown base for stratum 2
       OSTRST(16,J) = FLOAT(ICRCV2)     ! canopy cover for stratum 2
       OSTRST(17,J) = ISP12             ! major species 1 for stratum 2
@@ -660,7 +741,7 @@ C     SET THE IOSTR, WHICH IS USED BY STRSTAT, AN EVENT MONITOR FUNCTION.
       OSTRST(21,J) = DBHS3             ! nominal dbh for stratum 3
       OSTRST(22,J) = FLOAT(IHTS3)      ! nominal height for stratum 3
       OSTRST(23,J) = FLOAT(IHTLS3)     ! height of the tallest tree in stratum 3
-      OSTRST(24,J) = FLOAT(IHTSS3)     ! height of the shortest tree in stratum 3
+      OSTRST(24,J) = FLOAT(IHTSS3)     ! height of the shortest tree in stratum 3             
       OSTRST(25,J) = FLOAT(ICRBS3)     ! height to crown base for stratum 3
       OSTRST(26,J) = FLOAT(ICRCV3)     ! canopy cover for stratum 3
       OSTRST(27,J) = ISP13             ! major species 1 for stratum 3
@@ -683,9 +764,9 @@ C     SET THE IOSTR, WHICH IS USED BY STRSTAT, AN EVENT MONITOR FUNCTION.
             IF (.NOT. LSUPRT .AND. LPRNT .AND. IRREF.EQ.-1) THEN
                CALL GETID (IRREF)
                CALL GETLUN(IOUT)
-               WRITE (IOUT,5) IRREF,NPLT,MGMID,
+               WRITE (IOUT,85) IRREF,NPLT,MGMID,
      >              (' ------------ Stratum',I,' ------------',I=1,3)
-    5          FORMAT (1X,I5,' $#*%'
+   85          FORMAT (1X,I5,' $#*%'
      >                 //'Structural statistics for stand: ',A,
      >                  '  MgmtID: ',A//T8,3(A,I2,A)/
      >      '     Rm',3('       ---Height-- -Crown- -Major- C'),
@@ -709,7 +790,7 @@ C
      >           I3,1X,I3,1X,I3,1X,A3,1X,A3,1X,I1),1X,I1,1X,I3,2X,A4)
       ENDIF
 C
-
+    
       RETURN
       END
 C
@@ -720,12 +801,8 @@ C
 C     THIS IS A PRIVATE HELPER ROUTINE CALLED BY SSTAGE
 C     (AND, PLEASE, NO OTHER ROUTINES SHOULD CALL THIS ROUTINE).
 
-      INTEGER I1,I2,INDEX
-      REAL TMPPRB,WK6,WK4,DBH,HT,DBHNOM
-      INTEGER TMPICR,ISP,TMP,MAXTRE,MAXSP,IHT,IHTS,IHTL,ICRB,MSP1,MSP2
-
-      INTEGER I,II,IS,ITOP,I3,I70,K1,K2
-      REAL ACB,SP,SUM,X1,X2,T,SD,SH,DIFF
+      REAL TMPPRB
+      INTEGER TMPICR
 
       DIMENSION INDEX(MAXTRE),WK6(MAXTRE),WK4(MAXTRE),DBH(MAXTRE),
      >          HT(MAXTRE),TMPICR(MAXTRE),ISP(MAXTRE),TMPPRB(MAXTRE)
@@ -865,11 +942,7 @@ C     IT IS DIFFERENT THAN THE OTHER HELPER ROUTINE (SSTGHP) BECAUSE
 C     I WANTED TO INCLUDE THE TREES IN THE "GAPS" BETWEEN THE STRATA
 C     (LIKE THE COVER CALCULATIONS DO).  SAR - AUG 2006
 
-      INTEGER I1,I2,INDEX,MAXTRE
-      REAL TMPPRB,STRTPA
-
-      INTEGER I,II
-      REAL SP
+      REAL TMPPRB
 
       DIMENSION INDEX(MAXTRE),TMPPRB(MAXTRE)
 

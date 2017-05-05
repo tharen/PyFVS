@@ -7,7 +7,7 @@
       use prgprm_mod
       implicit none
 C----------
-C  **FMSFALL--FIRE-SO  DATE OF LAST REVISION: 11/30/09
+C  **FMSFALL--FIRE-SO  DATE OF LAST REVISION: 08/24/15
 C----------
 C
 C     SNAG FALL PREDICTION
@@ -122,11 +122,11 @@ C  left.
 C----------
 
       IF ((KODFOR .GE. 500 .AND. KODFOR .LT. 600)
-     &     .OR. KODFOR .GE. 700) THEN   ! CALIFORNIA
-
+     &     .OR. KODFOR .EQ. 701) THEN   ! CALIFORNIA
+     	
         BASE = -0.001679 * D + 0.064311
         IF (BASE .LT. 0.01) BASE = 0.01
-
+          
         IF (D .LT. 18.0) THEN
           DFALLN = BASE * FALLX(KSP) * ORIGDEN
         ELSE
@@ -169,22 +169,22 @@ C----------
           ENDIF
         ENDIF
       ELSE   ! OREGON
-
+        	
 C----------
 C  Call fmr6sdcy now because snag decay affects the snag fall rate through
 C  an adjustment factor.  Also, fmr6sdcy holds the dbh breakpoints used
 C  to determine whether a snag is small, or large.
 C----------
-
+        
         CALL FMR6SDCY(KSP, D, JYRSOFT, JADJ, JSML)
 
 C----------
 C  Call fmr6fall to determine the snag fall rate.
 C----------
-
+        
         CALL FMR6FALL(KSP, JSML, JADJ, BASE)
         DFALLN = BASE * FALLX(KSP) * DENTTL
-
+        
         IF (DEBUG) THEN
           WRITE(JOSTND,1010) KSP, D, JSML, JADJ, JYRSOFT
  1010     FORMAT(' FMSFALL: KSP=',I2,', DBHS=',F6.2,', JSML=',I3,

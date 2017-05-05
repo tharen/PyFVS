@@ -205,7 +205,10 @@ C                Check min log len for last log (3/25/14)
                  IF (LOGLEN(NUMSEG) .LT. MINLEN) THEN
                    LOGLEN(NUMSEG) = 0
                    LOGLEN(NUMSEG-1) = MAXLEN
-                 ENDIF
+C             Reset the NUMSEG (YW 2015/10/08)
+                  NUMSEG = NUMSEG - 1
+              ELSE                    
+C              ENDIF
 
 C--              IF BOTH SEGMENTS ARE ODD LENGTHS ADD ONE
 C--              TO LOWER SEGMENT AND SUBTRACT ONE FROM UPPER
@@ -216,16 +219,20 @@ C--              TO LOWER SEGMENT AND SUBTRACT ONE FROM UPPER
                  LOGLEN(NUMSEG)=LOGLEN(NUMSEG)-1.0
                  LOGLEN(NUMSEG-1)=LOGLEN(NUMSEG-1)+1.0
               ENDIF
-
+              ENDIF
            ELSEIF (OPT .EQ. 23) THEN
               IF(LEFTOV .GE. MINLEN) THEN
                  LOGLEN(NUMSEG)=LEFTOV
               ELSE
                  LOGLEN(NUMSEG)=0
+C             Reset the NUMSEG (YW 2015/10/08)
+                  NUMSEG = NUMSEG - 1
               ENDIF
            ELSEIF (OPT .EQ. 24) THEN
               IF (LEFTOV .LT. (MAXLEN*.25)) THEN
                  LOGLEN(NUMSEG)=0
+C             Reset the NUMSEG (YW 2015/10/08)
+                  NUMSEG = NUMSEG - 1
               ELSEIF (LEFTOV .GE. (MAXLEN*.25) .AND.
      >                               LEFTOV .LE. (MAXLEN*.75)) THEN
                  LOGLEN(NUMSEG)=INT((MAXLEN*.5)+.5)

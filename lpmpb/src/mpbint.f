@@ -2,10 +2,11 @@
       use prgprm_mod
       implicit none
 C----------
-C  **MPBINT        DATE OF LAST REVISION:  08/22/14
+C  **MPBINT        DATE OF LAST REVISION:  01/28/16
 C----------
 C
 C     INITIALIZES MPB VARIABLES.  CALLED FROM INITRE
+C
 C
 C Revision History
 C   09/26/91 Last noted revision date.
@@ -13,6 +14,7 @@ C   04/19/02 Lance R. David (FHTET)
 C     Random number generator initialization with default seed value.
 C     Added local variables LSET and MPSEED.
 C   07/02/10 Lance R. David (FMSC)
+C     Added IMPLICIT NONE.
 C   08/22/14 Lance R. David (FMSC)
 C     Function name was used as variable name.
 C     changed variable INT to INCRS
@@ -114,7 +116,7 @@ C
       STRBUG = 500.0
       EXCON  = 640.0
       ISTDT = 1
-
+ 
       DO 200 I = 1,30
          ACTSRF(I) = 0.0
          AGGPH(I)  = 0.9
@@ -135,7 +137,6 @@ C
 C
 C     OPEN DISK FILES FOR THE MPB ROUTINES.
 C
-      CALL MYOPEN (20, ' ', 4, 133, 0, 2, 1, 0, KODE)
       CALL MYOPEN (JOMPB, ' ', 4, 133, 0, 1, 1, 0, KODE)
 
 C

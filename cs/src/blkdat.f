@@ -14,7 +14,7 @@
       use prgprm_mod
       implicit none
 C----------
-C  **BLKDAT--CS  DATE OF LAST REVISION: 02/13/2015
+C CS $Id$
 C----------
 C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.

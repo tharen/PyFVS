@@ -84,7 +84,7 @@ C----------
         CALL DBSVKFN(KWDFIL)
 
 c       open the scratch file (should be removed sometime)
-        open(unit=JOTREE,status="unknown",form="unformatted")
+        open(unit=JOTREE,status="scratch",form="unformatted")
 
         return
   101   continue
@@ -147,6 +147,11 @@ C  MAIN OUTPUT FILE NEEDS KEYFILE NAME WITH EXTENSION. KEYFN ENTRY
 C  IS IN KEYRDR ROUTINE
 C----------
       CALL KEYFN(KWDFIL)
+C----------
+C     STORE THE KEYWORD FILENAME WITH EXTENSION IN GLBCNTL COMMON. MAY
+C     BE USED LATER TO CREATE FILES FOR TREELIST AND SNAG REPORT
+C----------
+      CALL fvsGetKeywordFileName(KWDFIL,250,251)
 C ----------
 C  FIND THE LAST PERIOD IN THE FILENAME AND SET THE REST OF THE
 C  KEYWORD FILE NAME TO BLANKS
@@ -225,6 +230,12 @@ C----------
       CALL UNBLNK(CNAME,LENNAM)
       IF (LENNAM.LE.0) CNAME=KWDFIL(:ISTLNB(KWDFIL))//'.chp'
       CALL MYOPEN (JOSUME,CNAME,5,91,0,1,1,0,KODE)
+      IF (KODE.GT.0) WRITE (*,'('' OPEN FAILED FOR '',A)') CNAME
+C----------
+C  FFE SNAG OUTPUT FILE
+C----------
+      CNAME=KWDFIL(:ISTLNB(KWDFIL))//'.sng'
+      CALL MYOPEN (35,CNAME,5,91,0,1,1,0,KODE)
       IF (KODE.GT.0) WRITE (*,'('' OPEN FAILED FOR '',A)') CNAME
 C----------
 C  OPEN THE SAMPLE TREE SCRATCH FILE.

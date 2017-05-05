@@ -75,17 +75,15 @@ C
       REAL REALS(MXR), ROSUM(20,MAXCY1),
      >          RSEED(2), ESSEED(2), RDTREE(MAXTRE),
      >          SVSED0(2),SVSED1(2)
-!      EQUIVALENCE (ROSUM,IOSUM),(RSEED,S0),(ESSEED,ESS0),(WK6,REALS),
-!     >            (WK6,LOGICS),(WK6,INTS),(IDTREE,RDTREE),
-!     >            (SVSED0,SVS0),(SVSED1,SVS1)
+      EQUIVALENCE (ROSUM,IOSUM),(RSEED,S0),(ESSEED,ESS0),(WK6,REALS),
+     >            (WK6,LOGICS),(WK6,INTS),(IDTREE,RDTREE),
+     >            (SVSED0,SVS0),(SVSED1,SVS1)
 C
       if (itable(2) .eq. 0) then
         itable(2) = 1
         print *,"FVS turned off the example tree table output."
       endif
       ILIMIT=IRECLN
-
-      ! FIXME: LOGICS,REALS,INTS transfer needs to be set up.
 C
 C     STORE THE INTEGER SCALARS IN THE ARRAY INTS.
 C
@@ -209,6 +207,7 @@ C
       INTS(117) = NPTGRP
       INTS(118) =   MAXTOP      ! DBSTK common
       INTS(119) =   MAXLEN      ! DBSTK common
+      INTS(120)	=		GLOCCC
 C
 C     BEGIN THE WRITE TO THE DIRECT ACCESS DATA FILE, AND WRITE THE
 C     INTEGER SCALARS.
@@ -369,6 +368,7 @@ C
       CALL LFWRIT (WK3,IPNT,ILIMIT,LTSTV5, ITST5,  2)
       CALL LFWRIT (WK3,IPNT,ILIMIT,LSPCWE,MAXSP,   2)
       CALL LFWRIT (WK3,IPNT,ILIMIT,LREG  ,MXLREG,  2)
+      CALL LFWRIT (WK3,IPNT,ILIMIT,LEAVESP,MAXSP,  2)
 C
 C     STORE THE REAL SCALARS IN THE ARRAY REALS.
 C
@@ -502,6 +502,7 @@ C
       REALS(128) = DBHZEIDE
       REALS(129) = DBHSTAGE
       REALS(130) = DR016
+      REALS(131)=  CCCOEF
 C
 C     WRITE THE REAL SCALARS.
 C
@@ -575,7 +576,6 @@ C
       CALL BFWRIT (WK3,IPNT,ILIMIT,DGIO,   6,         2)
       CALL BFWRIT (WK3,IPNT,ILIMIT,DIFH,   MAXSP,     2)
       CALL BFWRIT (WK3,IPNT,ILIMIT,ESB1,   MAXPLT,    2)
-      esseed = transfer(ess0,esseed)
       CALL BFWRIT (WK3,IPNT,ILIMIT,ESSEED, 2,         2)
       CALL BFWRIT (WK3,IPNT,ILIMIT,FL,     MAXSP,     2)
       CALL BFWRIT (WK3,IPNT,ILIMIT,FM,     MAXSP,     2)
@@ -659,10 +659,8 @@ C
       CALL BFWRIT (WK3,IPNT,ILIMIT,RHCON,  MAXSP,     2)
       K=ICYC+1
       DO 20 I=1,K
-      rosum = transfer(iosum(1,i),rosum(1,i))
       CALL BFWRIT (WK3,IPNT,ILIMIT,ROSUM(1,I),20,     2)
    20 CONTINUE
-      rseed = transfer(s0,rseed)
       CALL BFWRIT (WK3,IPNT,ILIMIT,RSEED,   2,        2)
       CALL BFWRIT (WK3,IPNT,ILIMIT,SDIDEF, MAXSP,     2)
       CALL BFWRIT (WK3,IPNT,ILIMIT,SIGMA,  MAXSP,     2)
@@ -696,9 +694,7 @@ C
       CALL BFWRIT (WK3,IPNT,ILIMIT,XRHMLT, MAXSP,     2)
       CALL BFWRIT (WK3,IPNT,ILIMIT,ZRAND,  ITRN,      2)
 C
-      svsed0 = transfer(svs0,svsed0)
       CALL BFWRIT (WK3,IPNT,ILIMIT,SVSED0, 2,         2)
-      svsed1 = transfer(svs1,svsed1)
       CALL BFWRIT (WK3,IPNT,ILIMIT,SVSED1, 2,         2)
       CALL BFWRIT (WK3,IPNT,ILIMIT,CRNDIA, NDEAD,     2)
       CALL BFWRIT (WK3,IPNT,ILIMIT,CRNRTO, NDEAD,     2)

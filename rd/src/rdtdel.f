@@ -3,7 +3,7 @@
       use prgprm_mod
       implicit none
 C----------
-C  **RDTDEL      LAST REVISION:  09/04/14
+C  **RDTDEL      LAST REVISION:  03/01/16
 C----------
 C
 C  THIS SUBROUTINE DELETES AND PACKS THE ROOT DISEASE TREE LISTS.
@@ -24,6 +24,9 @@ C    22-JUL-02 Lance R. David (FHTET)
 C      Removed unused array PROBO. It was also unused in the old
 C      annosus model.
 C   09/04/14 Lance R. David (FMSC)
+C     Added implicit none and declared variables.
+C   03/01/2016 Lance R. David (FMSC)
+C     Moved check to exit to top.
 C
 C----------------------------------------------------------------------
 C
@@ -37,6 +40,8 @@ C
       REAL    TPAREA
 
       CALL RDATV (LGO,LTEE)
+      IF (.NOT. LGO .OR. TPAREA .EQ. 0.0) RETURN
+      IF (.NOT. LTEE .AND. LSTART) RETURN
 
 C
 C     IF ROOT DISEASE NOT ACTIVE OR NO PATCH AREA THEN RETURN.  ALSO
@@ -46,9 +51,7 @@ C
       TPAREA = 0.0
       DO 700 IDI=MINRR,MAXRR
          TPAREA = TPAREA + PAREA(IDI)
-  700 CONTINUE
-      IF (.NOT. LGO .OR. TPAREA .EQ. 0.0) RETURN
-      IF (.NOT. LTEE .AND. LSTART) RETURN
+  700 CONTINUE       
 
 C
 C     PACK THE OUTSIDE TREE DENSITY

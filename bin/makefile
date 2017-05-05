@@ -18,7 +18,8 @@ ifdef OS
  PIC =      # never use PIC on this OSARCH type
 #not 32 bit windows, assume 64 bit Linux or mac osx.
 else
- WIN = 
+#setting WIN as done below is to enable correct processing of fofem (fire) c code.
+ WIN = -Dunix  
  SLIBSUFX = .so
  PRGSUFX = 
  ODBC = odbc 
@@ -62,6 +63,7 @@ endif
 
 export FC = gfortran 
 export FFLAGS = $(PIC) -g -Wall -ffpe-trap=invalid,zero -fbacktrace
+#export FFLAGS = $(PIC) -g -Wall -ffpe-trap=invalid,zero -fbacktrace -fcheck=all -fcheck=bounds
 export CC = gcc
 export CFLAGS = $(PIC) -DANSI -DCMP${CC} $(WIN)
 export LD = gfortran

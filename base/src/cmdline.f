@@ -351,13 +351,14 @@ cc     -        " restrtcd=",restrtcd
       integer :: restrtcd
       if (readFilePos == -1) then
         call fvsSetRtnCode (1)
-        restrtcd = fvsRtnCode
+      else
+        seekReadPos = readFilePos ! start reading form here.
+        call getstd
+        ! signal return to caller, will be reset when fvsRestart is called.
+        restartcode = -1 
+        stopstatcd = 4
       endif
-
-      seekReadPos = readFilePos ! start reading form here.
-      call getstd
-      restartcode = -1 ! signal return to caller
-      stopstatcd = 4
+      restrtcd = fvsRtnCode
       return
       end
 
@@ -381,8 +382,17 @@ cc     -        " restrtcd=",restrtcd
 
       integer :: mxch,nch
       character(mxch) fn
-      fn = " "
+
+C     nch of 251 is key to save, not load, filename
+      if (nch == 251) then
+        keywordfile = fn
+        return
+      else
+        fn = " "
+      endif
+
       if (mxch < 1) return
+      
       nch = min(mxch,len_trim(keywordfile))
       if (nch > 0) fn = keywordfile(:nch)
       return
@@ -507,7 +517,7 @@ c     If the program is "stopping", then store the data (unless there is
   100 continue
 cc      print *,"in fvsStopPoint,minorstopptyear=",minorstopptyear,
 cc     -  " minorstopptcode=",minorstopptcode," icyc=",icyc,"iy(icyc)=",
-cc     -  iy(icyc)," +1=",iy(icyc+1)
+cc     -  iy(icyc)," iy(icyc+1)=",iy(icyc+1)
 
       if (minorstopptyear == 0 .or. minorstopptcode == 0) return
 

@@ -284,7 +284,7 @@
               IERROR = 0
               SERROR(I) = 0
             ELSE
-
+               
               WRITE(JOSTND,9126) ICYC, I, SERROR(I)
  9126         FORMAT(' CRATET ORGANON ERROR CODE, CYCLE= ',I2, &
                     ' IDX= ',I2, ' SERROR= ',I2 )
@@ -685,6 +685,7 @@
       IF(NORMHT(II)*0.01.LT.HT(II)) NORMHT(II)=HT(II)*100.0
   125 CONTINUE
   130 CONTINUE
+  140 CONTINUE
       KNT2(IPTR)=K4 + KNTOHT(ISPC)
       IF(DEBUG)WRITE(JOSTND,*)' ISPC,IPTR,K4,KNTOHT,KNT2= ', &
       ISPC,IPTR,K4,KNTOHT(ISPC),KNT2(IPTR)

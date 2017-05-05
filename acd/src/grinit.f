@@ -13,7 +13,7 @@
       use calcom_mod
       implicit none
 C----------
-C  **GRINIT--NE   DATE OF LAST REVISION:  02/08/13
+C NE $Id$
 C----------
 C
 C  INITIALIZE PROGNOSIS MODEL VARIABLES
@@ -24,6 +24,10 @@ C
 C
       INCLUDE 'CWDCOM.F77'
 C
+      INCLUDE 'TWIGCOM.F77'
+C
+C
+COMMONS
 C----------
       INTEGER I,J,K
       CHARACTER*26 DBLK
@@ -81,6 +85,7 @@ C----------
       SIZCAP(I,3) = 0.
       SIZCAP(I,4) = 999.
       JSPIN(I)=3
+      LEAVESP(I)=.FALSE.
     5 CONTINUE
       LFLAGV = .FALSE.
       LBAMAX = .FALSE.
@@ -276,6 +281,10 @@ C----------
       SITETR(I,J)=0.
    74 CONTINUE
    75 CONTINUE
+C
+      DO J=1,50
+      BAU(J) = 0.0
+      ENDDO
 C
       RETURN
       END

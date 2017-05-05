@@ -3,7 +3,8 @@
       use prgprm_mod
       implicit none
 C----------
-C  **BWEIN                  DATE OF LAST REVISION:  10/21/13
+C  $Id: bwein.f 1842 2016-06-30 22:20:31Z ldavid $
+C  **BWEIN                  DATE OF LAST REVISION:  03/23/17
 C----------
 C
 C     OPTION PROCESSOR FOR BUDWORM MODEL.
@@ -132,9 +133,12 @@ C    29-MAY-2009 Lance R. David (FMSC)
 C       Added character variable TMPNAM. Prepended keyword file name
 C       to output file names at BWOUTPUT keyword processing.
 C    14-JUL-2010 Lance R. David (FMSC)
+C       Added IMPLICIT NONE and declared variables as needed.
 C    04-SEP-2013 Lance R. David (FMSC)
 C       Added RAWS weather year range as supplemental record on
 C       WEATHER keyword.
+C    23-MAR-2013 Lance R. David (FMSC)
+C       Modified DEFOL and SETPRBIO to process numeric and alpha specie codes.
 C----------
 C
       INCLUDE 'BWESTD.F77'
@@ -149,16 +153,16 @@ C
       CHARACTER*3 TREESP(5)
       CHARACTER*8 KEYWRD
       CHARACTER*7 CSTAT
-      CHARACTER*10 KARD(8)
+      CHARACTER*10 KARD(7)
       CHARACTER*6 STAGE(3)
       CHARACTER*20 WSTEA
       CHARACTER*25 CWTYP
       CHARACTER*40 STR40
       CHARACTER*80 RECORD
 
-      INTEGER  I, IACTK, IBWCHK, ICOUNT, IDT, IEND, IM, IOB, IOS,
-     &         IP, IS, ISKIP, ISTAGE, ISTART , ISTLNB, IUNIT, IYEAR,
-     &         IZNUL, J, K, KODE, N, NCOUNT, NE, NSKIP, NUMBR
+      INTEGER  I, IACTK, IBWCHK, IDT, IEND, IM, IOB,
+     &         IP, IS, ISKIP, ISTAGE, ISTART , ISTLNB, IUNIT,
+     &         IZNUL, J, K, KODE, N, NEN, NSKIP, NUMBR
 
       REAL ARRAY(7), RECNT, X
 
@@ -376,7 +380,7 @@ C
          IZNUL=1
          CFOUR='NULL'
       ENDIF
-      IS=ARRAY(3)+1
+      IS=INT(ARRAY(3))+1
       IF (IS.GE.0.OR.IS.LE.3) GOTO 320
       CALL BWEERR(IREAD,IRECNT,JOSTND,ICCODE,.TRUE.,4)
       GOTO 10
@@ -389,7 +393,7 @@ C
          CSTAT='FRESH'
       ENDIF
       IM=80
-      IF (ARRAY(4).GT.0) IM=ARRAY(4)
+      IF (ARRAY(4).GT.0) IM=INT(ARRAY(4))
 C
 C     CALL MYOPEN TO OPEN THE FILE.  MACHINE SPECIFIC CODE IS IN MYOPEN
 C
@@ -411,7 +415,7 @@ C
       IF (ARRAY(1).LE.0.0) THEN
          CALL BWEERR(IREAD,IRECNT,JOSTND,ICCODE,.TRUE.,4)
       ELSE
-         I=ARRAY(1)
+         I=INT(ARRAY(1))
          IF (LKECHO) WRITE(JOSTND,420) KEYWRD,I
   420    FORMAT (/,A8,'   DATA SET REFERENCE NUMBER = ',I5)
          CLOSE (UNIT=I)
@@ -497,22 +501,40 @@ C--------------------- OPTION NUMBER 9 -- DEFOL
 C
 C     THE DEFOL KEYWORD SCHEDULES MANUAL DEFOLIATION IN THE LINKED
 C     VERSION OF THE BUDWORM MODEL.
-C
+C     SPECIES IS DECODED AND SET TO APPROPIATE FVS SPECIES NUMBERIC CODE
+C     BLANK DEFOLIATION FIELDS ARE SET TO ZERO.
   900 CONTINUE
       LDEFOL=.TRUE.
       IACTK=2151
       X=0.
       IDT=1
       IF (LNOTBK(1)) IDT=IFIX(ARRAY(1))
-      IF (INT(ARRAY(2)).GT.MAXSP) ARRAY(2)=0.0
+
+      CALL SPDECD (2,IS,JSP,JOSTND,IRECNT,KEYWRD,
+     &             ARRAY,KARD)
+      IF (IS .EQ. -999 .OR. IS .EQ. 0) THEN
+         ARRAY(2) = 0.0
+      ELSE
+        IF (IBWSPM(IS) .EQ. 7) THEN
+C         NON-HOST SPECIES SPECIFIED
+          IF (LKECHO) WRITE(JOSTND,905) KEYWRD,IDT,JSP(IS)
+  905     FORMAT (/,A8,'   DATE/CYCLE=',I5,'; SPECIES= ',A4,
+     >        '; NON-HOST - NOT SCHEDULED.')
+          GOTO 10
+        ELSE
+          ARRAY(2)=IS
+        ENDIF
+      ENDIF
+
       IF (ARRAY(3).GT.15.) ARRAY(3)=0.0
       DO 910 I=4,7
       IF (.NOT.LNOTBK(I)) ARRAY(I)=X
   910 CONTINUE
       CALL OPNEW (KODE,IDT,IACTK,6,ARRAY(2))
       IF (KODE.GT.0) GOTO 10
-      IF (LKECHO) WRITE(JOSTND,920) KEYWRD,IDT,(ARRAY(I),I=2,7)
-  920 FORMAT (/,A8,'   DATE/CYCLE=',I5,'; SPECIES=',F4.0,
+      IF (LKECHO) WRITE(JOSTND,920)
+     >   KEYWRD,IDT,KARD(2)(1:4),(ARRAY(I),I=3,7)
+  920 FORMAT (/,A8,'   DATE/CYCLE=',I5,'; SPECIES= ',A4,
      >        '; CROWN CODE=',F3.0,'; NEW=',F7.2,'; 1-YR=',F7.2,
      >        '; 2-YR=',F7.2,'; REMAINING=',F7.2)
       GOTO 10
@@ -528,15 +550,31 @@ C
       X=1.0
       IDT=1
       IF (LNOTBK(1)) IDT=IFIX(ARRAY(1))
-      IF (INT(ARRAY(2)).GT.MAXSP) ARRAY(2)=0.0
+
+      CALL SPDECD (2,IS,JSP,JOSTND,IRECNT,KEYWRD,
+     &             ARRAY,KARD)
+      IF (IS .EQ. -999 .OR. IS .EQ. 0) THEN
+         ARRAY(2) = 0.0
+      ELSE
+        IF (IBWSPM(IS) .EQ. 7) THEN
+C         NON-HOST SPECIES SPECIFIED
+          IF (LKECHO) WRITE(JOSTND,1005) KEYWRD,IDT,JSP(IS)
+ 1005     FORMAT (/,A8,'   DATE/CYCLE=',I5,'; SPECIES= ',A4,
+     >        '; NON-HOST - NOT SCHEDULED.')
+          GOTO 10
+        ELSE
+          ARRAY(2)=IS
+        ENDIF
+      ENDIF
       IF (ARRAY(3).GT.15.) ARRAY(3)=0.0
       DO 1010 I=4,6
       IF (.NOT.LNOTBK(I)) ARRAY(I)=X
  1010 CONTINUE
       CALL OPNEW (KODE,IDT,IACTK,5,ARRAY(2))
       IF (KODE.GT.0) GOTO 10
-      IF(LKECHO)WRITE(JOSTND,1020) KEYWRD,IDT,(ARRAY(I),I=2,6)
- 1020 FORMAT (/,A8,'   DATE/CYCLE=',I5,'; SPECIES=',F4.0,
+      IF (LKECHO) WRITE(JOSTND,1020) 
+     >   KEYWRD,IDT,KARD(2)(1:4),(ARRAY(I),I=3,6)
+ 1020 FORMAT (/,A8,'   DATE/CYCLE=',I5,'; SPECIES= ',A4,
      >        '; CROWN CODE=',F3.0,'; 1-YR=',F7.2,
      >        '; 2-YR=',F7.2,'; REMAINING=',F7.2)
       GOTO 10
@@ -758,21 +796,21 @@ C
 C -----------------------OPTION NUMBER 19 -- NEMULT
 C
  1900 CONTINUE
-      NE=-1
+      NEN=-1
       IF (LNOTBK(1)) THEN
-         NE=IFIX(ARRAY(1))
-         IF (LNOTBK(2)) NEMULT(NE,1)=ARRAY(2)
-         IF (LNOTBK(3)) NEMULT(NE,2)=ARRAY(3)
-         IF (LNOTBK(4)) NEMULT(NE,3)=ARRAY(4)
+         NEN=IFIX(ARRAY(1))
+         IF (LNOTBK(2)) NEMULT(NEN,1)=ARRAY(2)
+         IF (LNOTBK(3)) NEMULT(NEN,2)=ARRAY(3)
+         IF (LNOTBK(4)) NEMULT(NEN,3)=ARRAY(4)
       ENDIF
-      IF (NE.LT.1.OR.NE.GT.4) THEN
-         WRITE (JOSTND,1910) KEYWRD,NE
+      IF (NEN.LT.1 .OR. NEN.GT.4) THEN
+         WRITE (JOSTND,1910) KEYWRD,NEN
  1910    FORMAT (/,A8,'   NATURAL ENEMY KEYWORD CALLED -- ERROR! ',
-     >   'NE = ',I3)
+     >   'NEN = ',I3)
       ELSE
-         IF (LKECHO) WRITE(JOSTND,1920) KEYWRD,NE,
-     >              (NEMULT(NE,ISTAGE),ISTAGE=1,3)
- 1920    FORMAT (/,A8,'   NATURAL ENEMY KEYWORD; NE = ',I3,
+         IF (LKECHO) WRITE(JOSTND,1920) KEYWRD,NEN,
+     >              (NEMULT(NEN,ISTAGE),ISTAGE=1,3)
+ 1920    FORMAT (/,A8,'   NATURAL ENEMY KEYWORD; NEN = ',I3,
      >   '  MULTIPLIERS= ',3F7.2)
       ENDIF
       GOTO 10
