@@ -33,29 +33,51 @@ version_path = 'pyfvs/_version.py'
 def update_version():
     try:
         desc = subprocess.check_output(
-                ['git', 'describe', '--tags', '--dirty']
-                ).decode('utf-8').strip()
-
+                ['git', 'branch']
+                ).decode('utf-8').split()
+        branch = desc[1].strip()
+        
     except:
         print('Error: git must be available in the PATH environment.')
         raise
+    
+    if branch=='master':
+        try:
+            desc = subprocess.check_output(
+                    ['git', 'describe', '--tags', '--dirty']
+                    ).decode('utf-8').strip()
 
-    if desc.startswith('fatal'):
-        print('Current folder is not a Git repo, skipping version update.')
-        return
+        except:
+            print('Error: git must be available in the PATH environment.')
+            raise
 
-    m = re.match('pyfvs-v(\d+\.\d+\.\d+)-(alpha|beta)?-(.*)', desc)
-    if not m:
-        print('The current tag is not a version tag (pyfvs-v#.#.#): {}'.format(desc))
-        return
+        if desc.startswith('fatal'):
+            print('Current folder is not a Git repo, skipping version update.')
+            return
 
-    g = m.groups()
-    version = g[0]
-    if g[1] in ('alpha', 'beta'):
-        status = g[1]
+        m = re.match('pyfvs-v(\d+\.\d+\.\d+)-(alpha|beta)?-(.*)', desc)
+        if not m:
+            print('The current tag is not a version tag (pyfvs-v#.#.#): {}'.format(desc))
+            return
+
+        g = m.groups()
+        version = g[0]
+        if g[1] in ('alpha', 'beta'):
+            status = g[1]
+        else:
+            status = ''
+    
     else:
-        status = ''
-
+        fn = os.path.join(os.path.dirname(__file__), version_path)
+        with open(fn, 'r') as fp:
+            content = fp.read()
+        
+        s = re.search('__version__\s*=\s*\'([\d\.]+)\+*\'', content)
+        version = s.groups()[0]+'+'
+        s = re.search('__status__\s*=\s*\'(.*)\'', content)
+        status = s.groups()[0]
+        desc = ''
+        
     version_str = version_tmp.format(**locals())
 
     fn = os.path.join(os.path.dirname(__file__), version_path)

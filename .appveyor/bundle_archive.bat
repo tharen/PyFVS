@@ -11,7 +11,7 @@ cd Open-FVS\python
 call python setup.py version
 
 :: Create the wheel
-call python setup.py build_ext --inplace
+call python setup.py build_ext --inplace --compiler=mingw32
 call python setup.py bdist_wheel
 mv dist/*.whl %APPVEYOR_BUILD_FOLDER%
 
