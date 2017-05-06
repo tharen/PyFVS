@@ -771,6 +771,6 @@ C----------
       ENDIF
       RETURN
 C
-      ENTRY MORCON
-      RETURN
+C      ENTRY MORCON
+C      RETURN
       END

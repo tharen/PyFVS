@@ -1,21 +1,12 @@
       SUBROUTINE FVSSIERRALOG(VN,VM,VMAX,ISPC,D,H,BARK,LCONE,CTKFLG)
+      use prgprm_mod
+      use coeffs_mod
+      use contrl_mod
       IMPLICIT NONE
 C----------
 C VOLUME $Id$
 C----------
 C  This routine 
-
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
 C
       REAL VN,VM,VMAX,D,H,BARK,ALVN,BEHRE,STUMP
       REAL DMRCH,HTMRCH,S3,VOLM,VOLT

@@ -104,11 +104,21 @@ if ((os.name=='nt') and (sys.version_info[:2]>=(3, 5))
 _is_64bit = (getattr(sys, 'maxsize', None) or getattr(sys, 'maxint')) > 2 ** 32
 _is_windows = sys.platform == 'win32'
 
+if _is_windows and _is_64bit:
+    args = ['-static-libgcc', '-static-libstdc++','-Wl,--allow-multiple-definition']
+    defs = [('MS_WIN64', None), ]
+else:
+    args = []
+    defs = []
+
 # Collect all Cython source files as a list of extensions
 extensions = cythonize([
         Extension("pyfvs.*"
             , sources=["pyfvs/*.pyx"]
             , include_dirs=[numpy.get_include()]
+            , extra_compile_args=args
+            , extra_link_args=args
+            , define_macros=defs
             )])
 
 setup(

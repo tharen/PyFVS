@@ -1,4 +1,8 @@
       SUBROUTINE FVSBRUCEDEMARS(VN,VM,VMAX,D,H,ISPC,BARK,LCONE,CTKFLG)
+      use prgprm_mod
+      use arrays_mod
+      use coeffs_mod
+      use contrl_mod
       IMPLICIT NONE
 C----------
 C VOLUME $Id
@@ -6,21 +10,7 @@ C----------
 C  This routine calculates volumes for the AK variant using
 C  the Bruce and Demars method METHC = 8
 C  called from **FVSVOL
-COMMONS
 C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-C      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-
       REAL VMAX,BARK,H,D,BBFV,VM,VN,DBT,BBF,VVN,VOLT
       REAL DMRCH,HTMRCH,VOLM,S3,STUMP
       REAL BEHRE

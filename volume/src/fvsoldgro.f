@@ -1,4 +1,6 @@
       SUBROUTINE FVSOLDGRO(ISPC,VN,D,H,BBFV)
+      use prgprm_mod
+      use contrl_mod
       IMPLICIT NONE
 C----------
 C VOLUME $Id$
@@ -7,17 +9,6 @@ C   OLDGRO COMPUTES VOLUMES OF OLD GROWTH TREES WITH
 C   (D GT 35  OR H GT 190).   32-foot log rule.
 C
 C   FROM DON DEMARS --- PNW, JUNEAU AK
-C----------
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-COMMONS
 C----------
       LOGICAL DEBUG
       INTEGER ISPC,I,K,N,NN,KBD,NNN,JJ,NM,ICK,KB

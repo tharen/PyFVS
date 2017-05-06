@@ -1,4 +1,10 @@
         SUBROUTINE FVSVOL
+        use prgprm_mod
+        use arrays_mod
+        use coeffs_mod
+        use contrl_mod
+        use plot_mod
+        use volstd_mod
         IMPLICIT NONE
 C----------
 C VOLUME $Id$
@@ -10,26 +16,6 @@ C  EQUAL TO 5 (GEVORKIANTZ) OR 6. IT ALSO CONTAINS ENTRY POINTS
 C  AT THE END FOR OTHER VARIANT-SPECIFIC SPECIAL VOLUME
 C  CALCULATION METHODZ (METHB OR METHC = 8)
 C----------
-C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'ARRAYS.F77'
-C
-C
-      INCLUDE 'COEFFS.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
 C
       COMMON/FVSVOLCOM/IREGN,FORST,VOLEQ,MTOPP,MTOPS,PROD
 C

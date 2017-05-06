@@ -1,4 +1,10 @@
       SUBROUTINE FVSHANNBARE(VN,VM,VMAX,ISPC,D,H,CTKFLG)
+      use prgprm_mod
+      use arrays_mod
+      use coeffs_mod
+      use contrl_mod
+      use plot_mod
+      use volstd_mod
       IMPLICIT NONE
 C----------
 C VOLUME $Id$
@@ -10,19 +16,7 @@ C  called from **FVSVOL
 C
 COMMONS
 C
-      INCLUDE 'PRGPRM.F77'
-C
-C
-      INCLUDE 'PLOT.F77'
-C
-C
       INCLUDE 'GGCOM.F77'
-C
-C
-      INCLUDE 'CONTRL.F77'
-C
-C
-      INCLUDE 'VOLSTD.F77'
 C
 C  DECLARATIONS: NOTE THAT THIS IS A R2 VOLUME CALCULATION METHOD only SO
 C  THE MAXSP ELEMENT IN THE IEQMAP ARRAY IS HARD CODDED TO THe NUMBER

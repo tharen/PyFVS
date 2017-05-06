@@ -68,16 +68,18 @@ C     THE RANDOM NUMBER SEEDS, WHICH ARE EQUIVALENCED TO REAL ARRAYS
 C     OF LENGTH 2.
 C
       INTEGER MXL,MXR,MXI,IRECLN
-      PARAMETER (MXR=130,MXL=40,MXI=119,IRECLN=1024)
+      PARAMETER (MXR=131,MXL=40,MXI=120,IRECLN=1024)
       INTEGER ILIMIT,IPNT,K,I,II
       INTEGER INTS(MXI)
       LOGICAL LOGICS(MXL),LCVGO,LMORED,LRR1,LRR2,LFM,LBWE,LCLM,LWRD,LZ
       REAL REALS(MXR), ROSUM(20,MAXCY1),
      >          RSEED(2), ESSEED(2), RDTREE(MAXTRE),
      >          SVSED0(2),SVSED1(2)
-      EQUIVALENCE (ROSUM,IOSUM),(RSEED,S0),(ESSEED,ESS0),(WK6,REALS),
-     >            (WK6,LOGICS),(WK6,INTS),(IDTREE,RDTREE),
-     >            (SVSED0,SVS0),(SVSED1,SVS1)
+! NOTE: EQUIVALENCE'd arrays are now transfer'd directly
+! FIXME: REALS, LOGICS, INTS is not handled
+!      EQUIVALENCE (ROSUM,IOSUM),(RSEED,S0),(ESSEED,ESS0),(WK6,REALS),
+!     >            (WK6,LOGICS),(WK6,INTS),(IDTREE,RDTREE),
+!     >            (SVSED0,SVS0),(SVSED1,SVS1)
 C
       if (itable(2) .eq. 0) then
         itable(2) = 1
@@ -202,12 +204,12 @@ C
       INTS(113) =   JSPINDEF
       INTS(114) =   KOLIST
       CALL GETNRPTS(I)
-      INTS(115) = I
-      INTS(116) = IGFOR
-      INTS(117) = NPTGRP
+      INTS(115) =   I
+      INTS(116) =   IGFOR
+      INTS(117) =   NPTGRP
       INTS(118) =   MAXTOP      ! DBSTK common
       INTS(119) =   MAXLEN      ! DBSTK common
-      INTS(120)	=		GLOCCC
+      INTS(120)	=   GLOCCC
 C
 C     BEGIN THE WRITE TO THE DIRECT ACCESS DATA FILE, AND WRITE THE
 C     INTEGER SCALARS.
@@ -576,6 +578,7 @@ C
       CALL BFWRIT (WK3,IPNT,ILIMIT,DGIO,   6,         2)
       CALL BFWRIT (WK3,IPNT,ILIMIT,DIFH,   MAXSP,     2)
       CALL BFWRIT (WK3,IPNT,ILIMIT,ESB1,   MAXPLT,    2)
+      esseed = transfer(ess0,esseed)
       CALL BFWRIT (WK3,IPNT,ILIMIT,ESSEED, 2,         2)
       CALL BFWRIT (WK3,IPNT,ILIMIT,FL,     MAXSP,     2)
       CALL BFWRIT (WK3,IPNT,ILIMIT,FM,     MAXSP,     2)
@@ -658,9 +661,11 @@ C
       CALL BFWRIT (WK3,IPNT,ILIMIT,RELDSP, MAXSP,     2)
       CALL BFWRIT (WK3,IPNT,ILIMIT,RHCON,  MAXSP,     2)
       K=ICYC+1
+      rosum(1,:) = transfer(iosum(1,:),rosum(1,:))
       DO 20 I=1,K
       CALL BFWRIT (WK3,IPNT,ILIMIT,ROSUM(1,I),20,     2)
    20 CONTINUE
+      rseed = transfer(s0,rseed)
       CALL BFWRIT (WK3,IPNT,ILIMIT,RSEED,   2,        2)
       CALL BFWRIT (WK3,IPNT,ILIMIT,SDIDEF, MAXSP,     2)
       CALL BFWRIT (WK3,IPNT,ILIMIT,SIGMA,  MAXSP,     2)
@@ -694,7 +699,9 @@ C
       CALL BFWRIT (WK3,IPNT,ILIMIT,XRHMLT, MAXSP,     2)
       CALL BFWRIT (WK3,IPNT,ILIMIT,ZRAND,  ITRN,      2)
 C
+      svsed0 = transfer(svs0,svsed0)
       CALL BFWRIT (WK3,IPNT,ILIMIT,SVSED0, 2,         2)
+      svsed1 = transfer(svs1,svsed1)
       CALL BFWRIT (WK3,IPNT,ILIMIT,SVSED1, 2,         2)
       CALL BFWRIT (WK3,IPNT,ILIMIT,CRNDIA, NDEAD,     2)
       CALL BFWRIT (WK3,IPNT,ILIMIT,CRNRTO, NDEAD,     2)
