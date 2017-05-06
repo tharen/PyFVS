@@ -8,11 +8,10 @@ REM ) else (
     REM set win32=Yes
 REM )
 
-set MINGW_PATH=C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64
 set win32=No
 
-set PATH=%MINICONDA%;%MINICONDA%\Scripts
-set PATH=%PATH%;%MINGW_PATH%\bin;C:\Program Files (x86)\cmake\bin
+set PATH=%MINGW_PATH%\bin;%MINICONDA%;%MINICONDA%\Scripts
+set PATH=%PATH%;C:\Program Files (x86)\cmake\bin
 set PATH=%PATH%;C:\Windows\System32;C:\Windows
 echo %PATH%
 echo %PYTHONPATH%

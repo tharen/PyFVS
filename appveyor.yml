@@ -2,6 +2,8 @@
 
 environment:
   global:
+    MINGW_PATH: "C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1\mingw64"
+    
     # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
     # /E:ON and /V:ON options are not enabled in the batch script intepreter
     # See: http://stackoverflow.com/a/13751649/163740
@@ -41,7 +43,8 @@ install:
     - ps: Update-AppveyorBuild -Version "$env:pkg_version-$env:APPVEYOR_BUILD_NUMBER"
     
     # Setup the python environment and install required packages
-    - set PATH=%MINICONDA%;%MINICONDA%\\Scripts;%PATH%
+    - set PATH=%MINICONDA%;%MINICONDA%\Scripts;%PATH%
+    - set PATH=%MINGW_PATH%\bin;%PATH%
     - conda config --set always_yes yes --set changeps1 no
     - conda update -q conda
     # Edit the environment.yml file for the target Python version
