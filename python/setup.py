@@ -73,7 +73,7 @@ def update_version():
             content = fp.read()
         
         s = re.search('__version__\s*=\s*\'([\d\.]+)\+*\'', content)
-        version = s.groups()[0]+'+'
+        version = s.groups()[0]
         s = re.search('__status__\s*=\s*\'(.*)\'', content)
         status = s.groups()[0]
         desc = ''
@@ -113,8 +113,8 @@ class Version(Command):
 if ((os.name == 'nt') and (sys.version_info[:2] >= (3, 5))
         and (numpy.version.version <= '1.13')):
     # Monkey patch numpy for MinGW until version 1.13 is mainstream
-    # This is fixes the of building extensions with Python 3.5+ resultinging
-    #       the error message `ValueError: Unknown MS Compiler version 1900`
+    # This fixes building extensions with Python 3.5+ resulting in
+    #       the error message `ValueError: Unknown MS Compiler version 1900
     # numpy_fix uses the patch referenced here:
     #       https://github.com/numpy/numpy/pull/8355
     root = os.path.split(__file__)[0]
