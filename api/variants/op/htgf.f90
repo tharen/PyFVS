@@ -1,17 +1,17 @@
       SUBROUTINE HTGF
       use findage_mod, only: findag
 
-      use htcal_mod
-      use plot_mod
+      use prgprm_mod
       use arrays_mod
-      use contrl_mod
       use coeffs_mod
+      use contrl_mod
       use outcom_mod
+      use plot_mod
+      use multcm_mod
+      use htcal_mod
       use pden_mod
       use varcom_mod
-      use prgprm_mod
       use organon_mod
-      use multcm_mod
       implicit none
 !----------
 !  **HTGF--OP    DATE OF LAST REVISION:  06/17/15

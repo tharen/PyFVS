@@ -5,7 +5,6 @@ module plot_mod
 !----------
 ! COMMON $ID$
 !----------
-!xxf2py character, intent(c) :: jsp(4,maxsp)
       CHARACTER*4 MGMID,JSP(MAXSP),NSP(MAXSP,3),FIAJSP(MAXSP)
       CHARACTER*10 CPVREF
       CHARACTER*6 PLNJSP(MAXSP)

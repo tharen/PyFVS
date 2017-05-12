@@ -1,5 +1,4 @@
       SUBROUTINE PRTRLS (IWHO)
-
       use prgprm_mod
       use arrays_mod
       use contrl_mod
@@ -7,10 +6,9 @@
       use estree_mod
       use varcom_mod
       use workcm_mod
-
-      IMPLICIT NONE
+      implicit none
 !----------
-!  $Id: prtrls.f 968 2013-07-12 18:49:16Z rhavis@msn.com $
+!  $Id:$
 !----------
 !
 !     PRINT THE TREE LIST.

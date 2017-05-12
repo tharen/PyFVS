@@ -1,17 +1,17 @@
       SUBROUTINE REGENT(LESTB,ITRNIN)
-      use findage_mod
-      use htcal_mod
-      use multcm_mod
-      use pden_mod
+	  use findage_mod
+      use prgprm_mod
       use arrays_mod
       use calcom_mod
-      use contrl_mod
       use coeffs_mod
-      use estcor_mod
+      use contrl_mod
       use outcom_mod
       use plot_mod
+      use htcal_mod
+      use multcm_mod
+      use estcor_mod
+      use pden_mod
       use varcom_mod
-      use prgprm_mod
       implicit none
 !----------
 !  **REGENT--SO   DATE OF LAST REVISION:  01/13/12

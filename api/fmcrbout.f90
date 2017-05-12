@@ -9,8 +9,7 @@
       use fmcom_mod
       use fmfcom_mod
       use metric_mod
-
-      IMPLICIT NONE
+      implicit none
 !----------
 !  $Id: fmcrbout.f 709 2013-03-19 22:06:06Z drobinsonessa@gmail.com $
 !----------

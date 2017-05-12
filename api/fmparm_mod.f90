@@ -1,9 +1,9 @@
 module fmparm_mod
     use prgprm_mod, only: maxtre,maxsp,maxcy1
     implicit none
-!ODE SEGMENT FMPARM
+!CODE SEGMENT FMPARM
 !----------
-!  $Id: FMPARM.F77 767 2013-04-10 22:29:22Z rhavis@msn.com $
+!  $Id$
 !----------
 !  **FMPARM FIRE
 !----------

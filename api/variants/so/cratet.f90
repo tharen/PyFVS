@@ -1,14 +1,14 @@
       SUBROUTINE CRATET
       use findage_mod, only: findag
       
-      use htcal_mod
-      use plot_mod
-      use arrays_mod
-      use contrl_mod
-      use coeffs_mod
-      use outcom_mod
-      use varcom_mod
       use prgprm_mod
+      use arrays_mod
+      use plot_mod
+      use coeffs_mod
+      use contrl_mod
+      use outcom_mod
+	  use htcal_mod
+      use varcom_mod
       implicit none
 !----------
 !  **CRATET--SO   DATE OF LAST REVISION:  04/18/11

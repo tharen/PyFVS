@@ -1,9 +1,9 @@
       SUBROUTINE SITSET
+      use prgprm_mod
       use contrl_mod
-      use volstd_mod
       use plot_mod
       use varcom_mod
-      use prgprm_mod
+      use volstd_mod
       use organon_mod
       implicit none
 !----------

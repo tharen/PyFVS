@@ -1,11 +1,11 @@
       SUBROUTINE SITSET
+      use prgprm_mod
       use contrl_mod
-      use volstd_mod
       use plot_mod
       use varcom_mod
-      use prgprm_mod
+      use volstd_mod
       implicit none
-!C----------
+!----------
 !  **SITSET--SO   DATE OF LAST REVISION:  08/20/15
 !----------
 ! THIS SUBROUTINE LOADS THE SITEAR ARRAY WITH A SITE INDEX FOR EACH

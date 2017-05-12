@@ -1,14 +1,13 @@
       SUBROUTINE CRATET
       use findage_mod, only: findag
-
-      use htcal_mod
-      use plot_mod
-      use arrays_mod
-      use contrl_mod
-      use coeffs_mod
-      use outcom_mod
-      use varcom_mod
       use prgprm_mod
+      use arrays_mod
+      use plot_mod
+      use coeffs_mod
+      use contrl_mod
+      use outcom_mod
+      use htcal_mod
+      use varcom_mod
       use organon_mod
       implicit none
 !----------
@@ -824,11 +823,10 @@
  9007 FORMAT(/,'NUMBER OF RECORDS WITH BROKEN OR DEAD TOPS', &
              ((T49,11(I4,2X)/)))
       DO 160 I=1,MAXSP
-      IPTR=IREF(I)
       KNT(I)=0
-      KNT2(IPTR)=KNTOCR(I)
+      KNT2(I)=KNTOCR(I)
       IF(DEBUG)WRITE(JOSTND,*)' I,IPTR,KNTOCR,KNT2= ', &
-       I,IPTR,KNTOCR(I),KNT2(IPTR)
+       I,IPTR,KNTOCR(I),KNT2(I)
   160 CONTINUE
 !----------
 !  CHECK FOR MISSING CROWNS ON LIVE TREES.

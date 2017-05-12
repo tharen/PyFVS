@@ -5,9 +5,9 @@
       use contrl_mod
       use outcom_mod
 
-      IMPLICIT NONE
+      implicit none
 !----------
-!  $Id: comcup.f 767 2013-04-10 22:29:22Z rhavis@msn.com $
+!  $Id$
 !----------
 !
 !     INTERFACE ROUTINE TO COUPLE THE COMPRESSION ROUTINE TO
