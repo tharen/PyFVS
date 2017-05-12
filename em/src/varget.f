@@ -1,5 +1,6 @@
       SUBROUTINE VARGET (WK3,IPNT,ILIMIT,REALS,LOGICS,INTS)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C EM $Id$
 C----------
@@ -8,10 +9,6 @@ C     READ THE VARIANT SPECIFIC VARIABLES.
 C
 C     PART OF THE PARALLEL PROCESSING EXTENSION TO PROGNOSIS.
 C
-COMMONS
-C
-C
-      INCLUDE 'PRGPRM.F77'
       INCLUDE 'EMCOM.F77'
 C
 C
@@ -43,12 +40,11 @@ C**   CALL BFREAD (WK3, IPNT, ILIMIT, REALS, MXR, 2)
       END
 
       SUBROUTINE VARCHGET (CBUFF, IPNT, LNCBUF)
-      IMPLICIT NONE
+      use prgprm_mod
+      implicit none
 C----------
 C     Get variant-specific character data
 C----------
-
-      INCLUDE 'PRGPRM.F77'
 
       INTEGER LNCBUF
       CHARACTER CBUFF(LNCBUF)

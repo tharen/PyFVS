@@ -2,7 +2,7 @@
       use prgprm_mod
       use coeffs_mod
       use contrl_mod
-      IMPLICIT NONE
+      implicit none
 C----------
 C VOLUME $Id$
 C----------

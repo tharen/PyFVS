@@ -19,6 +19,8 @@ C
 
       INTEGER I
 
+	  ! Initialize the common data
+      ! TODO: Move this to module initialization
       call svblkd()
 
       JSVOUT   =   0

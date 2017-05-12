@@ -1,10 +1,10 @@
       SUBROUTINE ESINIT
-      use esparm_mod
       use prgprm_mod
-      use escomn_mod
-      use esrncm_mod
-      use eshap_mod
       use contrl_mod, only : kwdfil
+      use esparm_mod
+      use escomn_mod
+      use eshap_mod
+      use esrncm_mod
       implicit none
 C----------
 C   **ESINIT DATE OF LAST REVISION:   01/06/09

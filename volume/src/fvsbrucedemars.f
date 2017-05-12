@@ -1,9 +1,8 @@
       SUBROUTINE FVSBRUCEDEMARS(VN,VM,VMAX,D,H,ISPC,BARK,LCONE,CTKFLG)
       use prgprm_mod
-      use arrays_mod
       use coeffs_mod
       use contrl_mod
-      IMPLICIT NONE
+      implicit none
 C----------
 C VOLUME $Id
 C----------

@@ -1,16 +1,16 @@
       SUBROUTINE REGENT(LESTB,ITRNIN)
-      use htcal_mod
-      use multcm_mod
-      use pden_mod
+      use prgprm_mod
       use arrays_mod
-      use contrl_mod
+      use calcom_mod
       use coeffs_mod
+      use contrl_mod
       use outcom_mod
       use plot_mod
-      use varcom_mod
-      use prgprm_mod
-      use calcom_mod
+      use htcal_mod
+      use multcm_mod
       use estcor_mod
+      use pden_mod
+      use varcom_mod
       implicit none
 C----------
 C  **REGENT--WC   DATE OF LAST REVISION:  02/08/13
@@ -186,7 +186,6 @@ C----------
       BARK=BRATIO(ISPC,D,H)
       IF(LSKIPH) THEN
         HTG(K)=0.0
-        DGR=0.0
         GO TO 4
       ENDIF
 C----------

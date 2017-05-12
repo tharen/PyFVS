@@ -136,7 +136,7 @@ if (CMAKE_COMPILER_IS_GNUCC OR APPLE)
 
     # CMAKE_BUILD_TYPE = Debug
     set(debug_flags "-g3 -mfpmath=sse -msse")
-    set(CMAKE_Fortran_FLAGS_DEBUG "${debug_flags} -ffpe-trap=invalid,zero,overflow,underflow")
+    set(CMAKE_Fortran_FLAGS_DEBUG "${debug_flags} -fbacktrace -ffpe-trap=invalid,zero,overflow,underflow")
     set(CMAKE_CXX_FLAGS_DEBUG "${debug_flags}")
     set(CMAKE_C_FLAGS_DEBUG "${debug_flags}")
 

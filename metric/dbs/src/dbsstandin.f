@@ -6,6 +6,7 @@
       use contrl_mod
       use coeffs_mod
       use econ_mod
+      use keycom_mod
       use outcom_mod
       use volstd_mod
       use prgprm_mod
@@ -22,7 +23,6 @@ C     OVERHAUL: NL CROOKTON -- RMRS MOSCOW -- SEPTEMBER 2004
 C---
 COMMONS
 
-      INCLUDE  'KEYCOM.F77'
       INCLUDE  'DBSCOM.F77'
 COMMONS
       CHARACTER*100 ColName

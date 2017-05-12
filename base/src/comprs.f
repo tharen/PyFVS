@@ -76,6 +76,8 @@ C
       DOUBLE PRECISION RMEANS(NRANK),STDDEV(NRANK),VARS(NRANK),
      >                 OBSERV(NRANK)
       LOGICAL LDEBG,LTRNK,L2,LTWO
+! FIXME: equivalence should be replaced with transfer, or similar
+!      EQUIVALENCE (OBSERV,WK6)
       INTEGER*4 IDCMP2
       DATA RNGMIN/0.00001/,ALGTOL/0.066/
       DATA IDCMP2/20000000/

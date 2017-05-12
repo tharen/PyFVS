@@ -8,6 +8,7 @@
       use coeffs_mod
       use econ_mod
       use plot_mod
+      use keycom_mod
       use screen_mod
       use escomn_mod
       use varcom_mod
@@ -20,8 +21,6 @@ C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
 C
       INCLUDE 'GGCOM.F77'
-C
-      INCLUDE 'KEYCOM.F77'
 C
 C----------
       INTEGER I,J

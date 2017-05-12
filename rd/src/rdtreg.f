@@ -75,6 +75,7 @@ C.... See if we need to do some debug.
 
       IF (DEBUG) WRITE (JOSTND,*) 'ENTER RDTREG'
 
+      IF (IROOT .EQ. 0) GOTO 300
       DO 10 IDI=1,ITOTRR
          DIFF(IDI) = 0.0
    10 CONTINUE

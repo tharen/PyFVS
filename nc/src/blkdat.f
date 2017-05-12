@@ -1,25 +1,24 @@
       BLOCK DATA BLKDAT
-      use htcal_mod
-      use fvsstdcm_mod
-      use pden_mod
-      use esparm_mod
-      use rancom_mod
-      use contrl_mod
-      use coeffs_mod
-      use econ_mod
-      use plot_mod
-      use screen_mod
-      use escomn_mod
-      use varcom_mod
       use prgprm_mod
+      use coeffs_mod
+      use contrl_mod
+      use econ_mod
+      use esparm_mod
+      use escomn_mod
+      use htcal_mod
+      use keycom_mod
+      use pden_mod
+      use plot_mod
+      use rancom_mod
+      use screen_mod
+      use varcom_mod
+      use fvsstdcm_mod
       implicit none
 C----------
 C  **BLKDAT--NC   DATE OF LAST REVISION:  04/19/10
 C----------
 C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
-C
-      INCLUDE 'KEYCOM.F77'
 C
 C----------
       INTEGER I,J

@@ -1,6 +1,6 @@
       SUBROUTINE HTCALC(JFOR,SINDX,ISPC,AG,HGUESS,JOSTND,DEBUG)
-      use varcom_mod
       use prgprm_mod
+      use varcom_mod
       implicit none
 
 !f2py intent(in) :: jfor,sindx,ispc,ag

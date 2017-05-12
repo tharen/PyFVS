@@ -34,7 +34,8 @@ C----------
 C----------
 C  VARIABLE INITIALIZATIONS.
 C----------
-
+      ! Initialize the common data
+      ! TODO: Move this to module initialization
       call fmcblk()
 
       HARVYR = 0

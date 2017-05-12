@@ -1,7 +1,7 @@
       SUBROUTINE FVSOLDGRO(ISPC,VN,D,H,BBFV)
       use prgprm_mod
       use contrl_mod
-      IMPLICIT NONE
+      implicit none
 C----------
 C VOLUME $Id$
 C----------
@@ -201,7 +201,7 @@ C----------
 C
 C
       FUNCTION PROF1(R,D,H)
-      IMPLICIT NONE
+      implicit none
 C----------
 C  **PROF1--AK    DATE OF LAST REVISION:  02/14/08
 C----------

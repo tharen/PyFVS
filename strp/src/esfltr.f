@@ -1,12 +1,12 @@
       SUBROUTINE ESFLTR
-      use plot_mod
+      use prgprm_mod
       use arrays_mod
+      use contrl_mod
+      use plot_mod
       use esparm_mod
       use estree_mod
-      use contrl_mod
       use eshap_mod
       use pden_mod
-      use prgprm_mod
       implicit none
 C----------
 C  **ESFLTR DATE OF LAST REVISION:  09/17/08
@@ -23,6 +23,8 @@ C
       INTEGER I,N,KODE,NPS,IDT,IFLAG,IBGIN,NNN,III,IS,KT,IHOLD
       REAL HEIGHT,CHEK,ZPROB,D,PIX
       INTEGER NUM,J,IDENT
+! FIXME: Check equivalence
+!      EQUIVALENCE (WK5,IDENWK),(WK6,IPLOT)
       DO 10 I=1,MAXPLT
       BAAINV(I)=0.0
    10 CONTINUE

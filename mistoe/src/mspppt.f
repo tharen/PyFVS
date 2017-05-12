@@ -143,7 +143,7 @@ C.... Note that MISCYC, PRFMST, PMCSP, and DGPDMR are 2-d arrays.
 
       SUBROUTINE MSCHPUT (CBUFF, IPNT, LNCBUF)
       use prgprm_mod
-      IMPLICIT NONE
+      implicit none
 C----------
 C  **MSCHPUT--MS  DATE OF LAST REVISION:  07/10/15
 C----------

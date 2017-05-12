@@ -744,7 +744,7 @@ C       CALIFORNIA SETTING; OTHERWISE THE DEFAULT OREGON
 C       RATE WILL BE USED
 
         IF ((KODFOR .GE. 500 .AND. KODFOR .LT. 600)
-     >    .OR. KODFOR .GE. 700) THEN
+     >    .OR. KODFOR .EQ. 701) THEN
           DKRT(1,1) = 0.025   ! < 0.25" - California
           DKRT(2,1) = 0.025   ! 0.25 - 1"
           DKRT(3,1) = 0.025   ! 1 - 3"

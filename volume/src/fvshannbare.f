@@ -1,11 +1,9 @@
       SUBROUTINE FVSHANNBARE(VN,VM,VMAX,ISPC,D,H,CTKFLG)
       use prgprm_mod
-      use arrays_mod
-      use coeffs_mod
-      use contrl_mod
       use plot_mod
+      use contrl_mod
       use volstd_mod
-      IMPLICIT NONE
+      implicit none
 C----------
 C VOLUME $Id$
 C----------

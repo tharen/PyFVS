@@ -21,6 +21,8 @@ C
       INTEGER NP,I,II,IP,N
       REAL XBALT
       INTEGER IPNDX(MAXPLT)
+! FIXME: Check equivalence      
+!      EQUIVALENCE (WK6,IPNDX)
 C
       LOGICAL DEBUG
 C-----------

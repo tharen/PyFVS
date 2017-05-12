@@ -92,7 +92,7 @@ module findage_mod
       IF(ISPC.EQ.24)THEN
         SITAGE = (H*2.54*12.0/26.9825)**(1.0/1.1752)
         SITHT = H
-        GO TO 30
+
 !----------
 !  WESTERN JUNIPER
 !  WHITEBARK PINE
@@ -100,11 +100,9 @@ module findage_mod
       ELSEIF(ISPC.EQ.11 .OR. ISPC.EQ.16) THEN
         SITAGE = 0.
         SITHT = H
-        GO TO 30
-      ENDIF
 
       ! If fast age flag is set call the binary search routine
-      if (fast_age_search) then
+      elseif (fast_age_search) then
           call guess_age(sindx,ispc,h,sitht,sitage)
           
       else
