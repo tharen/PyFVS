@@ -20,5 +20,5 @@ call pyfvs --run-tests
 call pytest -rsx --pyargs pyfvs.test
 
 :: Test examples
-call python %APPVEYOR_BUILD_FOLDER%\python\pyfvs\examples\demo.py
-call python %APPVEYOR_BUILD_FOLDER%\python\pyfvs\examples\pn_test.py
+call pytest %APPVEYOR_BUILD_FOLDER%\python\pyfvs\examples\demo.py
+call pytest %APPVEYOR_BUILD_FOLDER%\python\pyfvs\examples\pn_test.py
