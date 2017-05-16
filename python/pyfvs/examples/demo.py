@@ -5,6 +5,7 @@ Demonstrate basic usage of the PyFVS extension.
 Author: Tod Haren, tod.haren <at> gm....com
 """
 
+import os
 import matplotlib.pyplot as pyplot
 
 # import the fvs module
@@ -14,10 +15,11 @@ def main():
 
     # Initialize FVS for the required variant
     fvs = pyfvs.fvs.FVS(variant='pn')
-
+    kwds = os.path.join(os.path.split(__file__)[0], 'demo.key')
+    
     # Execute a basic FVS run
     # execute_projection is a helper method of the FVS class.
-    fvs.execute_projection('./demo.key')
+    fvs.execute_projection(kwds)
 
     # Plot the projected merchantable volume
     age = fvs.get_summary('age')
