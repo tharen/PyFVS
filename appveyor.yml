@@ -71,6 +71,7 @@ on_failure:
     
 test_script:
     # Run tests against the final package
+    - conda install matplotlib
     - call "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\run_tests.bat"
 
 artifacts:
