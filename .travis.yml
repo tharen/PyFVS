@@ -61,6 +61,8 @@ script:
   - pip install --no-index --find-links ${TRAVIS_BUILD_DIR}/artifacts pyfvs
   - pyfvs --run-tests
   - pytest -rsx --pyargs pyfvs.test
+  - python ${TRAVIS_BUILD_DIR}/python/pyfvs/examples/demo.py
+  - python ${TRAVIS_BUILD_DIR}/python/pyfvs/examples/pn_test.py
 
 after_failure:
   # Push error logs to the console output
