@@ -17,9 +17,6 @@ git:
   
 addons:
   apt:
-    sources:
-    - george-edison55-precise-backports
-    - kubuntu-backports
     packages:
     - cmake
     - gfortran
@@ -58,11 +55,12 @@ script:
   - source ${TRAVIS_BUILD_DIR}/.travis-ci/build.sh
   
   # Test the wheel
+  - conda install matplotlib
   - pip install --no-index --find-links ${TRAVIS_BUILD_DIR}/artifacts pyfvs
   - pyfvs --run-tests
   - pytest -rsx --pyargs pyfvs.test
-  - python ${TRAVIS_BUILD_DIR}/python/pyfvs/examples/demo.py
-  - python ${TRAVIS_BUILD_DIR}/python/pyfvs/examples/pn_test.py
+  - pytest ${TRAVIS_BUILD_DIR}/python/pyfvs/examples/demo.py
+  - pytest ${TRAVIS_BUILD_DIR}/python/pyfvs/examples/pn_test.py
 
 after_failure:
   # Push error logs to the console output
