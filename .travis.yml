@@ -1,3 +1,11 @@
+sudo: false
+cache:
+    apt: true
+    directories:
+    - $HOME/.cache/pip
+    - $HOME/miniconda
+    - $HOME/download
+
 language: python
 python:
   - '2.7'
@@ -11,29 +19,26 @@ env:
     - BUILD_ROOT=${TRAVIS_BUILD_DIR}/bin/build
     # - FVS_VARIANTS="pnc;wcc"
     - FVS_VARIANTS="pnc;wcc;soc;cac;ecc;oc;op"
+    - MPLBACKEND="agg"
 
 git:
   depth: 5
   
 addons:
   apt:
+    sources:
+    - george-edison55-precise-backports
+
     packages:
     - cmake
+    - cmake-data
     - gfortran
     - unixodbc
     - unixodbc-dev
     - p7zip-full
 
 before_install:
-  # Use miniconda in travis-ci http://conda.pydata.org/docs/travis.html
-  # We do this conditionally because it saves us some downloading if the
-  # version is the same.
-  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
-      wget https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh;
-    else
-      wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
-    fi
-  - bash miniconda.sh -b -p $HOME/miniconda
+  - source .travis-ci/install_miniconda.sh
   - export PATH="$HOME/miniconda/bin:$PATH"
   - hash -r
   - conda config --set always_yes yes --set changeps1 no
@@ -55,10 +60,10 @@ script:
   - source ${TRAVIS_BUILD_DIR}/.travis-ci/build.sh
   
   # Test the wheel
-  - conda install matplotlib
   - pip install --no-index --find-links ${TRAVIS_BUILD_DIR}/artifacts pyfvs
   - pyfvs --run-tests
   - pytest -rsx --pyargs pyfvs.test
+  - conda install matplotlib
   - pytest ${TRAVIS_BUILD_DIR}/python/pyfvs/examples/demo.py
   - pytest ${TRAVIS_BUILD_DIR}/python/pyfvs/examples/pn_test.py
 
