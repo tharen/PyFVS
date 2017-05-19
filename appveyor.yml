@@ -9,27 +9,27 @@ environment:
     # See: http://stackoverflow.com/a/13751649/163740
     CMD_IN_ENV: "cmd /E:ON /V:ON /C %APPVEYOR_BUILD_FOLDER%\\.appveyor\\run_with_env.cmd"
     
-    # FVS_VARIANTS: "pnc;wcc;soc;cac;ecc;oc;op"
-    FVS_VARIANTS: "pnc;wcc"
+    FVS_VARIANTS: "pnc;wcc;soc;cac;ecc;oc;op"
+    # FVS_VARIANTS: "pnc;wcc"
     
   matrix:
     # https://www.appveyor.com/docs/build-environment/#miniconda
     
-    # - MINICONDA: "C:\\Miniconda-x64"
-      # PYTHON_VERSION: "2.7"
-      # PYTHON_ARCH: "64"
+    - MINICONDA: "C:\\Miniconda-x64"
+      PYTHON_VERSION: "2.7"
+      PYTHON_ARCH: "64"
       
     - MINICONDA: "C:\\Miniconda3-x64"
       PYTHON_VERSION: "3.4"
       PYTHON_ARCH: "64"
     
-    # - MINICONDA: "C:\\Miniconda35-x64"
-      # PYTHON_VERSION: "3.5"
-      # PYTHON_ARCH: "64"
+    - MINICONDA: "C:\\Miniconda35-x64"
+      PYTHON_VERSION: "3.5"
+      PYTHON_ARCH: "64"
 
-    # - MINICONDA: "C:\\Miniconda36-x64"
-      # PYTHON_VERSION: "3.6"
-      # PYTHON_ARCH: "64"
+    - MINICONDA: "C:\\Miniconda36-x64"
+      PYTHON_VERSION: "3.6"
+      PYTHON_ARCH: "64"
     
 init:
     # Display remote desktop details

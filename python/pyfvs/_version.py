@@ -4,3 +4,5 @@
 __version__ = '0.0.11'
 __status__ = 'alpha'
 __git_tag__ = ''
+
+# TODO: Add git commit
