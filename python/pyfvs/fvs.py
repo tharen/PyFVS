@@ -78,7 +78,6 @@ class FVS(object):
 
         self.fvslib_path = None
         self.fvslib = None
-        self.projection_active = False
 
         self._load_fvslib()
 
@@ -157,7 +156,6 @@ class FVS(object):
         """
         Return an attribute from self.fvslib if it is n ot defined locally.
         """
-
         try:
             return getattr(self.fvslib, attr)
 
@@ -267,7 +265,9 @@ class FVS(object):
         -------
         keywords: An initialized KeywordSet object
         """
-        self._keywords = kw.KeywordSet(title=title, comment=comment)
+        self._keywords = kw.KeywordSet(
+                title=title, comment=comment, top_level=True
+                )
         return self._keywords
 
     def init_projection(self, keywords=None):
@@ -279,18 +279,30 @@ class FVS(object):
         keywords: Path to the FVS keywords file, or a KeywordSet instance.
                 If None then use self.keywords.
         """
-
+        
         if keywords is None:
             keywords = self.keywords
 
         if isinstance(keywords, kw.KeywordSet):
-            keywords.write(self.workspace)
+            # TODO: Add option to raise exceptions for missing keywords
+            if not keywords.find('STDINFO'):
+                print('No STDINFO keyword')
+                
+            if not keywords.find('DESIGN'):
+                print('No DESIGN keyword')
+                
+            fn = os.path.join(
+                    self.workspace
+                    , '{}.key'.format(keywords.title.lower())
+                    )
+            keywords.write(fn)
+            keywords = fn
 
-        elif not os.path.exists(keywords):
+        if not os.path.isfile(keywords):
             msg = 'The keyword file does not exist: {}'.format(keywords)
             log.error(msg)
             raise ValueError(msg)
-
+        
         # fvs_init requires a path
         r = self.fvs_step.fvs_init(keywords)
 
@@ -301,8 +313,6 @@ class FVS(object):
         if self.stochastic:
             self.set_random_seed()
 
-        self.projection_active = True
-
     def grow_projection(self, cycles=1):
         """
         Execute the FVS projection.
@@ -310,30 +320,41 @@ class FVS(object):
         :param cycles: Number of cycles to execute. Set to zero to run all
                 remaining cycles.
         """
-
+        
+        if self.fvs_step.sim_status<=0:
+            self.init_projection()
+        
         if not cycles:
             cycles = self.num_cycles - self.current_cycle
-
+        
         for n in range(cycles):
             r = self.fvs_step.fvs_grow()
             # TODO: Handle non-zero exit codes
-
+        
         return r
 
     def __del__(self):
         """
         Cleanup when the instance is destroyed.
         """
-        if self.projection_active:
-            self.end_projection()
+        try:
+            if self.fvs_step.sim_status>0:
+                self.end_projection()
+        except:
+            # FIXME: should this pass silently?
+            pass
 
     def end_projection(self):
         """
         Terminate the current projection.
         """
+        
+        if self.fvs_step.sim_status<=0:
+            # Nothing to do
+            return
+            
         # Finalize the projection
         r = self.fvs_step.fvs_end()
-        self.projection_active = False
 
         if r == 1:
             msg = 'FVS returned error code {}.'.format(r)
@@ -348,13 +369,13 @@ class FVS(object):
 
         return r
 
-    def execute_projection(self, keywords):
+    def execute_projection(self, keywords=None):
         """
         Convenience method to execute all cycles.
 
         :param keywords: Path of the keyword file initialize FVS with.
         """
-
+        
         self.init_projection(keywords)
         self.grow_projection(0)
         r = self.end_projection()

@@ -34,9 +34,7 @@ module fvs_step
     use cubrds_mod, only: cubrds
     use keywds_mod, only: keywds
 
-    logical sim_active
-
-    private :: sim_active
+    integer :: sim_status=0
 
     contains
 
@@ -93,13 +91,7 @@ module fvs_step
 
         character(len=100) :: fmt
 
-        ! Don't clober an active simulation
-        if (sim_active) then
-            irtncd = -1
-            return
-        end if
-
-        sim_active = .false.
+        sim_status = 0
 
         ! Initialize parameters and arrays
         ! TODO: This should probably be elevated to a toplevel call
@@ -354,8 +346,8 @@ module fvs_step
 
         !This is 40, the entrance to the grower loop in fvs.f
 
-        ! Flag the simulation as active
-        sim_active = .true.
+        ! Flag the simulation as initialized
+        sim_status = 1
         return
     end subroutine fvs_init
 
@@ -384,8 +376,9 @@ module fvs_step
         INTEGER IRSTRTCD,ISTOPDONE,lenCl
 
         character(len=100) :: fmt
-
-        if (.not. sim_active) then
+        
+        ! Ensure the simulation is initialized or running
+        if (sim_status < 1) then
             irtncd = -1
             return
         end if
@@ -473,8 +466,9 @@ module fvs_step
                 ENDIF
             ENDDO
         ENDIF
-
-        sim_active = .true.
+        
+        ! Flag simulation as running
+        sim_status = 2
         return
     end subroutine fvs_grow
 
@@ -511,8 +505,7 @@ module fvs_step
         INTEGER IRSTRTCD,ISTOPDONE,lenCl
 
         ! Bail if a simulation is not active
-        if (.not. sim_active) then
-            irtncd = -1
+        if (sim_status < 1) then
             return
         end if
 
@@ -563,21 +556,16 @@ module fvs_step
         CALL DFBOUT
         CALL TMOUT
         CALL BWEOUT
-!        CALL RDROUT
+!        CALL RDROUT ! RD output now handled by GENPRT 12/5/14 LD
         CALL BRROUT
 
         CALL GENPRT
 
-!       Close the GENRPT file
-        call getlun(i)
-        inquire(unit=i,opened=LFLAG)
-        if (LFLAG) close(unit=i)
-        
         ! Ensure all files are closed
         call filclose
 
-        ! Flag the simulation as inactive
-        sim_active = .false.
+        ! Flag the simulation as terminated
+        sim_status = -1
         return
     end subroutine fvs_end
 
