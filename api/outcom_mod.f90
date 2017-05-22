@@ -1,7 +1,7 @@
 module outcom_mod
     use prgprm_mod
     implicit none
-!ODE SEGMENT OUTCOM
+!CODE SEGMENT OUTCOM
 !----------
 !  **OUTCOM DATE OF LAST REVISION:   10/11/02
 !----------

@@ -1,8 +1,8 @@
 module cubrds_mod
     contains
     subroutine cubrds()
-        use volstd_mod
         use prgprm_mod
+        use volstd_mod
         implicit none
         
         integer k

@@ -3,7 +3,6 @@
 
       use prgprm_mod
       use fmparm_mod
-
       use plot_mod
       use contrl_mod
       use arrays_mod
@@ -14,7 +13,7 @@
 
       IMPLICIT NONE
 !----------
-!  $Id: fmchrvout.f 1333 2014-10-23 17:49:02Z tod.haren $
+!  $Id$
 !----------
 !     SINGLE-STAND VERSION
 !     CALLED FROM: FMMAIN
@@ -82,8 +81,6 @@
         DO IPL = 1,2 ! PULP/SAW
           DO IHW = 1,2 !SW/HW
           XTMP = 0.
-!            write(*,*) ICHABT,KYR,IFATE,IPL,IHW
-!            write(*,*) faprop(1,1,1,1,1)
             DO IFATE = 1,3 ! 3 FATES (INUSE,LANDFILL,ENERGY); 4=sum 1:3
               XTMP = XTMP + FAPROP(ICHABT,KYR,IFATE,IPL,IHW)
               V(IFATE) = V(IFATE) + &

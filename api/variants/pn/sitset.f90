@@ -1,15 +1,13 @@
       SUBROUTINE SITSET
 !      use siteht_mod, only: get_siteht
-
       use prgprm_mod
       use contrl_mod
       use plot_mod
       use varcom_mod
       use volstd_mod
-
-      IMPLICIT NONE
+      implicit none
 !----------
-!  **SITSET--PN   DATE OF LAST REVISION:  05/11/11
+!  PN $ID$
 !----------
 !
 ! THIS SUBROUTINE LOADS THE SITEAR ARRAY WITH A SITE INDEX FOR EACH

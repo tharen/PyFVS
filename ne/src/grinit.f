@@ -24,6 +24,7 @@ C
 C
       INCLUDE 'CWDCOM.F77'
 C
+      INCLUDE 'TWIGCOM.F77'
 C----------
       INTEGER I,J,K
       CHARACTER*26 DBLK
@@ -46,7 +47,7 @@ C----------
       XMDIA2(I) = 99999.
       VEQNNB(I) = '          '
       VEQNNC(I) = '          '
-      STMP(I) = 1.0
+      STMP(I) = 0.5
       DBHMIN(I) = 0.
       TOPD(I) = 0.
       BFMIND(I) = 0.
@@ -81,6 +82,7 @@ C----------
       SIZCAP(I,3) = 0.
       SIZCAP(I,4) = 999.
       JSPIN(I)=3
+      LEAVESP(I)=.FALSE.
     5 CONTINUE
       LFLAGV = .FALSE.
       LBAMAX = .FALSE.
@@ -216,6 +218,8 @@ C----------
       DR016=0.
       DBHSDI=0.
       JSPINDEF=0
+      GLOCCC=0
+      CCCOEF=0.01 
 C
       DO 30 J=1,9
       DO 20 K=1,MAXSP
@@ -277,6 +281,12 @@ C----------
       SITETR(I,J)=0.
    74 CONTINUE
    75 CONTINUE
+C
+C  BAU CARRIED IN TWIGCOM.F77
+C
+      DO I=1,50
+        BAU(I)=0.
+      ENDDO
 C
       RETURN
       END

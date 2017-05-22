@@ -1,27 +1,27 @@
       SUBROUTINE PUTSTD
-      use htcal_mod
-      use multcm_mod
-      use fvsstdcm_mod
-      use plot_mod
-      use arrays_mod
+      use prgprm_mod
       use esparm_mod
-      use rancom_mod
-      use estree_mod
-      use screen_mod
-      use contrl_mod
-      use svdata_mod
+      use arrays_mod
       use coeffs_mod
+      use contrl_mod
+      use calcom_mod
       use econ_mod
       use eshap_mod
+      use escomn_mod
+      use estcor_mod
+      use estree_mod
+      use htcal_mod
+      use multcm_mod
       use outcom_mod
       use pden_mod
+      use plot_mod
       use volstd_mod
+      use rancom_mod
       use esrncm_mod
-      use escomn_mod
       use varcom_mod
-      use prgprm_mod
-      use calcom_mod
-      use estcor_mod
+      use svdata_mod
+      use fvsstdcm_mod
+      use screen_mod
       implicit none
 C----------
 C  $Id$
@@ -68,13 +68,15 @@ C     THE RANDOM NUMBER SEEDS, WHICH ARE EQUIVALENCED TO REAL ARRAYS
 C     OF LENGTH 2.
 C
       INTEGER MXL,MXR,MXI,IRECLN
-      PARAMETER (MXR=130,MXL=40,MXI=119,IRECLN=1024)
+      PARAMETER (MXR=131,MXL=40,MXI=120,IRECLN=1024)
       INTEGER ILIMIT,IPNT,K,I,II
       INTEGER INTS(MXI)
       LOGICAL LOGICS(MXL),LCVGO,LMORED,LRR1,LRR2,LFM,LBWE,LCLM,LWRD,LZ
       REAL REALS(MXR), ROSUM(20,MAXCY1),
      >          RSEED(2), ESSEED(2), RDTREE(MAXTRE),
      >          SVSED0(2),SVSED1(2)
+! NOTE: EQUIVALENCE'd arrays are now transfer'd directly
+! FIXME: REALS, LOGICS, INTS is not handled
 !      EQUIVALENCE (ROSUM,IOSUM),(RSEED,S0),(ESSEED,ESS0),(WK6,REALS),
 !     >            (WK6,LOGICS),(WK6,INTS),(IDTREE,RDTREE),
 !     >            (SVSED0,SVS0),(SVSED1,SVS1)
@@ -84,8 +86,6 @@ C
         print *,"FVS turned off the example tree table output."
       endif
       ILIMIT=IRECLN
-
-      ! FIXME: LOGICS,REALS,INTS transfer needs to be set up.
 C
 C     STORE THE INTEGER SCALARS IN THE ARRAY INTS.
 C
@@ -204,11 +204,12 @@ C
       INTS(113) =   JSPINDEF
       INTS(114) =   KOLIST
       CALL GETNRPTS(I)
-      INTS(115) = I
-      INTS(116) = IGFOR
-      INTS(117) = NPTGRP
+      INTS(115) =   I
+      INTS(116) =   IGFOR
+      INTS(117) =   NPTGRP
       INTS(118) =   MAXTOP      ! DBSTK common
       INTS(119) =   MAXLEN      ! DBSTK common
+      INTS(120)	=   GLOCCC
 C
 C     BEGIN THE WRITE TO THE DIRECT ACCESS DATA FILE, AND WRITE THE
 C     INTEGER SCALARS.
@@ -369,6 +370,7 @@ C
       CALL LFWRIT (WK3,IPNT,ILIMIT,LTSTV5, ITST5,  2)
       CALL LFWRIT (WK3,IPNT,ILIMIT,LSPCWE,MAXSP,   2)
       CALL LFWRIT (WK3,IPNT,ILIMIT,LREG  ,MXLREG,  2)
+      CALL LFWRIT (WK3,IPNT,ILIMIT,LEAVESP,MAXSP,  2)
 C
 C     STORE THE REAL SCALARS IN THE ARRAY REALS.
 C
@@ -502,6 +504,7 @@ C
       REALS(128) = DBHZEIDE
       REALS(129) = DBHSTAGE
       REALS(130) = DR016
+      REALS(131)=  CCCOEF
 C
 C     WRITE THE REAL SCALARS.
 C
@@ -658,8 +661,8 @@ C
       CALL BFWRIT (WK3,IPNT,ILIMIT,RELDSP, MAXSP,     2)
       CALL BFWRIT (WK3,IPNT,ILIMIT,RHCON,  MAXSP,     2)
       K=ICYC+1
+      rosum(1,:) = transfer(iosum(1,:),rosum(1,:))
       DO 20 I=1,K
-      rosum = transfer(iosum(1,i),rosum(1,i))
       CALL BFWRIT (WK3,IPNT,ILIMIT,ROSUM(1,I),20,     2)
    20 CONTINUE
       rseed = transfer(s0,rseed)

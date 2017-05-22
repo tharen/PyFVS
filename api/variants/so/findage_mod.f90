@@ -23,7 +23,7 @@ module findage_mod
       SUBROUTINE FINDAG(I,ISPC,D1,D2,H,SITAGE,SITHT,AGMAX1,HTMAX1,HTMAX2,DEBUG)
     
 !----------
-!  **FINDAG--SO  DATE OF LAST REVISION:  01/12/11
+!  **FINDAG--SO  DATE OF LAST REVISION:  08/19/15
 !----------
 !  THIS ROUTINE FINDS EFFECTIVE TREE AGE BASED ON INPUT VARIABLE(S)
 !  CALLED FROM **COMCUP
@@ -61,13 +61,9 @@ module findage_mod
       TOLER=2.0
       SINDX = SITEAR(ISPC)
       AGMAX1 = AGMAX(ISPC)
-      IF(IFOR .GT. 3) AGMAX1=400.
+      IF(IFOR.GT.3 .AND. IFOR.LT.10) AGMAX1=400.
       HTMAX1 = HTMAX(ISPC)
       AG = 2.0
-
-      if (fast_age_search) then
-          call guess_age(sindx,ispc,h,sitht,sitage)
-      else
 
 !----------
 ! THE FOLLOWING LINES ARE AN RJ FIX 7-28-88
@@ -96,7 +92,7 @@ module findage_mod
       IF(ISPC.EQ.24)THEN
         SITAGE = (H*2.54*12.0/26.9825)**(1.0/1.1752)
         SITHT = H
-        
+
 !----------
 !  WESTERN JUNIPER
 !  WHITEBARK PINE
@@ -104,20 +100,22 @@ module findage_mod
       ELSEIF(ISPC.EQ.11 .OR. ISPC.EQ.16) THEN
         SITAGE = 0.
         SITHT = H
-      
-      ELSE
 
-      do
-
+      ! If fast age flag is set call the binary search routine
+      elseif (fast_age_search) then
+          call guess_age(sindx,ispc,h,sitht,sitage)
+          
+      else
+        do
+! NOTE: This is the original linear search routine
+!
           HGUESS = 0.
           IF(DEBUG)WRITE(JOSTND,*)' IN FINDAG, CALLING HTCALC'
           CALL HTCALC(IFOR,SINDX,ISPC,AG,HGUESS,JOSTND,DEBUG)
-
-          if (DEBUG) then
-              WRITE(JOSTND,fmt)I,IFOR,ISPC,AG,HGUESS,H
-              fmt = "(' FINDAG I,IFOR,ISPC,AG,HGUESS,H ',3I5,3F10.2)"
-          end if
-
+!
+      IF(DEBUG)WRITE(JOSTND,91200)I,IFOR,ISPC,AG,HGUESS,H
+91200   FORMAT(' FINDAG I,IFOR,ISPC,AG,HGUESS,H ',3I5,3F10.2)
+!
           DIFF = ABS(HGUESS-H)
           IF(DIFF .LE. TOLER .OR. H .LT. HGUESS)THEN
             SITAGE = AG
@@ -135,18 +133,15 @@ module findage_mod
             exit
           ELSE
             cycle
-          ENDIF
-      
-      end do
-      ENDIF
-      end if
-      
-      IF(DEBUG) THEN
-          WRITE(JOSTND,fmt)I,SITAGE,SITHT,AGMAX1,HTMAX1
-          fmt = "(' LEAVING SUBROUTINE FINDAG  I,SITAGE,SITHT,AGMAX1,', &
-              'HTMAX1 = ',I5,4F10.3)"
-      END IF
-      
+          END IF
+!
+        end do
+   end if
+   
+      IF(DEBUG)WRITE(JOSTND,50)I,SITAGE,SITHT,AGMAX1,HTMAX1
+   50 FORMAT(' LEAVING SUBROUTINE FINDAG  I,SITAGE,SITHT,AGMAX1,', &
+      'HTMAX1 = ',I5,4F10.3)
+!
       RETURN
       END SUBROUTINE FINDAG
 

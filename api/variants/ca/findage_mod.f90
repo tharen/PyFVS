@@ -1,8 +1,8 @@
 module findage_mod
-    use contrl_mod
-    use plot_mod
-    use arrays_mod
     use prgprm_mod
+    use contrl_mod
+    use arrays_mod
+    use plot_mod
     implicit none
 
     real :: age_steps(8),max_age(maxsp)
@@ -34,7 +34,6 @@ module findage_mod
       LOGICAL DEBUG
       REAL AGEMAX(MAXSP),AGMAX,AG,DIFF,H,HGUESS,SINDX,TOLER
       REAL SITAGE,SITHT,D1,D2,HTMAX1,HTMAX2
-      character(len=100) :: fmt
 !----------
 !  DATA STATEMENTS
 !----------
@@ -58,21 +57,19 @@ module findage_mod
 ! SPECIES DIFFERENCES ARE ARE ACCOUNTED FOR BY THE SPECIES
 ! SPECIFIC SITE INDEX VALUES WHICH ARE SET AFTER KEYWORD PROCESSING.
 !----------
-      do
+   75 CONTINUE
 !
           HGUESS = 0.
           CALL HTCALC(IFOR,SINDX,ISPC,AG,HGUESS,JOSTND,DEBUG)
     !
-          IF (DEBUG) THEN
-              WRITE(JOSTND,fmt)I,IFOR,AG,HGUESS,H
-              fmt = "(' IN GUESS AN AGE--I,IFOR,AGE,HGUESS,H ',2I5,3F10.2)"
-          END IF
+      IF(DEBUG)WRITE(JOSTND,91200)I,IFOR,AG,HGUESS,H
+91200 FORMAT(' IN GUESS AN AGE--I,IFOR,AGE,HGUESS,H ',2I5,3F10.2)
     !
           DIFF=ABS(HGUESS-H)
           IF(DIFF .LE. TOLER .OR. H .LT. HGUESS)THEN
             SITAGE = AG
             SITHT = HGUESS
-            exit
+        GO TO 30
           END IF
           AG = AG + 2.
     !
@@ -82,19 +79,17 @@ module findage_mod
     !----------
             SITAGE = AGMAX
             SITHT = H
-            exit
+        GO TO 30
           ELSE
-            cycle
+        GO TO 75
           ENDIF
 !
-      end do
-      
+   30 CONTINUE
       end if
-      
-      IF (DEBUG) THEN
-          WRITE(JOSTND,fmt)I,SITAGE,SITHT
-          fmt = "(' LEAVING SUBROUTINE FINDAG  I,SITAGE,SITHT =',I5,2F10.3)"
-      END IF
+
+      IF(DEBUG)WRITE(JOSTND,50)I,SITAGE,SITHT
+   50 FORMAT(' LEAVING SUBROUTINE FINDAG  I,SITAGE,SITHT =', &
+      I5,2F10.3)
 !
       RETURN
 

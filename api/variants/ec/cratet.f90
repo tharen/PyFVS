@@ -9,7 +9,6 @@
       use outcom_mod
       use htcal_mod
       use varcom_mod
-
       implicit none
 !----------
 !  **CRATET--EC   DATE OF LAST REVISION:  05/09/12

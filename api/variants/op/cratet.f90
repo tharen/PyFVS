@@ -1,14 +1,13 @@
       SUBROUTINE CRATET
       use findage_mod, only: findag
-
-      use htcal_mod
-      use plot_mod
-      use arrays_mod
-      use contrl_mod
-      use coeffs_mod
-      use outcom_mod
-      use varcom_mod
       use prgprm_mod
+      use arrays_mod
+      use plot_mod
+      use coeffs_mod
+      use contrl_mod
+      use outcom_mod
+      use htcal_mod
+      use varcom_mod
       use organon_mod
       implicit none
 !----------
@@ -275,7 +274,7 @@
               IERROR = 0
               SERROR(I) = 0
             ELSE
-
+               
               WRITE(JOSTND,9126) ICYC, I, SERROR(I)
  9126         FORMAT(' CRATET ORGANON ERROR CODE, CYCLE= ',I2, &
                     ' IDX= ',I2, ' SERROR= ',I2 )
@@ -700,6 +699,7 @@
       IF(NORMHT(II)*0.01.LT.HT(II)) NORMHT(II)=HT(II)*100.0
   125 CONTINUE
   130 CONTINUE
+  140 CONTINUE
       KNT2(IPTR)=K4 + KNTOHT(ISPC)
       IF(DEBUG)WRITE(JOSTND,*)' ISPC,IPTR,K4,KNTOHT,KNT2= ', &
       ISPC,IPTR,K4,KNTOHT(ISPC),KNT2(IPTR)
@@ -707,7 +707,6 @@
 !  END OF SPECIES LOOP.  PRINT HEIGHT-DIAMETER COEFFICIENTS ON
 !  DEBUG UNIT IF DESIRED.
 !----------
-  140 CONTINUE
       IF(DEBUG)THEN
       WRITE(JOSTND,9005) ISPC,AX,BX,IABFLG(ISPC)
  9005 FORMAT('HEIGHT-DIAMETER COEFFICIENTS FOR SPECIES ',I2, &
@@ -824,11 +823,10 @@
  9007 FORMAT(/,'NUMBER OF RECORDS WITH BROKEN OR DEAD TOPS', &
              ((T49,11(I4,2X)/)))
       DO 160 I=1,MAXSP
-      IPTR=IREF(I)
       KNT(I)=0
-      KNT2(IPTR)=KNTOCR(I)
+      KNT2(I)=KNTOCR(I)
       IF(DEBUG)WRITE(JOSTND,*)' I,IPTR,KNTOCR,KNT2= ', &
-       I,IPTR,KNTOCR(I),KNT2(IPTR)
+       I,IPTR,KNTOCR(I),KNT2(I)
   160 CONTINUE
 !----------
 !  CHECK FOR MISSING CROWNS ON LIVE TREES.

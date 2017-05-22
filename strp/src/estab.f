@@ -1,14 +1,14 @@
       SUBROUTINE ESTAB (KDT)
-      use plot_mod
+      use prgprm_mod
       use arrays_mod
+      use contrl_mod
+      use plot_mod
       use esparm_mod
       use estree_mod
-      use contrl_mod
       use eshap_mod
       use pden_mod
       use escomn_mod
       use varcom_mod
-      use prgprm_mod
       implicit none
 C----------
 C STRP $ID$
@@ -44,9 +44,6 @@ C
       INTEGER KDT,NOFSPE,ITRNIN,I,N,IDUP,NTODO,ITODO,NN,J,ISER,II
       INTEGER MYDO,IZERO,NP,IACTK,IPYEAR,NCOUNT,ISTART,IEND,ITYPEP
       INTEGER IPOLD,NTIMES,IREP
-
-      real bratio
-
 C
       DATA CBLANK/'  '/,CPREP/'NONE','MECH','BURN','ROAD'/,CTOPO/
      &  'BOTM','LOWR',' MID','UPPR','RIDG'/,MYTYPE/9*1,2*5,2*2,3*3,4,

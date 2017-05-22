@@ -18,3 +18,7 @@ call pip install --no-index --find-links . pyfvs
 call pyfvs --run-tests
 :: Tests module
 call pytest -rsx --pyargs pyfvs.test
+
+:: Test examples
+call pytest %APPVEYOR_BUILD_FOLDER%\python\pyfvs\examples\demo.py
+call pytest %APPVEYOR_BUILD_FOLDER%\python\pyfvs\examples\pn_test.py

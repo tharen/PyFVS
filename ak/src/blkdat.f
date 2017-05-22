@@ -1,4 +1,5 @@
       BLOCK DATA BLKDAT
+	  use keycom_mod
       use htcal_mod
       use fvsstdcm_mod
       use pden_mod
@@ -18,8 +19,6 @@ C  **BLKDAT--AK   DATE OF LAST REVISION:  05/08/12
 C----------
 C
 C     SEE **MAIN** FOR DICTIONARY OF VARIABLE NAMES.
-C
-      INCLUDE 'KEYCOM.F77'
 C
 C----------
       INTEGER I,J

@@ -5,7 +5,7 @@
       use prgprm_mod
       implicit none
 C----------
-C  **SITSET-- CS  DATE OF LAST REVISION:  10/13/11
+C CS $Id$
 C----------
 C THIS SUBROUTINE LOADS THE SITELG ARRAY WITH A SITE INDEX FOR EACH
 C SPECIES WHICH WAS NOT ASSIGNED A SITE INDEX BY KEYWORD.
@@ -153,7 +153,7 @@ C     &VEQNNC(ISPC)
       IF(((METHB(ISPC).EQ.6).OR.(METHB(ISPC).EQ.9).OR.
      &    (METHB(ISPC).EQ.5)).AND.(VEQNNB(ISPC).EQ.'          '))THEN
         IF(METHB(ISPC).EQ.5)THEN
-          VOLEQ(1:7)='900DVEE'
+          VOLEQ(1:7)='902DVEE'
         ELSE
           VOLEQ(1:7)='900CLKE'
         ENDIF

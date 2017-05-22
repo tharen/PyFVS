@@ -676,7 +676,7 @@ C
       IDT = 1
       PRMS(1)=200.
       PRMS(2)=-1.  ! reporting interval no longer used with cycle boundary FFE
-      PRMS(3)=13.
+      PRMS(3)=35.
       PRMS(4)=0.
 
       IF (LNOTBK(1)) IDT= IFIX(ARRAY(1))
@@ -2132,7 +2132,8 @@ C                        OPTION NUMBER 47 -- CANFPROF
       ICFPE = IY(1) + 999
 
       IF(LKECHO)WRITE(JOSTND,4710) KEYWRD
- 4710 FORMAT(/A8,'   THE CANOPY FUELS PROFILE TABLE WILL BE PRINTED.')
+ 4710 FORMAT(/A8,'   CANOPY FUELS PROFILE TABLE SENT ',
+     >        'TO SPECIFIED DATABASE.')
 
       GOTO 10
  4800 CONTINUE

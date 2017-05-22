@@ -557,7 +557,24 @@ class KeywordSet(object):
             raise
 
         return 0
-
+    
+    def find(self, kwd):
+        """
+        Search for instances of a keyword.
+        """
+        
+        objs = []
+        
+        for item in self.items:
+            if item.mnemonic==kwd:
+                objs.append(item)
+            
+            if isinstance(item, KeywordSet):
+                r = item.find(kwd)
+                objs.extend(r)
+            
+        return objs
+        
     def write(self, path):
         """
         Write the formatted keywords to a text file.
@@ -2200,6 +2217,9 @@ class NOTRIPLE(KeywordBase):
         KeywordBase.__init__(self, 'NOTRIPLE', 'Suppress Tree Record Tripling')
 
 class FIXMORT(KeywordBase):
+    """
+    Apply a fixed mortality proportion to species tpa records.
+    """
     period = IntegerField('Period')
     species = CharacterField('Species')
     proportion = DecimalField('Proportion', precision=4)
@@ -2212,7 +2232,7 @@ class FIXMORT(KeywordBase):
                  , min_dbh=0.0, max_dbh=999.0
                  , effect=0, distribution=0, **kargs):
         """
-        Apply a fixed mortality proportion to species tpa records
+        Apply a fixed mortality proportion to species tpa records.
         
         @param period:  Period affected by the mortality proportion.
         @param species:  Affected species.
@@ -2234,6 +2254,9 @@ class FIXMORT(KeywordBase):
         self.kargs = kargs
 
 class STRCLASS(KeywordBase):
+    """
+    Compute and report structure classification statistics.
+    """
     output = BooleanField('Write Reports')
     gap_size = IntegerField('Gap Size')
     sapling_max_dbh = DecimalField('Sapling Max DBH', precision=1)
@@ -2272,6 +2295,9 @@ class STRCLASS(KeywordBase):
         self.stem_exclusion_pct_sdi = stem_exclusion_pct_sdi
 
 class COMPRESS(KeywordBase):
+    """
+    Compress the treelist to reduce data overhead
+    """
     period = IntegerField('Period')
     records = IntegerField('Records')
     diff_pct = IntegerField('Difference Percent')
@@ -2295,6 +2321,9 @@ class COMPRESS(KeywordBase):
         self.debug = debug_out
 
 class BAIMULT(KeywordBase):
+    """
+    Adjust the large tree basa area increment prediction by a percentage
+    """
     period = IntegerField('Period')
     species = CharacterField('Species')
     multiplier = DecimalField('Multiplier', precision=4)

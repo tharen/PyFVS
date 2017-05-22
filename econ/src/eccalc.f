@@ -2,7 +2,7 @@
       use prgprm_mod
       implicit none
 C----------
-C **ECCALC--ECON  DATE OF LAST REVISION: 10/12/2012
+C ECON $Id$
 C----------
 C Author Fred Martin, WA DNR,
 C Calculates costs & revenues associated with the FVS/ECON extension.
@@ -89,7 +89,7 @@ C  ITITLE - STDIDENT title
             beginAnalYear = econStartYear
             endAnalYear   = IY(ICYC+1) - 1                               !IY(ICYC+1) = beginning year of next cycle
             rate          = discountRate / 100.0                         !Convert % to decimal
-            if (doSEV) call calcAnnCostRevSEV()                          !Annual costs & revenues can be done once for an infinite time horizon
+            if (doSEV) call calcAnnCostRevSEV()                          !Annual costs & revenues can be done once for an infinite time horizon 
             call processEconStart
          else                                                            !ECON has been previously called, hence now active from beginning of cycle
             beginAnalYear = IY(ICYC)
@@ -126,7 +126,7 @@ C  ITITLE - STDIDENT title
 
 !    Check for re-initialization of investment period and calculate years within current cycle prior to re-initialization if needed
       subroutine processEconStart()
-      implicit none
+         implicit none
          integer               :: evntYear = 0
          integer, dimension(1) :: econStart = (/ECON_START_YEAR/)
          real, dimension(3)    :: strtParms(3)
@@ -158,14 +158,14 @@ C  ITITLE - STDIDENT title
          startYear     = evntYear
          beginAnalYear = evntYear
          endAnalYear   = IY(ICYC+1) - 1                                  !IY(ICYC+1)= beginning year of next cycle
-         if (doSEV) call calcAnnCostRevSEV()                             !Annual costs & revenues can be done once for an infinite time horizon
+         if (doSEV) call calcAnnCostRevSEV()                             !Annual costs & revenues can be done once for an infinite time horizon 
          return
       end subroutine processEconStart
 
 
 !    Set/Reset accumulation values for ECON initiation/re-initiation that are saved across cycles
       subroutine initializeSavedVariables()
-      implicit none
+         implicit none
          costDisc    = 0.0; costUndisc = 0.0
          hrvCstCnt   = 0; hrvRvnCnt = 0; burnCnt    = 0; mechCnt   =   0
          hrvCstkeywd = 0; hrvCstTyp = 0; hrvCstTime = 0; hrvCstAmt = 0.0 !Arrays by hrvCstCnt
@@ -179,7 +179,7 @@ C  ITITLE - STDIDENT title
 
 !    Reset harvest & control variable values used within a single cycle but needed externally for next cycle, used 1st in echarv.f, initially set in ecinit.f
       subroutine resetSavedCycleVariables()
-      implicit none
+        implicit none
 !       Duplicate code from ecinit.f to initialize variables used in echarv.f & eccalc.f
          dbhSq     = 0.0
          harvest   = 0.0                                                 !Harvest volume array (TPA : FT3_100)
@@ -192,7 +192,7 @@ C  ITITLE - STDIDENT title
 
 !    Reset local harvest and control variable values used within a single cycle
       subroutine resetLocalCycleVariables()
-      implicit none
+         implicit none
          isHarvestPct = .FALSE.
          harvCst   = 0.0; harvRvn    = 0.0; pctCst    = 0.0
          sevSum    = 0.0
@@ -202,7 +202,7 @@ C  ITITLE - STDIDENT title
 
 !    Value the harvests by accumulating harvest/thinning costs and revenues, must run before calcEcon
       subroutine valueHarvest()
-      implicit none
+         implicit none
          integer :: cstCnt, evntTime, i, j, k, rvncnt, time
          logical :: done
          real    :: amt, cost, price, units
@@ -211,124 +211,127 @@ C  ITITLE - STDIDENT title
          if (harvest(TPA) > 0.0) then                                    !Harvests only occur in 1st year of cycle, & reset if ECON re-initialized
             time     = beginAnalYear - econStartYear + 1                 !Appreciation time from start of ECON
             evntTime = beginTime                                         !Harvests occur end 1st year of cycle
-            if (pctMinUnits>0 .and. (harvest(pctMinUnits)<pctMinVolume
-     &          .or. sqrt(dbhSq / harvest(TPA))<pctMinDbh)) then         !Harvest is a PCT
-               isHarvestPct = .TRUE.
-               do i = 1, fixPctCnt
-                  cost   = calcAppreAmt(fixPctAmt(i), fixPctRate(i,:),
-     &                                  fixPctDur(i,:), time, done)
-                  pctCst = pctCst + cost
-                  if (doSev) then
-                     hrvCstCnt              = hrvCstCnt + 1
-                     cstCnt                 = cstCnt + 1
-                     hrvCstTime(hrvCstCnt)  = evntTime
-                     hrvCstTyp(hrvCstCnt)   = FIX_PCT
-                     hrvCstKeywd(hrvCstCnt) = i
-                     hrvCstAmt(hrvCstCnt)   = 1.0                        !1.0=amt for a fixed cost
-                  end if
-               end do
-               do i = 1, varPctCnt                                       !Variable PCT costs are by dbh class
-                  amt  = 0.0
-                  select case(varHrvUnits(i))
-                     case (TPA)
-                        amt = pctTpa(i)
-                        units = 1.0
-                     case (BF_1000)
-                        amt = pctBf(i)
-                        units = 1000.0
-                     case (FT3_100)
-                        amt = pctFt3(i)
-                        units = 100.0
-                  end select
-                  cost = calcAppreAmt(varHrvAmt(i), varHrvRate(i,:),
-     &                               varHrvDur(i,:), time, done) / units
-                  if (amt > 0.0 .and. cost > 0.0) then
-                     pctCst = pctCst + amt * cost
+            if (pctMinUnits>0)then
+               if((harvest(pctMinUnits)<pctMinVolume)
+     &          .or. (sqrt(dbhSq / harvest(TPA))<pctMinDbh)) then         !Harvest is a PCT
+                  isHarvestPct = .TRUE.
+                  do i = 1, fixPctCnt
+                     cost   = calcAppreAmt(fixPctAmt(i),fixPctRate(i,:),
+     &                                     fixPctDur(i,:), time, done)
+                     pctCst = pctCst + cost
                      if (doSev) then
                         hrvCstCnt              = hrvCstCnt + 1
                         cstCnt                 = cstCnt + 1
                         hrvCstTime(hrvCstCnt)  = evntTime
-                        hrvCstTyp(hrvCstCnt)   = VAR_PCT
+                        hrvCstTyp(hrvCstCnt)   = FIX_PCT
                         hrvCstKeywd(hrvCstCnt) = i
-                        hrvCstAmt(hrvCstCnt)   = amt
+                        hrvCstAmt(hrvCstCnt)   = 1.0                        !1.0=amt for a fixed cost
                      end if
-                 end if
-               end do
-               call EVSET4 (EV_PCTCOST, pctCst)                          !Entry point in EVSET - register PCT cost w/ event monitor
-               undiscCost(beginTime) = undiscCost(beginTime) + pctCst
-            else                                                         !Harvest is a commercial harvest
-               do i = 1, fixHrvCnt
-                  cost = calcAppreAmt(fixHrvAmt(i), fixHrvRate(i,:),
-     &                                       fixHrvDur(i,:), time, done)
-                  harvCst = harvCst + cost
-                  if (doSev) then
-                     hrvCstCnt              = hrvCstCnt + 1
-                     cstCnt                 = cstCnt + 1
-                     hrvCstTime(hrvCstCnt)  = evntTime
-                     hrvCstTyp(hrvCstCnt)   = FIX_HRV
-                     hrvCstKeywd(hrvCstCnt) = i
-                     hrvCstAmt(hrvCstCnt)   = 1.0                        !1.0 = amt for a fixed cost
-                  end if
-               enddo
-               do i = 1, varHrvCnt                                       !Variable harvest costs are by dbh classes
-                  amt  = 0.0
-                  select case(varHrvUnits(i))
-                     case (TPA)
-                        amt = hrvCostTpa(i)
-                        cost = calcAppreAmt(varHrvAmt(i),
-     &                                      varHrvRate(i,:),
-     &                                      varHrvDur(i,:), time, done)
-                     case (BF_1000)
-                        amt = hrvCostBf(i)
-                        cost = calcAppreAmt(varHrvAmt(i),
-     &                                      varHrvRate(i,:),
-     &                                      varHrvDur(i,:), time, done)
-     &                                                / 1000.0
-                     case (FT3_100)
-                        amt = hrvCostFt3(i)
-                        cost = calcAppreAmt(varHrvAmt(i),
-     &                                      varHrvRate(i,:),
-     &                                      varHrvDur(i,:), time, done)
-     &                                                / 100.0
-                  end select
-                  if (amt > 0) then
-                     harvCst = harvCst + amt * cost
-                     if (doSev) then
-                        hrvCstCnt              = hrvCstCnt + 1
-                        cstCnt                 = cstCnt + 1
-                        hrvCstTime(hrvCstCnt)  = evntTime
-                        hrvCstTyp(hrvCstCnt)   = VAR_HRV
-                        hrvCstKeywd(hrvCstCnt) = i
-                        hrvCstAmt(hrvCstCnt)   = amt
-                     end if
-                 end if
-               end do
-               call EVSET4 (EV_HARVCOST, harvCst)                        !Entry point in EVSET - register harvest cost w/ event monitor
-               do i = 1, MAXSP                                           !Accumulate harvest revenues
-                  do j = 1, MAX_REV_UNITS
-                     do k = 1, hrvRevCnt(i,j)                            !Loop is diameter-classes for the given species and units-of-measure
-                        if (revVolume(i,j,k) > 0.0) then
-                           price = calcAppreAmt(hrvRevPrice(i,j,k),
-     &                                          hrvRevRate(i,j,k,:),
-     &                                          hrvRevDur(i,j,k,:),
-     &                                          time, done)
-                           harvRvn = harvRvn + revVolume(i,j,k) * price
-                           if (doSev) then
-                              hrvRvnCnt              = hrvRvnCnt + 1
-                              rvnCnt                 = rvnCnt + 1
-                              hrvRvnTime(hrvRvnCnt)  = evntTime
-                              hrvRvnSp(hrvRvnCnt)    = i
-                              hrvRvnUnits(hrvRvnCnt) = j
-                              hrvRvnKeywd(hrvRvnCnt) = k
-                              hrvRvnAmt(hrvRvnCnt)   = revVolume(i,j,k)
-                           end if
+                  end do
+                  do i = 1, varPctCnt                                       !Variable PCT costs are by dbh class
+                     amt  = 0.0
+                     select case(varHrvUnits(i))
+                        case (TPA)
+                           amt = pctTpa(i)
+                           units = 1.0
+                        case (BF_1000)
+                           amt = pctBf(i)
+                           units = 1000.0
+                        case (FT3_100)
+                           amt = pctFt3(i)
+                           units = 100.0
+                     end select
+                     cost = calcAppreAmt(varHrvAmt(i), varHrvRate(i,:),
+     &                              varHrvDur(i,:), time, done) / units
+                     if (amt > 0.0 .and. cost > 0.0) then
+                        pctCst = pctCst + amt * cost
+                        if (doSev) then
+                           hrvCstCnt              = hrvCstCnt + 1
+                           cstCnt                 = cstCnt + 1
+                           hrvCstTime(hrvCstCnt)  = evntTime
+                           hrvCstTyp(hrvCstCnt)   = VAR_PCT
+                           hrvCstKeywd(hrvCstCnt) = i
+                           hrvCstAmt(hrvCstCnt)   = amt
                         end if
-                     end do                                              !End "k" loop by diameter-class
-                  end do                                                 !End "j" loop by revenue-units
-               end do                                                    !End "i" loop by species
-               call EVSET4 (EV_HARVREVN, harvRvn)                        !Entry point in EVSET - register harvest revenue w/ event monitor
-               undiscCost(beginTime) = undiscCost(beginTime) + harvCst
-               undiscRev(beginTime)  = undiscRev(beginTime)  + harvRvn
+                    end if
+                  end do
+                  call EVSET4 (EV_PCTCOST, pctCst)                          !Entry point in EVSET - register PCT cost w/ event monitor
+                  undiscCost(beginTime) = undiscCost(beginTime) + pctCst
+               else                                                         !Harvest is a commercial harvest
+                  do i = 1, fixHrvCnt
+                     cost = calcAppreAmt(fixHrvAmt(i), fixHrvRate(i,:),
+     &                                       fixHrvDur(i,:), time, done)
+                     harvCst = harvCst + cost
+                     if (doSev) then
+                        hrvCstCnt              = hrvCstCnt + 1
+                        cstCnt                 = cstCnt + 1
+                        hrvCstTime(hrvCstCnt)  = evntTime
+                        hrvCstTyp(hrvCstCnt)   = FIX_HRV
+                        hrvCstKeywd(hrvCstCnt) = i
+                        hrvCstAmt(hrvCstCnt)   = 1.0                        !1.0 = amt for a fixed cost
+                     end if
+                  enddo
+                  do i = 1, varHrvCnt                                       !Variable harvest costs are by dbh classes
+                     amt  = 0.0
+                     select case(varHrvUnits(i))
+                        case (TPA)
+                           amt = hrvCostTpa(i)
+                           cost = calcAppreAmt(varHrvAmt(i),
+     &                                         varHrvRate(i,:),
+     &                                         varHrvDur(i,:), 
+     &                                         time, done)
+                        case (BF_1000)
+                           amt = hrvCostBf(i)
+                           cost = calcAppreAmt(varHrvAmt(i),
+     &                                         varHrvRate(i,:),
+     &                                         varHrvDur(i,:), 
+     &                                      time, done) / 1000.0
+                        case (FT3_100)
+                           amt = hrvCostFt3(i)
+                           cost = calcAppreAmt(varHrvAmt(i),
+     &                                         varHrvRate(i,:),
+     &                                         varHrvDur(i,:),
+     &                                    time, done) / 100.0
+                     end select
+                     if (amt > 0) then
+                        harvCst = harvCst + amt * cost
+                        if (doSev) then
+                           hrvCstCnt              = hrvCstCnt + 1
+                           cstCnt                 = cstCnt + 1
+                           hrvCstTime(hrvCstCnt)  = evntTime
+                           hrvCstTyp(hrvCstCnt)   = VAR_HRV
+                           hrvCstKeywd(hrvCstCnt) = i
+                           hrvCstAmt(hrvCstCnt)   = amt
+                        end if
+                    end if
+                  end do
+                  call EVSET4 (EV_HARVCOST, harvCst)                        !Entry point in EVSET - register harvest cost w/ event monitor
+                  do i = 1, MAXSP                                           !Accumulate harvest revenues
+                     do j = 1, MAX_REV_UNITS
+                        do k = 1, hrvRevCnt(i,j)                            !Loop is diameter-classes for the given species and units-of-measure
+                           if (revVolume(i,j,k) > 0.0) then
+                              price = calcAppreAmt(hrvRevPrice(i,j,k),
+     &                                             hrvRevRate(i,j,k,:),
+     &                                             hrvRevDur(i,j,k,:),
+     &                                             time, done)
+                              harvRvn = harvRvn + revVolume(i,j,k)*price
+                              if (doSev) then
+                                 hrvRvnCnt              = hrvRvnCnt + 1
+                                 rvnCnt                 = rvnCnt + 1
+                                 hrvRvnTime(hrvRvnCnt)  = evntTime
+                                 hrvRvnSp(hrvRvnCnt)    = i
+                                 hrvRvnUnits(hrvRvnCnt) = j
+                                 hrvRvnKeywd(hrvRvnCnt) = k
+                                 hrvRvnAmt(hrvRvnCnt) = revVolume(i,j,k)
+                              end if
+                           end if
+                        end do                                              !End "k" loop by diameter-class
+                     end do                                                 !End "j" loop by revenue-units
+                  end do                                                    !End "i" loop by species
+                  call EVSET4 (EV_HARVREVN, harvRvn)                        !Entry point in EVSET - register harvest revenue w/ event monitor
+                  undiscCost(beginTime) = undiscCost(beginTime)+ harvCst
+                  undiscRev(beginTime)  = undiscRev(beginTime) + harvRvn
+               end if
             end if
          end if
          if (doSev .and. (hrvRvnCnt>0 .or. hrvCstCnt>0)) then
@@ -344,7 +347,7 @@ C  ITITLE - STDIDENT title
 
 !    Accumulate costs and revenues, compute ECON measures, and output results
       subroutine calcEcon()
-      implicit none
+         implicit none
 
          character (len=6), parameter :: BLANK6 = '      '
          character (len=7), parameter :: BLANK7 = '       '
@@ -885,7 +888,7 @@ C  ITITLE - STDIDENT title
       end subroutine calcEcon
 
       subroutine accumulate(accumulator, increment)
-      implicit none
+        implicit none
         real, intent(inout) :: accumulator
         real, intent(in)    :: increment
 
@@ -897,6 +900,7 @@ C  ITITLE - STDIDENT title
       end subroutine
 
       pure character(len=5) function rtoc(n)
+        implicit none
         real, intent(in) :: n
         rtoc = '     '
         if(n /= -1.0) write(rtoc, '(f5.1)') n
@@ -904,6 +908,7 @@ C  ITITLE - STDIDENT title
       end function rtoc
 
       pure character(len=7) function itoc(n)
+        implicit none
         integer, intent(in) :: n
         itoc = '       '
         if (n /= -1) write(itoc, '(i7)') n
@@ -913,7 +918,7 @@ C  ITITLE - STDIDENT title
 
 !    Computes internal rate of return defined as interest rate at which pnv=0, rates are in decimal.
       real function computeIRR(rate, irrCalculated, pnv)
-      implicit none
+         implicit none
          logical, intent(out) :: irrCalculated
          real, intent(in)     :: rate, pnv
          real                 :: netA, netC, rorA, rorB, rorC
@@ -1003,6 +1008,7 @@ C  ITITLE - STDIDENT title
 
 !    Computes net present value for a given rate, for all costs & revenues since ECON start
       pure real function computePNV(rate)
+        implicit none
         integer          :: i
         real, intent(in) :: rate
         real             :: discCst, discRev
@@ -1026,7 +1032,7 @@ C  ITITLE - STDIDENT title
 !      "valueRates" are cummulative, all rates up to the end of the current analysis time are included.
       real function calcAppreAmt(amt, valueRate, valueDuration,
      &                                                 apprecTime, done)
-      implicit none
+         implicit none
          integer, intent(in)  :: apprecTime, valueDuration(*)
          integer              :: durationTime, i
          logical, intent(out) :: done                                   !Only used in calculating SEV w/ appreciated rate changes
@@ -1068,7 +1074,7 @@ C  ITITLE - STDIDENT title
 !        rotations, assuming it occurs at the same time within all future rotations.
       real function calcAppreSev(amt, priceOrCost, valueRate,
      &                                          valueDuration, evntTime)
-      implicit none
+         implicit none
          integer, intent(in) :: evntTime, valueDuration(*)
          integer             :: apprecTime, discTime
          logical             :: done
@@ -1106,7 +1112,7 @@ C  ITITLE - STDIDENT title
 
 !    Compute SEV for all previous harvest costs
       real function sevHrvCosts()
-      implicit none
+         implicit none
          integer :: evntTime, i, kw, units
          real    :: amt, cost
 
@@ -1157,7 +1163,7 @@ C  ITITLE - STDIDENT title
 
 !    Compute SEV for all previous harvest revenues
       real function sevHrvRevenues()
-      implicit none
+         implicit none
          integer :: i, j, k, l
 
          sevHrvRevenues = 0.0
@@ -1173,9 +1179,9 @@ C  ITITLE - STDIDENT title
       end function sevHrvRevenues
 
 
-!    !Computes appreciation of annual costs and revenues for computing sev over an infinite time horizon
+!    !Computes appreciation of annual costs and revenues for computing sev over an infinite time horizon 
       subroutine calcAnnCostRevSEV()
-      implicit none
+         implicit none
          endTime = 1; sevAnnCst = 0.0; sevAnnRvn = 0.0                   !endTime required by calcAppreSev
          do i = 1, annCostCnt
             sevAnnCst = sevAnnCst + calcAppreSev(1.0, annCostAmt(i),     !1.0=amt, 1=event time
@@ -1189,7 +1195,7 @@ C  ITITLE - STDIDENT title
 
 
       subroutine writeTableHeaders()
-      implicit none
+         implicit none
          integer :: headTableId
 
          call GETID (headTableId)                                        !Returns the index number for header information stored in genrpt.f

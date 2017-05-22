@@ -214,23 +214,23 @@ C************************************************************
       
       LOGVOL = 0.0
       !calculate the number of 4'segments in the passed in log
-      LOGSEG = INT(LENGTH * 0.25)
+      LOGSEG = INT(LENGTH/4.0)
       
       !get the leftover piece .25, .5 or .75% of 4' piece
-      FF = LENGTH*0.25 - LOGSEG
+      FF = LENGTH/4.0 - LOGSEG
 
       !for each 4' segment get the small end diameter which assumes
       !1/2" taper per segment
       DO 100, J = 1,LOGSEG
-        SEDIAM = DIB + (LOGSEG-J)*0.5
-        SEGVOL = (0.22*(SEDIAM*SEDIAM) - 0.71*(SEDIAM)) * 0.905
+        SEDIAM = DIB + (LOGSEG-J)/2.0
+        SEGVOL = (0.22*(SEDIAM)**2 - 0.71*(SEDIAM)) * 0.905
         LOGVOL = LOGVOL + SEGVOL
   100 CONTINUE
   
       !if there is a leftover piece get the volume of the top
       !4' piece and scale it by the percentage of 4'
       IF (FF.GT.0.0) THEN
-          SEGVOL = FF*(.22*(DIB*DIB) -
+          SEGVOL = FF*(.22*(DIB)**2 -
      >             0.71 *(DIB))*0.905
           LOGVOL = LOGVOL + SEGVOL
       ENDIF
@@ -240,9 +240,9 @@ C************************************************************
           LOGVOL = 5
       ELSE
         !get the largest multiple of 10
-        IRNDVOL=INT(LOGVOL*0.1)
+        IRNDVOL=INT(LOGVOL/10.0)
         !get the remaining ones and tenths places in integer
-         JJJ=INT(((LOGVOL*0.1) - IRNDVOL)*100)
+         JJJ=INT(((LOGVOL/10.0) - IRNDVOL)*100)
         !if you have lt 2.5  board feet remainder round down 10
         IF(JJJ .LT. 25) THEN
            LOGVOL = IRNDVOL*10
@@ -253,7 +253,6 @@ C************************************************************
         ELSE
            LOGVOL = IRNDVOL*10 + 5
         ENDIF
-
       ENDIF
       
      

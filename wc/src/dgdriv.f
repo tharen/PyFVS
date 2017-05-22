@@ -699,12 +699,13 @@ C----------
         IF(HT(I).LE.4.5) THEN
           DG(I)=0.0
         ELSE
-          DG(I)=SQRT(D*D+EXP((WK2(I)+OLDRN(I)))*SCALE)-D
+          DG(I)=SQRT(D*D+EXP(WK2(I)+OLDRN(I)))-D
           IF(DG(I) .GT. D) DG(I)=D
 C----------
 C   CALL DGBND TO SET BOUNDS ON VALUE OF DG.
 C----------
           CALL DGBND (ISPC,DBH(I),DG(I))
+         DG(I)=SQRT(D*D+EXP((WK2(I)+OLDRN(I)))*SCALE)-D
         ENDIF
         WORK1(I)=0.
       ENDIF

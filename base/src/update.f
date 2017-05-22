@@ -92,9 +92,7 @@ C----------
 C----------
 C  UPDATE DIAMETERS TO END OF CYCLE VALUES.
 C----------
-      IF (ITRN.EQ.0) THEN
-        RETURN
-      ENDIF
+      IF (ITRN.EQ.0) RETURN
 
       DO 110 I=1,ITRN
       IS=ISP(I)

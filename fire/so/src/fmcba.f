@@ -8,7 +8,7 @@
       use prgprm_mod
       implicit none
 C----------
-C  **FMCBA   FIRE-SO-DATE OF LAST REVISION: 04/25/13
+C  **FMCBA   FIRE-SO-DATE OF LAST REVISION: 08/24/15
 C----------
 C     SINGLE-STAND VERSION
 C     CALLED FROM: FMMAIN
@@ -47,9 +47,9 @@ C     I=5   0.25 - 1"     10 HOUR FUELS, TONS/AC
 C     I=6   1 - 3"       100 HOUR FUELS, TONS/AC
 C     I=7   3 - 9"     1,000 HOUR FUELS, TONS/AC
 C     I=8   9 - 20"    10,000 HOUR FUELS, TONS/AC
-C     I=9   20 - 35"
-C     I=10  35 - 50"
-C     I=11  > 50"
+C     I=9   20 - 35"    
+C     I=10  35 - 50"  
+C     I=11  > 50"  
 C     I=12  LITTER   ALWAYS ZERO: ABSENT FROM OTTMAR
 C     I=13  DUFF                         TONS/AC
 C     THE COVER TYPE (1-11) * 10 + STRUCTURAL STAGE (1-7) DEFINE, IN COMBINATION,
@@ -589,7 +589,8 @@ C----------
           CW(I)=CRWDTH(I)
           CW(I) = CW(I)*CW(I)*3.1415927/4*FMPROB(I)
         ENDDO
-        CALL COVOLP(.FALSE.,JOSTND,ITRN,IDUM,CW,PERCOV)
+        CALL COVOLP(.FALSE.,JOSTND,ITRN,IDUM,CW,PERCOV,
+     &   CCCOEF)
 
       ENDIF
 C----------
@@ -607,8 +608,8 @@ C----------
       IF (COVTYP .EQ. 0) THEN
         IF (IYR .GT. IY(1)) THEN
           COVTYP = OLDCOV
-        ELSEIF ((ITYPE .GT. 0) .AND.
-     >   (KODFOR .GE. 600 .AND. KODFOR .LT. 700)) THEN
+        ELSEIF ((ITYPE .GT. 0) .AND. 
+     >   ((KODFOR.GE.600 .AND. KODFOR.LT.700) .OR. KODFOR.EQ.799)) THEN
           COVTYP = COVINI(ITYPE)
         ELSE
           COVTYP = 10
@@ -714,9 +715,9 @@ C----------
         STFUEL(6,2) = FUELINI(8,IPOSN) * (8./11.) +
      &              FUELINI(9,IPOSN) !gt 20" material from the FCCS is thrown
 c                                     into the 12 - 20" class (the old gt 12" class)
-        STFUEL(7,2) = 0  ! this is zero instead of FUELINI(9,IPOSN) so that
+        STFUEL(7,2) = 0  ! this is zero instead of FUELINI(9,IPOSN) so that 
 c                        folks with old databases with the fuel_gt_12 column
-c                        filled in won't get extra large fuel added in when
+c                        filled in won't get extra large fuel added in when 
 c                        the fuels are initialized.
         STFUEL(8,2) = FUELINI(10,IPOSN)
         STFUEL(9,2) = FUELINI(11,IPOSN)
@@ -743,7 +744,7 @@ C       CALIFORNIA SETTING; OTHERWISE THE DEFAULT OREGON
 C       RATE WILL BE USED
 
         IF ((KODFOR .GE. 500 .AND. KODFOR .LT. 600)
-     >    .OR. KODFOR .GE. 700) THEN
+     >    .OR. KODFOR .EQ. 701) THEN
           DKRT(1,1) = 0.025   ! < 0.25" - California
           DKRT(2,1) = 0.025   ! 0.25 - 1"
           DKRT(3,1) = 0.025   ! 1 - 3"
@@ -775,7 +776,7 @@ C     BASED ON HABITAT TYPE (TEMPERATURE AND MOISTURE CATEGORY)
           DKRT(7,1) = 0.019  ! 20 - 35"
           DKRT(8,1) = 0.019  ! 35 - 50"
           DKRT(9,1) = 0.019  !  > 50"
-
+          
           DKRT(1,2) = 0.081 ! < 0.25"
           DKRT(2,2) = 0.081 ! 0.25 - 1"
           DKRT(3,2) = 0.081 ! 1 - 3"
@@ -785,7 +786,7 @@ C     BASED ON HABITAT TYPE (TEMPERATURE AND MOISTURE CATEGORY)
           DKRT(7,2) = 0.025  ! 20 - 35"
           DKRT(8,2) = 0.025  ! 35 - 50"
           DKRT(9,2) = 0.025  !  > 50"
-
+          
           DKRT(1,3) = 0.090 ! < 0.25"
           DKRT(2,3) = 0.090 ! 0.25 - 1"
           DKRT(3,3) = 0.090 ! 1 - 3"
@@ -805,10 +806,10 @@ C     BASED ON HABITAT TYPE (TEMPERATURE AND MOISTURE CATEGORY)
           DKRT(7,4) = 0.058  ! 20 - 35"
           DKRT(8,4) = 0.058  ! 35 - 50"
           DKRT(9,4) = 0.058  !  > 50"
-
+          
           TEMP = SOHMC(ITYPE)
           MOIST = SOWMD(ITYPE)
-
+          
           DO I = 1,9
             DO J = 1,4
               IF (I .LE. 3) THEN
@@ -895,7 +896,7 @@ C     GET TO 50% HEIGHT LOSS. ALL SNAGS WILL HAVE FALLEN IN THAT TIME
 C     ANYWAYS.
 
         IF ((KODFOR .GE. 500 .AND. KODFOR .LT. 600)
-     >    .OR. KODFOR .GE. 700) THEN
+     >    .OR. KODFOR .EQ. 701) THEN
           DO I = 1,MAXSP                        ! CALIFORNIA
             SELECT CASE (I)
 
@@ -986,12 +987,12 @@ C         HEIGHT LOSS CEASES FOR THE LAST 50% (USED TO BE SET BY HTR2, CHANGED F
 
             END SELECT
           ENDDO
-
+  
           IF (PBSOFT .LT. 0.0) PBSOFT = 0.0
           IF (PBSMAL .LT. 0.0) PBSMAL = 0.0
-
+          
         ENDIF
-
+        
         ! set whether each species is a softwood or not
 
         DO I = 1,MAXSP
@@ -1031,7 +1032,7 @@ C       THAT THEY BEHAVE PROPERLY.
 C       FINE DEAD FOLIAGE DIFFERS BETWEEN CA AND OR
 
         IF ((KODFOR .GE. 500 .AND. KODFOR .LT. 600)
-     >    .OR. KODFOR .GE. 700) THEN
+     >    .OR. KODFOR .EQ. 701) THEN
           DO I = 1, MAXSP            !! CALIFORNIA
             TFALL(I,0) =  3.0
             TFALL(I,1) = 10.0
@@ -1048,15 +1049,15 @@ C       FINE DEAD FOLIAGE DIFFERS BETWEEN CA AND OR
 C       DEAD INCENSE-CEDAR FOLIAGE DROPS IN ONE YR
 
         TFALL(6,0)     = 1.0
-
-C       DEAD LARCH AND HARDWOOD FOLIAGE DROPS IN ONE YR
-
+        
+C       DEAD LARCH AND HARDWOOD FOLIAGE DROPS IN ONE YR  
+      
         TFALL(17,0) = 1.0
         DO I = 21,31
           TFALL(I,0) = 1.0
         ENDDO
         TFALL(33,0) = 1.0
-
+        
 C       LARGER DEAD FOLIAGE IS IDENTICAL FOR CA AND OR
 
         DO I = 1,MAXSP
@@ -1099,7 +1100,7 @@ C         TFALL(I,3) CANNOT BE < TFALL(I,2)
 
 C       *** END OF SPECIAL SO-FFE INITIALIZATION ***
 C       *** SECTION                              ***
-
+        
 C       CHANGE THE INITIAL FUEL LEVELS BASED ON PHOTO SERIES INFO INPUT
 
         CALL OPFIND(1,MYACT(2),J)
@@ -1127,7 +1128,7 @@ C           NEED TO REPROCESS EVENT WHEN CALLED FROM FMMAIN.
             CALL RCDSET (2,.TRUE.)
           ENDIF
         ENDIF
-
+ 
 C       ASSUME THE FUELS ARE UNPILED.
 C       CHANGE THE INITIAL FUEL LEVELS BASED ON INPUT FROM THE USER
 C       FIRST DO FUELHARD (FUELINIT) THEN FUELSOFT
@@ -1213,8 +1214,8 @@ C----------
 
 C     IN FIRST YEAR, SET C-REPORTING REGION FOR FOREST CODES IN CALIFORNIA
         IF ((KODFOR .GE. 500 .AND. KODFOR .LT. 600)
-     >    .OR. KODFOR .GE. 700) ICHABT = 2
+     >    .OR. KODFOR .EQ. 701) ICHABT = 2
 
       RETURN
       END
-
+ 

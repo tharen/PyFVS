@@ -1,6 +1,6 @@
       SUBROUTINE HTCALC(JFOR,SINDX,ISPC,AG,HGUESS,JOSTND,DEBUG)
-      use varcom_mod
       use prgprm_mod
+      use varcom_mod
       implicit none
 
 !f2py intent(in) :: jfor,sindx,ispc,ag
@@ -8,7 +8,7 @@
 !f2py intent(out) :: hguess
 
 C----------
-C  **HTCALC--SO   DATE OF LAST REVISION:  01/07/11
+C  **HTCALC--SO   DATE OF LAST REVISION:  08/19/15
 C----------
 C THIS ROUTINE CALCULATES A POTENTIAL HT GIVEN AN SPECIES SITE AND AGE
 C IT IS USED TO CAL POTHTG AND SITE
@@ -109,7 +109,7 @@ C             R5 USES DUNNING-LEVITATN CURVES
 C----------
       CASE(9)
         SELECT CASE (JFOR)
-        CASE (1:3)
+        CASE (1:3,10)
           TERM=AG*EXP(AG*B3)*B2
           B = SINDX*TERM + B4*TERM*TERM + B5
           TERM2 = 50.0 * EXP(50.0*B3) * B2
@@ -216,7 +216,7 @@ C R5 DUNNING-LEVITAN SITE CURVES
 C----------
       CASE(27)
         SELECT CASE (JFOR)
-        CASE (1:3)
+        CASE (1:3,10)
           TERM = SQRT(AG)-SQRT(50.)
           HGUESS = (SINDX * (1 + B1*TERM)) - B0*TERM
           IF(DEBUG)WRITE(JOSTND,*)' ISPC,B0,B1,SINDX,AG,TERM,HGUESS= ',

@@ -4,7 +4,7 @@
       use prgprm_mod
       implicit none
 C----------
-C  **RDESTB      LAST REVISION:  O8/28/14
+C RD $Id$
 C----------
 C
 C  SUBROUTINE FOR PUTTING REGENERATION ONTO ROOT DISEASE ROOT DISEASE PATCHES
@@ -23,6 +23,9 @@ C
 C  Revision History :
 C   03/07/95 - Last revision date.
 C   08/28/14 Lance R. David (FMSC)
+C     Added implicit none and declared variables.
+C   03/01/2016 Lance R. David (FMSC)
+C     Moved one condition to exit to top.
 C
 C----------------------------------------------------------------------
 C
@@ -35,11 +38,13 @@ C
       INTEGER  IDI, IT, ISPI, J, N
       REAL     ANS, TPAREA, XXX
 
+      IF (IROOT .EQ. 0) RETURN
+
       TPAREA = 0.0
       DO 20 IDI=MINRR,MAXRR
          TPAREA = TPAREA + PAREA(IDI)
-   20 CONTINUE
-      IF (IROOT .EQ. 0 .OR. TPAREA .EQ. 0.0) RETURN
+   20 CONTINUE      
+      IF (TPAREA .EQ. 0.0) RETURN
 C
 C.....PUT TREES INTO OUTSIDE DENSIITY ARRAY (INCLUDING THE FRINGE ARRAY)
 C

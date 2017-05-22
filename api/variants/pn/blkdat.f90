@@ -1,7 +1,6 @@
 module blkdat_mod
     contains
     SUBROUTINE BLKDAT()
-        use plot_mod
         use prgprm_mod
         use coeffs_mod
         use esparm_mod
@@ -10,6 +9,7 @@ module blkdat_mod
         use econ_mod
         use htcal_mod
         use contrl_mod
+        use plot_mod
         use rancom_mod
         use screen_mod
         use varcom_mod

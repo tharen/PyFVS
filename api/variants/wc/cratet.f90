@@ -9,8 +9,7 @@
       use outcom_mod
       use htcal_mod
       use varcom_mod
-
-      IMPLICIT NONE
+      implicit none
 !----------
 !  **CRATET--WC   DATE OF LAST REVISION:  04/06/11
 !----------

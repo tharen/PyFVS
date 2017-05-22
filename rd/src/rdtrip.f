@@ -3,7 +3,7 @@
       use prgprm_mod
       implicit none
 C----------
-C  **RDTRIP      LAST REVISION:  09/04/14
+C  **RDTRIP      LAST REVISION:  03/01/16
 C----------
 C
 C  THIS ROOT DISEASE MODEL SUBROUTINE IS USED
@@ -26,6 +26,10 @@ C      Previous revision date noted was 11/06/89.
 C      Removed unused array PROBO. It was also unused in the old
 C      annosus model.
 C   09/04/14 Lance R. David (FMSC)
+C     Added implicit none and declared variables.
+C   03/01/2016 Lance R. David (FMSC)
+C     Moved one condition to exit to top.
+C
 C
 C----------------------------------------------------------------------
 C
@@ -36,11 +40,14 @@ C
 C
       INTEGER I, IDI, ITFN, ITYP, J, JINF
       REAL    TPAREA, WEIGHT
+
+      IF (IROOT .EQ. 0) RETURN
+
       TPAREA = 0.0
       DO 59 IDI=MINRR,MAXRR
          TPAREA = TPAREA + PAREA(IDI)
-   59 CONTINUE
-      IF (IROOT .EQ. 0 .OR. TPAREA .EQ. 0) RETURN
+   59 CONTINUE     
+      IF (TPAREA .EQ. 0) RETURN
 
       IF (WEIGHT .EQ. 0.6) ITFN = I
 

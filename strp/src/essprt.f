@@ -1,4 +1,4 @@
-      SUBROUTINE ESSPRT(VAR,ISPC,NSPT,PREM,DSTMP)
+      SUBROUTINE ESSPRT(VAR,ISPC,PREM,DSTMP)
       use plot_mod
       use prgprm_mod
       implicit none
@@ -17,8 +17,8 @@ C
 COMMONS
 C----------
       CHARACTER VAR*2
-      INTEGER IAG,INDXAS,ISHAG,ISPC,NASPRT,NMSPRC,NSPT
-      REAL ASTPAR,ASBAR,HTSPRT,PREM,RSHAG,SI,SPA,TREES,DSTMP,ABRTH,STEAR
+      INTEGER IAG,INDXAS,ISHAG,ISPC,NMSPRC
+      REAL ASTPAR,ASBAR,HTSPRT,PREM,RSHAG,SI,SPA,TREES,DSTMP
 C----------
 C  VARIANT AND SPECIES SPECIFIC RULES FOR DETERMINING TPA A SPROUT
 C  RECORD WILL REPRESENT. ASPEN IS HANDLED SEPERATELY IN ENTRY ASSPTN
@@ -679,7 +679,7 @@ C----------
           IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = -1.0 + 0.4 * DSTMP
+            NMSPRC = NINT(-1.0 + 0.4 * DSTMP)
           ELSE
           	NMSPRC = 3
           ENDIF
@@ -692,7 +692,7 @@ C----------
           IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = 0.2 * DSTMP
+            NMSPRC = NINT(0.2 * DSTMP)
           ELSE
           	NMSPRC = 2
           ENDIF
@@ -700,7 +700,7 @@ C----------
           IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = -1.0 + 0.4 * DSTMP
+            NMSPRC = NINT(-1.0 + 0.4 * DSTMP)
           ELSE
           	NMSPRC = 3
           ENDIF
@@ -717,7 +717,7 @@ C----------
           IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = 0.2 * DSTMP
+            NMSPRC = NINT(0.2 * DSTMP)
           ELSE
           	NMSPRC = 2
           ENDIF
@@ -725,7 +725,7 @@ C----------
           IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = -1.0 + 0.4 * DSTMP
+            NMSPRC = NINT(-1.0 + 0.4 * DSTMP)
           ELSE
           	NMSPRC = 3
           ENDIF
@@ -740,7 +740,7 @@ C----------
           IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = 0.2 * DSTMP
+            NMSPRC = NINT(0.2 * DSTMP)
           ELSE
           	NMSPRC = 2
           ENDIF
@@ -748,7 +748,7 @@ C----------
           IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = -1.0 + 0.4 * DSTMP
+            NMSPRC = NINT(-1.0 + 0.4 * DSTMP)
           ELSE
           	NMSPRC = 3
           ENDIF
@@ -767,7 +767,7 @@ C----------
           IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = -1.0 + 0.4 * DSTMP
+            NMSPRC = NINT(-1.0 + 0.4 * DSTMP)
           ELSE
           	NMSPRC = 3
           ENDIF
@@ -798,7 +798,7 @@ C----------
           IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = 0.2 * DSTMP
+            NMSPRC = NINT(0.2 * DSTMP)
           ELSE
           	NMSPRC = 2
           ENDIF
@@ -812,7 +812,7 @@ C----------
         	IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = -1.0 + 0.4 * DSTMP
+            NMSPRC = NINT(-1.0 + 0.4 * DSTMP)
           ELSE
           	NMSPRC = 3
           ENDIF
@@ -853,7 +853,7 @@ C----------
           IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = 0.2 * DSTMP
+            NMSPRC = NINT(0.2 * DSTMP)
           ELSE
           	NMSPRC = 2
           ENDIF
@@ -861,7 +861,7 @@ C----------
         	IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = -1.0 + 0.4 * DSTMP
+            NMSPRC = NINT(-1.0 + 0.4 * DSTMP)
           ELSE
           	NMSPRC = 3
           ENDIF
@@ -894,7 +894,7 @@ C----------
           IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = 0.2 * DSTMP
+            NMSPRC = NINT(0.2 * DSTMP)
           ELSE
           	NMSPRC = 2
           ENDIF
@@ -902,7 +902,7 @@ C----------
         	IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = -1.0 + 0.4 * DSTMP
+            NMSPRC = NINT(-1.0 + 0.4 * DSTMP)
           ELSE
           	NMSPRC = 3
           ENDIF
@@ -917,7 +917,7 @@ C----------
           IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = 0.2 * DSTMP
+            NMSPRC = NINT(0.2 * DSTMP)
           ELSE
           	NMSPRC = 2
           ENDIF
@@ -925,7 +925,7 @@ C----------
         	IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = -1.0 + 0.4 * DSTMP
+            NMSPRC = NINT(-1.0 + 0.4 * DSTMP)
           ELSE
           	NMSPRC = 3
           ENDIF
@@ -940,7 +940,7 @@ C----------
         	IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = -1.0 + 0.4 * DSTMP
+            NMSPRC = NINT(-1.0 + 0.4 * DSTMP)
           ELSE
           	NMSPRC = 3
           ENDIF
@@ -955,7 +955,7 @@ C----------
           IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = 0.2 * DSTMP
+            NMSPRC = NINT(0.2 * DSTMP)
           ELSE
           	NMSPRC = 2
           ENDIF
@@ -963,7 +963,7 @@ C----------
         	IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = -1.0 + 0.4 * DSTMP
+            NMSPRC = NINT(-1.0 + 0.4 * DSTMP)
           ELSE
           	NMSPRC = 3
           ENDIF
@@ -976,7 +976,7 @@ C----------
         	IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = -1.0 + 0.4 * DSTMP
+            NMSPRC = NINT(-1.0 + 0.4 * DSTMP)
           ELSE
           	NMSPRC = 3
           ENDIF
@@ -984,7 +984,7 @@ C----------
           IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = 0.2 * DSTMP
+            NMSPRC = NINT(0.2 * DSTMP)
           ELSE
           	NMSPRC = 2
           ENDIF
@@ -999,7 +999,7 @@ C----------
           IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = 0.2 * DSTMP
+            NMSPRC = NINT(0.2 * DSTMP)
           ELSE
           	NMSPRC = 2
           ENDIF
@@ -1007,7 +1007,7 @@ C----------
           IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = -1.0 + 0.4 * DSTMP
+            NMSPRC = NINT(-1.0 + 0.4 * DSTMP)
           ELSE
           	NMSPRC = 3
           ENDIF
@@ -1022,7 +1022,7 @@ C----------
           IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = 0.2 * DSTMP
+            NMSPRC = NINT(0.2 * DSTMP)
           ELSE
           	NMSPRC = 2
           ENDIF
@@ -1030,7 +1030,7 @@ C----------
           IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = -1.0 + 0.4 * DSTMP
+            NMSPRC = NINT(-1.0 + 0.4 * DSTMP)
           ELSE
           	NMSPRC = 3
           ENDIF
@@ -1045,7 +1045,7 @@ C----------
           IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = 0.2 * DSTMP
+            NMSPRC = NINT(0.2 * DSTMP)
           ELSE
           	NMSPRC = 2
           ENDIF
@@ -1053,7 +1053,7 @@ C----------
           IF(DSTMP.LT.5.0)THEN
         		NMSPRC = 1
         	ELSE IF(DSTMP.GE.5.0.AND.DSTMP.LE.10.0)THEN
-          	NMSPRC = -1.0 + 0.4 * DSTMP
+            NMSPRC = NINT(-1.0 + 0.4 * DSTMP)
           ELSE
           	NMSPRC = 3
           ENDIF

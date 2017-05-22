@@ -8,7 +8,7 @@
       use prgprm_mod
       implicit none
 C----------
-C   **FMCFMD FIRE-SO-DATE OF LAST REVISION: 02/28/08
+C   **FMCFMD FIRE-SO-DATE OF LAST REVISION: 08/24/15
 C----------
 *     SINGLE-STAND VERSION
 *     CALLED FROM: FMBURN
@@ -246,7 +246,7 @@ C     INDUSTRY
 C       701 ASSUMED TO BE CALIFORNIA (GARY DIXON)
 
       IF ((KODFOR .GE. 500 .AND. KODFOR .LT. 600)
-     >    .OR. KODFOR .GE. 700) THEN   ! CALIFORNIA
+     >    .OR. KODFOR .EQ. 701) THEN   ! CALIFORNIA
 C
 C       COMPUTE WEIGHTS FOR DOMINANT SPECIES
 C
@@ -387,12 +387,12 @@ C
      >              EQWT(10) = EQWT(10) + WD(I) * WT1(1) * WT2(2)
 
                 ENDIF
-
+               
               CASE DEFAULT
              ! fm 8 is the default for R5 when none of the above
              ! species is dominant
                 EQWT(8) = EQWT(8) + WD(I)
-
+                
             END SELECT
           ENDIF
         ENDDO

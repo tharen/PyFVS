@@ -1,5 +1,5 @@
 module fvsstdcm_mod
-    !ODE SEGMENT FVSSTDCM
+    !CODE SEGMENT FVSSTDCM
     !----------
     !  **FVSSTDCM---COMMON      DATE OF LAST REVISION:  03/01/2012
     !----------

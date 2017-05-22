@@ -12,8 +12,7 @@
       use htcal_mod
       use pden_mod
       use varcom_mod
-
-      IMPLICIT NONE
+      implicit none
 !----------
 !  **HTGF--WC    DATE OF LAST REVISION:  07/08/11
 !----------

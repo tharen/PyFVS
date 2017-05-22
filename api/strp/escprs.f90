@@ -6,8 +6,7 @@ SUBROUTINE ESCPRS (ITRGT,DEBUG)
       use eshap_mod
       use arrays_mod
       use outcom_mod
-
-      IMPLICIT NONE
+      implicit none
 !----------
 !  **ESCPRS DATE OF LAST REVISION:   06/21/11
 !----------

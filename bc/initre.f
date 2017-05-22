@@ -7,6 +7,7 @@
       use contrl_mod
       use coeffs_mod
       use econ_mod
+      use keycom_mod
       use outcom_mod
       use volstd_mod
       use screen_mod
@@ -22,7 +23,6 @@ C
 C  THIS ROUTINE PROCESSES OPTIONS AND INITIATES THE
 C  PROGNOSIS RUN.  CALLED FROM **MAIN**.
 C
-      INCLUDE  'KEYCOM.F77'
       INCLUDE  'CWDCOM.F77'
       INCLUDE  'BCPLOT.F77'
 C

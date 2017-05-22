@@ -66,7 +66,6 @@ C
          BARK=BRATIO(IS,D,HT(I))
          IF(DG(I) .GT. 0.) THEN
            DDS=(DG(I)*(2.0*BARK*D+DG(I)))*SCALE
-!           DG(I)=SQRT((D*BARK)**2+DDS)-BARK*D
            DG(I)=SQRT(((D*BARK)*(D*BARK))+DDS)-BARK*D
          ELSE
            DG(I)=0.0

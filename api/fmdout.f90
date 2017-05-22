@@ -3,18 +3,15 @@
 
       use prgprm_mod
       use fmparm_mod
-
       use plot_mod
       use contrl_mod
       use arrays_mod
-
       use fmcom_mod
       use fmfcom_mod
-
-      IMPLICIT NONE
+      implicit none
 !----------
-!  $Id: fmdout.f 1333 2014-10-23 17:49:02Z tod.haren $
-!  $Id: fmdout.f 1333 2014-10-23 17:49:02Z tod.haren $
+!  $Id$
+!  $Id$
 !----------
 !     SINGLE-STAND VERSION
 !     CALLED FROM: FMMAIN

@@ -2,7 +2,6 @@ module cubrds_mod
     contains
     subroutine CUBRDS()
         use volstd_mod
-        !      use prgprm_mod
         implicit none
         !----------
         !  **CUBRDS--WC    DATE OF LAST REVISION:  05/19/08

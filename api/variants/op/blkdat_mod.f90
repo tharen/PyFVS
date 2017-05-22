@@ -1,19 +1,19 @@
 module blkdat_mod
     contains
     SUBROUTINE BLKDAT()
-        use htcal_mod
-        use fvsstdcm_mod
-        use pden_mod
-        use esparm_mod
-        use rancom_mod
-        use contrl_mod
-        use coeffs_mod
-        use econ_mod
-        use plot_mod
-        use screen_mod
-        use escomn_mod
-        use varcom_mod
         use prgprm_mod
+        use coeffs_mod
+        use esparm_mod
+        use escomn_mod
+        use pden_mod
+        use econ_mod
+        use htcal_mod
+        use contrl_mod
+        use plot_mod
+        use rancom_mod
+        use screen_mod
+        use varcom_mod
+        use fvsstdcm_mod
         implicit none
         !----------
         !  **BLKDAT--OP   DATE OF LAST REVISION:  04/19/10

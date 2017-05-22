@@ -1,27 +1,27 @@
       SUBROUTINE GETSTD
-      use htcal_mod
-      use multcm_mod
-      use fvsstdcm_mod
-      use plot_mod
-      use arrays_mod
+      use prgprm_mod
       use esparm_mod
-      use rancom_mod
-      use estree_mod
-      use screen_mod
-      use contrl_mod
-      use svdata_mod
+      use arrays_mod
       use coeffs_mod
+      use contrl_mod
+      use calcom_mod
       use econ_mod
       use eshap_mod
+      use escomn_mod
+      use estcor_mod
+      use estree_mod
+      use htcal_mod
+      use multcm_mod
       use outcom_mod
       use pden_mod
+      use plot_mod
       use volstd_mod
+      use rancom_mod
       use esrncm_mod
-      use escomn_mod
       use varcom_mod
-      use prgprm_mod
-      use calcom_mod
-      use estcor_mod
+      use svdata_mod
+      use fvsstdcm_mod
+      use screen_mod
       implicit none
 C----------
 C  $Id$
@@ -64,14 +64,17 @@ C     ARE THE RANDOM NUMBER SEEDS, WHICH ARE EQUIVALENCED TO REAL
 C     ARRAYS OF LENGTH 2.
 C
       INTEGER MXL,MXR,MXI,IRECLN
-      PARAMETER (MXR=130,MXL=40,MXI=119,IRECLN=1024)
+      PARAMETER (MXR=131,MXL=40,MXI=120,IRECLN=1024)
       CHARACTER*40 CNAME
       INTEGER ILIMIT,IPNT,K,I,II,KODE
       INTEGER INTS(MXI)
-      LOGICAL LOGICS(MXL),LCVGO,LMORED,LRR1,LRR2,LFM,LBWE,LCLM,LWRD,LZ
+      LOGICAL LOGICS(MXL),LCVGO,LMORED,LRR1,LRR2,LFM,LBWE,LCLM,LWRD,
+     >        LCONN
       REAL REALS(MXR), ROSUM(20,MAXCY1),
      >          RSEED(2), ESSEED(2), RDTREE(MAXTRE),
      >          SVSED0(2),SVSED1(2)
+! NOTE: EQUIVALENCE'd arrays are now transfer'd directly
+! FIXME: REALS, LOGICS, INTS is not handled
 !      EQUIVALENCE (ROSUM,IOSUM),(RSEED,S0),(ESSEED,ESS0),(WK6,REALS),
 !     >            (WK6,LOGICS),(WK6,INTS),(IDTREE,RDTREE),
 !     >            (SVSED0,SVS0),(SVSED1,SVS1)
@@ -205,7 +208,7 @@ C
       NPTGRP   =  INTS(117)
       MAXTOP   =  INTS(118)      ! DBSTK common
       MAXLEN   =  INTS(119)      ! DBSTK common
-
+	  GLOCCC   =  INTS(120)
 C
 C     GET THE INTEGER ARRAYS.
 C
@@ -355,6 +358,8 @@ C
       CALL LFREAD (WK3,IPNT,ILIMIT,LTSTV5, ITST5,  2)
       CALL LFREAD (WK3,IPNT,ILIMIT,LSPCWE,MAXSP,   2)
       CALL LFREAD (WK3,IPNT,ILIMIT,LREG  ,MXLREG,  2)
+      CALL LFREAD (WK3,IPNT,ILIMIT,LEAVESP,MAXSP,  2)
+C
 C
 C     GET THE REAL SCALARS.
 C
@@ -488,7 +493,8 @@ C
       SDIBC2 = REALS (127)
       DBHZEIDE =REALS(128)
       DBHSTAGE= REALS (129)
-      DR016  = REALS (130)
+      DR016  = REALS (130)  
+	  CCCOEF = REALS(131)
 C
 C     GET THE REAL ARRAYS.
 C
@@ -643,8 +649,8 @@ C
       K=ICYC+1
       DO 20 I=1,K
       CALL BFREAD (WK3,IPNT,ILIMIT,ROSUM(1,I),20,     2)
-      IOSUM(1,I) = TRANSFER(ROSUM(1,I),IOSUM(1,I))
    20 CONTINUE
+      iosum(1,:) = transfer(rosum(1,:),iosum(1,:))
       CALL BFREAD (WK3,IPNT,ILIMIT,RSEED,   2,        2)
       S0 = TRANSFER(RSEED,S0)
       CALL BFREAD (WK3,IPNT,ILIMIT,SDIDEF, MAXSP,     2)
@@ -680,9 +686,9 @@ C
       CALL BFREAD (WK3,IPNT,ILIMIT,ZRAND,  ITRN,      2)
 C
       CALL BFREAD (WK3,IPNT,ILIMIT,SVSED0, 2,         2)
-      svs0 = transfer(svsed0,svs0)
+      SVS0 = TRANSFER(SVSED0, SVS0)
       CALL BFREAD (WK3,IPNT,ILIMIT,SVSED1, 2,         2)
-      svs1 = transfer(svsed1,svs1)
+      SVS0 = TRANSFER(SVSED1, SVS1)
       CALL BFREAD (WK3,IPNT,ILIMIT,CRNDIA, NDEAD,     2)
       CALL BFREAD (WK3,IPNT,ILIMIT,CRNRTO, NDEAD,     2)
       CALL BFREAD (WK3,IPNT,ILIMIT,OLEN,   NDEAD,     2)
@@ -735,10 +741,7 @@ C
 C     READ THE VARIANT SPECIFIC VARIABLES.
 C
       CALL VARGET (WK3,IPNT,ILIMIT,REALS,LOGICS,INTS)
-      ! FIXME: This probably does not fit with the original logic
-      WK6 = TRANSFER(REALS,WK6)
-      WK6 = TRANSFER(LOGICS,WK6)
-      WK6 = TRANSFER(INTS,WK6)
+
 C
 C     GET THE COVER VARIABLES...IF THE COVER MODEL IS BEING USED
 C     IN THIS STAND.
@@ -804,19 +807,21 @@ C     END OF NUMERIC AND LOGICAL READ.  READ IN CHARACTERS.
 C
       CALL CHGET
 C
-C     REOPEN ESTABLISHMENT MODEL REPORT FILE.
+C     REOPEN ESTABLISHMENT MODEL REPORT FILE IF PRESENT.
 C
       CNAME=TRIM(KWDFIL)//'_RegenRpt.txt'
-      CALL MYOPEN (JOREGT,CNAME,3,133, 0,1,1,0,KODE)
-      IF(KODE.GT.0) THEN
-        WRITE(*,'(''OPEN FAILED FOR '',I4)') JOREGT
-      ELSE
-        DO
-          READ (JOREGT,*,END=100)
-        ENDDO
+      INQUIRE(FILE=TRIM(CNAME),exist=LCONN)
+      IF (LCONN) THEN
+        CALL MYOPEN (JOREGT,CNAME,3,133, 0,1,1,0,KODE)
+        IF(KODE.GT.0) THEN
+          WRITE(*,'(''OPEN FAILED FOR '',I4)') JOREGT
+        ELSE
+          DO
+            READ (JOREGT,*,END=100)
+          ENDDO
+  100     BACKSPACE (JOREGT)
+        ENDIF
       ENDIF
-  100   BACKSPACE (JOREGT)
-
 
       RETURN
       END
