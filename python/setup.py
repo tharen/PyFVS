@@ -26,6 +26,7 @@ version_tmp = """\
 __version__ = '{version:}'
 __status__ = '{status:}'
 __git_tag__ = '{desc:}'
+__git_commit__ = '{commit:}'
 """
 
 version_path = 'pyfvs/_version.py'
@@ -33,14 +34,22 @@ version_path = 'pyfvs/_version.py'
 def update_version():
     try:
         desc = subprocess.check_output(
-                ['git', 'branch']
-                ).decode('utf-8').split()
-        branch = desc[1].strip()
+                ['git', 'symbolic-ref','HEAD']).decode('utf-8').strip()
+        m = re.match('refs/heads/(.*)', desc)
+        branch = m.groups()[0]
         
     except:
         print('Error: git must be available in the PATH environment.')
         raise
     
+    try:
+        commit = subprocess.check_output(
+                ['git', 'rev-parse', '--short', '--verify', 'HEAD']
+                ).decode('utf-8').strip()
+    except:
+        print('Error: git must be available in the PATH environment.')
+        raise
+                
     if branch=='master':
         try:
             desc = subprocess.check_output(
@@ -50,7 +59,7 @@ def update_version():
         except:
             print('Error: git must be available in the PATH environment.')
             raise
-
+        
         if desc.startswith('fatal'):
             print('Current folder is not a Git repo, skipping version update.')
             return
