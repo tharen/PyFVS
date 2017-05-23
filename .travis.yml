@@ -8,17 +8,17 @@ cache:
 
 language: python
 python:
-  # - '2.7'
+  - '2.7'
   - '3.4'
-  # - '3.5'
-  # - '3.6'
+  - '3.5'
+  - '3.6'
   
 env:
   global:
     - FVS_STATUS=alpha
     - BUILD_ROOT=${TRAVIS_BUILD_DIR}/bin/build
-    - FVS_VARIANTS="pnc;wcc"
-    # - FVS_VARIANTS="pnc;wcc;soc;cac;ecc;oc;op"
+    # - FVS_VARIANTS="pnc;wcc"
+    - FVS_VARIANTS="pnc;wcc;soc;cac;ecc;oc;op"
     - MPLBACKEND="agg"
 
 git:

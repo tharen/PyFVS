@@ -19,7 +19,7 @@ import logging.config
 # from .fvs import FVS, FVSTrees
 
 # If the __version__ file is present, use it.
-from ._version import __version__, __status__, __git_tag__
+from ._version import __version__, __git_commit__, __git_describe__
 
 # TODO: Look in local path as well as user home path
 # Use a config file written as a Python dictionary.
