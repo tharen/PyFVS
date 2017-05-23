@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if python python/misc/clean_version.py ; then
+    git add python/pyfvs/_version.py
+    echo "clean_version.py ran successfully."
+    exit 0
+    
+else
+    echo "clean_version.py ran failed."
+    exit 1
+    
+fi

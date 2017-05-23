@@ -1,5 +1,10 @@
 cd ${TRAVIS_BUILD_DIR}
 
+# Ensure the version information is consistent
+pushd python
+python setup.py version
+popd
+
 # make the folder to build from, e.g. bin/build
 mkdir -p ${BUILD_ROOT}
 cd ${BUILD_ROOT}
@@ -21,9 +26,6 @@ cmake -G"Unix Makefiles" .. \
 cmake --build . --target install 2> build_err.log
 
 cd Open-FVS/python
-
-# Ensure the version information is consistent
-python setup.py version
 
 # Build the additional Python extensions
 python setup.py build_ext --inplace

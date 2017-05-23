@@ -7,9 +7,6 @@ set ARCHIVE_NAME=pyfvs-%PKG_VERSION%-Python%PYTHON_VERSION%_%PYTHON_ARCH%-window
 
 cd Open-FVS\python
 
-:: Ensure the version info is consistent
-call python setup.py version
-
 :: Create the wheel
 call python setup.py build_ext --inplace --compiler=mingw32
 call python setup.py bdist_wheel

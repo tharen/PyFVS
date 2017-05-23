@@ -22,6 +22,10 @@ del %MINGW_PATH%\cmake.exe
 
 call activate pyfvs
 
+pushd python
+call python setup.py version
+popd
+
 call python -c "import sys;print(sys.version)"
 call python -c "import sys;print(sys.executable)"
 
