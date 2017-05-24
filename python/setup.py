@@ -23,57 +23,57 @@ def update_version():
     """
     Update the contents of _version.py with Git metadata.
     """
+    try:
+        r = subprocess.check_output(['git',])
+        
+    except:
+        print('Error: git must be available in the PATH environment.')
+        raise
+        
     contents = open(version_path).read()
     s = re.search(r'__version__ = \'(?P<version>.*)\'', contents)
     version = s.group('version')
     
-    try:
-        commit = subprocess.check_output(
-                ['git', 'rev-parse', '--short', '--verify', 'HEAD']
-                ).decode('utf-8').strip()
-        
-        # Check for dirty state
-        r = subprocess.check_output(
-                ['git', 'status', '--short', '-uno']
-                ).decode('utf-8').strip()
-        if r:
-            commit += '-dirty'
-
-    except:
-        print('Error getting the current Git commit.')
-        raise
+    commit = subprocess.check_output(
+            ['git', 'rev-parse', '--short', '--verify', 'HEAD']
+            ).decode('utf-8').strip()
+    
+    # Check for dirty state
+    r = subprocess.check_output(
+            ['git', 'status', '--short', '-uno']
+            ).decode('utf-8').strip()
+    if r:
+        commit += '-dirty'
     
     contents = re.sub(
             r"(__git_commit__) = '(.*)'"
             , r"\1 = '{}'".format(commit)
             , contents)
     
-    # Check for an appropriate tag
     try:
         desc = subprocess.check_output(
                 ['git', 'describe', '--tags', '--dirty']
                 ).decode('utf-8').strip()
         
+        # Check the most recent tag version
+        m = re.match('pyfvs-v(?P<version>\d+\.\d+\.\d+)(.*)', desc)
+        if m:
+            tag_version = m.group('version')
+        else:
+            tag_version = version
+        
+        # If this is a more recent version, e.g. release canditate
+        if version>tag_version:
+            desc = ''
+    
     except:
-        print('Error: git must be available in the PATH environment.')
-        raise
-    
-    # Check the most recent tag version
-    m = re.match('pyfvs-v(?P<version>\d+\.\d+\.\d+)(.*)', desc)
-    if m:
-        tag_version = m.group('version')
-    else:
-        tag_version = version
-    
-    # If this is a more recent version, e.g. release canditate
-    if version>tag_version:
+        # For shallow clones git describe may fail.
         desc = ''
         
     contents = re.sub(
             r"(__git_describe__) = '(.*)'"
             , r"\1 = '{}'".format(desc)
             , contents)
-
 
     fn = os.path.join(os.path.dirname(__file__), version_path)
     with open(fn, 'w') as fp:
