@@ -146,7 +146,7 @@ setup(
     , url='https://github.com/tharen/PyFVS'
     , author="Tod Haren"
     , author_email="tod.haren@gmail.com"
-    , setup_requires=['cython', 'numpy>=1.11', 'pytest-runner']
+    , setup_requires=['cython', 'numpy>=1.11', 'pytest-runner','twine']
     , tests_require=['pytest']
     , install_requires=['numpy>=1.11', 'pandas']
     , ext_modules=extensions
