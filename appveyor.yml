@@ -12,9 +12,9 @@ environment:
     # FVS_VARIANTS: "pnc;wcc;soc;cac;ecc;oc;op"
     FVS_VARIANTS: "pnc;wcc"
     
-    PYPI_PASSWORD:
+    TWINE_PASSWORD:
         secure: lLhgSTVGnQNINPD18gIe2g==
-    PYPI_USERNAME: tod.haren
+    TWINE_USERNAME: tod.haren
     
     MPLBACKEND: "agg"
     
@@ -117,8 +117,7 @@ deploy:
 deploy_script:
   # Adapted from: https://github.com/AndrewAnnex/SpiceyPy/blob/master/appveyor.yml
   - echo "Upload tagged commits to PyPI."
-  - conda install twine
-  - call .appveyor\\deploy_pypi.bat %PYPI_PASSWORD%
+  - call .appveyor\\deploy_pypi.bat
     
 # on_finish:
   # # Pause the build for remote desktop access

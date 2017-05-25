@@ -33,9 +33,10 @@ python setup.py build_ext --inplace
 # Create archives
 mkdir ${TRAVIS_BUILD_DIR}/artifacts
 
-# Create the wheel
+# Create the wheel and source archive
 python setup.py bdist_wheel
-mv dist/*.whl ${TRAVIS_BUILD_DIR}/artifacts/.
+python setup.py sdist
+mv dist/* ${TRAVIS_BUILD_DIR}/artifacts/.
 
 # Create the project zip archive
 # FIXME: After fixing the install target, adapt this to leverage the sdist command

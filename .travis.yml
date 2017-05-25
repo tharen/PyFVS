@@ -19,6 +19,11 @@ env:
     - BUILD_ROOT=${TRAVIS_BUILD_DIR}/bin/build
     - FVS_VARIANTS="pnc;wcc"
     # - FVS_VARIANTS="pnc;wcc;soc;cac;ecc;oc;op"
+    
+    - TWINE_USERNAME="tod.haren"
+    # travis encrypt TWINE_PASSWORD=<plain text>
+    - secure: "CmzP/HGhnhky+ij0Js+jr5CtaryAAzFZ/Z11gQH9zZbKmx5mlejvDZPK2lamJPpMh1Hl0dtSjQt+cWGyjlG7QhO98XQ/zZs0bXYRkX0Rhng+CxZGMLIsUkNGlHiOnLE4aKNpHQsRfFBMPzIWTV1WhJy8kO9HWAvJWqRFautyHvqzjjQMhvkVcZxc7B04rW+KcIiLJmLfif90H4jQTvKL98qi+crQFqzAR4YKperHlwjyjSoNhElSCGXXqaKpnqt8+ryQuyuUrU8c/9V/JSdElRgDX9wPkpSjWDOUV26TyVirowNDyEA5kBvT0IqPTwhu5fS1mnqDoRWBHFAYdrOS2qaSSGwQ60OWwdkWYN3pM1a8W2te0dwo8PiueIEkZmLdg7Fs2i2MFtpaLdVLrneRQjizIoIpAL12EZXdCk9zbGomviU78boZgd1YC8QHaztkFrfHf7Rf3buH7U/+Su8szGPx4HzygReqXNbNKXvOJlIeDvP6CHBGjOlY9y2Lq2vR0kZwNTlY+/YFWiD9XQXgsHvCOa8r9MQJmBR+cj21Acgt9PdhWONp2y/n2CtQ/aJUUbfnwYjhBrdDhUwWx9gfmNmFgq0z5yb+U7nES/Rgoc97IaZitZk+XQMV/8V5hFiT1LQqbO2eCnHkG1sgMhSedyqP2UN2E0ANhexhsxizSqI="
+    
     - MPLBACKEND="agg"
 
 git:
@@ -104,22 +109,15 @@ deploy:
       repo: tharen/PyFVS
       all_branches: true
       
-  # Python Packaging Index
-  - provider: pypi
-    user: tod.haren
-    password:
-      secure: "ZlBLqkoSCRsY1Z5+JDBnoSphXeM/KH30telPClevJpMnOdgzbLaKKj7P6QRHDGSoPaIkoz68DcyyX5bBcJEVh3FXzEix7FPhKSVwM8i5i6VlLK4ykK+PutF7+S80aKR2EAKem9dJ0mLxA3RnxfdwT2oxi5x1+HctGAkRy48CQjgDm46wR7cYIeSK+ktsLhq1BPajwKQf+4eq/6KgRD+crFXWhGebojc2HDt/V/P0jOX748Oj+P/InszKM8YsC/1mP93u+RS3EGYUO0JPcVrobRQveVba4XcyPL5IfiakfLi1tUUfzoLYBl2QPAnTKveiOVP5GE1j9merUTtFPHeCeoGbjhFJl4T2oJK+FNSd9Q4mSGIgxB99SdiX1bRim0/4AC461LWYy4QdDa34j32c+6o1slLPNTV2nnRaMHhqsbu+xpimUJntPgFpCh3ECKljvFzvYMkKXCWFrw0GE2YIXBVNxQNbGJlQR44XtCwWj/CTHOLjryAktw7mydMcmkoCojS+/IN91eqR7SMKmjUlZqvoqBvHKzUjlImIZv7AESHK+E1oQsdw4GSasjLqb0C+6LsuLiHQrj7AkaPSnvXvD8sFKxEybVYSrUuNmC2+aTV8R+rrRt1Nujy1/aCpTlKRcyPyUtOcK3cDyxhiQ3y8okaDSo6vXuS6LTvDqPc5PLw="
-    on:
-      tags: true
-      branch: master
-    distributions: "sdist bdist_wheel"
-    
-  - provider: pypi
-    server: https://testpypi.python.org/pypi
-    user: tod.haren
-    password:
-      secure: "ZlBLqkoSCRsY1Z5+JDBnoSphXeM/KH30telPClevJpMnOdgzbLaKKj7P6QRHDGSoPaIkoz68DcyyX5bBcJEVh3FXzEix7FPhKSVwM8i5i6VlLK4ykK+PutF7+S80aKR2EAKem9dJ0mLxA3RnxfdwT2oxi5x1+HctGAkRy48CQjgDm46wR7cYIeSK+ktsLhq1BPajwKQf+4eq/6KgRD+crFXWhGebojc2HDt/V/P0jOX748Oj+P/InszKM8YsC/1mP93u+RS3EGYUO0JPcVrobRQveVba4XcyPL5IfiakfLi1tUUfzoLYBl2QPAnTKveiOVP5GE1j9merUTtFPHeCeoGbjhFJl4T2oJK+FNSd9Q4mSGIgxB99SdiX1bRim0/4AC461LWYy4QdDa34j32c+6o1slLPNTV2nnRaMHhqsbu+xpimUJntPgFpCh3ECKljvFzvYMkKXCWFrw0GE2YIXBVNxQNbGJlQR44XtCwWj/CTHOLjryAktw7mydMcmkoCojS+/IN91eqR7SMKmjUlZqvoqBvHKzUjlImIZv7AESHK+E1oQsdw4GSasjLqb0C+6LsuLiHQrj7AkaPSnvXvD8sFKxEybVYSrUuNmC2+aTV8R+rrRt1Nujy1/aCpTlKRcyPyUtOcK3cDyxhiQ3y8okaDSo6vXuS6LTvDqPc5PLw="
+  - provider: script
+    script: .travis-ci/deploy_pypi.sh
     on:
       tags: false
       branch: dev
-    distributions: "sdist bdist_wheel"
+      
+  - provider: script
+    script: .travis-ci/deploy_pypi.sh
+    on:
+      tags: true
+      branch: master
+      
