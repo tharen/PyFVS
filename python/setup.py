@@ -24,7 +24,7 @@ def update_version():
     Update the contents of _version.py with Git metadata.
     """
     try:
-        r = subprocess.check_output(['git',])
+        r = subprocess.check_output(['git', 'status'])
         
     except:
         print('Error: git must be available in the PATH environment.')
@@ -144,6 +144,7 @@ setup(
     , description=description
     , long_description=long_desc
     , url='https://github.com/tharen/PyFVS'
+    , download_url='https://github.com/tharen/PyFVS/archive/master.zip'
     , author="Tod Haren"
     , author_email="tod.haren@gmail.com"
     , setup_requires=['cython', 'numpy>=1.11', 'pytest-runner','twine']

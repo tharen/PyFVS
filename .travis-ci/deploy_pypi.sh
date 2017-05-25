@@ -4,7 +4,6 @@
 
 # python setup.py artifacts are moved relative to the build dir.
 pushd ${TRAVIS_BUILD_DIR}/artifacts
-pip install twine
 
 if [ $TRAVIS_BRANCH = 'dev' ]; then
   TWINE_REPOSITORY_URL=https://testpypi.python.org
