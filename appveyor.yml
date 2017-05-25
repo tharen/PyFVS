@@ -116,7 +116,7 @@ deploy:
 
 deploy_script:
   # Adapted from: https://github.com/AndrewAnnex/SpiceyPy/blob/master/appveyor.yml
-  - echo "Upload tagged commits to PyPI."
+  - echo "Upload to PyPI."
   - call .appveyor\\deploy_pypi.bat
     
 # on_finish:

@@ -112,3 +112,5 @@ deploy:
   - provider: script
     skip_cleanup: true
     script: .travis-ci/deploy_pypi.sh
+    on:
+      all_branches: true
