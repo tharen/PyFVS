@@ -11,6 +11,7 @@ call python -c "import sys;print(sys.version)"
 
 :: Move into the package parent folder
 cd %APPVEYOR_BUILD_FOLDER%
+:: Install the compiled wheel
 call pip install --no-index --find-links . pyfvs
 
 :: Execute all test scripts

@@ -1,14 +1,14 @@
 sudo: false
-cache:
-    apt: true
-    directories:
-    - $HOME/.cache/pip
-    - $HOME/miniconda
-    - $HOME/download
+# cache:
+    # apt: true
+    # directories:
+    # - $HOME/.cache/pip
+    # - $HOME/miniconda
+    # - $HOME/download
 
 language: python
 python:
-  # - '2.7'
+  - '2.7'
   - '3.4'
   # - '3.5'
   # - '3.6'
@@ -21,8 +21,8 @@ env:
     # - FVS_VARIANTS="pnc;wcc;soc;cac;ecc;oc;op"
     
     - TWINE_USERNAME="tod.haren"
-    # travis encrypt TWINE_PASSWORD=<plain text>
-    - secure: "CmzP/HGhnhky+ij0Js+jr5CtaryAAzFZ/Z11gQH9zZbKmx5mlejvDZPK2lamJPpMh1Hl0dtSjQt+cWGyjlG7QhO98XQ/zZs0bXYRkX0Rhng+CxZGMLIsUkNGlHiOnLE4aKNpHQsRfFBMPzIWTV1WhJy8kO9HWAvJWqRFautyHvqzjjQMhvkVcZxc7B04rW+KcIiLJmLfif90H4jQTvKL98qi+crQFqzAR4YKperHlwjyjSoNhElSCGXXqaKpnqt8+ryQuyuUrU8c/9V/JSdElRgDX9wPkpSjWDOUV26TyVirowNDyEA5kBvT0IqPTwhu5fS1mnqDoRWBHFAYdrOS2qaSSGwQ60OWwdkWYN3pM1a8W2te0dwo8PiueIEkZmLdg7Fs2i2MFtpaLdVLrneRQjizIoIpAL12EZXdCk9zbGomviU78boZgd1YC8QHaztkFrfHf7Rf3buH7U/+Su8szGPx4HzygReqXNbNKXvOJlIeDvP6CHBGjOlY9y2Lq2vR0kZwNTlY+/YFWiD9XQXgsHvCOa8r9MQJmBR+cj21Acgt9PdhWONp2y/n2CtQ/aJUUbfnwYjhBrdDhUwWx9gfmNmFgq0z5yb+U7nES/Rgoc97IaZitZk+XQMV/8V5hFiT1LQqbO2eCnHkG1sgMhSedyqP2UN2E0ANhexhsxizSqI="
+    # travis encrypt TWINE_PASSWORD=<plain text> -r tharen/testing
+    - secure: "srfuDKb4QWIE5U/u3h7qlsZc/3rokbgAEdagWL5wzrh3MQTqpL8RW0eQFbdp21QD2ZS9CXzeKQDyzqjaMmF5FNE9FqYL3Y66EC9UBhYAqAG6Lf0CbCiBMEK20yHrXyGQ3+bewY4WyTvVidow9pEeW5GdLVZJPTHautKsaNdEXqiqvBUwSNrCtWUVxippka6SizIKI1+yYzlbB/smia4BAOPnw/vkhNhX4iicnADrG+NvPbH6VyXtJqETXTgZ3yFrpa1mTw6isV4HArLSf82puTwPKUWVgOfku0Mmgxcd7RfdvfqO6rMvQH2KtgOyHHCUZqMEX32BGNt1c/fkSrhLpDMZHExUhscePfgyRxCOZE+2QrlcoMjtpZMTWtuYJvk5iNXleGi04jmY5QbAxlaFHjS/En6mnAWH77RkDZoEnO8FxTAXjdPs3Ubq65lr4VhK6VWU4hlbvZyB12lvxZfSm7veE/coFks2YczvZgq95FCNxw57KF4fCxhGqr94R/t3ZVhLRlNp1aMU4xx8VoSza4BhQbAUA2asazQHnbkA3sYd1bnz8vKwGc5t507ktcxCU9WA8w2vFpuBIbvIf5KiyqQFw7SdBso0s45FFdESlY+szGR56g3a3rFlDjIl6jw9ayh4yN0wtI+6gnrIoXBweGt3tK5qb7uqZ+UA+tKd7oU="
     
     - MPLBACKEND="agg"
 
@@ -45,9 +45,9 @@ addons:
 before_install:
   - source .travis-ci/install_miniconda.sh
   - export PATH="$HOME/miniconda/bin:$PATH"
-  - hash -r
   - conda config --set always_yes yes --set changeps1 no
-  - conda update -q conda
+  - conda config --add channels conda-forge
+  - hash -r
   # Useful for debugging any issues with conda
   - conda info -a
   # Edit the environment.yml file for the target Python version
@@ -62,11 +62,9 @@ install:
 
 script:
   # build.sh compiles the Open-FVS binaries and builds the Python wheel and archive
+  # Run tests after a successful build, otherwise bail.
   - source ${TRAVIS_BUILD_DIR}/.travis-ci/build.sh
-  
-  # Test the wheel
   - pip install --no-index --find-links ${TRAVIS_BUILD_DIR}/artifacts pyfvs
-  - pyfvs --run-tests
   - pytest -rsx --pyargs pyfvs.test
   - conda install matplotlib
   - pytest ${TRAVIS_BUILD_DIR}/python/pyfvs/examples/demo.py
@@ -78,7 +76,11 @@ after_failure:
   - "cat ${BUILD_ROOT}/f2py_pnc.log"
 
 after_success:
-  - ls ${TRAVIS_BUILD_DIR}/artifacts
+  # Deploy here to run in the build environment
+  # PYPI doesn't accept compiled wheels for Linux.
+  # - conda install twine
+  # - chmod +x ${TRAVIS_BUILD_DIR}/.travis-ci/deploy_pypi.sh
+  # - ${TRAVIS_BUILD_DIR}/.travis-ci/deploy_pypi.sh
 
 deploy:
   # GitHub Releases
@@ -107,10 +109,4 @@ deploy:
     acl: public_read
     on:
       repo: tharen/PyFVS
-      all_branches: true
-      
-  - provider: script
-    skip_cleanup: true
-    script: .travis-ci/deploy_pypi.sh
-    on:
       all_branches: true

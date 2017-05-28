@@ -810,6 +810,7 @@ if (WITH_PYEXT)
             DESTINATION python
             FILES_MATCHING REGEX ".*\\.(py|pyx|cfg|rst|md|key|tre|save)$"
             PATTERN "__pycache__" EXCLUDE
+            PATTERN ".eggs"
             PATTERN "*genrpt.txt" EXCLUDE
             )
 
