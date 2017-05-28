@@ -1,4 +1,4 @@
-version: version: 0.0.13dev5-{build}
+version: 0.0.13dev5-{build}
 
 environment:
   global:
