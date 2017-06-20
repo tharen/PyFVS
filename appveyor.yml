@@ -1,4 +1,4 @@
-version: 0.0.13dev5-{build}
+version: 0.0.13dev6-{build}
 
 environment:
   global:
@@ -6,18 +6,19 @@ environment:
     MINGW_PATH: "C:\\mingw-w64\\x86_64-6.3.0-posix-seh-rt_v5-rev1\\mingw64"
     
     # FVS_VARIANTS: "pnc;wcc;soc;cac;ecc;oc;op"
-    FVS_VARIANTS: "pnc"
+    FVS_VARIANTS: "pnc;wcc"
     
     TWINE_PASSWORD:
         secure: lLhgSTVGnQNINPD18gIe2g==
-    TWINE_USERNAME: tod.haren
+    TWINE_USERNAME:
+        secure: 8hDc5xW8gYDuUGz/TNWNoA==
     
   matrix:
     # https://www.appveyor.com/docs/build-environment/#miniconda
     
-    # - MINICONDA: "C:\\Miniconda-x64"
-      # PYTHON_VERSION: "2.7"
-      # PYTHON_ARCH: "64"
+    - MINICONDA: "C:\\Miniconda-x64"
+      PYTHON_VERSION: "2.7"
+      PYTHON_ARCH: "64"
       
     - MINICONDA: "C:\\Miniconda3-x64"
       PYTHON_VERSION: "3.4"

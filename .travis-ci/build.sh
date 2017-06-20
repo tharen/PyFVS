@@ -43,6 +43,6 @@ cp dist/* ${TRAVIS_BUILD_DIR}/artifacts/.
 # Create the project zip archive
 # FIXME: After fixing the install target, adapt this to leverage the sdist command
 cd ${BUILD_ROOT}
-7z a -bd ${TRAVIS_BUILD_DIR}/artifacts/${ARCHIVE_NAME} Open-FVS/*
+7z a -bd ${TRAVIS_BUILD_DIR}/artifacts/${ARCHIVE_NAME}-build.zip Open-FVS/*
 
 cd ${TRAVIS_BUILD_DIR}

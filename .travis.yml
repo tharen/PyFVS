@@ -20,9 +20,10 @@ env:
     - FVS_VARIANTS="pnc;wcc"
     # - FVS_VARIANTS="pnc;wcc;soc;cac;ecc;oc;op"
     
-    - TWINE_USERNAME="tod.haren"
-    # travis encrypt TWINE_PASSWORD=<plain text> -r tharen/testing
-    - secure: "srfuDKb4QWIE5U/u3h7qlsZc/3rokbgAEdagWL5wzrh3MQTqpL8RW0eQFbdp21QD2ZS9CXzeKQDyzqjaMmF5FNE9FqYL3Y66EC9UBhYAqAG6Lf0CbCiBMEK20yHrXyGQ3+bewY4WyTvVidow9pEeW5GdLVZJPTHautKsaNdEXqiqvBUwSNrCtWUVxippka6SizIKI1+yYzlbB/smia4BAOPnw/vkhNhX4iicnADrG+NvPbH6VyXtJqETXTgZ3yFrpa1mTw6isV4HArLSf82puTwPKUWVgOfku0Mmgxcd7RfdvfqO6rMvQH2KtgOyHHCUZqMEX32BGNt1c/fkSrhLpDMZHExUhscePfgyRxCOZE+2QrlcoMjtpZMTWtuYJvk5iNXleGi04jmY5QbAxlaFHjS/En6mnAWH77RkDZoEnO8FxTAXjdPs3Ubq65lr4VhK6VWU4hlbvZyB12lvxZfSm7veE/coFks2YczvZgq95FCNxw57KF4fCxhGqr94R/t3ZVhLRlNp1aMU4xx8VoSza4BhQbAUA2asazQHnbkA3sYd1bnz8vKwGc5t507ktcxCU9WA8w2vFpuBIbvIf5KiyqQFw7SdBso0s45FFdESlY+szGR56g3a3rFlDjIl6jw9ayh4yN0wtI+6gnrIoXBweGt3tK5qb7uqZ+UA+tKd7oU="
+    # travis encrypt TWINE_USERNAME=<plain text> -r tharen/PyFVS
+    - secure: "rPyi4rdjd59a1JwwpLDy4dH7be2wcKB+DA/Zu4dX2BQ4RDSrx0u0V7EsdzKFVrrjzhTjh/+OomaBaJ9uz7xu6HquXVbYqTCVuw+TazAD3u9DLwDwL4FQa+20iCvBE7r5en3XVslCIcpUdkTXD2WNogNl7d+L5P50pdHTSMLDY7DLq0aan4nOHnjOPjXOIcu1Zc1OKyMT5hyi+FWkpyEhkJdZmFkHZcX4R2Ta0Hvk/302H6/FQ+mZtAA4Qb/Yh3dWdv58C1KxGxp2CbOiyxU6P5w2YZX5TgaX6/Wia8opbmlhvEoxMzLiteMHPLSOMLRkNLSsywIcY9Ndunwe/JtbZ74ZmOn+DF0k4BSKCe4P6jIgFbA54+M8Ju/2ZUX4EIxr/MwIbE3BefoWFc+m/ztKXp4K8kAeaHZ0uWqTl7cRRPUtGJrdVjMtFAZF59txBC9famccA4l4ZNBXBmgOep3+UOja+CRsnVNgIwznMOcgTDX5qPO6VKh0UYIiiWUwC40L9uRA4tnVw/bzIiqF2R4vfqiHwiBcOMHL04ipm4SmZDvcN0kTgfFiIdrCZB85WEyQW3xL9kzwiUsiN9rTj+rGQITJZkOVMm00VyovE7dY/pyS9R0/2l4W47I/O5LSKK4mxZG8wqlUvloYUIQhfK19WsYJQZXbSqai03iQCtI9iM8="
+    # travis encrypt TWINE_PASSWORD=<plain text> -r tharen/PyFVS
+    - secure: "CyiXYT8z3lqZ9sE4gkW+tkXnmNhLJ1hUXJKRw5+K8V/7C1t1XVRBYGsxo0a/2iZ7FpkEpcB7YVuTfOPM8xGxPdvze5EFvGBczKWOEXnDuJKQ90qScDeQ+gNjAI/o8zIdCckT+TIJW9quAaAu4Ry7+bRNeBu+Lf1DVvDWweWlzRuwvMi3yTUyC9soALi2hCp1hJDUdEdtOz3z6wury58+vfqo+kFXHPJ9cWlnFfpaKzeh9nhYk2TiWOZoXsAkGANI3/4M+7ydr3kVZ3iqRqQpzqIo1Cym1P+PX2G3gkMBNj9ukJQsWzxFFho8qiCIm6KaA4qu1ZeuN5z817Gkc7wV/jHBeT/5nYBrI1xclpCE36bSfQjqmKpxr4XywcCqjvfa3fcQIsLOrOCbzD9aqE1TFPSTVEcQKgNAwkpiJ3xqdIYLLKGfqeYewTGzBNDvY/uxjAVtA/OEVjg7hjFcQhiHuXUFyQsASkfQnOUbSsEmtkrJAmRgs3NKHtqfdGMk+C56119d3oeTgpCX9QcHXXS3aMnItJ2+x4UuIXILDsE2xb3r+EpEcvVbUMRhfDMRjnLrajia/nNKmGmrcWba0bgGquYm106aS3JYXnedIq27LeCtrs58M3vDay0pVVTphuOOEsEcgyU07negQ918dY/zab9Q9uAaZT2U1Ib3nfG/dQE="
     
     - MPLBACKEND="agg"
 
@@ -58,7 +59,7 @@ install:
   - source activate pyfvs
   - python -c "import sys;print('{}.{}'.format(*sys.version_info[:2]))"
   # Define the name to be used for the archive of compiled products.
-  - export ARCHIVE_NAME=pyfvs-${TRAVIS_TAG}-Python${TRAVIS_PYTHON_VERSION}_64-${TRAVIS_OS_NAME}-ci.zip
+  - export ARCHIVE_NAME=pyfvs-${TRAVIS_TAG}-Python${TRAVIS_PYTHON_VERSION}_64-${TRAVIS_OS_NAME}
 
 script:
   # build.sh compiles the Open-FVS binaries and builds the Python wheel and archive
