@@ -557,24 +557,24 @@ class KeywordSet(object):
             raise
 
         return 0
-    
+
     def find(self, kwd):
         """
         Search for instances of a keyword.
         """
-        
+
         objs = []
-        
+
         for item in self.items:
-            if item.mnemonic==kwd:
+            if item.mnemonic == kwd:
                 objs.append(item)
-            
+
             if isinstance(item, KeywordSet):
                 r = item.find(kwd)
                 objs.extend(r)
-            
+
         return objs
-        
+
     def write(self, path):
         """
         Write the formatted keywords to a text file.
@@ -1556,18 +1556,21 @@ class SETSITE(KeywordBase):
 class SITECODE(KeywordBase):
     species = CharacterField('Site Species')
     site_index = IntegerField('Site Index')
-    def __init__(self, species, site_index, **kargs):
+    spp_ovr = BooleanField('Site Species Overide')
+    def __init__(self, species, site_index, spp_ovr=None, **kargs):
         """
         Site index species code
 
         @param site_species:  Species code
         @param site_index:  Site species site index value
+        @param spp_ovr: Site species override flag
         """
         KeywordBase.__init__(self, 'SITECODE', 'Site Index Species Code'
                              , format=0, **kargs)
 
         self.species = species
         self.site_index = site_index
+        self.spp_ovr = spp_ovr
 
 class STDIDENT(KeywordBase):
     stand_id = CharacterField('Stand ID', width=26
