@@ -11,11 +11,13 @@ Created on Nov 29, 2014
 
 import os
 import sys
+import shutil
 import logging
 import logging.config
 import random
 import importlib
 import tempfile
+import warnings
 
 import numpy as np
 import pandas as pd
@@ -29,6 +31,12 @@ from pyfvs.keywords import keywords as kw
 
 pyfvs.init_logging()
 log = logging.getLogger('pyfvs.fvs')
+
+def deprecation(msg):
+    """
+    Warn users about deprecated features.
+    """
+    warnings.warn(msg, DeprecationWarning, stacklevel=2)
 
 class FVS(object):
     """
@@ -45,29 +53,32 @@ class FVS(object):
 
     * NOTE: The FVS subroutines, etc. are all converted to lower case by F2PY.
 
-    Basic usage:
+    Attributes:
+        variant: FVS variant abbreviation, PN, WC, etc. (Required)
+        stochastic: If True the FVS random number generater will be
+                reseeded on each call to run_fvs. If False the generator
+                will be set to a fixed value of 1.0. (Optional)
+        bootstrap: Number of bootstrap resamples of the plot data to
+                execute. (Optional)
+        config: Configuration dictionary. (Optional)
+
+    Usage:
         fvs = FVS(<variant abbreviation>)
         fvs.run_fvs(<path to keyword file>)
 
        # Return a tuple of species codes given an FVS ID using the FVS API.
        spp_attrs = fvs.fvsspeciescode(16)
     """
-    def __init__(self, variant, stochastic=False, bootstrap=0, config=None):
+    def __init__(self, variant, stochastic=False, bootstrap=0, config=None, cleanup=True):
         """
         Initialize a FVS variant library.
-
-        :param variant: FVS variant abbreviation, PN, WC, etc. (Required)
-        :param stochastic: If True the FVS random number generater will be
-                reseeded on each call to run_fvs. If False the generator will
-                be set to a fixed value of 1.0. (Optional)
-        :param bootstrap: Number of bootstrap resamples of the plot data to
-                execute. (Optional)
-        :param config: Configuration dictionary. (Optional)
         """
         # TODO: Document configuration options
 
         self.variant = variant
         self.stochastic = stochastic
+        self.bootstrap = bootstrap
+        self.cleanup = cleanup
 
         if not config:
             self.config = pyfvs.get_config()
@@ -86,9 +97,17 @@ class FVS(object):
 
         self._keywords = None
         self._workspace = None
-        self.trees = FVSTrees(self)
+        self.fvs_trees = FVSTrees(self)
         self._spp_codes = None
         self._spp_seq = None
+
+        # Keep a list of files and folders to cleanup
+        self._artifacts = []
+
+    @property
+    def trees(self):
+        deprecation('FVS.trees is deprecated. Use FVS.fvs_trees or FVS.inv_trees')
+        return self.fvs_trees
 
     def _load_fvslib(self):
         """
@@ -147,11 +166,6 @@ class FVS(object):
 
         return self._spp_seq
 
-
-        # lookup for the FVS sequence code of each species
-        # fvslib.spp_seq = {fvslib.spp_codes[x]:x + 1 for x in range(fvslib.prgprm_mod.maxsp)}
-
-
     def __getattr__(self, attr):
         """
         Return an attribute from self.fvslib if it is n ot defined locally.
@@ -169,7 +183,8 @@ class FVS(object):
         Reseed the FVS random number generator.  If seed is provided it will
         be used as the seed, otherwise a random number will be used.
 
-        :param seed: An odd number to seed the random number generator with.
+        Args:
+            seed: An odd number to seed the random number generator with.
         """
 
         if seed is None:
@@ -187,8 +202,9 @@ class FVS(object):
     def _init_fvs(self, keywords):
         """
         Initialize FVS with the given keywords file.
-
-        :param keywords: Path of the keyword file initialize FVS with.
+        
+        Args:
+            keywords: Path of the keyword file initialize FVS with.
         """
 
         if not os.path.exists(keywords):
@@ -204,9 +220,11 @@ class FVS(object):
         """
         Return the current workspace folder.
         """
-        if self._workspace is None:
+        if (self._workspace is None
+                or not os.path.exists(self._workspace)):
             # FIXME: look in self.config first
             self._workspace = tempfile.mkdtemp(prefix='pyfvs')
+            self._artifacts.append(self._workspace)
 
         return self._workspace
 
@@ -215,9 +233,8 @@ class FVS(object):
         """
         Set the current workspace folder.
         
-        Args
-        ----
-        workspace: Path to set as the current FVS workspace.
+        Args:
+            workspace: Path to set as the current FVS workspace.
         """
         if not os.path.exists(workspace):
             raise ValueError('Workspace folder must already exist.')
@@ -242,9 +259,8 @@ class FVS(object):
         """
         Set the current keywords instance.
         
-        Args
-        ----
-        keywords: Instance of KeywordSet class.
+        Args:
+            keywords: Instance of KeywordSet class.
         """
 
         if not isinstance(keywords, kw.KeywordSet):
@@ -256,55 +272,75 @@ class FVS(object):
         """
         Return an initialized KeywordSet instance.
         
-        Args
-        ----
-        title: Keywords title
-        comment: Keywords comment
+        Args:
+            title: Keywords title
+            comment: Keywords comment
         
-        Returns
-        -------
-        keywords: An initialized KeywordSet object
+        Returns:
+            keywords: An initialized KeywordSet object
         """
         self._keywords = kw.KeywordSet(
                 title=title, comment=comment, top_level=True
                 )
         return self._keywords
 
-    def init_projection(self, keywords=None):
+    def init_projection(self, keywords=None, trees=None):
         """
         Initialize a projection with the provided keywords.
         
-        Args
-        ----
-        keywords: Path to the FVS keywords file, or a KeywordSet instance.
-                If None then use self.keywords.
+        Args:
+            keywords: Path to the FVS keywords file, or a KeywordSet instance.
+                    If None then use self.keywords.
+            trees: Inventory treelist instance.
         """
-        
+
         if keywords is None:
             keywords = self.keywords
 
         if isinstance(keywords, kw.KeywordSet):
+
+            # FIXME: keyword implicitly know their relative position
+            keywords.top_level = True
+            keywords.parent = None
+
             # TODO: Add option to raise exceptions for missing keywords
             if not keywords.find('STDINFO'):
                 print('No STDINFO keyword')
-                
+
             if not keywords.find('DESIGN'):
                 print('No DESIGN keyword')
-                
-            fn = os.path.join(
-                    self.workspace
-                    , '{}.key'.format(keywords.title.lower())
-                    )
-            keywords.write(fn)
-            keywords = fn
 
-        if not os.path.isfile(keywords):
-            msg = 'The keyword file does not exist: {}'.format(keywords)
+            fn = keywords.title.lower()
+            fn = fn.replace(' ', '_')
+            keywords_fn = os.path.join(
+                    self.workspace
+                    , '{}.key'.format(fn)
+                    )
+            keywords.write(keywords_fn)
+
+            self._artifacts.append(keywords_fn)
+
+        else:
+            keywords_fn = keywords
+
+        if not os.path.isfile(keywords_fn):
+            msg = 'The keyword file does not exist: {}'.format(keywords_fn)
             log.error(msg)
             raise ValueError(msg)
-        
+
+        if not trees is None:
+            pth, fn = os.path.split(keywords_fn)
+            fn, ext = os.path.splitext(fn)
+            fn = os.path.join(
+                    self.workspace
+                    , '{}.tre'.format(fn)
+                    )
+            self.write_treelist(trees, fn)
+
+            self._artifacts.append(fn)
+
         # fvs_init requires a path
-        r = self.fvs_step.fvs_init(keywords)
+        r = self.fvs_step.fvs_init(keywords_fn)
 
         # TODO: Handle and format error codes
         if not r == 0:
@@ -313,24 +349,52 @@ class FVS(object):
         if self.stochastic:
             self.set_random_seed()
 
+
+    def iter_projection(self):
+        """
+        Return a generator to iterate through the projection cycles.
+        """
+        deprecation('FVS.iter_projection is deprecated. Use FVS iterator protocol.')
+        return self.__iter__()
+
+    def __iter__(self):
+        """
+        Iterate through the growth cycles of a projection.
+        """
+        if self.fvs_step.sim_status <= 0:
+            self.init_projection()
+
+        # Don't assume we're at the beginning
+        cycles = self.num_cycles - self.current_cycle
+        for n in range(cycles):
+            r = self.fvs_step.fvs_grow()
+            # TODO: Check return code and raise execption for critical errors
+            yield n
+
     def grow_projection(self, cycles=1):
+        deprecation('FVS.grow_projection is deprecated, use FVS.grow.')
+        r = self.grow(cycles)
+
+    def grow(self, cycles=1):
         """
         Execute the FVS projection.
-
-        :param cycles: Number of cycles to execute. Set to zero to run all
+        
+        Args:
+            cycles: Number of cycles to execute. Set to zero to run all
                 remaining cycles.
         """
-        
-        if self.fvs_step.sim_status<=0:
+
+        if self.fvs_step.sim_status <= 0:
             self.init_projection()
-        
+
         if not cycles:
             cycles = self.num_cycles - self.current_cycle
-        
+
+        r = -1
         for n in range(cycles):
             r = self.fvs_step.fvs_grow()
             # TODO: Handle non-zero exit codes
-        
+
         return r
 
     def __del__(self):
@@ -338,7 +402,7 @@ class FVS(object):
         Cleanup when the instance is destroyed.
         """
         try:
-            if self.fvs_step.sim_status>0:
+            if self.fvs_step.sim_status > 0:
                 self.end_projection()
         except:
             # FIXME: should this pass silently?
@@ -348,36 +412,58 @@ class FVS(object):
         """
         Terminate the current projection.
         """
-        
-        if self.fvs_step.sim_status<=0:
+
+        if self.fvs_step.sim_status <= 0:
             # Nothing to do
             return
-            
+
         # Finalize the projection
         r = self.fvs_step.fvs_end()
 
+        if self.cleanup:
+            for a in self._artifacts:
+#                 try: os.remove(a)
+#                 except: pass
+                try:
+                    if os.path.isdir(a):
+                        shutil.rmtree(a)
+                        if a == self._workspace:
+                            self._workspace = None
+                    else:
+                        os.remove(a)
+
+                except:
+                    pass
+
+            self._artifacts = []
+
         if r == 1:
-            msg = 'FVS returned error code {}.'.format(r)
+            err = error_codes.get(r, 'Unspecified Error')
+            msg = 'FVS returned error code {}: {}.'.format(r, err)
             log.error(msg)
             raise IOError(msg)
 
         if r != 0 and r <= 10:
-            log.warning('FVS returned with error code {}.'.format(r))
+            err = error_codes.get(r, 'Unspecified Error')
+            msg = 'FVS returned error code {}: {}.'.format(r, err)
+            log.warning(msg)
 
         if r > 10:
             log.error('FVS encountered an error, {}'.format(r))
 
         return r
 
-    def execute_projection(self, keywords=None):
+    def execute_projection(self, kwds=None, trees=None):
         """
         Convenience method to execute all cycles.
 
-        :param keywords: Path of the keyword file initialize FVS with.
+        Args:
+            keywords: Path of the keyword file initialize FVS with.
+            trees: Trees dataset
         """
-        
-        self.init_projection(keywords)
-        self.grow_projection(0)
+
+        self.init_projection(keywords=kwds, trees=trees)
+        self.grow(cycles=0)
         r = self.end_projection()
         return r
 
@@ -385,15 +471,25 @@ class FVS(object):
         """
         Write out an FVS treelist file
 
-        Args
-        ----
-        plots: Iterator of Pandas dataframe or numpy ndarray of plot tree records
-        path: Treelist file path.
+        Args:
+            plots: Iterator of Pandas dataframe or numpy ndarray of plot tree records
+            path: Treelist file path.
         """
 
         tmplt = pyfvs.treelist_format['template']
 
-        if plots:
+        if hasattr(plots, 'fvs_treelist'):
+            with open(treelist_path, 'w') as out:
+                out.write(plots.fvs_treelist())
+
+        elif isinstance(plots, pd.DataFrame):
+            names = plots.columns.values
+            with open(treelist_path, 'w') as out:
+                for r, rec in plots.iterrows():
+                    out.write(tmplt.format(
+                            **dict(zip(names, rec))) + '\n')
+
+        elif isinstance(plots, (list, tuple)):
             with open(treelist_path, 'w') as out:
                 for plot in plots:
                     if isinstance(plot, np.ndarray):
@@ -432,12 +528,13 @@ class FVS(object):
         """
         Return an FVS summary value through the current projection cycle.
 
-        :param variable: The summary variable to return. One of the following:
-                        year, age, tpa, total cuft, merch cuft, merch bdft,
-                        removed tpa, removed total cuft, removed merch cuft,
-                        removed merch bdft, baa after, ccf after, top ht after,
-                        period length, accretion, mortality, sample weight,
-                        forest type, size class, stocking class
+        Args:
+            variable: The summary variable to return. One of the following:
+                year, age, tpa, total cuft, merch cuft, merch bdft,
+                removed tpa, removed total cuft, removed merch cuft,
+                removed merch bdft, baa after, ccf after, top ht after,
+                period length, accretion, mortality, sample weight,
+                forest type, size class, stocking class
         """
 
         # Map summary variable to the array index
@@ -476,6 +573,13 @@ class FVS(object):
 
         # Return the summary values for the cycles in the run
         return(self.fvslib.outcom_mod.iosum[i, :self.num_cycles + 1])
+
+error_codes = {
+    1: 'Invalid keyword specified.',
+    2: 'No STOP keyword record.',
+    3: 'Forest code is outside the model range.',
+    4: 'Bad keyword parameter.'
+    }
 
 class FVSTrees(object):
     """

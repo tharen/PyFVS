@@ -410,7 +410,7 @@ class KeywordBase(with_metaclass(KeywordMetaClass, object)):
         else:
             raise KeyError('Keyword format not implemented: %s' % self.format)
 
-        return '%s\n' % s.rstrip()
+        return s  # '%s\n' % s.rstrip()
 
 class AddHocKeyword(KeywordBase):
     def __init__(self, mnemonic, field_vals=(), format=0, supplemental=()
@@ -467,6 +467,10 @@ class KeywordSet(object):
         self.title = title
         self.comment = comment
         self.top_level = top_level
+        self.parent = None
+
+        if top_level and self.title is None:
+            self.title = 'pyfvs'
 
         self.items = []
 
@@ -489,6 +493,10 @@ class KeywordSet(object):
         """
         Append a keyword object.
         """
+        if isinstance(kwd, KeywordSet):
+            kwd.top_level = False
+            kwd.parent = self
+
         self.items.append(kwd)
 
     def insert(self, idx, kwd):
@@ -525,8 +533,10 @@ class KeywordSet(object):
                 s += '!  {}\n'.format(line.strip())
             s += '!*******************\n'
 
-        for keyword in self.items:
-            s += '%s\n' % keyword.__str__().strip()
+#         for keyword in self.items:
+#             s += '%s\n' % keyword.__str__()  # .strip()
+        s += '\n'.join(str(i) for i in self.items)
+        s += '\n'
 
         if self.title:
             s += '! End: %s\n' % self.title.strip()
@@ -558,6 +568,10 @@ class KeywordSet(object):
 
         return 0
 
+    def __iter__(self):
+        for item in self.items:
+            yield item
+
     def find(self, kwd):
         """
         Search for instances of a keyword.
@@ -566,12 +580,17 @@ class KeywordSet(object):
         objs = []
 
         for item in self.items:
-            if item.mnemonic == kwd:
-                objs.append(item)
+            try:
+                if item.mnemonic == kwd:
+                    objs.append(item)
+                    continue
+            except:
+                pass
 
             if isinstance(item, KeywordSet):
                 r = item.find(kwd)
                 objs.extend(r)
+                continue
 
         return objs
 
@@ -2550,6 +2569,45 @@ class THINSDI(KeywordBase):
         self.min_dbh = min_dbh
         self.max_dbh = max_dbh
         self.cut_control = cut_control
+
+class THINBTA(KeywordBase):
+    """
+    Thin from below to a TPA target
+    """
+    cycle = IntegerField('Cycle')
+    target_tpa = IntegerField('Target')
+    cut_eff = DecimalField('Cutting Efficiency', precision=2)
+    min_dbh = DecimalField('Minimum DBH', precision=1)
+    max_dbh = DecimalField('Maximum DBH', precision=1)
+    min_ht = IntegerField('Minimum Height')
+    max_ht = IntegerField('Maximum Height')
+
+    def __init__(self, cycle=1, target_tpa=999, cut_eff=1.0
+                 , min_dbh=0.0, max_dbh=999.9
+                 , min_ht=0, max_ht=999
+                 , **kargs):
+        """
+        THINBBA - Thin From Below to a TPA Target
+        
+        @param cycle:
+        @param target_tpa:
+        @param cut_eff:
+        @param min_dbh:
+        @param max_dbh:
+        @param min_ht:
+        @param max_ht:
+        """
+        KeywordBase.__init__(self, 'THINBTA', 'Thin From Below to a TPA Target'
+                             , format=KW_FMT_ONELINE
+                             , **kargs
+                             )
+        self.cycle = cycle
+        self.target_tpa = target_tpa
+        self.cut_eff = cut_eff
+        self.min_dbh = min_dbh
+        self.max_dbh = max_dbh
+        self.min_ht = min_ht
+        self.max_ht = max_ht
 
 def print_test():
     # #TODO: implement better testing
