@@ -97,7 +97,7 @@ class KeywordBase(with_metaclass(KeywordMetaClass, object)):
     # TODO: Format 0 keywords should include an optional parms_fmt argument
     #       to automatically handle PARMS compatible keywords.
 
-    __metaclass__ = KeywordMetaClass
+    #__metaclass__ = KeywordMetaClass
     __fields__ = ()
     __supplemental__ = ()
 
