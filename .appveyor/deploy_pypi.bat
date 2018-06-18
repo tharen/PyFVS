@@ -8,7 +8,7 @@ if "%APPVEYOR_REPO_BRANCH%" == "dev" (
     echo On dev branch, deploy to PYPI test.
     
     echo Upload dev package to test.pypi.org.
-    call twine upload dist/* --repository-url https://test.pypi.org/legacy/ && (
+    call twine upload dist/* --skip-existing --repository-url https://test.pypi.org/legacy/ && (
         echo twine upload complete.
     ) || (
         echo twine upload failed!
@@ -18,7 +18,7 @@ if "%APPVEYOR_REPO_BRANCH%" == "dev" (
 if "%APPVEYOR_REPO_BRANCH%" == "master" (
     if "%APPVEYOR_REPO_TAG%" == "true" (
         echo Upload package to pypi.org.
-        call twine upload dist/* && (
+        call twine upload dist/* --skip-existing && (
             echo twine upload complete.
         ) || (
             echo twine upload failed!
