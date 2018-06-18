@@ -6,26 +6,26 @@ pushd %APPVEYOR_BUILD_FOLDER%\bin\build\Open-FVS\python
 
 if "%APPVEYOR_REPO_BRANCH%" == "dev" (
     echo On dev branch, deploy to PYPI test.
-    
-    echo Upload dev package to test.pypi.org.
-    call twine upload dist/* --skip-existing --repository-url https://test.pypi.org/legacy/ && (
-        echo twine upload complete.
-    ) || (
-        echo twine upload failed!
+    call twine upload dist/* --skip-existing --repository-url https://test.pypi.org/legacy/ || goto twineerror
+    goto finish
     )
-)
 
 if "%APPVEYOR_REPO_BRANCH%" == "master" (
     if "%APPVEYOR_REPO_TAG%" == "true" (
-        echo Upload package to pypi.org.
-        call twine upload dist/* --skip-existing && (
-            echo twine upload complete.
-        ) || (
-            echo twine upload failed!
-        )
-)
+        echo Tagged revision on master, deploy to PYPI.
+        call twine upload dist/* --skip-existing || goto twineerror
+        goto finish
+    ))
 
 echo Not on dev and not a tag on master, skipping pypi deploy.
+goto exit
+
+:twineerror
+echo ERROR: Twine upload failed!
+goto exit
+
+:finish
+echo Twine upload complete.
 goto exit
 
 :exit
