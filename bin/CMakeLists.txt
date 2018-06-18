@@ -617,7 +617,7 @@ if (WITH_PYEXT)
                 "htdbh.f" "forkod.f"
                 
                 "prgprm_mod.f90" "esparm_mod.f90" "arrays_mod.f90"
-                "contrl_mod.f90"
+                "contrl_mod.f90"66
 
                 "coeffs_mod.f90" "econ_mod.f90" "escomn_mod.f90" "eshap_mod.f90"
                 "estree_mod.f90" "htcal_mod.f90" "multcm_mod.f90" "pden_mod.f90"
@@ -691,7 +691,7 @@ if (WITH_PYEXT)
 
 #    if (CMAKE_BUILD_TYPE STREQUAL Debug)
 #        list(APPEND cmd_args "--debug")
-#    endif ()
+#    endif ()666666656656656666t6666665
     
     # Configure the setup.py script for the current variant.
     configure_file(../../setup.py.in setup.py @ONLY)
