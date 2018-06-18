@@ -1,0 +1,16 @@
+[bdist_wheel]
+universal=0
+
+[build]
+compiler=mingw32
+
+[build_ext]
+inplace=1
+compiler=mingw32
+
+[aliases]
+test=pytest
+
+[tool:pytest]
+addopts=--verbose
+python_files=pyfvs/test/*.py
