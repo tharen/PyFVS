@@ -156,7 +156,7 @@ setup(
     , author_email="tod.haren@gmail.com"
     , setup_requires=['cython', 'numpy>=1.11','twine']
     , tests_require=['pytest', 'pytest-runner']
-    , install_requires=['numpy>=1.11', 'pandas']
+    , install_requires=['numpy>=1.11', 'pandas', 'matplotlib']
     , ext_modules=get_extensions()
     , packages=['pyfvs', 'pyfvs.keywords']
     , package_data={

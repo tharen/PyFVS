@@ -47,7 +47,7 @@ install:
     # Edit the environment.yml file for the target Python version
     - call sed -i -E 's/(python=)(.*)/\1'%PYTHON_VERSION%'/' ./environment.yml
     # Create the conda environment
-    - conda env create -q -n pyfvs -f environment.yml
+    - conda env create -q -n pyfvs -f %APPVEYOR_BUILD_FOLDER%\\environment.yml
     - conda info -a
     - call activate pyfvs
     
@@ -61,7 +61,6 @@ after_build:
 
 test_script:
     # Run tests against the final package
-    - conda install matplotlib
     - call "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\run_tests.bat"
 
 on_success:

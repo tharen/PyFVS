@@ -53,7 +53,7 @@ before_install:
   - conda info -a
   # Edit the environment.yml file for the target Python version
   - sed -i -E 's/(python=)(.*)/\1'$TRAVIS_PYTHON_VERSION'/' ./environment.yml
-  - conda env create --force -q -n pyfvs -f environment.yml
+  - conda env create --force -q -n pyfvs -f ${TRAVIS_BUILD_DIR}/environment.yml
   
 install:
   - source activate pyfvs
@@ -67,7 +67,6 @@ script:
   - source ${TRAVIS_BUILD_DIR}/.travis-ci/build.sh
   - pip install --no-index --find-links ${TRAVIS_BUILD_DIR}/artifacts pyfvs
   - pytest -rsx --pyargs pyfvs.test
-  - conda install matplotlib
   - pytest ${TRAVIS_BUILD_DIR}/python/pyfvs/examples/demo.py
   - pytest ${TRAVIS_BUILD_DIR}/python/pyfvs/examples/pn_test.py
 
