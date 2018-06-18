@@ -18,6 +18,7 @@ import random
 import importlib
 import tempfile
 import warnings
+import datetime
 
 import numpy as np
 import pandas as pd
@@ -89,7 +90,10 @@ class FVS(object):
 
         self.fvslib_path = None
         self.fvslib = None
-
+        
+        self.treelist_tmplt = pyfvs.treelist_format['template']
+        self.treelist_fmt = pyfvs.treelist_format['fvs_format']
+        
         self._load_fvslib()
 
         # if self.fvslib is None:
@@ -98,6 +102,7 @@ class FVS(object):
         self._keywords = None
         self._workspace = None
         self.fvs_trees = FVSTrees(self)
+        self._inv_trees = None
         self._spp_codes = None
         self._spp_seq = None
 
@@ -108,7 +113,37 @@ class FVS(object):
     def trees(self):
         deprecation('FVS.trees is deprecated. Use FVS.fvs_trees or FVS.inv_trees')
         return self.fvs_trees
-
+    
+    @property
+    def inv_trees(self):
+        """
+        A dataframe of inventory tree records.
+        
+        Columns correspond to the description in Essential FVS section 4.2:
+            (plot_id,tree_id,prob,tree_history,species,dbh,dg_incr
+                ,live_ht,trunc_ht,htg_incr,crown_ratio,
+                ,dmg1,svr1,dmg2,svr2,dmg3,svr3
+                ,value_class
+        """
+        
+        return self._inv_trees
+    
+    @inv_trees.setter
+    def inv_trees(self, trees):
+        """
+        Set the inventory trees dataframe
+        """
+        
+        # check for required fields
+        rqd = ['plot_id','tree_id','prob','species','dbh']
+        missing = [fld for fld in rqd if not fld in trees.columns]
+        if missing:
+            raise ValueError(
+                    'Inventory trees missing required fields: '
+                    '{}'.format(str(missing)))
+                
+        self._inv_trees = trees
+       
     def _load_fvslib(self):
         """
         Load the requested FVS variant library.
@@ -157,7 +192,7 @@ class FVS(object):
     @property
     def spp_seq(self):
         """
-        Return a dictionary of species code translations {fvs code: fia code,}
+        Return a dictionary mapping of species translations {fvs abbv: fvs seq,...}
         """
         if self._spp_seq is None:
             maxspp = self.prgprm_mod.maxsp
@@ -165,7 +200,31 @@ class FVS(object):
             self._spp_seq = seq
 
         return self._spp_seq
+    
+    @property
+    def spp_fia_codes(self):
+        """
+        Return a dictionary mapping of species translations {fvs abbv: fia code,...}
+        """
+        if self._spp_fia_codes is None:
+            fiajsp = self.fvslib.plot_mod.fiajsp
+            fiajsp = [c.strip() for c in fiajsp.T.reshape(-1, 4).view('S4').astype(str)[:, 0]]
+            self._spp_fia_codes = dict(zip(self.spp_codes,fiajsp))
 
+        return self._spp_fia_codes
+
+    @property
+    def spp_plants_codes(self):
+        """
+        Return a dictionary mapping of species translations {fvs abbv: plants code,...}
+        """
+        if self._spp_plant_codes is None:
+            jsp = self.fvslib.plot_mod.plnjsp
+            jsp = [c.strip() for c in jsp.T.reshape(-1, 4).view('S4').astype(str)[:, 0]]
+            self._spp_plants_codes = dict(zip(self.spp_codes,jsp))
+
+        return self._spp_plants_codes
+    
     def __getattr__(self, attr):
         """
         Return an attribute from self.fvslib if it is n ot defined locally.
@@ -279,6 +338,11 @@ class FVS(object):
         Returns:
             keywords: An initialized KeywordSet object
         """
+        if not title:
+            now = datetime.datetime.strftime(
+                    datetime.datetime.now(), '%Y%m%d_%H%M%S')
+            title = '{}_{}'.format(self.variant,now)
+            
         self._keywords = kw.KeywordSet(
                 title=title, comment=comment, top_level=True
                 )
@@ -298,7 +362,7 @@ class FVS(object):
             keywords = self.keywords
 
         if isinstance(keywords, kw.KeywordSet):
-
+            
             # FIXME: keyword implicitly know their relative position
             keywords.top_level = True
             keywords.parent = None
@@ -309,7 +373,10 @@ class FVS(object):
 
             if not keywords.find('DESIGN'):
                 print('No DESIGN keyword')
-
+                
+            if not keywords.find('TREEFMT'):
+                keywords += kw.TREEFMT(self.treelist_fmt)
+                
             fn = keywords.title.lower()
             fn = fn.replace(' ', '_')
             keywords_fn = os.path.join(
@@ -327,18 +394,28 @@ class FVS(object):
             msg = 'The keyword file does not exist: {}'.format(keywords_fn)
             log.error(msg)
             raise ValueError(msg)
-
+        
+        # Write out the inventory trees
+        pth, fn = os.path.split(keywords_fn)
+        fn, ext = os.path.splitext(fn)
+        trees_fn = os.path.join(
+                self.workspace
+                , '{}.tre'.format(fn)
+                )
         if not trees is None:
-            pth, fn = os.path.split(keywords_fn)
-            fn, ext = os.path.splitext(fn)
-            fn = os.path.join(
-                    self.workspace
-                    , '{}.tre'.format(fn)
-                    )
-            self.write_treelist(trees, fn)
+            
+            self.write_treelist(trees, trees_fn)
 
-            self._artifacts.append(fn)
-
+        elif not self.inv_trees is None:
+            self.write_treelist(self.inv_trees, trees_fn)
+        
+        else:
+            log.warn('No inventory tree records, assume a bareground projection.')
+            if not keywords.find('NOTREES'):
+                keywords += kw.NOTREES()
+        
+        self._artifacts.append(trees_fn)
+        
         # fvs_init requires a path
         r = self.fvs_step.fvs_init(keywords_fn)
 
@@ -467,31 +544,32 @@ class FVS(object):
         r = self.end_projection()
         return r
 
-    def write_treelist(self, plots, treelist_path):
+    def write_treelist(self, trees, treelist_path):
         """
         Write out an FVS treelist file
 
         Args:
-            plots: Iterator of Pandas dataframe or numpy ndarray of plot tree records
+            trees: Pandas dataframe of tree records.
+                    May also be an iterator of plot level tree dataframes.
             path: Treelist file path.
         """
 
-        tmplt = pyfvs.treelist_format['template']
+        tmplt = self.treelist_tmplt
 
-        if hasattr(plots, 'fvs_treelist'):
+        if hasattr(trees, 'fvs_treelist'):
             with open(treelist_path, 'w') as out:
-                out.write(plots.fvs_treelist())
+                out.write(trees.fvs_treelist())
 
-        elif isinstance(plots, pd.DataFrame):
-            names = plots.columns.values
+        elif isinstance(trees, pd.DataFrame):
+            names = trees.columns.values
             with open(treelist_path, 'w') as out:
-                for r, rec in plots.iterrows():
+                for r, rec in trees.iterrows():
                     out.write(tmplt.format(
                             **dict(zip(names, rec))) + '\n')
 
-        elif isinstance(plots, (list, tuple)):
+        elif isinstance(trees, (list, tuple)):
             with open(treelist_path, 'w') as out:
-                for plot in plots:
+                for plot in trees:
                     if isinstance(plot, np.ndarray):
                         names = plot.dtype.names
                         for rec in plot:
@@ -514,7 +592,7 @@ class FVS(object):
                         # TODO: Handle zero tree plots
                         continue
         else:
-            raise ValueError('One or more plots are required, got nothing.')
+            raise ValueError('One or more trees are required, got nothing.')
 
     @property
     def current_cycle(self):

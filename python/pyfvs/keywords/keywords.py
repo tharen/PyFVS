@@ -543,9 +543,8 @@ class KeywordSet(object):
 
         if self.top_level:
             # Close out the keyword file
-            s += '\n'
-            s += str(PROCESS())
-            s += str(STOP())
+            s += '\n' + str(PROCESS())
+            s += '\n' + str(STOP())
 
         return s
 
@@ -2110,6 +2109,27 @@ class BFFDLN(KeywordBase):
         self.intercept = intercept
         self.slope = slope
 
+class VOLEQNUM(KeywordBase):
+    species = CharacterField('Species')
+    cuft_eq = CharacterField('Cubic Foot Equation')
+    bdft_eq = CharacterField('Board Foot Equation')
+    
+    def __init__(self, species='ALL', cuft_eq='', bdft_eq='', **kargs):
+        """
+        Sets the volume equation number used to calculate volume.
+        
+        @param species:  Species code for these equation numbers
+        @param cuft_eq:  Cubic Foot NVEL equation number.
+        @param bdft_eq:  Board Foot NVEL equation number
+        """
+        KeywordBase.__init__(self, 'VOLEQNUM', 'Volume Equation Numbers'
+                         , format=KW_FMT_ONELINE
+                         , **kargs)
+
+        self.species = species
+        self.cuft_eq = cuft_eq
+        self.bdft_eq = bdft_eq
+        
 class BFVOLEQU(KeywordBase):
     species = CharacterField('Species')
     transition_code = IntegerField('Transition Code')
