@@ -12,13 +12,17 @@ import subprocess
 import numpy
 from numpy.distutils.core import Extension
 
+# FIXME: This monkey patch can be removed once Numpy distutils is fixed
 if ((os.name=='nt') and (sys.version_info[:2]>=(3, 5))
-        and (numpy.version.version<='1.13')):
+        #and (numpy.version.version<='1.13')
+        ):
     # Monkey patch numpy until version 1.13 is mainstream
+    #   NOTE: This is still not fixed as of numpy version 1.13.3
     # This is fixes the of building extensions with Python 3.5+ resultinging
     #       the error message `ValueError: Unknown MS Compiler version 1900`
     # numpy_fix uses the patch referenced here:
     #       https://github.com/numpy/numpy/pull/8355
+    print('Patch numpy.distutils to work with MinGW.')
     sys.path.insert(0,os.path.join('@source_root@','python/numpy_fix'))
     import misc_util, mingw32ccompiler
     sys.modules['numpy.distutils.mingw32ccompiler'] = mingw32ccompiler

@@ -105,13 +105,17 @@ class Version(Command):
         update_version()
         print('Version is now {}'.format(get_version()))
 
+# FIXME: This monkey patch can be removed once Numpy distutils is fixed.
 if ((os.name == 'nt') and (sys.version_info[:2] >= (3, 5))
-        and (numpy.version.version <= '1.13')):
+        # and (numpy.version.version <= '1.13')
+        ):
     # Monkey patch numpy for MinGW until version 1.13 is mainstream
+    #   NOTE: This has not been fixed as of numpy 1.13.3
     # This fixes building extensions with Python 3.5+ resulting in
     #       the error message `ValueError: Unknown MS Compiler version 1900
     # numpy_fix uses the patch referenced here:
     #       https://github.com/numpy/numpy/pull/8355
+    print('Apply patch to numpy.distutils for MinGW')
     root = os.path.split(__file__)[0]
     sys.path.insert(0, os.path.join(root, 'numpy_fix'))
     import misc_util, mingw32ccompiler
@@ -150,8 +154,8 @@ setup(
     , download_url='https://github.com/tharen/PyFVS/archive/master.zip'
     , author="Tod Haren"
     , author_email="tod.haren@gmail.com"
-    , setup_requires=['cython', 'numpy>=1.11', 'pytest-runner','twine']
-    , tests_require=['pytest']
+    , setup_requires=['cython', 'numpy>=1.11','twine']
+    , tests_require=['pytest', 'pytest-runner']
     , install_requires=['numpy>=1.11', 'pandas']
     , ext_modules=get_extensions()
     , packages=['pyfvs', 'pyfvs.keywords']
