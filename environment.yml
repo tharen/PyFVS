@@ -2,9 +2,9 @@ channels: !!python/tuple
   - conda-forge
   - defaults
 dependencies:
-  - python=3.4
+  - python=3.6
   - cython
-  - numpy=1.11
+  - numpy>=1.13
   - pandas
   - pyodbc
   - click
