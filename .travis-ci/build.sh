@@ -1,3 +1,5 @@
+#!/bin/bash
+
 cd ${TRAVIS_BUILD_DIR}
 
 # Ensure the version information is consistent
@@ -33,13 +35,14 @@ python setup.py build_ext --inplace
 # Create archives
 mkdir ${TRAVIS_BUILD_DIR}/artifacts
 
-# Create the wheel
+# Create the wheel and source archive
 python setup.py bdist_wheel
-mv dist/*.whl ${TRAVIS_BUILD_DIR}/artifacts/.
+python setup.py sdist
+cp dist/* ${TRAVIS_BUILD_DIR}/artifacts/.
 
 # Create the project zip archive
 # FIXME: After fixing the install target, adapt this to leverage the sdist command
 cd ${BUILD_ROOT}
-7z a -bd ${TRAVIS_BUILD_DIR}/artifacts/${ARCHIVE_NAME} Open-FVS/*
+7z a -bd ${TRAVIS_BUILD_DIR}/artifacts/${ARCHIVE_NAME}-build.zip Open-FVS/*
 
 cd ${TRAVIS_BUILD_DIR}

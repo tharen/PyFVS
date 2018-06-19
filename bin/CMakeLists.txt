@@ -18,15 +18,8 @@
 #       -DFVS_VARIANTS="pnc;wcc" ^
 #       -DCMAKE_BUILD_TYPE=DEBUG ^
 #       -DWITH_PYEXT=ON
-#   mingw32-make -j4
 #
-#   mkdir <FVS bin>/release
-#   cd <FVS bin>/release
-#   cmake .. -G"MinGW Makefiles" ^
-#       -DFVS_VARIANTS="pnc;wcc" ^
-#       -DCMAKE_BUILD_TYPE=RELEASE ^
-#       -DWITH_PYEXT=ON
-#   mingw32-make -j4
+#   cmake --build . --target install -- -j8
 #
 # Example: Linux 64 bit
 #   mkdir debug
@@ -357,53 +350,6 @@ else ()
     add_library(ffe_lib OBJECT ${ffe_source})
 endif ()
 
-#---Common Objects
-# Generate a list of fortran source code files common to all variants
-set(common_source)
-#list(GET source_lists 0 sl)
-#file(STRINGS ${sl} common_source REGEX "(.*f$)|(.*f90$)")
-#string(REPLACE "../" "${source_root}/" common_source "${common_source}")
-
-#set(temp_src)
-#foreach(fn ${common_source})
-#    file(READ ${fn} foo)
-#    if ((NOT ${fn} MATCHES ".*main\\.(f|f90)$")
-#        # Variant specific code includes the prgprm and esparm files
-#        AND (NOT "${foo}" MATCHES ".*PRGPRM.F77.*")
-#        AND (NOT "${foo}" MATCHES ".*ESPARM.F77.*")
-#        AND (NOT "${foo}" MATCHES ".*prgprm_mod.*")
-#        AND (NOT "${foo}" MATCHES ".*siteht_mod.*")
-#        AND (NOT "${foo}" MATCHES ".*snag_data.*"))
-#        list(APPEND temp_src ${fn})
-#    endif()
-#endforeach()
-#set(common_source ${temp_src})
-
-# Parse each configured variant source file list keeping files common to all
-#foreach (sl ${source_lists})
-#    set(temp_src)
-#    # Read the list of source files for this variant
-#    file(STRINGS ${sl} fl)
-#    string(REPLACE "../" "${source_root}/" fl "${fl}")
-#
-#    # Compare each file currently in the common list with the variant file list
-#    foreach(fn ${common_source})
-#        list(FIND fl ${fn} m)
-#        # FIND returns -1 for files not in the variant file list
-#        if (NOT m EQUAL -1)
-#            list(APPEND temp_src ${fn})
-#        endif()
-#    endforeach()
-#    set(common_source ${temp_src})
-#endforeach()
-#list(REMOVE_DUPLICATES common_source)
-
-# Compile the  object libraries
-add_library(common_objs OBJECT ${common_source})
-
-# Ensure the SQL and common objects are built in sequence
-add_dependencies(common_objs sql_lib)
-
 add_custom_target(dev COMMENT "Copy files for development")
 
 #---Configure each requested variant.
@@ -531,8 +477,8 @@ list(APPEND include_dirs ${CMAKE_CURRENT_BINARY_DIR})
 # Add the newly found include dirs
 include_directories(BEFORE ${include_dirs})
 
-# Remove source files already in common, FFE, SQL
-set(sl ${common_source} ${ffe_source} ${sql_source})
+# Remove source files already in FFE, SQL
+set(sl ${ffe_source} ${sql_source})
 foreach(fn ${sl})
     list(FIND fvs_source ${fn} i)
     if (NOT ${i} EQUAL -1)
@@ -552,14 +498,11 @@ endforeach()
 
 #---Compile the variant FVS code to an object library
 set(fvs_objs "fvs${variant}_objs")
-add_library(${fvs_objs} OBJECT ${fvs_source} ${common_source})
+add_library(${fvs_objs} OBJECT ${fvs_source})
 
 set(objs_timestamp "${variant}_timestamp")
 add_custom_target(${objs_timestamp} ALL
         COMMAND ${CMAKE_COMMAND} -E touch "${variant}_timestamp")
-
-# Ensure common source files are built before the variant sources
-add_dependencies(${fvs_objs} common_objs)
 
 ##TODO: Need a fixup for VBA
 #if (WIN32)
@@ -571,37 +514,31 @@ add_dependencies(${fvs_objs} common_objs)
 #---Link the shared library and executables
 if (NOT STATIC_LINK)
     add_library(${fvslib_shared} SHARED
-        $<TARGET_OBJECTS:common_objs>
         $<TARGET_OBJECTS:${fvs_objs}>)
     target_link_libraries(${fvslib_shared} ffe_lib sql_lib)
 
     add_library(${fvslib_static}
-        $<TARGET_OBJECTS:common_objs>
         $<TARGET_OBJECTS:${fvs_objs}>)
     target_link_libraries(${fvslib_static} ffe_lib sql_lib)
 
     add_executable (${fvsexe} ${main_source}
-        $<TARGET_OBJECTS:common_objs>
         $<TARGET_OBJECTS:${fvs_objs}>)
     target_link_libraries(${fvsexe} ffe_lib sql_lib)
 
 else ()
     add_library(${fvslib_shared} SHARED
-        $<TARGET_OBJECTS:common_objs>
         $<TARGET_OBJECTS:${fvs_objs}>
         $<TARGET_OBJECTS:ffe_lib>
         $<TARGET_OBJECTS:sql_lib>
         )
 
     add_library(${fvslib_static}
-        $<TARGET_OBJECTS:common_objs>
         $<TARGET_OBJECTS:${fvs_objs}>
         $<TARGET_OBJECTS:ffe_lib>
         $<TARGET_OBJECTS:sql_lib>
         )
 
     add_executable (${fvsexe} ${main_source}
-        $<TARGET_OBJECTS:common_objs>
         $<TARGET_OBJECTS:${fvs_objs}>
         $<TARGET_OBJECTS:ffe_lib>
         $<TARGET_OBJECTS:sql_lib>
@@ -680,7 +617,7 @@ if (WITH_PYEXT)
                 "htdbh.f" "forkod.f"
                 
                 "prgprm_mod.f90" "esparm_mod.f90" "arrays_mod.f90"
-                "contrl_mod.f90"
+                "contrl_mod.f90"66
 
                 "coeffs_mod.f90" "econ_mod.f90" "escomn_mod.f90" "eshap_mod.f90"
                 "estree_mod.f90" "htcal_mod.f90" "multcm_mod.f90" "pden_mod.f90"
@@ -754,7 +691,7 @@ if (WITH_PYEXT)
 
 #    if (CMAKE_BUILD_TYPE STREQUAL Debug)
 #        list(APPEND cmd_args "--debug")
-#    endif ()
+#    endif ()666666656656656666t6666665
     
     # Configure the setup.py script for the current variant.
     configure_file(../../setup.py.in setup.py @ONLY)
@@ -810,6 +747,7 @@ if (WITH_PYEXT)
             DESTINATION python
             FILES_MATCHING REGEX ".*\\.(py|pyx|cfg|rst|md|key|tre|save)$"
             PATTERN "__pycache__" EXCLUDE
+            PATTERN ".eggs" EXCLUDE
             PATTERN "*genrpt.txt" EXCLUDE
             )
 

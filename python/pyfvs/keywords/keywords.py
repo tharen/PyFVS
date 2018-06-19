@@ -97,7 +97,7 @@ class KeywordBase(with_metaclass(KeywordMetaClass, object)):
     # TODO: Format 0 keywords should include an optional parms_fmt argument
     #       to automatically handle PARMS compatible keywords.
 
-    __metaclass__ = KeywordMetaClass
+    #__metaclass__ = KeywordMetaClass
     __fields__ = ()
     __supplemental__ = ()
 
@@ -410,7 +410,7 @@ class KeywordBase(with_metaclass(KeywordMetaClass, object)):
         else:
             raise KeyError('Keyword format not implemented: %s' % self.format)
 
-        return '%s\n' % s.rstrip()
+        return s  # '%s\n' % s.rstrip()
 
 class AddHocKeyword(KeywordBase):
     def __init__(self, mnemonic, field_vals=(), format=0, supplemental=()
@@ -467,6 +467,10 @@ class KeywordSet(object):
         self.title = title
         self.comment = comment
         self.top_level = top_level
+        self.parent = None
+
+        if top_level and self.title is None:
+            self.title = 'pyfvs'
 
         self.items = []
 
@@ -489,6 +493,10 @@ class KeywordSet(object):
         """
         Append a keyword object.
         """
+        if isinstance(kwd, KeywordSet):
+            kwd.top_level = False
+            kwd.parent = self
+
         self.items.append(kwd)
 
     def insert(self, idx, kwd):
@@ -525,17 +533,18 @@ class KeywordSet(object):
                 s += '!  {}\n'.format(line.strip())
             s += '!*******************\n'
 
-        for keyword in self.items:
-            s += '%s\n' % keyword.__str__().strip()
+#         for keyword in self.items:
+#             s += '%s\n' % keyword.__str__()  # .strip()
+        s += '\n'.join(str(i) for i in self.items)
+        s += '\n'
 
         if self.title:
             s += '! End: %s\n' % self.title.strip()
 
         if self.top_level:
             # Close out the keyword file
-            s += '\n'
-            s += str(PROCESS())
-            s += str(STOP())
+            s += '\n' + str(PROCESS())
+            s += '\n' + str(STOP())
 
         return s
 
@@ -557,24 +566,33 @@ class KeywordSet(object):
             raise
 
         return 0
-    
+
+    def __iter__(self):
+        for item in self.items:
+            yield item
+
     def find(self, kwd):
         """
         Search for instances of a keyword.
         """
-        
+
         objs = []
-        
+
         for item in self.items:
-            if item.mnemonic==kwd:
-                objs.append(item)
-            
+            try:
+                if item.mnemonic == kwd:
+                    objs.append(item)
+                    continue
+            except:
+                pass
+
             if isinstance(item, KeywordSet):
                 r = item.find(kwd)
                 objs.extend(r)
-            
+                continue
+
         return objs
-        
+
     def write(self, path):
         """
         Write the formatted keywords to a text file.
@@ -1556,18 +1574,21 @@ class SETSITE(KeywordBase):
 class SITECODE(KeywordBase):
     species = CharacterField('Site Species')
     site_index = IntegerField('Site Index')
-    def __init__(self, species, site_index, **kargs):
+    spp_ovr = BooleanField('Site Species Overide')
+    def __init__(self, species, site_index, spp_ovr=None, **kargs):
         """
         Site index species code
 
         @param site_species:  Species code
         @param site_index:  Site species site index value
+        @param spp_ovr: Site species override flag
         """
         KeywordBase.__init__(self, 'SITECODE', 'Site Index Species Code'
                              , format=0, **kargs)
 
         self.species = species
         self.site_index = site_index
+        self.spp_ovr = spp_ovr
 
 class STDIDENT(KeywordBase):
     stand_id = CharacterField('Stand ID', width=26
@@ -2088,6 +2109,27 @@ class BFFDLN(KeywordBase):
         self.intercept = intercept
         self.slope = slope
 
+class VOLEQNUM(KeywordBase):
+    species = CharacterField('Species')
+    cuft_eq = CharacterField('Cubic Foot Equation')
+    bdft_eq = CharacterField('Board Foot Equation')
+    
+    def __init__(self, species='ALL', cuft_eq='', bdft_eq='', **kargs):
+        """
+        Sets the volume equation number used to calculate volume.
+        
+        @param species:  Species code for these equation numbers
+        @param cuft_eq:  Cubic Foot NVEL equation number.
+        @param bdft_eq:  Board Foot NVEL equation number
+        """
+        KeywordBase.__init__(self, 'VOLEQNUM', 'Volume Equation Numbers'
+                         , format=KW_FMT_ONELINE
+                         , **kargs)
+
+        self.species = species
+        self.cuft_eq = cuft_eq
+        self.bdft_eq = bdft_eq
+        
 class BFVOLEQU(KeywordBase):
     species = CharacterField('Species')
     transition_code = IntegerField('Transition Code')
@@ -2547,6 +2589,45 @@ class THINSDI(KeywordBase):
         self.min_dbh = min_dbh
         self.max_dbh = max_dbh
         self.cut_control = cut_control
+
+class THINBTA(KeywordBase):
+    """
+    Thin from below to a TPA target
+    """
+    cycle = IntegerField('Cycle')
+    target_tpa = IntegerField('Target')
+    cut_eff = DecimalField('Cutting Efficiency', precision=2)
+    min_dbh = DecimalField('Minimum DBH', precision=1)
+    max_dbh = DecimalField('Maximum DBH', precision=1)
+    min_ht = IntegerField('Minimum Height')
+    max_ht = IntegerField('Maximum Height')
+
+    def __init__(self, cycle=1, target_tpa=999, cut_eff=1.0
+                 , min_dbh=0.0, max_dbh=999.9
+                 , min_ht=0, max_ht=999
+                 , **kargs):
+        """
+        THINBBA - Thin From Below to a TPA Target
+        
+        @param cycle:
+        @param target_tpa:
+        @param cut_eff:
+        @param min_dbh:
+        @param max_dbh:
+        @param min_ht:
+        @param max_ht:
+        """
+        KeywordBase.__init__(self, 'THINBTA', 'Thin From Below to a TPA Target'
+                             , format=KW_FMT_ONELINE
+                             , **kargs
+                             )
+        self.cycle = cycle
+        self.target_tpa = target_tpa
+        self.cut_eff = cut_eff
+        self.min_dbh = min_dbh
+        self.max_dbh = max_dbh
+        self.min_ht = min_ht
+        self.max_ht = max_ht
 
 def print_test():
     # #TODO: implement better testing

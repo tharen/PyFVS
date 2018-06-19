@@ -11,15 +11,14 @@ added over time.
  - South Central Oregon and Northeast California (SO)
  - Inland California and Southern Cascades (CA)
  - ORGANON Southwest (OC)
-
-# Implementation Roadmap
-
  - ORGANON Pacific Northwest (OP)
  - East Cascades (EC)
+ 
+# Implementation Roadmap
+
  - Northern California (NC)
  - Blue Mountains (BM)
  - Northern Idaho (NI)
-
 
 ![fvs_variant_map][map_url]
 

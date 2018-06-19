@@ -23,57 +23,57 @@ def update_version():
     """
     Update the contents of _version.py with Git metadata.
     """
+    try:
+        r = subprocess.check_output(['git', 'status'])
+        
+    except:
+        print('Error: git must be available in the PATH environment.')
+        raise
+        
     contents = open(version_path).read()
     s = re.search(r'__version__ = \'(?P<version>.*)\'', contents)
     version = s.group('version')
     
-    try:
-        commit = subprocess.check_output(
-                ['git', 'rev-parse', '--short', '--verify', 'HEAD']
-                ).decode('utf-8').strip()
-        
-        # Check for dirty state
-        r = subprocess.check_output(
-                ['git', 'status', '--short', '-uno']
-                ).decode('utf-8').strip()
-        if r:
-            commit += '-dirty'
-
-    except:
-        print('Error getting the current Git commit.')
-        raise
+    commit = subprocess.check_output(
+            ['git', 'rev-parse', '--short', '--verify', 'HEAD']
+            ).decode('utf-8').strip()
+    
+    # Check for dirty state
+    r = subprocess.check_output(
+            ['git', 'status', '--short', '-uno']
+            ).decode('utf-8').strip()
+    if r:
+        commit += '-dirty'
     
     contents = re.sub(
             r"(__git_commit__) = '(.*)'"
             , r"\1 = '{}'".format(commit)
             , contents)
     
-    # Check for an appropriate tag
     try:
         desc = subprocess.check_output(
                 ['git', 'describe', '--tags', '--dirty']
                 ).decode('utf-8').strip()
         
+        # Check the most recent tag version
+        m = re.match('pyfvs-v(?P<version>\d+\.\d+\.\d+)(.*)', desc)
+        if m:
+            tag_version = m.group('version')
+        else:
+            tag_version = version
+        
+        # If this is a more recent version, e.g. release canditate
+        if version>tag_version:
+            desc = ''
+    
     except:
-        print('Error: git must be available in the PATH environment.')
-        raise
-    
-    # Check the most recent tag version
-    m = re.match('pyfvs-v(?P<version>\d+\.\d+\.\d+)(.*)', desc)
-    if m:
-        tag_version = m.group('version')
-    else:
-        tag_version = version
-    
-    # If this is a more recent version, e.g. release canditate
-    if version>tag_version:
+        # For shallow clones git describe may fail.
         desc = ''
         
     contents = re.sub(
             r"(__git_describe__) = '(.*)'"
             , r"\1 = '{}'".format(desc)
             , contents)
-
 
     fn = os.path.join(os.path.dirname(__file__), version_path)
     with open(fn, 'w') as fp:
@@ -105,13 +105,17 @@ class Version(Command):
         update_version()
         print('Version is now {}'.format(get_version()))
 
+# FIXME: This monkey patch can be removed once Numpy distutils is fixed.
 if ((os.name == 'nt') and (sys.version_info[:2] >= (3, 5))
-        and (numpy.version.version <= '1.13')):
+        # and (numpy.version.version <= '1.13')
+        ):
     # Monkey patch numpy for MinGW until version 1.13 is mainstream
+    #   NOTE: This has not been fixed as of numpy 1.13.3
     # This fixes building extensions with Python 3.5+ resulting in
     #       the error message `ValueError: Unknown MS Compiler version 1900
     # numpy_fix uses the patch referenced here:
     #       https://github.com/numpy/numpy/pull/8355
+    print('Apply patch to numpy.distutils for MinGW')
     root = os.path.split(__file__)[0]
     sys.path.insert(0, os.path.join(root, 'numpy_fix'))
     import misc_util, mingw32ccompiler
@@ -128,15 +132,18 @@ else:
     args = []
     defs = []
 
-# Collect all Cython source files as a list of extensions
-extensions = cythonize([
+def get_extensions():
+    """Return all Cython source files as a list of extensions."""
+    ext = cythonize([
         Extension("pyfvs.*"
             , sources=["pyfvs/*.pyx"]
             , include_dirs=[numpy.get_include()]
             , extra_compile_args=args
             , extra_link_args=args
             , define_macros=defs
-            )])
+            )
+        ])
+    return ext
 
 setup(
     name='pyfvs'
@@ -144,12 +151,13 @@ setup(
     , description=description
     , long_description=long_desc
     , url='https://github.com/tharen/PyFVS'
+    , download_url='https://github.com/tharen/PyFVS/archive/master.zip'
     , author="Tod Haren"
     , author_email="tod.haren@gmail.com"
-    , setup_requires=['cython', 'numpy>=1.11', 'pytest-runner']
-    , tests_require=['pytest']
-    , install_requires=['numpy>=1.11', 'pandas']
-    , ext_modules=extensions
+    , setup_requires=['cython', 'numpy>=1.11','twine']
+    , tests_require=['pytest', 'pytest-runner']
+    , install_requires=['numpy>=1.11', 'pandas', 'matplotlib']
+    , ext_modules=get_extensions()
     , packages=['pyfvs', 'pyfvs.keywords']
     , package_data={
             '':['*.pyd', '*.cfg', '*.so', 'README.*']
@@ -170,5 +178,5 @@ setup(
             , 'Programming Language :: Fortran'
             ]
     , keywords=''
-    , cmdclass={"version": Version, }
+    , cmdclass={"version": Version, "build_ext": build_ext}
     )

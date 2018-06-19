@@ -14,7 +14,7 @@ class ListVariantsAction(argparse.Action):
     def __init__(self, option_strings, dest, **kwargs):
         super(ListVariantsAction, self).__init__(option_strings, dest, **kwargs)
 
-    #def __call__(self, parser, namespace, values, option_string=None):
+    # def __call__(self, parser, namespace, values, option_string=None):
     def __call__(self, *args, **kargs):
         # print('%r %r %r' % (namespace, values, option_string))
         # setattr(namespace, self.dest, values)
@@ -45,7 +45,7 @@ def handle_command_line():
     parser.add_argument('-b', '--bootstrap', dest='bootstrap'
             , metavar='', type=int, nargs=1, default=0
             , help='(not impl) Bootstrap resampling of sample plot data.')
-            
+
     parser.add_argument('-d', '--debug', dest='debug'
             , action='store_true', default=False
             , help='Set logging level to debug.')
@@ -53,7 +53,7 @@ def handle_command_line():
     parser.add_argument('-p', '--prompt', dest='prompt'
             , action='store_true', default=False
             , help='Prompt the user for I/O files.')
-    
+
     parser.add_argument('-v', '--version', action='version'
             , version=pyfvs.__version__)
 
@@ -93,16 +93,16 @@ def main():
     Execute a FVS projection from the command line.
     
     Basic Usage:
-        python fvs.py -h
-        python fvs.py <variant> <keyword file>
-        python -m pyfvs.fvs <variant> <keyword file>
+        pyfvs -h
+        pyfvs <variant> <keyword file>
+        python -m pyfvs <variant> <keyword file>
     """
 
     args = handle_command_line()
 
-    if args.bootstrap>0:
+    if args.bootstrap > 0:
         log.info('Bootstrap resampling of plot data is not implemented.')
-        
+
     if args.debug:
         log.setLevel(logging.DEBUG)
 

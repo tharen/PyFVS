@@ -3,16 +3,17 @@ channels: !!python/tuple
   - defaults
 dependencies:
   - python=3.4
-  - alabaster
-  - click
   - cython
   - numpy=1.11
   - pandas
-  - pip
   - pyodbc
+  - click
+  - pip
   - setuptools
-  - sphinx
   - wheel
+  - sphinx
+  - alabaster
+  - matplotlib
   - pip:
     - pytest
     - sphinxcontrib-napoleon

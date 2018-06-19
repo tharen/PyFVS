@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # Use miniconda in travis-ci http://conda.pydata.org/docs/travis.html
 # We do this conditionally because it saves us some downloading if the
@@ -21,6 +21,7 @@ else
     
     chmod +x $HOME/download/miniconda.sh
     $HOME/download/miniconda.sh -b -p $HOME/miniconda
+    $HOME/miniconda/bin/conda update -q conda --yes
 
 fi
 

@@ -17,6 +17,7 @@ import logging.config
 # from .keywords.keywords import *
 # from .keywords.eventmonitor import *
 # from .fvs import FVS, FVSTrees
+# from . import fvs
 
 # If the __version__ file is present, use it.
 from ._version import __version__, __git_commit__, __git_describe__
@@ -30,16 +31,61 @@ def version():
     """Return the current PyFVS API version number."""
     return __version__
 
+#treelist_format = {
+#    'template':(
+#        '{plot:04d}{tree:04d}{tpa:>7.1f}{status:1d}{species:2s}'
+#        '{diam:>5.1f}000{height:>3.0f}{cr_code:>7d}{age:>27d}')
+#    , 'fvs_format':(
+#        'I4,T1,I8,F7.1,I1,A2,F5.1,F3.1,F3.0,F3.0,F3.1'
+#        ',I1,6I2,2I1,I2,2I3,2I1,F3.0'
+#        )
+#    }
+
 treelist_format = {
     'template':(
-        '{plot:04d}{tree:04d}{tpa:>7.1f}{status:1d}{species:2s}'
-        '{diam:>5.1f}000{height:>3.0f}{cr_code:>7d}{age:>27d}')
+        '{plot_id:04d}{tree_id:04d}{prob:>7.1f}{tree_history:1d}{species:2s}'
+        '{dbh:>5.1f}{dg_incr:>3.1f}{live_ht:>3.0f}{trunc_ht:>3.0f}{htg_incr:>2.1}'
+        '{crown_ratio:>2d}'
+        '{damage1:>2d}{severity1:>2d}'
+        '{damage2:>2d}{severity2:>2d}'
+        '{damage3:>2d}{severity3:>2d}'
+        '{age:>15d}')
     , 'fvs_format':(
-        'I4,T1,I8,F7.1,I1,A2,F5.1,F3.1,F3.0,F3.0,F3.1'
-        ',I1,6I2,2I1,I2,2I3,2I1,F3.0'
+        'I4,T1,I8,F7.1,I1,A2,F5.1,F3.1,F3.0,F3.0,F2.1'
+        ',I2,6I2,2I1,I2,2I3,2I1,F3.0'
         )
     }
 
+# Map treelist dataframe columns to a FVS formatted treelist file
+treelist_fields = (
+    #(column name, python format, fortran format, required)
+    ('plot_id',':04d','I4',True),
+    ('tree_id',':04d','T1,I8',True),
+    ('prob',':>7.1f','F7.1',True),
+    ('tree_history',':1d','I1',False),
+    ('species',':>5s','A5',True),
+    ('dbh',':>5.1f','F5.1',True),
+    ('dg_incr',':>4.1f','F4.1',False),
+    ('height',':>3.0f','F3.0',False),
+    ('tk_height',':>3.0f','F3.0',False),
+    ('htg_incr',':>4.1f','F4.1',False),
+    ('crown_ratio',':>2.0f','I2',False),
+    ('damage1',':>2d','I2',False),
+    ('severity1',':>2d','I2',False),
+    ('damage2',':>2d','I2',False),
+    ('severity2',':>2d','I2',False),
+    ('damage3',':>2d','I2',False),
+    ('severity3',':>2d','I2',False),
+    ('value_class',':1d','I1',False),
+    ('rx_code',':1d','I1',False),
+    ('plot_slope',':>2d','I2',False),
+    ('plot_aspect',':>3d','I3',False),
+    ('plot_hab',':>3d','I3',False),
+    ('plot_topopos',':1d','I1',False),
+    ('plot_siteprep',':1d','I1',False),
+    ('tree_age',':>3d','F3.0',False),
+    )
+    
 def get_config():
     """
     Return the configuration dict.

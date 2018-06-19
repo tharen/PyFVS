@@ -138,7 +138,7 @@ However, it is usually advisable to avoid spaces in paths.
 From a git command line clone the repository.
 
     cd c:\pyfvs
-    git clone https://github.com/tharen/PyFVS.git`
+    git clone https://github.com/tharen/PyFVS.git
 
 Or use your Git GUI to clone the repository to a subfolder in your workspace.
 
@@ -335,7 +335,7 @@ folder. Be sure not to commit them to git!
 No go to the Python source folder and install in development mode.
 
     cd c:\pyfvs\pyfvs\python
-    python setup.py build_ext --inplace --force
+    python setup.py build_ext --inplace --force --compiler=mingw32
     pip install -e .
 
 This will not install PyFVS to your site-packages, but instead add the source

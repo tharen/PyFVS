@@ -1,13 +1,5 @@
 set OLDPATH=%PATH%
 
-REM if %PYTHON_ARCH% == "64" (
-    REM set MINGW_PATH=C:\msys64\mingw64\bin
-    REM set win32=No
-REM ) else (
-    REM set MINGW_PATH=C:\msys64\mingw32\bin
-    REM set win32=Yes
-REM )
-
 set win32=No
 
 set PATH=%MINGW_PATH%\bin;%MINICONDA%;%MINICONDA%\Scripts
