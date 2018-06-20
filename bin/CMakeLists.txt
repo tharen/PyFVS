@@ -617,7 +617,7 @@ if (WITH_PYEXT)
                 "htdbh.f" "forkod.f"
                 
                 "prgprm_mod.f90" "esparm_mod.f90" "arrays_mod.f90"
-                "contrl_mod.f90"66
+                "contrl_mod.f90"
 
                 "coeffs_mod.f90" "econ_mod.f90" "escomn_mod.f90" "eshap_mod.f90"
                 "estree_mod.f90" "htcal_mod.f90" "multcm_mod.f90" "pden_mod.f90"
