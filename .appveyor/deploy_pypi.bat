@@ -5,7 +5,6 @@
 pushd %APPVEYOR_BUILD_FOLDER%\bin\build\Open-FVS\python
 
 if "%APPVEYOR_REPO_BRANCH%" == "dev" (
-    conda install twine --yes -c conda-forge
     echo On dev branch, deploy to PYPI test.
     call twine upload dist/* --skip-existing --repository-url https://test.pypi.org/legacy/ || goto twineerror
     goto finish
@@ -13,7 +12,6 @@ if "%APPVEYOR_REPO_BRANCH%" == "dev" (
 
 if "%APPVEYOR_REPO_BRANCH%" == "master" (
     if "%APPVEYOR_REPO_TAG%" == "true" (
-        conda install twine --yes -c conda-forge
         echo Tagged revision on master, deploy to PYPI.
         call twine upload dist/* --skip-existing || goto twineerror
         goto finish

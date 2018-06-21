@@ -4,7 +4,7 @@ channels: !!python/tuple
 dependencies:
   - python=3.4
   - cython
-  - numpy>=1.13
+  - numpy>=1.11
   - pandas
   - pyodbc
   - click
