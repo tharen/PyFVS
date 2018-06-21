@@ -70,7 +70,6 @@ test_script:
 
 on_success:
   # Adapted from: https://github.com/AndrewAnnex/SpiceyPy/blob/master/appveyor.yml
-  - conda install twine --yes -c conda-forge
   - call %APPVEYOR_BUILD_FOLDER%\\.appveyor\\deploy_pypi.bat
 
 on_failure:
