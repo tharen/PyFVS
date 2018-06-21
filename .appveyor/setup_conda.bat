@@ -7,8 +7,9 @@ REM call sed -i -E 's/(python=)(.*)/\1'%PYTHON_VERSION%'/' ./environment.yml
 REM Create the conda environment
 REM conda env create -q -n pyfvs -f %APPVEYOR_BUILD_FOLDER%\\environment.yml
 
-set pkg="numpy pandas cython pyodbc click setuptools wheel sphinx alabaster matplotlib pip twine"
-conda create --force -q -n pyfvs python=%PYTHON_VERSION% %pkg%
+set pkg=numpy pandas cython pyodbc click setuptools wheel sphinx alabaster matplotlib pip twine
+conda create --force -q -n=pyfvs python=%PYTHON_VERSION% %pkg%
+activate pyfvs
 pip install pytest sphinxcontrib-napoleon
 
 conda info -a
