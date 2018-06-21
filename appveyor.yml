@@ -38,6 +38,8 @@ init:
     
 install:
     # Setup the python environment and install required packages
+    - set PATH=%MINICONDA%;%MINICONDA%\Scripts;%PATH%
+    - set PATH=%MINGW_PATH%\bin;%PATH%
     - call %APPVEYOR_BUILD_FOLDER%\\.appveyor\\setup_conda.bat
     - call activate pyfvs
     
