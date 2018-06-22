@@ -8,7 +8,7 @@ conda config --add channels conda-forge
 
 export pkg="numpy pandas cython pyodbc click setuptools wheel sphinx alabaster matplotlib pip twine"
 
-conda create -y -q --update-deps -n pyfvs python=$TRAVIS_PYTHON_VERSION $pkg
+conda create -y -q --update-deps --clobber -n pyfvs python=$TRAVIS_PYTHON_VERSION $pkg
 source activate pyfvs
 pip install pytest sphinxcontrib-napoleon
 

@@ -5,8 +5,8 @@ environment:
     MPLBACKEND: "agg"
     MINGW_PATH: "C:\\mingw-w64\\x86_64-6.3.0-posix-seh-rt_v5-rev1\\mingw64"
     
-    # FVS_VARIANTS: "pnc;wcc;soc;cac;ecc;oc;op"
-    FVS_VARIANTS: pnc
+    FVS_VARIANTS: "pnc;wcc;soc;cac;ecc;oc;op"
+    #FVS_VARIANTS: pnc
 
     TWINE_PASSWORD:
         secure: lLhgSTVGnQNINPD18gIe2g==
@@ -16,22 +16,22 @@ environment:
   matrix:
     # https://www.appveyor.com/docs/build-environment/#miniconda
     
-    # - MINICONDA: "C:\\Miniconda-x64"
-      # PYTHON_VERSION: "2.7"
-      # PYTHON_ARCH: "64"
-    
     # NOTE: Using the 36 install, since it is the most current version of conda
+    - MINICONDA: "C:\\Miniconda36-x64"
+      PYTHON_VERSION: "2.7"
+      PYTHON_ARCH: "64"
+    
     - MINICONDA: "C:\\Miniconda36-x64"
       PYTHON_VERSION: "3.4"
       PYTHON_ARCH: "64"
     
-    # - MINICONDA: "C:\\Miniconda35-x64"
-      # PYTHON_VERSION: "3.5"
-      # PYTHON_ARCH: "64"
+    - MINICONDA: "C:\\Miniconda36-x64"
+      PYTHON_VERSION: "3.5"
+      PYTHON_ARCH: "64"
 
-    # - MINICONDA: "C:\\Miniconda36-x64"
-      # PYTHON_VERSION: "3.6"
-      # PYTHON_ARCH: "64"
+    - MINICONDA: "C:\\Miniconda36-x64"
+      PYTHON_VERSION: "3.6"
+      PYTHON_ARCH: "64"
     
 init:
     - echo PYTHON_VERSION %PYTHON_VERSION%
