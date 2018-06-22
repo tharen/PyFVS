@@ -6,12 +6,7 @@ environment:
     MINGW_PATH: "C:\\mingw-w64\\x86_64-6.3.0-posix-seh-rt_v5-rev1\\mingw64"
     
     FVS_VARIANTS: "pnc;wcc;soc;cac;ecc;oc;op"
-    # FVS_VARIANTS: "pnc;wcc"
-
-    # SDK v7.0 MSVC Express 2008's SetEnv.cmd script will fail if the
-    # /E:ON and /V:ON options are not enabled in the batch script intepreter
-    # See: http://stackoverflow.com/a/13751649/163740
-    CMD_IN_ENV: "cmd /E:ON /V:ON /C %APPVEYOR_BUILD_FOLDER%\\.appveyor\\run_with_env.cmd"
+    #FVS_VARIANTS: pnc
 
     TWINE_PASSWORD:
         secure: lLhgSTVGnQNINPD18gIe2g==
@@ -21,15 +16,16 @@ environment:
   matrix:
     # https://www.appveyor.com/docs/build-environment/#miniconda
     
-    - MINICONDA: "C:\\Miniconda-x64"
+    # NOTE: Using the 36 install, since it is the most current version of conda
+    - MINICONDA: "C:\\Miniconda36-x64"
       PYTHON_VERSION: "2.7"
       PYTHON_ARCH: "64"
-      
-    - MINICONDA: "C:\\Miniconda34-x64"
+    
+    - MINICONDA: "C:\\Miniconda36-x64"
       PYTHON_VERSION: "3.4"
       PYTHON_ARCH: "64"
     
-    - MINICONDA: "C:\\Miniconda35-x64"
+    - MINICONDA: "C:\\Miniconda36-x64"
       PYTHON_VERSION: "3.5"
       PYTHON_ARCH: "64"
 
@@ -45,15 +41,7 @@ install:
     # Setup the python environment and install required packages
     - set PATH=%MINICONDA%;%MINICONDA%\Scripts;%PATH%
     - set PATH=%MINGW_PATH%\bin;%PATH%
-    - conda config --set always_yes yes --set changeps1 no
-    - conda config --add channels conda-forge
-    - conda update -q conda
-    
-    # Edit the environment.yml file for the target Python version
-    - call sed -i -E 's/(python=)(.*)/\1'%PYTHON_VERSION%'/' ./environment.yml
-    # Create the conda environment
-    - conda env create -q -n pyfvs -f %APPVEYOR_BUILD_FOLDER%\\environment.yml
-    - conda info -a
+    - call %APPVEYOR_BUILD_FOLDER%\\.appveyor\\setup_conda.bat
     - call activate pyfvs
     
 build_script:
