@@ -1,7 +1,7 @@
 conda config --set always_yes yes --set changeps1 no
 conda config --add channels conda-forge
 conda --version
-conda update -q conda
+conda update -y -q conda
 conda --version
 
 REM Edit the environment.yml file for the target Python version
