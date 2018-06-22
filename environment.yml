@@ -4,7 +4,7 @@ channels: !!python/tuple
 dependencies:
   - python=3.4
   - cython
-  - numpy=1.11
+  - numpy
   - pandas
   - pyodbc
   - click
@@ -14,6 +14,6 @@ dependencies:
   - sphinx
   - alabaster
   - matplotlib
+  - pytest
   - pip:
-    - pytest
     - sphinxcontrib-napoleon

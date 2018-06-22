@@ -2,11 +2,11 @@ version: 0.0.14dev0-{build}
 
 environment:
   global:
-    MPLBACKEND: "agg"
-    MINGW_PATH: "C:\\mingw-w64\\x86_64-6.3.0-posix-seh-rt_v5-rev1\\mingw64"
+    MPLBACKEND: agg
+    MINGW_PATH: C:\mingw-w64\x86_64-7.2.0-posix-seh-rt_v5-rev1\mingw64
     
-    FVS_VARIANTS: "pnc;wcc;soc;cac;ecc;oc;op"
-    #FVS_VARIANTS: pnc
+    #FVS_VARIANTS: pnc;wcc;soc;cac;ecc;oc;op
+    FVS_VARIANTS: pnc
 
     TWINE_PASSWORD:
         secure: lLhgSTVGnQNINPD18gIe2g==
@@ -17,21 +17,21 @@ environment:
     # https://www.appveyor.com/docs/build-environment/#miniconda
     
     # NOTE: Using the 36 install, since it is the most current version of conda
-    - MINICONDA: "C:\\Miniconda36-x64"
-      PYTHON_VERSION: "2.7"
-      PYTHON_ARCH: "64"
+    # - MINICONDA: C:\Miniconda36-x64
+      # PYTHON_VERSION: 2.7
+      # PYTHON_ARCH: 64
     
-    - MINICONDA: "C:\\Miniconda36-x64"
-      PYTHON_VERSION: "3.4"
-      PYTHON_ARCH: "64"
+    # - MINICONDA: C:\Miniconda36-x64
+      # PYTHON_VERSION: 3.4
+      # PYTHON_ARCH: 64
     
-    - MINICONDA: "C:\\Miniconda36-x64"
-      PYTHON_VERSION: "3.5"
-      PYTHON_ARCH: "64"
+    # - MINICONDA: C:\Miniconda36-x64
+      # PYTHON_VERSION: 3.5
+      # PYTHON_ARCH: 64
 
-    - MINICONDA: "C:\\Miniconda36-x64"
-      PYTHON_VERSION: "3.6"
-      PYTHON_ARCH: "64"
+    - MINICONDA: C:\Miniconda36-x64
+      PYTHON_VERSION: 3.6
+      PYTHON_ARCH: 64
     
 init:
     - echo PYTHON_VERSION %PYTHON_VERSION%
@@ -41,29 +41,29 @@ install:
     # Setup the python environment and install required packages
     - set PATH=%MINICONDA%;%MINICONDA%\Scripts;%PATH%
     - set PATH=%MINGW_PATH%\bin;%PATH%
-    - call %APPVEYOR_BUILD_FOLDER%\\.appveyor\\setup_conda.bat
+    - call %APPVEYOR_BUILD_FOLDER%\.appveyor\setup_conda.bat
     - call activate pyfvs
     
 build_script:
     # Configure the CMake project and execute the build
-    - call %APPVEYOR_BUILD_FOLDER%\\.appveyor\\config_and_build.bat
+    - call %APPVEYOR_BUILD_FOLDER%\.appveyor\config_and_build.bat
 
 after_build:
     # Create a zip file package of the compiled libraries and python package
-    - "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\bundle_archive.bat"
+    - "%APPVEYOR_BUILD_FOLDER%\.appveyor\bundle_archive.bat"
 
 test_script:
     # Run tests against the final package
-    - call "%APPVEYOR_BUILD_FOLDER%\\.appveyor\\run_tests.bat"
+    - call "%APPVEYOR_BUILD_FOLDER%\.appveyor\run_tests.bat"
 
 on_success:
   # Adapted from: https://github.com/AndrewAnnex/SpiceyPy/blob/master/appveyor.yml
-  - call %APPVEYOR_BUILD_FOLDER%\\.appveyor\\deploy_pypi.bat
+  - call %APPVEYOR_BUILD_FOLDER%\.appveyor\deploy_pypi.bat
 
 on_failure:
     # Post error logs to the build log
-    - appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\\bin\\build\\build_err.log
-    - appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\\bin\\build\\pypnc_f2py.log
+    - appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\bin\build\build_err.log
+    - appveyor PushArtifact %APPVEYOR_BUILD_FOLDER%\bin\build\pypnc_f2py.log
     
     # Report remote desktop connection parameters and wait
     # - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
@@ -80,16 +80,16 @@ artifacts:
 deploy:
   - provider: GitHub
     # release: myproduct-v$(appveyor_build_version)
-    description: 'Appveyor CI tag build.'
+    description: Appveyor CI tag build.
     auth_token:
       secure: Pi+Rn4LnPIHYZJ6uMQa4im0nQvZ6YMoBsGiGwzEpe1ZcJsunZ9D/snlNfjLlvA2w
     # artifact: pyfvs-zip pyfvs-wheel # Using artifact name works consistently
     artifact: pyfvs-wheel
-    draft: true
-    prerelease: false
+    draft: false
+    prerelease: true
     force_update: true
     on:
-      # branch: master                 # release from master branch only
+      branch: master                 # release from master branch only
       appveyor_repo_tag: true        # deploy on tag push only
 
   - provider: S3
