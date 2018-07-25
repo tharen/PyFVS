@@ -13,7 +13,6 @@ set path=%path:C:\progs\git\usr\bin;=%
 cmake -G "MinGW Makefiles" .. ^
     -DFVS_VARIANTS="pnc;wcc;soc;cac;ecc;oc;op" ^
     -DCMAKE_SYSTEM_NAME=Windows ^
-    -DWITH_PYEXT=Yes ^
     -DCMAKE_INSTALL_PREFIX=Open-FVS || goto :error_configure
 
 :: Compile and install locally

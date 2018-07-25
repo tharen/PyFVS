@@ -74,3 +74,4 @@ python/docs/_build/
 *.log
 .eggs
 .cache
+.pytest_cache

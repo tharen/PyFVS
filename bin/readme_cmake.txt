@@ -41,9 +41,9 @@ build folder.
 Example 1, A debug build:
     mkdir bin\debug
     cd bin\debug
-    cmake .. -G"MinGW Makefiles" -DDEBUG=1 -DFVS_VARIANTS="pnc;wcc"
-    mingw32-make -j2 all
-    mingw32-make install
+    cmake .. -G "MinGW Makefiles" -DFVS_VARIANTS="pnc;wcc" -DCMAKE_BUILD_TYPE=Debug
+    cmake --build . target all -- -j2
+    cmake --build . target install
 
 Description:
 Assuming you are in the root of the Open-FVS source tree (for the branch 
@@ -69,9 +69,9 @@ variant is compiled in its own out-of-source subfolder.
 Example 2, Configure all variants for a release build, build one at a time:
     mkdir bin\release
     cd bin\release
-    cmake .. -G"MinGW Makefiles" -DRELEASE=1
-    mingw32-make -j2 soc
-    mingw32-make -j2 ncc
+    cmake .. -G" MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
+    cmake --build . target soc
+    cmake --build . target pnc
     
 This creates subprojects for each variant in the FVS*_sourceList.txt file set.
 Release optimization flags are set on the compiler calls.  Finally, only the 
@@ -80,13 +80,13 @@ SOC and NCC variants are built.
 Example 3, configure and build each variant separately:
     mkdir pnc_only
     cd pnc_only
-    cmake .. -G"MinGW Makefiles" -DFVS_VARIANTS=pnc
-    mingw32-make -j2
+    cmake .. -G "MinGW Makefiles" -DFVS_VARIANTS=pnc
+    cmake --build .
     cd ..
     mkdir wcc_only
     cd wcc_only
-    cmake .. -G"MinGW Makefiles" -DFVS_VARIANTS=wcc
-    mingw32-make -j2
+    cmake .. -G "MinGW Makefiles" -DFVS_VARIANTS=wcc
+    cmake --build .
 
 Starting in the "bin" folder of the Open-FVS source tree this will build each 
 variant in complete isolation.  This may be useful for debugging, but should be
@@ -94,21 +94,15 @@ discouraged for general use.
 
 Configuration options specified within CMakeLists.txt:
     
-    -DFVS_VARIANTS - Configure only selected FVS variants to build.  Use a 
+    -DFVS_VARIANTS=<variants> - Configure selected FVS variants to build.  Use a 
             semicolon seperated list to select which variants will be 
             configured, eg. pnc;wcc;soc;ncc.  The default is "all" which will
             scan the FVS*_sourceLists.txt files for available variants.
     
-    -DWITH_PYMOD=ON - Configure each selected variant so a linked Python 
-            module will be built.  The resulting module file will be named 
-            according to the variant, prefixed with 'py', and with a platform
-            specific file extension, '.pyd' on Windows and '.so' on others.
+    -DNO_PYTHON=ON - Skip building Python exention libraries.
     
-    -DDEBUG=ON - Enable debugging compiler flags.
-    -DRELEASE=ON - Enable release optimization compiler flats
-
 Useful CMake variables:
 
     -DCMAKE_INSTALL_PREFIX - Root folder for installing the compiled binaries.
-    -DCMAKE_BUILD_TYPE - Enable alternative build modes.  See the CMak docs.
+    -DCMAKE_BUILD_TYPE - Enable alternative build modes.  See the CMake docs.
     
