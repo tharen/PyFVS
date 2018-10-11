@@ -62,6 +62,9 @@ def handle_command_line():
 
     parser.add_argument('--run-tests', action='store_true', default=False
             , help='Run tests against the supported variants.')
+    
+    parser.add_argument('--fvs-mort', action='store_true', default=False
+            , help='Use the former FVS mortality functions for PN & WC variants.')
 
     args = parser.parse_args()
 
@@ -131,7 +134,12 @@ def main():
 
     except:
         sys.exit(1)
-
+    
+    # 
+    fvs.contrl_mod.use_fvs_morts = args.fvs_mort
+    fvs.contrl_mod.fast_age_search = False
+    fvs.contrl_mod.calc_forest_type = False
+     
     try:
         fvs.execute_projection(args.keyword_file)
     except:

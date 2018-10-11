@@ -70,7 +70,7 @@ class FVS(object):
        # Return a tuple of species codes given an FVS ID using the FVS API.
        spp_attrs = fvs.fvsspeciescode(16)
     """
-    def __init__(self, variant, stochastic=False, bootstrap=0, config=None, cleanup=True):
+    def __init__(self, variant, stochastic=False, bootstrap=0, config=None, cleanup=True, treelist_format=None):
         """
         Initialize a FVS variant library.
         """
@@ -91,9 +91,15 @@ class FVS(object):
         self.fvslib_path = None
         self.fvslib = None
         
-        self.treelist_tmplt = pyfvs.treelist_format['template']
-        self.treelist_fmt = pyfvs.treelist_format['fvs_format']
+        if treelist_format is None:
+            # Use the default PyFVS treelist template
+            self.treelist_tmplt = pyfvs.treelist_format['template']
+            self.treelist_fmt = pyfvs.treelist_format['fvs_format']
         
+        else:
+            self.treelist_tmplt = treelist_format['template']
+            self.treelist_fmt = treelist_format['fvs_format']
+            
         self._load_fvslib()
 
         # if self.fvslib is None:
@@ -561,12 +567,20 @@ class FVS(object):
                 out.write(trees.fvs_treelist())
 
         elif isinstance(trees, pd.DataFrame):
-            names = trees.columns.values
-            with open(treelist_path, 'w') as out:
-                for r, rec in trees.iterrows():
-                    out.write(tmplt.format(
-                            **dict(zip(names, rec))) + '\n')
-
+            names = list(trees.columns)
+            try:
+                with open(treelist_path, 'w') as out:
+                    for r, rec in trees.iterrows():
+                        out.write(tmplt.format(
+                                **dict(zip(names, rec))) + '\n')
+            except KeyError:
+                print('Treelist template: {}'.format(tmplt))
+                raise
+            
+            except:
+                print(trees.info())
+                raise
+            
         elif isinstance(trees, (list, tuple)):
             with open(treelist_path, 'w') as out:
                 for plot in trees:

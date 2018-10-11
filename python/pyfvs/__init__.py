@@ -44,7 +44,7 @@ def version():
 treelist_format = {
     'template':(
         '{plot_id:04d}{tree_id:04d}{prob:>7.1f}{tree_history:1d}{species:2s}'
-        '{dbh:>5.1f}{dg_incr:>3.1f}{live_ht:>3.0f}{trunc_ht:>3.0f}{htg_incr:>2.1}'
+        '{dbh:>5.1f}{dg_incr:>3.1f}{live_ht:>3.0f}{trunc_ht:>3.0f}{htg_incr:>2.1f}'
         '{crown_ratio:>2d}'
         '{damage1:>2d}{severity1:>2d}'
         '{damage2:>2d}{severity2:>2d}'
