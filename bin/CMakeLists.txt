@@ -64,10 +64,24 @@ enable_language(Fortran)
 
 set(version "Open-FVS")
 
+# List known variants to compile by default
+set(all_variants "pnc;wcc;soc;cac;ecc;op;oc")
+
+# Set search path for CMake include files
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake_include")
+
+# Include the configuration scripts
+include("BuildType")
+
 #Assumes the FVS source is one level up from the parent CmakeLists.txt
 #Used to set the prefix of all files in *sourceList.txt
 get_filename_component(source_root "${CMAKE_CURRENT_LIST_DIR}/.." ABSOLUTE)
 set(source_list_dir ${CMAKE_CURRENT_LIST_DIR})
+
+string(TOLOWER ${FVS_VARIANTS} FVS_VARIANTS)
+if (FVS_VARIANTS STREQUAL "all" OR NOT FVS_VARIANTS)
+    set(FVS_VARIANTS ${all_variants})
+endif ()
 
 #TODO: Clean up cache variable to enable cmake-gui usage
 # Define default values for build configuration options
@@ -216,31 +230,17 @@ if (CMAKE_COMPILER_IS_GNUCC OR APPLE)
 
 endif ()
 
-#Process the variant list command line argument and make a list of source lists
-#  eg. cmake <...> -DFVS_VARIANTS=pnc;wcc;iec
-string(TOLOWER ${FVS_VARIANTS} FVS_VARIANTS)
-if (FVS_VARIANTS STREQUAL "all")
-    file(GLOB source_lists "${source_list_dir}/FVS*_sourceList.txt")
-    set(FVS_VARIANTS "")
-    foreach (fn ${source_lists})
-        string(REGEX REPLACE ".*FVS(.+)_sourceList.txt" "\\1" var ${fn})
-        string(TOLOWER ${var} var)
-        list(APPEND FVS_VARIANTS ${var})
-    endforeach(fn)
-
-else()
-    set(source_lists "")
-    foreach(var ${FVS_VARIANTS})
-        set(fn "${source_list_dir}/FVS${var}_sourceList.txt")
-        if (NOT EXISTS "${fn}")
-            message(FATAL_ERROR "No source list for variant ${var}: ${fn}")
-        else()
-            message(STATUS "Variant source list: ${var} - ${fn}")
-            list(APPEND source_lists ${fn})
-        endif()
-    endforeach(var)
-
-endif()
+# Get the source list files for each variant
+set(source_lists "")
+foreach(var ${FVS_VARIANTS})
+    set(fn "${source_list_dir}/FVS${var}_sourceList.txt")
+    if (NOT EXISTS "${fn}")
+        message(FATAL_ERROR "No source list for variant ${var}: ${fn}")
+    else()
+        message(STATUS "Variant source list: ${var} - ${fn}")
+        list(APPEND source_lists ${fn})
+    endif()
+endforeach(var)
 
 list(LENGTH FVS_VARIANTS num_variants)
 message(STATUS "FVS Variants = (${num_variants}) ${FVS_VARIANTS}")
@@ -373,9 +373,9 @@ foreach(v RANGE ${num_variants})
 
     # Write out the new variant CMakeLists file
     # TODO: Move the variant template to a seperate file.
-    file(STRINGS CMakeLists.txt cmakelist NEWLINE_CONSUME)
-    string(REGEX REPLACE ".*##-----DO NOT REMOVE THIS TAG-----##" ""
-           cmakelist ${cmakelist})
+    file(STRINGS FVSVariant.cmake.in cmakelist NEWLINE_CONSUME)
+    # string(REGEX REPLACE ".*##-----DO NOT REMOVE THIS TAG-----##" ""
+           # cmakelist ${cmakelist})
 
     # Replace template strings
     # TODO: use string(configure ...) instead of this mess
@@ -389,391 +389,3 @@ foreach(v RANGE ${num_variants})
     add_subdirectory(${variant_dir} ${variant_dir})
     
 endforeach()
-
-return()
-
-##The text below this tag becomes the CMakeLists.txt file in the variant subdirectory
-##-----DO NOT REMOVE THIS TAG-----##
-cmake_minimum_required(VERSION 2.8.8 FATAL_ERROR)
-
-project(FVS<<variant>> C CXX Fortran)
-#include(GenerateExportHeader)
-
-enable_language(Fortran)
-
-set(fvsexe "FVS${variant}")
-set(fvslib_shared "libFVS${variant}")
-set(fvslib_static "FVS${variant}_static")
-
-#Replaced by regex during configuration
-set(variant <<variant>>)
-set(source_list <<source_list>>)
-set(source_root <<source_root>>)
-
-message(STATUS "Configure variant: ${variant}")
-message(STATUS "CMake Build Type: ${CMAKE_BUILD_TYPE}")
-message(STATUS "Profiling: ${PROFILING}")
-message(STATUS "source_list: ${source_list}")
-message(STATUS "fvsexe: ${fvsexe}")
-message(STATUS "fvslib_shared: ${fvslib_shared}")
-#message(STATUS "Shared Link Flags: ${CMAKE_SHARED_LINKER_FLAGS}")
-#message(STATUS "Exe Link Flags: ${CMAKE_EXE_LINKER_FLAGS}")
-
-function(join VALUES GLUE OUTPUT)
-  string(REPLACE ";" "${GLUE}" _TMP_STR "${VALUES}")
-  set(${OUTPUT} "${_TMP_STR}" PARENT_SCOPE)
-endfunction()
-
-# Parse the source file list and populate Cmake lists
-set(include_dirs)
-set(fvs_source)
-set(main_source)
-set(pyext_source)
-
-# Process the source list for the variant as strip whitespace
-# file(STRINGS ${source_list} source_files)
-file(STRINGS ${source_list} x)
-set(source_files)
-foreach(y ${x})
-    string(STRIP ${y} z)
-    list(APPEND source_files ${z})
-endforeach()
-
-# Localize the paths
-string(REPLACE "../" "${source_root}/" source_files "${source_files}")
-
-foreach (fn ${source_files})
-    if (NOT ${fn} MATCHES "^#.*")
-        get_filename_component(filename ${fn} NAME)
-        get_filename_component(pathname ${fn} PATH)
-        get_filename_component(extname ${fn} EXT)
-
-        # Need the location of C headers and include files
-        if (${fn} MATCHES "(.*\\.h$)|(.*\\.F77$)")
-            list(APPEND include_dirs ${pathname})
-        endif()
-
-        # Separate the core FVS code from executable main routine
-        if ((${extname} STREQUAL ".f") OR (${extname} STREQUAL ".f90"))
-            if ((${filename} STREQUAL "main.f")
-                OR (${filename} STREQUAL "main.f90"))
-                list(APPEND main_source ${fn})
-            else()
-                list (APPEND fvs_source ${fn})
-            endif()
-        endif()
-
-        unset(filename CACHE)
-        unset(pathname CACHE)
-        unset(extname CACHE)
-    endif()
-endforeach(fn)
-
-list(REMOVE_DUPLICATES include_dirs)
-list(REMOVE_DUPLICATES fvs_source)
-list(REMOVE_DUPLICATES main_source)
-
-# Include the variant build folder to catch .mod files
-list(APPEND include_dirs ${CMAKE_CURRENT_BINARY_DIR})
-
-# Add the newly found include dirs
-include_directories(BEFORE ${include_dirs})
-
-# Remove source files already in FFE, SQL
-set(sl ${ffe_source} ${sql_source})
-foreach(fn ${sl})
-    list(FIND fvs_source ${fn} i)
-    if (NOT ${i} EQUAL -1)
-        list(REMOVE_ITEM fvs_source ${fn})
-    endif()
-endforeach()
-
-#---CMake Variables
-file(WRITE "cmakevars-${variant}.txt" "CMake Variables - ${variant}")
-get_cmake_property(_variableNames VARIABLES)
-foreach (_variableName ${_variableNames})
-    file(APPEND
-            "cmakevars-${variant}.txt"
-            "${_variableName}=${${_variableName}}\n"
-            )
-endforeach()
-
-#---Compile the variant FVS code to an object library
-set(fvs_objs "fvs${variant}_objs")
-add_library(${fvs_objs} OBJECT ${fvs_source})
-
-set(objs_timestamp "${variant}_timestamp")
-add_custom_target(${objs_timestamp} ALL
-        COMMAND ${CMAKE_COMMAND} -E touch "${variant}_timestamp")
-
-##TODO: Need a fixup for VBA
-#if (WIN32)
-#    set_target_properties(${fvs_lib} PROPERTIES
-#            LINK_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--output-def,${fvs_lib}.def"
-#            )
-#endif ()
-
-#---Link the shared library and executables
-if (NOT STATIC_LINK)
-    add_library(${fvslib_shared} SHARED
-        $<TARGET_OBJECTS:${fvs_objs}>)
-    target_link_libraries(${fvslib_shared} ffe_lib sql_lib)
-
-    add_library(${fvslib_static}
-        $<TARGET_OBJECTS:${fvs_objs}>)
-    target_link_libraries(${fvslib_static} ffe_lib sql_lib)
-
-    add_executable (${fvsexe} ${main_source}
-        $<TARGET_OBJECTS:${fvs_objs}>)
-    target_link_libraries(${fvsexe} ffe_lib sql_lib)
-
-else ()
-    add_library(${fvslib_shared} SHARED
-        $<TARGET_OBJECTS:${fvs_objs}>
-        $<TARGET_OBJECTS:ffe_lib>
-        $<TARGET_OBJECTS:sql_lib>
-        )
-
-    add_library(${fvslib_static}
-        $<TARGET_OBJECTS:${fvs_objs}>
-        $<TARGET_OBJECTS:ffe_lib>
-        $<TARGET_OBJECTS:sql_lib>
-        )
-
-    add_executable (${fvsexe} ${main_source}
-        $<TARGET_OBJECTS:${fvs_objs}>
-        $<TARGET_OBJECTS:ffe_lib>
-        $<TARGET_OBJECTS:sql_lib>
-        )
-
-endif ()
-
-add_dependencies(${fvslib_shared} sql_lib)
-
-if (WIN32)
-    target_link_libraries(${fvslib_shared} odbc32)
-    target_link_libraries(${fvsexe} odbc32)
-else ()
-    target_link_libraries(${fvslib_shared} ltdl odbc)
-    target_link_libraries(${fvsexe} ltdl odbc)
-endif ()
-
-set_target_properties(${fvsexe} PROPERTIES LINKER_LANGUAGE Fortran)
-set_target_properties(${fvslib_shared} PROPERTIES
-    LINKER_LANGUAGE Fortran
-    PREFIX ""
-    IMPORT_PREFIX ""
-    )
-
-# ##TODO: Need a fixup for VBA
-# if (NOT UNIX_TARGET)
-   # set_target_properties(${fvslib_shared} PROPERTIES
-           # LINK_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--output-def,${fvslib_shared}.def,--out-implib,${fvslib_shared}.a"
-           # )
-# endif ()
-
-if (NOT UNIX_TARGET)
-    set_target_properties(${fvslib_shared} PROPERTIES
-            LINK_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--output-def,${fvslib_shared}.def,--out-implib,${fvslib_shared}.a -Wl,--add-stdcall-alias"
-            )
-    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${fvslib_shared}.def DESTINATION lib)
-endif ()
-
-install(TARGETS ${fvsexe} DESTINATION bin)
-install(TARGETS ${fvslib_shared} DESTINATION lib)
-install(TARGETS ${fvslib_static} DESTINATION lib/static)
-
-# Create a header file for the variant library
-#generate_export_header(${fvslib_shared})
-#generate_export_header(${fvslib_shared}
-#    BASE_NAME ${fvslib_shared}
-#    EXPORT_MACRO_NAME ${fvslib_shared}_EXPORT
-#    EXPORT_FILE_NAME ${fvslib_shared}_Export.h
-#    STATIC_DEFINE ${fvslib_shared}_BUILT_AS_STATIC
-#    )
-
-# FIXME: Installation of header files is not working
-#install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${fvslib_shared}_Export.h DESTINATION "./")
-
-# TODO: Move the Python module support to a seperate CMake file.
-# Build the Python modules
-if (NOT NO_PYTHON)
-    message(STATUS "Configure and build the Python extension.")
-
-    set(pyext_name "pyfvs${variant}")
-
-    # TODO: Add a pyfvs_sources.txt file to avoid stuffing them here
-    # Process the source list for files to include in the Python module
-    file(STRINGS ${source_list} x)
-    set(source_files)
-    foreach(y ${x})
-        string(STRIP ${y} z)
-        list(APPEND source_files ${z})
-    endforeach()
-    #string(REGEX REPLACE "([cC].+)\ +;" "1;" source_files "${source_files}")
-    # string(REGEX REPLACE "(.+)\ +" "1" source_files ${source_files})
-    # string(STRIP source_files ${source_files})
-    string(REPLACE "../" "${source_root}/" source_files "${source_files}")
-
-    # Source files to be wrapped with F2PY
-    set(_pyext_src
-                "apisubs.f" "cmdline.f" "fvs.f"
-                "filopn.f" "htcalc.f" "rann.f"
-                "htdbh.f" "forkod.f"
-                
-                "prgprm_mod.f90" "esparm_mod.f90" "arrays_mod.f90"
-                "contrl_mod.f90"
-
-                "coeffs_mod.f90" "econ_mod.f90" "escomn_mod.f90" "eshap_mod.f90"
-                "estree_mod.f90" "htcal_mod.f90" "multcm_mod.f90" "pden_mod.f90"
-                "workcm_mod.f90" "plot_mod.f90" "rancom_mod.f90"
-                "screen_mod.f90"
-
-                "fvsstdcm_mod.f90" "varcom_mod.f90" "outcom_mod.f90"
-                "volstd_mod.f90"
-
-                "fmparm_mod.f90" "fmcom_mod.f90" "fmfcom_mod.f90"
-                "fmprop_mod.f90"
-
-#                "fmsvcm_mod.f90" "svdata_mod.f90"
-                "metric_mod.f90"
-
-                "carbon_data.f90" "downwood_data.f90" "tree_data.f90"
-                "fvs_step.f90"
-                "snag_data.f90"
-                # "siteht_mod.f90"
-                "findage_mod.f90"
-
-#                "step_grincr.f90" "dbs_commons.f" "fire_commons.f"
-#                "fvs_commons.f"
-
-                "esblkd_mod.f90" "esrncm_mod.f90" "escprs.f90"
-                )
-
-    # Routines to be skipped by F2PY
-    set(pyext_skip "") #required by f2py_gen
-
-    # Get the path names of the source files to be wrapped
-    foreach (fn ${source_files})
-        if (NOT ${fn} MATCHES "^#.*")
-            get_filename_component(filename ${fn} NAME)
-
-            list(FIND _pyext_src ${filename} x)
-            if (x GREATER -1)
-                list(APPEND pyext_source ${fn})
-            endif()
-            unset(filename)
-        endif()
-    endforeach(fn)
-    list(REMOVE_DUPLICATES pyext_source)
-
-    # Write the Python extension source files to a text file
-    file(WRITE ./pyext_source.txt "${pyext_source}")
-
-    # FIXME: The wrong python is being called on appveyor,
-    set(PYTHON_EXE python)
-    execute_process(
-            COMMAND ${PYTHON_EXE} -c "import sys\nprint(sys.version)"
-            COMMAND ${PYTHON_EXE} -c "import sys\nprint(sys.executable)"
-            )
-
-    # Determine the file name of the Python library
-    execute_process(
-            COMMAND ${PYTHON_EXE} ../platform_ext.py ${pyext_name}
-            OUTPUT_VARIABLE pyext_fn
-            OUTPUT_STRIP_TRAILING_WHITESPACE
-            )
-
-    set(cmd_args "")
-    # F2PY/Distutils needs to know what compilers are being used
-    if (CMAKE_COMPILER_IS_MINGW EQUAL 1)
-        list(APPEND cmd_args "--compiler=mingw32")
-    endif ()
-
-    if (CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
-        list(APPEND cmd_args "--fcompiler=gnu95")
-    endif ()
-
-#    if (CMAKE_BUILD_TYPE STREQUAL Debug)
-#        list(APPEND cmd_args "--debug")
-#    endif ()666666656656656666t6666665
-    
-    # Configure the setup.py script for the current variant.
-    configure_file(../../setup.py.in setup.py @ONLY)
-    configure_file(../../gen_pyf.py.in gen_pyf.py @ONLY)
-    configure_file(${source_root}/python/pyfvs_wrap.pyf.in ${pyext_name}.pyf @ONLY)
-    
-    # Generate the F2PY wrappers and compile the Python extension library
-    add_custom_command(
-            OUTPUT ${pyext_fn}
-            COMMAND python ARGS gen_pyf.py > ../py<<variant>>_f2py.log 2>&1
-            COMMAND python ARGS setup.py build_ext --inplace --force ${cmd_args} >> ../py<<variant>>_f2py.log 2>&1
-            DEPENDS ${fvslib_static} ./pyext_source.txt
-            COMMENT "Compile python extension."
-            )
-    add_custom_target(${pyext_name}_ext ALL DEPENDS ${pyext_fn})
-
-    # NOTE: Installation is primarily for packaging purposes
-    #       All scripts, modules, tests, etc. should be included in the
-    #       install target.  The final packaging uses setuptools.
-    install(
-        FILES ${pyext_fn}
-        DESTINATION python/pyfvs)
-
-    # Add intermediate files to the clean list
-    # NOTE: pyext_source.txt should not be cleaned
-    set(cf ${pyext_name}.pyf)
-    set_directory_properties(
-            PROPERTIES
-            ADDITIONAL_MAKE_CLEAN_FILES "${cf}"
-            )
-
-    # Generate a PyDoc HTML file for the module
-    # TODO: Incorporate pydoc generation into setup.py
-    set(PYDOC_EXE python -m pydoc)
-    add_custom_command(
-            TARGET ${pyext_name}_ext
-            #TARGET ${pyext_fn}
-            POST_BUILD
-            COMMAND ${PYDOC_EXE} -w ${pyext_name} > ../pydoc_${pyext_name}.log
-            )
-
-    install(FILES ${pyext_name}.html
-            DESTINATION python/pyfvs/docs
-            )
-    set_directory_properties(
-            PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES
-            ${pyext_name}.html
-            )
-
-    # Copy the Python source package with docs and support files.
-    install(
-            DIRECTORY ${source_root}/python/
-            DESTINATION python
-            FILES_MATCHING REGEX ".*\\.(py|pyx|cfg|rst|md|key|tre|save)$"
-            PATTERN "__pycache__" EXCLUDE
-            PATTERN ".eggs" EXCLUDE
-            PATTERN "*genrpt.txt" EXCLUDE
-            )
-
-    install(FILES
-                ${source_root}/python/README.txt
-            DESTINATION python/pyfvs)
-    
-    # Add the python extension to the development target
-    add_custom_target(${pyext_name}_dev
-        DEPENDS ${pyext_name}_ext
-        COMMAND ${CMAKE_COMMAND} -E copy ${pyext_fn} ${source_root}/python/pyfvs/.
-        )
-    add_dependencies(dev ${pyext_name}_dev)
-
-    message(STATUS "*** End PyMod Configuration ***")
-
-endif()
-
-# Add a make target for the variant to build everything seperate from 'all'
-if (NOT NO_PYTHON)
-    add_custom_target(${variant} DEPENDS ${pyext_name}_ext ${fvsexe} ${fvslib_shared} ${fvslib_static})
-else ()
-    add_custom_target(${variant} DEPENDS ${fvsexe} ${fvslib_shared} ${fvslib_static})
-endif ()
