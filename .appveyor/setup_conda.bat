@@ -10,7 +10,7 @@ REM Create the conda environment
 REM conda env create -q -n pyfvs -f %APPVEYOR_BUILD_FOLDER%\\environment.yml
 
 set pkg=numpy pandas cython pyodbc click setuptools wheel sphinx alabaster matplotlib pip twine
-conda create -y -q --update-deps --clobber -n=pyfvs python=%PYTHON_VERSION% %pkg%
+conda create -y -q -n=pyfvs python=%PYTHON_VERSION% %pkg%
 call activate pyfvs
 pip install pytest sphinxcontrib-napoleon
 
