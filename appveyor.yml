@@ -20,11 +20,11 @@ environment:
     - MINICONDA: "C:\\Miniconda3-x64"
       PYTHON_VERSION: "2.7"
       PYTHON_ARCH: "64"
-    
+
     - MINICONDA: "C:\\Miniconda3-x64"
       PYTHON_VERSION: "3.4"
       PYTHON_ARCH: "64"
-    
+
     - MINICONDA: "C:\\Miniconda3-x64"
       PYTHON_VERSION: "3.5"
       PYTHON_ARCH: "64"
@@ -32,15 +32,15 @@ environment:
     - MINICONDA: "C:\\Miniconda3-x64"
       PYTHON_VERSION: "3.6"
       PYTHON_ARCH: "64"
-	
+
     - MINICONDA: "C:\\Miniconda3-x64"
       PYTHON_VERSION: "3.7"
       PYTHON_ARCH: "64"
-    
+
 init:
     - echo PYTHON_VERSION %PYTHON_VERSION%
     - echo MINICONDA %MINICONDA%
-    
+
 install:
     # Setup the python environment and install required packages
     - set PATH=%MINICONDA%;%MINICONDA%\\Scripts;%PATH%
