@@ -154,9 +154,9 @@ setup(
     , download_url='https://github.com/tharen/PyFVS/archive/master.zip'
     , author="Tod Haren"
     , author_email="tod.haren@gmail.com"
-    , setup_requires=['cython', 'numpy>=1.11','twine']
-    , tests_require=['pytest', 'pytest-runner']
-    , install_requires=['numpy>=1.11', 'pandas', 'matplotlib']
+    , setup_requires=['cython', 'numpy']
+    , tests_require=['pytest',]
+    , install_requires=['numpy', 'pandas', 'matplotlib']
     , ext_modules=get_extensions()
     , packages=['pyfvs', 'pyfvs.keywords']
     , package_data={

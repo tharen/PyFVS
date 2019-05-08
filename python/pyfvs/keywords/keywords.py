@@ -1660,8 +1660,8 @@ class STDINFO(KeywordBase):
         @param age:  Stand age in years
         @param aspect:  0-360 degrees
         @param slope:  Slope in percent
-        @param elevCode:  Elevation as hundreds of feet
-        @param pvRefCode:  Potential vegetation translation code
+        @param elev_code:  Elevation as hundreds of feet
+        @param pot_veg_ref:  Potential vegetation translation code
         """
 
         KeywordBase.__init__(self, 'STDINFO', 'Stand Information'

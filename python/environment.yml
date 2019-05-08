@@ -2,9 +2,9 @@ channels: !!python/tuple
   - conda-forge
   - defaults
 dependencies:
-  - python=3.6
+  - python=3.4
   - cython
-  - numpy>=1.13
+  - numpy>=1.11
   - pandas
   - pyodbc
   - click
@@ -14,6 +14,6 @@ dependencies:
   - sphinx
   - alabaster
   - matplotlib
-  - pytest
   - pip:
+    - pytest
     - sphinxcontrib-napoleon
