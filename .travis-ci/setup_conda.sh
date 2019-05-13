@@ -10,6 +10,6 @@ export pkg="numpy pandas cython pyodbc click setuptools wheel sphinx alabaster m
 
 conda create -y -q --name pyfvs python=$TRAVIS_PYTHON_VERSION $pkg
 source activate pyfvs
-pip install pytest sphinxcontrib-napoleon
+pip install docutils pytest sphinxcontrib-napoleon
 
 conda info -a
