@@ -77,7 +77,9 @@ def handle_command_line():
     if args.help_variants:
         vars = pyfvs.list_variants()
         msg = 'Supported FVS variants:\n'
-        msg += '  ' + '\n  '.join(vars)
+        for v,s in vars.items():
+            msg += '  {} - ({}) - {}\n'.format(v,s['lib'],s['status'])
+            
         print(msg)
         sys.exit(0)
 

@@ -116,19 +116,29 @@ def list_variants():
     Return a list of available FVS variants.
     """
     import glob
+    import importlib
+    
     root = os.path.dirname(__file__)
     if os.name == 'nt':
         so = '.pyd'
     else:
         so = '.so'
     _vars = glob.glob(os.path.join(root, '*{}'.format(so,)))
-    vars = []
+    vars = {}
     for var in _vars:
         libname = os.path.splitext(os.path.basename(var))[0]
         if not (libname.startswith('py') or libname.startswith('_py')):
             continue
-
-        vars.append(libname[5:7].upper())
+        
+        lib = 'pyfvs.{}'.format(libname.split('.')[0])
+        try:
+            mod = importlib.import_module(lib)
+            status = 'OK'
+        except:
+            raise
+            status = 'Failed'
+            
+        vars[libname[5:7].upper()] = {'lib':lib, 'status':status}
 
     return vars
 
