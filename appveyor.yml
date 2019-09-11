@@ -54,11 +54,11 @@ build_script:
 
 after_build:
     # Create a zip file package of the compiled libraries and python package
-    - "%APPVEYOR_BUILD_FOLDER%\.appveyor\bundle_archive.bat"
+    - call %APPVEYOR_BUILD_FOLDER%\.appveyor\bundle_archive.bat
 
 test_script:
     # Run tests against the final package
-    - call "%APPVEYOR_BUILD_FOLDER%\.appveyor\run_tests.bat"
+    - call %APPVEYOR_BUILD_FOLDER%\.appveyor\run_tests.bat
 
 on_success:
   # Adapted from: https://github.com/AndrewAnnex/SpiceyPy/blob/master/appveyor.yml
