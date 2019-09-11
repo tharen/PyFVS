@@ -187,11 +187,7 @@ class FVS(object):
         Return the list of FVS species codes used in this variant.
         """
         if self._spp_codes is None:
-            jsp = self.fvslib.plot_mod.jsp
-            # F2PY returns arrays of characters with the wrong shape and order
-            # Transform and reshape so the array is in the expected form
-            jsp = jsp.T.reshape(-1, 4).view('S4').astype(str)[:, 0]
-            self._spp_codes = np.char.strip(jsp)
+            self._spp_codes = [s.decode().strip() for s in self.fvslib.plot_mod.jsp]
 
         return self._spp_codes
 
