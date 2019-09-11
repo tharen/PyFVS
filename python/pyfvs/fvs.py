@@ -611,7 +611,24 @@ class FVS(object):
     @property
     def num_cycles(self):
         return int(self.contrl_mod.ncyc)
-
+    
+    @property
+    def summary(self):
+        """
+        Return the FVS summary table as a Pandas DataFrame
+        """
+        
+        cols = ['year','age','tpa','tcuft','mcuft','mbdft'
+                ,'rem_tpa','rem_tcuft','rem_mcuft','rem_mbdft'
+                ,'baa','ccf','top_ht','per_len','accr','mort'
+                ,'sam_wgt','for_type','size','stock']
+        
+        df = pd.DataFrame.from_records(
+            self.fvslib.outcom_mod.iosum[:, :self.num_cycles + 1].T
+            , columns=cols)
+        
+        return df
+        
     def get_summary(self, variable):
         """
         Return an FVS summary value through the current projection cycle.
