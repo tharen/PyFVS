@@ -117,7 +117,7 @@ module tree_data
         use arrays_mod, only: wk3
         implicit none
 
-        cut_tpa(:itrn,icyc+1) = wk3(:itrn)/grospc
+        cut_tpa(:itrn,icyc) = wk3(:itrn)/grospc
 
     end subroutine copy_cuts_data
 

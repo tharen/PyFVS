@@ -1,7 +1,6 @@
       SUBROUTINE GRINCR (DEBUG,IPMODI,LTMGO,LMPBGO,LDFBGO,
      1                   LBWEGO,LCVATV,LBGCGO)
-      use tree_data, only: save_tree_data,copy_tree_data,copy_cuts_data
-     &                     ,copy_mort_data
+      use tree_data, only: save_tree_data,copy_tree_data,copy_mort_data
       use plot_mod
       use arrays_mod
       use contrl_mod
@@ -261,12 +260,6 @@ C
       IF (DEBUG) WRITE(JOSTND,20) ICYC
    20 FORMAT(' CALLING CUTS, CYCLE=',I2)
       CALL CUTS
-
-      ! Copy cut TPA to the tree_data arrays
-      if (save_tree_data) then
-          call copy_cuts_data()
-      endif
-
 C
 C     STORE THE REMOVED TPA IN WK4 FOR USE IN THE SECOND CALL TO THE
 C     EVENT MONITOR (SPMCDBH INVOLVING CUT TREES).

@@ -63,9 +63,21 @@ def test_tree_data(variant, kwd_path, sum_path):
 
     ncyc = f.contrl_mod.ncyc
 
+    # df = pd.DataFrame({
+        # 'tpa': np.round(np.sum(f.tree_data.live_tpa[:, :ncyc + 1], axis=0), 0)
+        # , 'cut_tpa': np.round(np.sum(f.tree_data.cut_tpa[:, :ncyc + 1], axis=0), 0)
+        # # , 'mort_tpa': np.round(np.sum(f.tree_data.mort_tpa[:, :ncyc + 1], axis=0), 0)
+        # })
+    # print(pd.concat([sum_check.loc[:,['tpa','rem_tpa']],df], axis=1))
+    
     # TPA +/- 1
     tpa = np.round(np.sum(f.tree_data.live_tpa[:, :ncyc + 1], axis=0), 0).astype(int)
     check_tpa = sum_check.loc[:, 'tpa'].values
+    assert np.all(np.isclose(check_tpa, tpa, atol=1))
+
+    # Removed TPA +/- 1
+    tpa = np.round(np.sum(f.tree_data.cut_tpa[:, :ncyc + 1], axis=0), 0)
+    check_tpa = sum_check.loc[:, 'rem_tpa'].values
     assert np.all(np.isclose(check_tpa, tpa, atol=1))
 
     # BAA +/- 1
@@ -82,6 +94,13 @@ def test_tree_data(variant, kwd_path, sum_path):
     cuft = f.tree_data.cuft_total[:, :ncyc + 1]
     tot_cuft = np.round(np.sum(tpa * cuft, axis=0), 0).astype(int)
     check_cuft = sum_check.loc[:, 'total_cuft'].values
+    assert np.all(np.isclose(check_cuft, tot_cuft, atol=1))
+
+    # Removed Total CuFt +/- 1
+    tpa = f.tree_data.cut_tpa[:, :ncyc + 1]
+    cuft = f.tree_data.cuft_total[:, :ncyc + 1]
+    tot_cuft = np.round(np.sum(tpa * cuft, axis=0), 0).astype(int)
+    check_cuft = sum_check.loc[:, 'rem_total_cuft'].values
     assert np.all(np.isclose(check_cuft, tot_cuft, atol=1))
 
     # Total BdFt +/- 1

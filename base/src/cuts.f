@@ -1,4 +1,5 @@
       SUBROUTINE CUTS
+      use tree_data, only: save_tree_data,copy_cuts_data
       use pden_mod
       use arrays_mod
       use contrl_mod
@@ -1579,6 +1580,12 @@ C  FOR REMOVED TREES. IF WE ARE IN 'PRETEND' MODE SKIP ACCUMULATION OF REMOVAL
 C  STATISTICS.
 C----------
       IF (LPRTND) GOTO 1950
+      
+      ! Copy cut TPA to the tree_data arrays
+      if (save_tree_data) then
+        call copy_cuts_data()
+      endif
+
 C----------
 C  CALL PRTRLS TO PROCESS THE CUTLIST (ARGUMENT=2) OR AFTER TREATEMENT
 C  (ARGUMENT=3) OPTION.

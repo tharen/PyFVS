@@ -111,6 +111,8 @@ class FVS(object):
         self._inv_trees = None
         self._spp_codes = None
         self._spp_seq = None
+        self._spp_fia_codes = None
+        self._spp_plant_codes = None
 
         # Keep a list of files and folders to cleanup
         self._artifacts = []
@@ -209,8 +211,7 @@ class FVS(object):
         Return a dictionary mapping of species translations {fvs abbv: fia code,...}
         """
         if self._spp_fia_codes is None:
-            fiajsp = self.fvslib.plot_mod.fiajsp
-            fiajsp = [c.strip() for c in fiajsp.T.reshape(-1, 4).view('S4').astype(str)[:, 0]]
+            fiajsp = [int(c.replace(b'    ', b'0')) for c in self.fvslib.plot_mod.fiajsp]
             self._spp_fia_codes = dict(zip(self.spp_codes,fiajsp))
 
         return self._spp_fia_codes
@@ -221,8 +222,7 @@ class FVS(object):
         Return a dictionary mapping of species translations {fvs abbv: plants code,...}
         """
         if self._spp_plant_codes is None:
-            jsp = self.fvslib.plot_mod.plnjsp
-            jsp = [c.strip() for c in jsp.T.reshape(-1, 4).view('S4').astype(str)[:, 0]]
+            jsp = [s.strip().decode('utf-8') for s in self.fvslib.plot_mod.plnjsp]
             self._spp_plants_codes = dict(zip(self.spp_codes,jsp))
 
         return self._spp_plants_codes

@@ -536,8 +536,7 @@ module fvs_step
         ! Copy tree attributes for the final of the period
         if (save_tree_data) then
             call copy_tree_data()
-            call copy_cuts_data()
-            call copy_mort_data()
+            ! call copy_mort_data()
         endif
 
         CALL DISPLY
