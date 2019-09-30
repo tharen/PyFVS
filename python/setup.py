@@ -141,6 +141,9 @@ def get_extensions():
             , extra_compile_args=args
             , extra_link_args=args
             , define_macros=defs
+            , compiler_directive={
+                    'language_level':3
+                    }
             )
         ])
     return ext

@@ -60,6 +60,7 @@ script:
   # build.sh compiles the Open-FVS binaries and builds the Python wheel and archive
   # Run tests after a successful build, otherwise bail.
   - source ${TRAVIS_BUILD_DIR}/.travis-ci/build.sh
+  - ls ${TRAVIS_BUILD_DIR}/artifacts
   - pip install --no-index --find-links ${TRAVIS_BUILD_DIR}/artifacts pyfvs
   - pytest -rsx --pyargs pyfvs.test
   - pytest ${TRAVIS_BUILD_DIR}/python/pyfvs/examples/demo.py
