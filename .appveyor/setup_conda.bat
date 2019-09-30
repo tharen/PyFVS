@@ -1,4 +1,4 @@
-activate base
+%MINICONDA%\Scripts\activate.bat base
 conda config --set always_yes yes --set changeps1 no
 conda config --add channels conda-forge
 conda update -y -q --all
@@ -11,7 +11,7 @@ REM conda env create -q -n pyfvs -f %APPVEYOR_BUILD_FOLDER%\\environment.yml
 
 set pkg=numpy pandas cython pyodbc click setuptools wheel sphinx alabaster matplotlib pip twine
 conda create -y -q --update-deps --clobber -n=pyfvs python=%PYTHON_VERSION% %pkg%
-call activate pyfvs
+call %MINICONDA%\Scripts\activate.bat pyfvs
 pip install pytest sphinxcontrib-napoleon
 
 conda info -a

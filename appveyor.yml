@@ -46,7 +46,7 @@ install:
     - set PATH=%MINICONDA%;%MINICONDA%\Scripts;%PATH%
     - set PATH=%MINGW_PATH%\bin;%PATH%
     - call %APPVEYOR_BUILD_FOLDER%\.appveyor\setup_conda.bat
-    - call activate pyfvs
+    - call %MINICONDA%\Scripts\activate.bat pyfvs
     
 build_script:
     # Configure the CMake project and execute the build

@@ -8,17 +8,18 @@ sudo: false
 
 language: python
 python:
-  - '2.7'
-  - '3.4'
-  - '3.5'
+  # - '2.7'
+  # - '3.4'
+  # - '3.5'
   - '3.6'
+  - '3.7'
   
 env:
   global:
     - FVS_STATUS=alpha
     - BUILD_ROOT=${TRAVIS_BUILD_DIR}/bin/build
-    # - FVS_VARIANTS="pnc;wcc"
-    - FVS_VARIANTS="pnc;wcc;soc;cac;ecc;oc;op"
+    - FVS_VARIANTS="pnc"
+    # - FVS_VARIANTS="pnc;wcc;soc;cac;ecc;oc;op"
     
     # travis encrypt TWINE_USERNAME=<plain text> -r tharen/PyFVS
     - secure: "rPyi4rdjd59a1JwwpLDy4dH7be2wcKB+DA/Zu4dX2BQ4RDSrx0u0V7EsdzKFVrrjzhTjh/+OomaBaJ9uz7xu6HquXVbYqTCVuw+TazAD3u9DLwDwL4FQa+20iCvBE7r5en3XVslCIcpUdkTXD2WNogNl7d+L5P50pdHTSMLDY7DLq0aan4nOHnjOPjXOIcu1Zc1OKyMT5hyi+FWkpyEhkJdZmFkHZcX4R2Ta0Hvk/302H6/FQ+mZtAA4Qb/Yh3dWdv58C1KxGxp2CbOiyxU6P5w2YZX5TgaX6/Wia8opbmlhvEoxMzLiteMHPLSOMLRkNLSsywIcY9Ndunwe/JtbZ74ZmOn+DF0k4BSKCe4P6jIgFbA54+M8Ju/2ZUX4EIxr/MwIbE3BefoWFc+m/ztKXp4K8kAeaHZ0uWqTl7cRRPUtGJrdVjMtFAZF59txBC9famccA4l4ZNBXBmgOep3+UOja+CRsnVNgIwznMOcgTDX5qPO6VKh0UYIiiWUwC40L9uRA4tnVw/bzIiqF2R4vfqiHwiBcOMHL04ipm4SmZDvcN0kTgfFiIdrCZB85WEyQW3xL9kzwiUsiN9rTj+rGQITJZkOVMm00VyovE7dY/pyS9R0/2l4W47I/O5LSKK4mxZG8wqlUvloYUIQhfK19WsYJQZXbSqai03iQCtI9iM8="
