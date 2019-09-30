@@ -43,10 +43,16 @@ init:
     
 install:
     # Setup the python environment and install required packages
-    - set PATH=%MINICONDA%;%MINICONDA%\Scripts;%PATH%
-    - set PATH=%MINGW_PATH%\bin;%PATH%
-    - call %APPVEYOR_BUILD_FOLDER%\.appveyor\setup_conda.bat
-    - call %MINICONDA%\Scripts\activate.bat pyfvs
+    - "set PATH=%MINICONDA%;%MINICONDA%\\Scripts;%PATH%"
+    - "set PATH=%MINGW_PATH%\bin;%PATH%"
+    - conda config --set always_yes yes --set changeps1 no
+    - conda update -q conda
+    - conda config --add channels conda-forge
+    - "set pkg=numpy pandas cython pyodbc click setuptools wheel sphinx alabaster matplotlib pip twine"
+    - conda create -y -q -n=pyfvs python=%PYTHON_VERSION% %pkg%
+    - activate pyfvs
+    - pip install pytest sphinxcontrib-napoleon
+    - conda info -a
     
 build_script:
     # Configure the CMake project and execute the build
