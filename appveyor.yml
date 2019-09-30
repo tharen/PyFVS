@@ -44,7 +44,7 @@ init:
 install:
     # Setup the python environment and install required packages
     - "set PATH=%MINICONDA%;%MINICONDA%\\Scripts;%PATH%"
-    - "set PATH=%MINGW_PATH%\bin;%PATH%"
+    - "set PATH=%MINGW_PATH%\\bin;%PATH%"
     - conda config --set always_yes yes --set changeps1 no
     - conda update -q conda
     - conda config --add channels conda-forge
