@@ -5,8 +5,8 @@ environment:
     MPLBACKEND: agg
     MINGW_PATH: C:\mingw-w64\x86_64-7.2.0-posix-seh-rt_v5-rev1\mingw64
     
-    #FVS_VARIANTS: pnc;wcc;soc;cac;ecc;oc;op
-    FVS_VARIANTS: pnc
+    FVS_VARIANTS: pnc;wcc;soc;cac;ecc;oc;op
+    #FVS_VARIANTS: pnc
 
     TWINE_PASSWORD:
         secure: lLhgSTVGnQNINPD18gIe2g==

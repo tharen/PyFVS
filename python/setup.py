@@ -128,22 +128,13 @@ _is_windows = sys.platform == 'win32'
 if _is_windows and _is_64bit:
     args = ['-static-libgcc', '-static-libstdc++', '-Wl,--allow-multiple-definition']
     defs = [('MS_WIN64', None), ]
-    print('*****')
-    print('Building for 64 bit Windows')
-    print('*****')
 
 else:
     args = []
     defs = []
-    print('*****')
-    print('Building for Non-Windows')
-    print('*****')
 
 def get_extensions():
     """Return all Cython source files as a list of extensions."""
-    
-    print('Args:', args)
-    print('Defs:', defs)
     
     ext = cythonize([
         Extension("pyfvs.*"
@@ -152,7 +143,7 @@ def get_extensions():
             , extra_compile_args=args
             , extra_link_args=args
             , define_macros=defs
-            , compiler_directive={
+            , compiler_directives={
                     'language_level':3
                     }
             )
