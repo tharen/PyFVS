@@ -141,6 +141,10 @@ else:
 
 def get_extensions():
     """Return all Cython source files as a list of extensions."""
+    
+    print('Args:', args)
+    print('Defs:', defs)
+    
     ext = cythonize([
         Extension("pyfvs.*"
             , sources=["pyfvs/*.pyx"]
