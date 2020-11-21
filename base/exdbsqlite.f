@@ -121,5 +121,22 @@ C----------
         RDANUW = TPAIN
       RETURN 
 C
+      ENTRY  DBSFMPFC(WINDSP,TEMP,MOIST1,MOIST2,MOIST3,MOIST4,MOIST5,
+                 MOIST6,MOIST7,KODE)
+C----------
+C  DUMMY ARGUMENT NOT USED WARNING SUPPRESSION SECTION
+C----------
+        RDANUW = WINDSP
+        IDANUW = TEMP
+        RDANUW = MOIST1
+        RDANUW = MOIST2
+        RDANUW = MOIST3
+        RDANUW = MOIST4
+        RDANUW = MOIST5
+        RDANUW = MOIST6
+        RDANUW = MOIST7
+        IDANUW = KODE
+      RETURN       
+C
       END
 
