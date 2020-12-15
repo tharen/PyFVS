@@ -1,0 +1,39 @@
+language: python
+python:
+  - '3.8'
+addons:
+  apt:
+    sources:
+    - george-edison55-precise-backports
+    - kubuntu-backports
+    packages:
+    - cmake
+    - gfortran
+    - unixodbc
+    - unixodbc-dev
+    - p7zip-full
+
+env:
+    global:
+      - FVS_STATUS=alpha
+      
+script:
+  - bash ./config_build.sh
+  - cd ${TRAVIS_BUILD_DIR}/bin
+  - make -f makefile_all bundle
+
+after_success:
+  - cd ${TRAVIS_BUILD_DIR}/bin
+  - 7z a -bd open-fvs_${TRAVIS_TAG}-${FVS_STATUS}.zip Open-FVS/*
+
+deploy:
+  provider: releases
+  api_key:
+    secure: cIv7F5Si2yS3QcL3bOu5QwTZdi/WiwsNhsS7+IL1LklXGKzBlzN1Df833+u1mzk1XN3VKafzrsAQ5UoshAcaN6TB6kE9FCBAGt/NO+BQJJcLr8Ig4NwU82cVQmnt8ata6t8MmNcPtRsqA4TUsd2Mvo2CKpeiZOMRo1JqasMElHqW4vh8Dbklsk4cd4zcvAOfnVT0qQC1Hzkgh0IzmB7y6dsaUOYoHbDVSMnkp+6j+yIZnWsGBsowXf7CF7hKQMMXiXbl5YGEMUob1OnOBw54xj5eM9Ax9mpYiyymvE+QKHj5nP1fkQoW89tgzcem53TK9qcSN+E3yApd0aK1Z11VVqIBvif7c1YmaL0w9uMv7reDnJ6zCS63GGO3nBLKUTrEo2xjrDsLpQRtK2sHYLG4JPtGB9ojzloTe0YLgemjf5bwmVWvyycVtMF0DZABnL5JWMqG9ogUA2CcNDHBqRyArcg5qkzC8LBGR5XG8V71O6M3QZVsCP+6NfxFAUGvKO3i36TQjOCMuWQdhmp75VaCH/B1o2B+UVMr7ekI4i0m16KP7JG4+47BSyPDUD7QLR0k055ext/F+RonBVtL8dpbQzZ3bASWQ/iW00tz910LanCFLRGAhUSe+bUISVsVQSltpqgV3j64OM3wC/LIyO4YSTyEx8NTTC+IRBfOgMc4ed0=
+  file: ${TRAVIS_BUILD_DIR}/bin/open-fvs_${TRAVIS_TAG}-${FVS_STATUS}.zip
+  skip_cleanup: true
+  on:
+    repo: tharen/PyFVS
+    tags: true
+    all_branches: true
+    
