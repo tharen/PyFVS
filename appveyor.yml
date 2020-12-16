@@ -11,8 +11,8 @@ install:
 build_script:
     - cd bin
     - del "C:\Program Files\Git\usr\bin\sh.exe"
-    - cmake -G"MinGW Makefiles" . -DFVS_VARIANTS=pn,wc,op -DCMAKE_SYSTEM_NAME=Windows -DMAKE_JOBS=2
-    - cmake --build . -j2
+    - cmake -G"MinGW Makefiles" . -DFVS_VARIANTS=pn -DCMAKE_SYSTEM_NAME=Windows -DMAKE_JOBS=1
+    - cmake --build . -j1
     
 after_build:
     - cd bin
