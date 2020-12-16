@@ -10,7 +10,7 @@ install:
     
 build_script:
     - cd bin
-    - del C:\Program Files\Git\usr\bin\sh.exe
+    - del "C:\Program Files\Git\usr\bin\sh.exe"
     - cmake -G"MinGW Makefiles" . -DFVS_VARIANTS=pn,wc,op -DCMAKE_SYSTEM_NAME=Windows -DMAKE_JOBS=2
     - cmake --build . -j2
     
