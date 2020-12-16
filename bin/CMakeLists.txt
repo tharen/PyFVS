@@ -2,7 +2,18 @@
 
 ## Towards using cmake! NCrookston July 24 2012
 
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required (VERSION 3.18.2)
+project (FVS C CXX Fortran)
+
+# Default variable values which can be set on the command line
+set(FVS_VARIANTS "all" CACHE STRING "FVS variants to configure, eg. pnc,wcc,oc,op")
+set(CMAKE_SYSTEM_NAME "Windows" CACHE STRING "Target system name, Windows, Linux, etc.")
+set(MAKE_JOBS 8 CACHE STRING "Number of parallel make jobs to execute, eg. make -j8")
+
+# The list of variants can be passed as a comma or semicolon separated list
+# If semicolon is used it translates directly to a CMake list, but must be 
+#   properly escaped or quoted in a bash terminal, eg. pnc\;wcc or "pnc;wcc"
+string(REPLACE "," ";" FVS_VARIANTS "${FVS_VARIANTS}")
 
 if (CMAKE_GENERATOR MATCHES "Visual Studio 10")
   set (CMAKE_C_FLAGS   "/D_WINDOWS /W3 /Zm100" CACHE STRING "VS10 mod A" FORCE)
@@ -10,6 +21,8 @@ if (CMAKE_GENERATOR MATCHES "Visual Studio 10")
   message(STATUS "Building FVS with VS10/Intel")
 elseif (CMAKE_GENERATOR MATCHES "MinGW Makefiles")
   message(STATUS "Building FVS with MinGW")
+elseif (CMAKE_GENERATOR MATCHES "MSYS Makefiles")
+  message(STATUS "Building FVS with MSYS")
 elseif (CMAKE_GENERATOR MATCHES "Unix Makefiles")
   message(STATUS "Building FVS with Unix")
 else ()
@@ -17,16 +30,37 @@ else ()
   return()
 endif()
 
+message(STATUS "Target system: ${CMAKE_SYSTEM_NAME}")
+
 ## example 1: Single-variant GLOB: file(GLOB tobuild FVSiec_sourceList.txt)
 ## example 2: All-variant GLOB: file(GLOB tobuild FVS*_sourceList.txt)
 
-file(GLOB tobuild FVSiec_sourceList.txt)
+#file(GLOB tobuild FVSiec_sourceList.txt)
+
+# Enumerate variant source list files to configure.
+if (FVS_VARIANTS STREQUAL "all")
+    # Setup all variants
+    file(GLOB tobuild "FVS*_sourceList.txt")
+else ()
+    # User specified variants, eg "pn,wc"
+    set(tobuild "")
+    foreach(var ${FVS_VARIANTS})
+        set(fn "FVS${var}_sourceList.txt")
+        if (NOT EXISTS "${fn}")
+            message(FATAL_ERROR "No source list for variant ${var}: ${fn}")
+        else()
+            message(STATUS "Adding variant to build: ${var} - ${fn}")
+            list(APPEND tobuild ${fn})
+        endif()
+    endforeach ()
+endif ()
 
 list(SORT tobuild)
 message(STATUS "tobuild = ${tobuild}")
 
 set(dirsToProcess)
 
+# Configure each variant subdirectory
 foreach (sourceList ${tobuild})
 
   get_filename_component (slfn ${sourceList} NAME CACHE)
@@ -50,14 +84,95 @@ foreach (sourceList ${tobuild})
   file(WRITE ${prgName}_CmakeDir/${prgName}_sourceList.txt ${newsourceList})
   list(APPEND dirsToProcess ${prgName}_CmakeDir)
 
+  # Perform variable substitution on the variant CMakeLists.txt
+  configure_file(
+      ${prgName}_CmakeDir/CMakeLists.txt
+      ${prgName}_CmakeDir/CMakeLists.txt
+      @ONLY
+      )
+      
   unset(prgName CACHE)
   unset(slfn CACHE)
 
+  message(STATUS "${prgName} - ${sourceList}")
+  
 endforeach(sourceList)
 
+# foreach(toProcess ${dirsToProcess})
+  # execute_process(COMMAND cmake -G ${CMAKE_GENERATOR} CMakeLists.txt WORKING_DIRECTORY ${toProcess})
+# endforeach(toProcess)
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Open-FVS/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Open-FVS/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Open-FVS/bin)
+
 foreach(toProcess ${dirsToProcess})
-  execute_process(COMMAND cmake -G ${CMAKE_GENERATOR} CMakeLists.txt WORKING_DIRECTORY ${toProcess})
+  add_subdirectory(${toProcess})
 endforeach(toProcess)
+
+# # TODO: Use add_subdirectory to configure a hierarchical build
+# #     Once the CMakeLists.txt files are configured CMake can handle the rest.
+# #     Note that CMake generates a Makefile, but this would only be valid
+# #     if we were using the CMake add_subdirectory command.
+# #
+# # Generate a top level makefile
+# if (${CMAKE_GENERATOR} MATCHES "MinGW Makefiles")
+  # set(make "mingw32-make")
+# else ()
+  # set(make "make")
+# endif ()
+
+# set(top_make "makefile_all") #makefile name
+# file(WRITE ${top_make} "# Build all configured variants\n")
+# file(APPEND ${top_make} "MAKE = ${make}\n")
+# file(APPEND ${top_make} "BUNDLE_DIR = Open-FVS\n")
+# if (CMAKE_SYSTEM_NAME MATCHES "Windows")
+  # file(APPEND ${top_make} "EXE_SUFFIX = .exe\n")
+  # file(APPEND ${top_make} "SO_SUFFIX = .dll\n")
+# else ()
+  # file(APPEND ${top_make} "EXE_SUFFIX = \n")
+  # file(APPEND ${top_make} "SO_SUFFIX = .so\n")
+# endif ()
+
+# # List all variants to be built
+# set(all_vars "")
+# foreach (source_list ${tobuild})
+  # string(REGEX REPLACE ".*FVS(.*)_sourceList.txt" "${CMAKE_MATCH_1}" var ${source_list})
+  # list(APPEND all_vars ${CMAKE_MATCH_1})
+# endforeach ()
+
+# string(REPLACE ";" " " _all_vars "${all_vars}")
+# file(APPEND ${top_make} "ALL_VARIANTS = ${_all_vars}\n")
+
+# # Phony targets
+# file(APPEND ${top_make} "\n")
+# file(APPEND ${top_make} ".PHONY: all\n")
+# file(APPEND ${top_make} ".PHONY: bundle\n")
+
+# file(APPEND ${top_make} "\nall: $(ALL_VARIANTS)\n")
+
+# # Target to bundle (package,install,etc.) all libraries and executables
+# if (CMAKE_SYSTEM_NAME MATCHES "Windows")
+	# file(APPEND ${top_make} "\nbundle: $(ALL_VARIANTS)\n\tif not exist ./$(BUNDLE_DIR) mkdir ./$(BUNDLE_DIR)\n")
+# else ()
+	# file(APPEND ${top_make} "\nbundle: $(ALL_VARIANTS)\n\tmkdir -p $(BUNDLE_DIR)\n")
+# endif ()
+
+# if (CMAKE_SYSTEM_NAME MATCHES "Windows")
+    # file(APPEND ${top_make} "\t$(foreach var,$(ALL_VARIANTS),copy FVS${var}_CmakeDir/FVS$(var).exe \$(BUNDLE_DIR))\n")
+	# file(APPEND ${top_make} "\t$(foreach var,$(ALL_VARIANTS),copy FVS${var}_CmakeDir/libFVS_$(var).dll \$(BUNDLE_DIR))\n")
+	# file(APPEND ${top_make} "\t$(foreach var,$(ALL_VARIANTS),copy FVS${var}_CmakeDir/libFVS_$(var).a \$(BUNDLE_DIR))\n")
+# else ()
+    # file(APPEND ${top_make} "\t$(foreach var,$(ALL_VARIANTS),cp FVS${var}_CmakeDir/FVS$(var) \$(BUNDLE_DIR))\n")
+	# file(APPEND ${top_make} "\t$(foreach var,$(ALL_VARIANTS),cp FVS${var}_CmakeDir/libFVS_$(var).so \$(BUNDLE_DIR))\n")
+	# file(APPEND ${top_make} "\t$(foreach var,$(ALL_VARIANTS),cp FVS${var}_CmakeDir/libFVS_$(var).a \$(BUNDLE_DIR))\n")
+# endif ()
+
+# # Configure targets for each variant
+# foreach (var ${all_vars})
+  # file(APPEND ${top_make} "\n${var}:\n\t\$(MAKE) -j${MAKE_JOBS} -C FVS${var}_CmakeDir\n")
+  # # file(APPEND ${top_make} "\n${var}:\n\tcmake --build .\\FVS${var}_CmakeDir -j${MAKE_JOBS}\n")
+# endforeach ()
 
 return()
 
@@ -65,7 +180,10 @@ return()
 ##DO NOT REMOVE THIS TAG##
 
 ##If edits are made, make them in the CMakeList.txt file in the parent directory.
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required (VERSION 3.18.2)
+
+set (CMAKE_SYSTEM_NAME @CMAKE_SYSTEM_NAME@)
+set (MAKE_JOBS @MAKE_JOBS@)
 
 if (CMAKE_GENERATOR MATCHES "Visual Studio 10")
   set (CMAKE_C_FLAGS   "/D_WINDOWS /W3 /Zm100" CACHE STRING "VS10 mod A" FORCE)
@@ -73,6 +191,8 @@ if (CMAKE_GENERATOR MATCHES "Visual Studio 10")
   message(STATUS "Building FVS variant with VS10/Intel")
 elseif (CMAKE_GENERATOR MATCHES "MinGW Makefiles")
   message(STATUS "Building FVS variant with MinGW")
+elseif (CMAKE_GENERATOR MATCHES "MSYS Makefiles")
+  message(STATUS "Building FVS variant with MSYS")
 elseif (CMAKE_GENERATOR MATCHES "Unix Makefiles")
   message(STATUS "Building FVS variant with Unix")
 else ()
@@ -80,30 +200,42 @@ else ()
   return()
 endif()
 
+message(STATUS "Target system: ${CMAKE_SYSTEM_NAME}")
+
 project (FVS C CXX Fortran)
 
 set (CMAKE_Fortran_Format FIXED)
-set (CMAKE_VERBOSE_MAKEFILE ON)
+set (CMAKE_VERBOSE_MAKEFILE OFF)
 
 file(GLOB sourceList FVS*_sourceList.txt)
-get_filename_component (slfn ${sourceList} NAME CACHE)
+get_filename_component (slfn ${sourceList} NAME)
 string(REPLACE "_sourceList.txt" "" prgName ${slfn})
 string(REPLACE "FVS" "" varName ${prgName})
 message(STATUS "slfn = ${slfn} prgName= ${prgName}")
 
-if (CMAKE_GENERATOR MATCHES "Visual Studio 10")
-  add_definitions(-DANSI -DWINDOWS -D_WINDLL)
+add_definitions(-DANSI)
+
+if (CMAKE_SYSTEM_NAME MATCHES "Windows")
   link_libraries(odbc32)
-elseif (CMAKE_GENERATOR MATCHES "MinGW Makefiles")
-  add_definitions(-DANSI -DWINDOWS -D_WINDLL -DCMPgcc)
-  link_libraries(odbc32)
-elseif (CMAKE_GENERATOR MATCHES "Unix Makefiles")
-  add_definitions(-DANSI -DCMPgcc)
+  add_definitions(-DWINDOWS -D_WINDLL)
+else ()
   link_libraries(odbc)
+endif ()
+
+if (CMAKE_COMPILER_IS_GNUCC)
+  add_definitions(-DCMPgcc)
+  if (CMAKE_SYSTEM_NAME MATCHES "Windows")
+    set (flags "-cpp -w")
 else()
+    set (flags "-cpp -w -fPIC")
+  endif ()
+  set (CMAKE_CXX_FLAGS "${flags} ${CMAKE_CXX_FLAGS}")
+  set (CMAKE_C_FLAGS "${flags} ${CMAKE_C_FLAGS}")
+  set (CMAKE_Fortran_FLAGS "${flags} -fno-align-commons ${CMAKE_Fortran_FLAGS}")
 endif()
 
 set (OUTPUT_NAME ${prgName})
+
 set (includeDirs)
 set (CsourceSQL)
 set (CsourceFFE)
@@ -113,10 +245,15 @@ set (FsourceMAIN)
 
 file(STRINGS ${prgName}_sourceList.txt fileList)
 
+# Separate source files into groups
 foreach (fn ${fileList})
-  get_filename_component (fname   ${fn} NAME CACHE)
-  get_filename_component (pname   ${fn} PATH CACHE)
-  get_filename_component (extname ${fn} EXT  CACHE)
+  
+  # White space mucks with STREQUAL
+  string(STRIP ${fn} fn)
+  
+  get_filename_component (fname   ${fn} NAME)
+  get_filename_component (pname   ${fn} PATH)
+  get_filename_component (extname ${fn} EXT)
 
   if (${extname} STREQUAL ".h" OR ${extname} STREQUAL ".F77")
     list (APPEND includeDirs  ${pname})
@@ -130,12 +267,17 @@ foreach (fn ${fileList})
     endif()
   elseif(${extname} STREQUAL ".c" OR ${extname} STREQUAL ".cpp")
     if (fname STREQUAL mkdbsTypeDefs.c)
-      add_executable(mkdbsTypeDefs ${fn})
-      get_target_property(MKDBSTYPEDEFS_EXE mkdbsTypeDefs LOCATION)
-      add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/DBSTYPEDEFS.F77
-                         COMMAND ${MKDBSTYPEDEFS_EXE}
-                         DEPENDS ${MKDBSTYPEDEFS_EXE})
-      add_custom_target(dbstypedefs mkdbsTypeDefs)
+	  add_executable(mkdbsTypeDefs_${varName} ${fn})
+	  # This should not be included in the primary outputs folder
+	  set_target_properties(mkdbsTypeDefs_${varName}
+	      PROPERTIES
+		  RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+		  )
+      set(dbstypedefs_f77 "${CMAKE_CURRENT_BINARY_DIR}/DBSTYPEDEFS.F77")
+      add_custom_command(OUTPUT ${dbstypedefs_f77}
+                         COMMAND $<TARGET_FILE:mkdbsTypeDefs_${varName}>
+                         DEPENDS mkdbsTypeDefs_${varName})
+      add_custom_target(dbstypedefs_${varName} ALL DEPENDS ${dbstypedefs_f77})
     elseif(fname STREQUAL fvsSQL.c)
       list (APPEND CsourceSQL ${fn})
     else()
@@ -150,6 +292,8 @@ endforeach(fn)
 list (REMOVE_DUPLICATES includeDirs)
 list (APPEND includeDirs ${CMAKE_CURRENT_BINARY_DIR})
 
+set(CMAKE_Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/mods)
+
 include_directories(BEFORE ${includeDirs})
 
 #message(STATUS "includeDirs= ${includeDirs}")
@@ -160,23 +304,54 @@ include_directories(BEFORE ${includeDirs})
 
 message(STATUS "FVSvariant = FVS${varName}")
 
-add_library(FVSsql SHARED ${CsourceSQL})
-add_library(FVSfofem SHARED ${CsourceFFE})
+# Create "object" libraries for later use
+# object libraries cache *.o files and enable parallel
+# builds by avoiding race conditions with *.mod file
+add_library(FVSsql_${varName} OBJECT ${CsourceSQL})
+add_library(FVSfofem_${varName} OBJECT ${CsourceFFE})
+add_library(FVSobjs_${varName} OBJECT ${FsourceFVS})
+
 ##add_library(FVScfim SHARED ${CsourceCFIM})
-add_library(FVS_${varName} SHARED ${FsourceFVS})
+add_library(FVS_${varName} SHARED $<TARGET_OBJECTS:FVSobjs_${varName}> $<TARGET_OBJECTS:FVSfofem_${varName}> $<TARGET_OBJECTS:FVSsql_${varName}>)
+add_library(FVS_${varName}_static STATIC $<TARGET_OBJECTS:FVSobjs_${varName}> $<TARGET_OBJECTS:FVSfofem_${varName}> $<TARGET_OBJECTS:FVSsql_${varName}>)
+
 add_executable (${prgName} ${FsourceMAIN})
+target_link_libraries(${prgName} FVS_${varName}_static)
+# target_link_libraries(FVS_${varName} FVSfofem FVSsql)
 
-target_link_libraries(${prgName} FVS_${varName} FVSsql FVSfofem)
-target_link_libraries(FVS_${varName} FVSfofem FVSsql)
+add_dependencies(FVS_${varName} dbstypedefs_${varName})
+add_dependencies(FVS_${varName}_static dbstypedefs_${varName})
 
-add_dependencies(FVS_${varName} dbstypedefs)
+if (CMAKE_SYSTEM_NAME MATCHES "Windows")
+    set (flags "-static")
+    set_target_properties(${prgName} PROPERTIES
+        LINKER_LANGUAGE Fortran
+        LINK_FLAGS ${flags})
+        
+    set_target_properties(FVS_${varName} PROPERTIES
+        LINKER_LANGUAGE Fortran
+        LINK_FLAGS ${flags})
 
-set_target_properties(${prgName} PROPERTIES LINKER_LANGUAGE Fortran)
+    set_target_properties(FVS_${varName}_static PROPERTIES
+        LINKER_LANGUAGE Fortran
+        OUTPUT_NAME FVS_${varName}
+        LINK_FLAGS ${flags})
+else ()
+    set_target_properties(${prgName} PROPERTIES
+        LINKER_LANGUAGE Fortran)
+        
+    set_target_properties(FVS_${varName} PROPERTIES
+        LINKER_LANGUAGE Fortran)
+
+    set_target_properties(FVS_${varName}_static PROPERTIES
+        LINKER_LANGUAGE Fortran
+        OUTPUT_NAME FVS_${varName})
+endif ()
 
 # set up function alias for DLL containing CPP code
 
 if (CMAKE_GENERATOR MATCHES "MinGW Makefiles")
-  set_target_properties(FVSfofem PROPERTIES LINK_FLAGS -Wl,--add-stdcall-alias)
+  set_target_properties(FVSfofem_${varName} PROPERTIES LINK_FLAGS -Wl,--add-stdcall-alias)
 endif()
 
 #INSTALL(TARGETS ${prgName} FVSsql FVSfofem FVS_${varName}
