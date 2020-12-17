@@ -19,8 +19,8 @@ env:
       
 script:
   - cd bin
-  - cmake --build . --target all -j 2
-
+  - cmake --build . --target all --parallel 2
+  
 after_success:
   - export ZIP_TAG="open-fvs_${TRAVIS_TAG}-${FVS_STATUS}"
   - cmake --build . --target make_zip
