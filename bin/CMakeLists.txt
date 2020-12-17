@@ -106,6 +106,13 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Open-FVS/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Open-FVS/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Open-FVS/bin)
 
+# Add a target for zipping the outputs
+add_custom_target(make_zip
+		COMMAND ${CMAKE_COMMAND} -E tar "cfv" "open-fvs.zip" --format=zip
+			"${CMAKE_BINARY_DIR}/Open-FVS"
+		)
+
+# Add each generated subdirectory to the project
 foreach(toProcess ${dirsToProcess})
   add_subdirectory(${toProcess})
 endforeach(toProcess)
