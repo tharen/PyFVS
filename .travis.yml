@@ -20,6 +20,7 @@ env:
       
 script:
   - cd bin
+  - cmake -G"Unix Makefiles" . -DFVS_VARIANTS=all -DCMAKE_SYSTEM_NAME=Linux
   - cmake --build . --target all
   
 after_success:
