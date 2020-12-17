@@ -1,5 +1,8 @@
 version: 0.0.{build}
 
+environment:
+  ZIP_TAG: open-fvs
+  
 # init:
   # # Display remote desktop details
   # - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
@@ -14,11 +17,10 @@ build_script:
     - cmake --build . -j2 --target all
     
 after_build:
-    - set ZIP_TAG=open-fvs
     - cmake --build . --target make_zip
 
 artifacts:
-    - path: bin\{ZIP_TAG}.zip
+    - path: bin\%ZIP_TAG%.zip
       name: open-fvs
       type: zip
     
