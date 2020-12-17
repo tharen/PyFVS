@@ -8,7 +8,6 @@ project (FVS C CXX Fortran)
 # Default variable values which can be set on the command line
 set(FVS_VARIANTS "all" CACHE STRING "FVS variants to configure, eg. pnc,wcc,oc,op")
 set(CMAKE_SYSTEM_NAME "Windows" CACHE STRING "Target system name, Windows, Linux, etc.")
-set(MAKE_JOBS 8 CACHE STRING "Number of parallel make jobs to execute, eg. make -j8")
 
 # The list of variants can be passed as a comma or semicolon separated list
 # If semicolon is used it translates directly to a CMake list, but must be 
@@ -40,7 +39,18 @@ message(STATUS "Target system: ${CMAKE_SYSTEM_NAME}")
 # Enumerate variant source list files to configure.
 if (FVS_VARIANTS STREQUAL "all")
     # Setup all variants
-    file(GLOB tobuild "FVS*_sourceList.txt")
+    file(GLOB sll "FVS*_sourceList.txt")
+	set (tobuild "")
+	foreach (sl ${sll})
+		get_filename_component(sl ${sl} NAME)
+		if (${sl} MATCHES "FVS..x_sourceList.txt")
+			message(STATUS "Skipping ${sl}")
+		else()
+			list(APPEND tobuild ${sl})
+			message(STATUS "Append ${sl}")
+		endif()
+	endforeach()
+
 else ()
     # User specified variants, eg "pn,wc"
     set(tobuild "")
@@ -108,7 +118,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Open-FVS/bin)
 
 # Add a target for zipping the outputs
 add_custom_target(make_zip
-		COMMAND ${CMAKE_COMMAND} -E tar "cfv" "open-fvs.zip" --format=zip
+		COMMAND ${CMAKE_COMMAND} -E tar "cfv" "$ENV{ZIP_TAG}.zip" --format=zip
 			"${CMAKE_BINARY_DIR}/Open-FVS"
 		)
 
@@ -116,70 +126,6 @@ add_custom_target(make_zip
 foreach(toProcess ${dirsToProcess})
   add_subdirectory(${toProcess})
 endforeach(toProcess)
-
-# # TODO: Use add_subdirectory to configure a hierarchical build
-# #     Once the CMakeLists.txt files are configured CMake can handle the rest.
-# #     Note that CMake generates a Makefile, but this would only be valid
-# #     if we were using the CMake add_subdirectory command.
-# #
-# # Generate a top level makefile
-# if (${CMAKE_GENERATOR} MATCHES "MinGW Makefiles")
-  # set(make "mingw32-make")
-# else ()
-  # set(make "make")
-# endif ()
-
-# set(top_make "makefile_all") #makefile name
-# file(WRITE ${top_make} "# Build all configured variants\n")
-# file(APPEND ${top_make} "MAKE = ${make}\n")
-# file(APPEND ${top_make} "BUNDLE_DIR = Open-FVS\n")
-# if (CMAKE_SYSTEM_NAME MATCHES "Windows")
-  # file(APPEND ${top_make} "EXE_SUFFIX = .exe\n")
-  # file(APPEND ${top_make} "SO_SUFFIX = .dll\n")
-# else ()
-  # file(APPEND ${top_make} "EXE_SUFFIX = \n")
-  # file(APPEND ${top_make} "SO_SUFFIX = .so\n")
-# endif ()
-
-# # List all variants to be built
-# set(all_vars "")
-# foreach (source_list ${tobuild})
-  # string(REGEX REPLACE ".*FVS(.*)_sourceList.txt" "${CMAKE_MATCH_1}" var ${source_list})
-  # list(APPEND all_vars ${CMAKE_MATCH_1})
-# endforeach ()
-
-# string(REPLACE ";" " " _all_vars "${all_vars}")
-# file(APPEND ${top_make} "ALL_VARIANTS = ${_all_vars}\n")
-
-# # Phony targets
-# file(APPEND ${top_make} "\n")
-# file(APPEND ${top_make} ".PHONY: all\n")
-# file(APPEND ${top_make} ".PHONY: bundle\n")
-
-# file(APPEND ${top_make} "\nall: $(ALL_VARIANTS)\n")
-
-# # Target to bundle (package,install,etc.) all libraries and executables
-# if (CMAKE_SYSTEM_NAME MATCHES "Windows")
-	# file(APPEND ${top_make} "\nbundle: $(ALL_VARIANTS)\n\tif not exist ./$(BUNDLE_DIR) mkdir ./$(BUNDLE_DIR)\n")
-# else ()
-	# file(APPEND ${top_make} "\nbundle: $(ALL_VARIANTS)\n\tmkdir -p $(BUNDLE_DIR)\n")
-# endif ()
-
-# if (CMAKE_SYSTEM_NAME MATCHES "Windows")
-    # file(APPEND ${top_make} "\t$(foreach var,$(ALL_VARIANTS),copy FVS${var}_CmakeDir/FVS$(var).exe \$(BUNDLE_DIR))\n")
-	# file(APPEND ${top_make} "\t$(foreach var,$(ALL_VARIANTS),copy FVS${var}_CmakeDir/libFVS_$(var).dll \$(BUNDLE_DIR))\n")
-	# file(APPEND ${top_make} "\t$(foreach var,$(ALL_VARIANTS),copy FVS${var}_CmakeDir/libFVS_$(var).a \$(BUNDLE_DIR))\n")
-# else ()
-    # file(APPEND ${top_make} "\t$(foreach var,$(ALL_VARIANTS),cp FVS${var}_CmakeDir/FVS$(var) \$(BUNDLE_DIR))\n")
-	# file(APPEND ${top_make} "\t$(foreach var,$(ALL_VARIANTS),cp FVS${var}_CmakeDir/libFVS_$(var).so \$(BUNDLE_DIR))\n")
-	# file(APPEND ${top_make} "\t$(foreach var,$(ALL_VARIANTS),cp FVS${var}_CmakeDir/libFVS_$(var).a \$(BUNDLE_DIR))\n")
-# endif ()
-
-# # Configure targets for each variant
-# foreach (var ${all_vars})
-  # file(APPEND ${top_make} "\n${var}:\n\t\$(MAKE) -j${MAKE_JOBS} -C FVS${var}_CmakeDir\n")
-  # # file(APPEND ${top_make} "\n${var}:\n\tcmake --build .\\FVS${var}_CmakeDir -j${MAKE_JOBS}\n")
-# endforeach ()
 
 return()
 
@@ -190,7 +136,6 @@ return()
 cmake_minimum_required (VERSION 3.16.2)
 
 set (CMAKE_SYSTEM_NAME @CMAKE_SYSTEM_NAME@)
-set (MAKE_JOBS @MAKE_JOBS@)
 
 if (CMAKE_GENERATOR MATCHES "Visual Studio 10")
   set (CMAKE_C_FLAGS   "/D_WINDOWS /W3 /Zm100" CACHE STRING "VS10 mod A" FORCE)

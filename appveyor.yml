@@ -6,19 +6,19 @@ version: 0.0.{build}
 
 install:
     - set "PATH=C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin;C:\Windows\System32;C:\Windows;%PATH%"
-    - set CHERE_INVOKING=1
     
 build_script:
     - cd bin
     - del "C:\Program Files\Git\usr\bin\sh.exe"
-    - cmake -G"MinGW Makefiles" . -DFVS_VARIANTS=pn -DCMAKE_SYSTEM_NAME=Windows -DMAKE_JOBS=1
-    - cmake --build . -j1
+    - cmake -G"MinGW Makefiles" . -DFVS_VARIANTS=all -DCMAKE_SYSTEM_NAME=Windows
+    - cmake --build . -j2 --target all
     
 after_build:
+    - set ZIP_TAG=open-fvs
     - cmake --build . --target make_zip
 
 artifacts:
-    - path: bin\open-fvs.zip
+    - path: bin\{ZIP_TAG}.zip
       name: open-fvs
       type: zip
     
