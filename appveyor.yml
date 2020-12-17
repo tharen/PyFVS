@@ -23,6 +23,6 @@ artifacts:
       name: open-fvs
       type: zip
     
-# on_finish:
-  # # Pause the build for remote desktop access
-  # - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+on_finish:
+  # Pause the build for remote desktop access
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
