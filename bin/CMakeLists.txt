@@ -278,6 +278,7 @@ foreach (fn ${fileList})
                          COMMAND $<TARGET_FILE:mkdbsTypeDefs_${varName}>
                          DEPENDS mkdbsTypeDefs_${varName})
       add_custom_target(dbstypedefs_${varName} ALL DEPENDS ${dbstypedefs_f77})
+	  
     elseif(fname STREQUAL fvsSQL.c)
       list (APPEND CsourceSQL ${fn})
     else()
@@ -310,6 +311,8 @@ message(STATUS "FVSvariant = FVS${varName}")
 add_library(FVSsql_${varName} OBJECT ${CsourceSQL})
 add_library(FVSfofem_${varName} OBJECT ${CsourceFFE})
 add_library(FVSobjs_${varName} OBJECT ${FsourceFVS})
+# Ensure the DBSTYPEDEFS is created
+add_dependencies(FVSobjs_${varName} dbstypedefs_${varName})
 
 ##add_library(FVScfim SHARED ${CsourceCFIM})
 add_library(FVS_${varName} SHARED $<TARGET_OBJECTS:FVSobjs_${varName}> $<TARGET_OBJECTS:FVSfofem_${varName}> $<TARGET_OBJECTS:FVSsql_${varName}>)
@@ -318,9 +321,6 @@ add_library(FVS_${varName}_static STATIC $<TARGET_OBJECTS:FVSobjs_${varName}> $<
 add_executable (${prgName} ${FsourceMAIN})
 target_link_libraries(${prgName} FVS_${varName}_static)
 # target_link_libraries(FVS_${varName} FVSfofem FVSsql)
-
-add_dependencies(FVS_${varName} dbstypedefs_${varName})
-add_dependencies(FVS_${varName}_static dbstypedefs_${varName})
 
 if (CMAKE_SYSTEM_NAME MATCHES "Windows")
     set (flags "-static")
