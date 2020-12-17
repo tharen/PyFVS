@@ -16,10 +16,11 @@ addons:
 env:
     global:
       - FVS_STATUS=alpha
+      - CMAKE_BUILD_PARALLEL_LEVEL=2
       
 script:
   - cd bin
-  - cmake --build . --target all --parallel 2
+  - cmake --build . --target all
   
 after_success:
   - export ZIP_TAG="open-fvs_${TRAVIS_TAG}-${FVS_STATUS}"
