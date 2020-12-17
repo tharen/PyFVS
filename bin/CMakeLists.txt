@@ -2,7 +2,7 @@
 
 ## Towards using cmake! NCrookston July 24 2012
 
-cmake_minimum_required (VERSION 3.16.2)
+cmake_minimum_required (VERSION 3.12.4)
 project (FVS C CXX Fortran)
 
 # Default variable values which can be set on the command line
@@ -133,7 +133,7 @@ return()
 ##DO NOT REMOVE THIS TAG##
 
 ##If edits are made, make them in the CMakeList.txt file in the parent directory.
-cmake_minimum_required (VERSION 3.16.2)
+cmake_minimum_required (VERSION 3.12.4)
 
 set (CMAKE_SYSTEM_NAME @CMAKE_SYSTEM_NAME@)
 
