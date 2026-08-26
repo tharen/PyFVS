@@ -1,3 +1,7 @@
+## *** PyFVS development and maintenance has moved ***
+Please visit [forest-modeling/PyFVS](https://github.com/forest-modeling/PyFVS) for more recent updates.
+This fork will eventually be archived.
+
 PyFVS - Python wrappers for Open-FVS.
 =====
 
